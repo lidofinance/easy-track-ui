@@ -6,17 +6,49 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "yarn lint --fix",
+    "typechain": "typechain --target=ethers-v5 --out-dir ./generated './abi/*.json'",
+    "postinstall": "husky install && yarn typechain"
   },
   "dependencies": {
+    "@lidofinance/lido-ui": "^1.6.0",
+    "@typechain/ethers-v5": "^7.0.1",
+    "@types/lodash": "^4.14.170",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/walletconnect-connector": "^6.2.0",
+    "@web3-react/walletlink-connector": "^6.2.1",
+    "cors": "^2.8.5",
+    "ethers": "^5.3.1",
+    "lodash": "^4.17.21",
+    "memory-cache": "^0.2.0",
+    "mkdirp": "^1.0.4",
     "next": "11.0.0",
+    "next-connect": "^0.10.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "styled-components": "^5.3.0",
+    "swr": "^0.5.6",
+    "typechain": "^5.0.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
+    "@types/cors": "^2.8.10",
+    "@types/memory-cache": "^0.2.1",
     "@types/react": "17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "@types/styled-components": "^5.1.10",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.0",
-    "typescript": "4.3.4"
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.1",
+    "type-fest": "^1.2.1",
+    "typescript": "4.3.4",
+    "url-loader": "^4.1.1"
   }
 }
