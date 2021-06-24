@@ -11,6 +11,7 @@ import { ConfigProvider } from 'modules/config'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
+import { ToastContainer } from 'modules/toasts'
 import 'modules/globalStyles/TT_Commons.css'
 
 function AppRoot({ Component, pageProps }: AppProps) {
@@ -25,6 +26,7 @@ function AppRoot({ Component, pageProps }: AppProps) {
       <PageLayout>
         <Component {...pageProps} />
       </PageLayout>
+      <ToastContainer />
     </>
   )
 }
