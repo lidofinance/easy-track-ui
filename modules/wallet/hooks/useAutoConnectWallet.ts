@@ -4,7 +4,7 @@ import { useConnectorStorage } from './useConnectorStorage'
 import { useConnect } from './useConnect'
 import { useConnectors } from './useConnectors'
 
-export const useAutoConnect = (): void => {
+export function useAutoConnectWallet() {
   const { active, connector: currentConnector } = useWeb3React()
   const connect = useConnect()
   const connectors = useConnectors()
