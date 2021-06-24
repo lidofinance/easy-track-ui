@@ -25,7 +25,7 @@ type RawMotionData = PromiseValue<
 export function formatMotionData(rawMotionData: RawMotionData): Motion {
   return {
     id: Number(rawMotionData[0]),
-    evmScriptFactory: rawMotionData[1],
+    evmScriptFactory: rawMotionData[1] as Motion['evmScriptFactory'],
     creator: rawMotionData[2],
     duration: Number(rawMotionData[3]),
     startDate: Number(rawMotionData[4]),

@@ -7,7 +7,7 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { getRpcUrl } from '../../blockChain/utils/getRpcUrls'
 import { isClientSide } from 'modules/utils/isClientSide'
 
-export type ConnectorsValue = {
+export type WalletConnectorsValue = {
   metamask: InjectedConnector
   trust: InjectedConnector
   imtoken: InjectedConnector
@@ -15,17 +15,19 @@ export type ConnectorsValue = {
   coinbase: WalletLinkConnector | null
 }
 
-export const connectorsContext = createContext({} as ConnectorsValue)
+export const walletConnectorsContext = createContext(
+  {} as WalletConnectorsValue,
+)
 
 type Props = {
   children?: React.ReactNode
 }
 
-export function ConnectorsProvider({ children }: Props) {
+export function WalletConnectorsProvider({ children }: Props) {
   const { supportedChainIds } = useConfig()
   const { current } = useRef({
     isInited: false,
-    connectors: {} as ConnectorsValue,
+    connectors: {} as WalletConnectorsValue,
   })
 
   const isMainnetSupported = useMemo(
@@ -66,7 +68,7 @@ export function ConnectorsProvider({ children }: Props) {
   }
 
   return (
-    <connectorsContext.Provider
+    <walletConnectorsContext.Provider
       value={current.connectors}
       children={children}
     />

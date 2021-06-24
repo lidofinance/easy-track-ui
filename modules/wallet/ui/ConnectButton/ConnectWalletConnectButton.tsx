@@ -1,14 +1,14 @@
 import { useCallback } from 'react'
-import { useConnect } from '../../hooks/useConnect'
-import { useConnectors } from '../../hooks/useConnectors'
+import { useWalletConnect } from '../../hooks/useWalletConnect'
+import { useWalletConnectors } from '../../hooks/useWalletConnectors'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
 import iconUrl from 'assets/icons/walletconnect.svg'
 
 export function ConnectWalletConnectButton(props: ConnectWalletButtonProps) {
   const { onConnect, disabled, ...rest } = props
-  const connect = useConnect()
-  const { walletconnect: connector } = useConnectors()
+  const connect = useWalletConnect()
+  const { walletconnect: connector } = useWalletConnectors()
 
   const handleConnect = useCallback(async () => {
     if (!connector) return

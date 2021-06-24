@@ -2,19 +2,19 @@ import { memo } from 'react'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
-import { useAutoConnectWallet } from 'modules/wallet/hooks/useAutoConnectWallet'
+import { useWalletAutoConnect } from 'modules/wallet/hooks/useWalletAutoConnect'
 
 import { PageLayout } from 'modules/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
 import { ThemeProvider, themeDefault } from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
-import { ConnectorsProvider } from 'modules/wallet/providers/connectorsProvider'
+import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import 'modules/globalStyles/TT_Commons.css'
 
 function AppRoot({ Component, pageProps }: AppProps) {
-  useAutoConnectWallet()
+  useWalletAutoConnect()
   return (
     <>
       <Head>
@@ -41,11 +41,11 @@ export default function App({ envConfig, ...appProps }: Props) {
       <GlobalStyle />
       <ConfigProvider envConfig={envConfig}>
         <Web3AppProvider>
-          <ConnectorsProvider>
+          <WalletConnectorsProvider>
             <ModalProvider>
               <AppRootMemo {...appProps} />
             </ModalProvider>
-          </ConnectorsProvider>
+          </WalletConnectorsProvider>
         </Web3AppProvider>
       </ConfigProvider>
     </ThemeProvider>

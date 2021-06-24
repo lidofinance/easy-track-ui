@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
-import { useConnect } from '../../hooks/useConnect'
-import { useConnectors } from '../../hooks/useConnectors'
+import { useWalletConnect } from '../../hooks/useWalletConnect'
+import { useWalletConnectors } from '../../hooks/useWalletConnectors'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
 import iconUrl from 'assets/icons/metamask.svg'
@@ -9,8 +9,8 @@ import { isClientSide } from 'modules/utils/isClientSide'
 
 export function ConnectMetamaskButton(props: ConnectWalletButtonProps) {
   const { onConnect, ...rest } = props
-  const connect = useConnect()
-  const { metamask: connector } = useConnectors()
+  const connect = useWalletConnect()
+  const { metamask: connector } = useWalletConnectors()
 
   const openInWallet = useCallback(() => {
     const url = encodeURIComponent(window.location.host)

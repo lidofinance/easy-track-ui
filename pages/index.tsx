@@ -1,5 +1,5 @@
 import { useSWR } from 'modules/hooks/useSwr'
-import { useChain } from 'modules/blockChain/hooks/useChain'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Title } from 'modules/ui/Common/Title'
 import { MotionCard } from 'modules/motions/ui/MotionCard'
@@ -9,7 +9,7 @@ import type { Motion } from 'modules/motions/types'
 import { standardFetcher } from 'modules/utils/standardFetcher'
 
 export default function HomePage() {
-  const currentChain = useChain()
+  const currentChain = useCurrentChain()
   const { initialLoading, data } = useSWR<{ motions: Motion[] }>(
     `/api/motions?chainId=${currentChain}`,
     standardFetcher,

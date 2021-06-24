@@ -1,4 +1,4 @@
-import { useChain } from 'modules/blockChain/hooks/useChain'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Text } from 'modules/ui/Common/Text'
@@ -17,7 +17,7 @@ import logoSrc from 'assets/logo.com.svg'
 import * as urls from 'modules/utils/urls'
 
 export function Header() {
-  const currentChain = useChain()
+  const currentChain = useCurrentChain()
 
   return (
     <Wrap>

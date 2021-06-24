@@ -3,7 +3,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { useCallback } from 'react'
 
-export function useDisconnectWallet() {
+export function useWalletDisconnect() {
   const { deactivate, connector } = useWeb3React()
   return useCallback(() => {
     deactivate()

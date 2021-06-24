@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { useEtherscanOpen } from 'modules/blockChain/hooks/useEtherscanOpen'
-import { useDisconnectWallet } from 'modules/wallet/hooks/useDisconnectWallet'
-import { useConnectorStorage } from 'modules/wallet/hooks/useConnectorStorage'
+import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
+import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
+import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
 import { useCopyToClipboard } from 'modules/hooks/useCopyToClipboard'
 import {
   ButtonIcon,
@@ -26,8 +26,8 @@ import {
 export function WalletModal(props: ModalProps) {
   const { onClose } = props
   const { account } = useWeb3React()
-  const [connector] = useConnectorStorage()
-  const disconnect = useDisconnectWallet()
+  const [connector] = useWalletConnectorStorage()
+  const disconnect = useWalletDisconnect()
 
   const handleDisconnect = useCallback(() => {
     disconnect()
@@ -37,7 +37,7 @@ export function WalletModal(props: ModalProps) {
   const trimmedAddress = useMemo(() => trimAddress(account ?? '', 6), [account])
 
   const handleCopy = useCopyToClipboard(account ?? '')
-  const handleEtherscan = useEtherscanOpen(account ?? '', 'address')
+  const handleEtherscan = useEtherscanOpener(account ?? '', 'address')
 
   return (
     <Modal title="Account" {...props}>
