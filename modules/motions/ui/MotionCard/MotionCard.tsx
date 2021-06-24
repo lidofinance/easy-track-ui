@@ -1,5 +1,7 @@
+import { FormattedDate } from 'modules/ui/Utils/FormattedDate'
 import { Wrap, FieldWrap, FieldLabel, FieldText } from './MotionCardStyle'
 import type { Motion } from 'modules/motions/types'
+import { getMotionType } from 'modules/motions/utils/getMotionType'
 
 type FieldProps = {
   label: React.ReactNode
@@ -23,10 +25,13 @@ export function MotionCard({ motion }: Props) {
   return (
     <Wrap>
       <Field label="#" text={motion.id} />
-      <Field label="ScriptFactory" text={motion.evmScriptFactory} />
+      <Field label="Type" text={getMotionType(motion.evmScriptFactory)} />
       <Field label="Creator" text={motion.creator} />
       <Field label="Duration" text={motion.duration} />
-      <Field label="StartDate" text={motion.startDate} />
+      <Field
+        label="Started"
+        text={<FormattedDate date={motion.startDate} format="DD MMM h:mma" />}
+      />
       <Field label="SnapshotBlock" text={motion.snapshotBlock} />
       <Field label="ObjectionsThreshold" text={motion.objectionsThreshold} />
       <Field label="ObjectionsAmount" text={motion.objectionsAmount} />

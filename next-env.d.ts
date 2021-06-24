@@ -1,8 +1,8 @@
-declare module '*.com.svg' {
-  const content: React.SFC<React.SVGProps<SVGSVGElement>>
+// declare module '*.com.svg' {
+//   const content: React.SFC<React.SVGProps<SVGSVGElement>>
 
-  export default content
-}
+//   export default content
+// }
 
 /// <reference types="next" />
 /// <reference types="next/types/global" />

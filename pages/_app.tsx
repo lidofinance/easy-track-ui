@@ -7,7 +7,8 @@ import { GlobalStyle } from 'modules/globalStyles'
 import { ThemeProvider, themeDefault } from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
-import { ConnectorsProvider } from 'modules/blockChain/providers/connectorsProvider'
+import { ConnectorsProvider } from 'modules/wallet/providers/connectorsProvider'
+import { ModalProvider } from 'modules/modal/ModalProvider'
 import 'modules/globalStyles/TT_Commons.css'
 
 type Props = AppProps & {
@@ -27,9 +28,11 @@ export default function App({ Component, pageProps, envConfig }: Props) {
         <ConfigProvider envConfig={envConfig}>
           <Web3AppProvider>
             <ConnectorsProvider>
-              <PageLayout>
-                <Component {...pageProps} />
-              </PageLayout>
+              <ModalProvider>
+                <PageLayout>
+                  <Component {...pageProps} />
+                </PageLayout>
+              </ModalProvider>
             </ConnectorsProvider>
           </Web3AppProvider>
         </ConfigProvider>

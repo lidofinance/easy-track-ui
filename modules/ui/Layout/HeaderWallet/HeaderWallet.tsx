@@ -1,35 +1,23 @@
-import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { useConfig } from 'modules/config'
-import { useConnectors } from 'modules/blockChain/hooks/useConnectors'
+import { useModal } from 'modules/modal/useModal'
 
-import { Text } from 'modules/ui/Common/Text'
 import { Button } from '@lidofinance/lido-ui'
-import { Wrap, Disconnect } from './HeaderWalletStyle'
+
+import { WalletModal } from 'modules/wallet/ui/WalletModal'
+import { ConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
+import { Wrap, AddressBadge } from './HeaderWalletStyle'
 
 export function HeaderWallet() {
   const web3 = useWeb3React()
-  const { currentChain } = useConfig()
-  const connectors = useConnectors()
-
-  console.log(connectors.metamask)
-
-  const handleConnect = useCallback(() => {
-    web3.activate(connectors.metamask)
-  }, [web3, connectors])
-
-  const handleDisconnect = useCallback(() => {
-    web3.deactivate()
-  }, [web3])
-
-  console.log(web3, currentChain)
+  const openWalletModal = useModal(WalletModal)
+  const openConnectWalletModal = useModal(ConnectWalletModal)
 
   if (!web3.active) {
     return (
       <Wrap>
         <Button
           size="sm"
-          onClick={handleConnect}
+          onClick={openConnectWalletModal}
           children="Connect"
           style={{ width: '100%' }}
         />
@@ -39,10 +27,11 @@ export function HeaderWallet() {
 
   return (
     <Wrap>
-      <Text title={String(web3.account)} size={12} weight={400}>
-        {web3.account?.slice(0, 10)}...
-      </Text>
-      <Disconnect onClick={handleDisconnect}>Disconnect</Disconnect>
+      <AddressBadge
+        symbols={5}
+        address={web3.account!}
+        onClick={openWalletModal}
+      />
     </Wrap>
   )
 }

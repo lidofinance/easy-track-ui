@@ -1,6 +1,8 @@
+import type { ScriptFactory } from './utils/getMotionType'
+
 export type Motion = {
   id: number
-  evmScriptFactory: string
+  evmScriptFactory: ScriptFactory
   creator: string
   duration: number
   startDate: number

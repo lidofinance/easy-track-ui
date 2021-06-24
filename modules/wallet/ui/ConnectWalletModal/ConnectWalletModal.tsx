@@ -1,0 +1,39 @@
+import { useCallback } from 'react'
+import { Modal, ModalProps } from '@lidofinance/lido-ui'
+import { ConnectWalletModalTerms } from './ConnectWalletModalTerms'
+import {
+  ConnectMetamaskButton,
+  ConnectWalletConnectButton,
+  ConnectCoinbaseButton,
+  ConnectTrustButton,
+  ConnectImTokenButton,
+} from '../ConnectButton'
+import { useLocalStorage } from 'modules/hooks/useLocalStorage'
+import { STORAGE_TERMS_KEY } from 'modules/config'
+
+type Props = ModalProps & {}
+
+export function ConnectWalletModal(props: Props) {
+  const { onClose } = props
+  const [checked, setChecked] = useLocalStorage(STORAGE_TERMS_KEY, false)
+
+  const handleChange = useCallback(() => {
+    setChecked(currentValue => !currentValue)
+  }, [setChecked])
+
+  const common = {
+    disabled: !checked,
+    onConnect: onClose,
+  }
+
+  return (
+    <Modal {...props} title="Connect wallet">
+      <ConnectWalletModalTerms onChange={handleChange} checked={checked} />
+      <ConnectMetamaskButton {...common} />
+      <ConnectWalletConnectButton {...common} />
+      <ConnectCoinbaseButton {...common} />
+      <ConnectTrustButton {...common} />
+      <ConnectImTokenButton {...common} />
+    </Modal>
+  )
+}

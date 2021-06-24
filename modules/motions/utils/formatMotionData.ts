@@ -1,5 +1,6 @@
 import type { PromiseValue } from 'type-fest'
 import type { EasyTrackMockAbi } from 'generated'
+import type { Motion } from '../types'
 
 type RawMotionData = PromiseValue<
   ReturnType<InstanceType<typeof EasyTrackMockAbi>['getMotions']>
@@ -21,7 +22,7 @@ type RawMotionData = PromiseValue<
   }
 */
 
-export function formatMotionData(rawMotionData: RawMotionData) {
+export function formatMotionData(rawMotionData: RawMotionData): Motion {
   return {
     id: Number(rawMotionData[0]),
     evmScriptFactory: rawMotionData[1],

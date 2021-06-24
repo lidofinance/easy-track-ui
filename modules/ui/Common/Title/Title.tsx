@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import { Text } from '../Text'
 
 const TitleStyle = styled(Text)`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  line-height: 1;
 `
 
 type Props = {

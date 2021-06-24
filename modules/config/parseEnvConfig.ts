@@ -3,7 +3,7 @@ import { EnvConfig, Config } from './types'
 
 export function parseEnvConfig(envConfig: EnvConfig): Config {
   return {
-    currentChain: parseChainId(envConfig.defaultChain),
-    supportedChainIds: envConfig.supportedChains.split(',').map(parseInt),
+    defaultChain: parseChainId(envConfig.defaultChain),
+    supportedChainIds: envConfig.supportedChains.split(',').map(parseChainId),
   }
 }

@@ -6,6 +6,6 @@ export type EnvConfig = {
 }
 
 export type Config = {
-  currentChain: ChainId
-  supportedChainIds: number[]
+  defaultChain: ChainId
+  supportedChainIds: ChainId[]
 }

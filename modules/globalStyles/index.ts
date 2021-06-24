@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
   html {
     width: 100%;
     font-size: ${({ theme }) => theme.fontSizesMap.sm}px;
-    line-height: 1.25em;
+    line-height: 1.25;
   }
 
   body {

@@ -1,24 +1,23 @@
-import { useConfig } from 'modules/config'
 import { useSWR } from 'modules/hooks/useSwr'
-import { standardFetcher } from 'modules/utils/standardFetcher'
+import { useChain } from 'modules/blockChain/hooks/useChain'
 
 import { Title } from 'modules/ui/Common/Title'
 import { MotionCard } from 'modules/motions/ui/MotionCard'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 
 import type { Motion } from 'modules/motions/types'
+import { standardFetcher } from 'modules/utils/standardFetcher'
 
 export default function HomePage() {
-  const { currentChain } = useConfig()
+  const currentChain = useChain()
   const { initialLoading, data } = useSWR<{ motions: Motion[] }>(
     `/api/motions?chainId=${currentChain}`,
     standardFetcher,
   )
 
   return (
-    <div>
+    <>
       <Title>Active Motions</Title>
-      <br />
       {initialLoading && <div>Loading...</div>}
       {!initialLoading && data && (
         <MotionsGrid>
@@ -27,6 +26,6 @@ export default function HomePage() {
           ))}
         </MotionsGrid>
       )}
-    </div>
+    </>
   )
 }

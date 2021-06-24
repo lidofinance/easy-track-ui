@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   padding: 20px 0;
   display: flex;
   align-items: center;
@@ -15,10 +15,7 @@ export const Nav = styled.div`
 
 export const Logo = styled.div`
   margin-right: 40px;
-
-  svg {
-    display: block;
-  }
+  font-size: 0;
 `
 
 export const NavLink = styled.a`

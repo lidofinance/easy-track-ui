@@ -1,5 +1,6 @@
-import { useConfig } from 'modules/config'
+import { useChain } from 'modules/blockChain/hooks/useChain'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Text } from 'modules/ui/Common/Text'
 import { HeaderWallet } from '../HeaderWallet'
 import {
@@ -12,17 +13,17 @@ import {
   NetworkBulb,
 } from './HeaderStyle'
 import { getChainColor, getChainName } from 'modules/blockChain/chains'
-import LogoIcon from 'assets/logo.com.svg'
+import logoSrc from 'assets/logo.com.svg'
 import * as urls from 'modules/utils/urls'
 
 export function Header() {
-  const { currentChain } = useConfig()
+  const currentChain = useChain()
 
   return (
     <Wrap>
       <Nav>
         <Logo>
-          <LogoIcon />
+          <Image src={logoSrc} alt="Lido" />
         </Logo>
         <Link passHref href={urls.home}>
           <NavLink>Active motions</NavLink>

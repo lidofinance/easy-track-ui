@@ -9,6 +9,7 @@ export const Wrap = styled.div`
 
 export const FieldWrap = styled.div`
   display: flex;
+  align-items: center;
 
   &:not(:last-child) {
     margin-bottom: 8px;
