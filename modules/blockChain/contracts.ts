@@ -12,6 +12,6 @@ export const connectNodeOperators = createContractConnector({
 export const connectEasyTrackMock = createContractConnector({
   factory: EasyTrackMockAbi__factory,
   address: {
-    [Chains.Goerli]: '0x28c7F387b43feD5343196Cf5F0A822334b930EF9',
+    [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c',
   },
 })

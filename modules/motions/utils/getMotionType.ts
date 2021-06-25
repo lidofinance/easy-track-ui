@@ -11,5 +11,10 @@ export const parseScriptFactory = (scriptFactory: string) => {
   return scriptFactory as ScriptFactory
 }
 
-export const getMotionType = (scriptFactory: ScriptFactory) =>
-  MotionTypes[parseScriptFactory(scriptFactory)]
+export const getMotionType = (scriptFactory: ScriptFactory) => {
+  try {
+    return MotionTypes[parseScriptFactory(scriptFactory)]
+  } catch {
+    return 'unrecognized type'
+  }
+}
