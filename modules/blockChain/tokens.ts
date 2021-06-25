@@ -36,7 +36,8 @@ export const TOKENS_BY_NETWORK = {
     [Chains.Mainnet]: '0x5a98fcbea516cf06857215779fd812ca3bef1b32',
     [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
     [Chains.Rinkeby]: '0xbfcb02cf3df4f36ab8185469834e0e00a5fc6053',
-    [Chains.Goerli]: '0xc3e39834c92c90463fab675a99def1bdd195fb04',
+    [Chains.Goerli]: '0x56340274fb5a72af1a3c6609061c451de7961bd4',
+    // [Chains.Goerli]: '0xc3e39834c92c90463fab675a99def1bdd195fb04',
     [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
   } as const,
   // [TOKENS.ldopl]: {

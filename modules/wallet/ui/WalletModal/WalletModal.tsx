@@ -24,6 +24,7 @@ import {
   Address,
   Actions,
 } from './WalletModalStyle'
+import { formatToken } from 'modules/blockChain/utils/formatToken'
 
 export function WalletModal(props: ModalProps) {
   const { onClose } = props
@@ -55,7 +56,7 @@ export function WalletModal(props: ModalProps) {
         <Account>
           <Text size={14} weight={500} children="LDO Balance:" />
           <Text size={14} weight={400}>
-            &nbsp;{Number(LDO.balance)}
+            &nbsp;{LDO.balance ? formatToken(LDO.balance, 'LDO') : 'Loading...'}
           </Text>
         </Account>
         <Account>
