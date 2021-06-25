@@ -7,8 +7,9 @@ import { useWalletAutoConnect } from 'modules/wallet/hooks/useWalletAutoConnect'
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
 import { ThemeProvider, themeDefault } from '@lidofinance/lido-ui'
-import { ConfigProvider } from 'modules/config'
+import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
+import { TokensProvider } from 'modules/blockChain/providers/tokensProvider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { ToastContainer } from 'modules/toasts'
@@ -44,9 +45,11 @@ export default function App({ envConfig, ...appProps }: Props) {
       <ConfigProvider envConfig={envConfig}>
         <Web3AppProvider>
           <WalletConnectorsProvider>
-            <ModalProvider>
-              <AppRootMemo {...appProps} />
-            </ModalProvider>
+            <TokensProvider>
+              <ModalProvider>
+                <AppRootMemo {...appProps} />
+              </ModalProvider>
+            </TokensProvider>
           </WalletConnectorsProvider>
         </Web3AppProvider>
       </ConfigProvider>

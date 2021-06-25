@@ -1,6 +1,6 @@
 import { createContext, useRef, useMemo } from 'react'
 import { InjectedConnector } from '@web3-react/injected-connector'
-import { useConfig } from 'modules/config'
+import { useConfig } from 'modules/config/hooks/useConfig'
 import { Chains } from '../../blockChain/chains'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'

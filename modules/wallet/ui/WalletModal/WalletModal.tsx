@@ -4,6 +4,8 @@ import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
 import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
 import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
+import { useLDOToken } from 'modules/blockChain/hooks/useLDOToken'
+import { Text } from 'modules/shared/ui/Common/Text'
 import {
   ButtonIcon,
   Modal,
@@ -38,6 +40,7 @@ export function WalletModal(props: ModalProps) {
 
   const handleCopy = useCopyToClipboard(account ?? '')
   const handleEtherscan = useEtherscanOpener(account ?? '', 'address')
+  const LDO = useLDOToken()
 
   return (
     <Modal title="Account" {...props}>
@@ -49,6 +52,12 @@ export function WalletModal(props: ModalProps) {
           </Disconnect>
         </Connected>
 
+        <Account>
+          <Text size={14} weight={500} children="LDO Balance:" />
+          <Text size={14} weight={400}>
+            &nbsp;{Number(LDO.balance)}
+          </Text>
+        </Account>
         <Account>
           <Identicon address={account ?? ''} />
           <Address>{trimmedAddress}</Address>

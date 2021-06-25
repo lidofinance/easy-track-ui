@@ -1,6 +1,11 @@
 import { Chains } from 'modules/blockChain/chains'
 import { createContractConnector } from './utils/createContractConnector'
-import { NodeOperatorsAbi__factory, EasyTrackMockAbi__factory } from 'generated'
+import { getTokenAddresses, TOKENS } from './tokens'
+import {
+  NodeOperatorsAbi__factory,
+  EasyTrackMockAbi__factory,
+  Erc20Abi__factory,
+} from 'generated'
 
 export const connectNodeOperators = createContractConnector({
   factory: NodeOperatorsAbi__factory,
@@ -14,4 +19,19 @@ export const connectEasyTrackMock = createContractConnector({
   address: {
     [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c',
   },
+})
+
+// export const connectSTETH = createContractConnector({
+//   factory: Erc20Abi__factory,
+//   address: getTokenAddresses(TOKENS.steth),
+// })
+
+// export const connectWETH = createContractConnector({
+//   factory: Erc20Abi__factory,
+//   address: getTokenAddresses(TOKENS.weth),
+// })
+
+export const connectLDO = createContractConnector({
+  factory: Erc20Abi__factory,
+  address: getTokenAddresses(TOKENS.ldo),
 })

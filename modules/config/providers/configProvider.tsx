@@ -1,12 +1,8 @@
-import { useMemo, createContext, useContext } from 'react'
-import { parseEnvConfig } from './parseEnvConfig'
-import { EnvConfig, Config } from './types'
+import { useMemo, createContext } from 'react'
+import { parseEnvConfig } from '../utils/parseEnvConfig'
+import { EnvConfig, Config } from '../types'
 
-const configContext = createContext({} as Config)
-
-export function useConfig() {
-  return useContext(configContext)
-}
+export const configContext = createContext({} as Config)
 
 type Props = {
   envConfig: EnvConfig

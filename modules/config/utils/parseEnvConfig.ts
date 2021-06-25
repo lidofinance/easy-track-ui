@@ -1,5 +1,5 @@
 import { parseChainId } from 'modules/blockChain/chains'
-import { EnvConfig, Config } from './types'
+import { EnvConfig, Config } from '../types'
 
 export function parseEnvConfig(envConfig: EnvConfig): Config {
   return {
