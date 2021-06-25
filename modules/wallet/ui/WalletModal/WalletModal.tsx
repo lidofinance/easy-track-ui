@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
 import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
-import { useCopyToClipboard } from 'modules/hooks/useCopyToClipboard'
+import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
 import {
   ButtonIcon,
   Modal,

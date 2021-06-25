@@ -1,4 +1,4 @@
-import { Title } from 'modules/ui/Common/Title'
+import { Title } from 'modules/shared/ui/Common/Title'
 
 export default function StartMotionPage() {
   return (

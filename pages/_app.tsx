@@ -4,7 +4,7 @@ import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
 import { useWalletAutoConnect } from 'modules/wallet/hooks/useWalletAutoConnect'
 
-import { PageLayout } from 'modules/ui/Layout/PageLayout'
+import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
 import { ThemeProvider, themeDefault } from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config'

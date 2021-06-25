@@ -1,4 +1,4 @@
-import { useLocalStorage } from 'modules/hooks/useLocalStorage'
+import { useLocalStorage } from 'modules/shared/hooks/useLocalStorage'
 import { STORAGE_KEY_CONNECTOR } from 'modules/config'
 import type { WalletConnectorsValue } from '../providers/walletConnectorsProvider'
 

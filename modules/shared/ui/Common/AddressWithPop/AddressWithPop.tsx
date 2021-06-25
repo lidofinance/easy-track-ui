@@ -1,9 +1,9 @@
 import { useClickAway } from 'react-use'
 import { useCallback, useEffect, useRef } from 'react'
-import { useSimpleReducer } from 'modules/hooks/useSimpleReducer'
-import { useCopyToClipboard } from 'modules/hooks/useCopyToClipboard'
+import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
+import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
 import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
-import { Text } from 'modules/ui/Common/Text'
+import { Text } from 'modules/shared/ui/Common/Text'
 import {
   IdenticonBadge,
   ButtonIcon,
@@ -11,7 +11,7 @@ import {
   External,
 } from '@lidofinance/lido-ui'
 import { Wrap, Pop, Actions } from './AddressWithPopStyle'
-import { minmax } from 'modules/utils/minmax'
+import { minmax } from 'modules/shared/utils/minmax'
 
 type BadgeProps = React.ComponentProps<typeof IdenticonBadge>
 

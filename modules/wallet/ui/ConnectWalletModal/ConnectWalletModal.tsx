@@ -8,7 +8,7 @@ import {
   ConnectTrustButton,
   ConnectImTokenButton,
 } from '../ConnectButton'
-import { useLocalStorage } from 'modules/hooks/useLocalStorage'
+import { useLocalStorage } from 'modules/shared/hooks/useLocalStorage'
 import { STORAGE_TERMS_KEY } from 'modules/config'
 
 type Props = ModalProps & {}

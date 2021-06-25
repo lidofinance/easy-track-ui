@@ -1,4 +1,4 @@
-import { createNextConnect } from 'modules/utils/createNextConnect'
+import { createNextConnect } from 'modules/shared/utils/createNextConnect'
 import { getLibrary } from 'modules/blockChain/utils/getLibrary'
 import { connectNodeOperators } from 'modules/blockChain/contracts'
 import { ChainId, parseChainId } from 'modules/blockChain/chains'

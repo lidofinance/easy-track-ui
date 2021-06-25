@@ -1,12 +1,12 @@
-import { useSWR } from 'modules/hooks/useSwr'
+import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
-import { Title } from 'modules/ui/Common/Title'
+import { Title } from 'modules/shared/ui/Common/Title'
 import { MotionCard } from 'modules/motions/ui/MotionCard'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 
 import type { Motion } from 'modules/motions/types'
-import { standardFetcher } from 'modules/utils/standardFetcher'
+import { standardFetcher } from 'modules/shared/utils/standardFetcher'
 
 export default function HomePage() {
   const currentChain = useCurrentChain()

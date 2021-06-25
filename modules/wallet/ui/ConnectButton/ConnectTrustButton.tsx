@@ -4,8 +4,8 @@ import { useWalletConnectors } from '../../hooks/useWalletConnectors'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
 import iconUrl from 'assets/icons/trust.svg'
-import { openWindow } from 'modules/utils/openWindow'
-import { isClientSide } from 'modules/utils/isClientSide'
+import { openWindow } from 'modules/shared/utils/openWindow'
+import { isClientSide } from 'modules/shared/utils/isClientSide'
 
 export function ConnectTrustButton(props: ConnectWalletButtonProps) {
   const { onConnect, ...rest } = props

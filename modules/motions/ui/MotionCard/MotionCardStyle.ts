@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { Text } from 'modules/ui/Common/Text'
+import { Text } from 'modules/shared/ui/Common/Text'
 
 export const Wrap = styled.div`
   padding: 20px;

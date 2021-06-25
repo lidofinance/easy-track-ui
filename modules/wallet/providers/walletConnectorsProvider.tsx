@@ -5,7 +5,7 @@ import { Chains } from '../../blockChain/chains'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { getRpcUrl } from '../../blockChain/utils/getRpcUrls'
-import { isClientSide } from 'modules/utils/isClientSide'
+import { isClientSide } from 'modules/shared/utils/isClientSide'
 
 export type WalletConnectorsValue = {
   metamask: InjectedConnector

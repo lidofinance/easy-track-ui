@@ -1,7 +1,7 @@
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Text } from 'modules/ui/Common/Text'
+import { Text } from 'modules/shared/ui/Common/Text'
 import { HeaderWallet } from '../HeaderWallet'
 import {
   Wrap,
@@ -14,7 +14,7 @@ import {
 } from './HeaderStyle'
 import { getChainColor, getChainName } from 'modules/blockChain/chains'
 import logoSrc from 'assets/logo.com.svg'
-import * as urls from 'modules/utils/urls'
+import * as urls from 'modules/shared/utils/urls'
 
 export function Header() {
   const currentChain = useCurrentChain()

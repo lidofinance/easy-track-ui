@@ -1,6 +1,6 @@
 import React, { memo, useMemo, useCallback, createContext, useRef } from 'react'
 import type { ModalProps } from '@lidofinance/lido-ui'
-import { useForceUpdate } from 'modules/hooks/useForceUpdate'
+import { useForceUpdate } from 'modules/shared/hooks/useForceUpdate'
 
 export type Modal = React.ComponentType<ModalProps>
 

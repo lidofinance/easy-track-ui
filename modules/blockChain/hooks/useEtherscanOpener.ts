@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useCurrentChain } from './useCurrentChain'
-import { openWindow } from 'modules/utils/openWindow'
+import { openWindow } from 'modules/shared/utils/openWindow'
 import { getEtherscanLink, EtherscanEntities } from '../utils/getEtherscanLink'
 
 export function useEtherscanOpener(hash: string, entity: EtherscanEntities) {
