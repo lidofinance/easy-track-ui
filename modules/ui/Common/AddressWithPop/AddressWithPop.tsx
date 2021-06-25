@@ -11,9 +11,7 @@ import {
   External,
 } from '@lidofinance/lido-ui'
 import { Wrap, Pop, Actions } from './AddressWithPopStyle'
-
-const minmax = (min: number, x: number, max: number) =>
-  Math.max(min, Math.min(max, x))
+import { minmax } from 'modules/utils/minmax'
 
 type BadgeProps = React.ComponentProps<typeof IdenticonBadge>
 

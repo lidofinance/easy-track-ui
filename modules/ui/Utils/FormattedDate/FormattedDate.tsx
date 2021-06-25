@@ -7,10 +7,10 @@ type Props = {
 }
 
 export function FormattedDate({ date, format }: Props) {
-  const formattedDate = useMemo(
+  const formatted = useMemo(
     () => moment.unix(date).format(format),
     [date, format],
   )
 
-  return <>{formattedDate}</>
+  return <>{formatted}</>
 }

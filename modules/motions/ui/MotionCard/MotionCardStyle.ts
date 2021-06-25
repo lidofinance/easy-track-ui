@@ -9,7 +9,7 @@ export const Wrap = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 
   &:not(:last-child) {
