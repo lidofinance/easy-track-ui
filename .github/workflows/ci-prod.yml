@@ -1,0 +1,34 @@
+name: CI Prod
+
+on:
+  workflow_dispatch:
+  release:
+    types: [ published ]
+  # push:
+  #   # branches: [ main ]
+  #   # Pattern matched against refs/tags
+  #   tags:
+  #   - "*" # Push events to every tag not containing /
+  workflow_run:
+    workflows: [ "Bump version" ]
+    types: [ completed ]
+
+jobs:
+# test:
+#   ...
+  deploy:
+    runs-on: ubuntu-latest
+    # needs: test
+    name: Build and deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Mainnet deploying
+        run: .github/dispatch_workflow.py
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          TARGET_REPO: "${{ secrets.TARGET_REPO }}"
+          TARGET: "mainnet"
+          TARGET_WORKFLOW: "easytrack_ui.yaml"
