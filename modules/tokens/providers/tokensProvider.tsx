@@ -1,6 +1,5 @@
 import { useWeb3React } from '@web3-react/core'
 import { BigNumber } from '@ethersproject/bignumber'
-// import { useTokenRpcSwr } from 'hooks'
 import React, {
   useRef,
   useMemo,
@@ -10,14 +9,14 @@ import React, {
   createContext,
 } from 'react'
 import { useTokenRpcSwr } from '../hooks/useTokenRpcSwr'
-import { useCurrentChain } from '../hooks/useCurrentChain'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import {
   ContractByToken,
   getTokenContractWeb3,
   getTokenContractRpc,
 } from '../utils/getTokenContract'
 import { TOKENS } from '../tokens'
-import { ChainId } from '../chains'
+import { ChainId } from 'modules/blockChain/chains'
 
 type ProviderProps = {
   children: React.ReactNode

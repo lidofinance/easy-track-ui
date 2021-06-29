@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from 'react'
-import { useWeb3React } from '@web3-react/core'
 import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
+import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
 import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
 import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
-import { useLDOToken } from 'modules/blockChain/hooks/useLDOToken'
+import { useLDOToken } from 'modules/tokens/hooks/useLDOToken'
 import { Text } from 'modules/shared/ui/Common/Text'
 import {
   ButtonIcon,
@@ -24,11 +24,11 @@ import {
   Address,
   Actions,
 } from './WalletModalStyle'
-import { formatToken } from 'modules/blockChain/utils/formatToken'
+import { formatToken } from 'modules/tokens/utils/formatToken'
 
 export function WalletModal(props: ModalProps) {
   const { onClose } = props
-  const { account } = useWeb3React()
+  const { walletAddress: address } = useWalletInfo()
   const [connector] = useWalletConnectorStorage()
   const disconnect = useWalletDisconnect()
 
@@ -37,10 +37,9 @@ export function WalletModal(props: ModalProps) {
     onClose?.()
   }, [disconnect, onClose])
 
-  const trimmedAddress = useMemo(() => trimAddress(account ?? '', 6), [account])
-
-  const handleCopy = useCopyToClipboard(account ?? '')
-  const handleEtherscan = useEtherscanOpener(account ?? '', 'address')
+  const trimmedAddress = useMemo(() => trimAddress(address ?? '', 6), [address])
+  const handleCopy = useCopyToClipboard(address ?? '')
+  const handleEtherscan = useEtherscanOpener(address ?? '', 'address')
   const LDO = useLDOToken()
 
   return (
@@ -60,7 +59,7 @@ export function WalletModal(props: ModalProps) {
           </Text>
         </Account>
         <Account>
-          <Identicon address={account ?? ''} />
+          <Identicon address={address ?? ''} />
           <Address>{trimmedAddress}</Address>
         </Account>
 

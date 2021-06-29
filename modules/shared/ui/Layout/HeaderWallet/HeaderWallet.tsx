@@ -1,5 +1,5 @@
-import { useWeb3React } from '@web3-react/core'
 import { useModal } from 'modules/modal/useModal'
+import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 
 import { Button } from '@lidofinance/lido-ui'
 
@@ -8,11 +8,11 @@ import { ConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { Wrap, AddressBadge } from './HeaderWalletStyle'
 
 export function HeaderWallet() {
-  const web3 = useWeb3React()
+  const { isWalletConnected, walletAddress } = useWalletInfo()
   const openWalletModal = useModal(WalletModal)
   const openConnectWalletModal = useModal(ConnectWalletModal)
 
-  if (!web3.active) {
+  if (!isWalletConnected) {
     return (
       <Wrap>
         <Button
@@ -29,7 +29,7 @@ export function HeaderWallet() {
     <Wrap>
       <AddressBadge
         symbols={5}
-        address={web3.account!}
+        address={walletAddress!}
         onClick={openWalletModal}
       />
     </Wrap>

@@ -3,7 +3,7 @@ import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Title } from 'modules/shared/ui/Common/Title'
-import { MotionCard } from 'modules/motions/ui/MotionCard'
+import { MotionCardDetailed } from 'modules/motions/ui/MotionCardDetailed'
 
 import type { Motion } from 'modules/motions/types'
 import { standardFetcher } from 'modules/shared/utils/standardFetcher'
@@ -29,7 +29,7 @@ export default function MotionDetailsPage() {
   return (
     <>
       <Title>Motion #{motionId}</Title>
-      <MotionCard motion={data.motion} />
+      <MotionCardDetailed motion={data.motion} />
     </>
   )
 }
