@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatBalance } from './formatBalance'
+import { formatBalance } from '../../blockChain/utils/formatBalance'
 
 export function formatToken(
   amount: BigNumber,

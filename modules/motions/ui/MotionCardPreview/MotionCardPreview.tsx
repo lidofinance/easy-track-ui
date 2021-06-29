@@ -1,10 +1,17 @@
 import { useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+
 import { Text } from 'modules/shared/ui/Common/Text'
-import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
-import { FormattedDuration } from 'modules/shared/ui/Utils/FormattedDuration'
-import { Wrap, Row, FieldWrap, FieldLabel, FieldText } from './MotionCardStyle'
+import { MotionDate } from '../MotionDate'
+import {
+  Wrap,
+  Row,
+  FieldWrap,
+  FieldLabel,
+  FieldText,
+} from './MotionCardPreviewStyle'
+
 import type { Motion } from 'modules/motions/types'
 import { getMotionType } from 'modules/motions/utils/getMotionType'
 import * as urls from 'modules/shared/utils/urls'
@@ -30,7 +37,7 @@ type Props = {
   motion: Motion
 }
 
-export function MotionCard({ motion }: Props) {
+export function MotionCardPreview({ motion }: Props) {
   const router = useRouter()
   const goToDetails = useCallback(() => {
     router.push(urls.motionDetails(motion.id))
@@ -52,20 +59,7 @@ export function MotionCard({ motion }: Props) {
       <Field label="EvmScriptCallData" text={motion.evmScriptCallData} />
 
       <Row>
-        <Text size={14} weight={500}>
-          <FormattedDate date={motion.startDate} format="DD MMM h:mma" />
-          <span> –</span>
-          <br />
-          <span>
-            <FormattedDate
-              date={motion.startDate + motion.duration}
-              format="DD MMM h:mma"
-            />{' '}
-            <Text as="span" size={14} weight={400}>
-              (<FormattedDuration value={motion.duration} unit="seconds" />)
-            </Text>
-          </span>
-        </Text>
+        <MotionDate fontSize={14} fontWeight={500} motion={motion} />
       </Row>
     </Wrap>
   )

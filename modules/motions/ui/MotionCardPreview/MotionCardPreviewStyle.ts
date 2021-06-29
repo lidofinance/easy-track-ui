@@ -1,10 +1,8 @@
 import styled, { css } from 'styled-components'
 import { Text } from 'modules/shared/ui/Common/Text'
+import { Card } from 'modules/shared/ui/Common/Card'
 
-export const Wrap = styled.div`
-  padding: 20px;
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.colors.foreground};
+export const Wrap = styled(Card)`
   cursor: pointer;
 `
 

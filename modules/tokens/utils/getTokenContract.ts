@@ -1,9 +1,9 @@
 import type { Signer } from '@ethersproject/abstract-signer'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { ChainId } from '../chains'
+import { ChainId } from '../../blockChain/chains'
 import { TOKENS } from '../tokens'
-import { getRpcUrl } from './getRpcUrls'
-import * as contracts from '../contracts'
+import { getRpcUrl } from '../../blockChain/utils/getRpcUrls'
+import * as contracts from '../../blockChain/contracts'
 
 const TOKEN_CONTRACT_CONNECTORS = {
   // [TOKENS.wsteth]: contracts.connectWSTETH,

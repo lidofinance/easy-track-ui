@@ -2,9 +2,9 @@ import { TOKENS } from '../tokens'
 import { ContractByToken, getTokenContractRpc } from '../utils/getTokenContract'
 import { SWRResponse } from 'modules/shared/hooks/useSwr'
 import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
-import { useContractRpcSwr } from './useContractRpcSwr'
+import { useContractRpcSwr } from '../../blockChain/hooks/useContractRpcSwr'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
-import { useCurrentChain } from './useCurrentChain'
+import { useCurrentChain } from '../../blockChain/hooks/useCurrentChain'
 
 export const useTokenRpcSwr = <
   T extends TOKENS,

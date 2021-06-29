@@ -10,9 +10,12 @@ type Props = {
 export function FormattedDuration({ value, unit }: Props) {
   const formatted = useMemo(
     () =>
-      moment.duration(value, unit).format('d [day] h [hr] m [min] s [sec]', {
-        trim: 'all',
-      }),
+      moment
+        .duration(value, unit)
+        // \xa0 is non-breaking space
+        .format('d\xa0[day]\xa0h\xa0[hr]\xa0m\xa0[min]\xa0s\xa0[sec]', {
+          trim: 'all',
+        }),
     [value, unit],
   )
 

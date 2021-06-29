@@ -1,6 +1,6 @@
 import { Chains } from 'modules/blockChain/chains'
 import { createContractConnector } from './utils/createContractConnector'
-import { getTokenAddresses, TOKENS } from './tokens'
+import { getTokenAddresses, TOKENS } from '../tokens/tokens'
 import {
   NodeOperatorsAbi__factory,
   EasyTrackMockAbi__factory,
