@@ -2,8 +2,8 @@ import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Title } from 'modules/shared/ui/Common/Title'
-import { MotionCard } from 'modules/motions/ui/MotionCard'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
+import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
 import type { Motion } from 'modules/motions/types'
 import { standardFetcher } from 'modules/shared/utils/standardFetcher'
@@ -23,7 +23,7 @@ export default function HomePage() {
       {!initialLoading && data && (
         <MotionsGrid>
           {data.motions.map((motion, i) => (
-            <MotionCard key={i} motion={motion} />
+            <MotionCardPreview key={i} motion={motion} />
           ))}
         </MotionsGrid>
       )}

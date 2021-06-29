@@ -1,4 +1,4 @@
-import { Chains, ChainId, parseChainId } from './chains'
+import { Chains, ChainId, parseChainId } from '../blockChain/chains'
 
 export enum TOKENS {
   // wsteth = 'wsteth',
