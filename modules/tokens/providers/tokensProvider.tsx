@@ -9,14 +9,14 @@ import React, {
   createContext,
 } from 'react'
 import { useTokenRpcSwr } from '../hooks/useTokenRpcSwr'
-import { useCurrentChain } from '../../blockChain/hooks/useCurrentChain'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import {
   ContractByToken,
   getTokenContractWeb3,
   getTokenContractRpc,
 } from '../utils/getTokenContract'
 import { TOKENS } from '../tokens'
-import { ChainId } from '../../blockChain/chains'
+import { ChainId } from 'modules/blockChain/chains'
 
 type ProviderProps = {
   children: React.ReactNode

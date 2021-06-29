@@ -1,10 +1,13 @@
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Button } from '@lidofinance/lido-ui'
 import { Card } from 'modules/shared/ui/Common/Card'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+import { MotionDate } from '../MotionDate'
+import { MotionObjectionsBar } from '../MotionObjectionsBar'
 import {
   InfoTitle,
   InfoText,
@@ -13,11 +16,9 @@ import {
   Column,
   Actions,
 } from './MotionCardDetailedStyle'
-import { MotionDate } from '../MotionDate'
 
 import type { Motion } from 'modules/motions/types'
 import { connectEasyTrackMock } from 'modules/blockChain/contracts'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 type Props = {
   motion: Motion
@@ -35,7 +36,7 @@ export function MotionCardDetailed({ motion }: Props) {
         chainId: currentChainId,
         library: library.getSigner(),
       })
-      const res = await contract.objectToMotion(motion.id)
+      const res = await contract.objectToMotion(motion.id, { gasLimit: 21000 })
       console.log(res)
     } catch (err) {
       console.error(err)
@@ -57,10 +58,8 @@ export function MotionCardDetailed({ motion }: Props) {
 
           <InfoTitle children="Objections" />
           <InfoText>
-            Threshold: {motion.objectionsThreshold / 100}%
-            <br />
-            Amount: {motion.objectionsAmount} (
-            {motion.objectionsAmountPct / 100}%)
+            <div />
+            {/* <MotionObjectionsBar motion={motion} /> */}
           </InfoText>
 
           <Actions>
