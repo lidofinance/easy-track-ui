@@ -13,3 +13,10 @@ export type Motion = {
   evmScriptHash: string
   evmScriptCallData: string
 }
+
+export enum MotionStatus {
+  Ongoing = 'Ongoing',
+  Pending = 'Pending',
+  Enacted = 'Enacted',
+  Canceled = 'Canceled',
+}

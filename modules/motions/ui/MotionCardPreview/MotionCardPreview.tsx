@@ -4,6 +4,7 @@ import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 
 import { Text } from 'modules/shared/ui/Common/Text'
 import { MotionDate } from '../MotionDate'
+import { MotionObjectionsBar } from '../MotionObjectionsBar'
 import {
   Wrap,
   Row,
@@ -12,9 +13,10 @@ import {
   FieldText,
 } from './MotionCardPreviewStyle'
 
+import * as urls from 'modules/shared/utils/urls'
 import type { Motion } from 'modules/motions/types'
 import { getMotionType } from 'modules/motions/utils/getMotionType'
-import * as urls from 'modules/shared/utils/urls'
+import { getMotionStatus } from 'modules/motions/utils/getMotionStatus'
 
 type FieldProps = {
   label: React.ReactNode
@@ -51,16 +53,16 @@ export function MotionCardPreview({ motion }: Props) {
         <AddressWithPop diameter={20} symbols={4} address={motion.creator} />
       </Row>
 
+      <Field label="Status" text={getMotionStatus(motion)} />
       <Field label="Snapshot" text={motion.snapshotBlock} />
-      <Field label="ObjectionsThreshold" text={motion.objectionsThreshold} />
-      <Field label="ObjectionsAmount" text={motion.objectionsAmount} />
-      <Field label="ObjectionsAmountPct" text={motion.objectionsAmountPct} />
       <Field label="EvmScriptHash" text={motion.evmScriptHash} isHoverable />
       <Field label="EvmScriptCallData" text={motion.evmScriptCallData} />
 
       <Row>
         <MotionDate fontSize={14} fontWeight={500} motion={motion} />
       </Row>
+
+      <MotionObjectionsBar motion={motion} />
     </Wrap>
   )
 }
