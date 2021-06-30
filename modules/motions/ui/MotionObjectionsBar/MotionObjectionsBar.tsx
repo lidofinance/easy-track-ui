@@ -1,4 +1,3 @@
-// import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther } from '@ethersproject/units'
 import { useMemo } from 'react'
 import { useLDOTotalSupply } from 'modules/tokens/hooks/useLDOTotalSupply'
@@ -7,7 +6,6 @@ import { Text } from 'modules/shared/ui/Common/Text'
 import { Bar, Progress, Row, Col } from './MotionObjectionsBarStyle'
 
 import type { Motion } from 'modules/motions/types'
-import { formatToken } from 'modules/tokens/utils/formatToken'
 
 type Props = {
   motion: Motion
@@ -24,13 +22,15 @@ export function MotionObjectionsBar({ motion }: Props) {
 
     const thresholdPct = motion.objectionsThreshold / 100
     const totalSupplyNumber = Number(formatEther(totalSupply))
+    const objectionsAmount = Number(formatEther(motion.objectionsAmount))
+    const thresholdAmount = (totalSupplyNumber * thresholdPct) / 100
+    const objectionsPct = (objectionsAmount / thresholdAmount) * 100
 
     return {
       thresholdPct,
-      thresholdAmount: totalSupplyNumber * thresholdPct,
-      objectionsPct: motion.objectionsAmountPct / 100,
-      objectionsAmount: formatEther(motion.objectionsAmount),
-      totalSupply: formatToken(totalSupply, 'LDO'),
+      thresholdAmount,
+      objectionsPct,
+      objectionsAmount,
     }
   }, [isLoadingSupply, motion, totalSupply])
 
@@ -39,12 +39,12 @@ export function MotionObjectionsBar({ motion }: Props) {
   return (
     <>
       <Bar>
-        <Progress style={{ width: `${formatted.objectionsPct * 100}%` }} />
+        <Progress style={{ width: `${formatted.objectionsPct}%` }} />
       </Bar>
       <Row>
         <Col>
           <Text size={14} weight={400}>
-            {formatted.objectionsPct}% / {motion.objectionsAmount} LDO
+            {formatted.objectionsPct}% / {formatted.objectionsAmount} LDO
           </Text>
         </Col>
         <Col>

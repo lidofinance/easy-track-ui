@@ -15,7 +15,7 @@ import {
 
 import * as urls from 'modules/shared/utils/urls'
 import type { Motion } from 'modules/motions/types'
-import { getMotionType } from 'modules/motions/utils/getMotionType'
+import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { getMotionStatus } from 'modules/motions/utils/getMotionStatus'
 
 type FieldProps = {
@@ -48,7 +48,7 @@ export function MotionCardPreview({ motion }: Props) {
     <Wrap onClick={goToDetails}>
       <Row>
         <Text size={14} weight={500}>
-          #{motion.id} {getMotionType(motion.evmScriptFactory)}
+          #{motion.id} {getMotionTypeByScriptFactory(motion.evmScriptFactory)}
         </Text>
         <AddressWithPop diameter={20} symbols={4} address={motion.creator} />
       </Row>

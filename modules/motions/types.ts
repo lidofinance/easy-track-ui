@@ -1,17 +1,22 @@
-import type { ScriptFactory } from './utils/getMotionType'
+import type { BigNumber } from 'ethers'
 
 export type Motion = {
   id: number
-  evmScriptFactory: ScriptFactory
+  evmScriptFactory: string
   creator: string
   duration: number
   startDate: number
   snapshotBlock: number
   objectionsThreshold: number
-  objectionsAmount: number
+  objectionsAmount: BigNumber
   objectionsAmountPct: number
   evmScriptHash: string
   evmScriptCallData: string
+}
+
+export enum MotionType {
+  NodeOperator = 'NodeOperator',
+  LEGO = 'LEGO',
 }
 
 export enum MotionStatus {

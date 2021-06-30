@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
-import { useWeb3React } from '@web3-react/core'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useMotionContractGetter } from 'modules/motions/hooks/useMotionContractGetter'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -19,9 +18,9 @@ import {
 } from './MotionCardDetailedStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
-import { connectEasyTrackMock } from 'modules/blockChain/contracts'
-import { getMotionType } from 'modules/motions/utils/getMotionType'
+import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { getMotionStatus } from 'modules/motions/utils/getMotionStatus'
+import { toastError } from 'modules/toasts'
 
 type Props = {
   motion: Motion
@@ -33,9 +32,8 @@ export function MotionCardDetailed({ motion }: Props) {
   const openConnectWalletModal = useConnectWalletModal()
   const motionStatus = getMotionStatus(motion)
 
-  const { library } = useWeb3React()
-  const currentChainId = useCurrentChain()
-  const gasLimit = 21000
+  const gasLimit = 120000
+  const getContract = useMotionContractGetter()
 
   const checkWalletConnect = useCallback(() => {
     if (!isWalletConnected) {
@@ -45,25 +43,24 @@ export function MotionCardDetailed({ motion }: Props) {
     return true
   }, [isWalletConnected, openConnectWalletModal])
 
-  const getContract = useCallback(
-    () =>
-      connectEasyTrackMock({
-        chainId: currentChainId,
-        library: library.getSigner(),
-      }),
-    [currentChainId, library],
-  )
-
   const handleSubmitObjection = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
       const contract = getContract()
+      const canObject = await contract.canObjectToMotion(
+        motion.id,
+        walletAddress as string,
+      )
+      if (!canObject) {
+        toastError('You cannot submit objection to this motion')
+        return
+      }
       const res = await contract.objectToMotion(motion.id, { gasLimit })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, getContract, motion.id])
+  }, [checkWalletConnect, getContract, motion.id, walletAddress])
 
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
@@ -92,7 +89,9 @@ export function MotionCardDetailed({ motion }: Props) {
       <MainBody>
         <Card>
           <InfoTitle children="Type" />
-          <InfoText>{getMotionType(motion.evmScriptFactory)}</InfoText>
+          <InfoText>
+            {getMotionTypeByScriptFactory(motion.evmScriptFactory)}
+          </InfoText>
 
           <InfoTitle children="Description" />
           <InfoText style={{ wordBreak: 'break-all' }}>

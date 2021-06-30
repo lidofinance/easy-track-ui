@@ -31,7 +31,7 @@ export function formatMotionData(rawMotionData: RawMotionData): Motion {
     startDate: Number(rawMotionData[4]),
     snapshotBlock: Number(rawMotionData[5]),
     objectionsThreshold: Number(rawMotionData[6]),
-    objectionsAmount: Number(rawMotionData[7]),
+    objectionsAmount: rawMotionData[7],
     objectionsAmountPct: Number(rawMotionData[8]),
     evmScriptHash: rawMotionData[9],
     evmScriptCallData: rawMotionData[10],
