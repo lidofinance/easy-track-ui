@@ -1,6 +1,7 @@
 import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
+import { Container } from '@lidofinance/lido-ui'
 import { Title } from 'modules/shared/ui/Common/Title'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
@@ -17,7 +18,7 @@ export default function HomePage() {
   )
 
   return (
-    <>
+    <Container as="main" size="full">
       <Title>Active Motions</Title>
       {initialLoading && <div>Loading...</div>}
       {!initialLoading && data && (
@@ -27,6 +28,6 @@ export default function HomePage() {
           ))}
         </MotionsGrid>
       )}
-    </>
+    </Container>
   )
 }

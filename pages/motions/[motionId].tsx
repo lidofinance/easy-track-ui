@@ -2,6 +2,7 @@ import { useRouter } from 'next/dist/client/router'
 import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
+import { Container } from '@lidofinance/lido-ui'
 import { Title } from 'modules/shared/ui/Common/Title'
 import { MotionCardDetailed } from 'modules/motions/ui/MotionCardDetailed'
 
@@ -27,9 +28,9 @@ export default function MotionDetailsPage() {
   }
 
   return (
-    <>
+    <Container as="main" size="full">
       <Title>Motion #{motionId}</Title>
       <MotionCardDetailed motion={data.motion} />
-    </>
+    </Container>
   )
 }

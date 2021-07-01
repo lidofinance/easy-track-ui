@@ -5,7 +5,8 @@ import {
   EasyTrackMockAbi,
   NodeOperatorsAbi__factory,
   EasyTrackMockAbi__factory,
-  Erc20Abi__factory,
+  // Erc20Abi__factory,
+  MiniMeTokenAbi__factory,
 } from 'generated'
 
 export const connectNodeOperators = createContractConnector({
@@ -35,6 +36,6 @@ export const connectEasyTrack = createContractConnector({
 // })
 
 export const connectLDO = createContractConnector({
-  factory: Erc20Abi__factory,
+  factory: MiniMeTokenAbi__factory,
   address: getTokenAddresses(TOKENS.ldo),
 })

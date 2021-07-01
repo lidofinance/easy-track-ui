@@ -1,7 +1,10 @@
+import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useMotionContractGetter } from 'modules/motions/hooks/useMotionContractGetter'
+import { useMotionContractWeb3 } from 'modules/motions/hooks/useMotionContract'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
+import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
+import { useTokenRpcSwr } from 'modules/tokens/hooks/useTokenRpcSwr'
 
 import { Button } from '@lidofinance/lido-ui'
 import { Card } from 'modules/shared/ui/Common/Card'
@@ -21,6 +24,7 @@ import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { getMotionStatus } from 'modules/motions/utils/getMotionStatus'
 import { toastError } from 'modules/toasts'
+import { TOKENS } from 'modules/tokens/tokens'
 
 type Props = {
   motion: Motion
@@ -33,7 +37,28 @@ export function MotionCardDetailed({ motion }: Props) {
   const motionStatus = getMotionStatus(motion)
 
   const gasLimit = 120000
-  const getContract = useMotionContractGetter()
+
+  const motionContract = useMotionContractWeb3()
+
+  const balanceAtData = useTokenRpcSwr(
+    TOKENS.ldo,
+    walletAddress ? 'balanceOfAt' : null,
+    String(walletAddress),
+    motion.snapshotBlock,
+  )
+  const balanceAt = balanceAtData.data && formatEther(balanceAtData.data)
+
+  const canObjectData = useContractRpcSwr(
+    motionContract,
+    walletAddress ? 'canObjectToMotion' : null,
+    motion.id,
+    walletAddress as string,
+  )
+  const canObject = canObjectData.data && canObjectData.data
+
+  const isAlreadyObjected = Number(balanceAt) > 0 && !canObject
+  const isLoadingActions =
+    canObjectData.initialLoading || balanceAtData.initialLoading
 
   const checkWalletConnect = useCallback(() => {
     if (!isWalletConnected) {
@@ -46,43 +71,36 @@ export function MotionCardDetailed({ motion }: Props) {
   const handleSubmitObjection = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const contract = getContract()
-      const canObject = await contract.canObjectToMotion(
-        motion.id,
-        walletAddress as string,
-      )
       if (!canObject) {
         toastError('You cannot submit objection to this motion')
         return
       }
-      const res = await contract.objectToMotion(motion.id, { gasLimit })
+      const res = await motionContract.objectToMotion(motion.id, { gasLimit })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, getContract, motion.id, walletAddress])
+  }, [checkWalletConnect, motionContract, motion.id, canObject])
 
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const contract = getContract()
-      const res = await contract.enactMotion(motion.id, { gasLimit })
+      const res = await motionContract.enactMotion(motion.id, { gasLimit })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, getContract, motion.id])
+  }, [checkWalletConnect, motionContract, motion.id])
 
   const handleCancel = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const contract = getContract()
-      const res = await contract.cancelMotion(motion.id, { gasLimit })
+      const res = await motionContract.cancelMotion(motion.id, { gasLimit })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, getContract, motion.id])
+  }, [checkWalletConnect, motionContract, motion.id])
 
   return (
     <Layout>
@@ -109,24 +127,60 @@ export function MotionCardDetailed({ motion }: Props) {
             <MotionObjectionsBar motion={motion} />
           </InfoText>
 
-          <Actions>
-            <Button
-              size="sm"
-              children="Submit objection"
-              onClick={handleSubmitObjection}
-            />
-            {motionStatus === MotionStatus.Pending && (
-              <Button size="sm" children="Enact" onClick={handleEnact} />
-            )}
-            {isAuthorConnected && (
-              <Button
-                variant="translucent"
-                size="sm"
-                children="Cancel"
-                onClick={handleCancel}
-              />
-            )}
-          </Actions>
+          {!isWalletConnected && (
+            <>
+              <InfoTitle children="Actions" />
+              <InfoText children="Connect your wallet to interact with this motion" />
+            </>
+          )}
+
+          {isWalletConnected && isLoadingActions && (
+            <>
+              <InfoTitle children="Actions" />
+              <InfoText children="Loading..." />
+            </>
+          )}
+
+          {isWalletConnected && !isLoadingActions && (
+            <>
+              <InfoTitle children="Actions" />
+              <InfoText>
+                {isAlreadyObjected && (
+                  <>
+                    You have objected this motion with <b>{balanceAt}</b> LDO
+                  </>
+                )}
+                {canObject && !isAlreadyObjected && (
+                  <>
+                    You can object this motion with <b>{balanceAt}</b> LDO
+                  </>
+                )}
+                {!canObject && !isAlreadyObjected && (
+                  <>You didn’t have LDO when the motion started to object it</>
+                )}
+              </InfoText>
+              <Actions>
+                {canObject && (
+                  <Button
+                    size="sm"
+                    children="Submit objection"
+                    onClick={handleSubmitObjection}
+                  />
+                )}
+                {motionStatus === MotionStatus.Pending && (
+                  <Button size="sm" children="Enact" onClick={handleEnact} />
+                )}
+                {isAuthorConnected && (
+                  <Button
+                    variant="translucent"
+                    size="sm"
+                    children="Cancel"
+                    onClick={handleCancel}
+                  />
+                )}
+              </Actions>
+            </>
+          )}
         </Card>
       </MainBody>
 

@@ -70,7 +70,7 @@ const getTokenProvider = <T extends TOKENS>(token: T) => {
       return mutate(undefined, true)
     }, [mutate])
 
-    const subscribeToUpdates = useCallback(() => {
+    useEffect(() => {
       if (!account || !library || !contractWeb3) return
 
       try {
@@ -88,8 +88,6 @@ const getTokenProvider = <T extends TOKENS>(token: T) => {
         console.warn('Cannot subscribe to Transfer event')
       }
     }, [account, library, contractWeb3, invalidateBalance])
-
-    useEffect(subscribeToUpdates, [subscribeToUpdates])
 
     const value = useMemo(
       () => ({

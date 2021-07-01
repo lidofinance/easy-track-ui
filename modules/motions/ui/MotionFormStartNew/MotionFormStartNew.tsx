@@ -1,16 +1,16 @@
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMotionContractGetter } from 'modules/motions/hooks/useMotionContractGetter'
+import { useMotionContractWeb3 } from 'modules/motions/hooks/useMotionContract'
 
 import { Button } from '@lidofinance/lido-ui'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Form } from 'modules/shared/ui/Controls/Form'
-import { Wrap, Fieldset } from './CreateMotionFormStyle'
+import { Fieldset } from './CreateMotionFormStyle'
 
 import * as formLEGO from './Parts/StartNewLEGO'
 import * as formNodeOperators from './Parts/StartNewNodeOperators'
 
 import { MotionType } from '../../types'
-import { useCallback } from 'react'
 
 type FormData = {
   motionType: MotionType | null
@@ -41,7 +41,7 @@ export function MotionFormStartNew() {
     },
   })
 
-  const getContract = useMotionContractGetter()
+  const motionContract = useMotionContractWeb3()
 
   const handleSubmit = useCallback(
     e => {
@@ -49,10 +49,10 @@ export function MotionFormStartNew() {
       if (!motionType) return
       MotionFormParts[motionType].onSubmit({
         formData: e[motionType],
-        contract: getContract(),
+        contract: motionContract,
       })
     },
-    [formMethods, getContract],
+    [formMethods, motionContract],
   )
 
   const motionType = formMethods.watch('motionType')
@@ -61,18 +61,16 @@ export function MotionFormStartNew() {
     : null
 
   return (
-    <Wrap>
-      <Form formMethods={formMethods} onSubmit={handleSubmit}>
-        <Fieldset>
-          <SelectControl name="motionType" label="Motion type">
-            {Object.values(MotionType).map(type => (
-              <Option key={type} value={type} children={type} />
-            ))}
-          </SelectControl>
-        </Fieldset>
-        {CurrentFormPart && <CurrentFormPart />}
-        {motionType && <Button type="submit" fullwidth children="Submit" />}
-      </Form>
-    </Wrap>
+    <Form formMethods={formMethods} onSubmit={handleSubmit}>
+      <Fieldset>
+        <SelectControl name="motionType" label="Motion type">
+          {Object.values(MotionType).map(type => (
+            <Option key={type} value={type} children={type} />
+          ))}
+        </SelectControl>
+      </Fieldset>
+      {CurrentFormPart && <CurrentFormPart />}
+      {motionType && <Button type="submit" fullwidth children="Submit" />}
+    </Form>
   )
 }
