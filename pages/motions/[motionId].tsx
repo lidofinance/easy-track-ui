@@ -20,15 +20,23 @@ export default function MotionDetailsPage() {
   )
 
   if (initialLoading) {
-    return 'Loading...'
+    return (
+      <Container as="main" size="content">
+        Loading...
+      </Container>
+    )
   }
 
   if (!data?.motion) {
-    return 'Nothing found'
+    return (
+      <Container as="main" size="content">
+        Nothing found
+      </Container>
+    )
   }
 
   return (
-    <Container as="main" size="full">
+    <Container as="main" size="content">
       <Title>Motion #{motionId}</Title>
       <MotionCardDetailed motion={data.motion} />
     </Container>
