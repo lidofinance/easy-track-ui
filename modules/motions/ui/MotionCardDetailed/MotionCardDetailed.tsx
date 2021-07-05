@@ -50,6 +50,15 @@ export function MotionCardDetailed({ motion }: Props) {
   )
   const balanceAt = balanceAtData.data && formatEther(balanceAtData.data)
 
+  const isAlreadyObjectedData = useContractRpcSwr(
+    motionContract,
+    walletAddress ? 'objections' : null,
+    motion.id,
+    walletAddress as string,
+  )
+  const isAlreadyObjected =
+    isAlreadyObjectedData.data && isAlreadyObjectedData.data
+
   const canObjectData = useContractRpcSwr(
     motionContract,
     walletAddress ? 'canObjectToMotion' : null,
@@ -58,7 +67,6 @@ export function MotionCardDetailed({ motion }: Props) {
   )
   const canObject = canObjectData.data && canObjectData.data
 
-  const isAlreadyObjected = Number(balanceAt) > 0 && !canObject
   const isLoadingActions =
     canObjectData.initialLoading || balanceAtData.initialLoading
 
