@@ -1,3 +1,4 @@
+// import ethers from 'ethers'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { Fieldset } from '../CreateMotionFormStyle'
 
@@ -5,21 +6,19 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 
 export const formParts = createMotionFormPart({
-  motionType: MotionType.NodeOperatorLimit,
+  motionType: MotionType.RewardProgramTopUp,
   onSubmit: async ({ evmScriptFactory, formData, contract }) => {
-    console.log('Node Operator Increase Limit', formData, contract)
-    await contract.createMotion(evmScriptFactory, [Number(formData.newLimit)], {
-      gasLimit: 120000,
-    })
+    console.log('RewardProgramTopUp', formData, contract)
+    await contract.createMotion(evmScriptFactory, [0, 1, 2])
   },
   getDefaultFormData: () => ({
-    newLimit: '',
+    test: '',
   }),
   getComponent: ({ getFieldName }) =>
-    function StartNewMotionNodeOperators() {
+    function StartNewMotionMotionFormLego() {
       return (
         <Fieldset>
-          <InputControl name={getFieldName('newLimit')} label="New limit" />
+          <InputControl name={getFieldName('test')} label="test" />
         </Fieldset>
       )
     },

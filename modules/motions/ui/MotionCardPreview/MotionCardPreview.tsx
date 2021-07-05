@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
-import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
+import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { MotionDate } from '../MotionDate'
 import { MotionObjectionsBar } from '../MotionObjectionsBar'
@@ -44,11 +45,16 @@ export function MotionCardPreview({ motion }: Props) {
   const goToDetails = useCallback(() => {
     router.push(urls.motionDetails(motion.id))
   }, [router, motion.id])
+  const currentChainId = useCurrentChain()
   return (
     <Wrap onClick={goToDetails}>
       <Row>
         <Text size={14} weight={500}>
-          #{motion.id} {getMotionTypeByScriptFactory(motion.evmScriptFactory)}
+          #{motion.id}{' '}
+          {getMotionTypeByScriptFactory(
+            currentChainId,
+            motion.evmScriptFactory,
+          )}
         </Text>
         <AddressWithPop diameter={20} symbols={4} address={motion.creator} />
       </Row>
@@ -56,7 +62,6 @@ export function MotionCardPreview({ motion }: Props) {
       <Field label="Status" text={getMotionStatus(motion)} />
       <Field label="Snapshot" text={motion.snapshotBlock} />
       <Field label="EvmScriptHash" text={motion.evmScriptHash} isHoverable />
-      <Field label="EvmScriptCallData" text={motion.evmScriptCallData} />
 
       <Row>
         <MotionDate fontSize={14} fontWeight={500} motion={motion} />

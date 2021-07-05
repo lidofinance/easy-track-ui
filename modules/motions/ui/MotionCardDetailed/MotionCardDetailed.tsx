@@ -4,6 +4,7 @@ import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useMotionContractWeb3 } from 'modules/motions/hooks/useMotionContract'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useTokenRpcSwr } from 'modules/tokens/hooks/useTokenRpcSwr'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -35,6 +36,7 @@ export function MotionCardDetailed({ motion }: Props) {
   const isAuthorConnected = walletAddress === motion.creator
   const openConnectWalletModal = useConnectWalletModal()
   const motionStatus = getMotionStatus(motion)
+  const currentChainId = useCurrentChain()
 
   const gasLimit = 120000
 
@@ -85,7 +87,9 @@ export function MotionCardDetailed({ motion }: Props) {
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const res = await motionContract.enactMotion(motion.id, { gasLimit })
+      const res = await motionContract.enactMotion(motion.id, [1], {
+        gasLimit,
+      })
       console.log(res)
     } catch (err) {
       console.error(err)
@@ -108,7 +112,10 @@ export function MotionCardDetailed({ motion }: Props) {
         <Card>
           <InfoTitle children="Type" />
           <InfoText>
-            {getMotionTypeByScriptFactory(motion.evmScriptFactory)}
+            {getMotionTypeByScriptFactory(
+              currentChainId,
+              motion.evmScriptFactory,
+            )}
           </InfoText>
 
           <InfoTitle children="Description" />
@@ -118,8 +125,6 @@ export function MotionCardDetailed({ motion }: Props) {
             Factory: {motion.evmScriptFactory}
             <br />
             Hash: {motion.evmScriptHash}
-            <br />
-            Call data: {motion.evmScriptCallData}
           </InfoText>
 
           <InfoTitle children="Objections" />

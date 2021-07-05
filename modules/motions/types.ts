@@ -14,8 +14,11 @@ export type Motion = {
 }
 
 export enum MotionType {
-  NodeOperator = 'NodeOperator',
-  LEGO = 'LEGO',
+  NodeOperatorLimit = 'NodeOperatorLimit',
+  LEGOTopUp = 'LEGOTopUp',
+  RewardProgramAdd = 'RewardProgramAdd',
+  RewardProgramRemove = 'RewardProgramRemove',
+  RewardProgramTopUp = 'RewardProgramTopUp',
 }
 
 export enum MotionStatus {

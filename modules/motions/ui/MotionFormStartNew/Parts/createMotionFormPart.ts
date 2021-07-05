@@ -1,15 +1,13 @@
-import { MotionType } from '../../types'
-import { getScriptFactoryByMotionType } from '../../utils/getMotionType'
+import { MotionType } from 'modules/motions/types'
 import type { ContractEasyTrack } from 'modules/blockChain/contracts'
 
 type Args<FormData> = {
   motionType: MotionType
 
-  getSubmitter: (args: {
-    evmScriptFactory: string
-  }) => (args: {
+  onSubmit: (args: {
     formData: FormData
     contract: ContractEasyTrack
+    evmScriptFactory: string
   }) => Promise<void>
 
   getDefaultFormData: () => FormData
@@ -21,14 +19,13 @@ type Args<FormData> = {
 
 export function createMotionFormPart<FormData>({
   motionType,
-  getSubmitter,
+  onSubmit,
   getComponent,
   getDefaultFormData,
 }: Args<FormData>) {
   const getFieldName = (name: keyof FormData) => `[${motionType}][${name}]`
-  const evmScriptFactory = getScriptFactoryByMotionType(motionType)
   return {
-    onSubmit: getSubmitter({ evmScriptFactory }),
+    onSubmit,
     getDefaultFormData,
     Component: getComponent({ getFieldName }),
   }

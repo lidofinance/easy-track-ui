@@ -2,29 +2,27 @@
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { Fieldset } from '../CreateMotionFormStyle'
 
-import { MotionType } from '../../../types'
-import { createMotionFormPart } from '../createMotionFormPart'
+import { MotionType } from 'modules/motions/types'
+import { createMotionFormPart } from './createMotionFormPart'
 
 export const formParts = createMotionFormPart({
-  motionType: MotionType.LEGO,
-  getSubmitter:
-    ({ evmScriptFactory }) =>
-    async ({ formData, contract }) => {
-      console.log('Lego', formData, contract)
+  motionType: MotionType.LEGOTopUp,
+  onSubmit: async ({ evmScriptFactory, formData, contract }) => {
+    console.log('Lego Top Up', formData, contract)
 
-      // contract.encode
+    // contract.encode
 
-      // const encoded = contract.interface.encodeFunctionData('createMotion', [
-      //   '123',
-      //   '12',
-      // ])
-      // console.log(encoded)
+    // const encoded = contract.interface.encodeFunctionData('createMotion', [
+    //   '123',
+    //   '12',
+    // ])
+    // console.log(encoded)
 
-      // const iface = new ethers.utils.Interface(abi);
-      // const callData = iface.functions.myFunction.encode(…args);
+    // const iface = new ethers.utils.Interface(abi);
+    // const callData = iface.functions.myFunction.encode(…args);
 
-      await contract.createMotion(evmScriptFactory, [0, 1, 2])
-    },
+    await contract.createMotion(evmScriptFactory, [0, 1, 2])
+  },
   getDefaultFormData: () => ({
     token: '',
   }),
@@ -37,5 +35,3 @@ export const formParts = createMotionFormPart({
       )
     },
 })
-
-export type FormData = ReturnType<typeof formParts.getDefaultFormData>
