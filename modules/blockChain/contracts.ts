@@ -2,9 +2,9 @@ import { Chains } from 'modules/blockChain/chains'
 import { createContractConnector } from './utils/createContractConnector'
 import { getTokenAddresses, TOKENS } from '../tokens/tokens'
 import {
-  EasyTrackMockAbi,
+  EasyTrackAbi,
+  EasyTrackAbi__factory,
   NodeOperatorsAbi__factory,
-  EasyTrackMockAbi__factory,
   // Erc20Abi__factory,
   MiniMeTokenAbi__factory,
 } from 'generated'
@@ -16,12 +16,13 @@ export const connectNodeOperators = createContractConnector({
   },
 })
 
-export type ContractEasyTrack = EasyTrackMockAbi
+export type ContractEasyTrack = EasyTrackAbi
 
 export const connectEasyTrack = createContractConnector({
-  factory: EasyTrackMockAbi__factory,
+  factory: EasyTrackAbi__factory,
   address: {
-    [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c',
+    [Chains.Rinkeby]: '0x4e442D49a4B335E0E3B6Cdad2E77A9AaA6823330',
+    // [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c', // EasyTrackMock
   },
 })
 

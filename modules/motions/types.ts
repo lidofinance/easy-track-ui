@@ -11,7 +11,6 @@ export type Motion = {
   objectionsAmount: BigNumber
   objectionsAmountPct: number
   evmScriptHash: string
-  evmScriptCallData: string
 }
 
 export enum MotionType {
