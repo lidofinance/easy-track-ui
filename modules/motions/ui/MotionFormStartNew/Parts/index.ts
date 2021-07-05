@@ -6,7 +6,7 @@ import * as formRewardProgramAdd from './StartNewRewardProgramAdd'
 import * as formRewardProgramRemove from './StartNewRewardProgramRemove'
 import * as formRewardProgramTopUp from './StartNewRewardProgramTopUp'
 
-export const FormParts = {
+export const formParts = {
   [MotionType.NodeOperatorLimit]: formNodeOperators.formParts,
   [MotionType.LEGOTopUp]: formLEGO.formParts,
   [MotionType.RewardProgramAdd]: formRewardProgramAdd.formParts,
@@ -17,11 +17,11 @@ export const FormParts = {
 export type FormData = {
   motionType: MotionType | null
 } & {
-  [key in MotionType]: ReturnType<typeof FormParts[key]['getDefaultFormData']>
+  [key in MotionType]: ReturnType<typeof formParts[key]['getDefaultFormData']>
 }
 
 export const getDefaultFormPartsData = () => {
-  return Object.entries(FormParts).reduce(
+  return Object.entries(formParts).reduce(
     (res, [type, part]) => ({
       ...res,
       [type]: part.getDefaultFormData(),
