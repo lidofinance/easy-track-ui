@@ -38,8 +38,6 @@ export function MotionCardDetailed({ motion }: Props) {
   const motionStatus = getMotionStatus(motion)
   const currentChainId = useCurrentChain()
 
-  const gasLimit = 120000
-
   const motionContract = useMotionContractWeb3()
 
   const balanceAtData = useTokenRpcSwr(
@@ -78,6 +76,7 @@ export function MotionCardDetailed({ motion }: Props) {
     return true
   }, [isWalletConnected, openConnectWalletModal])
 
+  // Submit Objection
   const handleSubmitObjection = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
@@ -85,29 +84,44 @@ export function MotionCardDetailed({ motion }: Props) {
         toastError('You cannot submit objection to this motion')
         return
       }
-      const res = await motionContract.objectToMotion(motion.id, { gasLimit })
+      const res = await motionContract.objectToMotion(motion.id, {
+        gasLimit: 120000,
+      })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
   }, [checkWalletConnect, motionContract, motion.id, canObject])
 
+  // Enact Motion
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const res = await motionContract.enactMotion(motion.id, [1], {
-        gasLimit,
+      const filter = motionContract.filters.MotionCreated(motion.id)
+      const event = (await motionContract.queryFilter(filter))[0]
+
+      if (!event.decode) {
+        throw new Error('Motion creation event parsing error')
+      }
+
+      const callData = event.decode(event.data, event.topics)._evmScriptCallData
+      const res = await motionContract.enactMotion(motion.id, callData, {
+        gasLimit: 500000,
       })
+
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, motionContract, motion.id])
+  }, [checkWalletConnect, motion.id, motionContract])
 
+  // Cancel Motion
   const handleCancel = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const res = await motionContract.cancelMotion(motion.id, { gasLimit })
+      const res = await motionContract.cancelMotion(motion.id, {
+        gasLimit: 120000,
+      })
       console.log(res)
     } catch (err) {
       console.error(err)
