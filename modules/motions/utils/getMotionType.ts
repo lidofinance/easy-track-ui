@@ -7,6 +7,7 @@ export const MotionAddressesByType: Record<
   ChainId,
   Record<MotionType, string>
 > = {
+  // Mainnet
   [Chains.Mainnet]: {
     [MotionType.NodeOperatorLimit]: '0x01',
     [MotionType.LEGOTopUp]: '0x02',
@@ -14,6 +15,8 @@ export const MotionAddressesByType: Record<
     [MotionType.RewardProgramRemove]: '0x04',
     [MotionType.RewardProgramTopUp]: '0x05',
   } as const,
+
+  // Ropsten
   [Chains.Ropsten]: {
     [MotionType.NodeOperatorLimit]: '0x01',
     [MotionType.LEGOTopUp]: '0x02',
@@ -21,6 +24,8 @@ export const MotionAddressesByType: Record<
     [MotionType.RewardProgramRemove]: '0x04',
     [MotionType.RewardProgramTopUp]: '0x05',
   } as const,
+
+  // Rinkeby
   [Chains.Rinkeby]: {
     [MotionType.NodeOperatorLimit]:
       '0x6b59EcE035C876aA6eFE75E0702CFBdE9A535478',
@@ -31,6 +36,8 @@ export const MotionAddressesByType: Record<
     [MotionType.RewardProgramTopUp]:
       '0x9718e057cE4881Dbfb4929426DD2314C9656eD9f',
   } as const,
+
+  // Goerli
   [Chains.Goerli]: {
     [MotionType.NodeOperatorLimit]:
       '0x81C2F1f181496089c4b93a378fe68614F609EB05',
@@ -39,6 +46,8 @@ export const MotionAddressesByType: Record<
     [MotionType.RewardProgramRemove]: '0x04',
     [MotionType.RewardProgramTopUp]: '0x05',
   } as const,
+
+  // Kovan
   [Chains.Kovan]: {
     [MotionType.NodeOperatorLimit]: '0x01',
     [MotionType.LEGOTopUp]: '0x02',

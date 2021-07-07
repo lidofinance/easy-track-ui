@@ -5,15 +5,12 @@ export function getMotionStatus(motion: Motion) {
   const destination = (motion.startDate + motion.duration) * 1000
 
   if (now < destination) {
-    return MotionStatus.Ongoing
+    return MotionStatus.ACTIVE
   }
 
   if (destination <= now) {
-    return MotionStatus.Pending
+    return MotionStatus.PENDING
   }
 
-  // TODO:
-  // return 'Rejected'
-  // return 'Enacted'
-  // return 'Canceled'
+  return motion.status
 }

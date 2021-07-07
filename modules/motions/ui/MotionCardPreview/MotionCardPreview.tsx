@@ -17,7 +17,6 @@ import {
 import * as urls from 'modules/shared/utils/urls'
 import type { Motion } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
-import { getMotionStatus } from 'modules/motions/utils/getMotionStatus'
 
 type FieldProps = {
   label: React.ReactNode
@@ -42,10 +41,12 @@ type Props = {
 
 export function MotionCardPreview({ motion }: Props) {
   const router = useRouter()
+  const currentChainId = useCurrentChain()
+
   const goToDetails = useCallback(() => {
     router.push(urls.motionDetails(motion.id))
   }, [router, motion.id])
-  const currentChainId = useCurrentChain()
+
   return (
     <Wrap onClick={goToDetails}>
       <Row>
@@ -59,7 +60,7 @@ export function MotionCardPreview({ motion }: Props) {
         <AddressWithPop diameter={20} symbols={4} address={motion.creator} />
       </Row>
 
-      <Field label="Status" text={getMotionStatus(motion)} />
+      <Field label="Status" text={motion.status} />
       <Field label="Snapshot" text={motion.snapshotBlock} />
       <Field label="EvmScriptHash" text={motion.evmScriptHash} isHoverable />
 

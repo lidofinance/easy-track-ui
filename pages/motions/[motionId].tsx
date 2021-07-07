@@ -7,7 +7,7 @@ import { Title } from 'modules/shared/ui/Common/Title'
 import { MotionCardDetailed } from 'modules/motions/ui/MotionCardDetailed'
 
 import type { Motion } from 'modules/motions/types'
-import { standardFetcher } from 'modules/shared/utils/standardFetcher'
+import { fetcherStandard } from 'modules/shared/utils/fetcherStandard'
 import * as urlsApi from 'modules/shared/utils/urlsApi'
 
 export default function MotionDetailsPage() {
@@ -16,7 +16,7 @@ export default function MotionDetailsPage() {
   const motionId = Number(router.query.motionId)
   const { initialLoading, data } = useSWR<{ motion: Motion }>(
     urlsApi.motionDetails(motionId, currentChain),
-    standardFetcher,
+    fetcherStandard,
   )
 
   if (initialLoading) {

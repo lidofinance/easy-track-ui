@@ -5,16 +5,17 @@ export const DEFAULT_PARAMS = {
   },
 }
 
-type StandardFetcher = <T extends unknown>(
+type FetcherStandard = <T extends unknown>(
   url: string,
   params: RequestInit,
 ) => Promise<T>
 
-export const standardFetcher: StandardFetcher = async (
+export const fetcherStandard: FetcherStandard = async (
   url,
   params = DEFAULT_PARAMS,
 ) => {
   const response = await fetch(url, params)
+
   if (!response.ok) {
     const error = new Error('An error occurred while fetching the data.')
     throw error

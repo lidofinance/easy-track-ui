@@ -1,4 +1,4 @@
-import { toastEthereumError } from 'modules/toasts'
+import { toastError } from 'modules/toasts'
 import {
   default as useSWRSource,
   SWRResponse as SWRResponseSource,
@@ -21,7 +21,7 @@ export const useSWR = <Data = unknown, Error = unknown>(
   const result = useSWRSource(key, fetcher, {
     onError: error => {
       console.error(error)
-      toastEthereumError()
+      toastError(error)
     },
     errorRetryInterval: 10_000,
     focusThrottleInterval: 10_000,

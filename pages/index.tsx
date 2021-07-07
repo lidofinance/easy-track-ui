@@ -7,23 +7,23 @@ import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
 import type { Motion } from 'modules/motions/types'
-import { standardFetcher } from 'modules/shared/utils/standardFetcher'
+import { fetcherStandard } from 'modules/shared/utils/fetcherStandard'
 import * as urlsApi from 'modules/shared/utils/urlsApi'
 
 export default function HomePage() {
   const currentChain = useCurrentChain()
-  const { initialLoading, data } = useSWR<{ motions: Motion[] }>(
+  const { initialLoading, data: motions } = useSWR<Motion[]>(
     urlsApi.motionsListActive(currentChain),
-    standardFetcher,
+    fetcherStandard,
   )
 
   return (
     <Container as="main" size="full">
       <Title>Active Motions</Title>
       {initialLoading && <div>Loading...</div>}
-      {!initialLoading && data && (
+      {!initialLoading && motions && (
         <MotionsGrid>
-          {data.motions.map((motion, i) => (
+          {motions.map((motion, i) => (
             <MotionCardPreview key={i} motion={motion} />
           ))}
         </MotionsGrid>

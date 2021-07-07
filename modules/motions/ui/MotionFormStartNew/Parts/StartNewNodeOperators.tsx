@@ -16,6 +16,8 @@ export const formParts = createMotionFormPart({
     console.log('Node Operator Increase Limit', formData, contract)
     console.log(encodedCallData)
 
+    // contract.
+
     await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })

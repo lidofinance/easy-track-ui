@@ -23,7 +23,6 @@ import {
 
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
-import { getMotionStatus } from 'modules/motions/utils/getMotionStatus'
 import { toastError } from 'modules/toasts'
 import { TOKENS } from 'modules/tokens/tokens'
 
@@ -35,7 +34,6 @@ export function MotionCardDetailed({ motion }: Props) {
   const { walletAddress, isWalletConnected } = useWalletInfo()
   const isAuthorConnected = walletAddress === motion.creator
   const openConnectWalletModal = useConnectWalletModal()
-  const motionStatus = getMotionStatus(motion)
   const currentChainId = useCurrentChain()
 
   const motionContract = useMotionContractWeb3()
@@ -194,7 +192,7 @@ export function MotionCardDetailed({ motion }: Props) {
                     onClick={handleSubmitObjection}
                   />
                 )}
-                {motionStatus === MotionStatus.Pending && (
+                {motion.status === MotionStatus.PENDING && (
                   <Button size="sm" children="Enact" onClick={handleEnact} />
                 )}
                 {isAuthorConnected && (
@@ -214,7 +212,7 @@ export function MotionCardDetailed({ motion }: Props) {
       <Column>
         <Card>
           <InfoTitle children="Status" />
-          <InfoText>{motionStatus}</InfoText>
+          <InfoText>{motion.status}</InfoText>
         </Card>
         <Card>
           <InfoTitle children="Start – End" />
