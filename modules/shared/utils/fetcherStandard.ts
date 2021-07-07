@@ -7,7 +7,7 @@ export const DEFAULT_PARAMS = {
 
 type FetcherStandard = <T extends unknown>(
   url: string,
-  params: RequestInit,
+  params?: RequestInit,
 ) => Promise<T>
 
 export const fetcherStandard: FetcherStandard = async (
@@ -17,8 +17,7 @@ export const fetcherStandard: FetcherStandard = async (
   const response = await fetch(url, params)
 
   if (!response.ok) {
-    const error = new Error('An error occurred while fetching the data.')
-    throw error
+    throw new Error('An error occurred while fetching the data.')
   }
 
   const data = await response.json()

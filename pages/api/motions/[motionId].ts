@@ -11,9 +11,13 @@ export default createNextConnect().get(async (req, res) => {
     const library = getLibrary(chainId)
     const easyTracksContract = connectEasyTrack({ chainId, library })
     const motion = await easyTracksContract.getMotion(motionId)
-    res.json({ motion: formatMotionDataOnchain(motion) })
+    res.json(formatMotionDataOnchain(motion))
   } catch (e) {
-    console.log(e)
-    res.status(500).send({ error: 'Something went wrong!' })
+    if (e.reason === 'MOTION_NOT_FOUND') {
+      res.status(404).send({ error: 'Not found' })
+    } else {
+      console.log(e)
+      res.status(500).send({ error: 'Something went wrong!' })
+    }
   }
 })
