@@ -2,13 +2,16 @@ import type { BigNumber } from 'ethers'
 import type { PromiseValue } from 'type-fest'
 import type { EasyTrackAbi } from 'generated'
 
-export enum MotionType {
-  NodeOperatorLimit = 'NodeOperatorLimit',
-  LEGOTopUp = 'LEGOTopUp',
-  RewardProgramAdd = 'RewardProgramAdd',
-  RewardProgramRemove = 'RewardProgramRemove',
-  RewardProgramTopUp = 'RewardProgramTopUp',
-}
+export const MotionType = {
+  NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
+  LEGOTopUp: 'LEGOTopUp',
+  RewardProgramAdd: 'RewardProgramAdd',
+  RewardProgramRemove: 'RewardProgramRemove',
+  RewardProgramTopUp: 'RewardProgramTopUp',
+} as const
+// intentionally
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type MotionType = typeof MotionType[keyof typeof MotionType]
 
 export const MotionStatus = {
   ACTIVE: 'ACTIVE',
@@ -17,7 +20,6 @@ export const MotionStatus = {
   REJECTED: 'REJECTED',
   ENACTED: 'ENACTED',
 } as const
-
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type MotionStatus = typeof MotionStatus[keyof typeof MotionStatus]

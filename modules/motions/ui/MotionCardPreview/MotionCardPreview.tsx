@@ -6,6 +6,7 @@ import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { MotionDate } from '../MotionDate'
 import { MotionObjectionsBar } from '../MotionObjectionsBar'
+import { MotionDescription } from '../MotionDescription'
 import {
   Wrap,
   Row,
@@ -61,8 +62,14 @@ export function MotionCardPreview({ motion }: Props) {
       </Row>
 
       <Field label="Status" text={motion.status} />
-      <Field label="Snapshot" text={motion.snapshotBlock} />
-      <Field label="EvmScriptHash" text={motion.evmScriptHash} isHoverable />
+
+      <FieldWrap>
+        <Text
+          size={16}
+          weight={400}
+          children={<MotionDescription motion={motion} />}
+        />
+      </FieldWrap>
 
       <Row>
         <MotionDate fontSize={14} fontWeight={500} motion={motion} />

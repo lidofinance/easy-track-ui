@@ -1,7 +1,7 @@
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useMotionContractWeb3 } from 'modules/motions/hooks/useMotionContract'
+import { useContractMotionWeb3 } from 'modules/motions/hooks/useContractMotion'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
@@ -11,6 +11,7 @@ import { Button } from '@lidofinance/lido-ui'
 import { Card } from 'modules/shared/ui/Common/Card'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 import { MotionDate } from '../MotionDate'
+import { MotionDescription } from '../MotionDescription'
 import { MotionObjectionsBar } from '../MotionObjectionsBar'
 import {
   InfoTitle,
@@ -21,10 +22,11 @@ import {
   Actions,
 } from './MotionCardDetailedStyle'
 
+import { TOKENS } from 'modules/tokens/tokens'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
+import { getMotionCallData } from 'modules/motions/utils/getMotionCallData'
 import { toastError } from 'modules/toasts'
-import { TOKENS } from 'modules/tokens/tokens'
 
 type Props = {
   motion: Motion
@@ -35,8 +37,7 @@ export function MotionCardDetailed({ motion }: Props) {
   const isAuthorConnected = walletAddress === motion.creator
   const openConnectWalletModal = useConnectWalletModal()
   const currentChainId = useCurrentChain()
-
-  const motionContract = useMotionContractWeb3()
+  const motionContract = useContractMotionWeb3()
 
   const balanceAtData = useTokenRpcSwr(
     TOKENS.ldo,
@@ -95,18 +96,10 @@ export function MotionCardDetailed({ motion }: Props) {
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const filter = motionContract.filters.MotionCreated(motion.id)
-      const event = (await motionContract.queryFilter(filter))[0]
-
-      if (!event.decode) {
-        throw new Error('Motion creation event parsing error')
-      }
-
-      const callData = event.decode(event.data, event.topics)._evmScriptCallData
+      const callData = await getMotionCallData(motionContract, motion.id)
       const res = await motionContract.enactMotion(motion.id, callData, {
         gasLimit: 500000,
       })
-
       console.log(res)
     } catch (err) {
       console.error(err)
@@ -138,13 +131,12 @@ export function MotionCardDetailed({ motion }: Props) {
             )}
           </InfoText>
 
+          <InfoTitle children="Snapshot" />
+          <InfoText children={motion.snapshotBlock} />
+
           <InfoTitle children="Description" />
           <InfoText style={{ wordBreak: 'break-all' }}>
-            Snapshot: {motion.snapshotBlock}
-            <br />
-            Factory: {motion.evmScriptFactory}
-            <br />
-            Hash: {motion.evmScriptHash}
+            <MotionDescription motion={motion} />
           </InfoText>
 
           <InfoTitle children="Objections" />

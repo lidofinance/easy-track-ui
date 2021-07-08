@@ -1,4 +1,4 @@
-import type { ChainId } from 'modules/blockChain/chains'
+import type { Chains } from 'modules/blockChain/chains'
 
 export type EnvConfig = {
   defaultChain: string
@@ -6,6 +6,6 @@ export type EnvConfig = {
 }
 
 export type Config = {
-  defaultChain: ChainId
-  supportedChainIds: ChainId[]
+  defaultChain: Chains
+  supportedChainIds: Chains[]
 }

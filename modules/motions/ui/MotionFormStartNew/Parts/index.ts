@@ -7,7 +7,7 @@ import * as formRewardProgramRemove from './StartNewRewardProgramRemove'
 import * as formRewardProgramTopUp from './StartNewRewardProgramTopUp'
 
 export const formParts = {
-  [MotionType.NodeOperatorLimit]: formNodeOperators.formParts,
+  [MotionType.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
   [MotionType.LEGOTopUp]: formLEGO.formParts,
   [MotionType.RewardProgramAdd]: formRewardProgramAdd.formParts,
   [MotionType.RewardProgramRemove]: formRewardProgramRemove.formParts,

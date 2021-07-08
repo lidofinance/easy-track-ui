@@ -1,5 +1,5 @@
 import type { Signer, providers } from 'ethers'
-import { ChainId, getChainName } from 'modules/blockChain/chains'
+import { Chains, getChainName } from 'modules/blockChain/chains'
 
 type Library = Signer | providers.Provider
 
@@ -9,7 +9,7 @@ interface Factory {
 }
 
 type Address = {
-  [key in ChainId]?: string
+  [key in Chains]?: string
 }
 
 type CreatorArgs<F> = {
@@ -18,7 +18,7 @@ type CreatorArgs<F> = {
 }
 
 type CallArgs = {
-  chainId: ChainId
+  chainId: Chains
   library: Library
 }
 

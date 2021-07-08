@@ -1,4 +1,4 @@
-import { ChainId, Chains } from '../chains'
+import { Chains } from '../chains'
 
 const ETHERSCAN_SUBDOMAINS_BY_NETWORK = {
   [Chains.Mainnet]: '',
@@ -11,7 +11,7 @@ const ETHERSCAN_SUBDOMAINS_BY_NETWORK = {
 export type EtherscanEntities = 'tx' | 'token' | 'address'
 
 export const getEtherscanLink = (
-  chainId: ChainId,
+  chainId: Chains,
   hash: string,
   entity: EtherscanEntities = 'tx',
 ) =>

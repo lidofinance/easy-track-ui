@@ -6,18 +6,12 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 
 export const formParts = createMotionFormPart({
-  motionType: MotionType.NodeOperatorLimit,
+  motionType: MotionType.NodeOperatorIncreaseLimit,
   onSubmit: async ({ evmScriptFactory, formData, contract }) => {
     const encodedCallData = new utils.AbiCoder().encode(
       ['uint256', 'uint256'],
       [Number(formData.nodeOperatorId), Number(formData.newLimit)],
     )
-
-    console.log('Node Operator Increase Limit', formData, contract)
-    console.log(encodedCallData)
-
-    // contract.
-
     await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })

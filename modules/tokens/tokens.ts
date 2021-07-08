@@ -1,4 +1,4 @@
-import { Chains, ChainId, parseChainId } from '../blockChain/chains'
+import { Chains, parseChainId } from '../blockChain/chains'
 
 export enum TOKENS {
   // wsteth = 'wsteth',
@@ -52,5 +52,5 @@ export const TOKENS_BY_NETWORK = {
 
 export const getTokenAddresses = (token: Token) => TOKENS_BY_NETWORK[token]
 
-export const getTokenAddress = (chainId: ChainId, token: Token) =>
+export const getTokenAddress = (chainId: Chains, token: Token) =>
   TOKENS_BY_NETWORK[token][parseChainId(chainId)]

@@ -16,7 +16,7 @@ import {
   getTokenContractRpc,
 } from '../utils/getTokenContract'
 import { TOKENS } from '../tokens'
-import { ChainId } from 'modules/blockChain/chains'
+import { Chains } from 'modules/blockChain/chains'
 
 type ProviderProps = {
   children: React.ReactNode
@@ -41,7 +41,7 @@ const getTokenProvider = <T extends TOKENS>(token: T) => {
     const { current: that } = useRef({
       contractWeb3: null as ContractByToken<T> | null,
       contractRpc: null as ContractByToken<T>,
-      inited: null as null | { chainId: ChainId; token: string },
+      inited: null as null | { chainId: Chains; token: string },
     })
 
     if (

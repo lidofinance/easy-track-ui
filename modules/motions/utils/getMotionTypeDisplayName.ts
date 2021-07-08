@@ -1,7 +1,8 @@
 import { MotionType } from '../types'
 
 const MotionTypeDisplayNames: Record<MotionType, string> = {
-  [MotionType.NodeOperatorLimit]: 'Increase node operator staking limit',
+  [MotionType.NodeOperatorIncreaseLimit]:
+    'Increase node operator staking limit',
   [MotionType.LEGOTopUp]: 'Top up LEGO',
   [MotionType.RewardProgramAdd]: 'Add reward program',
   [MotionType.RewardProgramRemove]: 'Remove reward program',

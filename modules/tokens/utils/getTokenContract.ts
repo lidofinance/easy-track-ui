@@ -1,6 +1,6 @@
 import type { Signer } from '@ethersproject/abstract-signer'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { ChainId } from 'modules/blockChain/chains'
+import { Chains } from 'modules/blockChain/chains'
 import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
 import * as contracts from 'modules/blockChain/contracts'
 import { TOKENS } from '../tokens'
@@ -24,7 +24,7 @@ const getContractConnector = <T extends TOKENS>(token: T) => {
 }
 
 export const getTokenContractRpc = <T extends TOKENS>(
-  chainId: ChainId,
+  chainId: Chains,
   token: T,
 ): ContractByToken<T> => {
   const connect = getContractConnector(token)
@@ -33,7 +33,7 @@ export const getTokenContractRpc = <T extends TOKENS>(
 }
 
 export const getTokenContractWeb3 = <T extends TOKENS>(
-  chainId: ChainId,
+  chainId: Chains,
   token: T,
   library?: { getSigner: () => Signer } | null,
 ): ContractByToken<T> | null => {
