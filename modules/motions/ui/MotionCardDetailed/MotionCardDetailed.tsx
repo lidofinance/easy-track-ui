@@ -144,58 +144,70 @@ export function MotionCardDetailed({ motion }: Props) {
             <MotionObjectionsBar motion={motion} />
           </InfoText>
 
-          {!isWalletConnected && (
+          {(motion.status === MotionStatus.ACTIVE ||
+            motion.status === MotionStatus.PENDING) && (
             <>
-              <InfoTitle children="Actions" />
-              <InfoText children="Connect your wallet to interact with this motion" />
-            </>
-          )}
+              {!isWalletConnected && (
+                <>
+                  <InfoTitle children="Actions" />
+                  <InfoText children="Connect your wallet to interact with this motion" />
+                </>
+              )}
 
-          {isWalletConnected && isLoadingActions && (
-            <>
-              <InfoTitle children="Actions" />
-              <InfoText children="Loading..." />
-            </>
-          )}
+              {isWalletConnected && isLoadingActions && (
+                <>
+                  <InfoTitle children="Actions" />
+                  <InfoText children="Loading..." />
+                </>
+              )}
 
-          {isWalletConnected && !isLoadingActions && (
-            <>
-              <InfoTitle children="Actions" />
-              <InfoText>
-                {isAlreadyObjected && (
-                  <>
-                    You have objected this motion with <b>{balanceAt}</b> LDO
-                  </>
-                )}
-                {canObject && !isAlreadyObjected && (
-                  <>
-                    You can object this motion with <b>{balanceAt}</b> LDO
-                  </>
-                )}
-                {!canObject && !isAlreadyObjected && (
-                  <>You didn’t have LDO when the motion started to object it</>
-                )}
-              </InfoText>
-              <Actions>
-                {canObject && (
-                  <Button
-                    size="sm"
-                    children="Submit objection"
-                    onClick={handleSubmitObjection}
-                  />
-                )}
-                {motion.status === MotionStatus.PENDING && (
-                  <Button size="sm" children="Enact" onClick={handleEnact} />
-                )}
-                {isAuthorConnected && (
-                  <Button
-                    variant="translucent"
-                    size="sm"
-                    children="Cancel"
-                    onClick={handleCancel}
-                  />
-                )}
-              </Actions>
+              {isWalletConnected && !isLoadingActions && (
+                <>
+                  <InfoTitle children="Actions" />
+                  <InfoText>
+                    {isAlreadyObjected && (
+                      <>
+                        You have objected this motion with <b>{balanceAt}</b>{' '}
+                        LDO
+                      </>
+                    )}
+                    {canObject && !isAlreadyObjected && (
+                      <>
+                        You can object this motion with <b>{balanceAt}</b> LDO
+                      </>
+                    )}
+                    {!canObject && !isAlreadyObjected && (
+                      <>
+                        You didn’t have LDO when the motion started to object it
+                      </>
+                    )}
+                  </InfoText>
+                  <Actions>
+                    {canObject && (
+                      <Button
+                        size="sm"
+                        children="Submit objection"
+                        onClick={handleSubmitObjection}
+                      />
+                    )}
+                    {motion.status === MotionStatus.PENDING && (
+                      <Button
+                        size="sm"
+                        children="Enact"
+                        onClick={handleEnact}
+                      />
+                    )}
+                    {isAuthorConnected && (
+                      <Button
+                        variant="translucent"
+                        size="sm"
+                        children="Cancel"
+                        onClick={handleCancel}
+                      />
+                    )}
+                  </Actions>
+                </>
+              )}
             </>
           )}
         </Card>
