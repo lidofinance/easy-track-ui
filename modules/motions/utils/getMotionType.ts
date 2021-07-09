@@ -7,10 +7,11 @@ import {
 } from '../evmAddresses'
 
 export const parseScriptFactory = (chainId: Chains, scriptFactory: string) => {
-  if (!EvmTypesByAdress[parseChainId(chainId)].hasOwnProperty(scriptFactory)) {
-    throw new Error(`Script factory ${scriptFactory} not recognized`)
+  const address = scriptFactory.toLowerCase()
+  if (!EvmTypesByAdress[parseChainId(chainId)].hasOwnProperty(address)) {
+    throw new Error(`Script factory ${address} not recognized`)
   }
-  return scriptFactory
+  return address
 }
 
 export const getMotionTypeByScriptFactory = (

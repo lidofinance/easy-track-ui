@@ -33,33 +33,14 @@ const CALL_DATA_DECODERS = {
   [MotionType.RewardProgramRemove]: 'decodeEVMScriptCallData',
 } as const
 
-type CallDataTypeByEvm = {
-  [MotionType.NodeOperatorIncreaseLimit]: UnpackedPromise<
-    ReturnType<EvmIncreaseNodeOperatorStakingLimitAbi['_decodeMotionData']>
-  >
-  [MotionType.LEGOTopUp]: UnpackedPromise<
-    ReturnType<EvmTopUpLegoProgramAbi['decodeEVMScriptCallData']>
-  >
-  [MotionType.RewardProgramAdd]: UnpackedPromise<
-    ReturnType<EvmAddRewardProgramAbi['decodeEVMScriptCallData']>
-  >
-  [MotionType.RewardProgramTopUp]: UnpackedPromise<
-    ReturnType<EvmRemoveRewardProgramAbi['decodeEVMScriptCallData']>
-  >
-  [MotionType.RewardProgramRemove]: UnpackedPromise<
-    ReturnType<EvmTopUpRewardProgramsAbi['decodeEVMScriptCallData']>
-  >
-}
-
-type NestProps<T extends MotionType> = {
-  callData: CallDataTypeByEvm[T]
+type NestProps<C extends (...a: any) => Promise<any>> = {
+  callData: UnpackedPromise<ReturnType<C>>
 }
 
 // NodeOperatorIncreaseLimit
-function DescriptionNodeOperatorIncreaseLimit(
-  props: NestProps<'NodeOperatorIncreaseLimit'>,
-) {
-  const { callData } = props
+function DescNodeOperatorIncreaseLimit({
+  callData,
+}: NestProps<EvmIncreaseNodeOperatorStakingLimitAbi['_decodeMotionData']>) {
   return (
     <div>
       Node operator with id {Number(callData._nodeOperatorId)} wants to increase
@@ -69,37 +50,39 @@ function DescriptionNodeOperatorIncreaseLimit(
 }
 
 // LEGOTopUp
-function DescriptionLEGOTopUp(props: NestProps<'LEGOTopUp'>) {
-  const { callData } = props
+function DescLEGOTopUp({
+  callData,
+}: NestProps<EvmTopUpLegoProgramAbi['decodeEVMScriptCallData']>) {
   return <div>DescriptionLEGOTopUp {JSON.stringify(callData)}</div>
 }
 
 // RewardProgramAdd
-function DescriptionRewardProgramAdd(props: NestProps<'RewardProgramAdd'>) {
-  const { callData } = props
+function DescRewardProgramAdd({
+  callData,
+}: NestProps<EvmAddRewardProgramAbi['decodeEVMScriptCallData']>) {
   return <div>DescriptionRewardProgramAdd {JSON.stringify(callData)}</div>
 }
 
 // RewardProgramTopUp
-function DescriptionRewardProgramTopUp(props: NestProps<'RewardProgramTopUp'>) {
-  const { callData } = props
+function DescRewardProgramTopUp({
+  callData,
+}: NestProps<EvmRemoveRewardProgramAbi['decodeEVMScriptCallData']>) {
   return <div>DescriptionRewardProgramTopUp {JSON.stringify(callData)}</div>
 }
 
 // RewardProgramRemove
-function DescriptionRewardProgramRemove(
-  props: NestProps<'RewardProgramRemove'>,
-) {
-  const { callData } = props
+function DescRewardProgramRemove({
+  callData,
+}: NestProps<EvmTopUpRewardProgramsAbi['decodeEVMScriptCallData']>) {
   return <div>DescriptionRewardProgramRemove {JSON.stringify(callData)}</div>
 }
 
 const MOTION_DESCRIPTIONS = {
-  [MotionType.NodeOperatorIncreaseLimit]: DescriptionNodeOperatorIncreaseLimit,
-  [MotionType.LEGOTopUp]: DescriptionLEGOTopUp,
-  [MotionType.RewardProgramAdd]: DescriptionRewardProgramAdd,
-  [MotionType.RewardProgramTopUp]: DescriptionRewardProgramTopUp,
-  [MotionType.RewardProgramRemove]: DescriptionRewardProgramRemove,
+  [MotionType.NodeOperatorIncreaseLimit]: DescNodeOperatorIncreaseLimit,
+  [MotionType.LEGOTopUp]: DescLEGOTopUp,
+  [MotionType.RewardProgramAdd]: DescRewardProgramAdd,
+  [MotionType.RewardProgramTopUp]: DescRewardProgramTopUp,
+  [MotionType.RewardProgramRemove]: DescRewardProgramRemove,
 } as const
 
 type Props = {

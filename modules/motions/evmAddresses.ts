@@ -3,6 +3,10 @@ import { Chains } from 'modules/blockChain/chains'
 import { MotionType } from './types'
 import type { Invert } from 'modules/shared/utils/utilTypes'
 
+//
+// Addresses should be lower cased
+//
+
 export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
   // Mainnet
   [Chains.Mainnet]: {
@@ -25,19 +29,19 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
   // Rinkeby
   [Chains.Rinkeby]: {
     [MotionType.NodeOperatorIncreaseLimit]:
-      '0x6b59EcE035C876aA6eFE75E0702CFBdE9A535478',
-    [MotionType.LEGOTopUp]: '0x457b38f8366A964E39Db284F57135fe6b81e0201',
-    [MotionType.RewardProgramAdd]: '0xe5e9150d3ec886eB399A4c05E9710D822E15a9e6',
+      '0x6b59ece035c876aa6efe75e0702cfbde9a535478',
+    [MotionType.LEGOTopUp]: '0x457b38f8366a964e39db284f57135fe6b81e0201',
+    [MotionType.RewardProgramAdd]: '0xe5e9150d3ec886eb399a4c05e9710d822e15a9e6',
     [MotionType.RewardProgramRemove]:
-      '0x5C4B1e63625A0AB78113fD79C2769B2838CeEe30',
+      '0x5c4b1e63625a0ab78113fd79c2769b2838ceee30',
     [MotionType.RewardProgramTopUp]:
-      '0x9718e057cE4881Dbfb4929426DD2314C9656eD9f',
+      '0x9718e057ce4881dbfb4929426dd2314c9656ed9f',
   } as const,
 
   // Goerli
   [Chains.Goerli]: {
     [MotionType.NodeOperatorIncreaseLimit]:
-      '0x81C2F1f181496089c4b93a378fe68614F609EB05',
+      '0x81c2f1f181496089c4b93a378fe68614f609eb05',
     [MotionType.LEGOTopUp]: '0x02',
     [MotionType.RewardProgramAdd]: '0x03',
     [MotionType.RewardProgramRemove]: '0x04',
