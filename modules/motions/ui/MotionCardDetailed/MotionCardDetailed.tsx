@@ -12,6 +12,7 @@ import { Card } from 'modules/shared/ui/Common/Card'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 import { MotionDate } from '../MotionDate'
 import { MotionDescription } from '../MotionDescription'
+import { MotionEvmScript } from '../MotionEvmScript'
 import { MotionObjectionsBar } from '../MotionObjectionsBar'
 import {
   InfoTitle,
@@ -25,7 +26,7 @@ import {
 import { TOKENS } from 'modules/tokens/tokens'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
-import { getMotionCallData } from 'modules/motions/utils/getMotionCallData'
+import { getMotionCreatedEvent } from 'modules/motions/utils/getMotionCreationEvent'
 import { toastError } from 'modules/toasts'
 
 type Props = {
@@ -96,7 +97,10 @@ export function MotionCardDetailed({ motion }: Props) {
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const callData = await getMotionCallData(motionContract, motion.id)
+      const { _evmScriptCallData: callData } = await getMotionCreatedEvent(
+        motionContract,
+        motion.id,
+      )
       const res = await motionContract.enactMotion(motion.id, callData, {
         gasLimit: 500000,
       })
@@ -137,6 +141,11 @@ export function MotionCardDetailed({ motion }: Props) {
           <InfoTitle children="Description" />
           <InfoText style={{ wordBreak: 'break-all' }}>
             <MotionDescription motion={motion} />
+          </InfoText>
+
+          <InfoTitle children="Evm script" />
+          <InfoText style={{ wordBreak: 'break-all' }}>
+            <MotionEvmScript motion={motion} />
           </InfoText>
 
           <InfoTitle children="Objections" />

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
-import { useMotionCallData } from 'modules/motions/hooks/useMotionCallData'
+import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
 import {
   useContractEvmScript,
   // useContractEvmNodeOperatorIncreaseLimit,
@@ -96,9 +96,12 @@ export function MotionDescription({ motion }: Props) {
     [chainId, motion.evmScriptFactory],
   )
   const contract = useContractEvmScript(motionType)
-  const { initialLoading, data: callDataRaw } = useMotionCallData(motion.id)
+  const { initialLoading: isLoadingEvent, data: motionEvent } =
+    useMotionCreatedEvent(motion.id)
+  const callDataRaw = motionEvent?._evmScriptCallData
+
   const { data: callData } = useSWR(
-    initialLoading ? null : `call-data-${chainId}-${motion.id}`,
+    isLoadingEvent ? null : `call-data-${chainId}-${motion.id}`,
     () => {
       if (motionType === EvmUnrecognized) return null
       return (contract as any)[CALL_DATA_DECODERS[motionType]](callDataRaw)
@@ -109,7 +112,7 @@ export function MotionDescription({ motion }: Props) {
     return <>Unrecognized motion type</>
   }
 
-  if (initialLoading || !callData) {
+  if (isLoadingEvent || !callData) {
     return <>Loading...</>
   }
 
