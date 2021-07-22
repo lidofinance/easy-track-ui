@@ -27,6 +27,7 @@ import { TOKENS } from 'modules/tokens/tokens'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { getMotionCreatedEvent } from 'modules/motions/utils/getMotionCreationEvent'
+import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
 import { toastError } from 'modules/toasts'
 
 type Props = {
@@ -129,9 +130,11 @@ export function MotionCardDetailed({ motion }: Props) {
         <Card>
           <InfoTitle children="Type" />
           <InfoText>
-            {getMotionTypeByScriptFactory(
-              currentChainId,
-              motion.evmScriptFactory,
+            {getMotionTypeDisplayName(
+              getMotionTypeByScriptFactory(
+                currentChainId,
+                motion.evmScriptFactory,
+              ),
             )}
           </InfoText>
 

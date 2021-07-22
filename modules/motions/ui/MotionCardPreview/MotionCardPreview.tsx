@@ -18,6 +18,7 @@ import {
 import * as urls from 'modules/shared/utils/urls'
 import type { Motion } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
+import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
 
 type FieldProps = {
   label: React.ReactNode
@@ -53,9 +54,11 @@ export function MotionCardPreview({ motion }: Props) {
       <Row>
         <Text size={14} weight={500}>
           #{motion.id}{' '}
-          {getMotionTypeByScriptFactory(
-            currentChainId,
-            motion.evmScriptFactory,
+          {getMotionTypeDisplayName(
+            getMotionTypeByScriptFactory(
+              currentChainId,
+              motion.evmScriptFactory,
+            ),
           )}
         </Text>
         <AddressWithPop diameter={20} symbols={4} address={motion.creator} />

@@ -26,11 +26,11 @@ export const formParts = createMotionFormPart({
   getDefaultFormData: () => ({
     token: '',
   }),
-  getComponent: ({ getFieldName }) =>
+  getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
       return (
         <Fieldset>
-          <InputControl name={getFieldName('token')} label="Token" />
+          <InputControl name={fieldNames.token} label="Token" />
         </Fieldset>
       )
     },

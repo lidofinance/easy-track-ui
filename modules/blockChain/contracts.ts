@@ -7,6 +7,7 @@ import {
   NodeOperatorsAbi__factory,
   // Erc20Abi__factory,
   MiniMeTokenAbi__factory,
+  RewardProgramRegistryAbi__factory,
   EvmIncreaseNodeOperatorStakingLimitAbi__factory,
   EvmTopUpLegoProgramAbi__factory,
   EvmAddRewardProgramAbi__factory,
@@ -28,8 +29,15 @@ export type ContractEasyTrack = EasyTrackAbi
 export const connectEasyTrack = createContractConnector({
   factory: EasyTrackAbi__factory,
   address: {
-    [Chains.Rinkeby]: '0x4e442D49a4B335E0E3B6Cdad2E77A9AaA6823330',
+    [Chains.Rinkeby]: '0x0006de2639a6fc48349aa0b116f499621168a112',
     // [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c', // EasyTrackMock
+  },
+})
+
+export const connectRewardProgramRegistry = createContractConnector({
+  factory: RewardProgramRegistryAbi__factory,
+  address: {
+    [Chains.Rinkeby]: '0x07804B6667d649c819dfA94aF50c782c26f5Abc3',
   },
 })
 

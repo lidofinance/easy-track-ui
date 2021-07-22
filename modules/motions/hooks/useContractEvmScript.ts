@@ -16,8 +16,8 @@ const EVM_CONNECTORS = {
   [MotionType.NodeOperatorIncreaseLimit]: connectEvmNodeOperatorIncreaseLimit,
   [MotionType.LEGOTopUp]: connectEvmLEGOTopUp,
   [MotionType.RewardProgramAdd]: connectEvmRewardProgramAdd,
-  [MotionType.RewardProgramTopUp]: connectEvmRewardProgramRemove,
-  [MotionType.RewardProgramRemove]: connectEvmRewardProgramTopUp,
+  [MotionType.RewardProgramTopUp]: connectEvmRewardProgramTopUp,
+  [MotionType.RewardProgramRemove]: connectEvmRewardProgramRemove,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
@@ -50,9 +50,9 @@ export function useContractEvmRewardProgramAdd() {
 }
 
 export function useContractEvmRewardProgramRemove() {
-  return useContractEvmScript(MotionType.RewardProgramTopUp)
+  return useContractEvmScript(MotionType.RewardProgramRemove)
 }
 
 export function useContractEvmRewardProgramTopUp() {
-  return useContractEvmScript(MotionType.RewardProgramRemove)
+  return useContractEvmScript(MotionType.RewardProgramTopUp)
 }

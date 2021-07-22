@@ -20,18 +20,18 @@ export const formParts = createMotionFormPart({
     newLimit: '',
     nodeOperatorId: '',
   }),
-  getComponent: ({ getFieldName }) =>
+  getComponent: ({ fieldNames }) =>
     function StartNewMotionNodeOperators() {
       return (
         <>
           <Fieldset>
             <InputControl
-              name={getFieldName('nodeOperatorId')}
+              name={fieldNames.nodeOperatorId}
               label="Node operator id"
             />
           </Fieldset>
           <Fieldset>
-            <InputControl name={getFieldName('newLimit')} label="New limit" />
+            <InputControl name={fieldNames.newLimit} label="New limit" />
           </Fieldset>
         </>
       )

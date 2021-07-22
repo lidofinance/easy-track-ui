@@ -1,5 +1,9 @@
-// import ethers from 'ethers'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
+import { utils } from 'ethers'
+
+import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
+import { useContractRewardProgramRegistryRpc } from 'modules/motions/hooks/useContractRewardProgramRegistry'
+
+import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset } from '../CreateMotionFormStyle'
 
 import { MotionType } from 'modules/motions/types'
@@ -8,17 +12,37 @@ import { createMotionFormPart } from './createMotionFormPart'
 export const formParts = createMotionFormPart({
   motionType: MotionType.RewardProgramRemove,
   onSubmit: async ({ evmScriptFactory, formData, contract }) => {
-    console.log('RewardProgramRemove', formData, contract)
-    await contract.createMotion(evmScriptFactory, [0, 1, 2])
+    const encodedCallData = new utils.AbiCoder().encode(
+      ['address'],
+      [utils.getAddress(formData.address)],
+    )
+    await contract.createMotion(evmScriptFactory, encodedCallData, {
+      gasLimit: 500000,
+    })
   },
   getDefaultFormData: () => ({
-    test: '',
+    address: '',
   }),
-  getComponent: ({ getFieldName }) =>
+  getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
+      const contract = useContractRewardProgramRegistryRpc()
+      const { data: rewardPrograms, initialLoading } = useContractRpcSwr(
+        contract,
+        'getRewardPrograms',
+      )
+
       return (
         <Fieldset>
-          <InputControl name={getFieldName('test')} label="test" />
+          <SelectControl
+            label="Reward program address"
+            name={fieldNames.address}
+            rules={{ required: 'Field is required' }}
+          >
+            {initialLoading && <Option value="" disabled children="Loading" />}
+            {rewardPrograms?.map((value, i) => (
+              <Option key={i} value={value} children={value} />
+            ))}
+          </SelectControl>
         </Fieldset>
       )
     },

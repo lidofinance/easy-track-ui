@@ -29,13 +29,13 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
   // Rinkeby
   [Chains.Rinkeby]: {
     [MotionType.NodeOperatorIncreaseLimit]:
-      '0x6b59ece035c876aa6efe75e0702cfbde9a535478',
-    [MotionType.LEGOTopUp]: '0x457b38f8366a964e39db284f57135fe6b81e0201',
-    [MotionType.RewardProgramAdd]: '0xe5e9150d3ec886eb399a4c05e9710d822e15a9e6',
+      '0x1ABE1418148dEeBFC2e286e0e963A2C94428843d',
+    [MotionType.LEGOTopUp]: '0x416aBfE68A17c7AaAe1d52165796E0A31443b83D',
+    [MotionType.RewardProgramAdd]: '0x3053abE521881975D6863E5Dc0c15dFa5f5fF83A',
     [MotionType.RewardProgramRemove]:
-      '0x5c4b1e63625a0ab78113fd79c2769b2838ceee30',
+      '0x4745BaB1F8f6622b849dB704dBDFE5c3CF305C8a',
     [MotionType.RewardProgramTopUp]:
-      '0x9718e057ce4881dbfb4929426dd2314c9656ed9f',
+      '0x7A6CEFacA5e92295705d5640034De608A4d0212A',
   } as const,
 
   // Goerli

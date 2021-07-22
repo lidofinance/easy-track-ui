@@ -1,4 +1,5 @@
-// import ethers from 'ethers'
+import { utils } from 'ethers'
+
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { Fieldset } from '../CreateMotionFormStyle'
 
@@ -8,17 +9,30 @@ import { createMotionFormPart } from './createMotionFormPart'
 export const formParts = createMotionFormPart({
   motionType: MotionType.RewardProgramAdd,
   onSubmit: async ({ evmScriptFactory, formData, contract }) => {
-    console.log('RewardProgramAdd', formData, contract)
-    await contract.createMotion(evmScriptFactory, [0, 1, 2])
+    const encodedCallData = new utils.AbiCoder().encode(
+      ['address'],
+      [utils.getAddress(formData.address)],
+    )
+    await contract.createMotion(evmScriptFactory, encodedCallData, {
+      gasLimit: 500000,
+    })
   },
   getDefaultFormData: () => ({
-    test: '',
+    address: '',
   }),
-  getComponent: ({ getFieldName }) =>
+  getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
       return (
         <Fieldset>
-          <InputControl name={getFieldName('test')} label="test" />
+          <InputControl
+            name={fieldNames.address}
+            label="Address"
+            rules={{
+              required: 'Field is required',
+              validate: value =>
+                utils.isAddress(value) ? true : 'Address is not valid',
+            }}
+          />
         </Fieldset>
       )
     },

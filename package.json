@@ -12,6 +12,7 @@
     "postinstall": "husky install && yarn typechain"
   },
   "dependencies": {
+    "@gnosis.pm/safe-apps-web3-react": "^0.6.0",
     "@lidofinance/lido-ui": "^1.6.0",
     "@typechain/ethers-v5": "^7.0.1",
     "@types/lodash": "^4.14.170",
@@ -31,7 +32,7 @@
     "next-connect": "^0.10.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "^7.9.0",
+    "react-hook-form": "^7.11.1",
     "react-toastify": "^7.0.4",
     "react-use": "^17.2.4",
     "styled-components": "^5.3.0",

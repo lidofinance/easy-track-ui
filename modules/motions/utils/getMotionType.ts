@@ -1,3 +1,4 @@
+import { utils } from 'ethers'
 import { Chains, parseChainId } from 'modules/blockChain/chains'
 import { MotionType } from '../types'
 import {
@@ -7,7 +8,7 @@ import {
 } from '../evmAddresses'
 
 export const parseScriptFactory = (chainId: Chains, scriptFactory: string) => {
-  const address = scriptFactory.toLowerCase()
+  const address = utils.getAddress(scriptFactory)
   if (!EvmTypesByAdress[parseChainId(chainId)].hasOwnProperty(address)) {
     throw new Error(`Script factory ${address} not recognized`)
   }
