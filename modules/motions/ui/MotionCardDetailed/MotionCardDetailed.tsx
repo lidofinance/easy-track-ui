@@ -1,7 +1,7 @@
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useContractMotionWeb3 } from 'modules/motions/hooks/useContractMotion'
+import { useContractMotionWeb3 } from 'modules/blockChain/hooks/useContractMotion'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'

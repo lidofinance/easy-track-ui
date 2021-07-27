@@ -3,15 +3,16 @@ import { utils } from 'ethers'
 import { Fragment, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
-import { useContractRewardProgramRegistryRpc } from 'modules/motions/hooks/useContractRewardProgramRegistry'
+import { useContractRewardProgramRegistryRpc } from 'modules/blockChain/hooks/useContractRewardProgramRegistry'
 
+import { Button } from '@lidofinance/lido-ui'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset } from '../CreateMotionFormStyle'
-import { Button } from '@lidofinance/lido-ui'
 
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
+import { validateToken } from 'modules/tokens/utils/validateToken'
 
 type Program = {
   address: string
@@ -25,7 +26,7 @@ export const formParts = createMotionFormPart({
       ['address[]', 'uint256[]'],
       [
         formData.programs.map(p => utils.getAddress(p.address)),
-        formData.programs.map(p => Number(p.amount)),
+        formData.programs.map(p => utils.parseEther(p.amount)),
       ],
     )
     await contract.createMotion(evmScriptFactory, encodedCallData, {
@@ -78,7 +79,10 @@ export const formParts = createMotionFormPart({
                 <InputControl
                   label="LDO Amount"
                   name={`${fieldNames.programs}.${i}.amount`}
-                  rules={{ required: 'Field is required' }}
+                  rules={{
+                    required: 'Field is required',
+                    validate: validateToken,
+                  }}
                 />
               </Fieldset>
 

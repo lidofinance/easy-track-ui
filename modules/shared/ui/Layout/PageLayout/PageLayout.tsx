@@ -12,6 +12,9 @@ export function PageLayout({ children }: Props) {
         <Header />
       </Container>
       {children}
+      <br />
+      <br />
+      <br />
     </>
   )
 }

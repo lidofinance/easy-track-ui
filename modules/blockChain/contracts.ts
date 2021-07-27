@@ -1,6 +1,4 @@
-import { Chains } from 'modules/blockChain/chains'
 import { createContractConnector } from './utils/createContractConnector'
-import { getTokenAddresses, TOKENS } from '../tokens/tokens'
 import {
   EasyTrackAbi,
   EasyTrackAbi__factory,
@@ -16,34 +14,33 @@ import {
 } from 'generated'
 import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
+import {
+  contractAddressesNodeOperatorsRegistry,
+  contractAddressesEasyTrack,
+  contractAddressesLDO,
+  contractAddressesRewardProgramRegistry,
+} from './contractAddresses'
 
 export const connectNodeOperators = createContractConnector({
   factory: NodeOperatorsAbi__factory,
-  address: {
-    [Chains.Mainnet]: '0x55032650b14df07b85bf18a3a3ec8e0af2e028d5',
-  },
+  address: contractAddressesNodeOperatorsRegistry,
 })
 
 export type ContractEasyTrack = EasyTrackAbi
 
 export const connectEasyTrack = createContractConnector({
   factory: EasyTrackAbi__factory,
-  address: {
-    [Chains.Rinkeby]: '0x0006de2639a6fc48349aa0b116f499621168a112',
-    // [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c', // EasyTrackMock
-  },
+  address: contractAddressesEasyTrack,
 })
 
 export const connectRewardProgramRegistry = createContractConnector({
   factory: RewardProgramRegistryAbi__factory,
-  address: {
-    [Chains.Rinkeby]: '0x07804B6667d649c819dfA94aF50c782c26f5Abc3',
-  },
+  address: contractAddressesRewardProgramRegistry,
 })
 
 export const connectLDO = createContractConnector({
   factory: MiniMeTokenAbi__factory,
-  address: getTokenAddresses(TOKENS.ldo),
+  address: contractAddressesLDO,
 })
 
 export const connectEvmNodeOperatorIncreaseLimit = createContractConnector({

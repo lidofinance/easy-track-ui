@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { useContractMotionWeb3 } from 'modules/motions/hooks/useContractMotion'
+import { useContractMotionWeb3 } from 'modules/blockChain/hooks/useContractMotion'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Button } from '@lidofinance/lido-ui'

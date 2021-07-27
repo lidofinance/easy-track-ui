@@ -3,33 +3,33 @@ import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
 import { useWeb3React } from '@web3-react/core'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
-import { connectRewardProgramRegistry } from 'modules/blockChain/contracts'
+import { connectEasyTrack } from 'modules/blockChain/contracts'
 
-export function useContractRewardProgramRegistryRpc() {
+export function useContractMotionRpc() {
   const chainId = useCurrentChain()
 
   return useGlobalMemo(
     () =>
-      connectRewardProgramRegistry({
+      connectEasyTrack({
         chainId,
         library: new JsonRpcProvider(getRpcUrl(chainId), chainId),
       }),
-    ['reward-contract-registry-contract-rpc-', chainId].join('-'),
+    `easytrack-contract-rpc-${chainId}`,
   )
 }
 
-export function useContractRewardProgramRegistryWeb3() {
+export function useContractMotionWeb3() {
   const { library, active, account } = useWeb3React()
   const chainId = useCurrentChain()
 
   return useGlobalMemo(
     () =>
-      connectRewardProgramRegistry({
+      connectEasyTrack({
         chainId,
         library: library?.getSigner(),
       }),
     [
-      'reward-contract-registry-contract-web3-',
+      'easytrack-contract-web3-',
       active ? 'active' : 'inactive',
       chainId,
       account,

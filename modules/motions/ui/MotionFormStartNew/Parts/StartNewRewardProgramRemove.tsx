@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
-import { useContractRewardProgramRegistryRpc } from 'modules/motions/hooks/useContractRewardProgramRegistry'
+import { useContractRewardProgramRegistryRpc } from 'modules/blockChain/hooks/useContractRewardProgramRegistry'
 
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset } from '../CreateMotionFormStyle'
