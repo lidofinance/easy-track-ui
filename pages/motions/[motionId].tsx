@@ -8,7 +8,7 @@ import { MotionCardDetailed } from 'modules/motions/ui/MotionCardDetailed'
 
 import type { Motion } from 'modules/motions/types'
 import { fetcherStandard } from 'modules/shared/utils/fetcherStandard'
-import { fetchMotionsArchiveItem } from 'modules/motions/utils/motionsArchiveFetchers'
+import { fetchMotionsSubgraphItem } from 'modules/motions/utils/motionsSubgraphFetchers'
 import * as urlsApi from 'modules/shared/utils/urlsApi'
 
 export default function MotionDetailsPage() {
@@ -24,7 +24,7 @@ export default function MotionDetailsPage() {
         )
         return tryActive
       } catch {
-        const tryArchive = await fetchMotionsArchiveItem(motionId)
+        const tryArchive = await fetchMotionsSubgraphItem(motionId)
         return tryArchive
       }
     },
