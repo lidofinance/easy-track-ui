@@ -12,10 +12,7 @@ import { Fieldset } from '../CreateMotionFormStyle'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
-import {
-  contractAddressesLDO,
-  contractAddressesSTETH,
-} from 'modules/blockChain/contractAddresses'
+import { getLegoTokenOptions } from 'modules/motions/utils/getLegoTokenOptions'
 
 type Program = {
   address: string
@@ -55,22 +52,10 @@ export const formParts = createMotionFormPart({
         [fieldsArr],
       )
 
-      const tokenOptions = useMemo(() => {
-        return [
-          {
-            label: 'ETH',
-            value: '0x0000000000000000000000000000000000000000',
-          },
-          {
-            label: 'LDO',
-            value: contractAddressesLDO[chainId],
-          },
-          {
-            label: 'stETH',
-            value: contractAddressesSTETH[chainId],
-          },
-        ]
-      }, [chainId])
+      const tokenOptions = useMemo(
+        () => getLegoTokenOptions(chainId),
+        [chainId],
+      )
 
       return (
         <>

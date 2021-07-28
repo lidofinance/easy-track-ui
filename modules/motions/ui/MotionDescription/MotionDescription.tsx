@@ -1,3 +1,6 @@
+import { utils } from 'ethers'
+
+import { useMemo } from 'react'
 import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
@@ -17,6 +20,7 @@ import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { UnpackedPromise } from 'modules/shared/utils/utilTypes'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
+import { getLegoTokenOptions } from 'modules/motions/utils/getLegoTokenOptions'
 
 import {
   EvmIncreaseNodeOperatorStakingLimitAbi,
@@ -48,7 +52,32 @@ function DescNodeOperatorIncreaseLimit({
 function DescLEGOTopUp({
   callData,
 }: NestProps<EvmTopUpLegoProgramAbi['decodeEVMScriptCallData']>) {
-  return <div>DescriptionLEGOTopUp {JSON.stringify(callData)}</div>
+  const chainId = useCurrentChain()
+  const formattedTokens = useMemo(() => {
+    const options = getLegoTokenOptions(chainId)
+    return callData[0].map(
+      address =>
+        options.find(
+          o => utils.getAddress(o.value) === utils.getAddress(address),
+        )?.label,
+    )
+  }, [callData, chainId])
+  return (
+    <div>
+      Top up LEGO program with:
+      {callData[0].map((_, i) => (
+        <div key={i}>
+          {formatEther(callData[1][i])}{' '}
+          {formattedTokens[i] || (
+            <>
+              token with address{' '}
+              <AddressInlineWithPop address={callData[0][i]} />
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  )
 }
 
 // RewardProgramAdd
