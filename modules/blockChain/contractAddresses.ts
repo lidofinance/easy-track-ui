@@ -2,6 +2,7 @@ import { Chains } from 'modules/blockChain/chains'
 
 export const contractAddressesNodeOperatorsRegistry = {
   [Chains.Mainnet]: '0x55032650b14df07b85bf18a3a3ec8e0af2e028d5',
+  [Chains.Rinkeby]: '0x7899EF901Ed9B331bAf7759c15D2e8728e8c2a2C',
 }
 
 export const contractAddressesEasyTrack = {

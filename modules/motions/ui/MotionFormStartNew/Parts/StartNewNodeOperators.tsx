@@ -12,9 +12,10 @@ export const formParts = createMotionFormPart({
       ['uint256', 'uint256'],
       [Number(formData.nodeOperatorId), Number(formData.newLimit)],
     )
-    await contract.createMotion(evmScriptFactory, encodedCallData, {
+    const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })
+    return res
   },
   getDefaultFormData: () => ({
     newLimit: '',

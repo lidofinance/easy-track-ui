@@ -21,7 +21,7 @@ import {
   contractAddressesRewardProgramRegistry,
 } from './contractAddresses'
 
-export const connectNodeOperators = createContractConnector({
+export const connectNodeOperatorsRegistry = createContractConnector({
   factory: NodeOperatorsAbi__factory,
   address: contractAddressesNodeOperatorsRegistry,
 })

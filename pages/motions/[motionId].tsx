@@ -4,6 +4,7 @@ import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Container } from '@lidofinance/lido-ui'
 import { Title } from 'modules/shared/ui/Common/Title'
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MotionCardDetailed } from 'modules/motions/ui/MotionCardDetailed'
 
 import type { Motion } from 'modules/motions/types'
@@ -33,7 +34,7 @@ export default function MotionDetailsPage() {
   if (initialLoading) {
     return (
       <Container as="main" size="content">
-        Loading...
+        <PageLoader />
       </Container>
     )
   }

@@ -1,5 +1,6 @@
 import { MotionType } from 'modules/motions/types'
 import type { ContractEasyTrack } from 'modules/blockChain/contracts'
+import type { ContractTransaction } from 'ethers'
 
 type Args<FormData> = {
   motionType: MotionType
@@ -8,7 +9,7 @@ type Args<FormData> = {
     formData: FormData
     contract: ContractEasyTrack
     evmScriptFactory: string
-  }) => Promise<void>
+  }) => Promise<ContractTransaction>
 
   getDefaultFormData: () => FormData
 

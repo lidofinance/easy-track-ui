@@ -4,6 +4,7 @@ import { useSWRInfinite } from 'modules/shared/hooks/useSwr'
 
 import { Button, Container } from '@lidofinance/lido-ui'
 import { Title } from 'modules/shared/ui/Common/Title'
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
@@ -39,7 +40,7 @@ export default function ArchivePage() {
   return (
     <Container as="main" size="full">
       <Title>Archive</Title>
-      {initialLoading && <div>Loading...</div>}
+      {initialLoading && <PageLoader />}
       {!initialLoading && motions && (
         <MotionsGrid>
           {motions.map((motion, i) => (

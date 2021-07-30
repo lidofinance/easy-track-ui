@@ -36,10 +36,11 @@ type Props = {
 
 export function MotionCardDetailed({ motion }: Props) {
   const { walletAddress, isWalletConnected } = useWalletInfo()
-  const isAuthorConnected = walletAddress === motion.creator
   const openConnectWalletModal = useConnectWalletModal()
   const currentChainId = useCurrentChain()
   const motionContract = useContractMotionWeb3()
+
+  const isAuthorConnected = walletAddress === motion.creator
 
   const balanceAtData = useTokenRpcSwr(
     TOKENS.ldo,
@@ -88,6 +89,11 @@ export function MotionCardDetailed({ motion }: Props) {
       const res = await motionContract.objectToMotion(motion.id, {
         gasLimit: 120000,
       })
+
+      // motionContract.
+      // res.wait().then(r => {
+      //   console.log(r)
+      // })
       console.log(res)
     } catch (err) {
       console.error(err)
@@ -163,6 +169,13 @@ export function MotionCardDetailed({ motion }: Props) {
                 <>
                   <InfoTitle children="Actions" />
                   <InfoText children="Connect your wallet to interact with this motion" />
+                  <Actions>
+                    <Button
+                      size="sm"
+                      children="Connect wallet"
+                      onClick={openConnectWalletModal}
+                    />
+                  </Actions>
                 </>
               )}
 

@@ -3,6 +3,7 @@ import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Container } from '@lidofinance/lido-ui'
 import { Title } from 'modules/shared/ui/Common/Title'
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
@@ -20,7 +21,7 @@ export default function HomePage() {
   return (
     <Container as="main" size="full">
       <Title>Active Motions</Title>
-      {initialLoading && <div>Loading...</div>}
+      {initialLoading && <PageLoader />}
       {!initialLoading && motions && (
         <MotionsGrid>
           {motions.map((motion, i) => (

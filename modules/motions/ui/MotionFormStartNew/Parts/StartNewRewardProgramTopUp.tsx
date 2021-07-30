@@ -13,6 +13,7 @@ import { Fieldset } from '../CreateMotionFormStyle'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
+import { toastInfo } from 'modules/toasts'
 
 type Program = {
   address: string
@@ -29,9 +30,11 @@ export const formParts = createMotionFormPart({
         formData.programs.map(p => utils.parseEther(p.amount)),
       ],
     )
-    await contract.createMotion(evmScriptFactory, encodedCallData, {
+    toastInfo('Check Gnosis Safe to confirm transaction')
+    const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })
+    return res
   },
   getDefaultFormData: () => ({
     programs: [{ address: '', amount: '' }] as Program[],

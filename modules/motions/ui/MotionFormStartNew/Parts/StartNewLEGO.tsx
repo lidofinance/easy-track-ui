@@ -13,6 +13,7 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 import { getLegoTokenOptions } from 'modules/motions/utils/getLegoTokenOptions'
+import { toastInfo } from 'modules/toasts'
 
 type Program = {
   address: string
@@ -29,9 +30,12 @@ export const formParts = createMotionFormPart({
         formData.tokens.map(t => utils.parseEther(t.amount)),
       ],
     )
-    await contract.createMotion(evmScriptFactory, encodedCallData, {
+    toastInfo('Check Gnosis Safe to confirm transaction')
+    const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })
+    console.log(res)
+    return res
   },
   getDefaultFormData: () => ({
     tokens: [{ address: '', amount: '' }] as Program[],

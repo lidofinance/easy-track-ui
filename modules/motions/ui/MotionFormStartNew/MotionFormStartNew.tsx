@@ -1,4 +1,7 @@
-import { useCallback } from 'react'
+import {
+  useCallback,
+  // useState
+} from 'react'
 import { useForm } from 'react-hook-form'
 import { useContractMotionWeb3 } from 'modules/blockChain/hooks/useContractMotion'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
@@ -12,9 +15,11 @@ import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { MotionType } from '../../types'
 import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
+import { toastError } from 'modules/toasts'
 
 export function MotionFormStartNew() {
   const currentChainId = useCurrentChain()
+  // const [isSubmitting, setSubmitting] = useState(false)
 
   const formMethods = useForm<FormData>({
     defaultValues: {
@@ -26,17 +31,27 @@ export function MotionFormStartNew() {
   const motionContract = useContractMotionWeb3()
 
   const handleSubmit = useCallback(
-    e => {
-      const motionType = formMethods.getValues('motionType')
-      if (!motionType) return
-      formParts[motionType].onSubmit({
-        evmScriptFactory: getScriptFactoryByMotionType(
-          currentChainId,
-          motionType,
-        ),
-        formData: e[motionType],
-        contract: motionContract,
-      })
+    async e => {
+      try {
+        const motionType = formMethods.getValues('motionType')
+        if (!motionType) return
+        // setSubmitting(true)
+        const res = await formParts[motionType].onSubmit({
+          evmScriptFactory: getScriptFactoryByMotionType(
+            currentChainId,
+            motionType,
+          ),
+          formData: e[motionType],
+          contract: motionContract,
+        })
+        console.log(res)
+      } catch (error) {
+        console.error(String(error))
+        console.error(error)
+        toastError(String(error))
+      } finally {
+        // setSubmitting(false)
+      }
     },
     [currentChainId, formMethods, motionContract],
   )
@@ -58,7 +73,14 @@ export function MotionFormStartNew() {
         </SelectControl>
       </Fieldset>
       {CurrentFormPart && <CurrentFormPart />}
-      {motionType && <Button type="submit" fullwidth children="Submit" />}
+      {motionType && (
+        <Button
+          type="submit"
+          fullwidth
+          children="Submit"
+          // loading={isSubmitting}
+        />
+      )}
     </Form>
   )
 }
