@@ -50,9 +50,12 @@ export function MotionCardDetailed({ motion }: Props) {
   )
   const balanceAt = balanceAtData.data && formatEther(balanceAtData.data)
 
+  const isMotionActive =
+    motion.status === 'ACTIVE' || motion.status === 'PENDING'
+
   const isAlreadyObjectedData = useContractRpcSwr(
     motionContract,
-    walletAddress ? 'objections' : null,
+    walletAddress && isMotionActive ? 'objections' : null,
     motion.id,
     walletAddress as string,
   )
@@ -61,7 +64,7 @@ export function MotionCardDetailed({ motion }: Props) {
 
   const canObjectData = useContractRpcSwr(
     motionContract,
-    walletAddress ? 'canObjectToMotion' : null,
+    walletAddress && isMotionActive ? 'canObjectToMotion' : null,
     motion.id,
     walletAddress as string,
   )
@@ -130,17 +133,23 @@ export function MotionCardDetailed({ motion }: Props) {
     }
   }, [checkWalletConnect, motionContract, motion.id])
 
+  const motionType = getMotionTypeByScriptFactory(
+    currentChainId,
+    motion.evmScriptFactory,
+  )
+
   return (
     <Layout>
       <MainBody>
         <Card>
           <InfoTitle children="Type" />
           <InfoText>
-            {getMotionTypeDisplayName(
-              getMotionTypeByScriptFactory(
-                currentChainId,
-                motion.evmScriptFactory,
-              ),
+            {getMotionTypeDisplayName(motionType)}
+            {motionType === 'EvmUnrecognized' && (
+              <>
+                <br />
+                {motion.evmScriptFactory}
+              </>
             )}
           </InfoText>
 
@@ -245,7 +254,7 @@ export function MotionCardDetailed({ motion }: Props) {
         </Card>
         <Card>
           <InfoTitle children="Start – End" />
-          <MotionDate fontSize={16} fontWeight={400} showYear motion={motion} />
+          <MotionDate fontSize={16} fontWeight={500} showYear motion={motion} />
         </Card>
         <Card>
           <InfoTitle children="Created by" />

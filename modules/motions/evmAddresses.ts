@@ -31,11 +31,11 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0x1ABE1418148dEeBFC2e286e0e963A2C94428843d',
     [MotionType.LEGOTopUp]: '0x416aBfE68A17c7AaAe1d52165796E0A31443b83D',
-    [MotionType.RewardProgramAdd]: '0x3053abE521881975D6863E5Dc0c15dFa5f5fF83A',
+    [MotionType.RewardProgramAdd]: '0xb4A1e61b4F9150ec85910b966b9eF536860738D5',
     [MotionType.RewardProgramRemove]:
-      '0x4745BaB1F8f6622b849dB704dBDFE5c3CF305C8a',
+      '0xD9Fa5976D60DDc3e7A311bF0bBC39d7619D61b0C',
     [MotionType.RewardProgramTopUp]:
-      '0x7A6CEFacA5e92295705d5640034De608A4d0212A',
+      '0xA2E5860C209D533d58824a5235f66bB20C5aCcF2',
   } as const,
 
   // Goerli

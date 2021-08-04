@@ -1,16 +1,19 @@
 import { Chains } from 'modules/blockChain/chains'
 
-export const contractAddressesNodeOperatorsRegistry = {
+export const NodeOperatorsRegistry = {
   [Chains.Mainnet]: '0x55032650b14df07b85bf18a3a3ec8e0af2e028d5',
+  [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x7899EF901Ed9B331bAf7759c15D2e8728e8c2a2C',
+  [Chains.Goerli]: '0x0000000000000000000000000000000000000000',
+  [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
 }
 
-export const contractAddressesEasyTrack = {
+export const EasyTrack = {
   [Chains.Rinkeby]: '0x0006de2639a6fc48349aa0b116f499621168a112',
   // [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c', // EasyTrackMock
 }
 
-export const contractAddressesLDO = {
+export const LDO = {
   [Chains.Mainnet]: '0x5a98fcbea516cf06857215779fd812ca3bef1b32',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x06c6Ab60F0Ad054236d7d4Faf98A5D33e852E717',
@@ -20,14 +23,26 @@ export const contractAddressesLDO = {
   [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
 }
 
-export const contractAddressesRewardProgramRegistry = {
-  [Chains.Rinkeby]: '0x07804B6667d649c819dfA94aF50c782c26f5Abc3',
+export const RewardProgramRegistry = {
+  [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
+  [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
+  [Chains.Rinkeby]: '0xbB4d7A2661ACC245298fC932601ab99e897761DD',
+  [Chains.Goerli]: '0x0000000000000000000000000000000000000000',
+  [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
 }
 
-export const contractAddressesSTETH = {
+export const STETH = {
   [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x06c6Ab60F0Ad054236d7d4Faf98A5D33e852E717',
+  [Chains.Goerli]: '0x0000000000000000000000000000000000000000',
+  [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
+}
+
+export const Finance = {
+  [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
+  [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
+  [Chains.Rinkeby]: '0x9046286F2F467AcfA576021410D8D193BA4c1bC5',
   [Chains.Goerli]: '0x0000000000000000000000000000000000000000',
   [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
 }

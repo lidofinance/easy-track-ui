@@ -11,8 +11,8 @@ export const formParts = createMotionFormPart({
   motionType: MotionType.RewardProgramAdd,
   onSubmit: async ({ evmScriptFactory, formData, contract }) => {
     const encodedCallData = new utils.AbiCoder().encode(
-      ['address'],
-      [utils.getAddress(formData.address)],
+      ['address', 'string'],
+      [utils.getAddress(formData.address), formData.title],
     )
     toastInfo('Check Gnosis Safe to confirm transaction')
     const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
@@ -22,21 +22,31 @@ export const formParts = createMotionFormPart({
   },
   getDefaultFormData: () => ({
     address: '',
+    title: '',
   }),
   getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
       return (
-        <Fieldset>
-          <InputControl
-            name={fieldNames.address}
-            label="Address"
-            rules={{
-              required: 'Field is required',
-              validate: value =>
-                utils.isAddress(value) ? true : 'Address is not valid',
-            }}
-          />
-        </Fieldset>
+        <>
+          <Fieldset>
+            <InputControl
+              name={fieldNames.title}
+              label="Title"
+              rules={{ required: 'Field is required' }}
+            />
+          </Fieldset>
+          <Fieldset>
+            <InputControl
+              name={fieldNames.address}
+              label="Address"
+              rules={{
+                required: 'Field is required',
+                validate: value =>
+                  utils.isAddress(value) ? true : 'Address is not valid',
+              }}
+            />
+          </Fieldset>
+        </>
       )
     },
 })

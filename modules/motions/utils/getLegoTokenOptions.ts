@@ -1,8 +1,5 @@
 import { Chains } from 'modules/blockChain/chains'
-import {
-  contractAddressesLDO,
-  contractAddressesSTETH,
-} from 'modules/blockChain/contractAddresses'
+import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
 export const getLegoTokenOptions = (chainId: Chains) => [
   {
@@ -11,10 +8,10 @@ export const getLegoTokenOptions = (chainId: Chains) => [
   },
   {
     label: 'LDO',
-    value: contractAddressesLDO[chainId],
+    value: CONTRACT_ADDRESSES.LDO[chainId],
   },
   {
     label: 'stETH',
-    value: contractAddressesSTETH[chainId],
+    value: CONTRACT_ADDRESSES.STETH[chainId],
   },
 ]

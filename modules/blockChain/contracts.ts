@@ -14,33 +14,28 @@ import {
 } from 'generated'
 import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
-import {
-  contractAddressesNodeOperatorsRegistry,
-  contractAddressesEasyTrack,
-  contractAddressesLDO,
-  contractAddressesRewardProgramRegistry,
-} from './contractAddresses'
+import * as CONTRACT_ADDRESSES from './contractAddresses'
 
 export const connectNodeOperatorsRegistry = createContractConnector({
   factory: NodeOperatorsAbi__factory,
-  address: contractAddressesNodeOperatorsRegistry,
+  address: CONTRACT_ADDRESSES.NodeOperatorsRegistry,
 })
 
 export type ContractEasyTrack = EasyTrackAbi
 
 export const connectEasyTrack = createContractConnector({
   factory: EasyTrackAbi__factory,
-  address: contractAddressesEasyTrack,
+  address: CONTRACT_ADDRESSES.EasyTrack,
 })
 
 export const connectRewardProgramRegistry = createContractConnector({
   factory: RewardProgramRegistryAbi__factory,
-  address: contractAddressesRewardProgramRegistry,
+  address: CONTRACT_ADDRESSES.RewardProgramRegistry,
 })
 
 export const connectLDO = createContractConnector({
   factory: MiniMeTokenAbi__factory,
-  address: contractAddressesLDO,
+  address: CONTRACT_ADDRESSES.LDO,
 })
 
 export const connectEvmNodeOperatorIncreaseLimit = createContractConnector({

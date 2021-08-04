@@ -86,8 +86,8 @@ function DescRewardProgramAdd({
 }: NestProps<EvmAddRewardProgramAbi['decodeEVMScriptCallData']>) {
   return (
     <div>
-      Add reward program with address{' '}
-      <AddressInlineWithPop address={callData} />
+      Add reward program “{callData[1]}” with address{' '}
+      <AddressInlineWithPop address={callData[0]} />
     </div>
   )
 }
