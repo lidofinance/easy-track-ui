@@ -258,7 +258,7 @@ export function MotionCardDetailed({ motion }: Props) {
         </Card>
         <Card>
           <InfoTitle children="Created by" />
-          <AddressWithPop diameter={20} symbols={5} address={motion.creator} />
+          <AddressWithPop symbols={5} address={motion.creator} />
         </Card>
       </Column>
     </Layout>

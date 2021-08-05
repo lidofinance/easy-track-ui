@@ -11,9 +11,5 @@ type Props = {
 }
 
 export function Title({ children }: Props) {
-  return (
-    <TitleStyle size={48} weight={400}>
-      {children}
-    </TitleStyle>
-  )
+  return <TitleStyle size={48} weight={800} children={children} />
 }

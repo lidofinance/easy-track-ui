@@ -23,7 +23,7 @@ export function MotionDate({ motion, fontSize, fontWeight, showYear }: Props) {
           date={motion.startDate + motion.duration}
           format={format}
         />{' '}
-        <Text as="span" size={fontSize} weight={400}>
+        <Text as="span" size={fontSize} weight={500}>
           (<FormattedDuration value={motion.duration} unit="seconds" />
           &nbsp;total)
         </Text>

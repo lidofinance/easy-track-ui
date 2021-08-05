@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Wrap = styled.div`
   margin-bottom: 30px;
@@ -18,17 +18,39 @@ export const Logo = styled.div`
   font-size: 0;
 `
 
-export const NavLink = styled.a`
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
+type NavLinkProps = {
+  isActive: boolean
+}
+export const NavLink = styled.a<NavLinkProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
   text-decoration: none;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.text};
+  transition: color ease ${({ theme }) => theme.duration.norm};
+
+  &:hover {
+    transition-duration: ${({ theme }) => theme.duration.fast};
+  }
 
   &:not(:last-child) {
-    margin-right: 24px;
+    margin-right: 44px;
   }
+
+  & svg {
+    display: block;
+    margin-right: 8px;
+    fill: currentColor;
+  }
+
+  ${({ isActive, theme }) =>
+    isActive &&
+    css`
+      color: ${theme.colors.primary};
+    `}
 `
 
 export const Actions = styled.div`
@@ -45,7 +67,7 @@ export const Network = styled.div`
 type NetworkBulbProps = { color: string }
 export const NetworkBulb = styled.div<NetworkBulbProps>`
   position: relative;
-  top: -1px;
+  top: 1px;
   margin-right: 6px;
   width: 8px;
   height: 8px;

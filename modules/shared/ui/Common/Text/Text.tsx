@@ -1,8 +1,8 @@
 import type { Theme } from '@lidofinance/lido-ui'
 import styled, { css } from 'styled-components'
 
-export type TextSize = 12 | 14 | 16 | 18 | 20 | 48
-export type TextWeight = 400 | 500 | 700
+export type TextSize = 10 | 12 | 14 | 16 | 18 | 20 | 26 | 48
+export type TextWeight = 500 | 800
 export type TextColor = keyof Theme['colors']
 
 type Props = {

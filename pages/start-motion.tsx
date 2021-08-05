@@ -15,7 +15,7 @@ export default function StartMotionPage() {
       <Title>Start Motion</Title>
       {!isWalletConnected && (
         <div>
-          <Text size={18} weight={400} children="Connect your wallet first" />
+          <Text size={16} weight={500} children="Connect your wallet first" />
           <br />
           <Button
             type="submit"

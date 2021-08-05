@@ -53,8 +53,8 @@ export function WalletModal(props: ModalProps) {
         </Connected>
 
         <Account>
-          <Text size={14} weight={500} children="LDO Balance:" />
-          <Text size={14} weight={400}>
+          <Text size={12} weight={500} children="LDO Balance:" />
+          <Text size={12} weight={500}>
             &nbsp;{LDO.balance ? formatToken(LDO.balance, 'LDO') : 'Loading...'}
           </Text>
         </Account>
