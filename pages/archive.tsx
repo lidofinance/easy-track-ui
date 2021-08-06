@@ -20,7 +20,7 @@ const LoadMoreWrap = styled.div`
   justify-content: center;
 `
 
-const PAGE_SIZE = 2
+const PAGE_SIZE = 8
 
 export default function ArchivePage() {
   const { initialLoading, isValidating, data, size, setSize } = useSWRInfinite(
@@ -35,7 +35,7 @@ export default function ArchivePage() {
   )
 
   const motions = data?.flat()
-  const hasMore = data && data[data.length - 1].length === 0
+  const hasMore = data && data[data.length - 1].length === PAGE_SIZE
 
   return (
     <Container as="main" size="full">
@@ -46,12 +46,12 @@ export default function ArchivePage() {
       {initialLoading && <PageLoader />}
       {!initialLoading && motions && (
         <MotionsGrid>
-          {motions.map((motion, i) => (
-            <MotionCardPreview key={i} motion={motion!} />
+          {motions.map(motion => (
+            <MotionCardPreview key={motion.id} motion={motion!} />
           ))}
         </MotionsGrid>
       )}
-      {!initialLoading && !hasMore && (
+      {!initialLoading && hasMore && (
         <LoadMoreWrap>
           <Button
             type="button"

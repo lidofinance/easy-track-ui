@@ -115,3 +115,8 @@ export const TimeLeft = styled(Text).attrs({
 })`
   opacity: 0.6;
 `
+
+export const DateLabel = styled.span`
+  display: inline-block;
+  width: 36px;
+`

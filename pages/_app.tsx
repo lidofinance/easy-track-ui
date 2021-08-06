@@ -9,7 +9,6 @@ import { GlobalStyle } from 'modules/globalStyles'
 import { ThemeProvider, themeDefault } from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
-import { TokensProvider } from 'modules/tokens/providers/tokensProvider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { ToastContainer } from 'modules/toasts'
@@ -44,11 +43,9 @@ export default function App({ envConfig, ...appProps }: Props) {
       <ConfigProvider envConfig={envConfig}>
         <Web3AppProvider>
           <WalletConnectorsProvider>
-            <TokensProvider>
-              <ModalProvider>
-                <AppRootMemo {...appProps} />
-              </ModalProvider>
-            </TokensProvider>
+            <ModalProvider>
+              <AppRootMemo {...appProps} />
+            </ModalProvider>
           </WalletConnectorsProvider>
         </Web3AppProvider>
       </ConfigProvider>

@@ -1,7 +1,7 @@
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useTokenRpcSwr } from 'modules/tokens/hooks/useTokenRpcSwr'
+import { useContractLDORpc } from 'modules/blockChain/hooks/useContractLdoToken'
 import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
 import { useContractMotionWeb3 } from 'modules/blockChain/hooks/useContractMotion'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
@@ -14,8 +14,6 @@ import { Motion, MotionStatus } from 'modules/motions/types'
 import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
 import { toastError } from 'modules/toasts'
 
-import { TOKENS } from 'modules/tokens/tokens'
-
 type Props = {
   motion: Motion
 }
@@ -24,9 +22,10 @@ export function MotionDetailedActions({ motion }: Props) {
   const { walletAddress, isWalletConnected } = useWalletInfo()
   const motionContract = useContractMotionWeb3()
   const checkWalletConnect = useCheckWalletConnect()
+  const contractLdo = useContractLDORpc()
 
-  const balanceAtData = useTokenRpcSwr(
-    TOKENS.ldo,
+  const balanceAtData = useContractRpcSwr(
+    contractLdo,
     walletAddress ? 'balanceOfAt' : null,
     String(walletAddress),
     motion.snapshotBlock,
@@ -64,11 +63,6 @@ export function MotionDetailedActions({ motion }: Props) {
       const res = await motionContract.objectToMotion(motion.id, {
         gasLimit: 120000,
       })
-
-      // motionContract.
-      // res.wait().then(r => {
-      //   console.log(r)
-      // })
       console.log(res)
     } catch (err) {
       console.error(err)

@@ -8,7 +8,7 @@ import { MotionDetailedCancelButton } from './MotionDetailedCancelButton'
 import { MotionDescription } from '../MotionDescription'
 import { MotionEvmScript } from '../MotionEvmScript'
 import { MotionDetailedActions } from './MotionDetailedActions'
-import { MotionTimeLeft } from '../MotionTimeLeft'
+import { MotionTime } from '../MotionTime'
 import {
   Card,
   Header,
@@ -24,6 +24,7 @@ import {
   InfoCell,
   InfoLabel,
   TimeLeft,
+  DateLabel,
 } from './MotionCardDetailedStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
@@ -102,16 +103,28 @@ export function MotionCardDetailed({ motion }: Props) {
             <AddressWithPop symbols={5} address={motion.creator} />
           </InfoCell>
 
-          <InfoCell>
-            <InfoLabel children="Time left" />
-            <TimeLeft>
-              <MotionTimeLeft motion={motion} />
-            </TimeLeft>
-          </InfoCell>
+          <MotionTime
+            motion={motion}
+            children={({ isPassed, timeFormatted }) => (
+              <InfoCell>
+                <InfoLabel>{isPassed ? 'Time passed' : 'Time left'}</InfoLabel>
+                <TimeLeft>
+                  {timeFormatted}
+                  {isPassed ? ' ago' : ''}
+                </TimeLeft>
+              </InfoCell>
+            )}
+          />
 
           <InfoCell>
             <InfoLabel>
-              To{' '}
+              <DateLabel>From: </DateLabel>
+              <FormattedDate
+                date={motion.startDate}
+                format="h:mma MMM DD YYYY"
+              />
+              <br />
+              <DateLabel>To: </DateLabel>
               <FormattedDate
                 date={motion.startDate + motion.duration}
                 format="h:mma MMM DD YYYY"

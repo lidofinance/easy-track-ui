@@ -17,8 +17,13 @@ type Props = {
 export function MotionDetailedObjections({ motion }: Props) {
   const progress = useMotionProgress(motion)
 
+  const isDangered = Boolean(
+    motion.status === MotionStatus.REJECTED ||
+      (progress && progress.objectionsPct > 0),
+  )
+
   return (
-    <ObjectionsInfo isRejected={motion.status === MotionStatus.REJECTED}>
+    <ObjectionsInfo isDangered={isDangered}>
       <ObjectionsTitle>Objections</ObjectionsTitle>
       <ObjectionsPercents>
         {!progress ? '...' : `${progress.objectionsPct}%`}

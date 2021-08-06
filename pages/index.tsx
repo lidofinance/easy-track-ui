@@ -24,8 +24,8 @@ export default function HomePage() {
       {initialLoading && <PageLoader />}
       {!initialLoading && motions && (
         <MotionsGrid>
-          {motions.map((motion, i) => (
-            <MotionCardPreview key={i} motion={motion} />
+          {motions.map(motion => (
+            <MotionCardPreview key={motion.id} motion={motion} />
           ))}
         </MotionsGrid>
       )}

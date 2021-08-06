@@ -4,7 +4,7 @@ import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
 import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
 import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
-import { useLDOToken } from 'modules/tokens/hooks/useLDOToken'
+import { useLDOBalance } from 'modules/tokens/hooks/useLDOBalance'
 import { Text } from 'modules/shared/ui/Common/Text'
 import {
   ButtonIcon,
@@ -40,7 +40,8 @@ export function WalletModal(props: ModalProps) {
   const trimmedAddress = useMemo(() => trimAddress(address ?? '', 6), [address])
   const handleCopy = useCopyToClipboard(address ?? '')
   const handleEtherscan = useEtherscanOpener(address ?? '', 'address')
-  const LDO = useLDOToken()
+  const { data: LDOBalance, initialLoading: LDOBalanceLoading } =
+    useLDOBalance()
 
   return (
     <Modal title="Account" {...props}>
@@ -55,7 +56,10 @@ export function WalletModal(props: ModalProps) {
         <Account>
           <Text size={12} weight={500} children="LDO Balance:" />
           <Text size={12} weight={500}>
-            &nbsp;{LDO.balance ? formatToken(LDO.balance, 'LDO') : 'Loading...'}
+            &nbsp;
+            {LDOBalanceLoading || !LDOBalance
+              ? 'Loading...'
+              : formatToken(LDOBalance, 'LDO')}
           </Text>
         </Account>
         <Account>

@@ -4,7 +4,7 @@ import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
 
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
-import { MotionTimeLeft } from '../MotionTimeLeft'
+import { MotionTime } from '../MotionTime'
 import { MotionDescription } from '../MotionDescription'
 import {
   Wrap,
@@ -18,7 +18,7 @@ import {
 } from './MotionCardPreviewStyle'
 
 import * as urls from 'modules/shared/utils/urls'
-import type { Motion } from 'modules/motions/types'
+import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
 
@@ -36,13 +36,18 @@ export function MotionCardPreview({ motion }: Props) {
 
   const progress = useMotionProgress(motion)
 
+  const isDangered = Boolean(
+    motion.status === MotionStatus.REJECTED ||
+      (progress && progress.objectionsPct > 0),
+  )
+
   return (
     <Wrap
       onClick={goToDetails}
-      isActive={motion.status === 'ACTIVE'}
-      isSucceed={motion.status === 'ENACTED'}
-      isDangered={motion.status === 'REJECTED'}
-      isAttended={motion.status === 'PENDING'}
+      isActive={!isDangered && motion.status === MotionStatus.ACTIVE}
+      isSucceed={motion.status === MotionStatus.ENACTED}
+      isDangered={isDangered}
+      isAttended={!isDangered && motion.status === MotionStatus.PENDING}
     >
       <CardTitle>
         #{motion.id}{' '}
@@ -62,12 +67,20 @@ export function MotionCardPreview({ motion }: Props) {
       <CardStatus>{motion.status}</CardStatus>
 
       <Row>
-        <div>
-          <CardTimeLabel>Time left</CardTimeLabel>
-          <CardTimeValue>
-            <MotionTimeLeft motion={motion} />
-          </CardTimeValue>
-        </div>
+        <MotionTime
+          motion={motion}
+          children={({ isPassed, timeFormatted }) => (
+            <div>
+              <CardTimeLabel>
+                {isPassed ? 'Time passed' : 'Time left'}
+              </CardTimeLabel>
+              <CardTimeValue>
+                {timeFormatted}
+                {isPassed ? ' ago' : ''}
+              </CardTimeValue>
+            </div>
+          )}
+        />
         <AddressWithPop symbols={4} address={motion.creator} />
       </Row>
     </Wrap>

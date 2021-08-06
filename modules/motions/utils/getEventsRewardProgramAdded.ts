@@ -1,4 +1,3 @@
-// import type { BigNumber } from 'ethers'
 import type { ContractRewardProgramRegistry } from 'modules/blockChain/contracts'
 
 type RewardProgramAddedEvent = [string, string] & {

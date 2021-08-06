@@ -31,11 +31,11 @@ export const ObjectionsThreshold = styled.span`
 `
 
 type ObjectionsInfoProps = {
-  isRejected: boolean
+  isDangered: boolean
 }
 export const ObjectionsInfo = styled.div<ObjectionsInfoProps>`
-  ${({ isRejected }) =>
-    isRejected &&
+  ${({ isDangered }) =>
+    isDangered &&
     css`
       color: #de186b;
     `}
