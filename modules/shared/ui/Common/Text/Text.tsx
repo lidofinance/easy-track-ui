@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 export type TextSize = 10 | 12 | 14 | 16 | 18 | 20 | 26 | 48
 export type TextWeight = 500 | 800
-export type TextColor = keyof Theme['colors']
+export type TextColor = keyof Theme['colors'] | 'inherit'
 
 type Props = {
   size: TextSize
@@ -15,7 +15,8 @@ type Props = {
 export const Text = styled.div<Props>`
   font-size: ${({ size }) => size}px;
   font-weight: ${({ weight }) => weight};
-  color: ${({ color = 'text', theme }) => theme.colors[color]};
+  color: ${({ color = 'text', theme }) =>
+    color === 'inherit' ? color : theme.colors[color]};
 
   ${({ truncateLines }) =>
     truncateLines === undefined

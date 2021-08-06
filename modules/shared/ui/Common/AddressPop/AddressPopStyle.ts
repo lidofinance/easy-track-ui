@@ -22,8 +22,8 @@ export const Pop = styled.div<PopProps>`
   padding: 10px;
   position: fixed;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.colors.foreground};
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgba(222, 250, 255, 0.9);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   z-index: 999;
 
   ${({ isVisible }) =>
@@ -36,6 +36,14 @@ export const Pop = styled.div<PopProps>`
           opacity: 0;
           pointer-events: none;
         `}
+`
+
+export const BadgeWrap = styled.div`
+  & > div {
+    font-size: 14px;
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 `
 
 export const Actions = styled.div`

@@ -45,12 +45,12 @@ export const CardTimeLabel = styled(Text).attrs({
 })`
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: rgba(39, 56, 82, 0.4);
+  opacity: 0.4;
 `
 
 export const CardTimeValue = styled(CardTimeLabel)`
   margin-top: 4px;
-  color: rgba(39, 56, 82, 0.6);
+  opacity: 0.6;
 `
 
 type WrapProps = {
@@ -64,11 +64,11 @@ export const Wrap = styled.div<WrapProps>`
   background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
 
-  ${({ isActive }) =>
+  ${({ isActive, theme }) =>
     isActive &&
     css`
       & ${CardStatus} {
-        color: #00a3ff;
+        color: ${theme.colors.primary};
       }
     `}
 

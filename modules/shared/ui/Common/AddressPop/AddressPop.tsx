@@ -3,14 +3,13 @@ import { useCallback, useEffect, useRef } from 'react'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
 import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
 import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
-import { Text } from 'modules/shared/ui/Common/Text'
 import {
   IdenticonBadge,
   ButtonIcon,
   Copy,
   External,
 } from '@lidofinance/lido-ui'
-import { Wrap, Pop, Actions } from './AddressPopStyle'
+import { Wrap, Pop, Actions, BadgeWrap } from './AddressPopStyle'
 import { minmax } from 'modules/shared/utils/minmax'
 
 type BadgeProps = React.ComponentProps<typeof IdenticonBadge>
@@ -64,14 +63,14 @@ export function AddressPop({ children, ...badgeProps }: Props) {
       <span onClick={handleOpen}>{children}</span>
       {isOpened && (
         <Pop ref={popRef} isVisible={Boolean(position)} style={position}>
-          <Text size={14} weight={500}>
+          <BadgeWrap>
             <IdenticonBadge
               {...badgeProps}
               diameter={30}
               symbols={80}
               onClick={handleOpen}
             />
-          </Text>
+          </BadgeWrap>
           <Actions>
             <ButtonIcon
               onClick={handleCopy}

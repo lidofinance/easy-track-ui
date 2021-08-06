@@ -1,16 +1,23 @@
+import styled from 'styled-components'
 import { useRouter } from 'next/dist/client/router'
 import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Container } from '@lidofinance/lido-ui'
-import { Title } from 'modules/shared/ui/Common/Title'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
-import { MotionCardDetailed } from 'modules/motions/ui/MotionCardDetailed'
+import { MotionCardDetailed } from 'modules/motions/ui/MotionDetailed'
 
 import type { Motion } from 'modules/motions/types'
 import { fetcherStandard } from 'modules/shared/utils/fetcherStandard'
 import { fetchMotionsSubgraphItem } from 'modules/motions/utils/motionsSubgraphFetchers'
 import * as urlsApi from 'modules/shared/utils/urlsApi'
+
+const ContentContainer = styled(Container).attrs({
+  as: 'main',
+})`
+  margin: 0 auto;
+  max-width: 600px;
+`
 
 export default function MotionDetailsPage() {
   const router = useRouter()
@@ -33,24 +40,19 @@ export default function MotionDetailsPage() {
 
   if (initialLoading) {
     return (
-      <Container as="main" size="content">
+      <ContentContainer>
         <PageLoader />
-      </Container>
+      </ContentContainer>
     )
   }
 
   if (!motion) {
-    return (
-      <Container as="main" size="content">
-        Nothing found
-      </Container>
-    )
+    return <ContentContainer>Nothing found</ContentContainer>
   }
 
   return (
-    <Container as="main" size="content">
-      <Title>Motion #{motionId}</Title>
+    <ContentContainer>
       <MotionCardDetailed motion={motion} />
-    </Container>
+    </ContentContainer>
   )
 }

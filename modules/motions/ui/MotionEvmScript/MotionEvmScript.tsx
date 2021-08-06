@@ -30,10 +30,20 @@ export function MotionEvmScript({ motion }: Props) {
   }
 
   return (
-    <pre
-      style={{ display: 'flex', maxWidth: '100%', whiteSpace: 'break-spaces' }}
-    >
-      {JSON.stringify(decoded, null, 2)}
-    </pre>
+    <>
+      <div>
+        <b>{script}</b>
+      </div>
+      <br />
+      <pre
+        style={{
+          display: 'flex',
+          maxWidth: '100%',
+          whiteSpace: 'break-spaces',
+        }}
+      >
+        {JSON.stringify(decoded, null, 2)}
+      </pre>
+    </>
   )
 }
