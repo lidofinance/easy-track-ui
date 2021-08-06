@@ -24,7 +24,7 @@ const Subtitle = styled(Text).attrs({
 
 type Props = {
   title: React.ReactNode
-  subtitle: React.ReactNode
+  subtitle?: React.ReactNode
 }
 
 export function Title({ title, subtitle }: Props) {
