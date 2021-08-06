@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (
     <Container as="main" size="full">
-      <Title>Active Motions</Title>
+      <Title title="Active Motions" subtitle="Select the card to see details" />
       {initialLoading && <PageLoader />}
       {!initialLoading && motions && (
         <MotionsGrid>

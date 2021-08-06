@@ -138,7 +138,12 @@ export function MotionDetailedActions({ motion }: Props) {
           />
         )}
         {motion.status === MotionStatus.PENDING && (
-          <Button size="sm" children="Enact" onClick={handleEnact} />
+          <Button
+            size="sm"
+            variant="outlined"
+            children="Enact"
+            onClick={handleEnact}
+          />
         )}
       </Actions>
     </>

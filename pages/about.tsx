@@ -4,7 +4,7 @@ import { Title } from 'modules/shared/ui/Common/Title'
 export default function AboutPage() {
   return (
     <Container as="main" size="full">
-      <Title>About</Title>
+      <Title title="About" />
     </Container>
   )
 }

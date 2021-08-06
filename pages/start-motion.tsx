@@ -12,7 +12,7 @@ export default function StartMotionPage() {
 
   return (
     <Container as="main" size="tight">
-      <Title>Start Motion</Title>
+      <Title title="Start Motion" subtitle="Fill in the fields below" />
       {!isWalletConnected && (
         <div>
           <Text size={16} weight={500} children="Connect your wallet first" />

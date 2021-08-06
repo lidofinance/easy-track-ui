@@ -39,7 +39,7 @@ export default function ArchivePage() {
 
   return (
     <Container as="main" size="full">
-      <Title>Archive</Title>
+      <Title title="Archive Motions" subtitle="Select the card to see details" />
       {initialLoading && <PageLoader />}
       {!initialLoading && motions && (
         <MotionsGrid>
