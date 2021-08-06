@@ -9,7 +9,7 @@ type MotionCreatedEvent = [BigNumber, string, string, string, string] & {
   _evmScript: string
 }
 
-export async function getMotionCreatedEvent(
+export async function getEventMotionCreated(
   motionContract: ContractEasyTrack,
   motionId: string | number,
 ) {

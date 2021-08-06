@@ -1,7 +1,5 @@
 import { utils } from 'ethers'
-
-import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
-import { useContractRewardProgramRegistryRpc } from 'modules/blockChain/hooks/useContractRewardProgramRegistry'
+import { useRewardPrograms } from 'modules/motions/hooks/useRewardPrograms'
 
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset } from '../CreateMotionFormStyle'
@@ -28,11 +26,7 @@ export const formParts = createMotionFormPart({
   }),
   getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
-      const contract = useContractRewardProgramRegistryRpc()
-      const { data: rewardPrograms, initialLoading } = useContractRpcSwr(
-        contract,
-        'getRewardPrograms',
-      )
+      const { data: rewardPrograms, initialLoading } = useRewardPrograms()
 
       return (
         <Fieldset>
@@ -42,8 +36,12 @@ export const formParts = createMotionFormPart({
             rules={{ required: 'Field is required' }}
           >
             {initialLoading && <Option value="" disabled children="Loading" />}
-            {rewardPrograms?.map((value, i) => (
-              <Option key={i} value={value} children={value} />
+            {rewardPrograms?.map((program, i) => (
+              <Option
+                key={i}
+                value={program.address}
+                children={`${program.title}`}
+              />
             ))}
           </SelectControl>
         </Fieldset>

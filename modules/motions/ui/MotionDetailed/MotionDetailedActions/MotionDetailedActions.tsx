@@ -11,7 +11,7 @@ import { Text } from 'modules/shared/ui/Common/Text'
 import { Actions, Hint } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
-import { getMotionCreatedEvent } from 'modules/motions/utils/getMotionCreationEvent'
+import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
 import { toastError } from 'modules/toasts'
 
 import { TOKENS } from 'modules/tokens/tokens'
@@ -79,7 +79,7 @@ export function MotionDetailedActions({ motion }: Props) {
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const { _evmScriptCallData: callData } = await getMotionCreatedEvent(
+      const { _evmScriptCallData: callData } = await getEventMotionCreated(
         motionContract,
         motion.id,
       )

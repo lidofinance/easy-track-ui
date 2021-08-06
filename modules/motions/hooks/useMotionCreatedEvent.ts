@@ -1,10 +1,10 @@
 import { useSWR } from 'modules/shared/hooks/useSwr'
 import { useContractMotionRpc } from 'modules/blockChain/hooks/useContractMotion'
-import { getMotionCreatedEvent } from '../utils/getMotionCreationEvent'
+import { getEventMotionCreated } from '../utils/getEventMotionCreation'
 
 export function useMotionCreatedEvent(motionId: number | string) {
   const motionContract = useContractMotionRpc()
   return useSWR(`motion-created-event-${motionId}`, () =>
-    getMotionCreatedEvent(motionContract, motionId),
+    getEventMotionCreated(motionContract, motionId),
   )
 }

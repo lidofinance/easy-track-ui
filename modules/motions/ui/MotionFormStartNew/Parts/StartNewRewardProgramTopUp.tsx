@@ -2,8 +2,7 @@ import { utils } from 'ethers'
 
 import { Fragment, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
-import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
-import { useContractRewardProgramRegistryRpc } from 'modules/blockChain/hooks/useContractRewardProgramRegistry'
+import { useRewardPrograms } from 'modules/motions/hooks/useRewardPrograms'
 
 import { Button } from '@lidofinance/lido-ui'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -41,11 +40,12 @@ export const formParts = createMotionFormPart({
   }),
   getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
-      const contract = useContractRewardProgramRegistryRpc()
-      const { data: rewardPrograms, initialLoading } = useContractRpcSwr(
-        contract,
-        'getRewardPrograms',
-      )
+      // const contract = useContractRewardProgramRegistryRpc()
+      // const { data: rewardPrograms, initialLoading } = useContractRpcSwr(
+      //   contract,
+      //   'getRewardPrograms',
+      // )
+      const { data: rewardPrograms, initialLoading } = useRewardPrograms()
 
       const fieldsArr = useFieldArray({ name: fieldNames.programs })
 
@@ -72,8 +72,12 @@ export const formParts = createMotionFormPart({
                   {initialLoading && (
                     <Option value="" disabled children="Loading" />
                   )}
-                  {rewardPrograms?.map((value, j) => (
-                    <Option key={j} value={value} children={value} />
+                  {rewardPrograms?.map((program, j) => (
+                    <Option
+                      key={j}
+                      value={program.address}
+                      children={program.title}
+                    />
                   ))}
                 </SelectControl>
               </Fieldset>

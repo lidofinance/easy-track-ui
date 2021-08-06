@@ -1,6 +1,7 @@
 import { createContractConnector } from './utils/createContractConnector'
 import {
   EasyTrackAbi,
+  RewardProgramRegistryAbi,
   EasyTrackAbi__factory,
   NodeOperatorsAbi__factory,
   // Erc20Abi__factory,
@@ -16,12 +17,13 @@ import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
 import * as CONTRACT_ADDRESSES from './contractAddresses'
 
+export type ContractEasyTrack = EasyTrackAbi
+export type ContractRewardProgramRegistry = RewardProgramRegistryAbi
+
 export const connectNodeOperatorsRegistry = createContractConnector({
   factory: NodeOperatorsAbi__factory,
   address: CONTRACT_ADDRESSES.NodeOperatorsRegistry,
 })
-
-export type ContractEasyTrack = EasyTrackAbi
 
 export const connectEasyTrack = createContractConnector({
   factory: EasyTrackAbi__factory,
