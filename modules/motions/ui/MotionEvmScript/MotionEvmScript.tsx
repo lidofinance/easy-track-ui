@@ -56,7 +56,7 @@ export function MotionEvmScript({ motion }: Props) {
 
               res += `${abi.type} ${abi.name} (${inputsFormatted})`
             } else {
-              res += '[abi data not found]'
+              res += '[abi not found]'
             }
 
             res += '\n\nCall data:\n'
