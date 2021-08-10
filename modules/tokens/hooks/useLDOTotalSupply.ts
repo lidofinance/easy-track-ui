@@ -1,7 +1,7 @@
-import { useContractLDORpc } from 'modules/blockChain/hooks/useContractLdoToken'
-import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
+import { ContractLDO } from 'modules/blockChain/contracts'
+import { useContractSwr } from 'modules/blockChain/hooks/useContractSwr'
 
 export function useLDOTotalSupply() {
-  const contractLdo = useContractLDORpc()
-  return useContractRpcSwr(contractLdo, 'totalSupply')
+  const contractLdo = ContractLDO.useRpc()
+  return useContractSwr(contractLdo, 'totalSupply')
 }

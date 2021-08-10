@@ -1,11 +1,11 @@
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useContractLDORpc } from 'modules/blockChain/hooks/useContractLdoToken'
-import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
+import { ContractLDO } from 'modules/blockChain/contracts'
+import { useContractSwr } from 'modules/blockChain/hooks/useContractSwr'
 
 export function useLDOBalance() {
   const { walletAddress } = useWalletInfo()
-  const contractLdo = useContractLDORpc()
-  return useContractRpcSwr(
+  const contractLdo = ContractLDO.useRpc()
+  return useContractSwr(
     contractLdo,
     walletAddress ? 'balanceOf' : null,
     String(walletAddress),

@@ -4,20 +4,21 @@ import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
 import { MotionType } from '../types'
 import {
-  connectEvmNodeOperatorIncreaseLimit,
-  connectEvmLEGOTopUp,
-  connectEvmRewardProgramAdd,
-  connectEvmRewardProgramRemove,
-  connectEvmRewardProgramTopUp,
+  ContractEvmNodeOperatorIncreaseLimit,
+  ContractEvmLEGOTopUp,
+  ContractEvmRewardProgramAdd,
+  ContractEvmRewardProgramRemove,
+  ContractEvmRewardProgramTopUp,
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
 const EVM_CONNECTORS = {
-  [MotionType.NodeOperatorIncreaseLimit]: connectEvmNodeOperatorIncreaseLimit,
-  [MotionType.LEGOTopUp]: connectEvmLEGOTopUp,
-  [MotionType.RewardProgramAdd]: connectEvmRewardProgramAdd,
-  [MotionType.RewardProgramTopUp]: connectEvmRewardProgramTopUp,
-  [MotionType.RewardProgramRemove]: connectEvmRewardProgramRemove,
+  [MotionType.NodeOperatorIncreaseLimit]:
+    ContractEvmNodeOperatorIncreaseLimit.connect,
+  [MotionType.LEGOTopUp]: ContractEvmLEGOTopUp.connect,
+  [MotionType.RewardProgramAdd]: ContractEvmRewardProgramAdd.connect,
+  [MotionType.RewardProgramTopUp]: ContractEvmRewardProgramTopUp.connect,
+  [MotionType.RewardProgramRemove]: ContractEvmRewardProgramRemove.connect,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

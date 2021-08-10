@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useSWR, SWRResponse } from 'modules/shared/hooks/useSwr'
 import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
-export const useContractRpcSwr = <
+export const useContractSwr = <
   C extends Object,
   M extends FilterMethods<C>,
   R extends UnpackedPromise<ReturnType<C[M]>>,
@@ -15,12 +15,12 @@ export const useContractRpcSwr = <
   const cacheKey = contract
   const args = [cacheKey, method, ...params]
 
-  const rpcFetcher = useCallback(
-    (_cacheKey: C, _method: M, ...p: Parameters<C[M]>): R | Promise<R> => {
-      return contract[_method](...p)
+  const fetcher = useCallback(
+    (_contract: C, _method: M, ...p: Parameters<C[M]>): R | Promise<R> => {
+      return _contract[_method](...p)
     },
-    [contract],
+    [],
   )
 
-  return useSWR<R, Error>(shouldFetch ? args : null, rpcFetcher)
+  return useSWR<R, Error>(shouldFetch ? args : null, fetcher)
 }

@@ -1,4 +1,4 @@
-import type { ContractRewardProgramRegistry } from 'modules/blockChain/contracts'
+import type { ContractTypeRewardProgramRegistry } from 'modules/blockChain/contracts'
 
 type RewardProgramAddedEvent = [string, string] & {
   _rewardProgram: string
@@ -9,7 +9,7 @@ type RewardProgramAddedEvent = [string, string] & {
 }
 
 export async function getEventsRewardProgramAdded(
-  motionContract: ContractRewardProgramRegistry,
+  motionContract: ContractTypeRewardProgramRegistry,
 ) {
   const filter = motionContract.filters.RewardProgramAdded()
   const events = await motionContract.queryFilter(filter)

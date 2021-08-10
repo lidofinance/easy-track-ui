@@ -1,9 +1,8 @@
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useContractLDORpc } from 'modules/blockChain/hooks/useContractLdoToken'
-import { useContractRpcSwr } from 'modules/blockChain/hooks/useContractRpcSwr'
-import { useContractMotionWeb3 } from 'modules/blockChain/hooks/useContractMotion'
+import { ContractEasyTrack, ContractLDO } from 'modules/blockChain/contracts'
+import { useContractSwr } from 'modules/blockChain/hooks/useContractSwr'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -20,37 +19,37 @@ type Props = {
 
 export function MotionDetailedActions({ motion }: Props) {
   const { walletAddress, isWalletConnected } = useWalletInfo()
-  const motionContract = useContractMotionWeb3()
+  const contractLDO = ContractLDO.useRpc()
+  const contractEasyTrack = ContractEasyTrack.useWeb3()
   const checkWalletConnect = useCheckWalletConnect()
-  const contractLdo = useContractLDORpc()
 
-  const balanceAtData = useContractRpcSwr(
-    contractLdo,
-    walletAddress ? 'balanceOfAt' : null,
-    String(walletAddress),
-    motion.snapshotBlock,
-  )
-  const balanceAt = balanceAtData.data && formatEther(balanceAtData.data)
+  const { data: balanceAtRaw, initialLoading: isLoadingBalanceAt } =
+    useContractSwr(
+      contractLDO,
+      walletAddress ? 'balanceOfAt' : null,
+      String(walletAddress),
+      motion.snapshotBlock,
+    )
+  const balanceAt = balanceAtRaw && formatEther(balanceAtRaw)
 
-  const isAlreadyObjectedData = useContractRpcSwr(
-    motionContract,
-    walletAddress ? 'objections' : null,
-    motion.id,
-    walletAddress as string,
-  )
-  const isAlreadyObjected =
-    isAlreadyObjectedData.data && isAlreadyObjectedData.data
+  const { data: isAlreadyObjected, initialLoading: isLoadingAlreadyObjected } =
+    useContractSwr(
+      contractEasyTrack,
+      walletAddress ? 'objections' : null,
+      motion.id,
+      walletAddress as string,
+    )
 
-  const canObjectData = useContractRpcSwr(
-    motionContract,
-    walletAddress ? 'canObjectToMotion' : null,
-    motion.id,
-    walletAddress as string,
-  )
-  const canObject = canObjectData.data && canObjectData.data
+  const { data: canObject, initialLoading: isLoadingCanObject } =
+    useContractSwr(
+      contractEasyTrack,
+      walletAddress ? 'canObjectToMotion' : null,
+      motion.id,
+      walletAddress as string,
+    )
 
   const isLoadingActions =
-    canObjectData.initialLoading || balanceAtData.initialLoading
+    isLoadingCanObject || isLoadingAlreadyObjected || isLoadingBalanceAt
 
   // Submit Objection
   const handleSubmitObjection = useCallback(async () => {
@@ -60,31 +59,31 @@ export function MotionDetailedActions({ motion }: Props) {
         toastError('You cannot submit objection to this motion')
         return
       }
-      const res = await motionContract.objectToMotion(motion.id, {
+      const res = await contractEasyTrack.objectToMotion(motion.id, {
         gasLimit: 120000,
       })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, motionContract, motion.id, canObject])
+  }, [checkWalletConnect, contractEasyTrack, motion.id, canObject])
 
   // Enact Motion
   const handleEnact = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
       const { _evmScriptCallData: callData } = await getEventMotionCreated(
-        motionContract,
+        contractEasyTrack,
         motion.id,
       )
-      const res = await motionContract.enactMotion(motion.id, callData, {
+      const res = await contractEasyTrack.enactMotion(motion.id, callData, {
         gasLimit: 500000,
       })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, motion.id, motionContract])
+  }, [checkWalletConnect, motion.id, contractEasyTrack])
 
   if (!isWalletConnected) {
     return (

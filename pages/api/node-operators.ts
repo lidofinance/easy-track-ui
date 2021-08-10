@@ -1,12 +1,12 @@
 import { createNextConnect } from 'modules/shared/utils/createNextConnect'
 import { getLibrary } from 'modules/blockChain/utils/getLibrary'
-import { connectNodeOperatorsRegistry } from 'modules/blockChain/contracts'
+import { ContractNodeOperatorsRegistry } from 'modules/blockChain/contracts'
 import { Chains, parseChainId } from 'modules/blockChain/chains'
 
 async function getNodeOperatorsCount(chainId: Chains) {
   const library = getLibrary(chainId)
 
-  const nodeOperatorsContract = connectNodeOperatorsRegistry({
+  const nodeOperatorsContract = ContractNodeOperatorsRegistry.connect({
     chainId,
     library,
   })

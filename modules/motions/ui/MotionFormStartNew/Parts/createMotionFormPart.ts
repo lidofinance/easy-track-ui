@@ -1,13 +1,13 @@
-import { MotionType } from 'modules/motions/types'
-import type { ContractEasyTrack } from 'modules/blockChain/contracts'
 import type { ContractTransaction } from 'ethers'
+import type { MotionType } from 'modules/motions/types'
+import type { ContractTypeEasyTrack } from 'modules/blockChain/contracts'
 
 type Args<FormData> = {
   motionType: MotionType
 
   onSubmit: (args: {
     formData: FormData
-    contract: ContractEasyTrack
+    contract: ContractTypeEasyTrack
     evmScriptFactory: string
   }) => Promise<ContractTransaction>
 

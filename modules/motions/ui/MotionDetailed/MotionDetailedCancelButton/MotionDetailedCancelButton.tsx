@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useContractMotionWeb3 } from 'modules/blockChain/hooks/useContractMotion'
+import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
 
 import { CancelButton } from './MotionDetailedCancelButtonStyle'
@@ -12,21 +12,21 @@ type Props = {
 }
 
 export function MotionDetailedCancelButton({ motion }: Props) {
-  const motionContract = useContractMotionWeb3()
+  const contractEasyTrack = ContractEasyTrack.useWeb3()
   const checkWalletConnect = useCheckWalletConnect()
 
   // Cancel Motion
   const handleCancel = useCallback(async () => {
     if (!checkWalletConnect()) return
     try {
-      const res = await motionContract.cancelMotion(motion.id, {
+      const res = await contractEasyTrack.cancelMotion(motion.id, {
         gasLimit: 120000,
       })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, motionContract, motion.id])
+  }, [checkWalletConnect, contractEasyTrack, motion.id])
 
   return (
     <CancelButton onClick={handleCancel}>

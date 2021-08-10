@@ -3,7 +3,6 @@ import {
   // useState
 } from 'react'
 import { useForm } from 'react-hook-form'
-import { useContractMotionWeb3 } from 'modules/blockChain/hooks/useContractMotion'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -12,6 +11,7 @@ import { Form } from 'modules/shared/ui/Controls/Form'
 import { Fieldset } from './CreateMotionFormStyle'
 
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
+import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from '../../types'
 import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
@@ -28,7 +28,7 @@ export function MotionFormStartNew() {
     },
   })
 
-  const motionContract = useContractMotionWeb3()
+  const contractEasyTrack = ContractEasyTrack.useWeb3()
 
   const handleSubmit = useCallback(
     async e => {
@@ -42,7 +42,7 @@ export function MotionFormStartNew() {
             motionType,
           ),
           formData: e[motionType],
-          contract: motionContract,
+          contract: contractEasyTrack,
         })
         console.log(res)
       } catch (error) {
@@ -53,7 +53,7 @@ export function MotionFormStartNew() {
         // setSubmitting(false)
       }
     },
-    [currentChainId, formMethods, motionContract],
+    [currentChainId, formMethods, contractEasyTrack],
   )
 
   const motionType = formMethods.watch('motionType')

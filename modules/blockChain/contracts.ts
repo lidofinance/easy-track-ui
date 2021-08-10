@@ -1,4 +1,4 @@
-import { createContractConnector } from './utils/createContractConnector'
+import { createContractHelpers } from './utils/createContractHelpers'
 import {
   EasyTrackAbi,
   RewardProgramRegistryAbi,
@@ -17,50 +17,50 @@ import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
 import * as CONTRACT_ADDRESSES from './contractAddresses'
 
-export type ContractEasyTrack = EasyTrackAbi
-export type ContractRewardProgramRegistry = RewardProgramRegistryAbi
+export type ContractTypeEasyTrack = EasyTrackAbi
+export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
 
-export const connectNodeOperatorsRegistry = createContractConnector({
+export const ContractNodeOperatorsRegistry = createContractHelpers({
   factory: NodeOperatorsAbi__factory,
   address: CONTRACT_ADDRESSES.NodeOperatorsRegistry,
 })
 
-export const connectEasyTrack = createContractConnector({
+export const ContractEasyTrack = createContractHelpers({
   factory: EasyTrackAbi__factory,
   address: CONTRACT_ADDRESSES.EasyTrack,
 })
 
-export const connectRewardProgramRegistry = createContractConnector({
+export const ContractRewardProgramRegistry = createContractHelpers({
   factory: RewardProgramRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.RewardProgramRegistry,
 })
 
-export const connectLDO = createContractConnector({
+export const ContractLDO = createContractHelpers({
   factory: MiniMeTokenAbi__factory,
   address: CONTRACT_ADDRESSES.LDO,
 })
 
-export const connectEvmNodeOperatorIncreaseLimit = createContractConnector({
+export const ContractEvmNodeOperatorIncreaseLimit = createContractHelpers({
   factory: EvmIncreaseNodeOperatorStakingLimitAbi__factory,
   address: EvmAddressesByType[MotionType.NodeOperatorIncreaseLimit],
 })
 
-export const connectEvmLEGOTopUp = createContractConnector({
+export const ContractEvmLEGOTopUp = createContractHelpers({
   factory: EvmTopUpLegoProgramAbi__factory,
   address: EvmAddressesByType[MotionType.LEGOTopUp],
 })
 
-export const connectEvmRewardProgramAdd = createContractConnector({
+export const ContractEvmRewardProgramAdd = createContractHelpers({
   factory: EvmAddRewardProgramAbi__factory,
   address: EvmAddressesByType[MotionType.RewardProgramAdd],
 })
 
-export const connectEvmRewardProgramRemove = createContractConnector({
+export const ContractEvmRewardProgramRemove = createContractHelpers({
   factory: EvmRemoveRewardProgramAbi__factory,
   address: EvmAddressesByType[MotionType.RewardProgramRemove],
 })
 
-export const connectEvmRewardProgramTopUp = createContractConnector({
+export const ContractEvmRewardProgramTopUp = createContractHelpers({
   factory: EvmTopUpRewardProgramsAbi__factory,
   address: EvmAddressesByType[MotionType.RewardProgramTopUp],
 })

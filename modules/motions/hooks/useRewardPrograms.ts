@@ -1,9 +1,9 @@
-import { useContractRewardProgramRegistryRpc } from 'modules/blockChain/hooks/useContractRewardProgramRegistry'
+import { ContractRewardProgramRegistry } from 'modules/blockChain/contracts'
 import { useSWR } from 'modules/shared/hooks/useSwr'
 import { getEventsRewardProgramAdded } from '../utils/getEventsRewardProgramAdded'
 
 export function useRewardPrograms() {
-  const rewardProgramRegistry = useContractRewardProgramRegistryRpc()
+  const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
 
   return useSWR('reward-programs', async () => {
     const [rewardProgramsData, events] = await Promise.all([
