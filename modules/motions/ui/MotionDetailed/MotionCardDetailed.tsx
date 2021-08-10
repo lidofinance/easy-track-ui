@@ -88,7 +88,7 @@ export function MotionCardDetailed({ motion }: Props) {
         <br />
         <div>Script:</div>
         <br />
-        <div style={{ marginBottom: 66, maxHeight: 200, overflow: 'auto' }}>
+        <div style={{ marginBottom: 66 }}>
           <MotionEvmScript motion={motion} />
         </div>
       </Description>
