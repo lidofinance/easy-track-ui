@@ -13,6 +13,7 @@ export const ScriptBox = styled.textarea.attrs({
   rows: 14,
   readOnly: true,
 })`
+  padding: 10px;
   display: block;
   resize: vertical;
   width: 100%;
