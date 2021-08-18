@@ -29,7 +29,7 @@ export const formParts = createMotionFormPart({
         formData.programs.map(p => utils.parseEther(p.amount)),
       ],
     )
-    toastInfo('Check Gnosis Safe to confirm transaction')
+    toastInfo('Confirm transaction with Gnosis Safe')
     const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })
@@ -40,11 +40,6 @@ export const formParts = createMotionFormPart({
   }),
   getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
-      // const contract = useContractRewardProgramRegistryRpc()
-      // const { data: rewardPrograms, initialLoading } = useContractRpcSwr(
-      //   contract,
-      //   'getRewardPrograms',
-      // )
       const { data: rewardPrograms, initialLoading } = useRewardPrograms()
 
       const fieldsArr = useFieldArray({ name: fieldNames.programs })

@@ -70,6 +70,7 @@ export const Description = styled(Text).attrs({
   size: 12,
   weight: 500,
 })`
+  margin-bottom: 64px;
   color: rgba(39, 56, 82, 0.6);
   word-break: break-all;
 `
@@ -88,7 +89,7 @@ export const InfoCol = styled.div`
   &:nth-child(2) {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     padding-left: 20px;
     flex: 0 0 auto;
     border-left: 1px solid rgba(39, 56, 82, 0.1);
@@ -109,14 +110,18 @@ export const InfoLabel = styled(Text).attrs({
   margin-bottom: 4px;
 `
 
-export const TimeLeft = styled(Text).attrs({
-  size: 14,
-  weight: 800,
-})`
-  opacity: 0.6;
+export const StartDateCell = styled.div`
+  margin-top: 30px;
 `
 
-export const DateLabel = styled.span`
-  display: inline-block;
-  width: 36px;
+export const StartDateValue = styled.div`
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: rgba(39, 56, 82, 0.6);
+`
+
+export const StartDateTime = styled.span`
+  color: rgba(39, 56, 82, 0.4);
 `

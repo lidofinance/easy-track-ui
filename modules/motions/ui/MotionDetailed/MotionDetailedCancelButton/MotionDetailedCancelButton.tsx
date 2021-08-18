@@ -20,7 +20,7 @@ export function MotionDetailedCancelButton({ motion }: Props) {
     if (!checkWalletConnect()) return
     try {
       const res = await contractEasyTrack.cancelMotion(motion.id, {
-        gasLimit: 120000,
+        gasLimit: 500000,
       })
       console.log(res)
     } catch (err) {

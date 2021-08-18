@@ -30,7 +30,7 @@ export const formParts = createMotionFormPart({
         formData.tokens.map(t => utils.parseEther(t.amount)),
       ],
     )
-    toastInfo('Check Gnosis Safe to confirm transaction')
+    toastInfo('Confirm transaction with Gnosis Safe')
     const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })

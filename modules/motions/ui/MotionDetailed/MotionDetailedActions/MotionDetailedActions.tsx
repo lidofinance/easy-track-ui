@@ -60,7 +60,7 @@ export function MotionDetailedActions({ motion }: Props) {
         return
       }
       const res = await contractEasyTrack.objectToMotion(motion.id, {
-        gasLimit: 120000,
+        gasLimit: 500000,
       })
       console.log(res)
     } catch (err) {

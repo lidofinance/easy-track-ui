@@ -8,9 +8,9 @@ export function useMotionProgress(motion: Motion) {
     useLDOTotalSupply()
 
   const formatted = useMemo(() => {
-    return (
-      !isLoadingSupply && totalSupply && getMotionProgress(motion, totalSupply)
-    )
+    return !isLoadingSupply && totalSupply
+      ? getMotionProgress(motion, totalSupply)
+      : null
   }, [isLoadingSupply, motion, totalSupply])
 
   return formatted

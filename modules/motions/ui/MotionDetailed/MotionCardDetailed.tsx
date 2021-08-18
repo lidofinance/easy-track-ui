@@ -1,14 +1,16 @@
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
+import { useMotionTimeCountdown } from 'modules/motions/hooks/useMotionTimeCountdown'
 
-import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
+import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 import { MotionDetailedObjections } from './MotionDetailedObjections'
+import { MotionDetailedTime } from './MotionDetailedTime'
 import { MotionDetailedCancelButton } from './MotionDetailedCancelButton'
 import { MotionDescription } from '../MotionDescription'
 import { MotionEvmScript } from '../MotionEvmScript'
 import { MotionDetailedActions } from './MotionDetailedActions'
-import { MotionTime } from '../MotionTime'
 import {
   Card,
   Header,
@@ -23,13 +25,16 @@ import {
   InfoCol,
   InfoCell,
   InfoLabel,
-  TimeLeft,
-  DateLabel,
+  StartDateCell,
+  StartDateValue,
+  StartDateTime,
 } from './MotionCardDetailedStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
+import { getMotionDisplayStatus } from 'modules/motions/utils/getMotionDisplayStatus'
+import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 
 type Props = {
   motion: Motion
@@ -39,14 +44,26 @@ export function MotionCardDetailed({ motion }: Props) {
   const currentChainId = useCurrentChain()
   const { walletAddress } = useWalletInfo()
 
-  const isMotionLiving =
-    motion.status === MotionStatus.ACTIVE ||
-    motion.status === MotionStatus.PENDING
+  const progress = useMotionProgress(motion)
+
+  const timeData = useMotionTimeCountdown(motion)
+  const { isPassed, diff } = timeData
+
+  const isArchived =
+    motion.status !== MotionStatus.ACTIVE &&
+    motion.status !== MotionStatus.PENDING
   const isAuthorConnected = walletAddress === motion.creator
+  const isAttentionTime = diff <= motion.duration * MOTION_ATTENTION_PERIOD
+
   const motionType = getMotionTypeByScriptFactory(
     currentChainId,
     motion.evmScriptFactory,
   )
+  const displayStatus = getMotionDisplayStatus({
+    motion,
+    progress,
+    isAttentionTime,
+  })
 
   return (
     <Card>
@@ -70,7 +87,9 @@ export function MotionCardDetailed({ motion }: Props) {
               isActive={motion.status === MotionStatus.ACTIVE}
               isRejected={motion.status === MotionStatus.REJECTED}
             >
-              {motion.status}
+              {motion.status === MotionStatus.ACTIVE && isPassed
+                ? MotionStatus.PENDING
+                : motion.status}
             </StatusValue>
           </HeaderStatus>
 
@@ -81,60 +100,45 @@ export function MotionCardDetailed({ motion }: Props) {
       <Description>
         <MotionDescription motion={motion} />
         <br />
+        <br />
         <div>Snapshot: {motion.snapshotBlock}</div>
-      </Description>
-
-      <Description>
         <br />
         <div>Script:</div>
         <br />
-        <div style={{ marginBottom: 66 }}>
-          <MotionEvmScript motion={motion} />
-        </div>
+        <MotionEvmScript motion={motion} />
       </Description>
 
       <InfoRow>
         <InfoCol>
-          <MotionDetailedObjections motion={motion} />
+          <MotionDetailedTime
+            motion={motion}
+            timeData={timeData}
+            displayStatus={displayStatus}
+          />
+
+          <StartDateCell>
+            <InfoLabel children="Started on:" />
+            <StartDateValue>
+              <FormattedDate date={motion.startDate} format="DD MMM YYYY " />
+              <StartDateTime>
+                <FormattedDate date={motion.startDate} format="hh:mma" />
+              </StartDateTime>
+            </StartDateValue>
+          </StartDateCell>
         </InfoCol>
         <InfoCol>
           <InfoCell>
-            <InfoLabel children="Author" />
-            <AddressWithPop symbols={5} address={motion.creator} />
+            <MotionDetailedObjections motion={motion} />
           </InfoCell>
 
-          <MotionTime
-            motion={motion}
-            children={({ isPassed, timeFormatted }) => (
-              <InfoCell>
-                <InfoLabel>{isPassed ? 'Time passed' : 'Time left'}</InfoLabel>
-                <TimeLeft>
-                  {timeFormatted}
-                  {isPassed ? ' ago' : ''}
-                </TimeLeft>
-              </InfoCell>
-            )}
-          />
-
           <InfoCell>
-            <InfoLabel>
-              <DateLabel>From: </DateLabel>
-              <FormattedDate
-                date={motion.startDate}
-                format="h:mma MMM DD YYYY"
-              />
-              <br />
-              <DateLabel>To: </DateLabel>
-              <FormattedDate
-                date={motion.startDate + motion.duration}
-                format="h:mma MMM DD YYYY"
-              />
-            </InfoLabel>
+            <InfoLabel children="Author Address:" />
+            <AddressWithPop symbols={5} address={motion.creator} />
           </InfoCell>
         </InfoCol>
       </InfoRow>
 
-      {isMotionLiving && <MotionDetailedActions motion={motion} />}
+      {!isArchived && <MotionDetailedActions motion={motion} />}
     </Card>
   )
 }

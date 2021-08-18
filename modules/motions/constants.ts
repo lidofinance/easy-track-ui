@@ -1,0 +1,1 @@
+export const MOTION_ATTENTION_PERIOD = 1 / 24

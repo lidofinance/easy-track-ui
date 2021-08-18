@@ -15,3 +15,5 @@ export function getMotionProgress(motion: Motion, totalSupply: BigNumber) {
     objectionsAmount,
   }
 }
+
+export type MotionProgress = ReturnType<typeof getMotionProgress>

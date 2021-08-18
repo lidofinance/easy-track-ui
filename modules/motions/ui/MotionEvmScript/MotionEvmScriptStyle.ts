@@ -2,10 +2,30 @@ import styled from 'styled-components'
 
 export const Actions = styled.div`
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: -1px;
+
+  & > * {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:before {
+      border-color: ${({ theme }) => theme.colors.border};
+    }
+
+    &:hover {
+      &:before {
+        border-color: ${({ theme }) => theme.colors.primary};
+      }
+    }
+  }
 
   & > *:not(:last-child) {
-    margin-right: 10px;
+    border-top-right-radius: 0;
+    margin-right: -1px;
+  }
+
+  & > *:not(:first-child) {
+    border-top-left-radius: 0;
   }
 `
 
@@ -22,7 +42,7 @@ export const ScriptBox = styled.textarea.attrs({
   font-size: 12px;
   color: ${({ theme }) => theme.colors.text};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 8px;
+  border-radius: 0 8px 8px 8px;
   background-color: rgba(255, 255, 255, 0.2);
   outline: none;
 `

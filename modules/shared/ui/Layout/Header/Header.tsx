@@ -16,7 +16,7 @@ import {
 } from './HeaderStyle'
 import ActiveMotionsSVG from './icons/active_motions.svg.react'
 import ArchiveSVG from './icons/archive.svg.react'
-import InfoSVG from './icons/info.svg.react'
+// import InfoSVG from './icons/info.svg.react'
 import StartSVG from './icons/start.svg.react'
 
 import { getChainColor, getChainName } from 'modules/blockChain/chains'
@@ -63,7 +63,7 @@ export function Header() {
           icon={<StartSVG />}
           children="Start motion"
         />
-        <NavItem link={urls.about} icon={<InfoSVG />} children="About" />
+        {/* <NavItem link={urls.about} icon={<InfoSVG />} children="About" /> */}
       </Nav>
       <Actions>
         <Network>

@@ -24,6 +24,19 @@ export const MotionStatus = {
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type MotionStatus = typeof MotionStatus[keyof typeof MotionStatus]
 
+export const MotionDisplayStatus = {
+  DEFAULT: 'DEFAULT',
+  DANGER: 'DANGER',
+  ATTENDED: 'ATTENDED',
+  ATTENDED_DANGER: 'ATTENDED_DANGER',
+  ACTIVE: 'ACTIVE',
+  ENACTED: 'ENACTED',
+} as const
+// intentionally
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type MotionDisplayStatus =
+  typeof MotionDisplayStatus[keyof typeof MotionDisplayStatus]
+
 export type Motion = {
   id: number
   evmScriptFactory: string

@@ -14,7 +14,7 @@ export const formParts = createMotionFormPart({
       ['address', 'string'],
       [utils.getAddress(formData.address), formData.title],
     )
-    toastInfo('Check Gnosis Safe to confirm transaction')
+    toastInfo('Confirm transaction with Gnosis Safe')
     const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
       gasLimit: 500000,
     })
