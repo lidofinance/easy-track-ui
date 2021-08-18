@@ -1,21 +1,19 @@
-name: CI Prod
+name: CI Build prod image
 
 on:
   workflow_dispatch:
-  release:
-    types: [ published ]
-  # push:
-  #   # branches: [ main ]
-  #   # Pattern matched against refs/tags
-  #   tags:
-  #   - "*" # Push events to every tag not containing /
-  # workflow_run:
-  #   workflows: [ "Bump version" ]
-  #   types: [ completed ]
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "*"
+    paths-ignore:
+      - '.github/**'
 
 jobs:
 # test:
 #   ...
+
   deploy:
     runs-on: ubuntu-latest
     # needs: test
@@ -24,11 +22,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
 
-      - name: Mainnet deploying
+      - name: Branch name
+        id: branch_name
+        run: |
+          echo ::set-output name=TAG::${GITHUB_REF#refs/tags/}
+      
+      - name: Build prod image
         run: .github/dispatch_workflow.py
         env:
           APP_ID: ${{ secrets.APP_ID }}
           APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
           TARGET_REPO: "${{ secrets.TARGET_REPO }}"
-          TARGET: "mainnet"
-          TARGET_WORKFLOW: "easytrack_ui.yaml"
+          TAG: "${{ steps.branch_name.outputs.TAG }}"
+          TARGET_WORKFLOW: "build_mainnet_easytrack_ui.yaml"
