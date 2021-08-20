@@ -7,7 +7,7 @@ import { useRewardPrograms } from 'modules/motions/hooks/useRewardPrograms'
 import { Button } from '@lidofinance/lido-ui'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { Fieldset } from '../CreateMotionFormStyle'
+import { Fieldset, RemoveItemButton } from '../CreateMotionFormStyle'
 
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -89,17 +89,9 @@ export const formParts = createMotionFormPart({
               </Fieldset>
 
               {fieldsArr.fields.length > 1 && (
-                <Fieldset>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="xs"
-                    children="Remove"
-                    onClick={() => handleRemoveProgram(i)}
-                  />
-                  <br />
-                  <br />
-                </Fieldset>
+                <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
+                  Remove program {i + 1}
+                </RemoveItemButton>
               )}
             </Fragment>
           ))}

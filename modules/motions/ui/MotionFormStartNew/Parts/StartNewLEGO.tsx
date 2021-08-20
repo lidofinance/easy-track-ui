@@ -7,7 +7,7 @@ import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { Button } from '@lidofinance/lido-ui'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { Fieldset } from '../CreateMotionFormStyle'
+import { Fieldset, RemoveItemButton } from '../CreateMotionFormStyle'
 
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -89,17 +89,9 @@ export const formParts = createMotionFormPart({
               </Fieldset>
 
               {fieldsArr.fields.length > 1 && (
-                <Fieldset>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="xs"
-                    children="Remove"
-                    onClick={() => handleRemoveToken(i)}
-                  />
-                  <br />
-                  <br />
-                </Fieldset>
+                <RemoveItemButton onClick={() => handleRemoveToken(i)}>
+                  Remove token {i + 1}
+                </RemoveItemButton>
               )}
             </Fragment>
           ))}
@@ -108,7 +100,7 @@ export const formParts = createMotionFormPart({
             <Fieldset>
               <Button
                 type="button"
-                variant="translucent"
+                variant="outlined"
                 size="sm"
                 children="One more token"
                 onClick={handleAddToken}

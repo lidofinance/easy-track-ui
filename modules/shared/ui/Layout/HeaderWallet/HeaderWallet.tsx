@@ -27,7 +27,7 @@ export function HeaderWallet() {
   return (
     <Wrap>
       <AddressBadge
-        symbols={5}
+        symbols={3}
         address={walletAddress!}
         onClick={openWalletModal}
       />
