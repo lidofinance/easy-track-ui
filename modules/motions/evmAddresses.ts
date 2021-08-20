@@ -41,11 +41,13 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
   // Goerli
   [Chains.Goerli]: {
     [MotionType.NodeOperatorIncreaseLimit]:
-      '0x81c2f1f181496089c4b93a378fe68614f609eb05',
-    [MotionType.LEGOTopUp]: '0x02',
-    [MotionType.RewardProgramAdd]: '0x03',
-    [MotionType.RewardProgramRemove]: '0x04',
-    [MotionType.RewardProgramTopUp]: '0x05',
+      '0xEfa0dB536d2c8089685630fafe88CF7805966FC3',
+    [MotionType.LEGOTopUp]: '0x75ff3dd673Ef9fC459A52E1054db5dF2A1101212',
+    [MotionType.RewardProgramAdd]: '0x0fc3De4B1bbcB315880d328e3f9C81d742D73d01',
+    [MotionType.RewardProgramRemove]:
+      '0xc641B760aA2D2a39eCB070e1eE781cc6beb31b6D',
+    [MotionType.RewardProgramTopUp]:
+      '0x24479aB019a6ee090c942De41745ac4112075aD1',
   } as const,
 
   // Kovan
