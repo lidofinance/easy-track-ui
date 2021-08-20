@@ -48,7 +48,7 @@ export type Motion = {
   objectionsAmount: BigNumber
   objectionsAmountPct: number
   evmScriptHash: string
-  evmScriptCalldata: string
+  evmScriptCalldata?: string
   status: MotionStatus
   enacted_at?: number
   canceled_at?: number
@@ -70,7 +70,7 @@ export type RawMotionSubgraph = {
   objectionsAmount: string
   objectionsAmountPct: string
   evmScriptHash: string
-  evmScriptCalldata: string
+  evmScriptCalldata?: string
   status: MotionStatus
   enacted_at?: string
   canceled_at?: string

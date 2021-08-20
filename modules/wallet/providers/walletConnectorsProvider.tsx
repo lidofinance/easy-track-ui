@@ -47,14 +47,15 @@ export function WalletConnectorsProvider({ children }: Props) {
   )
 
   if (!current.isInited && isClientSide()) {
-    current.connectors.metamask = new InjectedConnector({ supportedChainIds })
-    current.connectors.trust = new InjectedConnector({ supportedChainIds })
-    current.connectors.imtoken = new InjectedConnector({ supportedChainIds })
+    current.connectors.metamask = new InjectedConnector({})
+    current.connectors.trust = new InjectedConnector({})
+    current.connectors.imtoken = new InjectedConnector({})
     // current.connectors.gnosisSafe = new SafeAppConnector()
 
     current.connectors.walletconnect = new WalletConnectConnector({
-      supportedChainIds,
-      rpc: supportedChainIds.reduce<Record<number, string>>(
+      // supportedChainIds,
+      // rpc: supportedChainIds.reduce<Record<number, string>>(
+      rpc: Object.values(Chains).reduce<Record<number, string>>(
         (acc, chainId) => ({
           ...acc,
           [chainId]: getRpcUrl(chainId),

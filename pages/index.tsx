@@ -8,8 +8,8 @@ import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
 import type { Motion } from 'modules/motions/types'
-import { fetcherStandard } from 'modules/shared/utils/fetcherStandard'
-import * as urlsApi from 'modules/shared/utils/urlsApi'
+import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
+import * as urlsApi from 'modules/network/utils/urlsApi'
 
 export default function HomePage() {
   const currentChain = useCurrentChain()

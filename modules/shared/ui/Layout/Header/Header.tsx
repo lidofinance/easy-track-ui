@@ -21,7 +21,7 @@ import StartSVG from './icons/start.svg.react'
 
 import { getChainColor, getChainName } from 'modules/blockChain/chains'
 import logoSrc from 'assets/logo.com.svg'
-import * as urls from 'modules/shared/utils/urls'
+import * as urls from 'modules/network/utils/urls'
 
 function NavItem({
   link,

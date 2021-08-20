@@ -19,7 +19,7 @@ import {
   FooterValue,
 } from './MotionCardPreviewStyle'
 
-import * as urls from 'modules/shared/utils/urls'
+import * as urls from 'modules/network/utils/urls'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
