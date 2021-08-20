@@ -21,17 +21,27 @@ export function MotionDetailedTime({ motion, timeData, displayStatus }: Props) {
     motion.status !== MotionStatus.ACTIVE &&
     motion.status !== MotionStatus.PENDING
 
-  const endDate = motion.startDate + motion.duration
-
   if (isArchived) {
+    let title = 'Ended at:'
+    let date = motion.startDate + motion.duration
+    if (motion.status === MotionStatus.ENACTED) {
+      title = 'Enacted at:'
+      date = motion.enacted_at!
+    } else if (motion.status === MotionStatus.CANCELED) {
+      title = 'Canceled at:'
+      date = motion.canceled_at!
+    } else if (motion.status === MotionStatus.REJECTED) {
+      title = 'Rejected at:'
+      date = motion.rejected_at!
+    }
     return (
       <Wrap displayStatus={displayStatus}>
-        <Title>Ended at:</Title>
+        <Title>{title}</Title>
         <Value>
-          <FormattedDate format="DD MMM YYYY" date={endDate} />
+          <FormattedDate format="DD MMM YYYY" date={date} />
         </Value>
         <Subvalue>
-          <FormattedDate format="hh:mm a" date={endDate} />
+          <FormattedDate format="hh:mm a" date={date} />
         </Subvalue>
       </Wrap>
     )

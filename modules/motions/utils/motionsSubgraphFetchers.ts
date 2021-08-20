@@ -26,7 +26,11 @@ export const getQuerySubgraphMotions = (
     objectionsAmount
     objectionsAmountPct
     evmScriptHash
+    evmScriptCalldata
     status
+    enacted_at
+    canceled_at
+    rejected_at
   }
 }`
 

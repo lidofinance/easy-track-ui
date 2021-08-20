@@ -48,7 +48,11 @@ export type Motion = {
   objectionsAmount: BigNumber
   objectionsAmountPct: number
   evmScriptHash: string
+  evmScriptCalldata: string
   status: MotionStatus
+  enacted_at?: number
+  canceled_at?: number
+  rejected_at?: number
 }
 
 export type RawMotionOnchain = PromiseValue<
@@ -66,5 +70,9 @@ export type RawMotionSubgraph = {
   objectionsAmount: string
   objectionsAmountPct: string
   evmScriptHash: string
+  evmScriptCalldata: string
   status: MotionStatus
+  enacted_at?: string
+  canceled_at?: string
+  rejected_at?: string
 }
