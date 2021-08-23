@@ -1,5 +1,5 @@
 import { ContractRewardProgramRegistry } from 'modules/blockChain/contracts'
-import { useSWR } from 'modules/shared/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { getEventsRewardProgramAdded } from '../utils/getEventsRewardProgramAdded'
 
 export function useRewardPrograms() {

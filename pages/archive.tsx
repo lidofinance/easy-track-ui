@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { useSWRInfinite } from 'modules/shared/hooks/useSwr'
+import { useSWRInfinite } from 'modules/network/hooks/useSwr'
 import {
   useFetchMotionsSubgraphList,
   getQuerySubgraphMotions,

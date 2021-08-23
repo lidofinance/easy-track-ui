@@ -1,4 +1,4 @@
-import { useSWR } from 'modules/shared/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Container } from '@lidofinance/lido-ui'

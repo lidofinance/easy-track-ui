@@ -1,4 +1,4 @@
-import { useSWR } from 'modules/shared/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { getEventMotionCreated } from '../utils/getEventMotionCreation'
 

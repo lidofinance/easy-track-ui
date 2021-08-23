@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useSWR, SWRResponse } from 'modules/shared/hooks/useSwr'
+import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
 import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
 export const useContractSwr = <

@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { useMemo } from 'react'
-import { useSWR } from 'modules/shared/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
 import {

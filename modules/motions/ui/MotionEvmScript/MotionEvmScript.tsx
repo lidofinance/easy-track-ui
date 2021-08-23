@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useSWR } from 'modules/shared/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
 import { useEVMScriptDecoder } from 'modules/motions/hooks/useEVMScriptDecoder'
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useRouter } from 'next/dist/client/router'
-import { useSWR } from 'modules/shared/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useFetchMotionsSubgraphItem } from 'modules/motions/hooks/useMotionsSubgraphFetchers'
 
