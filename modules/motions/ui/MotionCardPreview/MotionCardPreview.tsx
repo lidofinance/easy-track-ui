@@ -72,7 +72,7 @@ export function MotionCardPreview({ motion }: Props) {
         <CardProgress>
           {isArchived ? (
             <FormattedDate
-              format="MMM DD YYYY"
+              format="MMM DD, YYYY"
               date={motion.startDate + motion.duration}
             />
           ) : isPassed ? (

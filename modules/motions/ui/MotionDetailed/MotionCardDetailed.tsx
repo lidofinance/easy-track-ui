@@ -119,7 +119,7 @@ export function MotionCardDetailed({ motion }: Props) {
           <StartDateCell>
             <InfoLabel children="Started on:" />
             <StartDateValue>
-              <FormattedDate date={motion.startDate} format="DD MMM YYYY " />
+              <FormattedDate date={motion.startDate} format="MMM DD, YYYY " />
               <StartDateTime>
                 <FormattedDate date={motion.startDate} format="hh:mma" />
               </StartDateTime>

@@ -38,7 +38,7 @@ export function MotionDetailedTime({ motion, timeData, displayStatus }: Props) {
       <Wrap displayStatus={displayStatus}>
         <Title>{title}</Title>
         <Value>
-          <FormattedDate format="DD MMM YYYY" date={date} />
+          <FormattedDate format="MMM DD, YYYY" date={date} />
         </Value>
         <Subvalue>
           <FormattedDate format="hh:mm a" date={date} />
