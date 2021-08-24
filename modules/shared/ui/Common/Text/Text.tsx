@@ -10,6 +10,7 @@ type Props = {
   weight: TextWeight
   color?: TextColor
   truncateLines?: number
+  isCentered?: boolean
 }
 
 export const Text = styled.div<Props>`
@@ -17,6 +18,12 @@ export const Text = styled.div<Props>`
   font-weight: ${({ weight }) => weight};
   color: ${({ color = 'text', theme }) =>
     color === 'inherit' ? color : theme.colors[color]};
+
+  ${({ isCentered }) =>
+    isCentered &&
+    css`
+      text-align: center;
+    `}
 
   ${({ truncateLines }) =>
     truncateLines === undefined
