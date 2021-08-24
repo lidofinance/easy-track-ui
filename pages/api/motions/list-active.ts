@@ -1,3 +1,4 @@
+import { flow, map, orderBy } from 'lodash/fp'
 import { createNextConnect } from 'modules/shared/utils/createNextConnect'
 import { getLibrary } from 'modules/blockChain/utils/getLibrary'
 import { parseChainId } from 'modules/blockChain/chains'
@@ -10,7 +11,11 @@ export default createNextConnect().get(async (req, res) => {
     const library = getLibrary(chainId)
     const easyTracksContract = ContractEasyTrack.connect({ chainId, library })
     const motions = await easyTracksContract.getMotions()
-    res.json(motions.map(formatMotionDataOnchain).reverse())
+    const formatted = flow(
+      map(formatMotionDataOnchain),
+      orderBy('id', 'desc'),
+    )(motions)
+    res.json(formatted)
   } catch (e) {
     console.log(e)
     res.status(500).send({ error: 'Something went wrong!' })

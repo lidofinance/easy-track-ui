@@ -10,7 +10,7 @@ export const getQuerySubgraphMotions = (
   motions(
     ${arg.skip !== undefined ? `skip: ${arg.skip}` : ''}
     ${arg.first !== undefined ? `first: ${arg.first}` : ''}
-    orderBy:id
+    orderBy: startDate
     orderDirection: desc
     where: { status_in: ["CANCELED", "REJECTED", "ENACTED"]${
       arg.id ? `, id: ${arg.id}` : ''
