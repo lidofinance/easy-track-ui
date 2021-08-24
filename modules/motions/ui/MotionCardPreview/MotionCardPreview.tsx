@@ -86,7 +86,9 @@ export function MotionCardPreview({ motion }: Props) {
           <div>
             <FooterLabel>Objections</FooterLabel>
             <FooterValue>
-              {!progress ? 'Loading...' : `${progress.objectionsPct}%`}
+              {!progress
+                ? 'Loading...'
+                : `${Math.round(progress.objectionsPct * 100) / 100}%`}
             </FooterValue>
           </div>
           <AddressWithPop symbols={4} address={motion.creator} />

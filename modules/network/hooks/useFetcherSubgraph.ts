@@ -1,12 +1,11 @@
 import { useCallback } from 'react'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { fetcherGraphql } from '../utils/fetcherGraphql'
-import { SUBGRAPH_URL } from '../networkConfig'
+import { useSubgraphUrl } from './useSubgraphUrl'
 
 export function useFetcherSubgraph() {
-  const chainId = useCurrentChain()
+  const subgraphUrl = useSubgraphUrl()
   return useCallback(
-    <T>(query: string) => fetcherGraphql<T>(SUBGRAPH_URL[chainId], query),
-    [chainId],
+    <T>(query: string) => fetcherGraphql<T>(subgraphUrl, query),
+    [subgraphUrl],
   )
 }

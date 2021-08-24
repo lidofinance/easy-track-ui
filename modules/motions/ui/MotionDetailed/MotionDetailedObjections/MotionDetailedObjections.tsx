@@ -39,7 +39,9 @@ export function MotionDetailedObjections({ motion }: Props) {
         )}
       </ObjectionsValue>
       <ObjectionsPercents>
-        {!progress ? '...' : `${progress.objectionsPct}%`}
+        {!progress
+          ? '...'
+          : `${Math.round(progress.objectionsPct * 100) / 100}%`}
       </ObjectionsPercents>
     </ObjectionsInfo>
   )

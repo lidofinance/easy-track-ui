@@ -1,7 +1,6 @@
-import { useCallback } from 'react'
-import { useFetcherSubgraph } from 'modules/network/hooks/useFetcherSubgraph'
 import { RawMotionSubgraph } from '../types'
 import { formatMotionDataSubgraph } from '../utils/formatMotionDataSubgraph'
+import { fetcherGraphql } from 'modules/network/utils/fetcherGraphql'
 
 type Response = { data: { motions: RawMotionSubgraph[] } }
 
@@ -35,25 +34,19 @@ export const getQuerySubgraphMotions = (
   }
 }`
 
-export function useFetchMotionsSubgraphList() {
-  const fetchSubgraph = useFetcherSubgraph()
-  return useCallback(
-    async (query: string) => {
-      const res = await fetchSubgraph<Response>(query)
-      return res.data.motions.map(formatMotionDataSubgraph)
-    },
-    [fetchSubgraph],
-  )
+export async function fetchMotionsSubgraphList(url: string, query: string) {
+  const res = await fetcherGraphql<Response>(url, query)
+  return res.data.motions.map(formatMotionDataSubgraph)
 }
 
-export function useFetchMotionsSubgraphItem() {
-  const fetchSubgraph = useFetcherSubgraph()
-  return useCallback(
-    async (id: string | number) => {
-      const res = await fetchSubgraph<Response>(getQuerySubgraphMotions({ id }))
-      const motion = res.data.motions[0] as RawMotionSubgraph | undefined
-      return motion ? formatMotionDataSubgraph(motion) : null
-    },
-    [fetchSubgraph],
+export async function fetchMotionsSubgraphItem(
+  url: string,
+  id: string | number,
+) {
+  const res = await fetcherGraphql<Response>(
+    url,
+    getQuerySubgraphMotions({ id }),
   )
+  const motion = res.data.motions[0] as RawMotionSubgraph | undefined
+  return motion ? formatMotionDataSubgraph(motion) : null
 }

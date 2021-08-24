@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useRouter } from 'next/dist/client/router'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
-import { useFetchMotionsSubgraphItem } from 'modules/motions/hooks/useMotionsSubgraphFetchers'
+import { useSubgraphUrl } from 'modules/network/hooks/useSubgraphUrl'
 
 import { Container } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -10,6 +10,7 @@ import { MotionCardDetailed } from 'modules/motions/ui/MotionDetailed'
 
 import type { Motion } from 'modules/motions/types'
 import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
+import { fetchMotionsSubgraphItem } from 'modules/motions/network/motionsSubgraphFetchers'
 import * as urlsApi from 'modules/network/utils/urlsApi'
 
 const ContentContainer = styled(Container).attrs({
@@ -23,7 +24,7 @@ export default function MotionDetailsPage() {
   const router = useRouter()
   const currentChain = useCurrentChain()
   const motionId = Number(router.query.motionId)
-  const fetchMotionsSubgraphItem = useFetchMotionsSubgraphItem()
+  const subgraphUrl = useSubgraphUrl()
   const { initialLoading, data: motion } = useSWR<Motion | null>(
     `motion-${currentChain}-${motionId}`,
     async () => {
@@ -33,7 +34,7 @@ export default function MotionDetailsPage() {
         )
         return tryActive
       } catch {
-        const tryArchive = await fetchMotionsSubgraphItem(motionId)
+        const tryArchive = await fetchMotionsSubgraphItem(subgraphUrl, motionId)
         return tryArchive
       }
     },
