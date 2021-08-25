@@ -23,12 +23,12 @@ export default function HomePage() {
     <Container as="main" size="full">
       <Title title="Active Motions" subtitle="Select the card to see details" />
       {initialLoading && <PageLoader />}
-      {!initialLoading && (!motions || !motions.length) && (
+      {!initialLoading && (!motions || motions.length === 0) && (
         <Text size={16} weight={500} isCentered color="textSecondary">
           No active motions at the moment
         </Text>
       )}
-      {!initialLoading && motions && motions.length && (
+      {!initialLoading && motions && motions.length > 0 && (
         <MotionsGrid>
           {motions.map(motion => (
             <MotionCardPreview key={motion.id} motion={motion} />
