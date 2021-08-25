@@ -12,6 +12,7 @@ import { Actions, Hint } from './MotionDetailedActionsStyle'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
 import { toastError } from 'modules/toasts'
+import { getAccessList } from 'modules/motions/accessLists'
 
 type Props = {
   motion: Motion
@@ -78,12 +79,13 @@ export function MotionDetailedActions({ motion }: Props) {
       )
       const res = await contractEasyTrack.enactMotion(motion.id, callData, {
         gasLimit: 500000,
+        accessList: getAccessList(motion.evmScriptFactory, 'enact'),
       })
       console.log(res)
     } catch (err) {
       console.error(err)
     }
-  }, [checkWalletConnect, motion.id, contractEasyTrack])
+  }, [checkWalletConnect, motion, contractEasyTrack])
 
   if (!isWalletConnected) {
     return (
