@@ -77,6 +77,11 @@ export function MotionDetailedActions({ motion }: Props) {
         contractEasyTrack,
         motion.id,
       )
+      console.info(
+        'Access list:',
+        motion.evmScriptFactory,
+        getAccessList(motion.evmScriptFactory, 'enact'),
+      )
       const res = await contractEasyTrack.enactMotion(motion.id, callData, {
         gasLimit: 500000,
         accessList: getAccessList(motion.evmScriptFactory, 'enact'),
