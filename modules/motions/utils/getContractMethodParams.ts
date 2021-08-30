@@ -1,4 +1,3 @@
-import type { AccessListish } from 'ethers/lib/utils'
 import { get } from 'lodash'
 import { Chains } from 'modules/blockChain/chains'
 import { EvmAddressesByChain } from '../evmAddresses'
@@ -30,9 +29,6 @@ const ACCESS_LISTS_MAP = {
   } as const,
 } as const
 
-export function getContractMethodParams(
-  contract: string,
-  method: string,
-): AccessListish | undefined {
+export function getContractMethodParams(contract: string, method: string): any {
   return get(ACCESS_LISTS_MAP, [contract, method], {})
 }
