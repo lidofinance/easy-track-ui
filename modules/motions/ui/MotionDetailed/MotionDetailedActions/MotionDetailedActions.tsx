@@ -12,7 +12,7 @@ import { Actions, Hint } from './MotionDetailedActionsStyle'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
 import { toastError } from 'modules/toasts'
-import { getAccessList } from 'modules/motions/accessLists'
+import { getContractMethodParams } from 'modules/motions/utils/getContractMethodParams'
 
 type Props = {
   motion: Motion
@@ -80,11 +80,11 @@ export function MotionDetailedActions({ motion }: Props) {
       console.info(
         'Access list:',
         motion.evmScriptFactory,
-        getAccessList(motion.evmScriptFactory, 'enact'),
+        getContractMethodParams(motion.evmScriptFactory, 'enact'),
       )
       const res = await contractEasyTrack.enactMotion(motion.id, callData, {
         gasLimit: 500000,
-        accessList: getAccessList(motion.evmScriptFactory, 'enact'),
+        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
       })
       console.log(res)
     } catch (err) {
