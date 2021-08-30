@@ -29,6 +29,6 @@ const ACCESS_LISTS_MAP = {
   } as const,
 } as const
 
-export function getContractMethodParams(contract: string, method: string): any {
+export function getContractMethodParams(contract: string, method: string) {
   return get(ACCESS_LISTS_MAP, [contract, method], {})
 }
