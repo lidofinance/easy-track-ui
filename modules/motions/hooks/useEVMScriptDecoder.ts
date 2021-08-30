@@ -14,7 +14,7 @@ export function useEVMScriptDecoder() {
 
   return useGlobalMemo(
     () =>
-      new EVMScriptDecoder([
+      new EVMScriptDecoder(
         new ABIProviderLocal({
           [CONTRACT_ADDRESSES.RewardProgramRegistry[chainId]]:
             RewardProgramRegistryAbi as any,
@@ -22,7 +22,7 @@ export function useEVMScriptDecoder() {
             NodeOperatorsRegistryAbi as any,
           [CONTRACT_ADDRESSES.Finance[chainId]]: FinanceAbi as any,
         }),
-      ]),
+      ),
     `evm-script-decoder-${chainId}`,
   )
 }
