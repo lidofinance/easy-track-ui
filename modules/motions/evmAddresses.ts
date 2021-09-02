@@ -43,11 +43,11 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xEfa0dB536d2c8089685630fafe88CF7805966FC3',
     [MotionType.LEGOTopUp]: '0x75ff3dd673Ef9fC459A52E1054db5dF2A1101212',
-    [MotionType.RewardProgramAdd]: '0x0fc3De4B1bbcB315880d328e3f9C81d742D73d01',
+    [MotionType.RewardProgramAdd]: '0xdA53fF207966b3946facaC52dD22B130D507d276',
     [MotionType.RewardProgramRemove]:
-      '0xc641B760aA2D2a39eCB070e1eE781cc6beb31b6D',
+      '0xFeBd8FAC16De88206d4b18764e826AF38546AfE0',
     [MotionType.RewardProgramTopUp]:
-      '0x24479aB019a6ee090c942De41745ac4112075aD1',
+      '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
   } as const,
 
   // Kovan
