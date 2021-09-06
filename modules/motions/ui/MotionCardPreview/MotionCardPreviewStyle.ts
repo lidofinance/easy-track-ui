@@ -132,6 +132,8 @@ export const Wrap = styled.div<WrapProps>`
   padding: 24px;
   background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
 
   ${({ displayStatus }) => statusStyles[displayStatus]}
 `
