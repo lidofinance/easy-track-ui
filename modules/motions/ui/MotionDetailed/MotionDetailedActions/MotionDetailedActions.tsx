@@ -2,7 +2,6 @@ import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { ContractEasyTrack, ContractLDO } from 'modules/blockChain/contracts'
-import { useContractSwr } from 'modules/blockChain/hooks/useContractSwr'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -20,13 +19,11 @@ type Props = {
 
 export function MotionDetailedActions({ motion }: Props) {
   const { walletAddress, isWalletConnected } = useWalletInfo()
-  const contractLDO = ContractLDO.useRpc()
   const contractEasyTrack = ContractEasyTrack.useWeb3()
   const checkWalletConnect = useCheckWalletConnect()
 
   const { data: balanceAtRaw, initialLoading: isLoadingBalanceAt } =
-    useContractSwr(
-      contractLDO,
+    ContractLDO.useSwrWeb3(
       walletAddress ? 'balanceOfAt' : null,
       String(walletAddress),
       motion.snapshotBlock,
@@ -34,16 +31,14 @@ export function MotionDetailedActions({ motion }: Props) {
   const balanceAt = balanceAtRaw && formatEther(balanceAtRaw)
 
   const { data: isAlreadyObjected, initialLoading: isLoadingAlreadyObjected } =
-    useContractSwr(
-      contractEasyTrack,
+    ContractEasyTrack.useSwrWeb3(
       walletAddress ? 'objections' : null,
       motion.id,
       walletAddress as string,
     )
 
   const { data: canObject, initialLoading: isLoadingCanObject } =
-    useContractSwr(
-      contractEasyTrack,
+    ContractEasyTrack.useSwrWeb3(
       walletAddress ? 'canObjectToMotion' : null,
       motion.id,
       walletAddress as string,

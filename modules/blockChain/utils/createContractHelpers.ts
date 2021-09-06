@@ -1,10 +1,13 @@
-import type { Signer, providers } from 'ethers'
-import { JsonRpcProvider } from '@ethersproject/providers'
-import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
 import { useWeb3React } from '@web3-react/core'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
+import { useContractSwr } from '../hooks/useContractSwr'
+
+import type { Signer, providers } from 'ethers'
+import { JsonRpcProvider } from '@ethersproject/providers'
+import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
 import { Chains, getChainName } from 'modules/blockChain/chains'
+import { FilterMethods } from 'modules/shared/utils/utilTypes'
 
 type Library = Signer | providers.Provider
 
@@ -76,11 +79,27 @@ export function createContractHelpers<F extends Factory>({
     )
   }
 
+  const getUseSwr = function (type: 'web3' | 'rpc') {
+    return function <M extends FilterMethods<Instance>>(
+      method: M | null,
+      ...params: Parameters<Instance[M]>
+    ) {
+      const contractInstance = type === 'web3' ? useWeb3() : useRpc()
+      const data = useContractSwr(contractInstance, method, ...params)
+      return data
+    }
+  }
+
+  const useSwrWeb3 = getUseSwr('web3')
+  const useSwrRpc = getUseSwr('rpc')
+
   return {
     address,
     factory,
     connect,
     useRpc,
     useWeb3,
+    useSwrWeb3,
+    useSwrRpc,
   }
 }
