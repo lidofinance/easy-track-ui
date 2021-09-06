@@ -2,7 +2,8 @@ import { useCallback } from 'react'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
 
-import { CancelButton } from './MotionDetailedCancelButtonStyle'
+import { Tooltip } from 'modules/shared/ui/Common/Tooltip'
+import { CancelButton, Wrap } from './MotionDetailedCancelButtonStyle'
 import TrashSVG from 'assets/icons/trash.svg.react'
 
 import type { Motion } from 'modules/motions/types'
@@ -29,8 +30,12 @@ export function MotionDetailedCancelButton({ motion }: Props) {
   }, [checkWalletConnect, contractEasyTrack, motion.id])
 
   return (
-    <CancelButton onClick={handleCancel}>
-      <TrashSVG />
-    </CancelButton>
+    <Wrap>
+      <Tooltip position="top" tooltip="Cancel">
+        <CancelButton onClick={handleCancel}>
+          <TrashSVG />
+        </CancelButton>
+      </Tooltip>
+    </Wrap>
   )
 }
