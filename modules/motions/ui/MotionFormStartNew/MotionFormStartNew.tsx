@@ -58,6 +58,14 @@ export function MotionFormStartNew() {
 
   const motionType = formMethods.watch('motionType')
   const CurrentFormPart = motionType ? formParts[motionType].Component : null
+  const submitAction = (
+    <Button
+      type="submit"
+      fullwidth
+      children="Submit"
+      // loading={isSubmitting}
+    />
+  )
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
@@ -72,13 +80,10 @@ export function MotionFormStartNew() {
           ))}
         </SelectControl>
       </Fieldset>
-      {CurrentFormPart && <CurrentFormPart />}
-      {motionType && (
-        <Button
-          type="submit"
-          fullwidth
-          children="Submit"
-          // loading={isSubmitting}
+      {CurrentFormPart && motionType && (
+        <CurrentFormPart
+          fieldNames={formParts[motionType].fieldNames as any}
+          submitAction={submitAction}
         />
       )}
     </Form>

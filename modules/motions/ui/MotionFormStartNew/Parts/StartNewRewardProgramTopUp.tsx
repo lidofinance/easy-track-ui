@@ -39,77 +39,81 @@ export const formParts = createMotionFormPart({
   getDefaultFormData: () => ({
     programs: [{ address: '', amount: '' }] as Program[],
   }),
-  getComponent: ({ fieldNames }) =>
-    function StartNewMotionMotionFormLego() {
-      const { data: rewardPrograms, initialLoading } = useRewardPrograms()
-      const { data: governanceSymbol } = useGovernanceSymbol()
+  Component: function StartNewMotionMotionFormLego({
+    fieldNames,
+    submitAction,
+  }) {
+    const { data: rewardPrograms, initialLoading } = useRewardPrograms()
+    const { data: governanceSymbol } = useGovernanceSymbol()
 
-      const fieldsArr = useFieldArray({ name: fieldNames.programs })
+    const fieldsArr = useFieldArray({ name: fieldNames.programs })
 
-      const handleAddProgram = useCallback(
-        () => fieldsArr.append({ address: '', amount: '' }),
-        [fieldsArr],
-      )
+    const handleAddProgram = useCallback(
+      () => fieldsArr.append({ address: '', amount: '' }),
+      [fieldsArr],
+    )
 
-      const handleRemoveProgram = useCallback(
-        (i: number) => fieldsArr.remove(i),
-        [fieldsArr],
-      )
+    const handleRemoveProgram = useCallback(
+      (i: number) => fieldsArr.remove(i),
+      [fieldsArr],
+    )
 
-      return (
-        <>
-          {fieldsArr.fields.map((item, i) => (
-            <Fragment key={item.id}>
-              <Fieldset>
-                <SelectControl
-                  label="Reward program address"
-                  name={`${fieldNames.programs}.${i}.address`}
-                  rules={{ required: 'Field is required' }}
-                >
-                  {initialLoading && (
-                    <Option value="" disabled children="Loading" />
-                  )}
-                  {rewardPrograms?.map((program, j) => (
-                    <Option
-                      key={j}
-                      value={program.address}
-                      children={program.title}
-                    />
-                  ))}
-                </SelectControl>
-              </Fieldset>
-
-              <Fieldset>
-                <InputControl
-                  label={`${governanceSymbol} Amount`}
-                  name={`${fieldNames.programs}.${i}.amount`}
-                  rules={{
-                    required: 'Field is required',
-                    validate: validateToken,
-                  }}
-                />
-              </Fieldset>
-
-              {fieldsArr.fields.length > 1 && (
-                <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
-                  Remove program {i + 1}
-                </RemoveItemButton>
-              )}
-            </Fragment>
-          ))}
-
-          {rewardPrograms && fieldsArr.fields.length < rewardPrograms.length && (
+    return (
+      <>
+        {fieldsArr.fields.map((item, i) => (
+          <Fragment key={item.id}>
             <Fieldset>
-              <Button
-                type="button"
-                variant="translucent"
-                size="sm"
-                children="One more program"
-                onClick={handleAddProgram}
+              <SelectControl
+                label="Reward program address"
+                name={`${fieldNames.programs}.${i}.address`}
+                rules={{ required: 'Field is required' }}
+              >
+                {initialLoading && (
+                  <Option value="" disabled children="Loading" />
+                )}
+                {rewardPrograms?.map((program, j) => (
+                  <Option
+                    key={j}
+                    value={program.address}
+                    children={program.title}
+                  />
+                ))}
+              </SelectControl>
+            </Fieldset>
+
+            <Fieldset>
+              <InputControl
+                label={`${governanceSymbol} Amount`}
+                name={`${fieldNames.programs}.${i}.amount`}
+                rules={{
+                  required: 'Field is required',
+                  validate: validateToken,
+                }}
               />
             </Fieldset>
-          )}
-        </>
-      )
-    },
+
+            {fieldsArr.fields.length > 1 && (
+              <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
+                Remove program {i + 1}
+              </RemoveItemButton>
+            )}
+          </Fragment>
+        ))}
+
+        {rewardPrograms && fieldsArr.fields.length < rewardPrograms.length && (
+          <Fieldset>
+            <Button
+              type="button"
+              variant="translucent"
+              size="sm"
+              children="One more program"
+              onClick={handleAddProgram}
+            />
+          </Fieldset>
+        )}
+
+        {submitAction}
+      </>
+    )
+  },
 })

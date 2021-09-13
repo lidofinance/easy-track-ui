@@ -39,69 +39,73 @@ export const formParts = createMotionFormPart({
   getDefaultFormData: () => ({
     tokens: [{ address: '', amount: '' }] as Program[],
   }),
-  getComponent: ({ fieldNames }) =>
-    function StartNewMotionMotionFormLego() {
-      const fieldsArr = useFieldArray({ name: fieldNames.tokens })
+  Component: function StartNewMotionMotionFormLego({
+    fieldNames,
+    submitAction,
+  }) {
+    const fieldsArr = useFieldArray({ name: fieldNames.tokens })
 
-      const handleAddToken = useCallback(
-        () => fieldsArr.append({ address: '', amount: '' }),
-        [fieldsArr],
-      )
+    const handleAddToken = useCallback(
+      () => fieldsArr.append({ address: '', amount: '' }),
+      [fieldsArr],
+    )
 
-      const handleRemoveToken = useCallback(
-        (i: number) => fieldsArr.remove(i),
-        [fieldsArr],
-      )
+    const handleRemoveToken = useCallback(
+      (i: number) => fieldsArr.remove(i),
+      [fieldsArr],
+    )
 
-      const tokenOptions = useLegoTokenOptions()
+    const tokenOptions = useLegoTokenOptions()
 
-      return (
-        <>
-          {fieldsArr.fields.map((item, i) => (
-            <Fragment key={item.id}>
-              <Fieldset>
-                <SelectControl
-                  label="Token"
-                  name={`${fieldNames.tokens}.${i}.address`}
-                  rules={{ required: 'Field is required' }}
-                >
-                  {tokenOptions.map(({ label, value }, j) => (
-                    <Option key={j} value={value} children={label} />
-                  ))}
-                </SelectControl>
-              </Fieldset>
-
-              <Fieldset>
-                <InputControl
-                  label="Amount"
-                  name={`${fieldNames.tokens}.${i}.amount`}
-                  rules={{
-                    required: 'Field is required',
-                    validate: validateToken,
-                  }}
-                />
-              </Fieldset>
-
-              {fieldsArr.fields.length > 1 && (
-                <RemoveItemButton onClick={() => handleRemoveToken(i)}>
-                  Remove token {i + 1}
-                </RemoveItemButton>
-              )}
-            </Fragment>
-          ))}
-
-          {fieldsArr.fields.length < tokenOptions.length && (
+    return (
+      <>
+        {fieldsArr.fields.map((item, i) => (
+          <Fragment key={item.id}>
             <Fieldset>
-              <Button
-                type="button"
-                variant="outlined"
-                size="sm"
-                children="One more token"
-                onClick={handleAddToken}
+              <SelectControl
+                label="Token"
+                name={`${fieldNames.tokens}.${i}.address`}
+                rules={{ required: 'Field is required' }}
+              >
+                {tokenOptions.map(({ label, value }, j) => (
+                  <Option key={j} value={value} children={label} />
+                ))}
+              </SelectControl>
+            </Fieldset>
+
+            <Fieldset>
+              <InputControl
+                label="Amount"
+                name={`${fieldNames.tokens}.${i}.amount`}
+                rules={{
+                  required: 'Field is required',
+                  validate: validateToken,
+                }}
               />
             </Fieldset>
-          )}
-        </>
-      )
-    },
+
+            {fieldsArr.fields.length > 1 && (
+              <RemoveItemButton onClick={() => handleRemoveToken(i)}>
+                Remove token {i + 1}
+              </RemoveItemButton>
+            )}
+          </Fragment>
+        ))}
+
+        {fieldsArr.fields.length < tokenOptions.length && (
+          <Fieldset>
+            <Button
+              type="button"
+              variant="outlined"
+              size="sm"
+              children="One more token"
+              onClick={handleAddToken}
+            />
+          </Fieldset>
+        )}
+
+        {submitAction}
+      </>
+    )
+  },
 })

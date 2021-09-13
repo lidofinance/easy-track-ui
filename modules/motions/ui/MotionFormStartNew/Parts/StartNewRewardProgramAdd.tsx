@@ -24,29 +24,34 @@ export const formParts = createMotionFormPart({
     address: '',
     title: '',
   }),
-  getComponent: ({ fieldNames }) =>
-    function StartNewMotionMotionFormLego() {
-      return (
-        <>
-          <Fieldset>
-            <InputControl
-              name={fieldNames.title}
-              label="Title"
-              rules={{ required: 'Field is required' }}
-            />
-          </Fieldset>
-          <Fieldset>
-            <InputControl
-              name={fieldNames.address}
-              label="Address"
-              rules={{
-                required: 'Field is required',
-                validate: value =>
-                  utils.isAddress(value) ? true : 'Address is not valid',
-              }}
-            />
-          </Fieldset>
-        </>
-      )
-    },
+  Component: function StartNewMotionMotionFormLego({
+    fieldNames,
+    submitAction,
+  }) {
+    return (
+      <>
+        <Fieldset>
+          <InputControl
+            name={fieldNames.title}
+            label="Title"
+            rules={{ required: 'Field is required' }}
+          />
+        </Fieldset>
+
+        <Fieldset>
+          <InputControl
+            name={fieldNames.address}
+            label="Address"
+            rules={{
+              required: 'Field is required',
+              validate: value =>
+                utils.isAddress(value) ? true : 'Address is not valid',
+            }}
+          />
+        </Fieldset>
+
+        {submitAction}
+      </>
+    )
+  },
 })

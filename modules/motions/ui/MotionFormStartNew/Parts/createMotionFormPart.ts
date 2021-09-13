@@ -13,15 +13,16 @@ type Args<FormData> = {
 
   getDefaultFormData: () => FormData
 
-  getComponent: (getComponent: {
+  Component: React.ComponentType<{
     fieldNames: Record<keyof FormData, string>
-  }) => React.ComponentType
+    submitAction: React.ReactNode
+  }>
 }
 
 export function createMotionFormPart<FormData>({
   motionType,
   onSubmit,
-  getComponent,
+  Component,
   getDefaultFormData,
 }: Args<FormData>) {
   const fieldNames = Object.keys(getDefaultFormData()).reduce(
@@ -34,6 +35,7 @@ export function createMotionFormPart<FormData>({
   return {
     onSubmit,
     getDefaultFormData,
-    Component: getComponent({ fieldNames }),
+    fieldNames,
+    Component,
   }
 }

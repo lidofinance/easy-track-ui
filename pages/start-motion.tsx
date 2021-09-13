@@ -2,9 +2,9 @@ import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 
 import { Container, Button } from '@lidofinance/lido-ui'
-import { Text } from 'modules/shared/ui/Common/Text'
 import { Title } from 'modules/shared/ui/Common/Title'
 import { MotionFormStartNew } from 'modules/motions/ui/MotionFormStartNew'
+import { MessageBox } from 'modules/motions/ui/MotionFormStartNew/CreateMotionFormStyle'
 
 export default function StartMotionPage() {
   const { isWalletConnected } = useWalletInfo()
@@ -15,7 +15,7 @@ export default function StartMotionPage() {
       <Title title="Start Motion" subtitle="Fill in the fields below" />
       {!isWalletConnected && (
         <div>
-          <Text size={16} weight={500} children="Connect your wallet first" />
+          <MessageBox>Connect your wallet first</MessageBox>
           <br />
           <Button
             type="submit"

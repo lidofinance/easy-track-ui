@@ -24,11 +24,14 @@ export const formParts = createMotionFormPart({
   getDefaultFormData: () => ({
     address: '',
   }),
-  getComponent: ({ fieldNames }) =>
-    function StartNewMotionMotionFormLego() {
-      const { data: rewardPrograms, initialLoading } = useRewardPrograms()
+  Component: function StartNewMotionMotionFormLego({
+    fieldNames,
+    submitAction,
+  }) {
+    const { data: rewardPrograms, initialLoading } = useRewardPrograms()
 
-      return (
+    return (
+      <>
         <Fieldset>
           <SelectControl
             label="Reward program address"
@@ -45,6 +48,9 @@ export const formParts = createMotionFormPart({
             ))}
           </SelectControl>
         </Fieldset>
-      )
-    },
+
+        {submitAction}
+      </>
+    )
+  },
 })
