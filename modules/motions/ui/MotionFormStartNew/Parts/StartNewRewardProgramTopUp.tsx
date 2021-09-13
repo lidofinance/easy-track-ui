@@ -2,14 +2,21 @@ import { utils } from 'ethers'
 
 import { Fragment, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
+import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useRewardPrograms } from 'modules/motions/hooks/useRewardPrograms'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { Button } from '@lidofinance/lido-ui'
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { Fieldset, RemoveItemButton } from '../CreateMotionFormStyle'
+import {
+  Fieldset,
+  MessageBox,
+  RemoveItemButton,
+} from '../CreateMotionFormStyle'
 
+import { ContractEvmRewardProgramTopUp } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
@@ -43,7 +50,14 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const { data: rewardPrograms, initialLoading } = useRewardPrograms()
+    const { walletAddress } = useWalletInfo()
+    const trustedCaller = ContractEvmRewardProgramTopUp.useSwrWeb3(
+      'trustedCaller',
+      [],
+    )
+    const isTrustedCallerConnected = trustedCaller.data === walletAddress
+
+    const rewardPrograms = useRewardPrograms()
     const { data: governanceSymbol } = useGovernanceSymbol()
 
     const fieldsArr = useFieldArray({ name: fieldNames.programs })
@@ -58,6 +72,14 @@ export const formParts = createMotionFormPart({
       [fieldsArr],
     )
 
+    if (trustedCaller.initialLoading || rewardPrograms.initialLoading) {
+      return <PageLoader />
+    }
+
+    if (!isTrustedCallerConnected) {
+      return <MessageBox>You should be connected as trusted caller</MessageBox>
+    }
+
     return (
       <>
         {fieldsArr.fields.map((item, i) => (
@@ -68,10 +90,7 @@ export const formParts = createMotionFormPart({
                 name={`${fieldNames.programs}.${i}.address`}
                 rules={{ required: 'Field is required' }}
               >
-                {initialLoading && (
-                  <Option value="" disabled children="Loading" />
-                )}
-                {rewardPrograms?.map((program, j) => (
+                {rewardPrograms.data?.map((program, j) => (
                   <Option
                     key={j}
                     value={program.address}
@@ -100,17 +119,18 @@ export const formParts = createMotionFormPart({
           </Fragment>
         ))}
 
-        {rewardPrograms && fieldsArr.fields.length < rewardPrograms.length && (
-          <Fieldset>
-            <Button
-              type="button"
-              variant="translucent"
-              size="sm"
-              children="One more program"
-              onClick={handleAddProgram}
-            />
-          </Fieldset>
-        )}
+        {rewardPrograms.data &&
+          fieldsArr.fields.length < rewardPrograms.data.length && (
+            <Fieldset>
+              <Button
+                type="button"
+                variant="translucent"
+                size="sm"
+                children="One more program"
+                onClick={handleAddProgram}
+              />
+            </Fieldset>
+          )}
 
         {submitAction}
       </>

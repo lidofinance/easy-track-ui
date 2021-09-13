@@ -2,13 +2,20 @@ import { utils } from 'ethers'
 
 import { useCallback, Fragment } from 'react'
 import { useFieldArray } from 'react-hook-form'
+import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
 
 import { Button } from '@lidofinance/lido-ui'
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { Fieldset, RemoveItemButton } from '../CreateMotionFormStyle'
+import {
+  Fieldset,
+  MessageBox,
+  RemoveItemButton,
+} from '../CreateMotionFormStyle'
 
+import { ContractEvmLEGOTopUp } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
@@ -43,7 +50,11 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
+    const tokenOptions = useLegoTokenOptions()
     const fieldsArr = useFieldArray({ name: fieldNames.tokens })
+    const { walletAddress } = useWalletInfo()
+    const trustedCaller = ContractEvmLEGOTopUp.useSwrWeb3('trustedCaller', [])
+    const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
     const handleAddToken = useCallback(
       () => fieldsArr.append({ address: '', amount: '' }),
@@ -55,7 +66,13 @@ export const formParts = createMotionFormPart({
       [fieldsArr],
     )
 
-    const tokenOptions = useLegoTokenOptions()
+    if (trustedCaller.initialLoading) {
+      return <PageLoader />
+    }
+
+    if (!isTrustedCallerConnected) {
+      return <MessageBox>You should be connected as trusted caller</MessageBox>
+    }
 
     return (
       <>

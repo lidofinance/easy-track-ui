@@ -12,13 +12,12 @@ import {
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
-const EVM_CONNECTORS = {
-  [MotionType.NodeOperatorIncreaseLimit]:
-    ContractEvmNodeOperatorIncreaseLimit.connect,
-  [MotionType.LEGOTopUp]: ContractEvmLEGOTopUp.connect,
-  [MotionType.RewardProgramAdd]: ContractEvmRewardProgramAdd.connect,
-  [MotionType.RewardProgramTopUp]: ContractEvmRewardProgramTopUp.connect,
-  [MotionType.RewardProgramRemove]: ContractEvmRewardProgramRemove.connect,
+const EVM_CONTRACTS = {
+  [MotionType.NodeOperatorIncreaseLimit]: ContractEvmNodeOperatorIncreaseLimit,
+  [MotionType.LEGOTopUp]: ContractEvmLEGOTopUp,
+  [MotionType.RewardProgramAdd]: ContractEvmRewardProgramAdd,
+  [MotionType.RewardProgramTopUp]: ContractEvmRewardProgramTopUp,
+  [MotionType.RewardProgramRemove]: ContractEvmRewardProgramRemove,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
@@ -29,31 +28,11 @@ export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
   const contract = useGlobalMemo(() => {
     if (motionType === EvmUnrecognized) return null
     const library = new JsonRpcProvider(getRpcUrl(chainId), chainId)
-    return EVM_CONNECTORS[motionType as MotionType]({ chainId, library })
+    return EVM_CONTRACTS[motionType as MotionType].connect({ chainId, library })
   }, `evm-contract-${chainId}-${motionType}`)
 
   type Contract = T extends MotionType
-    ? ReturnType<typeof EVM_CONNECTORS[T]>
+    ? ReturnType<typeof EVM_CONTRACTS[T]['connect']>
     : null
   return contract as Contract
-}
-
-export function useContractEvmNodeOperatorIncreaseLimit() {
-  return useContractEvmScript(MotionType.NodeOperatorIncreaseLimit)
-}
-
-export function useContractEvmLEGOTopUp() {
-  return useContractEvmScript(MotionType.LEGOTopUp)
-}
-
-export function useContractEvmRewardProgramAdd() {
-  return useContractEvmScript(MotionType.RewardProgramAdd)
-}
-
-export function useContractEvmRewardProgramRemove() {
-  return useContractEvmScript(MotionType.RewardProgramRemove)
-}
-
-export function useContractEvmRewardProgramTopUp() {
-  return useContractEvmScript(MotionType.RewardProgramTopUp)
 }

@@ -1,8 +1,11 @@
 import { utils } from 'ethers'
+import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { Fieldset } from '../CreateMotionFormStyle'
+import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
+import { ContractEvmRewardProgramAdd } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { toastInfo } from 'modules/toasts'
@@ -28,6 +31,21 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
+    const { walletAddress } = useWalletInfo()
+    const trustedCaller = ContractEvmRewardProgramAdd.useSwrWeb3(
+      'trustedCaller',
+      [],
+    )
+    const isTrustedCallerConnected = trustedCaller.data === walletAddress
+
+    if (trustedCaller.initialLoading) {
+      return <PageLoader />
+    }
+
+    if (!isTrustedCallerConnected) {
+      return <MessageBox>You should be connected as trusted caller</MessageBox>
+    }
+
     return (
       <>
         <Fieldset>
