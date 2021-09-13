@@ -135,13 +135,12 @@ export function MotionDetailedActions({ motion }: Props) {
       </Hint>
 
       <Actions>
-        {canObject && (
-          <Button
-            size="sm"
-            children="Submit objection"
-            onClick={handleSubmitObjection}
-          />
-        )}
+        <Button
+          size="sm"
+          children="Submit objection"
+          disabled={!canObject}
+          onClick={handleSubmitObjection}
+        />
         {motion.status === MotionStatus.PENDING && (
           <Button
             size="sm"
