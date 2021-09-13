@@ -28,26 +28,23 @@ export function MotionDetailedActions({ motion }: Props) {
   const { data: governanceSymbol } = useGovernanceSymbol()
 
   const { data: balanceAtRaw, initialLoading: isLoadingBalanceAt } =
-    ContractGovernanceToken.useSwrWeb3(
-      walletAddress ? 'balanceOfAt' : null,
+    ContractGovernanceToken.useSwrWeb3(walletAddress ? 'balanceOfAt' : null, [
       String(walletAddress),
       motion.snapshotBlock,
-    )
+    ])
   const balanceAt = balanceAtRaw && formatEther(balanceAtRaw)
 
   const { data: isAlreadyObjected, initialLoading: isLoadingAlreadyObjected } =
-    ContractEasyTrack.useSwrWeb3(
-      walletAddress ? 'objections' : null,
+    ContractEasyTrack.useSwrWeb3(walletAddress ? 'objections' : null, [
       motion.id,
       walletAddress as string,
-    )
+    ])
 
   const { data: canObject, initialLoading: isLoadingCanObject } =
-    ContractEasyTrack.useSwrWeb3(
-      walletAddress ? 'canObjectToMotion' : null,
+    ContractEasyTrack.useSwrWeb3(walletAddress ? 'canObjectToMotion' : null, [
       motion.id,
       walletAddress as string,
-    )
+    ])
 
   const isLoadingActions =
     isLoadingCanObject || isLoadingAlreadyObjected || isLoadingBalanceAt

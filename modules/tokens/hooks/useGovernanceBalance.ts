@@ -5,6 +5,6 @@ export function useGovernanceBalance() {
   const { walletAddress } = useWalletInfo()
   return ContractGovernanceToken.useSwrWeb3(
     walletAddress ? 'balanceOf' : null,
-    String(walletAddress),
+    [String(walletAddress)],
   )
 }

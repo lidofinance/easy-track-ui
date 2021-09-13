@@ -1,3 +1,5 @@
+import { SWRConfiguration } from 'swr'
+
 import { useWeb3React } from '@web3-react/core'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
@@ -7,7 +9,7 @@ import type { Signer, providers } from 'ethers'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
 import { Chains, getChainName } from 'modules/blockChain/chains'
-import { FilterMethods } from 'modules/shared/utils/utilTypes'
+import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
 type Library = Signer | providers.Provider
 
@@ -80,12 +82,16 @@ export function createContractHelpers<F extends Factory>({
   }
 
   const getUseSwr = function (type: 'web3' | 'rpc') {
-    return function <M extends FilterMethods<Instance>>(
+    return function <
+      M extends FilterMethods<Instance>,
+      Data extends UnpackedPromise<ReturnType<Instance[M]>>,
+    >(
       method: M | null,
-      ...params: Parameters<Instance[M]>
+      params: Parameters<Instance[M]>,
+      config?: SWRConfiguration<Data>,
     ) {
       const contractInstance = type === 'web3' ? useWeb3() : useRpc()
-      const data = useContractSwr(contractInstance, method, ...params)
+      const data = useContractSwr(contractInstance, method, params, config)
       return data
     }
   }

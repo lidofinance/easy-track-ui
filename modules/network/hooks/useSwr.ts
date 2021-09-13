@@ -12,10 +12,7 @@ import {
   SWRInfiniteConfiguration,
 } from 'swr/dist/types'
 
-export type SWRResponse<Data, Error = unknown> = SWRResponseSource<
-  Data,
-  Error
-> & {
+export type SWRResponse<Data, Error = any> = SWRResponseSource<Data, Error> & {
   initialLoading: boolean
 }
 
@@ -28,7 +25,7 @@ const defaultConfig = {
   focusThrottleInterval: 10_000,
 }
 
-export const useSWR = <Data = unknown, Error = unknown>(
+export const useSWR = <Data = unknown, Error = any>(
   key: Key,
   fetcher: Fetcher<Data> | null,
   config?: SWRConfiguration<Data, Error>,
@@ -44,7 +41,7 @@ export const useSWR = <Data = unknown, Error = unknown>(
   }
 }
 
-export const useSWRInfinite = <Data = unknown, Error = unknown>(
+export const useSWRInfinite = <Data = unknown, Error = any>(
   getKey: KeyLoader<Data>,
   fetcher: Fetcher<Data>,
   config?: SWRInfiniteConfiguration<Data, Error>,
