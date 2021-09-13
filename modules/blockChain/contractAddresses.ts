@@ -13,7 +13,7 @@ export const EasyTrack = {
   [Chains.Goerli]: '0xe413799Ee2978489a6299031924b5DBD858f3a52',
 }
 
-export const LDO = {
+export const GovernanceToken = {
   [Chains.Mainnet]: '0x5a98fcbea516cf06857215779fd812ca3bef1b32',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x06c6Ab60F0Ad054236d7d4Faf98A5D33e852E717',

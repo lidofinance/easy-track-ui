@@ -3,6 +3,7 @@ import { utils } from 'ethers'
 import { Fragment, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
 import { useRewardPrograms } from 'modules/motions/hooks/useRewardPrograms'
+import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { Button } from '@lidofinance/lido-ui'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -41,6 +42,7 @@ export const formParts = createMotionFormPart({
   getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
       const { data: rewardPrograms, initialLoading } = useRewardPrograms()
+      const { data: governanceSymbol } = useGovernanceSymbol()
 
       const fieldsArr = useFieldArray({ name: fieldNames.programs })
 
@@ -79,7 +81,7 @@ export const formParts = createMotionFormPart({
 
               <Fieldset>
                 <InputControl
-                  label="LDO Amount"
+                  label={`${governanceSymbol} Amount`}
                   name={`${fieldNames.programs}.${i}.amount`}
                   rules={{
                     required: 'Field is required',

@@ -4,7 +4,9 @@ import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
 import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
 import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
-import { useLDOBalance } from 'modules/tokens/hooks/useLDOBalance'
+import { useGovernanceBalance } from 'modules/tokens/hooks/useGovernanceBalance'
+import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
+
 import { Text } from 'modules/shared/ui/Common/Text'
 import {
   ButtonIcon,
@@ -24,6 +26,7 @@ import {
   Address,
   Actions,
 } from './WalletModalStyle'
+
 import { formatToken } from 'modules/tokens/utils/formatToken'
 
 export function WalletModal(props: ModalProps) {
@@ -40,8 +43,8 @@ export function WalletModal(props: ModalProps) {
   const trimmedAddress = useMemo(() => trimAddress(address ?? '', 6), [address])
   const handleCopy = useCopyToClipboard(address ?? '')
   const handleEtherscan = useEtherscanOpener(address ?? '', 'address')
-  const { data: LDOBalance, initialLoading: LDOBalanceLoading } =
-    useLDOBalance()
+  const governanceBalance = useGovernanceBalance()
+  const { data: governanceSymbol } = useGovernanceSymbol()
 
   return (
     <Modal title="Account" {...props}>
@@ -54,12 +57,16 @@ export function WalletModal(props: ModalProps) {
         </Connected>
 
         <Account>
-          <Text size={12} weight={500} children="LDO Balance:" />
+          <Text
+            size={12}
+            weight={500}
+            children={`${governanceSymbol} Balance:`}
+          />
           <Text size={12} weight={500}>
             &nbsp;
-            {LDOBalanceLoading || !LDOBalance
+            {governanceBalance.initialLoading || !governanceBalance.data
               ? 'Loading...'
-              : formatToken(LDOBalance, 'LDO')}
+              : formatToken(governanceBalance.data, governanceSymbol || '')}
           </Text>
         </Account>
         <Account>

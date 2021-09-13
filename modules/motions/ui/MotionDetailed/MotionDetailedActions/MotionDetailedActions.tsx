@@ -1,8 +1,12 @@
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { ContractEasyTrack, ContractLDO } from 'modules/blockChain/contracts'
+import {
+  ContractEasyTrack,
+  ContractGovernanceToken,
+} from 'modules/blockChain/contracts'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
+import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
@@ -21,9 +25,10 @@ export function MotionDetailedActions({ motion }: Props) {
   const { walletAddress, isWalletConnected } = useWalletInfo()
   const contractEasyTrack = ContractEasyTrack.useWeb3()
   const checkWalletConnect = useCheckWalletConnect()
+  const { data: governanceSymbol } = useGovernanceSymbol()
 
   const { data: balanceAtRaw, initialLoading: isLoadingBalanceAt } =
-    ContractLDO.useSwrWeb3(
+    ContractGovernanceToken.useSwrWeb3(
       walletAddress ? 'balanceOfAt' : null,
       String(walletAddress),
       motion.snapshotBlock,
@@ -111,16 +116,21 @@ export function MotionDetailedActions({ motion }: Props) {
       <Hint>
         {isAlreadyObjected && (
           <>
-            You have objected this motion with <b>{balanceAt}</b> LDO
+            You have objected this motion with <b>{balanceAt}</b>{' '}
+            {governanceSymbol}
           </>
         )}
         {canObject && !isAlreadyObjected && (
           <>
-            You can object this motion with <b>{balanceAt}</b> LDO
+            You can object this motion with <b>{balanceAt}</b>{' '}
+            {governanceSymbol}
           </>
         )}
         {!canObject && !isAlreadyObjected && (
-          <>You didn’t have LDO when the motion started to object it</>
+          <>
+            You didn’t have {governanceSymbol} when the motion started to object
+            it
+          </>
         )}
       </Hint>
 

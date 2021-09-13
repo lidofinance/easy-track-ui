@@ -35,9 +35,9 @@ export const ContractRewardProgramRegistry = createContractHelpers({
   address: CONTRACT_ADDRESSES.RewardProgramRegistry,
 })
 
-export const ContractLDO = createContractHelpers({
+export const ContractGovernanceToken = createContractHelpers({
   factory: MiniMeTokenAbi__factory,
-  address: CONTRACT_ADDRESSES.LDO,
+  address: CONTRACT_ADDRESSES.GovernanceToken,
 })
 
 export const ContractEvmNodeOperatorIncreaseLimit = createContractHelpers({

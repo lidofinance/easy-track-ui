@@ -1,8 +1,8 @@
 import { utils } from 'ethers'
 
-import { useMemo, useCallback, Fragment } from 'react'
+import { useCallback, Fragment } from 'react'
 import { useFieldArray } from 'react-hook-form'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
 
 import { Button } from '@lidofinance/lido-ui'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -12,7 +12,6 @@ import { Fieldset, RemoveItemButton } from '../CreateMotionFormStyle'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
-import { getLegoTokenOptions } from 'modules/motions/utils/getLegoTokenOptions'
 import { toastInfo } from 'modules/toasts'
 
 type Program = {
@@ -42,8 +41,6 @@ export const formParts = createMotionFormPart({
   }),
   getComponent: ({ fieldNames }) =>
     function StartNewMotionMotionFormLego() {
-      const chainId = useCurrentChain()
-
       const fieldsArr = useFieldArray({ name: fieldNames.tokens })
 
       const handleAddToken = useCallback(
@@ -56,10 +53,7 @@ export const formParts = createMotionFormPart({
         [fieldsArr],
       )
 
-      const tokenOptions = useMemo(
-        () => getLegoTokenOptions(chainId),
-        [chainId],
-      )
+      const tokenOptions = useLegoTokenOptions()
 
       return (
         <>

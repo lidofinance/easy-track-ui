@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
+import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
 import {
   useContractEvmScript,
   // useContractEvmNodeOperatorIncreaseLimit,
@@ -20,7 +21,6 @@ import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { UnpackedPromise } from 'modules/shared/utils/utilTypes'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
-import { getLegoTokenOptions } from 'modules/motions/utils/getLegoTokenOptions'
 
 import {
   EvmIncreaseNodeOperatorStakingLimitAbi,
@@ -29,6 +29,7 @@ import {
   EvmRemoveRewardProgramAbi,
   EvmTopUpRewardProgramsAbi,
 } from 'generated'
+import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 type NestProps<C extends (...a: any) => Promise<any>> = {
   callData: UnpackedPromise<ReturnType<C>>
@@ -52,16 +53,15 @@ function DescNodeOperatorIncreaseLimit({
 function DescLEGOTopUp({
   callData,
 }: NestProps<EvmTopUpLegoProgramAbi['decodeEVMScriptCallData']>) {
-  const chainId = useCurrentChain()
+  const options = useLegoTokenOptions()
   const formattedTokens = useMemo(() => {
-    const options = getLegoTokenOptions(chainId)
     return callData[0].map(
       address =>
         options.find(
           o => utils.getAddress(o.value) === utils.getAddress(address),
         )?.label,
     )
-  }, [callData, chainId])
+  }, [callData, options])
   return (
     <div>
       Top up LEGO program with:
@@ -96,13 +96,14 @@ function DescRewardProgramAdd({
 function DescRewardProgramTopUp({
   callData,
 }: NestProps<EvmTopUpRewardProgramsAbi['decodeEVMScriptCallData']>) {
+  const governanceSymbol = useGovernanceSymbol()
   return (
     <div>
       Top up reward programs:
       {callData[0].map((address, i) => (
         <div key={i}>
           <AddressInlineWithPop address={address} /> with{' '}
-          {formatEther(callData[1][i])} LDO
+          {formatEther(callData[1][i])} {governanceSymbol.data}
         </div>
       ))}
     </div>

@@ -1,9 +1,9 @@
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { ContractLDO } from 'modules/blockChain/contracts'
+import { ContractGovernanceToken } from 'modules/blockChain/contracts'
 
-export function useLDOBalance() {
+export function useGovernanceBalance() {
   const { walletAddress } = useWalletInfo()
-  return ContractLDO.useSwrWeb3(
+  return ContractGovernanceToken.useSwrWeb3(
     walletAddress ? 'balanceOf' : null,
     String(walletAddress),
   )
