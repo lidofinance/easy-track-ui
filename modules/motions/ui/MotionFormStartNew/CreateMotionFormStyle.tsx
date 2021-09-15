@@ -62,3 +62,25 @@ export const MessageBox = styled.div`
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: ${({ theme }) => theme.borderRadiusesMap.md + 'px'};
 `
+
+export const RetryHint = styled(Text).attrs({
+  size: 12,
+  weight: 500,
+})`
+  margin-top: 20px;
+  text-align: center;
+  opacity: 0.8;
+
+  & button {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 12px;
+    font-weight: 500;
+    background: none;
+    font-weight: 800;
+    cursor: pointer;
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`

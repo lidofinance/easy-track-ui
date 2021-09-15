@@ -9,20 +9,22 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 import { ContractEvmRewardProgramRemove } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
-import { toastInfo } from 'modules/toasts'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RewardProgramRemove,
-  onSubmit: async ({ evmScriptFactory, formData, contract }) => {
+  populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const encodedCallData = new utils.AbiCoder().encode(
       ['address'],
       [utils.getAddress(formData.address)],
     )
-    toastInfo('Confirm transaction with Gnosis Safe')
-    const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
-      gasLimit: 500000,
-    })
-    return res
+    const tx = await contract.populateTransaction.createMotion(
+      evmScriptFactory,
+      encodedCallData,
+      {
+        gasLimit: 500000,
+      },
+    )
+    return tx
   },
   getDefaultFormData: () => ({
     address: '',

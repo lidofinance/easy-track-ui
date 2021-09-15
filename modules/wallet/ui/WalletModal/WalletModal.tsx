@@ -1,30 +1,20 @@
 import { useCallback, useMemo } from 'react'
-import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
 import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
-import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
 import { useGovernanceBalance } from 'modules/tokens/hooks/useGovernanceBalance'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { Text } from 'modules/shared/ui/Common/Text'
-import {
-  ButtonIcon,
-  Modal,
-  ModalProps,
-  Identicon,
-  External,
-  Copy,
-  trimAddress,
-} from '@lidofinance/lido-ui'
+import { CopyOpenActions } from 'modules/shared/ui/Common/CopyOpenActions'
+import { Modal, ModalProps, Identicon, trimAddress } from '@lidofinance/lido-ui'
 import {
   Content,
   Connected,
   Connector,
   Disconnect,
-  Account,
+  Row,
   Address,
-  Actions,
 } from './WalletModalStyle'
 
 import { formatToken } from 'modules/tokens/utils/formatToken'
@@ -41,8 +31,6 @@ export function WalletModal(props: ModalProps) {
   }, [disconnect, onClose])
 
   const trimmedAddress = useMemo(() => trimAddress(address ?? '', 6), [address])
-  const handleCopy = useCopyToClipboard(address ?? '')
-  const handleEtherscan = useEtherscanOpener(address ?? '', 'address')
   const governanceBalance = useGovernanceBalance()
   const { data: governanceSymbol } = useGovernanceSymbol()
 
@@ -56,7 +44,7 @@ export function WalletModal(props: ModalProps) {
           </Disconnect>
         </Connected>
 
-        <Account>
+        <Row>
           <Text
             size={12}
             weight={500}
@@ -68,28 +56,16 @@ export function WalletModal(props: ModalProps) {
               ? 'Loading...'
               : formatToken(governanceBalance.data, governanceSymbol || '')}
           </Text>
-        </Account>
-        <Account>
+        </Row>
+
+        <Row>
           <Identicon address={address ?? ''} />
           <Address>{trimmedAddress}</Address>
-        </Account>
+        </Row>
 
-        <Actions>
-          <ButtonIcon
-            onClick={handleCopy}
-            icon={<Copy />}
-            size="xs"
-            variant="ghost"
-            children="Copy address"
-          />
-          <ButtonIcon
-            onClick={handleEtherscan}
-            icon={<External />}
-            size="xs"
-            variant="ghost"
-            children="View on Etherscan"
-          />
-        </Actions>
+        <Row>
+          <CopyOpenActions value={address} entity="address" />
+        </Row>
       </Content>
     </Modal>
   )

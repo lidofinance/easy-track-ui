@@ -1,15 +1,15 @@
-import type { ContractTransaction } from 'ethers'
+import type { PopulatedTransaction } from 'ethers'
 import type { MotionType } from 'modules/motions/types'
 import type { ContractTypeEasyTrack } from 'modules/blockChain/contracts'
 
 type Args<FormData> = {
   motionType: MotionType
 
-  onSubmit: (args: {
+  populateTx: (args: {
     formData: FormData
     contract: ContractTypeEasyTrack
     evmScriptFactory: string
-  }) => Promise<ContractTransaction>
+  }) => Promise<PopulatedTransaction>
 
   getDefaultFormData: () => FormData
 
@@ -21,7 +21,7 @@ type Args<FormData> = {
 
 export function createMotionFormPart<FormData>({
   motionType,
-  onSubmit,
+  populateTx,
   Component,
   getDefaultFormData,
 }: Args<FormData>) {
@@ -33,7 +33,7 @@ export function createMotionFormPart<FormData>({
     {} as Record<keyof FormData, string>,
   )
   return {
-    onSubmit,
+    populateTx,
     getDefaultFormData,
     fieldNames,
     Component,

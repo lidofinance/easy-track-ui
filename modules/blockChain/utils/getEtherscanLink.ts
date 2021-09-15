@@ -1,6 +1,6 @@
 import { Chains } from '../chains'
 
-const ETHERSCAN_SUBDOMAINS_BY_NETWORK = {
+const SUBDOMAINS = {
   [Chains.Mainnet]: '',
   [Chains.Ropsten]: 'ropsten.',
   [Chains.Rinkeby]: 'rinkeby.',
@@ -14,5 +14,4 @@ export const getEtherscanLink = (
   chainId: Chains,
   hash: string,
   entity: EtherscanEntities = 'tx',
-) =>
-  `https://${ETHERSCAN_SUBDOMAINS_BY_NETWORK[chainId]}etherscan.io/${entity}/${hash}`
+) => `https://${SUBDOMAINS[chainId]}etherscan.io/${entity}/${hash}`

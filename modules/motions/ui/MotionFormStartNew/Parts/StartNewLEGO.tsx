@@ -19,7 +19,6 @@ import { ContractEvmLEGOTopUp } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
-import { toastInfo } from 'modules/toasts'
 
 type Program = {
   address: string
@@ -28,7 +27,7 @@ type Program = {
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.LEGOTopUp,
-  onSubmit: async ({ evmScriptFactory, formData, contract }) => {
+  populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const encodedCallData = new utils.AbiCoder().encode(
       ['address[]', 'uint256[]'],
       [
@@ -36,12 +35,14 @@ export const formParts = createMotionFormPart({
         formData.tokens.map(t => utils.parseEther(t.amount)),
       ],
     )
-    toastInfo('Confirm transaction with Gnosis Safe')
-    const res = await contract.createMotion(evmScriptFactory, encodedCallData, {
-      gasLimit: 500000,
-    })
-    console.log(res)
-    return res
+    const tx = await contract.populateTransaction.createMotion(
+      evmScriptFactory,
+      encodedCallData,
+      {
+        gasLimit: 500000,
+      },
+    )
+    return tx
   },
   getDefaultFormData: () => ({
     tokens: [{ address: '', amount: '' }] as Program[],

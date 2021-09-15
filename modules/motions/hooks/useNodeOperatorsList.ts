@@ -1,7 +1,19 @@
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { ContractNodeOperatorsRegistry } from 'modules/blockChain/contracts'
+import { SWRConfiguration } from 'swr'
+import { UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
-export function useNodeOperatorsList() {
+type NodeOperator = UnpackedPromise<
+  ReturnType<
+    ReturnType<
+      typeof ContractNodeOperatorsRegistry['connect']
+    >['getNodeOperator']
+  >
+>
+
+export function useNodeOperatorsList(
+  swrConfig?: SWRConfiguration<NodeOperator[]>,
+) {
   const registry = ContractNodeOperatorsRegistry.useWeb3()
 
   const nodeOperatorsList = useSWR(
@@ -15,6 +27,7 @@ export function useNodeOperatorsList() {
       )
       return nodeOperators
     },
+    swrConfig,
   )
 
   return nodeOperatorsList

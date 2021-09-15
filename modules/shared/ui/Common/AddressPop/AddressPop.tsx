@@ -1,15 +1,11 @@
 import { useClickAway } from 'react-use'
 import { useCallback, useEffect, useRef } from 'react'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
-import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
-import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
-import {
-  IdenticonBadge,
-  ButtonIcon,
-  Copy,
-  External,
-} from '@lidofinance/lido-ui'
-import { Wrap, Pop, Actions, BadgeWrap } from './AddressPopStyle'
+
+import { CopyOpenActions } from 'modules/shared/ui/Common/CopyOpenActions'
+import { IdenticonBadge } from '@lidofinance/lido-ui'
+import { Wrap, Pop, BadgeWrap } from './AddressPopStyle'
+
 import { minmax } from 'modules/shared/utils/minmax'
 
 type BadgeProps = React.ComponentProps<typeof IdenticonBadge>
@@ -20,8 +16,6 @@ type Props = BadgeProps & {
 
 export function AddressPop({ children, ...badgeProps }: Props) {
   const { address } = badgeProps
-  const handleCopy = useCopyToClipboard(address)
-  const handleEtherscan = useEtherscanOpener(address, 'address')
 
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const popRef = useRef<HTMLDivElement | null>(null)
@@ -71,22 +65,7 @@ export function AddressPop({ children, ...badgeProps }: Props) {
               onClick={handleOpen}
             />
           </BadgeWrap>
-          <Actions>
-            <ButtonIcon
-              onClick={handleCopy}
-              icon={<Copy />}
-              size="xs"
-              variant="ghost"
-              children="Copy address"
-            />
-            <ButtonIcon
-              onClick={handleEtherscan}
-              icon={<External />}
-              size="xs"
-              variant="ghost"
-              children="View on Etherscan"
-            />
-          </Actions>
+          <CopyOpenActions value={address} entity="address" />
         </Pop>
       )}
     </Wrap>

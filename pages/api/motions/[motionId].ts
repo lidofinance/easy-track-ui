@@ -12,7 +12,7 @@ export default createNextConnect().get(async (req, res) => {
     const easyTracksContract = ContractEasyTrack.connect({ chainId, library })
     const motion = await easyTracksContract.getMotion(motionId)
     res.json(formatMotionDataOnchain(motion))
-  } catch (e) {
+  } catch (e: any) {
     if (e.reason === 'MOTION_NOT_FOUND') {
       res.status(404).send({ error: 'Not found' })
     } else {

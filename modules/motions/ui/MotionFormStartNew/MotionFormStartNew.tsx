@@ -1,25 +1,28 @@
-import {
-  useCallback,
-  // useState
-} from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Button } from '@lidofinance/lido-ui'
-import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Form } from 'modules/shared/ui/Controls/Form'
-import { Fieldset } from './CreateMotionFormStyle'
+import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
+import { Fieldset, RetryHint } from './CreateMotionFormStyle'
 
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from '../../types'
+import { toastError } from 'modules/toasts'
 import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
-import { toastError } from 'modules/toasts'
+import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
+import { ResultTx } from 'modules/blockChain/types'
 
-export function MotionFormStartNew() {
+type Props = {
+  onComplete: (tx: ResultTx) => void
+}
+
+export function MotionFormStartNew({ onComplete }: Props) {
   const currentChainId = useCurrentChain()
-  // const [isSubmitting, setSubmitting] = useState(false)
+  const [isSubmitting, setSubmitting] = useState(false)
 
   const formMethods = useForm<FormData>({
     defaultValues: {
@@ -35,8 +38,10 @@ export function MotionFormStartNew() {
       try {
         const motionType = formMethods.getValues('motionType')
         if (!motionType) return
-        // setSubmitting(true)
-        const res = await formParts[motionType].onSubmit({
+
+        setSubmitting(true)
+
+        const tx = await formParts[motionType].populateTx({
           evmScriptFactory: getScriptFactoryByMotionType(
             currentChainId,
             motionType,
@@ -44,27 +49,36 @@ export function MotionFormStartNew() {
           formData: e[motionType],
           contract: contractEasyTrack,
         })
-        console.log(res)
-      } catch (error) {
-        console.error(String(error))
+
+        const res = await sendTransactionGnosisWorkaround(contractEasyTrack, tx)
+
+        onComplete(res)
+      } catch (error: any) {
         console.error(error)
-        toastError(String(error))
-      } finally {
-        // setSubmitting(false)
+        toastError(error.message || (error as any).toString())
+        setSubmitting(false)
       }
     },
-    [currentChainId, formMethods, contractEasyTrack],
+    [formMethods, currentChainId, contractEasyTrack, onComplete],
   )
 
   const motionType = formMethods.watch('motionType')
   const CurrentFormPart = motionType ? formParts[motionType].Component : null
   const submitAction = (
-    <Button
-      type="submit"
-      fullwidth
-      children="Submit"
-      // loading={isSubmitting}
-    />
+    <>
+      <Button
+        type="submit"
+        fullwidth
+        children="Submit"
+        loading={isSubmitting}
+      />
+      {isSubmitting && (
+        <RetryHint>
+          If something went wrong press{' '}
+          <button type="submit" children="Retry" />
+        </RetryHint>
+      )}
+    </>
   )
 
   return (

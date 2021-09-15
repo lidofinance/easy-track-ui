@@ -39,14 +39,11 @@ export const Pop = styled.div<PopProps>`
 `
 
 export const BadgeWrap = styled.div`
+  margin-bottom: 10px;
+
   & > div {
     font-size: 14px;
     font-weight: 500;
     background-color: rgba(0, 0, 0, 0.05);
   }
-`
-
-export const Actions = styled.div`
-  display: flex;
-  margin-top: 10px;
 `
