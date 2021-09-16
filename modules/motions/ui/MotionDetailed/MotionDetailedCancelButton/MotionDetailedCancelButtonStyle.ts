@@ -1,6 +1,9 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const CancelButton = styled.div`
+type CancelButtonProps = {
+  isActive: boolean
+}
+export const CancelButton = styled.div<CancelButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,7 +11,12 @@ export const CancelButton = styled.div`
   height: 44px;
   background: rgba(39, 56, 82, 0.1);
   border-radius: 6px;
-  cursor: pointer;
+
+  ${({ isActive = true }) =>
+    isActive &&
+    css`
+      cursor: pointer;
+    `}
 `
 
 export const Wrap = styled.div`

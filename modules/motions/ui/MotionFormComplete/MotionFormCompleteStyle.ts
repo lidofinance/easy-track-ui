@@ -1,6 +1,7 @@
-import { Loader } from '@lidofinance/loaders'
-import { Text } from 'modules/shared/ui/Common/Text'
 import styled from 'styled-components'
+import { Text } from 'modules/shared/ui/Common/Text'
+import { Loader } from '@lidofinance/loaders'
+import { TxStatus } from 'modules/blockChain/types'
 
 export const Hash = styled(Text).attrs({
   size: 10,
@@ -27,7 +28,7 @@ export const StatusWrap = styled(Text).attrs({
 `
 
 type StatusProps = {
-  status: 'pending' | 'failed' | 'confirmed'
+  status: TxStatus
 }
 export const Status = styled.span<StatusProps>`
   margin-left: 4px;
@@ -36,7 +37,7 @@ export const Status = styled.span<StatusProps>`
   color: ${({ status, theme }) =>
     status === 'pending'
       ? theme.colors.primary
-      : status === 'confirmed'
+      : status === 'success'
       ? theme.colors.success
       : theme.colors.error};
 `

@@ -7,102 +7,93 @@ import {
 } from 'modules/blockChain/contracts'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
+import {
+  useTransactionSender,
+  TransactionSender,
+} from 'modules/blockChain/hooks/useTransactionSender'
 
 import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
-import { Actions, Hint } from './MotionDetailedActionsStyle'
+import { Actions, Hint, TxHint, TxStatus } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
-import { toastError } from 'modules/toasts'
 import { getContractMethodParams } from 'modules/motions/utils/getContractMethodParams'
+
+function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
+  return (
+    <TxHint>
+      {label}
+      <TxStatus status={tx.status} onClick={tx.open}>
+        {tx.isPending && 'Pending...'}
+        {tx.isSuccess && 'Confirmed (click to open)'}
+        {tx.isFailed && 'Failed (click to see why)'}
+      </TxStatus>
+    </TxHint>
+  )
+}
 
 type Props = {
   motion: Motion
+  onFinish?: () => void
 }
 
-export function MotionDetailedActions({ motion }: Props) {
-  const { walletAddress, isWalletConnected } = useWalletInfo()
+function ActionsBody({ motion, onFinish }: Props) {
+  const { walletAddress } = useWalletInfo()
   const contractEasyTrack = ContractEasyTrack.useWeb3()
-  const checkWalletConnect = useCheckWalletConnect()
   const { data: governanceSymbol } = useGovernanceSymbol()
 
-  const { data: balanceAtRaw, initialLoading: isLoadingBalanceAt } =
-    ContractGovernanceToken.useSwrWeb3(walletAddress ? 'balanceOfAt' : null, [
-      String(walletAddress),
-      motion.snapshotBlock,
-    ])
-  const balanceAt = balanceAtRaw && formatEther(balanceAtRaw)
+  const balanceAt = ContractGovernanceToken.useSwrWeb3('balanceOfAt', [
+    String(walletAddress),
+    motion.snapshotBlock,
+  ])
+  const balanceAtFormatted = balanceAt.data && formatEther(balanceAt.data)
 
-  const { data: isAlreadyObjected, initialLoading: isLoadingAlreadyObjected } =
-    ContractEasyTrack.useSwrWeb3(walletAddress ? 'objections' : null, [
-      motion.id,
-      walletAddress as string,
-    ])
+  const isObjected = ContractEasyTrack.useSwrWeb3('objections', [
+    motion.id,
+    String(walletAddress),
+  ])
 
-  const { data: canObject, initialLoading: isLoadingCanObject } =
-    ContractEasyTrack.useSwrWeb3(walletAddress ? 'canObjectToMotion' : null, [
-      motion.id,
-      walletAddress as string,
-    ])
-
-  const isLoadingActions =
-    isLoadingCanObject || isLoadingAlreadyObjected || isLoadingBalanceAt
+  const canObject = ContractEasyTrack.useSwrWeb3('canObjectToMotion', [
+    motion.id,
+    String(walletAddress),
+  ])
 
   // Submit Objection
-  const handleSubmitObjection = useCallback(async () => {
-    if (!checkWalletConnect()) return
-    try {
-      if (!canObject) {
-        toastError('You cannot submit objection to this motion')
-        return
-      }
-      const res = await contractEasyTrack.objectToMotion(motion.id, {
-        gasLimit: 500000,
-      })
-      console.log(res)
-    } catch (err) {
-      console.error(err)
-    }
-  }, [checkWalletConnect, contractEasyTrack, motion.id, canObject])
+  const populateObject = useCallback(async () => {
+    const tx = await contractEasyTrack.populateTransaction.objectToMotion(
+      motion.id,
+      { gasLimit: 500000 },
+    )
+    return tx
+  }, [contractEasyTrack.populateTransaction, motion.id])
+
+  const txObject = useTransactionSender(populateObject, { onFinish })
 
   // Enact Motion
-  const handleEnact = useCallback(async () => {
-    if (!checkWalletConnect()) return
-    try {
-      const { _evmScriptCallData: callData } = await getEventMotionCreated(
-        contractEasyTrack,
-        motion.id,
-      )
-      console.info(
-        'Access list:',
-        motion.evmScriptFactory,
-        getContractMethodParams(motion.evmScriptFactory, 'enact'),
-      )
-      const res = await contractEasyTrack.enactMotion(motion.id, callData, {
+  const populateEnact = useCallback(async () => {
+    const { _evmScriptCallData: callData } = await getEventMotionCreated(
+      contractEasyTrack,
+      motion.id,
+    )
+    const tx = await contractEasyTrack.populateTransaction.enactMotion(
+      motion.id,
+      callData,
+      {
         gasLimit: 500000,
         ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
-      })
-      console.log(res)
-    } catch (err) {
-      console.error(err)
-    }
-  }, [checkWalletConnect, motion, contractEasyTrack])
-
-  if (!isWalletConnected) {
-    return (
-      <>
-        <Hint>Connect your wallet to interact with this motion</Hint>
-        <Actions>
-          <Button
-            size="sm"
-            children="Connect wallet"
-            onClick={checkWalletConnect}
-          />
-        </Actions>
-      </>
+      },
     )
-  }
+    return tx
+  }, [contractEasyTrack, motion.evmScriptFactory, motion.id])
+
+  const txEnact = useTransactionSender(populateEnact, { onFinish })
+
+  // Loader
+  const isLoadingActions =
+    canObject.initialLoading ||
+    isObjected.initialLoading ||
+    balanceAt.initialLoading
 
   if (isLoadingActions) {
     return <Text size={10} weight={500} children="Loading..." />
@@ -111,19 +102,19 @@ export function MotionDetailedActions({ motion }: Props) {
   return (
     <>
       <Hint>
-        {isAlreadyObjected && (
+        {isObjected.data && (
           <>
-            You have objected this motion with <b>{balanceAt}</b>{' '}
+            You have objected this motion with <b>{balanceAtFormatted}</b>{' '}
             {governanceSymbol}
           </>
         )}
-        {canObject && !isAlreadyObjected && (
+        {canObject.data && !isObjected.data && (
           <>
-            You can object this motion with <b>{balanceAt}</b>{' '}
+            You can object this motion with <b>{balanceAtFormatted}</b>{' '}
             {governanceSymbol}
           </>
         )}
-        {!canObject && !isAlreadyObjected && (
+        {!canObject.data && !isObjected.data && (
           <>
             You didn’t have {governanceSymbol} when the motion started to object
             it
@@ -131,22 +122,53 @@ export function MotionDetailedActions({ motion }: Props) {
         )}
       </Hint>
 
+      {!txEnact.isEmpty && <TxRow label="Enact transaction:" tx={txEnact} />}
+      {!txObject.isEmpty && (
+        <TxRow label="Objection transaction:" tx={txObject} />
+      )}
+
       <Actions>
         <Button
           size="sm"
           children="Submit objection"
-          disabled={!canObject}
-          onClick={handleSubmitObjection}
+          disabled={!canObject.data}
+          onClick={txObject.send}
+          loading={txObject.isPending}
         />
         {motion.status === MotionStatus.PENDING && (
           <Button
             size="sm"
             variant="outlined"
             children="Enact"
-            onClick={handleEnact}
+            onClick={txEnact.send}
+            loading={txEnact.isPending}
           />
         )}
       </Actions>
     </>
   )
+}
+
+function AuthStub() {
+  const checkWalletConnect = useCheckWalletConnect()
+  return (
+    <>
+      <Hint>Connect your wallet to interact with this motion</Hint>
+      <Actions>
+        <Button
+          size="sm"
+          children="Connect wallet"
+          onClick={checkWalletConnect}
+        />
+      </Actions>
+    </>
+  )
+}
+
+export function MotionDetailedActions({ motion, onFinish }: Props) {
+  const { isWalletConnected } = useWalletInfo()
+
+  if (!isWalletConnected) return <AuthStub />
+
+  return <ActionsBody motion={motion} onFinish={onFinish} />
 }

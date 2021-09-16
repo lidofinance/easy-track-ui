@@ -38,9 +38,10 @@ import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 
 type Props = {
   motion: Motion
+  onInvalidate?: () => void
 }
 
-export function MotionCardDetailed({ motion }: Props) {
+export function MotionCardDetailed({ motion, onInvalidate }: Props) {
   const currentChainId = useCurrentChain()
   const { walletAddress } = useWalletInfo()
 
@@ -93,7 +94,12 @@ export function MotionCardDetailed({ motion }: Props) {
             </StatusValue>
           </HeaderStatus>
 
-          {isAuthorConnected && <MotionDetailedCancelButton motion={motion} />}
+          {isAuthorConnected && (
+            <MotionDetailedCancelButton
+              motion={motion}
+              onFinish={onInvalidate}
+            />
+          )}
         </HeaderAside>
       </Header>
 
@@ -138,7 +144,9 @@ export function MotionCardDetailed({ motion }: Props) {
         </InfoCol>
       </InfoRow>
 
-      {!isArchived && <MotionDetailedActions motion={motion} />}
+      {!isArchived && (
+        <MotionDetailedActions motion={motion} onFinish={onInvalidate} />
+      )}
     </Card>
   )
 }

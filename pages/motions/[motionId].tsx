@@ -25,20 +25,21 @@ export default function MotionDetailsPage() {
   const currentChain = useCurrentChain()
   const motionId = Number(router.query.motionId)
   const subgraphUrl = useSubgraphUrl()
-  const { initialLoading, data: motion } = useSWR<Motion | null>(
-    `motion-${currentChain}-${motionId}`,
-    async () => {
-      try {
-        const tryActive = await fetcherStandard<Motion>(
-          urlsApi.motionDetails(motionId, currentChain),
-        )
-        return tryActive
-      } catch {
-        const tryArchive = await fetchMotionsSubgraphItem(subgraphUrl, motionId)
-        return tryArchive
-      }
-    },
-  )
+  const {
+    initialLoading,
+    data: motion,
+    revalidate,
+  } = useSWR<Motion | null>(`motion-${currentChain}-${motionId}`, async () => {
+    try {
+      const tryActive = await fetcherStandard<Motion>(
+        urlsApi.motionDetails(motionId, currentChain),
+      )
+      return tryActive
+    } catch {
+      const tryArchive = await fetchMotionsSubgraphItem(subgraphUrl, motionId)
+      return tryArchive
+    }
+  })
 
   if (initialLoading) {
     return (
@@ -54,7 +55,7 @@ export default function MotionDetailsPage() {
 
   return (
     <ContentContainer>
-      <MotionCardDetailed motion={motion} />
+      <MotionCardDetailed motion={motion} onInvalidate={revalidate} />
     </ContentContainer>
   )
 }

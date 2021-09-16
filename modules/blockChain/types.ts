@@ -13,3 +13,5 @@ export type ResultTx =
       type: 'regular'
       tx: ContractTransaction
     }
+
+export type TxStatus = 'empty' | 'pending' | 'failed' | 'success'

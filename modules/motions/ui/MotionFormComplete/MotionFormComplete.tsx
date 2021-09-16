@@ -21,7 +21,7 @@ import {
   StatusLoader,
 } from './MotionFormCompleteStyle'
 
-import { ResultTx, SafeTx } from 'modules/blockChain/types'
+import { ResultTx, SafeTx, TxStatus } from 'modules/blockChain/types'
 import { ContractTransaction } from '@ethersproject/contracts'
 
 type BodySafeProps = {
@@ -50,9 +50,7 @@ type BodyRegularProps = {
 function BodyRegular({ tx }: BodyRegularProps) {
   const { library } = useWeb3React<Web3Provider>()
   const openEtherscan = useEtherscanOpener(tx.hash, 'tx')
-  const [status, setStatus] = useState<'pending' | 'failed' | 'confirmed'>(
-    'pending',
-  )
+  const [status, setStatus] = useState<TxStatus>('pending')
 
   useEffect(() => {
     if (!library) return
@@ -61,7 +59,7 @@ function BodyRegular({ tx }: BodyRegularProps) {
       if (!e) {
         setStatus('pending')
       } else if (e.status === 1) {
-        setStatus('confirmed')
+        setStatus('success')
       } else if (e.status === 0) {
         setStatus('failed')
       }
@@ -78,7 +76,7 @@ function BodyRegular({ tx }: BodyRegularProps) {
   const renderStatusText = () =>
     status === 'failed'
       ? 'Failed (click to see why)'
-      : status === 'confirmed'
+      : status === 'success'
       ? 'Confirmed'
       : 'Pending'
 

@@ -50,7 +50,10 @@ export function MotionFormStartNew({ onComplete }: Props) {
           contract: contractEasyTrack,
         })
 
-        const res = await sendTransactionGnosisWorkaround(contractEasyTrack, tx)
+        const res = await sendTransactionGnosisWorkaround(
+          contractEasyTrack.signer,
+          tx,
+        )
 
         onComplete(res)
       } catch (error: any) {

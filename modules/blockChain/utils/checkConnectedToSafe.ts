@@ -1,7 +1,8 @@
-import { getWalletNameFromContract } from './getWalletNameFromContract'
+import { getWalletNameFromProvider } from './getWalletNameFromProvider'
 
-export function checkConnectedToSafe(contract: any) {
-  return Boolean(getWalletNameFromContract(contract)?.startsWith('Gnosis Safe'))
+export function checkConnectedToSafe(provider: any) {
+  const walletName = getWalletNameFromProvider(provider)
+  return Boolean(walletName?.startsWith('Gnosis Safe'))
 
   //
   //
