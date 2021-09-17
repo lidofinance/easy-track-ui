@@ -29,7 +29,7 @@ function AppRoot({ Component, pageProps }: AppProps) {
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <title>Lido EasyTracks</title>
+        <title>Lido Easy Track</title>
       </Head>
       <PageLayout>
         {isChainSupported ? (
