@@ -46,7 +46,6 @@ export type Motion = {
   snapshotBlock: number
   objectionsThreshold: number
   objectionsAmount: BigNumber
-  objectionsAmountPct: number
   evmScriptHash: string
   evmScriptCalldata?: string
   status: MotionStatus
@@ -68,7 +67,6 @@ export type RawMotionSubgraph = {
   snapshotBlock: string
   objectionsThreshold: string
   objectionsAmount: string
-  objectionsAmountPct: string
   evmScriptHash: string
   evmScriptCalldata?: string
   status: MotionStatus

@@ -24,7 +24,6 @@ export const getQuerySubgraphMotions = (
     snapshotBlock
     objectionsThreshold
     objectionsAmount
-    objectionsAmountPct
     evmScriptHash
     evmScriptCalldata
     status

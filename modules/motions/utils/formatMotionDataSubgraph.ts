@@ -10,7 +10,6 @@ export function formatMotionDataSubgraph(rawMotion: RawMotionSubgraph): Motion {
     snapshotBlock: Number(rawMotion.snapshotBlock),
     objectionsThreshold: Number(rawMotion.objectionsThreshold),
     objectionsAmount: BigNumber.from(rawMotion.objectionsAmount),
-    objectionsAmountPct: Number(rawMotion.objectionsAmountPct),
     enacted_at: rawMotion.enacted_at ? Number(rawMotion.enacted_at) : undefined,
     canceled_at: rawMotion.canceled_at
       ? Number(rawMotion.canceled_at)
