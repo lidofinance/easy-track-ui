@@ -10,7 +10,7 @@ export const NodeOperatorsRegistry = {
 
 export const EasyTrack = {
   [Chains.Rinkeby]: '0x0006de2639a6fc48349aa0b116f499621168a112',
-  [Chains.Goerli]: '0xe413799Ee2978489a6299031924b5DBD858f3a52',
+  [Chains.Goerli]: '0xAf072C8D368E4DD4A9d4fF6A76693887d6ae92Af',
 }
 
 export const GovernanceToken = {
@@ -25,7 +25,7 @@ export const RewardProgramRegistry = {
   [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0xbB4d7A2661ACC245298fC932601ab99e897761DD',
-  [Chains.Goerli]: '0x69d02FedAE5E289F467280bC25316D2E835C5864',
+  [Chains.Goerli]: '0x28a08f61AE129d0d8BD4380Ae5647e7Add0527ca',
   [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
 }
 
