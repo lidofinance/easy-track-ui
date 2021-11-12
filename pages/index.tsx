@@ -1,32 +1,40 @@
-import { useSWR } from 'modules/shared/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
+import { Container } from '@lidofinance/lido-ui'
+import { Text } from 'modules/shared/ui/Common/Text'
 import { Title } from 'modules/shared/ui/Common/Title'
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
 import type { Motion } from 'modules/motions/types'
-import { standardFetcher } from 'modules/shared/utils/standardFetcher'
-import * as urlsApi from 'modules/shared/utils/urlsApi'
+import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
+import * as urlsApi from 'modules/network/utils/urlsApi'
 
 export default function HomePage() {
   const currentChain = useCurrentChain()
-  const { initialLoading, data } = useSWR<{ motions: Motion[] }>(
+  const { initialLoading, data: motions } = useSWR<Motion[]>(
     urlsApi.motionsListActive(currentChain),
-    standardFetcher,
+    fetcherStandard,
   )
 
   return (
-    <>
-      <Title>Active Motions</Title>
-      {initialLoading && <div>Loading...</div>}
-      {!initialLoading && data && (
+    <Container as="main" size="full">
+      <Title title="Active Motions" subtitle="Select the card to see details" />
+      {initialLoading && <PageLoader />}
+      {!initialLoading && (!motions || motions.length === 0) && (
+        <Text size={16} weight={500} isCentered color="textSecondary">
+          No active motions at the moment
+        </Text>
+      )}
+      {!initialLoading && motions && motions.length > 0 && (
         <MotionsGrid>
-          {data.motions.map((motion, i) => (
-            <MotionCardPreview key={i} motion={motion} />
+          {motions.map(motion => (
+            <MotionCardPreview key={motion.id} motion={motion} />
           ))}
         </MotionsGrid>
       )}
-    </>
+    </Container>
   )
 }

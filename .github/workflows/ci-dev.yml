@@ -25,5 +25,5 @@ jobs:
           APP_ID: ${{ secrets.APP_ID }}
           APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
           TARGET_REPO: "${{ secrets.TARGET_REPO }}"
-          TARGET: "testnet"
-          TARGET_WORKFLOW: "easytrack_ui.yaml"
+          TARGET: "develop"
+          TARGET_WORKFLOW: "deploy_testnet_easytrack_ui.yaml"

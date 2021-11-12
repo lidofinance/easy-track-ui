@@ -1,21 +1,29 @@
 import type { Theme } from '@lidofinance/lido-ui'
 import styled, { css } from 'styled-components'
 
-export type TextSize = 12 | 14 | 16 | 18 | 20 | 48
-export type TextWeight = 400 | 500 | 700
-export type TextColor = keyof Theme['colors']
+export type TextSize = 10 | 12 | 14 | 16 | 18 | 20 | 26 | 48
+export type TextWeight = 500 | 800
+export type TextColor = keyof Theme['colors'] | 'inherit'
 
 type Props = {
   size: TextSize
   weight: TextWeight
   color?: TextColor
   truncateLines?: number
+  isCentered?: boolean
 }
 
 export const Text = styled.div<Props>`
   font-size: ${({ size }) => size}px;
   font-weight: ${({ weight }) => weight};
-  color: ${({ color = 'text', theme }) => theme.colors[color]};
+  color: ${({ color = 'text', theme }) =>
+    color === 'inherit' ? color : theme.colors[color]};
+
+  ${({ isCentered }) =>
+    isCentered &&
+    css`
+      text-align: center;
+    `}
 
   ${({ truncateLines }) =>
     truncateLines === undefined

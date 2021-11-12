@@ -1,6 +1,16 @@
-import { createContext, useRef, useMemo } from 'react'
-import { InjectedConnector } from '@web3-react/injected-connector'
+import {
+  createContext,
+  useRef,
+  useMemo,
+  //  useEffect
+} from 'react'
 import { useConfig } from 'modules/config/hooks/useConfig'
+// import {
+//   useSafeAppConnection,
+//   SafeAppConnector,
+// } from '@gnosis.pm/safe-apps-web3-react'
+
+import { InjectedConnector } from '@web3-react/injected-connector'
 import { Chains } from 'modules/blockChain/chains'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
@@ -13,6 +23,7 @@ export type WalletConnectorsValue = {
   imtoken: InjectedConnector
   walletconnect: WalletConnectConnector | null
   coinbase: WalletLinkConnector | null
+  // gnosisSafe: SafeAppConnector
 }
 
 export const walletConnectorsContext = createContext(
@@ -35,14 +46,16 @@ export function WalletConnectorsProvider({ children }: Props) {
     [supportedChainIds],
   )
 
-  if (!current.isInited) {
-    current.connectors.metamask = new InjectedConnector({ supportedChainIds })
-    current.connectors.trust = new InjectedConnector({ supportedChainIds })
-    current.connectors.imtoken = new InjectedConnector({ supportedChainIds })
+  if (!current.isInited && isClientSide()) {
+    current.connectors.metamask = new InjectedConnector({})
+    current.connectors.trust = new InjectedConnector({})
+    current.connectors.imtoken = new InjectedConnector({})
+    // current.connectors.gnosisSafe = new SafeAppConnector()
 
     current.connectors.walletconnect = new WalletConnectConnector({
-      supportedChainIds,
-      rpc: supportedChainIds.reduce<Record<number, string>>(
+      // supportedChainIds,
+      // rpc: supportedChainIds.reduce<Record<number, string>>(
+      rpc: Object.values(Chains).reduce<Record<number, string>>(
         (acc, chainId) => ({
           ...acc,
           [chainId]: getRpcUrl(chainId),
@@ -66,6 +79,23 @@ export function WalletConnectorsProvider({ children }: Props) {
 
     current.isInited = true
   }
+
+  // const triedToConnectToSafe = useSafeAppConnection(
+  //   current.connectors.gnosisSafe,
+  // )
+
+  // useEffect(() => {
+  //   if (triedToConnectToSafe) {
+  //     // is not gnosis safe
+  //     eagerConnect()
+  //   }
+  // }, [eagerConnect, triedToConnectToSafe])
+
+  // useEffect(() => {
+  //   if (isMobile && hasInjectedEthereum && triedToConnectToSafe) {
+  //     activate(injected)
+  //   }
+  // }, [activate, hasInjectedEthereum, injected, triedToConnectToSafe])
 
   return (
     <walletConnectorsContext.Provider

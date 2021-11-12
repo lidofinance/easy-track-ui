@@ -4,9 +4,9 @@ import { ConnectWalletModalTerms } from './ConnectWalletModalTerms'
 import {
   ConnectMetamaskButton,
   ConnectWalletConnectButton,
-  ConnectCoinbaseButton,
-  ConnectTrustButton,
-  ConnectImTokenButton,
+  // ConnectCoinbaseButton,
+  // ConnectTrustButton,
+  // ConnectImTokenButton,
 } from '../ConnectButton'
 import { useLocalStorage } from 'modules/shared/hooks/useLocalStorage'
 import { STORAGE_TERMS_KEY } from 'modules/config'
@@ -31,9 +31,9 @@ export function ConnectWalletModal(props: Props) {
       <ConnectWalletModalTerms onChange={handleChange} checked={checked} />
       <ConnectMetamaskButton {...common} />
       <ConnectWalletConnectButton {...common} />
-      <ConnectCoinbaseButton {...common} />
-      <ConnectTrustButton {...common} />
-      <ConnectImTokenButton {...common} />
+      {/* <ConnectCoinbaseButton {...common} /> */}
+      {/* <ConnectTrustButton {...common} /> */}
+      {/* <ConnectImTokenButton {...common} /> */}
     </Modal>
   )
 }

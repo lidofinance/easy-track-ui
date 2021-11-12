@@ -13,7 +13,7 @@ export function FormattedDuration({ value, unit }: Props) {
       moment
         .duration(value, unit)
         // \xa0 is non-breaking space
-        .format('d\xa0[day]\xa0h\xa0[hr]\xa0m\xa0[min]\xa0s\xa0[sec]', {
+        .format('h\xa0[hr]\xa0m\xa0[min]', {
           trim: 'all',
         }),
     [value, unit],

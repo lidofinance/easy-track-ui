@@ -1,29 +1,22 @@
 import { useCallback, useMemo } from 'react'
-import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
 import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
-import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
-import { useLDOToken } from 'modules/tokens/hooks/useLDOToken'
+import { useGovernanceBalance } from 'modules/tokens/hooks/useGovernanceBalance'
+import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
+
 import { Text } from 'modules/shared/ui/Common/Text'
-import {
-  ButtonIcon,
-  Modal,
-  ModalProps,
-  Identicon,
-  External,
-  Copy,
-  trimAddress,
-} from '@lidofinance/lido-ui'
+import { CopyOpenActions } from 'modules/shared/ui/Common/CopyOpenActions'
+import { Modal, ModalProps, Identicon, trimAddress } from '@lidofinance/lido-ui'
 import {
   Content,
   Connected,
   Connector,
   Disconnect,
-  Account,
+  Row,
   Address,
-  Actions,
 } from './WalletModalStyle'
+
 import { formatToken } from 'modules/tokens/utils/formatToken'
 
 export function WalletModal(props: ModalProps) {
@@ -38,9 +31,8 @@ export function WalletModal(props: ModalProps) {
   }, [disconnect, onClose])
 
   const trimmedAddress = useMemo(() => trimAddress(address ?? '', 6), [address])
-  const handleCopy = useCopyToClipboard(address ?? '')
-  const handleEtherscan = useEtherscanOpener(address ?? '', 'address')
-  const LDO = useLDOToken()
+  const governanceBalance = useGovernanceBalance()
+  const { data: governanceSymbol } = useGovernanceSymbol()
 
   return (
     <Modal title="Account" {...props}>
@@ -52,33 +44,28 @@ export function WalletModal(props: ModalProps) {
           </Disconnect>
         </Connected>
 
-        <Account>
-          <Text size={14} weight={500} children="LDO Balance:" />
-          <Text size={14} weight={400}>
-            &nbsp;{LDO.balance ? formatToken(LDO.balance, 'LDO') : 'Loading...'}
+        <Row>
+          <Text
+            size={12}
+            weight={500}
+            children={`${governanceSymbol} Balance:`}
+          />
+          <Text size={12} weight={500}>
+            &nbsp;
+            {governanceBalance.initialLoading || !governanceBalance.data
+              ? 'Loading...'
+              : formatToken(governanceBalance.data, governanceSymbol || '')}
           </Text>
-        </Account>
-        <Account>
+        </Row>
+
+        <Row>
           <Identicon address={address ?? ''} />
           <Address>{trimmedAddress}</Address>
-        </Account>
+        </Row>
 
-        <Actions>
-          <ButtonIcon
-            onClick={handleCopy}
-            icon={<Copy />}
-            size="xs"
-            variant="ghost"
-            children="Copy address"
-          />
-          <ButtonIcon
-            onClick={handleEtherscan}
-            icon={<External />}
-            size="xs"
-            variant="ghost"
-            children="View on Etherscan"
-          />
-        </Actions>
+        <Row>
+          <CopyOpenActions value={address} entity="address" />
+        </Row>
       </Content>
     </Modal>
   )

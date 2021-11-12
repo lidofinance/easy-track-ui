@@ -1,16 +1,15 @@
-import { useModal } from 'modules/modal/useModal'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 
 import { Button } from '@lidofinance/lido-ui'
 
-import { WalletModal } from 'modules/wallet/ui/WalletModal'
-import { ConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
+import { useWalletModal } from 'modules/wallet/ui/WalletModal'
+import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { Wrap, AddressBadge } from './HeaderWalletStyle'
 
 export function HeaderWallet() {
   const { isWalletConnected, walletAddress } = useWalletInfo()
-  const openWalletModal = useModal(WalletModal)
-  const openConnectWalletModal = useModal(ConnectWalletModal)
+  const openWalletModal = useWalletModal()
+  const openConnectWalletModal = useConnectWalletModal()
 
   if (!isWalletConnected) {
     return (
@@ -28,7 +27,7 @@ export function HeaderWallet() {
   return (
     <Wrap>
       <AddressBadge
-        symbols={5}
+        symbols={3}
         address={walletAddress!}
         onClick={openWalletModal}
       />

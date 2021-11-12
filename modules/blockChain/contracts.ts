@@ -1,37 +1,66 @@
-import { Chains } from 'modules/blockChain/chains'
-import { createContractConnector } from './utils/createContractConnector'
-import { getTokenAddresses, TOKENS } from '../tokens/tokens'
+import { createContractHelpers } from './utils/createContractHelpers'
 import {
+  EasyTrackAbi,
+  RewardProgramRegistryAbi,
+  EasyTrackAbi__factory,
   NodeOperatorsAbi__factory,
-  EasyTrackMockAbi__factory,
-  Erc20Abi__factory,
+  // Erc20Abi__factory,
+  MiniMeTokenAbi__factory,
+  RewardProgramRegistryAbi__factory,
+  EvmIncreaseNodeOperatorStakingLimitAbi__factory,
+  EvmTopUpLegoProgramAbi__factory,
+  EvmAddRewardProgramAbi__factory,
+  EvmRemoveRewardProgramAbi__factory,
+  EvmTopUpRewardProgramsAbi__factory,
 } from 'generated'
+import { MotionType } from 'modules/motions/types'
+import { EvmAddressesByType } from 'modules/motions/evmAddresses'
+import * as CONTRACT_ADDRESSES from './contractAddresses'
 
-export const connectNodeOperators = createContractConnector({
+export type ContractTypeEasyTrack = EasyTrackAbi
+export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
+
+export const ContractNodeOperatorsRegistry = createContractHelpers({
   factory: NodeOperatorsAbi__factory,
-  address: {
-    [Chains.Mainnet]: '0x55032650b14df07b85bf18a3a3ec8e0af2e028d5',
-  },
+  address: CONTRACT_ADDRESSES.NodeOperatorsRegistry,
 })
 
-export const connectEasyTrackMock = createContractConnector({
-  factory: EasyTrackMockAbi__factory,
-  address: {
-    [Chains.Goerli]: '0x65f7365B20A254d247BEB8197Ee25aCB49e8B48c',
-  },
+export const ContractEasyTrack = createContractHelpers({
+  factory: EasyTrackAbi__factory,
+  address: CONTRACT_ADDRESSES.EasyTrack,
 })
 
-// export const connectSTETH = createContractConnector({
-//   factory: Erc20Abi__factory,
-//   address: getTokenAddresses(TOKENS.steth),
-// })
+export const ContractRewardProgramRegistry = createContractHelpers({
+  factory: RewardProgramRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.RewardProgramRegistry,
+})
 
-// export const connectWETH = createContractConnector({
-//   factory: Erc20Abi__factory,
-//   address: getTokenAddresses(TOKENS.weth),
-// })
+export const ContractGovernanceToken = createContractHelpers({
+  factory: MiniMeTokenAbi__factory,
+  address: CONTRACT_ADDRESSES.GovernanceToken,
+})
 
-export const connectLDO = createContractConnector({
-  factory: Erc20Abi__factory,
-  address: getTokenAddresses(TOKENS.ldo),
+export const ContractEvmNodeOperatorIncreaseLimit = createContractHelpers({
+  factory: EvmIncreaseNodeOperatorStakingLimitAbi__factory,
+  address: EvmAddressesByType[MotionType.NodeOperatorIncreaseLimit],
+})
+
+export const ContractEvmLEGOTopUp = createContractHelpers({
+  factory: EvmTopUpLegoProgramAbi__factory,
+  address: EvmAddressesByType[MotionType.LEGOTopUp],
+})
+
+export const ContractEvmRewardProgramAdd = createContractHelpers({
+  factory: EvmAddRewardProgramAbi__factory,
+  address: EvmAddressesByType[MotionType.RewardProgramAdd],
+})
+
+export const ContractEvmRewardProgramRemove = createContractHelpers({
+  factory: EvmRemoveRewardProgramAbi__factory,
+  address: EvmAddressesByType[MotionType.RewardProgramRemove],
+})
+
+export const ContractEvmRewardProgramTopUp = createContractHelpers({
+  factory: EvmTopUpRewardProgramsAbi__factory,
+  address: EvmAddressesByType[MotionType.RewardProgramTopUp],
 })

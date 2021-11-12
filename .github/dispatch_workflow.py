@@ -6,8 +6,8 @@ import os
 import sys
 import time
 
-JOB_WAIT_TIMEOUT = 60  # timeout to wait for triggered job to be created (not finished)
-JOB_TIMEOUT = 600  # timeout to wait fo job to finish
+JOB_WAIT_TIMEOUT = 300  # timeout to wait for triggered job to be created (not finished)
+JOB_TIMEOUT = 6000  # timeout to wait fo job to finish
 
 
 def make_jwt_token(private_key):
@@ -93,11 +93,14 @@ def main():
     repo = os.environ["TARGET_REPO"]
     target_workflow = os.environ["TARGET_WORKFLOW"]
     target = os.environ.get("TARGET")
+    target_tag = os.environ.get("TAG")
     jwt_token = make_jwt_token(private_key)
     auth = prep_auth(jwt_token, get_installation_id(jwt_token))
     job_inputs = dict()
     if target:
-        job_inputs["target"] = target
+        job_inputs["repo_ref"] = target
+    if target_tag:
+        job_inputs["tag"] = target_tag
 
     print(f"Dispatching workflow {target_workflow} with inputs {job_inputs}")
     res = requests.post(

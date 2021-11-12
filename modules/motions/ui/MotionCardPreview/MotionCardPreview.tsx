@@ -1,37 +1,30 @@
 import { useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
-import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
+import { useMotionTimeCountdown } from 'modules/motions/hooks/useMotionTimeCountdown'
 
-import { Text } from 'modules/shared/ui/Common/Text'
-import { MotionDate } from '../MotionDate'
+import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
+import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+import { MotionDescription } from '../MotionDescription'
 import {
   Wrap,
   Row,
-  FieldWrap,
-  FieldLabel,
-  FieldText,
+  CardTitle,
+  CardDescription,
+  CardStatus,
+  CardProgress,
+  Footer,
+  FooterLabel,
+  FooterValue,
 } from './MotionCardPreviewStyle'
 
-import type { Motion } from 'modules/motions/types'
-import { getMotionType } from 'modules/motions/utils/getMotionType'
-import * as urls from 'modules/shared/utils/urls'
-
-type FieldProps = {
-  label: React.ReactNode
-  text: React.ReactNode
-  isHoverable?: boolean
-}
-
-function Field({ label, text, isHoverable }: FieldProps) {
-  return (
-    <FieldWrap>
-      <FieldLabel size={14} weight={400} children={label} />
-      <FieldText isHoverable={isHoverable}>
-        <Text size={16} weight={500} children={text} />
-      </FieldText>
-    </FieldWrap>
-  )
-}
+import * as urls from 'modules/network/utils/urls'
+import { Motion, MotionStatus } from 'modules/motions/types'
+import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
+import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
+import { getMotionDisplayStatus } from 'modules/motions/utils/getMotionDisplayStatus'
+import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 
 type Props = {
   motion: Motion
@@ -39,28 +32,68 @@ type Props = {
 
 export function MotionCardPreview({ motion }: Props) {
   const router = useRouter()
+  const currentChainId = useCurrentChain()
+
+  const progress = useMotionProgress(motion)
+
+  const timeData = useMotionTimeCountdown(motion)
+  const { isPassed, diff, diffFormatted } = timeData
+
+  const isArchived =
+    motion.status !== MotionStatus.ACTIVE &&
+    motion.status !== MotionStatus.PENDING
+  const isAttentionTime = diff <= motion.duration * MOTION_ATTENTION_PERIOD
+  const displayStatus = getMotionDisplayStatus({
+    motion,
+    progress,
+    isAttentionTime,
+  })
+
   const goToDetails = useCallback(() => {
     router.push(urls.motionDetails(motion.id))
   }, [router, motion.id])
+
   return (
-    <Wrap onClick={goToDetails}>
-      <Row>
-        <Text size={14} weight={500}>
-          #{motion.id} {getMotionType(motion.evmScriptFactory)}
-        </Text>
-        <AddressWithPop diameter={20} symbols={4} address={motion.creator} />
-      </Row>
+    <Wrap displayStatus={displayStatus} onClick={goToDetails}>
+      <CardTitle>
+        #{motion.id}{' '}
+        {getMotionTypeDisplayName(
+          getMotionTypeByScriptFactory(currentChainId, motion.evmScriptFactory),
+        )}
+      </CardTitle>
 
-      <Field label="Snapshot" text={motion.snapshotBlock} />
-      <Field label="ObjectionsThreshold" text={motion.objectionsThreshold} />
-      <Field label="ObjectionsAmount" text={motion.objectionsAmount} />
-      <Field label="ObjectionsAmountPct" text={motion.objectionsAmountPct} />
-      <Field label="EvmScriptHash" text={motion.evmScriptHash} isHoverable />
-      <Field label="EvmScriptCallData" text={motion.evmScriptCallData} />
+      <CardDescription>
+        <MotionDescription motion={motion} />
+      </CardDescription>
 
-      <Row>
-        <MotionDate fontSize={14} fontWeight={500} motion={motion} />
-      </Row>
+      <Footer>
+        <CardStatus>{motion.status}</CardStatus>
+
+        <CardProgress>
+          {isArchived ? (
+            <FormattedDate
+              format="MMM DD, YYYY"
+              date={motion.startDate + motion.duration}
+            />
+          ) : isPassed ? (
+            '—'
+          ) : (
+            diffFormatted
+          )}
+        </CardProgress>
+
+        <Row>
+          <div>
+            <FooterLabel>Objections</FooterLabel>
+            <FooterValue>
+              {!progress
+                ? 'Loading...'
+                : `${Math.round(progress.objectionsPct * 100) / 100}%`}
+            </FooterValue>
+          </div>
+          <AddressWithPop symbols={4} address={motion.creator} />
+        </Row>
+      </Footer>
     </Wrap>
   )
 }

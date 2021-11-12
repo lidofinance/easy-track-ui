@@ -1,20 +1,36 @@
-export const MotionTypes = {
-  '0x81C2F1f181496089c4b93a378fe68614F609EB05': 'Test type',
-} as const
+import { utils } from 'ethers'
+import { Chains, parseChainId } from 'modules/blockChain/chains'
+import { MotionType } from '../types'
+import {
+  EvmAddressesByChain,
+  EvmTypesByAdress,
+  EvmUnrecognized,
+} from '../evmAddresses'
 
-export type ScriptFactory = keyof typeof MotionTypes
-
-export const parseScriptFactory = (scriptFactory: string) => {
-  if (!MotionTypes.hasOwnProperty(scriptFactory)) {
-    throw new Error(`Script factory ${scriptFactory} not recognized`)
+export const parseScriptFactory = (chainId: Chains, scriptFactory: string) => {
+  const address = utils.getAddress(scriptFactory)
+  if (!EvmTypesByAdress[parseChainId(chainId)].hasOwnProperty(address)) {
+    throw new Error(`Script factory ${address} not recognized`)
   }
-  return scriptFactory as ScriptFactory
+  return address
 }
 
-export const getMotionType = (scriptFactory: ScriptFactory) => {
+export const getMotionTypeByScriptFactory = (
+  chainId: Chains,
+  scriptFactory: string,
+): MotionType | EvmUnrecognized => {
   try {
-    return MotionTypes[parseScriptFactory(scriptFactory)]
+    return EvmTypesByAdress[parseChainId(chainId)][
+      parseScriptFactory(chainId, scriptFactory)
+    ]
   } catch {
-    return 'unrecognized type'
+    return EvmUnrecognized
   }
+}
+
+export const getScriptFactoryByMotionType = (
+  chainId: Chains,
+  motionType: MotionType,
+) => {
+  return EvmAddressesByChain[parseChainId(chainId)][motionType]
 }

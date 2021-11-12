@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useCallback, createContext, useRef } from 'react'
+import { memo, useMemo, useCallback, createContext, useRef } from 'react'
 import type { ModalProps } from '@lidofinance/lido-ui'
 import { useForceUpdate } from 'modules/shared/hooks/useForceUpdate'
 

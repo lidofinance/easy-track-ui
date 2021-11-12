@@ -6,5 +6,8 @@ import { parseChainId } from '../chains'
 export const useCurrentChain = () => {
   const { defaultChain } = useConfig()
   const { chainId = defaultChain } = useWeb3React()
-  return useMemo(() => parseChainId(chainId), [chainId])
+  return useMemo(
+    () => parseChainId(chainId || defaultChain),
+    [chainId, defaultChain],
+  )
 }

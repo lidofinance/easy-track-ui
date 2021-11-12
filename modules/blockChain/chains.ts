@@ -5,8 +5,9 @@ export const Chains = {
   Goerli: 5,
   Kovan: 42,
 } as const
-
-export type ChainId = typeof Chains[keyof typeof Chains]
+// intentionally
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type Chains = typeof Chains[keyof typeof Chains]
 
 export const ChainNames = {
   [Chains.Mainnet]: 'Mainnet',
@@ -21,7 +22,7 @@ export const parseChainId = (chainId: number | string) => {
   if (!ChainNames.hasOwnProperty(chainId)) {
     throw new Error(`Chain ${chainId} is not supported`)
   }
-  return parsed as ChainId
+  return parsed as Chains
 }
 
 export const getChainName = (chainId: number) =>

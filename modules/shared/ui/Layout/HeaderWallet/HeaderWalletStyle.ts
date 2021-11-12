@@ -19,5 +19,6 @@ export const Disconnect = styled.button`
 
 export const AddressBadge = styled(IdenticonBadge)`
   cursor: pointer;
-  background-color: ${({ theme }) => theme.colors.foreground};
+  font-size: 12px;
+  background: rgba(39, 56, 82, 0.1);
 `
