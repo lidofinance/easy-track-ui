@@ -46,6 +46,31 @@ module.exports = {
 
   //   // return config
   // },
+  async headers() {
+    // https://nextjs.org/docs/advanced-features/security-headers
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          // DNS pre-fetching for external resources
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          // HTTPS connections only, 2 years
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          // Explicit MIME types
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+        ],
+      },
+    ]
+  },
   devServer(configFunction) {
     return function (proxy, allowedHost) {
       const config = configFunction(proxy, allowedHost)
