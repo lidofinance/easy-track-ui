@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:dockerfile": "dockerfilelint Dockerfile",
     "lint:fix": "yarn lint --fix",
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated './abi/*.json'",
     "postinstall": "husky install && yarn typechain"
@@ -50,6 +51,7 @@
     "@types/styled-components": "5.1.10",
     "@typescript-eslint/eslint-plugin": "4.29.1",
     "@typescript-eslint/parser": "4.29.1",
+    "dockerfilelint": "^1.8.0",
     "eslint": "7.32.0",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "8.3.0",
