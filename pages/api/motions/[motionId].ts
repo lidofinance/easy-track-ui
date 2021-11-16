@@ -3,6 +3,7 @@ import { getLibrary } from 'modules/blockChain/utils/getLibrary'
 import { parseChainId } from 'modules/blockChain/chains'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { formatMotionDataOnchain } from 'modules/motions/utils/formatMotionDataOnchain'
+import { logger } from 'modules/shared/utils/log'
 
 export default createNextConnect().get(async (req, res) => {
   try {
@@ -16,7 +17,7 @@ export default createNextConnect().get(async (req, res) => {
     if (e.reason === 'MOTION_NOT_FOUND') {
       res.status(404).send({ error: 'Not found' })
     } else {
-      console.log(e)
+      logger.error(e)
       res.status(500).send({ error: 'Something went wrong!' })
     }
   }
