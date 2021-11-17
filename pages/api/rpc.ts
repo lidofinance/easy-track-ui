@@ -18,7 +18,7 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     const responded = await requested.json()
     res.status(requested.status).json(responded)
   } catch (error) {
-    logger.error(error)
+    logger.error(error instanceof Error ? error.message : error)
     res.status(500).send({ error: 'Something went wrong!' })
   }
 }

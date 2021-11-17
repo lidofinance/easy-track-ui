@@ -18,7 +18,7 @@ export default createNextConnect().get(async (req, res) => {
     )(motions)
     res.json(formatted)
   } catch (e) {
-    logger.error(e)
+    logger.error(e instanceof Error ? e.message : e)
     res.status(500).send({ error: 'Something went wrong!' })
   }
 })

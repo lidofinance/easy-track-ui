@@ -17,7 +17,7 @@ export default createNextConnect().get(async (req, res) => {
     if (e.reason === 'MOTION_NOT_FOUND') {
       res.status(404).send({ error: 'Not found' })
     } else {
-      logger.error(e)
+      logger.error(e instanceof Error ? e.message : e)
       res.status(500).send({ error: 'Something went wrong!' })
     }
   }
