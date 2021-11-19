@@ -15,6 +15,9 @@ import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { ToastContainer } from 'modules/toasts'
+import { getAddressList } from 'modules/config/utils/getAddressList'
+
+const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
 function AppRoot({ Component, pageProps }: AppProps) {
   useWalletAutoConnect()
@@ -24,12 +27,55 @@ function AppRoot({ Component, pageProps }: AppProps) {
     () => supportedChainIds.includes(chainId),
     [chainId, supportedChainIds],
   )
+
+  const currentChain = useCurrentChain()
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <title>Lido Easy Track</title>
+
+        <link rel="manifest" href={`${basePath}/manifest.json`} />
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href={`${basePath}/favicon-1080x1080.svg`}
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href={`${basePath}/apple-touch-icon.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href={`${basePath}/favicon-192x192.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="180x180"
+          href={`${basePath}/favicon-180x180.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href={`${basePath}/favicon-32x32.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href={`${basePath}/favicon-16x16.png`}
+        />
+
+        <meta name="currentChain" content={String(currentChain)} />
+        {getAddressList(currentChain).map(({ contractName, address }) => (
+          <meta key={contractName} name={contractName} content={address} />
+        ))}
       </Head>
       <PageLayout>
         {isChainSupported ? (
