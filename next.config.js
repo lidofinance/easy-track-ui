@@ -1,7 +1,6 @@
 const basePath = process.env.BASE_PATH || ''
 const infuraApiKey = process.env.INFURA_API_KEY
 const alchemyApiKey = process.env.ALCHEMY_API_KEY
-const etherscanApiKey = process.env.ETHERSCAN_API_KEY
 
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
@@ -89,7 +88,6 @@ module.exports = {
     basePath,
     infuraApiKey,
     alchemyApiKey,
-    etherscanApiKey,
   },
   publicRuntimeConfig: {
     defaultChain,
