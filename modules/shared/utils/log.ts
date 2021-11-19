@@ -1,8 +1,11 @@
-import winston, { createLogger, transports } from 'winston'
+import { createLogger, transports, format } from 'winston'
+
+const { json, prettyPrint, timestamp, combine } = format
 
 export const logger = createLogger({
   defaultMeta: {
     service: 'easy-track-ui',
   },
-  transports: [new transports.Console({ format: winston.format.json() })],
+  format: combine(json(), timestamp(), prettyPrint()),
+  transports: [new transports.Console()],
 })
