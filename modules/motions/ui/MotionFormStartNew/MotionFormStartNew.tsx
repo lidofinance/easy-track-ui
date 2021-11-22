@@ -10,7 +10,7 @@ import { Fieldset, RetryHint } from './CreateMotionFormStyle'
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from '../../types'
-import { toastError } from 'modules/toasts'
+import { ToastError } from '@lidofinance/lido-ui'
 import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
 import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
@@ -58,7 +58,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
         onComplete(res)
       } catch (error: any) {
         console.error(error)
-        toastError(error.message || (error as any).toString())
+        ToastError(error.message || (error as any).toString())
         setSubmitting(false)
       }
     },

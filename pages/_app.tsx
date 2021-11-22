@@ -14,7 +14,7 @@ import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
-import { ToastContainer } from 'modules/toasts'
+import { ToastContainer } from '@lidofinance/lido-ui';
 import { getAddressList } from 'modules/config/utils/getAddressList'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
