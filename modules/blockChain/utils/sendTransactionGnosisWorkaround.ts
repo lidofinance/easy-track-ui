@@ -1,6 +1,6 @@
 import { Signer } from '@ethersproject/abstract-signer'
 import { PopulatedTransaction } from '@ethersproject/contracts'
-import { toastInfo } from 'modules/toasts'
+import { ToastInfo, toast } from '@lidofinance/lido-ui'
 import { ResultTx } from '../types'
 import { checkConnectedToSafe } from './checkConnectedToSafe'
 import { getWalletNameFromProvider } from './getWalletNameFromProvider'
@@ -16,7 +16,7 @@ export async function sendTransactionGnosisWorkaround(
   const walletName = getWalletNameFromProvider(provider)
   const isGnosisSafe = checkConnectedToSafe(provider)
 
-  toastInfo(`Confirm transaction with ${walletName}`)
+  const pendingToastId = ToastInfo(`Confirm transaction with ${walletName}`)
 
   if (isGnosisSafe) {
     const hash: string = await (signer as any).sendUncheckedTransaction(
@@ -29,6 +29,8 @@ export async function sendTransactionGnosisWorkaround(
   }
 
   const tx = await signer.sendTransaction(transaction)
+
+  toast.dismiss(pendingToastId)
 
   return {
     type: 'regular',

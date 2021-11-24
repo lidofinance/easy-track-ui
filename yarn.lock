@@ -1394,362 +1394,356 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
-"@lidofinance/accordion@2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/accordion/-/accordion-2.0.7.tgz#92dc5f194c0eb187b8d19ffa8ab36799af7727fb"
-  integrity sha512-vnUBuwuvZLWlGZ/7hAyVU6mveiloJdsYOjdNl+FUtKy7mM5xcNPrW04Mmkcqxxzh/GTxvGQ4XrMkhOvlBKcRUw==
+"@lidofinance/accordion@2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@lidofinance/accordion/-/accordion-2.0.12.tgz#dfd4252633cb0e96284f88ad93ac49604d75d70a"
+  integrity sha512-4QQZAnWPqFdfk10wmsIIZrM2ToTK4yGXVKU1XZTgxNmcSRtdrgGoDUeuFlMe+5jOD0hQmoYnbXEcOj1uF4yGqg==
   dependencies:
-    "@lidofinance/icons" "2.2.1"
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/icons" "2.6.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
     react-collapsed "3.0.2"
 
-"@lidofinance/block@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@lidofinance/block/-/block-2.0.5.tgz#2a9354aa308f8eb97f41f6491badef39e239ca46"
-  integrity sha512-pVGdhnlmoAa6SXldwimM6W6JEve0IqfVKWrlH9936qKwWRo91eoLsZB0MLY/q0aCyYdzkMSAXe0CM6Yz+7TPEQ==
+"@lidofinance/address@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@lidofinance/address/-/address-1.0.1.tgz#45069f7021a7dec65db958621348d5de60f3ff29"
+  integrity sha512-OjDiHa3VOBktcvdcN+5WQKFxz8AuSkwrQeB2lFg4HZtz9ocKszXRNUM5gEG4wb1LoEdZiXcZkBrJP/srAci79Q==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/box@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/box/-/box-1.3.7.tgz#3c646c031268fc82a7c7205525a58c8972091955"
-  integrity sha512-C+B82PBAtAq1ZeIGeZu7+JC/L8s5dbZZRBi9NbZf80CQbQCI7nfdKmxssmkjnfSq+IhUI1XJbfsaUT9jRNLENA==
-  dependencies:
-    "@lidofinance/styled-system" "1.3.6"
-    "@lidofinance/theme" "2.2.0"
-    "@lidofinance/utils" "1.3.2"
-
-"@lidofinance/button@2.0.7":
+"@lidofinance/block@2.0.7":
   version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/button/-/button-2.0.7.tgz#30b2dbff9d778c54495e00570f7f00da9451f863"
-  integrity sha512-j834z5BE93i7BKUALOYxzZC3Vx+uhUoI/n3cszO5rFokcI4CaOOVcidAIlkAme5kqjl2/av3PMOu+STXJZKgcA==
+  resolved "https://registry.yarnpkg.com/@lidofinance/block/-/block-2.0.7.tgz#878b4779ae093d3a5018a2a036591fdc48c40460"
+  integrity sha512-bRGexD4z/nQPcPDYfk1by92YZU0V/hEjrd/bvXT0e7vH0z4b6o2Zkz4vemmngDQByo4W8Q/+AV0pnQ0oIdlJLw==
   dependencies:
-    "@lidofinance/loaders" "1.3.7"
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/checkbox@1.3.13":
-  version "1.3.13"
-  resolved "https://registry.yarnpkg.com/@lidofinance/checkbox/-/checkbox-1.3.13.tgz#7633898534523fcc9238325e171621e1569d57df"
-  integrity sha512-F8eZ3v9M9sRAa/FjtUvq2JqAunKJdppgStY2qgzkke2e6OLuwGQvbBCbjTz9Bw8z9i4q7NJOOSDXRw5UXVZdPA==
+"@lidofinance/box@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/box/-/box-1.3.9.tgz#abc0dbd1d36574861f19b0e9ba766d40aaf1f677"
+  integrity sha512-SVAyzJ+GzROGNBFglqcEAHmZk+28lqfZrW32StZWYo13xspXTplorgMGMc0+60L5vlsQsprQDyUh1NZKHBpFZA==
   dependencies:
-    "@lidofinance/icons" "2.2.1"
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/styled-system" "1.3.8"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/container@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/container/-/container-1.3.7.tgz#e994dcf954965545232ef2895e7cc7a37bfc0d90"
-  integrity sha512-CYuCdjW307Nd3bhPCdcIo78SFVbu6y0p/1ZqYonV+uBU5yUQpJC1DZXYvN33lAPHofX1vtb4OmVhHfBJVHU7kQ==
+"@lidofinance/button@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@lidofinance/button/-/button-2.1.2.tgz#241e095cc01cb31cb91f36134673d89b55e0fcbb"
+  integrity sha512-pei6guhYEoGoOdShfnN3QZlu0uzzYhdCM3vy87T+doH+9upmR6/G1NEr+gnIriwKMxQ8Rtcutb2e6UVMXrzuOg==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/loaders" "1.3.9"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/data-table@2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@lidofinance/data-table/-/data-table-2.0.8.tgz#09ba53fa912df6868408937d138b8809981a4e35"
-  integrity sha512-2NRrvt79tO0D6EfDP8UvJeA9Sk2Z43rECEiSmsjBeYE/byX+MMhh3xDtcTcCwgDwnx2RwnJDfdjd4F19FZ3Ixw==
+"@lidofinance/button@2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@lidofinance/button/-/button-2.1.3.tgz#2bdeb15d035ccc03b89c713624aed18f074ebfab"
+  integrity sha512-e29u09eAc+pTWn7h6ty2wKDoJA/JPASUFKHIu/hRSt/r8xlJxjUZ4EXR1kGCNqRpM6E+sjCQ8GN9sw5teQVxeQ==
   dependencies:
-    "@lidofinance/icons" "2.2.1"
-    "@lidofinance/loaders" "1.3.6"
-    "@lidofinance/theme" "2.2.0"
-    "@lidofinance/tooltip" "3.0.7"
+    "@lidofinance/loaders" "1.3.9"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/divider@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/divider/-/divider-1.3.7.tgz#fcfd890106519e9488d4690218094439665c7349"
-  integrity sha512-kRk6wKPsTOGiE8PRdSDr+NexKKxtRXanPQKe524VH4hef9gNgFsRBw+2+qj2ULjLjmIFz8OoQfNEXm+HVV167g==
+"@lidofinance/checkbox@1.3.18":
+  version "1.3.18"
+  resolved "https://registry.yarnpkg.com/@lidofinance/checkbox/-/checkbox-1.3.18.tgz#e774536ed3696544245af806a08258513e0c73ed"
+  integrity sha512-VebfMARyvf3A29Dj9stXW5rkXIEwaGilvLk1rfV1FSWKKVF/u/T1UVxkXusA+hUToRZ2iqZmo+loK0owIDxR5Q==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/icons" "2.6.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/heading@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@lidofinance/heading/-/heading-2.0.4.tgz#0ca580bbd6900a084576b15b1b1ccabd13738c96"
-  integrity sha512-5zH6HugqzfRgWicOlz9InsRz0SMLU2EDpxmO2XVw8BkH2eRsI4Kn3KAoXxa+ZWGiFnC04o0r4JDf3ZdEge4aTQ==
+"@lidofinance/container@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/container/-/container-1.3.9.tgz#d7f3dcb2057e2fba548b61d74792421eb0fe8f40"
+  integrity sha512-m1qQZ0+0gx5/hPYhPcK+jS6Lkuw8Ty7ZU8qNlPA2vG26rd0puV/yhtclMQgTy6mE6N34g4wV2iU0cc8kl5Uqmw==
   dependencies:
-    "@lidofinance/theme" "2.1.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/heading@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@lidofinance/heading/-/heading-2.0.5.tgz#55eb401f3a25820882aab155512d37e9e39c04b2"
-  integrity sha512-j8S7jfe42Y5HpOEVi8pe9VvAegO7Ok7GBzqE6M1yIpu6HzG9EzHkbZIcr7cuM9WbzbAYbOWUocMgWavJFvYMBw==
+"@lidofinance/data-table@2.0.15":
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/@lidofinance/data-table/-/data-table-2.0.15.tgz#589309106e1c67f19ec604b0182ca64ce2b8e90a"
+  integrity sha512-2dl0pg0CE9e2Z/YIzAFljhP87NUy/xFclf4ZuyRcutRCBopY52ib6u1d3GVhy+W/JsTamdKt/u3xtfGyc+Z9Mg==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/icons" "2.6.0"
+    "@lidofinance/loaders" "1.3.9"
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/tooltip" "3.0.15"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/hooks@2.2.6":
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/@lidofinance/hooks/-/hooks-2.2.6.tgz#dc165f182594aa79568eb4479ce1639d291afb4d"
-  integrity sha512-JPPk4+Hp3XXn9amgWMkzrpVrQPccEjF8/dh8Qz8xx+GjOorcIU5n+ZtNVQaGN/DZ9UHz0CAxPMa9N+0oJj8I1g==
+"@lidofinance/divider@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/divider/-/divider-1.3.9.tgz#b0aeb0e482a360ad1294d9a524f2d64529d02390"
+  integrity sha512-wpjOCCdqI0qJJ/aSQIxcRXjxdwzPRgzgKS66ZsbBTHK9pRiCKal149V3Mcj86WeasJdXBRJmIxdx+lA+eB37rw==
   dependencies:
-    "@lidofinance/theme" "2.1.0"
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/utils" "1.3.2"
+
+"@lidofinance/heading@2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@lidofinance/heading/-/heading-2.0.7.tgz#fb4a9ff04974f1e2904675bbb46060a832f28ad5"
+  integrity sha512-MxzJgablBJnowZT1XO31+o8k+Lft3zsw4f19SPc0OOyfcO8P5uZM+G+XJBtsVg+T+p5weZOSOVv2maFbI93hbA==
+  dependencies:
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/utils" "1.3.2"
+
+"@lidofinance/hooks@2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@lidofinance/hooks/-/hooks-2.5.1.tgz#b3dc5a6c8dd5ed1a44cf371e8a6ef26a81612f74"
+  integrity sha512-DV7sIGgoWI7aKkiCkeeTkGuSfcDV6EiuLbi/nVGxgyXCJv7WCP6as4FkARzeJCSm+Buz66xhLfvEmGLVi2u0SA==
+  dependencies:
+    "@lidofinance/theme" "2.4.0"
     use-callback-ref "1.2.5"
 
-"@lidofinance/hooks@2.2.7":
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/hooks/-/hooks-2.2.7.tgz#5eece29d3bd1147a4e1fd2ec5bec61f2d3748172"
-  integrity sha512-II6uuGyhvnPkYTtKEL8UlIUJeBiaP1eVZGtv+depliZGFvhKiVgCfF2Yze1edjEgDFzVdQHCDeHEN3VGRWb6XA==
+"@lidofinance/icons@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/icons/-/icons-2.5.0.tgz#ec26603c7aa2e68bccf83ea2f335b4ef9c2c7a5a"
+  integrity sha512-741OwJPbhs5pigVd59Io+cSGRaVaQk0Nc9rxFQPLfb1rH3kLwcCcUqVJMKdDvPRaNmZKAz75X+R84sW58wWKAg==
+
+"@lidofinance/icons@2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/icons/-/icons-2.6.0.tgz#ae518fef91c422744b3ec3d281b0cd2ffd826735"
+  integrity sha512-XnADuyAZZW3jOp7qQvWRvHpx4L6Iqdum9aMOOtgruNWe/PRAU44iV1Dke/IWYqFQsgsagTnSRfMNrnDZhhMrqw==
+
+"@lidofinance/identicon@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@lidofinance/identicon/-/identicon-1.4.1.tgz#3c3a65da39e677012dfef7459a1b278ab0249d46"
+  integrity sha512-hGlPhVqX5ejCGi+8umlR02SSBnZ6m0aNrMTsOxoKIAD8jbmu/SVLKhiGnK2oycXyNV4eR0HLHvTypJPr+PGNBQ==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
-    use-callback-ref "1.2.5"
-
-"@lidofinance/icons@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@lidofinance/icons/-/icons-2.2.1.tgz#3a9c0a0643b2c806e49e135119f73eb92fc016e5"
-  integrity sha512-Ruvfgf0zvtq+p6g7lz1sToR/39mhYZ/zdx+1wMg81JEuYImPQzHzlhR4URYB09XbLZmJKznq3vWhxQvbH3NxAQ==
-
-"@lidofinance/icons@2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@lidofinance/icons/-/icons-2.2.2.tgz#0896d1435f2fd34a8c1845f5eb46dfe844b2457f"
-  integrity sha512-HES21AUiuMpYEMIiookbamrr1cQD/E49PhMtuGV/uDd8UOQAKa/Do87iXoTbOKrdSZZ22NosSQsrV3Y/VW6Wrw==
-
-"@lidofinance/identicon@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/identicon/-/identicon-1.3.7.tgz#8f8589971f637f2396a9237f90d86d685c414067"
-  integrity sha512-XAJEmhl8BLuo8u8gYf1+duaLAO5NMzJg+OHAjCFp+a7WMHcZ0N+Y7EdZk30ts3LzdwmfdGCKu2XFehkGw/7HHw==
-  dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/address" "1.0.1"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
     react-jazzicon "0.1.3"
 
-"@lidofinance/input@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/input/-/input-2.2.0.tgz#dd2782de2c94329bfd7b187e9b38ae41b31000b2"
-  integrity sha512-c4zjeJUddGl38gxAtnYfGMB0r8Qb3kCsFr3bxYpCKtzJbRyO7+TLmOR98aDaRyo4iS80k6xXt00N+xNGO+ft9Q==
+"@lidofinance/input@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@lidofinance/input/-/input-2.2.4.tgz#0347c1ee5231dfffe1297b7dd0ac14e3e5d62453"
+  integrity sha512-C/C+IDX4FWdy+8Ii5rzkcTy59+iatDoVUMboguGGnF/uyIndVhIhSzRF71VEP4ETO0S9xZ3SbA0CygiBbaL2tQ==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/lido-logo@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-logo/-/lido-logo-1.0.1.tgz#2a9fe63be02c419a51be794abb7f15a622fcfc3b"
-  integrity sha512-KInZ7GmqQCJSSpiSGQivwx2KpRtWquxgpVoYE72YAIu4sytN6TSPVYzp1NC3f365e41BwJAkqx68CVNKK+pbCA==
+"@lidofinance/input@2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@lidofinance/input/-/input-2.2.5.tgz#261db44464d81df74cb07863e76ad3d6f795b6eb"
+  integrity sha512-xoxMplo4LUfVw361klJUKrUAmZ6b1qyJp9zB738tGxaUnaCaN5n0/rPNKXoQpBisSXJ/FQh8rhEJ6v7s0sIrlw==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/lido-ui@1.9.0":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-1.9.0.tgz#5d745037408106ae21f6b816a41e89c5c6094f78"
-  integrity sha512-/Oe1HCh5NwR4Dj/JPpAuN9nY/1Wv+KTGoo16NDqWPkNSO/to56hOM+5gyh4O0B1NxfEp8Z8sthF/sqXBd+LQVw==
+"@lidofinance/lido-logo@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-logo/-/lido-logo-1.0.3.tgz#e926c0e4d6945f570dfeabcd374752de306f76e7"
+  integrity sha512-FMSA499qq+KnxejxdpLxfCiGavAdU74bYf9ue+99FEdgQBocsjPr/BOIOuLmZgZZ+TUZHr9bIfdOd14xodas3g==
   dependencies:
-    "@lidofinance/accordion" "2.0.7"
-    "@lidofinance/block" "2.0.5"
-    "@lidofinance/box" "1.3.7"
-    "@lidofinance/button" "2.0.7"
-    "@lidofinance/checkbox" "1.3.13"
-    "@lidofinance/container" "1.3.7"
-    "@lidofinance/data-table" "2.0.8"
-    "@lidofinance/divider" "1.3.7"
-    "@lidofinance/heading" "2.0.5"
-    "@lidofinance/hooks" "2.2.7"
-    "@lidofinance/icons" "2.2.2"
-    "@lidofinance/identicon" "1.3.7"
-    "@lidofinance/input" "2.2.0"
-    "@lidofinance/lido-logo" "1.0.1"
-    "@lidofinance/link" "1.3.7"
-    "@lidofinance/loaders" "1.3.7"
-    "@lidofinance/modal" "3.0.8"
-    "@lidofinance/popover" "3.0.8"
-    "@lidofinance/popup-menu" "3.0.8"
-    "@lidofinance/select" "2.1.19"
-    "@lidofinance/service-page" "1.0.0"
-    "@lidofinance/stack" "1.3.7"
-    "@lidofinance/styled-system" "1.3.7"
-    "@lidofinance/text" "2.0.5"
-    "@lidofinance/theme" "2.2.0"
-    "@lidofinance/toast" "1.0.0"
-    "@lidofinance/tooltip" "3.0.8"
-    "@lidofinance/transition" "1.1.9"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/link@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/link/-/link-1.3.7.tgz#29b9d0c724584bc0e2b8db42a99648427251bd3d"
-  integrity sha512-6i4WmnZssol86MaxNBvk3ec2iVNjo25IOmA9ibKEhK0NKwdQvEceGQf1tmeqj+vy9UgunsNF0T5zXLL2Ke+UdA==
+"@lidofinance/lido-ui@1.10.9":
+  version "1.10.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/lido-ui/-/lido-ui-1.10.9.tgz#fb1ee5819111959ce2a4235e9f18740e2d1c9354"
+  integrity sha512-rxYIaITJ7uvugETZKon0HjKnr3wjZjo0KadF5gXSq0c8oLVt1yktJHyeQ7fa256QKg2oShOeuI5WTBRwuYbGWw==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/accordion" "2.0.12"
+    "@lidofinance/address" "1.0.1"
+    "@lidofinance/block" "2.0.7"
+    "@lidofinance/box" "1.3.9"
+    "@lidofinance/button" "2.1.3"
+    "@lidofinance/checkbox" "1.3.18"
+    "@lidofinance/container" "1.3.9"
+    "@lidofinance/data-table" "2.0.15"
+    "@lidofinance/divider" "1.3.9"
+    "@lidofinance/heading" "2.0.7"
+    "@lidofinance/hooks" "2.5.1"
+    "@lidofinance/icons" "2.6.0"
+    "@lidofinance/identicon" "1.4.1"
+    "@lidofinance/input" "2.2.5"
+    "@lidofinance/lido-logo" "1.0.3"
+    "@lidofinance/link" "1.3.9"
+    "@lidofinance/loaders" "1.3.9"
+    "@lidofinance/modal" "3.1.5"
+    "@lidofinance/popover" "3.0.15"
+    "@lidofinance/popup-menu" "3.0.14"
+    "@lidofinance/select" "2.1.25"
+    "@lidofinance/service-page" "1.0.2"
+    "@lidofinance/stack" "1.3.9"
+    "@lidofinance/styled-system" "1.3.9"
+    "@lidofinance/table" "1.0.2"
+    "@lidofinance/text" "2.0.7"
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/toast" "1.1.2"
+    "@lidofinance/tooltip" "3.0.15"
+    "@lidofinance/transition" "1.1.13"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/loaders@1.3.6":
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/@lidofinance/loaders/-/loaders-1.3.6.tgz#0ab34562417fe4f2ddf598855371c8513fe1b418"
-  integrity sha512-HPynL2y2sFbAAIPqbNd8rRkKchM78egski0hcO5krl9uan1UJzm42al3K/YxcAKDCnUlw2z7wMGxQP1kh200hw==
+"@lidofinance/link@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/link/-/link-1.3.9.tgz#5538a23f937c1e10e5dfa85cd134f97a5fb51189"
+  integrity sha512-xg4vvYj5H+460lkUtmXV1XENMOzcCGr18vqZA29TX0J+6gA6WZWPCpM4ZBegEQ2IYmxmrkb8a7bXy9aYjX1p8w==
   dependencies:
-    "@lidofinance/theme" "2.1.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/loaders@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/loaders/-/loaders-1.3.7.tgz#dedfab68a08ffcde21b7bee1bcfc5fe1cef3d1b8"
-  integrity sha512-JjbAFn0e4qls/5R9FWtNcyUM5D/SDadzlmx4uUMNTaHIxk6A1gbhaj+Mbdml02ykiIbhLdrjO9Zv86M4cEzrTw==
+"@lidofinance/loaders@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/loaders/-/loaders-1.3.9.tgz#d1712ec54b0f8ad81fe4c2b60e8c2b08ee5f9df5"
+  integrity sha512-nw6YYh5+gSDIsQcE3i527lIy15vA/Xrc9kSmguxkxJcp9mB00VDbjeMqQoWbIHBbMLnVuKzhGsocYNWIMBFtJA==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/modal@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@lidofinance/modal/-/modal-3.0.8.tgz#de4a43c52dfd2ced4887ffba39fa1728473ea737"
-  integrity sha512-V4CXg637tFnqnt1/t+1RznCLelHX5AWWM/8yOFOgGOR/hsLDJpUbHFkC+w0NYAnsOzvvIsksW8hZUbycbWlsaQ==
+"@lidofinance/modal@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@lidofinance/modal/-/modal-3.1.5.tgz#064d8bbc1e4bd510d261c9c3c6df6d2414d6df97"
+  integrity sha512-a/AB5CIfWytCPjZk77ZuQOaOMlOjr72SjHMWZ2DiEgIaOjYzyL2RCUPnNVDjOAug9YR2NE7C+9jpQqiyRbW9Nw==
   dependencies:
-    "@lidofinance/button" "2.0.7"
-    "@lidofinance/hooks" "2.2.7"
-    "@lidofinance/icons" "2.2.1"
-    "@lidofinance/theme" "2.2.0"
-    "@lidofinance/transition" "1.1.9"
+    "@lidofinance/button" "2.1.2"
+    "@lidofinance/hooks" "2.5.1"
+    "@lidofinance/icons" "2.5.0"
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/transition" "1.1.13"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/popover@3.0.7":
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/popover/-/popover-3.0.7.tgz#fcaf987b9a292c24c67ca479b0de5677727a2a58"
-  integrity sha512-I2tjveWX59nvP4rNbO39Vd+OAvQBG6Go8+WoAB5UKk0mD791127WanDkjnJ5orbn1NTbhOCPYB8RSyeWdwM63Q==
+"@lidofinance/popover@3.0.14":
+  version "3.0.14"
+  resolved "https://registry.yarnpkg.com/@lidofinance/popover/-/popover-3.0.14.tgz#183cd4d4a59db3ef41f252b57a808495bbdb033f"
+  integrity sha512-lvdpQ3wOvDEuGcvcMNH989LbYld3rdWLVtM3pcWqytsaB0NCc6cWXHrZ+diV/D3DBTh1iCuVSZfrWtMJzx2VsA==
   dependencies:
-    "@lidofinance/hooks" "2.2.6"
-    "@lidofinance/theme" "2.1.0"
-    "@lidofinance/transition" "1.1.8"
+    "@lidofinance/hooks" "2.5.1"
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/transition" "1.1.13"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/popover@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@lidofinance/popover/-/popover-3.0.8.tgz#baf7af623c621fac595d2130edf8ee8b39b39500"
-  integrity sha512-BuORj5mB0CXJQvMZYP/EQ6PLu3JIrUaH+oicxLuPfh2jv8CwiwEqHcUAeiMlzSV3oStGBx+3BQbJb8t9Axk5JQ==
+"@lidofinance/popover@3.0.15":
+  version "3.0.15"
+  resolved "https://registry.yarnpkg.com/@lidofinance/popover/-/popover-3.0.15.tgz#4d94f4cc104d2557e9a683b9e8f6e8d44c0d31c7"
+  integrity sha512-UzgUxDaryUqb2WPw9xvvcBU3TqpG1xKcgX4HCNIKoos+8AoNBkzUbjBHJrEg/NFJHhBThNeVnjz1kVrcQ1rDCA==
   dependencies:
-    "@lidofinance/hooks" "2.2.7"
-    "@lidofinance/theme" "2.2.0"
-    "@lidofinance/transition" "1.1.9"
+    "@lidofinance/hooks" "2.5.1"
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/transition" "1.1.13"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/popup-menu@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@lidofinance/popup-menu/-/popup-menu-3.0.8.tgz#d2ca10965e35e86f6b8395a9f15cbbe3e495590d"
-  integrity sha512-JgfDDewAx5EGwoP8SQwADOAtGmJWiDcSnEpAYXBT8iXdTqvkfjOvGOy27YciQUjBTPy325q4fR1UHWE5QzjS2w==
+"@lidofinance/popup-menu@3.0.14":
+  version "3.0.14"
+  resolved "https://registry.yarnpkg.com/@lidofinance/popup-menu/-/popup-menu-3.0.14.tgz#cc6ce83bad8f90711c1edd068ca7f71ee617c01a"
+  integrity sha512-ce5KTTojQXcZ9gwI3EFQe3TcKsR9mqJ1CItmw8FOoOx3QdDwEIolgrwjEY/u0vbmHGFdBxNCvHn6Iz+XbV0oSQ==
   dependencies:
-    "@lidofinance/hooks" "2.2.7"
-    "@lidofinance/popover" "3.0.8"
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/hooks" "2.5.1"
+    "@lidofinance/popover" "3.0.14"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/select@2.1.19":
-  version "2.1.19"
-  resolved "https://registry.yarnpkg.com/@lidofinance/select/-/select-2.1.19.tgz#cec6b6b0cd3b658fcfa6a9005714605d224d9b78"
-  integrity sha512-KK1oMzMtRs1WVl4Re1SHluN+FlsU0yaBkpS4Pb1V+HsSCf49naydcXqXRxvVvL2ZlCXhJGNSrn6CmLJB/0mGkA==
+"@lidofinance/select@2.1.25":
+  version "2.1.25"
+  resolved "https://registry.yarnpkg.com/@lidofinance/select/-/select-2.1.25.tgz#a1c1ea34f94a1bd8f8518d37abb1423d46737f93"
+  integrity sha512-QEkK/DWGT6Eb26xajdQXMqTcAUzSlb0411FdgprpkO0jYzXPMHGLn671LYFnu2y2Cu08tZ9jt3RTbnkE1SPEsg==
   dependencies:
-    "@lidofinance/hooks" "2.2.7"
-    "@lidofinance/icons" "2.2.2"
-    "@lidofinance/input" "2.2.0"
-    "@lidofinance/popup-menu" "3.0.8"
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/hooks" "2.5.1"
+    "@lidofinance/icons" "2.5.0"
+    "@lidofinance/input" "2.2.4"
+    "@lidofinance/popup-menu" "3.0.14"
+    "@lidofinance/theme" "2.4.0"
     resize-observer-polyfill "1.5.1"
 
-"@lidofinance/service-page@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/service-page/-/service-page-1.0.0.tgz#c0b026d83e8695156284d70fe856c5c52b661435"
-  integrity sha512-pnU0Sv8ZQ1ZvoAzZEFntFSzJFOkmkzHRU2cqWQBirn2svs+4lwuLXmUgZf79zqsxiaiB8BEd9qblbkGFhNBhvg==
+"@lidofinance/service-page@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@lidofinance/service-page/-/service-page-1.0.2.tgz#fb9a98c1f0b3bea171b60a53778823a2da3e1ca7"
+  integrity sha512-4r6qUV3bvKFysBAlslsaoeGgXfx3wxAQWfNLZBCW/t/MDJefphW5Byv9Zm3DhLMMJLjtgyv16QACjjeAJBH15w==
   dependencies:
-    "@lidofinance/heading" "2.0.4"
-    "@lidofinance/styled-system" "1.3.6"
-    "@lidofinance/text" "2.0.4"
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/heading" "2.0.7"
+    "@lidofinance/styled-system" "1.3.8"
+    "@lidofinance/text" "2.0.6"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/stack@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/stack/-/stack-1.3.7.tgz#5ba654c7581bdf58f73460e9cebbb4e65edf7963"
-  integrity sha512-wRd+Tc4upAhf34MXIjeL3a/y0GQandQYajH6GBflvPStdxikvlg/n/UJ0eUhqwv0QYtb/nFktX2eRwfs5aVQHA==
+"@lidofinance/stack@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/stack/-/stack-1.3.9.tgz#8607caf1c5d5c193e3522cefc8d84e3c677dbf72"
+  integrity sha512-NfEIk6DZoQr1u14U3zIjjLr9WZVW3ST7KWsk26EB8FozSygumRhCAI+4QbXNOzsL9orhs1IsXKiBJBruuVKvvg==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/styled-system@1.3.6":
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/@lidofinance/styled-system/-/styled-system-1.3.6.tgz#44f8d91f1c0590e20a43710da2e3df9396ca3dec"
-  integrity sha512-QN1x1muYiQ6lKplfR7dM84S2zi0zr2GKjqOwzktgFg/pPrBNFoXJLsyH1vieXaZwafEH5KDVLKuK7E0mw84MSg==
+"@lidofinance/styled-system@1.3.8":
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/@lidofinance/styled-system/-/styled-system-1.3.8.tgz#594921c39dc2df762299ab9b1e3d2e7b2ee67401"
+  integrity sha512-UcM20O4zVx6m753n+/cvMfbeESlwCnSOszJ+uPAG7s7q4h3OHxfMzA6fD+bINNH6IQf+4PZE8aQ8w/H+pGj2bg==
   dependencies:
     "@styled-system/should-forward-prop" "5.1.5"
     styled-system "5.1.5"
 
-"@lidofinance/styled-system@1.3.7":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/styled-system/-/styled-system-1.3.7.tgz#bdde322ce2826228cfb7f6b7dddf06738807de69"
-  integrity sha512-UKwe6dQ3CPI7bMeNE0eS5tbT/nkkBUeX2GiiUCv7YztEE3muwNtjGbjBI1PNz64AjOMGt6uvW01hQNIguDVHrw==
+"@lidofinance/styled-system@1.3.9":
+  version "1.3.9"
+  resolved "https://registry.yarnpkg.com/@lidofinance/styled-system/-/styled-system-1.3.9.tgz#154576be1848a23ee2ddabdf483d8f0ed3d081d1"
+  integrity sha512-kWChezoODzBpxDCGcu4tL/mYzyTUhnOA7NvkS4RE7lLQHQYwVWRykpRkqVHFf/ck1EYvA+EIpqB0l79VtkFnEw==
   dependencies:
     "@styled-system/should-forward-prop" "5.1.5"
     styled-system "5.1.5"
 
-"@lidofinance/text@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@lidofinance/text/-/text-2.0.4.tgz#3535d91e420fc2e79f9fe3eca3ea7592ccaa425f"
-  integrity sha512-K1ntrptub2LlB6MlnbfQF+WhWvIGLcg8KBnNlGxFKTnahxN96wjX+ZUoKZ+yv9R1aP8E5tEyVMrDdXs/1bsOHg==
+"@lidofinance/table@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@lidofinance/table/-/table-1.0.2.tgz#9653359496e41048a8469fdabd0158ccf8135ca7"
+  integrity sha512-bWupNDKz0/BcpfymDcPbkwOpTX9Zf+LvTU+nTDpf0idlOc/xmYbcaHfEYx3tD2F5qJSDDlmRVQm6ZT4K0CQmKA==
   dependencies:
-    "@lidofinance/theme" "2.1.0"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/text@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@lidofinance/text/-/text-2.0.5.tgz#63338b8c91ba6eefaec4902acb3955a14b16ab70"
-  integrity sha512-iwrLn46d7JbNxDcqKcNQ7YxBflN+ts06AytSklKppgk/aiNaUKnw8yp+eZM/vJSb9z8VhTLmeYOvwhm15A6mzA==
+"@lidofinance/text@2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@lidofinance/text/-/text-2.0.6.tgz#66c9039ea8c79c764338d3ba4bc63ab1a9928332"
+  integrity sha512-oxc2WO41X1UphTeTWamVjGWUMBFTz98LwzGxRFy10CLX09kh3ltBmpxpHoe1k4/+Wt+OdQTfBGpzRStdooBhaQ==
   dependencies:
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.3.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/theme@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/theme/-/theme-2.1.0.tgz#ff06181f7b813c65567ef3b154f54dac60b25971"
-  integrity sha512-3FEc7JoOtSs1vyaPioozf3SI3oahPgjxQBAQvhmN2cn8JUo22Y8xg7gx3j25EKJ4dq76aaAAzWCdKAJ59iKfnw==
-
-"@lidofinance/theme@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/theme/-/theme-2.2.0.tgz#727b50d50fc42583c60ae4ef97bff7ae5519e5cd"
-  integrity sha512-8S6L79GGbTLmVwSpzteujqFBh9FQFjHfk50OWTbcZM+lvPKZhc3mgwISWOUT092hF02/hfrWeii6oo40Fjg2og==
-
-"@lidofinance/toast@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@lidofinance/toast/-/toast-1.0.0.tgz#6c690be7cad6dde9fe4760dec9dc34765ebca242"
-  integrity sha512-TEhiUORC0lxEryHucJqJEfcuhfaLOhqgahA9u3qhLTJp2w+k9fYUD6+D+r+xQXILw70j+ojTgvVVOmVcuSUGJg==
+"@lidofinance/text@2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@lidofinance/text/-/text-2.0.7.tgz#32af565ff7a0e6a391faf21d6a9b4d45f4fe483d"
+  integrity sha512-dQKl/RYVVkQIpLld5+auMi90BbZO/knci2iztyEHmfhqutBoMKt7RfAt61fNkO7PRRb0dZr1Utty3oiDDvpgSw==
   dependencies:
-    "@lidofinance/loaders" "1.3.7"
-    "@lidofinance/theme" "2.2.0"
+    "@lidofinance/theme" "2.4.0"
+    "@lidofinance/utils" "1.3.2"
+
+"@lidofinance/theme@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/theme/-/theme-2.3.0.tgz#ab82c570b1a46935205cd5c6ef6e84caf45e194c"
+  integrity sha512-4o0PC1aAVgyJQu3/xF/gHJJObp62ruiPrmoCdaLHiuAIGsS9S1c/+1qtAnyA4/GJgZ+bAqsje0xcyNhn2S67KQ==
+
+"@lidofinance/theme@2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/theme/-/theme-2.4.0.tgz#5a193eaf123ca9ab0718b0097484dcc17eacbc26"
+  integrity sha512-VCzvr6Q0U1OQ0DO56I7t1I2ola6kUxbS8mva1xv9oNHJVKWOfsj9X1mOzUrxXS3amiZHYX8YKz0kH2Bgq9Tchg==
+
+"@lidofinance/toast@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@lidofinance/toast/-/toast-1.1.2.tgz#4c49bb3d0ba34108b559a0d752354bf8549ef7a9"
+  integrity sha512-U0DaPtZCA+CMhk4DGP6tbZ8Yz/R9juQDOG+vGw2Orfys5be3sXFCI8BrkPAUs/peb23dGThS7JV7O34V2kBhkg==
+  dependencies:
+    "@lidofinance/loaders" "1.3.9"
+    "@lidofinance/theme" "2.4.0"
     react-toastify "7.0.4"
 
-"@lidofinance/tooltip@3.0.7":
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/@lidofinance/tooltip/-/tooltip-3.0.7.tgz#d244c051185ca668df3917071e649026090eaeba"
-  integrity sha512-RNk+BV6lEiZ2RpKOdnSoBK5WrtYLIKRnSKoqLCuW/BR34c3AJhoglc8ujK6Rdc+U39OSwh1mGNorqFqa+dj3LQ==
+"@lidofinance/tooltip@3.0.15":
+  version "3.0.15"
+  resolved "https://registry.yarnpkg.com/@lidofinance/tooltip/-/tooltip-3.0.15.tgz#221f152e24520a38bf9282c8b50d58000c7e6575"
+  integrity sha512-Tzylpf//S0Q5ICJDOhzXNhFSJWROLwkxdJno8wt9F2DBYQUJO1lhUFWlRjA4lbbH4QRuRu0IJXJ8zi+vvLS3qQ==
   dependencies:
-    "@lidofinance/hooks" "2.2.6"
-    "@lidofinance/popover" "3.0.7"
-    "@lidofinance/theme" "2.1.0"
+    "@lidofinance/hooks" "2.5.1"
+    "@lidofinance/popover" "3.0.15"
+    "@lidofinance/theme" "2.4.0"
     "@lidofinance/utils" "1.3.2"
 
-"@lidofinance/tooltip@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@lidofinance/tooltip/-/tooltip-3.0.8.tgz#bcd227534f6cc38657401dd07820e5b0d969424f"
-  integrity sha512-D3gV5B141ssQfSJif0eEnWIwHnAHEBb+YPbdtGdAEPVBu7ZYRlyn9KXAojxp74kPalamu4ZMBODnD0luDukGTQ==
+"@lidofinance/transition@1.1.13":
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/@lidofinance/transition/-/transition-1.1.13.tgz#4e1fd74d748fd5aff75b411981376e25058aa4ed"
+  integrity sha512-0dWtPgI+KezJkffYw/k21UOdtijnIFhz1cXN8Wru2Qjd3MdQ9DkSD/Kr680cU1SZcOXCL+7eqmO79eYkcROyTA==
   dependencies:
-    "@lidofinance/hooks" "2.2.7"
-    "@lidofinance/popover" "3.0.8"
-    "@lidofinance/theme" "2.2.0"
-    "@lidofinance/utils" "1.3.2"
-
-"@lidofinance/transition@1.1.8":
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/@lidofinance/transition/-/transition-1.1.8.tgz#a6e9222ad5385ad36af327acedbb88a321cd90b6"
-  integrity sha512-/x2kRjwhcgDVFQeiSQ60hr3pJ+vzkDV9l9KNzR101/++mlD6lf6OBX5144VW5BcBcz+73FTEvvRI454oqRKCJQ==
-  dependencies:
-    "@lidofinance/hooks" "2.2.6"
-    react-transition-group "4"
-
-"@lidofinance/transition@1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@lidofinance/transition/-/transition-1.1.9.tgz#f64bafe2b5f36a875141024947a6fc62351b3277"
-  integrity sha512-szUr8HJQTBxK1S9c17FreR2lw6mh70D9wPvIikO66MD0sFl7HC0Uc7JGOOo5DMvarBgUAYDA8piyqe7IgCw4FQ==
-  dependencies:
-    "@lidofinance/hooks" "2.2.7"
+    "@lidofinance/hooks" "2.5.1"
     react-transition-group "4"
 
 "@lidofinance/utils@1.3.2":
