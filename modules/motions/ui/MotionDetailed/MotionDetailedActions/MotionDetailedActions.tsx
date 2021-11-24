@@ -99,22 +99,30 @@ function ActionsBody({ motion, onFinish }: Props) {
     return <Text size={10} weight={500} children="Loading..." />
   }
 
+  const showHintEnacted = Boolean(txEnact.isSuccess)
+  const showHintObjected = !showHintEnacted && txEnact.isSuccess
+  const showHintCanObject =
+    !showHintEnacted && Boolean(canObject.data && !isObjected.data)
+  const showHintCanNotObject =
+    !showHintEnacted && Boolean(!canObject.data && !isObjected.data)
+
   return (
     <>
       <Hint>
-        {isObjected.data && (
+        {showHintEnacted && <>Motion was enacted</>}
+        {showHintObjected && (
           <>
             You have objected this motion with <b>{balanceAtFormatted}</b>{' '}
             {governanceSymbol}
           </>
         )}
-        {canObject.data && !isObjected.data && (
+        {showHintCanObject && (
           <>
             You can object this motion with <b>{balanceAtFormatted}</b>{' '}
             {governanceSymbol}
           </>
         )}
-        {!canObject.data && !isObjected.data && (
+        {showHintCanNotObject && (
           <>
             You didn’t have {governanceSymbol} when the motion started to object
             it
@@ -127,24 +135,26 @@ function ActionsBody({ motion, onFinish }: Props) {
         <TxRow label="Objection transaction:" tx={txObject} />
       )}
 
-      <Actions>
-        <Button
-          size="sm"
-          children="Submit objection"
-          disabled={!canObject.data}
-          onClick={txObject.send}
-          loading={txObject.isPending}
-        />
-        {motion.status === MotionStatus.PENDING && (
+      {!txEnact.isSuccess && (
+        <Actions>
           <Button
             size="sm"
-            variant="outlined"
-            children="Enact"
-            onClick={txEnact.send}
-            loading={txEnact.isPending}
+            children="Submit objection"
+            disabled={!canObject.data}
+            onClick={txObject.send}
+            loading={txObject.isPending}
           />
-        )}
-      </Actions>
+          {motion.status === MotionStatus.PENDING && (
+            <Button
+              size="sm"
+              variant="outlined"
+              children="Enact"
+              onClick={txEnact.send}
+              loading={txEnact.isPending}
+            />
+          )}
+        </Actions>
+      )}
     </>
   )
 }
