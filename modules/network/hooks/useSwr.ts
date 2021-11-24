@@ -19,7 +19,7 @@ export type SWRResponse<Data, Error = any> = SWRResponseSource<Data, Error> & {
 const defaultConfig = {
   onError: (error: any) => {
     console.error(error)
-    ToastError(error)
+    ToastError(error, {})
   },
   errorRetryInterval: 10_000,
   focusThrottleInterval: 10_000,

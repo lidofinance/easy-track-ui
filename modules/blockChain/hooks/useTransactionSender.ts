@@ -51,7 +51,7 @@ export function useTransactionSender(
     } catch (error: any) {
       setStatus('empty')
       console.error(error)
-      ToastError(error.message || (error as any).toString())
+      ToastError(error.message || (error as any).toString(), {})
     }
   }, [finish, populateTx, sendTransactionGnosisWorkaround])
 

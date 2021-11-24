@@ -16,7 +16,7 @@ export async function sendTransactionGnosisWorkaround(
   const walletName = getWalletNameFromProvider(provider)
   const isGnosisSafe = checkConnectedToSafe(provider)
 
-  const pendingToastId = ToastInfo(`Confirm transaction with ${walletName}`)
+  const pendingToastId = ToastInfo(`Confirm transaction with ${walletName}`, {})
 
   if (isGnosisSafe) {
     const hash: string = await (signer as any).sendUncheckedTransaction(
@@ -30,7 +30,7 @@ export async function sendTransactionGnosisWorkaround(
 
   const tx = await signer.sendTransaction(transaction)
 
-  toast.dismiss(pendingToastId)
+  toast.dismiss(pendingToastId as any)
 
   return {
     type: 'regular',
