@@ -9,7 +9,7 @@ export const NodeOperatorsRegistry = {
 }
 
 export const EasyTrack = {
-  [Chains.Rinkeby]: '0x0006de2639a6fc48349aa0b116f499621168a112',
+  [Chains.Rinkeby]: '0x661090cB830757B2D0Cd53C49Bf0d17a28992e5d',
   [Chains.Goerli]: '0xAf072C8D368E4DD4A9d4fF6A76693887d6ae92Af',
 }
 
@@ -33,7 +33,7 @@ export const STETH = {
   [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x06c6Ab60F0Ad054236d7d4Faf98A5D33e852E717',
-  [Chains.Goerli]: '0x1643E812aE58766192Cf7D2Cf9567dF2C37e9B7F',
+  [Chains.Goerli]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
   [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
 }
 
