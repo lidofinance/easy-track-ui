@@ -24,7 +24,7 @@ export const GovernanceToken = {
 export const RewardProgramRegistry = {
   [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
-  [Chains.Rinkeby]: '0xbB4d7A2661ACC245298fC932601ab99e897761DD',
+  [Chains.Rinkeby]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
   [Chains.Goerli]: '0x28a08f61AE129d0d8BD4380Ae5647e7Add0527ca',
   [Chains.Kovan]: '0x0000000000000000000000000000000000000000',
 }
