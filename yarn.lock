@@ -1735,7 +1735,7 @@
     "@lido-sdk/constants" "1.2.0"
     tiny-invariant "1"
 
-"@lido-sdk/providers@1.4.0":
+"@lido-sdk/providers@1.4.0", "@lido-sdk/providers@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@lido-sdk/providers/-/providers-1.4.0.tgz#765d964e3da0a50b2151f8ee923c5be0a0fa4bdd"
   integrity sha512-lsxcMCJuGHdZ6P0FpCe+eAIeEyMsJM+56DGMhA85snXghqXClFRAwTmwbJSulIsj2oi4LTlD8FdRbnNGisEgbQ==
