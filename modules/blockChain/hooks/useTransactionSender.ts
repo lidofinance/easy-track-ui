@@ -9,7 +9,7 @@ import { PopulatedTransaction } from '@ethersproject/contracts'
 import { openWindow } from 'modules/shared/utils/openWindow'
 import { getGnosisSafeLink } from '../utils/getGnosisSafeLink'
 import { getEtherscanLink } from '../utils/getEtherscanLink'
-import { toastError } from 'modules/toasts'
+import { ToastError } from '@lidofinance/lido-ui'
 
 type PopulateFn =
   | (() => PopulatedTransaction)
@@ -51,7 +51,7 @@ export function useTransactionSender(
     } catch (error: any) {
       setStatus('empty')
       console.error(error)
-      toastError(error.message || (error as any).toString())
+      ToastError(error.message || (error as any).toString(), {})
     }
   }, [finish, populateTx, sendTransactionGnosisWorkaround])
 

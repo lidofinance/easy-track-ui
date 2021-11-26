@@ -1,4 +1,4 @@
-import { toastError } from 'modules/toasts'
+import { ToastError } from '@lidofinance/lido-ui'
 import {
   default as useSWRSource,
   useSWRInfinite as useSWRInfiniteSource,
@@ -19,7 +19,7 @@ export type SWRResponse<Data, Error = any> = SWRResponseSource<Data, Error> & {
 const defaultConfig = {
   onError: (error: any) => {
     console.error(error)
-    toastError(error)
+    ToastError(error, {})
   },
   errorRetryInterval: 10_000,
   focusThrottleInterval: 10_000,

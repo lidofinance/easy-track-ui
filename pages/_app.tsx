@@ -9,12 +9,15 @@ import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { Title } from 'modules/shared/ui/Common/Title'
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
-import { ThemeProvider, themeDefault } from '@lidofinance/lido-ui'
+import {
+  ThemeProvider,
+  themeDefault,
+  ToastContainer,
+} from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
-import { ToastContainer } from 'modules/toasts'
 import { getAddressList } from 'modules/config/utils/getAddressList'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''

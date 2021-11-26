@@ -4,7 +4,6 @@ import { getLibraryRpc } from 'modules/blockChain/utils/getLibraryRpc'
 import { parseChainId } from 'modules/blockChain/chains'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { formatMotionDataOnchain } from 'modules/motions/utils/formatMotionDataOnchain'
-import { logger } from 'modules/shared/utils/log'
 
 export default createNextConnect().get(async (req, res) => {
   try {
@@ -18,7 +17,7 @@ export default createNextConnect().get(async (req, res) => {
     )(motions)
     res.json(formatted)
   } catch (e) {
-    logger.error(e instanceof Error ? e.message : e)
+    console.error(e)
     res.status(500).send({ error: 'Something went wrong!' })
   }
 })
