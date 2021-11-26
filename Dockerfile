@@ -20,6 +20,9 @@ WORKDIR /app
 RUN apk add --no-cache curl=7.79.1-r0
 COPY --from=build /app /app
 
+RUN mkdir -p /app/.next/cache/images && chown -R node:node /app/.next/cache/images
+VOLUME /app/.next/cache/images
+
 USER node
 EXPOSE 3000
 
