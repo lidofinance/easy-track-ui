@@ -93,12 +93,17 @@ module.exports = {
       env,
       files: ['**/*.js', '**/*.jsx', '**/*.json'],
       extends: ['next', 'prettier'],
-      plugins: ['prettier', 'react', 'react-hooks', 'import'],
+      plugins: [
+        'prettier',
+        'react',
+        'react-hooks',
+        // 'import'
+      ],
       settings,
       rules: {
         ...esRules,
         ...reactRules,
-        ...importRules,
+        // ...importRules,
       },
     },
     {
@@ -110,7 +115,7 @@ module.exports = {
         '@typescript-eslint',
         'react',
         'react-hooks',
-        'import',
+        // 'import',
       ],
       settings,
       rules: {
