@@ -14,8 +14,9 @@ export async function getEventMotionCreated(
   motionId: string | number,
 ) {
   const filter = motionContract.filters.MotionCreated(motionId)
-  const event = (await motionContract.queryFilter(filter))[0]
-  if (!event.decode) {
+  const events = await motionContract.queryFilter(filter)
+  const event = events[0]
+  if (!events[0] || !event.decode) {
     throw new Error('Motion creation event parsing error')
   }
   const decoded = event.decode(event.data, event.topics)

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
-import { Button } from '@lidofinance/lido-ui'
+import { Button, ToastError } from '@lidofinance/lido-ui'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, RetryHint } from './CreateMotionFormStyle'
@@ -10,7 +10,6 @@ import { Fieldset, RetryHint } from './CreateMotionFormStyle'
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from '../../types'
-import { toastError } from 'modules/toasts'
 import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
 import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
@@ -58,7 +57,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
         onComplete(res)
       } catch (error: any) {
         console.error(error)
-        toastError(error.message || (error as any).toString())
+        ToastError(error.message || (error as any).toString(), {})
         setSubmitting(false)
       }
     },

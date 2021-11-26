@@ -70,3 +70,10 @@ export default function ArchivePage() {
     </Container>
   )
 }
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getServerSideProps = async () => {
+  return {
+    props: {},
+  }
+}

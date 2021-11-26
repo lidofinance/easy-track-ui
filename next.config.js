@@ -1,7 +1,6 @@
 const basePath = process.env.BASE_PATH || ''
 const infuraApiKey = process.env.INFURA_API_KEY
 const alchemyApiKey = process.env.ALCHEMY_API_KEY
-const etherscanApiKey = process.env.ETHERSCAN_API_KEY
 
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
@@ -46,6 +45,31 @@ module.exports = {
 
   //   // return config
   // },
+  async headers() {
+    // https://nextjs.org/docs/advanced-features/security-headers
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          // DNS pre-fetching for external resources
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          // HTTPS connections only, 2 years
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          // Explicit MIME types
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+        ],
+      },
+    ]
+  },
   devServer(configFunction) {
     return function (proxy, allowedHost) {
       const config = configFunction(proxy, allowedHost)
@@ -64,7 +88,6 @@ module.exports = {
     basePath,
     infuraApiKey,
     alchemyApiKey,
-    etherscanApiKey,
   },
   publicRuntimeConfig: {
     defaultChain,

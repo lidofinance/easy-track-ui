@@ -1,17 +1,29 @@
-FROM node:14-alpine
+# build env
+FROM node:14-alpine as build
 
-RUN apk add --no-cache git
 WORKDIR /app
-COPY package.json yarn.lock ./
 
+RUN apk add --no-cache git=2.32.0-r0
+COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --non-interactive && yarn cache clean
+COPY . .
+RUN yarn typechain && yarn build
+
+# final image
+FROM node:14-alpine as base
 
 ARG BASE_PATH=""
-ENV NEXT_TELEMETRY_DISABLED=1 \
-    BASE_PATH=$BASE_PATH 
+ENV BASE_PATH=$BASE_PATH
+ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY . .
-RUN yarn typechain
-RUN yarn build
+WORKDIR /app
+RUN apk add --no-cache curl=7.79.1-r0
+COPY --from=build /app /app
+
+USER node
+EXPOSE 3000
+
+HEALTHCHECK --interval=10s --timeout=3s \
+  CMD curl -f http://localhost:3000/api/health || exit 1
 
 CMD ["yarn", "start"]

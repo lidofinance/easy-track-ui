@@ -10,11 +10,14 @@ import type { Invert } from 'modules/shared/utils/utilTypes'
 export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
   // Mainnet
   [Chains.Mainnet]: {
-    [MotionType.NodeOperatorIncreaseLimit]: '0x01',
-    [MotionType.LEGOTopUp]: '0x02',
-    [MotionType.RewardProgramAdd]: '0x03',
-    [MotionType.RewardProgramRemove]: '0x04',
-    [MotionType.RewardProgramTopUp]: '0x05',
+    [MotionType.NodeOperatorIncreaseLimit]:
+      '0xFeBd8FAC16De88206d4b18764e826AF38546AfE0',
+    [MotionType.LEGOTopUp]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
+    [MotionType.RewardProgramAdd]: '0x9D15032b91d01d5c1D940eb919461426AB0dD4e3',
+    [MotionType.RewardProgramRemove]:
+      '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
+    [MotionType.RewardProgramTopUp]:
+      '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
   } as const,
 
   // Ropsten
@@ -29,13 +32,13 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
   // Rinkeby
   [Chains.Rinkeby]: {
     [MotionType.NodeOperatorIncreaseLimit]:
-      '0x1ABE1418148dEeBFC2e286e0e963A2C94428843d',
-    [MotionType.LEGOTopUp]: '0x416aBfE68A17c7AaAe1d52165796E0A31443b83D',
-    [MotionType.RewardProgramAdd]: '0xb4A1e61b4F9150ec85910b966b9eF536860738D5',
+      '0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977',
+    [MotionType.LEGOTopUp]: '0xdA53fF207966b3946facaC52dD22B130D507d276',
+    [MotionType.RewardProgramAdd]: '0x3129C041B372eE93a5A8756dc4EC6f154D85Bc9a',
     [MotionType.RewardProgramRemove]:
-      '0xD9Fa5976D60DDc3e7A311bF0bBC39d7619D61b0C',
+      '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
-      '0xA2E5860C209D533d58824a5235f66bB20C5aCcF2',
+      '0xbb0f594143208eCd04DC7AAe48955902A716F9F7',
   } as const,
 
   // Goerli
