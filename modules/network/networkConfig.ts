@@ -1,7 +1,7 @@
 import { Chains } from 'modules/blockChain/chains'
 
 export const SUBGRAPH_URL = {
-  [Chains.Mainnet]: '',
+  [Chains.Mainnet]: 'https://api.thegraph.com/subgraphs/name/lidofinance/lido',
   [Chains.Ropsten]: '',
   [Chains.Rinkeby]:
     'https://easytrack-subgraph.testnet.lido.fi/subgraphs/name/bulbozaur/lido-easytrack-rinkeby',
