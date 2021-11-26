@@ -10,7 +10,7 @@
     "lint:dockerfile": "dockerfilelint Dockerfile",
     "lint:fix": "yarn lint --fix",
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated './abi/*.json'",
-    "postinstall": "husky install && yarn typechain"
+    "postinstall": "husky install && yarn typechain || true"
   },
   "dependencies": {
     "@lido-sdk/constants": "^1.2.0",
