@@ -13,6 +13,12 @@
     "postinstall": "husky install && yarn typechain"
   },
   "dependencies": {
+    "@lido-sdk/constants": "^1.2.0",
+    "@lido-sdk/contracts": "^1.5.2",
+    "@lido-sdk/fetch": "^1.2.2",
+    "@lido-sdk/helpers": "^1.3.1",
+    "@lido-sdk/react": "^1.17.0",
+    "@lido-sdk/web3-react": "^1.10.0",
     "@lidofinance/lido-ui": "1.10.9",
     "@typechain/ethers-v5": "7.0.1",
     "@types/lodash": "4.14.170",
@@ -22,7 +28,7 @@
     "@web3-react/walletlink-connector": "6.2.3",
     "copy-to-clipboard": "3.3.1",
     "cors": "2.8.5",
-    "ethers": "5.4.4",
+    "ethers": "5.5.1",
     "evm-script-decoder": "git+https://github.com/lidofinance/evm-script-decoder",
     "lodash": "4.17.21",
     "memory-cache": "0.2.0",
@@ -38,7 +44,7 @@
     "react-use": "17.2.4",
     "styled-components": "5.3.0",
     "swr": "0.5.6",
-    "typechain": "5.1.2",
+    "typechain": "6.0.3",
     "winston": "^3.3.3"
   },
   "devDependencies": {
