@@ -1,7 +1,7 @@
 import { Chains } from 'modules/blockChain/chains'
 
 export const NodeOperatorsRegistry = {
-  [Chains.Mainnet]: '0x55032650b14df07b85bf18a3a3ec8e0af2e028d5',
+  [Chains.Mainnet]: '0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x7899EF901Ed9B331bAf7759c15D2e8728e8c2a2C',
   [Chains.Goerli]: '0x9D4AF1Ee19Dad8857db3a45B0374c81c8A1C6320',
@@ -9,12 +9,13 @@ export const NodeOperatorsRegistry = {
 }
 
 export const EasyTrack = {
+  [Chains.Mainnet]: '0xF0211b7660680B49De1A7E9f25C65660F0a13Fea',
   [Chains.Rinkeby]: '0x661090cB830757B2D0Cd53C49Bf0d17a28992e5d',
   [Chains.Goerli]: '0xAf072C8D368E4DD4A9d4fF6A76693887d6ae92Af',
 }
 
 export const GovernanceToken = {
-  [Chains.Mainnet]: '0x5a98fcbea516cf06857215779fd812ca3bef1b32',
+  [Chains.Mainnet]: '0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x06c6Ab60F0Ad054236d7d4Faf98A5D33e852E717',
   [Chains.Goerli]: '0x56340274fB5a72af1A3C6609061c451De7961Bd4',
@@ -22,7 +23,7 @@ export const GovernanceToken = {
 }
 
 export const RewardProgramRegistry = {
-  [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
+  [Chains.Mainnet]: '0x3129c041b372ee93a5a8756dc4ec6f154d85bc9a',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
   [Chains.Goerli]: '0x28a08f61AE129d0d8BD4380Ae5647e7Add0527ca',
@@ -30,7 +31,7 @@ export const RewardProgramRegistry = {
 }
 
 export const STETH = {
-  [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
+  [Chains.Mainnet]: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x06c6Ab60F0Ad054236d7d4Faf98A5D33e852E717',
   [Chains.Goerli]: '0x1643E812aE58766192Cf7D2Cf9567dF2C37e9B7F',
@@ -38,7 +39,7 @@ export const STETH = {
 }
 
 export const Finance = {
-  [Chains.Mainnet]: '0x0000000000000000000000000000000000000000',
+  [Chains.Mainnet]: '0xB9E5CBB9CA5b0d659238807E84D0176930753d86',
   [Chains.Ropsten]: '0x0000000000000000000000000000000000000000',
   [Chains.Rinkeby]: '0x9046286F2F467AcfA576021410D8D193BA4c1bC5',
   [Chains.Goerli]: '0x75c7b1D23f1cad7Fb4D60281d7069E46440BC179',

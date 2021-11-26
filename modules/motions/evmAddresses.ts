@@ -10,11 +10,14 @@ import type { Invert } from 'modules/shared/utils/utilTypes'
 export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
   // Mainnet
   [Chains.Mainnet]: {
-    [MotionType.NodeOperatorIncreaseLimit]: '0x01',
-    [MotionType.LEGOTopUp]: '0x02',
-    [MotionType.RewardProgramAdd]: '0x03',
-    [MotionType.RewardProgramRemove]: '0x04',
-    [MotionType.RewardProgramTopUp]: '0x05',
+    [MotionType.NodeOperatorIncreaseLimit]:
+      '0xFeBd8FAC16De88206d4b18764e826AF38546AfE0',
+    [MotionType.LEGOTopUp]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
+    [MotionType.RewardProgramAdd]: '0x9D15032b91d01d5c1D940eb919461426AB0dD4e3',
+    [MotionType.RewardProgramRemove]:
+      '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
+    [MotionType.RewardProgramTopUp]:
+      '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
   } as const,
 
   // Ropsten
