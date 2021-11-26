@@ -1787,6 +1787,170 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
+"@json-rpc-tools/provider@^1.5.5":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@json-rpc-tools/provider/-/provider-1.7.6.tgz#8a17c34c493fa892632e278fd9331104e8491ec6"
+  integrity sha512-z7D3xvJ33UfCGv77n40lbzOYjZKVM3k2+5cV7xS8G6SCvKTzMkhkUYuD/qzQUNT4cG/lv0e9mRToweEEVLVVmA==
+  dependencies:
+    "@json-rpc-tools/utils" "^1.7.6"
+    axios "^0.21.0"
+    safe-json-utils "^1.1.1"
+    ws "^7.4.0"
+
+"@json-rpc-tools/types@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@json-rpc-tools/types/-/types-1.7.6.tgz#5abd5fde01364a130c46093b501715bcce5bdc0e"
+  integrity sha512-nDSqmyRNEqEK9TZHtM15uNnDljczhCUdBmRhpNZ95bIPKEDQ+nTDmGMFd2lLin3upc5h2VVVd9tkTDdbXUhDIQ==
+  dependencies:
+    keyvaluestorage-interface "^1.0.0"
+
+"@json-rpc-tools/utils@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@json-rpc-tools/utils/-/utils-1.7.6.tgz#67f04987dbaa2e7adb6adff1575367b75a9a9ba1"
+  integrity sha512-HjA8x/U/Q78HRRe19yh8HVKoZ+Iaoo3YZjakJYxR+rw52NHo6jM+VE9b8+7ygkCFXl/EHID5wh/MkXaE/jGyYw==
+  dependencies:
+    "@json-rpc-tools/types" "^1.7.6"
+    "@pedrouid/environment" "^1.0.1"
+
+"@ledgerhq/cryptoassets@^6.17.0":
+  version "6.17.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/cryptoassets/-/cryptoassets-6.17.0.tgz#cc3963b0ed726efcba976b78185d7f72ea9bedbc"
+  integrity sha512-xvXmS0fCLBOr54/lBF4w4pfWVhmbEcf/Wf45k0Carx4vtSUzMChd/KyAvIuLODNeIBj9lXOK2OqXB0u8wc8p5A==
+  dependencies:
+    invariant "2"
+
+"@ledgerhq/devices@^6.11.2":
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-6.11.2.tgz#a0413b087f7c07adf2a91d23f84a4580cdbb36fe"
+  integrity sha512-j2SoG0Ifm7khsPKC2UFhJIoi1oCDCvJemmO+pz7Oc9jx8JRhIGtCfqEIUhL+ZIl0TrIYuApPLaSqJjiFi7VGCQ==
+  dependencies:
+    "@ledgerhq/errors" "^6.10.0"
+    "@ledgerhq/logs" "^6.10.0"
+    rxjs "6"
+    semver "^7.3.5"
+
+"@ledgerhq/errors@^6.10.0":
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.10.0.tgz#dda9127b65f653fbb2f74a55e8f0e550d69de6e4"
+  integrity sha512-fQFnl2VIXh9Yd41lGjReCeK+Q2hwxQJvLZfqHnKqWapTz68NHOv5QcI0OHuZVNEbv0xhgdLhi5b65kgYeQSUVg==
+
+"@ledgerhq/hw-app-eth@6":
+  version "6.17.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-eth/-/hw-app-eth-6.17.0.tgz#9f2f7ee18b0fe553277a08d007a8271ec94014ff"
+  integrity sha512-msZD5mU/Ck/2ODKCNPSyMDq3v8FBOI3R3QasDDm7WNfH5H8UVB+mobjExPjmlke+t1GsM864V2EU2/YiLGM/lg==
+  dependencies:
+    "@ledgerhq/cryptoassets" "^6.17.0"
+    "@ledgerhq/errors" "^6.10.0"
+    "@ledgerhq/hw-transport" "^6.11.2"
+    "@ledgerhq/logs" "^6.10.0"
+    axios "^0.24.0"
+    bignumber.js "^9.0.1"
+    ethers "^5.5.1"
+
+"@ledgerhq/hw-transport-webhid@6":
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webhid/-/hw-transport-webhid-6.11.2.tgz#db2e513f139ae4f3e9a1d79e4671726c650d5751"
+  integrity sha512-y/Cv2oRDXy0wsGQsSrNi6e8DziGRNbgTiW7dgXcenI/1RfsCN+2hPfNMr8a9s2zPJ8Tfv2Sm5VubbspWDhPUCQ==
+  dependencies:
+    "@ledgerhq/devices" "^6.11.2"
+    "@ledgerhq/errors" "^6.10.0"
+    "@ledgerhq/hw-transport" "^6.11.2"
+    "@ledgerhq/logs" "^6.10.0"
+
+"@ledgerhq/hw-transport@6", "@ledgerhq/hw-transport@^6.11.2":
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.11.2.tgz#247d0297f96db9d255672a453a1e621ade92096f"
+  integrity sha512-VZbGfyQ8iFl2W6TUkVmQ3rz8kyOXMbOdFiht3VNlglMe3KBGJWOjW9s/5LhOR348NJs797B1gl4V0Zqmn11kUg==
+  dependencies:
+    "@ledgerhq/devices" "^6.11.2"
+    "@ledgerhq/errors" "^6.10.0"
+    events "^3.3.0"
+
+"@ledgerhq/iframe-provider@0", "@ledgerhq/iframe-provider@0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/iframe-provider/-/iframe-provider-0.4.2.tgz#2b63892bb3ab9a0719d2b00488be18b176ad6b7e"
+  integrity sha512-RbdwvQow/ITLk0TLb6c3M7y8IyjopIGXhhuUEMjqTU6PZhAL9Gl7TzH8INit9x9cOeG2WCuV+ZbHQ2oWsLfJ+A==
+  dependencies:
+    eventemitter3 "^4.0.0"
+
+"@ledgerhq/logs@^6.10.0":
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.10.0.tgz#c012c1ecc1a0e53d50e6af381618dca5268461c1"
+  integrity sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==
+
+"@lido-sdk/constants@1.2.0", "@lido-sdk/constants@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/constants/-/constants-1.2.0.tgz#e9eb1830f762ff901dd4c27bad2ddfca1335931c"
+  integrity sha512-PAWXerRFn3/qnaEvPhN+69yCZT1b4KFtJWe1JN3+bLVThYyAkj6zK73HHCCm4idPHl+nustcSMnU15GNUjqZ9A==
+  dependencies:
+    tiny-invariant "1"
+
+"@lido-sdk/contracts@1.5.2", "@lido-sdk/contracts@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/contracts/-/contracts-1.5.2.tgz#27b183e3f3b3782051a00a12f5ce4e245c167a7c"
+  integrity sha512-KGYrVbmbiEFJo5dQNRC8/ZA0u813iSwskum9o4cN3hALo78akV1YM9TwnNlFrOcWvHxnlZ5Nzj68uY9kNwgD3Q==
+  dependencies:
+    "@lido-sdk/constants" "1.2.0"
+    tiny-invariant "^1.1.0"
+
+"@lido-sdk/fetch@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/fetch/-/fetch-1.2.2.tgz#888ebc5d1a09c9c4fa5b752d313ce13bcee18d65"
+  integrity sha512-z6vzDVHmV+1RQNtSP1o8HL1UZFedNwpkKAmFz42NfCt9AJvEKTzFcO9pEgY97MNoWnrZPlh/L606ikBFoZXIKA==
+  dependencies:
+    "@lido-sdk/constants" "1.2.0"
+    node-fetch "2"
+    tiny-invariant "1"
+
+"@lido-sdk/helpers@1.3.1", "@lido-sdk/helpers@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/helpers/-/helpers-1.3.1.tgz#2759b6b05348da4cbfdba082fd59702f5895655e"
+  integrity sha512-iJZ/Ka8bIgJDqwhmYgiBXvqKFgWK63qaVyU1SjnMAX7amWkPNYJwq7E1hQtE5Y68pBePsKtOQC6VJRDPCdM/Rw==
+  dependencies:
+    "@lido-sdk/constants" "1.2.0"
+    tiny-invariant "1"
+
+"@lido-sdk/providers@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/providers/-/providers-1.4.0.tgz#765d964e3da0a50b2151f8ee923c5be0a0fa4bdd"
+  integrity sha512-lsxcMCJuGHdZ6P0FpCe+eAIeEyMsJM+56DGMhA85snXghqXClFRAwTmwbJSulIsj2oi4LTlD8FdRbnNGisEgbQ==
+  dependencies:
+    "@lido-sdk/constants" "1.2.0"
+
+"@lido-sdk/react@1.17.0", "@lido-sdk/react@^1.17.0":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/react/-/react-1.17.0.tgz#8eee66051da9b4b49a57b2013d570cd1b365c084"
+  integrity sha512-CP8GE4WHUoKPd/6OJXuKmprFPCeg9y2mODrUMWIwh8yhuZ20Pi3wqpeE8PvZfz20T0eFIKHfSKWqW0Kq9ci1Dg==
+  dependencies:
+    "@lido-sdk/constants" "1.2.0"
+    "@lido-sdk/contracts" "1.5.2"
+    "@lido-sdk/helpers" "1.3.1"
+    swr "^1.0.1"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+
+"@lido-sdk/web3-react@^1.10.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@lido-sdk/web3-react/-/web3-react-1.12.0.tgz#52c8167ae903c59a3c839a96850a1a655833a9e3"
+  integrity sha512-AFo4mnhmY7ezqn5Yt1NY5cEHqfl8m5opBh0tPLQp0AUDyAKjnMjIybFjx0puR0VV46xHFLxDXpKrXm7/E3w1lA==
+  dependencies:
+    "@gnosis.pm/safe-apps-web3-react" "0.6.3"
+    "@ledgerhq/iframe-provider" "0.4.2"
+    "@lido-sdk/constants" "1.2.0"
+    "@lido-sdk/helpers" "1.3.1"
+    "@lido-sdk/providers" "1.4.0"
+    "@lido-sdk/react" "1.17.0"
+    "@web3-react/abstract-connector" "^6.0.7"
+    "@web3-react/core" "^6.1.9"
+    "@web3-react/injected-connector" "^6.0.7"
+    "@web3-react/walletconnect-connector" "^6.2.4"
+    "@web3-react/walletlink-connector" "^6.2.5"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+    ua-parser-js "^0.7.28"
+    web3-ledgerhq-connector "^1.1.0"
+    web3-ledgerhq-frame-connector "^1.0.1"
+
 "@lidofinance/accordion@2.0.12":
   version "2.0.12"
   resolved "https://registry.yarnpkg.com/@lidofinance/accordion/-/accordion-2.0.12.tgz#dfd4252633cb0e96284f88ad93ac49604d75d70a"
