@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { parseChainId } from 'modules/blockChain/chains'
 import { getRpcJsonUrls } from 'modules/blockChain/utils/getRpcUrls'
 import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
+import { logger } from 'modules/shared/utils/log'
 
 export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -17,7 +18,7 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     const responded = await requested.json()
     res.status(requested.status).json(responded)
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     res.status(500).send({ error: 'Something went wrong!' })
   }
 }
