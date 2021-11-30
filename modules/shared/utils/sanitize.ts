@@ -8,10 +8,7 @@ const SECRETS = {
   alchemyApiKey: alchemyApiKey ? new RegExp(alchemyApiKey, 'ig') : null,
   address: new RegExp('0x[a-fA-F0-9]{40}', 'ig'),
   txHash: new RegExp('0x[a-fA-F0-9]{64}', 'ig'),
-  ensAddress: new RegExp(
-    '[-a-zA-Z0-9@:%._+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?',
-    'ig',
-  ),
+  ensAddress: new RegExp('[a-zA-Z.]+\\.eth', 'gi'),
 }
 
 const secretEntries = Object.entries(SECRETS)
@@ -21,6 +18,9 @@ export const sanitizeMessage = (message: string) => {
 
   for (let [key, re] of secretEntries) {
     if (re) {
+      if (key === 'ensAddress') {
+        console.log(re.test(result))
+      }
       result = result.replace(re, `%${key}%`)
     }
   }
