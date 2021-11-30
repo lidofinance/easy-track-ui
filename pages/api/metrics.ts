@@ -1,13 +1,59 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { register, collectDefaultMetrics } from 'prom-client'
+import { register, collectDefaultMetrics, Gauge } from 'prom-client'
+import buildInfoJson from 'build-info.json'
+import { getRpcJsonUrls } from 'modules/blockChain/utils/getRpcUrls'
+import getConfig from 'next/config'
+import { Chains } from 'modules/blockChain/chains'
+import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 
-collectDefaultMetrics()
+const { publicRuntimeConfig } = getConfig()
+const defaultChain = +publicRuntimeConfig.defaultChain as Chains
 
-export default async function metrics(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+const METRICS_PREFIX = 'easy_track_ui_'
+
+export const recordBuildInfo = () => {
+  const buildInfo = new Gauge({
+    name: METRICS_PREFIX + 'build_info',
+    help: 'Build information',
+    labelNames: ['version', 'commit', 'branch'],
+  })
+
+  buildInfo
+    .labels(buildInfoJson.version, buildInfoJson.commit, buildInfoJson.branch)
+    .set(1)
+}
+
+const timeEthereum = async () => {
+  const ethereumResponseTime = new Gauge({
+    name: METRICS_PREFIX + 'ethereum_response_time',
+    help: 'Third-party Ethereum provider response time',
+  })
+
+  const urls = getRpcJsonUrls(defaultChain)
+
+  ethereumResponseTime.setToCurrentTime()
+
+  const end = ethereumResponseTime.startTimer()
+
+  await fetchWithFallback(urls, {
+    method: 'POST',
+    body: JSON.stringify({
+      method: 'eth_chainId',
+      params: [],
+      id: 1,
+      jsonrpc: '2.0',
+    }),
+  })
+
+  end()
+}
+
+export default async function m(req: NextApiRequest, res: NextApiResponse) {
+  recordBuildInfo()
+  await timeEthereum()
+  collectDefaultMetrics({ prefix: METRICS_PREFIX })
+
   res.setHeader('Content-type', register.contentType)
-  const defaultMetrics = await register.metrics()
-  res.send(defaultMetrics)
+  const metrics = await register.metrics()
+  res.send(metrics)
 }
