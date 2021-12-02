@@ -6844,6 +6844,11 @@ object-keys@~0.4.0:
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-0.4.0.tgz#28a6aae7428dd2c3a92f3d95f21335dd204e0336"
   integrity sha1-KKaq50KN0sOpLz2V8hM13SBOAzY=
 
+object-traversal@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/object-traversal/-/object-traversal-0.1.2.tgz#c1676c98b6964a585f52d9da9a0f42a6543c53ae"
+  integrity sha512-Q5My9GgntrOS5VrHN0d+VGN9SxjeEmZx97prSVeFVyuKSghQp3KHf0BRZOL4razE7cXvskMEuAk5BiDZhbCLag==
+
 object.assign@^4.1.0, object.assign@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.1.2.tgz#0ed54a342eceb37b38ff76eb831a0e788cb63940"
