@@ -1,12 +1,12 @@
 import { Chains } from '../chains'
 
-const SUBDOMAINS = {
-  [Chains.Mainnet]: '',
-  [Chains.Ropsten]: 'ropsten.',
-  [Chains.Rinkeby]: 'rinkeby.',
-  [Chains.Goerli]: 'goerli.',
-  [Chains.Kovan]: 'kovan.',
+const PREFIXES = {
+  [Chains.Mainnet]: 'eth',
+  [Chains.Ropsten]: '?',
+  [Chains.Rinkeby]: 'rin',
+  [Chains.Goerli]: '?',
+  [Chains.Kovan]: '?',
 } as const
 
 export const getGnosisSafeLink = (chainId: Chains, address: string) =>
-  `https://${SUBDOMAINS[chainId]}gnosis-safe.io/app/#/safes/${address}`
+  `https://gnosis-safe.io/app/${PREFIXES[chainId]}:${address}`
