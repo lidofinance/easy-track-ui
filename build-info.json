@@ -1,5 +1,5 @@
 {
-  "version": "VERSION",
-  "branch": "BRANCH",
-  "commit": "COMMIT"
+  "version": "REPLACE_WITH_VERSION",
+  "branch": "REPLACE_WITH_BRANCH",
+  "commit": "REPLACE_WITH_COMMIT"
 }
