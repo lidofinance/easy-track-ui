@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { register, collectDefaultMetrics, Gauge } from 'prom-client'
+import { register, collectDefaultMetrics, Gauge, Histogram } from 'prom-client'
 import buildInfoJson from 'build-info.json'
 import { getRpcJsonUrls } from 'modules/blockChain/utils/getRpcUrls'
 import getConfig from 'next/config'
@@ -24,14 +24,13 @@ export const recordBuildInfo = () => {
 }
 
 const timeEthereum = async () => {
-  const ethereumResponseTime = new Gauge({
+  const ethereumResponseTime = new Histogram({
     name: METRICS_PREFIX + 'ethereum_response_time',
     help: 'Third-party Ethereum provider response time',
+    buckets: [0.1, 1, 5, 10, 60],
   })
 
   const urls = getRpcJsonUrls(defaultChain)
-
-  ethereumResponseTime.setToCurrentTime()
 
   const end = ethereumResponseTime.startTimer()
 
@@ -49,6 +48,7 @@ const timeEthereum = async () => {
 }
 
 export default async function m(req: NextApiRequest, res: NextApiResponse) {
+  register.clear()
   recordBuildInfo()
   await timeEthereum()
   collectDefaultMetrics({ prefix: METRICS_PREFIX })
