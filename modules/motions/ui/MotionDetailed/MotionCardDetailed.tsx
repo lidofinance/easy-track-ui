@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
@@ -49,6 +50,12 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
 
   const timeData = useMotionTimeCountdown(motion)
   const { isPassed, diff } = timeData
+
+  useEffect(() => {
+    if (motion.status === MotionStatus.ACTIVE && isPassed) {
+      onInvalidate?.()
+    }
+  }, [isPassed, motion.status, onInvalidate])
 
   const isArchived =
     motion.status !== MotionStatus.ACTIVE &&
