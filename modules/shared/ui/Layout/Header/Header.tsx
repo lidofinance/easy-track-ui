@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useScrollLock } from 'modules/shared/hooks/useScrollLock'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -9,10 +11,18 @@ import {
   Wrap,
   Logo,
   Nav,
+  NavItems,
   NavLink,
-  Actions,
+  ActionsDesktop,
   Network,
   NetworkBulb,
+  BurgerWrap,
+  BurgerLine,
+  MobileMenu,
+  MobileMenuScroll,
+  MobileNavItems,
+  MobileNetworkWrap,
+  MobileSpacer,
 } from './HeaderStyle'
 import ActiveMotionsSVG from './icons/active_motions.svg.react'
 import ArchiveSVG from './icons/archive.svg.react'
@@ -45,35 +55,90 @@ function NavItem({
 
 export function Header() {
   const currentChain = useCurrentChain()
+  const [isBurgerOpened, setBurgerOpened] = useState(false)
+  useScrollLock(isBurgerOpened)
 
   return (
-    <Wrap>
-      <Nav>
-        <Logo>
-          <Image src={logoSrc} alt="Lido" />
-        </Logo>
-        <NavItem
-          link={urls.home}
-          icon={<ActiveMotionsSVG />}
-          children="Active motions"
-        />
-        <NavItem link={urls.archive} icon={<ArchiveSVG />} children="Archive" />
-        <NavItem
-          link={urls.startMotion}
-          icon={<StartSVG />}
-          children="Start motion"
-        />
-        {/* <NavItem link={urls.about} icon={<InfoSVG />} children="About" /> */}
-      </Nav>
-      <Actions>
-        <Network>
-          <NetworkBulb color={getChainColor(currentChain)} />
-          <Text size={14} weight={500}>
-            {getChainName(currentChain)}
-          </Text>
-        </Network>
-        <HeaderWallet />
-      </Actions>
-    </Wrap>
+    <>
+      <Wrap>
+        <Nav>
+          <Logo>
+            <Image src={logoSrc} alt="Lido" />
+          </Logo>
+          <NavItems>
+            <NavItem
+              link={urls.home}
+              icon={<ActiveMotionsSVG />}
+              children="Active motions"
+            />
+            <NavItem
+              link={urls.archive}
+              icon={<ArchiveSVG />}
+              children="Archive"
+            />
+            <NavItem
+              link={urls.startMotion}
+              icon={<StartSVG />}
+              children="Start motion"
+            />
+            {/* <NavItem link={urls.about} icon={<InfoSVG />} children="About" /> */}
+          </NavItems>
+        </Nav>
+
+        <ActionsDesktop>
+          <Network>
+            <NetworkBulb color={getChainColor(currentChain)} />
+            <Text size={14} weight={500}>
+              {getChainName(currentChain)}
+            </Text>
+          </Network>
+          <HeaderWallet />
+        </ActionsDesktop>
+
+        <BurgerWrap
+          isOpened={isBurgerOpened}
+          onClick={() => setBurgerOpened(!isBurgerOpened)}
+        >
+          <BurgerLine />
+          <BurgerLine />
+          <BurgerLine />
+        </BurgerWrap>
+
+        {isBurgerOpened && (
+          <MobileMenu>
+            <MobileMenuScroll>
+              <MobileNavItems>
+                <NavItem
+                  link={urls.home}
+                  icon={<ActiveMotionsSVG />}
+                  children="Active motions"
+                />
+                <NavItem
+                  link={urls.archive}
+                  icon={<ArchiveSVG />}
+                  children="Archive"
+                />
+                <NavItem
+                  link={urls.startMotion}
+                  icon={<StartSVG />}
+                  children="Start motion"
+                />
+                {/* <NavItem link={urls.about} icon={<InfoSVG />} children="About" /> */}
+              </MobileNavItems>
+              <MobileNetworkWrap>
+                <Network>
+                  <NetworkBulb color={getChainColor(currentChain)} />
+                  <Text size={14} weight={500}>
+                    {getChainName(currentChain)}
+                  </Text>
+                </Network>
+                <HeaderWallet />
+              </MobileNetworkWrap>
+            </MobileMenuScroll>
+          </MobileMenu>
+        )}
+      </Wrap>
+      <MobileSpacer />
+    </>
   )
 }

@@ -36,7 +36,10 @@ function AppRoot({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
         <title>Lido Easy Track</title>
 
         <link rel="manifest" href={`${basePath}/manifest.json`} />

@@ -1,4 +1,6 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
+
+const BURGER_BREAKPOINT = '780px'
 
 export const Wrap = styled.div`
   margin-bottom: 30px;
@@ -6,6 +8,23 @@ export const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 99;
+
+  @media (max-width: ${BURGER_BREAKPOINT}) {
+    position: fixed;
+    left: 20px;
+    top: 0;
+    right: 20px;
+  }
+`
+
+export const MobileSpacer = styled.div`
+  height: 90px;
+  display: none;
+
+  @media (max-width: ${BURGER_BREAKPOINT}) {
+    display: block;
+  }
 `
 
 export const Nav = styled.div`
@@ -16,6 +35,16 @@ export const Nav = styled.div`
 export const Logo = styled.div`
   margin-right: 40px;
   font-size: 0;
+  z-index: 99;
+`
+
+export const NavItems = styled.div`
+  display: flex;
+  align-items: center;
+
+  @media (max-width: ${BURGER_BREAKPOINT}) {
+    display: none;
+  }
 `
 
 type NavLinkProps = {
@@ -24,7 +53,6 @@ type NavLinkProps = {
 export const NavLink = styled.a<NavLinkProps>`
   display: flex;
   align-items: center;
-  justify-content: center;
   font-size: 10px;
   font-weight: 800;
   text-decoration: none;
@@ -51,11 +79,24 @@ export const NavLink = styled.a<NavLinkProps>`
     css`
       color: ${theme.colors.primary};
     `}
+
+  @media (max-width: ${BURGER_BREAKPOINT}) {
+    padding: 3px 0;
+
+    &:not(:last-child) {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
 `
 
-export const Actions = styled.div`
+export const ActionsDesktop = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: ${BURGER_BREAKPOINT}) {
+    display: none;
+  }
 `
 
 export const Network = styled.div`
@@ -73,4 +114,88 @@ export const NetworkBulb = styled.div<NetworkBulbProps>`
   height: 8px;
   border-radius: 50%;
   background-color: ${({ color }) => color};
+`
+
+export const BurgerLine = styled.div`
+  width: 25px;
+  height: 2px;
+  background-color: ${({ theme }) => theme.colors.text};
+  transition: transform ease ${({ theme }) => theme.duration.norm},
+    opacity ease ${({ theme }) => theme.duration.norm};
+
+  &:not(:last-child) {
+    margin-bottom: 6px;
+  }
+
+  &:nth-child(1) {
+    transform-origin: right -1px;
+  }
+
+  &:nth-child(3) {
+    transform-origin: right 3px;
+  }
+`
+
+type BurgerWrapProps = { isOpened: boolean }
+export const BurgerWrap = styled.div<BurgerWrapProps>`
+  margin: -10px;
+  padding: 10px;
+  z-index: 99;
+
+  ${({ isOpened }) =>
+    isOpened &&
+    css`
+      ${BurgerLine}:nth-child(1) {
+        transform: rotate(-45deg);
+      }
+      ${BurgerLine}:nth-child(2) {
+        opacity: 0;
+      }
+      ${BurgerLine}:nth-child(3) {
+        transform: rotate(45deg);
+      }
+    `}
+`
+
+const menuAppearing = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
+
+export const MobileMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 60px 20px 0;
+  position: fixed;
+  overflow: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(12px);
+  z-index: 98;
+  animation: ${menuAppearing} ${({ theme }) => theme.duration.norm} ease 0s 1;
+`
+
+export const MobileMenuScroll = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+`
+
+export const MobileNavItems = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`
+
+export const MobileNetworkWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  margin-bottom: 40px;
 `

@@ -30,4 +30,14 @@ export const GlobalStyle = createGlobalStyle`
   b {
     font-weight: 600;
   }
+
+  html.html-scroll-lock {
+    overflow-y: scroll;
+  }
+
+  body.body-scroll-lock {
+    overflow: hidden;
+    position: fixed;
+    height: auto;
+  }
 `
