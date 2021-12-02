@@ -1,7 +1,9 @@
-import { memo, useMemo } from 'react'
+import { memo, useMemo, useCallback } from 'react'
+import styled from 'styled-components'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
+import { useWeb3React } from '@web3-react/core'
 import { useWalletAutoConnect } from 'modules/wallet/hooks/useWalletAutoConnect'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
@@ -10,6 +12,7 @@ import { Title } from 'modules/shared/ui/Common/Title'
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
 import {
+  Button,
   ThemeProvider,
   themeDefault,
   ToastContainer,
@@ -18,20 +21,38 @@ import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
+
 import { getAddressList } from 'modules/config/utils/getAddressList'
+import { Chains, getChainName } from 'modules/blockChain/chains'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
+
+const NetworksBox = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+`
 
 function AppRoot({ Component, pageProps }: AppProps) {
   useWalletAutoConnect()
   const chainId = useCurrentChain()
+  const { library } = useWeb3React()
   const { supportedChainIds } = useConfig()
   const isChainSupported = useMemo(
     () => supportedChainIds.includes(chainId),
     [chainId, supportedChainIds],
   )
 
-  const currentChain = useCurrentChain()
+  const handleChangeNetwork = useCallback(
+    (switchTo: Chains) => {
+      if (!library) return
+      library.send('wallet_switchEthereumChain', [
+        { chainId: `0x${switchTo.toString(16)}` },
+      ])
+    },
+    [library],
+  )
+
   return (
     <>
       <Head>
@@ -75,8 +96,8 @@ function AppRoot({ Component, pageProps }: AppProps) {
           href={`${basePath}/favicon-16x16.png`}
         />
 
-        <meta name="currentChain" content={String(currentChain)} />
-        {getAddressList(currentChain).map(({ contractName, address }) => (
+        <meta name="currentChain" content={String(chainId)} />
+        {getAddressList(chainId).map(({ contractName, address }) => (
           <meta key={contractName} name={contractName} content={address} />
         ))}
       </Head>
@@ -84,10 +105,24 @@ function AppRoot({ Component, pageProps }: AppProps) {
         {isChainSupported ? (
           <Component {...pageProps} />
         ) : (
-          <Title
-            title="Network does not match"
-            subtitle={<>Please, select correct network in your wallet</>}
-          />
+          <>
+            <Title
+              title="Network does not match"
+              subtitle={<>Please, switch to another network</>}
+            />
+            <NetworksBox>
+              {supportedChainIds.map(supportedChainId => (
+                <Button
+                  key={supportedChainId}
+                  size="sm"
+                  variant="filled"
+                  onClick={() => handleChangeNetwork(supportedChainId)}
+                >
+                  {getChainName(supportedChainId)}
+                </Button>
+              ))}
+            </NetworksBox>
+          </>
         )}
       </PageLayout>
       <ToastContainer />
