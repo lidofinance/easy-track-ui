@@ -18,9 +18,6 @@ export const sanitizeMessage = (message: string) => {
 
   for (let [key, re] of secretEntries) {
     if (re) {
-      if (key === 'ensAddress') {
-        console.log(re.test(result))
-      }
       result = result.replace(re, `%${key}%`)
     }
   }
