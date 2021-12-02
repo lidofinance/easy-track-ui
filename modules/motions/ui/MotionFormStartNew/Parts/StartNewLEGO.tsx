@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { useCallback, Fragment } from 'react'
-import { useFieldArray } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
 
@@ -20,7 +20,7 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 
-type Program = {
+type TokenData = {
   address: string
   amount: string
 }
@@ -45,7 +45,7 @@ export const formParts = createMotionFormPart({
     return tx
   },
   getDefaultFormData: () => ({
-    tokens: [{ address: '', amount: '' }] as Program[],
+    tokens: [{ address: '', amount: '' }] as TokenData[],
   }),
   Component: function StartNewMotionMotionFormLego({
     fieldNames,
@@ -67,6 +67,18 @@ export const formParts = createMotionFormPart({
       [fieldsArr],
     )
 
+    const { watch } = useFormContext()
+    const selectedTokens: TokenData[] = watch(fieldNames.tokens)
+
+    const getFilteredOptions = (fieldIdx: number) => {
+      const thatAddress = selectedTokens[fieldIdx].address
+      const selectedAddresses = selectedTokens.map(({ address }) => address)
+      return tokenOptions.filter(
+        ({ value }) =>
+          !selectedAddresses.includes(value) || value === thatAddress,
+      )
+    }
+
     if (trustedCaller.initialLoading) {
       return <PageLoader />
     }
@@ -85,7 +97,7 @@ export const formParts = createMotionFormPart({
                 name={`${fieldNames.tokens}.${i}.address`}
                 rules={{ required: 'Field is required' }}
               >
-                {tokenOptions.map(({ label, value }, j) => (
+                {getFilteredOptions(i).map(({ label, value }, j) => (
                   <Option key={j} value={value} children={label} />
                 ))}
               </SelectControl>
