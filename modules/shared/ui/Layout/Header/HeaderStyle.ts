@@ -1,6 +1,5 @@
 import styled, { css, keyframes } from 'styled-components'
-
-const BURGER_BREAKPOINT = '780px'
+import { BREAKPOINT_MOBILE } from 'modules/globalStyles'
 
 export const Wrap = styled.div`
   margin-bottom: 30px;
@@ -10,20 +9,11 @@ export const Wrap = styled.div`
   justify-content: space-between;
   z-index: 99;
 
-  @media (max-width: ${BURGER_BREAKPOINT}) {
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
     position: fixed;
     left: 20px;
     top: 0;
     right: 20px;
-  }
-`
-
-export const MobileSpacer = styled.div`
-  height: 90px;
-  display: none;
-
-  @media (max-width: ${BURGER_BREAKPOINT}) {
-    display: block;
   }
 `
 
@@ -42,7 +32,7 @@ export const NavItems = styled.div`
   display: flex;
   align-items: center;
 
-  @media (max-width: ${BURGER_BREAKPOINT}) {
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
     display: none;
   }
 `
@@ -80,7 +70,7 @@ export const NavLink = styled.a<NavLinkProps>`
       color: ${theme.colors.primary};
     `}
 
-  @media (max-width: ${BURGER_BREAKPOINT}) {
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
     padding: 3px 0;
 
     &:not(:last-child) {
@@ -94,7 +84,7 @@ export const ActionsDesktop = styled.div`
   display: flex;
   align-items: center;
 
-  @media (max-width: ${BURGER_BREAKPOINT}) {
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
     display: none;
   }
 `
@@ -141,6 +131,11 @@ export const BurgerWrap = styled.div<BurgerWrapProps>`
   margin: -10px;
   padding: 10px;
   z-index: 99;
+  display: none;
+
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
+    display: block;
+  }
 
   ${({ isOpened }) =>
     isOpened &&
@@ -198,4 +193,13 @@ export const MobileNetworkWrap = styled.div`
   justify-content: space-between;
   margin-top: auto;
   margin-bottom: 40px;
+`
+
+export const MobileSpacer = styled.div`
+  height: 90px;
+  display: none;
+
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
+    display: block;
+  }
 `

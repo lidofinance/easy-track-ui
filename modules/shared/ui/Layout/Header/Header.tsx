@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useScrollLock } from 'modules/shared/hooks/useScrollLock'
@@ -36,16 +36,18 @@ import * as urls from 'modules/network/utils/urls'
 function NavItem({
   link,
   icon,
+  onClick,
   children,
 }: {
   link: string
   icon: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLElement>
   children: React.ReactNode
 }) {
   const router = useRouter()
   return (
     <Link passHref href={link}>
-      <NavLink isActive={router.pathname === link}>
+      <NavLink isActive={router.pathname === link} onClick={onClick}>
         {icon}
         <div>{children}</div>
       </NavLink>
@@ -56,6 +58,7 @@ function NavItem({
 export function Header() {
   const currentChain = useCurrentChain()
   const [isBurgerOpened, setBurgerOpened] = useState(false)
+  const handleCloseMobileMenu = useCallback(() => setBurgerOpened(false), [])
   useScrollLock(isBurgerOpened)
 
   return (
@@ -112,16 +115,19 @@ export function Header() {
                   link={urls.home}
                   icon={<ActiveMotionsSVG />}
                   children="Active motions"
+                  onClick={handleCloseMobileMenu}
                 />
                 <NavItem
                   link={urls.archive}
                   icon={<ArchiveSVG />}
                   children="Archive"
+                  onClick={handleCloseMobileMenu}
                 />
                 <NavItem
                   link={urls.startMotion}
                   icon={<StartSVG />}
                   children="Start motion"
+                  onClick={handleCloseMobileMenu}
                 />
                 {/* <NavItem link={urls.about} icon={<InfoSVG />} children="About" /> */}
               </MobileNavItems>
