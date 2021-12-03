@@ -29,3 +29,11 @@ export const getRpcJsonUrls = (chainId: Chains): string[] => {
 
 export const getRpcUrl = (chainId: Chains) =>
   `${basePath ?? ''}/api/rpc?chainId=${parseChainId(chainId)}`
+
+export const backendRPC = {
+  [Chains.Mainnet]: getRpcUrl(Chains.Mainnet),
+  [Chains.Goerli]: getRpcUrl(Chains.Goerli),
+  [Chains.Kovan]: getRpcUrl(Chains.Kovan),
+  [Chains.Rinkeby]: getRpcUrl(Chains.Rinkeby),
+  [Chains.Ropsten]: getRpcUrl(Chains.Ropsten),
+}

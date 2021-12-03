@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { useWalletConnectorStorage } from './useWalletConnectorStorage'
-import { useWalletConnectors } from './useWalletConnectors'
+import { useConnectors, useConnectorStorage } from '@lido-sdk/web3-react'
+// import { useWalletConnectorStorage } from './useWalletConnectorStorage'
+// import { useWalletConnectors } from './useWalletConnectors'
 
 export function useWalletAutoConnect() {
   const {
@@ -9,8 +10,8 @@ export function useWalletAutoConnect() {
     connector: currentConnector,
     activate: connect,
   } = useWeb3React()
-  const connectors = useWalletConnectors()
-  const [connectorName, setConnector] = useWalletConnectorStorage()
+  const connectors = useConnectors()
+  const [connectorName, setConnector] = useConnectorStorage()
 
   useEffect(() => {
     if (!active) {
