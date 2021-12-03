@@ -1,37 +1,27 @@
 import { useCallback } from 'react'
+import { useConnectorInfo } from '@lido-sdk/web3-react'
 import { useWalletConnect } from '../../hooks/useWalletConnect'
 import { useWalletConnectors } from '../../hooks/useWalletConnectors'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
 import iconUrl from 'assets/icons/metamask.svg'
-import { openWindow } from 'modules/shared/utils/openWindow'
-import { isClientSide } from 'modules/shared/utils/isClientSide'
 
 export function ConnectMetamaskButton(props: ConnectWalletButtonProps) {
-  const { onConnect, ...rest } = props
+  const { onConnect, disabled, ...rest } = props
   const connect = useWalletConnect()
+  const { isMetamask } = useConnectorInfo()
   const { metamask: connector } = useWalletConnectors()
 
-  const openInWallet = useCallback(() => {
-    const url = encodeURIComponent(window.location.host)
-    openWindow(`https://metamask.app.link/dapp/${url}`)
-  }, [])
-
   const handleConnect = useCallback(async () => {
-    const hasInjected = isClientSide() && 'ethereum' in window
-
-    if (!hasInjected) {
-      openInWallet()
-      return
-    }
-
+    if (!isMetamask) return
     onConnect?.()
     await connect(connector)
-  }, [onConnect, connect, connector, openInWallet])
+  }, [isMetamask, onConnect, connect, connector])
 
   return (
     <ConnectButton
       {...rest}
+      disabled={!isMetamask || disabled}
       iconSrc={iconUrl}
       onClick={handleConnect}
       children="Metamask"
