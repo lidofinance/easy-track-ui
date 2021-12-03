@@ -1,5 +1,7 @@
 import { utils } from 'ethers'
+import { useMemo } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useRewardPrograms } from 'modules/motions/hooks/useRewardPrograms'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -34,13 +36,18 @@ export const formParts = createMotionFormPart({
     submitAction,
   }) {
     const { walletAddress } = useWalletInfo()
+    const rewardPrograms = useRewardPrograms()
     const trustedCaller = ContractEvmRewardProgramAdd.useSwrWeb3(
       'trustedCaller',
       [],
     )
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
-    if (trustedCaller.initialLoading) {
+    const existedAddresses = useMemo(() => {
+      return (rewardPrograms.data || []).map(({ address }) => address)
+    }, [rewardPrograms.data])
+
+    if (trustedCaller.initialLoading || rewardPrograms.initialLoading) {
       return <PageLoader />
     }
 
@@ -64,8 +71,13 @@ export const formParts = createMotionFormPart({
             label="Address"
             rules={{
               required: 'Field is required',
-              validate: value =>
-                utils.isAddress(value) ? true : 'Address is not valid',
+              validate: value => {
+                if (!utils.isAddress(value)) return 'Address is not valid'
+                if (existedAddresses.includes(value)) {
+                  return 'Reward programm with this address already exists'
+                }
+                return true
+              },
             }}
           />
         </Fieldset>

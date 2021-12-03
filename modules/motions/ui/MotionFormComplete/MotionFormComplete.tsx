@@ -31,7 +31,10 @@ type BodySafeProps = {
 // Can be improved with https://safe-transaction.rinkeby.gnosis.io/
 function BodySafe({ tx }: BodySafeProps) {
   const { walletAddress } = useWalletInfo()
-  const openGnosis = useGnosisOpener(String(walletAddress), '/transactions')
+  const openGnosis = useGnosisOpener(
+    String(walletAddress),
+    '/transactions/queue',
+  )
   return (
     <div>
       <Text size={14} weight={500}>

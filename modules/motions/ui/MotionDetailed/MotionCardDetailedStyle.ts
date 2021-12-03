@@ -1,11 +1,17 @@
 import styled, { css } from 'styled-components'
 import { Text } from 'modules/shared/ui/Common/Text'
 import type { Theme } from '@lidofinance/lido-ui'
+import { BREAKPOINT_MOBILE } from 'modules/globalStyles'
 
 export const Card = styled.div`
   padding: 50px 60px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.5);
+
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
+    margin: 0 20px;
+    padding: 20px;
+  }
 `
 
 export const Header = styled.div`

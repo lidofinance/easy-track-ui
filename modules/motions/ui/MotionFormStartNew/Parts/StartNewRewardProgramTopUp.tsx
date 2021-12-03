@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment, useCallback } from 'react'
-import { useFieldArray } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useRewardPrograms } from 'modules/motions/hooks/useRewardPrograms'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
@@ -74,6 +74,19 @@ export const formParts = createMotionFormPart({
       [fieldsArr],
     )
 
+    const { watch } = useFormContext()
+    const selectedPrograms: Program[] = watch(fieldNames.programs)
+
+    const getFilteredOptions = (fieldIdx: number) => {
+      if (!rewardPrograms.data) return []
+      const thatAddress = selectedPrograms[fieldIdx].address
+      const selectedAddresses = selectedPrograms.map(({ address }) => address)
+      return rewardPrograms.data.filter(
+        ({ address }) =>
+          !selectedAddresses.includes(address) || address === thatAddress,
+      )
+    }
+
     if (trustedCaller.initialLoading || rewardPrograms.initialLoading) {
       return <PageLoader />
     }
@@ -92,7 +105,7 @@ export const formParts = createMotionFormPart({
                 name={`${fieldNames.programs}.${i}.address`}
                 rules={{ required: 'Field is required' }}
               >
-                {rewardPrograms.data?.map((program, j) => (
+                {getFilteredOptions(i).map((program, j) => (
                   <Option
                     key={j}
                     value={program.address}

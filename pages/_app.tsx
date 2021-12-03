@@ -6,7 +6,6 @@ import { useWalletAutoConnect } from 'modules/wallet/hooks/useWalletAutoConnect'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
-import { Title } from 'modules/shared/ui/Common/Title'
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
 import {
@@ -18,6 +17,8 @@ import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
 import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
+import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
+
 import { getAddressList } from 'modules/config/utils/getAddressList'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
@@ -31,12 +32,14 @@ function AppRoot({ Component, pageProps }: AppProps) {
     [chainId, supportedChainIds],
   )
 
-  const currentChain = useCurrentChain()
   return (
     <>
       <Head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
         <title>Lido Easy Track</title>
 
         <link rel="manifest" href={`${basePath}/manifest.json`} />
@@ -75,20 +78,13 @@ function AppRoot({ Component, pageProps }: AppProps) {
           href={`${basePath}/favicon-16x16.png`}
         />
 
-        <meta name="currentChain" content={String(currentChain)} />
-        {getAddressList(currentChain).map(({ contractName, address }) => (
+        <meta name="currentChain" content={String(chainId)} />
+        {getAddressList(chainId).map(({ contractName, address }) => (
           <meta key={contractName} name={contractName} content={address} />
         ))}
       </Head>
       <PageLayout>
-        {isChainSupported ? (
-          <Component {...pageProps} />
-        ) : (
-          <Title
-            title="Network does not match"
-            subtitle={<>Please, select correct network in your wallet</>}
-          />
-        )}
+        {isChainSupported ? <Component {...pageProps} /> : <NetworkSwitcher />}
       </PageLayout>
       <ToastContainer />
     </>
