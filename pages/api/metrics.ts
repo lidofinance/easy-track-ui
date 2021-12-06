@@ -31,7 +31,7 @@ export const recordBuildInfo = () => {
 
 export const collectChainConfig = () => {
   const chainConfig = new Gauge({
-    name: METRICS_PREFIX + 'chain_config',
+    name: METRICS_PREFIX + 'chain_config_info',
     help: 'Default network and supported networks',
     labelNames: ['default_chain', 'supported_chains'],
   })
@@ -49,7 +49,7 @@ export const collectContractConfigForChain = (chainId: Chains) => {
   const contractAddrs = getAddressList(chainId).map(c => c.address)
 
   const contractConfig = new Gauge({
-    name: METRICS_PREFIX + `contract_config_${chainId}`,
+    name: METRICS_PREFIX + `contract_config_${chainId}_info`,
     help: `Contract config for chain ${chainId}`,
     labelNames: contractNames,
   })
@@ -67,7 +67,7 @@ const collectContractConfig = () => {
 
 const timeInfura = async () => {
   const ethereumResponseTime = new Histogram({
-    name: METRICS_PREFIX + 'infura_response_time',
+    name: METRICS_PREFIX + 'infura_response_time_seconds',
     help: 'Infura response time',
     buckets: [0.1, 1, 5, 10, 60],
     labelNames: ['status'],
@@ -98,7 +98,7 @@ const timeInfura = async () => {
 
 const timeAlchemy = async () => {
   const ethereumResponseTime = new Histogram({
-    name: METRICS_PREFIX + 'alchemy_response_time',
+    name: METRICS_PREFIX + 'alchemy_response_time_seconds',
     help: 'Alchemy response time',
     buckets: [0.1, 1, 5, 10, 60],
     labelNames: ['status'],
