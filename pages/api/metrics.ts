@@ -8,14 +8,18 @@ import {
 import getConfig from 'next/config'
 import { Chains } from 'modules/blockChain/chains'
 import { getAddressList } from 'modules/config/utils/getAddressList'
+import {
+  failedRpcRequests,
+  successfulRpcRequests,
+  totalRpcRequests,
+} from './rpc'
+import { METRICS_PREFIX } from 'modules/config'
 
 const { serverRuntimeConfig } = getConfig()
 const { infuraApiKey, alchemyApiKey } = serverRuntimeConfig
 
 const { publicRuntimeConfig } = getConfig()
 const defaultChain = +publicRuntimeConfig.defaultChain as Chains
-
-const METRICS_PREFIX = 'easy_track_ui_'
 
 export const recordBuildInfo = () => {
   const buildInfo = new Gauge({
@@ -129,6 +133,9 @@ const timeAlchemy = async () => {
 
 export default async function m(req: NextApiRequest, res: NextApiResponse) {
   register.clear()
+  register.registerMetric(totalRpcRequests)
+  register.registerMetric(successfulRpcRequests)
+  register.registerMetric(failedRpcRequests)
   recordBuildInfo()
   collectChainConfig()
   collectContractConfig()
