@@ -5,6 +5,7 @@ import { getRpcJsonUrls } from 'modules/blockChain/utils/getRpcUrls'
 import getConfig from 'next/config'
 import { Chains } from 'modules/blockChain/chains'
 import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
+import { getAddressList } from 'modules/config/utils/getAddressList'
 
 const { publicRuntimeConfig } = getConfig()
 const defaultChain = +publicRuntimeConfig.defaultChain as Chains
@@ -38,6 +39,19 @@ export const collectChainConfig = () => {
     .set(1)
 }
 
+export const collectContractConfig = () => {
+  const contractNames = getAddressList(defaultChain).map(c => c.contractName)
+  const contractAddrs = getAddressList(defaultChain).map(c => c.address)
+
+  const contractConfig = new Gauge({
+    name: METRICS_PREFIX + 'contract_config',
+    help: 'Contract config for default chain',
+    labelNames: contractNames,
+  })
+
+  contractConfig.labels(...contractAddrs).set(1)
+}
+
 const timeEthereum = async () => {
   const ethereumResponseTime = new Histogram({
     name: METRICS_PREFIX + 'ethereum_response_time',
@@ -66,6 +80,7 @@ export default async function m(req: NextApiRequest, res: NextApiResponse) {
   register.clear()
   recordBuildInfo()
   collectChainConfig()
+  collectContractConfig()
   await timeEthereum()
   collectDefaultMetrics({ prefix: METRICS_PREFIX })
 
