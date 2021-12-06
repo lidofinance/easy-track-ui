@@ -8,11 +8,7 @@ import {
 import getConfig from 'next/config'
 import { Chains } from 'modules/blockChain/chains'
 import { getAddressList } from 'modules/config/utils/getAddressList'
-import {
-  failedRpcRequests,
-  successfulRpcRequests,
-  totalRpcRequests,
-} from './rpc'
+import { rpcRequests } from './rpc'
 import { METRICS_PREFIX } from 'modules/config'
 
 const { serverRuntimeConfig } = getConfig()
@@ -133,9 +129,7 @@ const timeAlchemy = async () => {
 
 export default async function m(req: NextApiRequest, res: NextApiResponse) {
   register.clear()
-  register.registerMetric(totalRpcRequests)
-  register.registerMetric(successfulRpcRequests)
-  register.registerMetric(failedRpcRequests)
+  register.registerMetric(rpcRequests)
   recordBuildInfo()
   collectChainConfig()
   collectContractConfig()
