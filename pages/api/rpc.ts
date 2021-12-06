@@ -3,8 +3,20 @@ import { parseChainId } from 'modules/blockChain/chains'
 import { getRpcJsonUrls } from 'modules/blockChain/utils/getRpcUrls'
 import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 import { logger } from 'modules/shared/utils/log'
+import { Counter, register } from 'prom-client'
+import { METRICS_PREFIX } from 'modules/config'
+
+register.clear()
+
+export const rpcRequests = new Counter({
+  name: METRICS_PREFIX + 'proxy_rpc_requests',
+  help: 'Total, successful and failed requests to proxy rpc',
+  labelNames: ['total', 'failed', 'success'] as const,
+})
 
 export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
+  rpcRequests.inc({ total: 1 })
+
   try {
     const chainId = parseChainId(String(req.query.chainId))
 
@@ -16,8 +28,11 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     })
 
     const responded = await requested.json()
+
     res.status(requested.status).json(responded)
+    rpcRequests.inc({ success: 1 })
   } catch (error) {
+    rpcRequests.inc({ failed: 1 })
     logger.error(error)
     res.status(500).send({ error: 'Something went wrong!' })
   }
