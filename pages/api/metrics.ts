@@ -39,17 +39,25 @@ export const collectChainConfig = () => {
     .set(1)
 }
 
-export const collectContractConfig = () => {
-  const contractNames = getAddressList(defaultChain).map(c => c.contractName)
-  const contractAddrs = getAddressList(defaultChain).map(c => c.address)
+export const collectContractConfigForChain = (chainId: Chains) => {
+  const contractNames = getAddressList(chainId).map(c => c.contractName)
+  const contractAddrs = getAddressList(chainId).map(c => c.address)
 
   const contractConfig = new Gauge({
-    name: METRICS_PREFIX + 'contract_config',
-    help: 'Contract config for default chain',
+    name: METRICS_PREFIX + `contract_config_${chainId}`,
+    help: `Contract config for chain ${chainId}`,
     labelNames: contractNames,
   })
 
   contractConfig.labels(...contractAddrs).set(1)
+}
+
+const collectContractConfig = () => {
+  const supportedChains = publicRuntimeConfig.supportedChains
+    .split(',')
+    .map(Number)
+
+  supportedChains.forEach(collectContractConfigForChain)
 }
 
 const timeEthereum = async () => {
