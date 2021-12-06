@@ -29,6 +29,5 @@ const jsonLogger = createLogger({
   transports: [new transports.Console()],
 })
 
-// export const logger =
-//   process.env.NODE_ENV === 'production' ? jsonLogger : console
-export const logger = jsonLogger
+export const logger =
+  process.env.NODE_ENV === 'production' ? jsonLogger : console
