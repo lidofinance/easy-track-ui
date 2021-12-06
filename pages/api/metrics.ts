@@ -1,11 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { register, collectDefaultMetrics, Gauge, Histogram } from 'prom-client'
 import buildInfoJson from 'build-info.json'
-import { getRpcJsonUrls } from 'modules/blockChain/utils/getRpcUrls'
+import {
+  getAlchemyRpcUrl,
+  getInfuraRpcUrl,
+} from 'modules/blockChain/utils/getRpcUrls'
 import getConfig from 'next/config'
 import { Chains } from 'modules/blockChain/chains'
-import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 import { getAddressList } from 'modules/config/utils/getAddressList'
+
+const { serverRuntimeConfig } = getConfig()
+const { infuraApiKey, alchemyApiKey } = serverRuntimeConfig
 
 const { publicRuntimeConfig } = getConfig()
 const defaultChain = +publicRuntimeConfig.defaultChain as Chains
@@ -60,18 +65,23 @@ const collectContractConfig = () => {
   supportedChains.forEach(collectContractConfigForChain)
 }
 
-const timeEthereum = async () => {
+const timeInfura = async () => {
   const ethereumResponseTime = new Histogram({
-    name: METRICS_PREFIX + 'ethereum_response_time',
-    help: 'Third-party Ethereum provider response time',
+    name: METRICS_PREFIX + 'infura_response_time',
+    help: 'Infura response time',
     buckets: [0.1, 1, 5, 10, 60],
+    labelNames: ['status'],
   })
 
-  const urls = getRpcJsonUrls(defaultChain)
+  if (!infuraApiKey) {
+    return
+  }
+
+  const url = getInfuraRpcUrl(defaultChain)
 
   const end = ethereumResponseTime.startTimer()
 
-  await fetchWithFallback(urls, {
+  const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       method: 'eth_chainId',
@@ -81,6 +91,39 @@ const timeEthereum = async () => {
     }),
   })
 
+  ethereumResponseTime.labels(String(response.status))
+
+  end()
+}
+
+const timeAlchemy = async () => {
+  const ethereumResponseTime = new Histogram({
+    name: METRICS_PREFIX + 'alchemy_response_time',
+    help: 'Alchemy response time',
+    buckets: [0.1, 1, 5, 10, 60],
+    labelNames: ['status'],
+  })
+
+  if (!alchemyApiKey) {
+    return ethereumResponseTime.observe(0)
+  }
+
+  const url = getAlchemyRpcUrl(defaultChain)
+
+  const end = ethereumResponseTime.startTimer()
+
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      method: 'eth_chainId',
+      params: [],
+      id: 1,
+      jsonrpc: '2.0',
+    }),
+  })
+
+  ethereumResponseTime.labels(String(response.status))
+
   end()
 }
 
@@ -89,7 +132,8 @@ export default async function m(req: NextApiRequest, res: NextApiResponse) {
   recordBuildInfo()
   collectChainConfig()
   collectContractConfig()
-  await timeEthereum()
+  await timeInfura()
+  await timeAlchemy()
   collectDefaultMetrics({ prefix: METRICS_PREFIX })
 
   res.setHeader('Content-type', register.contentType)
