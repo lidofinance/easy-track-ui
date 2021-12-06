@@ -17,6 +17,17 @@ export const rpcRequests = new Counter({
 export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
   rpcRequests.inc({ total: 1 })
 
+  const requestInfo = {
+    type: 'API request',
+    path: 'rpc',
+    body: req.body,
+    query: req.query,
+    method: req.method,
+    stage: 'INCOMING',
+  }
+
+  logger.info('Incoming request to api/rpc', requestInfo)
+
   try {
     const chainId = parseChainId(String(req.query.chainId))
 
@@ -30,10 +41,26 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     const responded = await requested.json()
 
     res.status(requested.status).json(responded)
+
     rpcRequests.inc({ success: 1 })
+    logger.info('Request to api/rpc successfully fullfilled', {
+      ...requestInfo,
+      stage: 'FULFILLED',
+    })
   } catch (error) {
     rpcRequests.inc({ failed: 1 })
-    logger.error(error)
+    logger.error(
+      typeof error === 'object'
+        ? {
+            ...error,
+            ...requestInfo,
+            stage: 'FAILED',
+          }
+        : {
+            ...requestInfo,
+            error,
+          },
+    )
     res.status(500).send({ error: 'Something went wrong!' })
   }
 }

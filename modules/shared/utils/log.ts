@@ -15,19 +15,20 @@ const sanitize = format(info => {
   return info
 })
 
-export const logger =
-  process.env.NODE_ENV === 'production'
-    ? createLogger({
-        defaultMeta: {
-          service: 'easy-track-ui',
-        },
-        format: combine(
-          json(),
-          timestamp(),
-          errors({ stack: true }),
-          sanitize(),
-          prettyPrint(),
-        ),
-        transports: [new transports.Console()],
-      })
-    : console
+const jsonLogger = createLogger({
+  defaultMeta: {
+    service: 'easy-track-ui',
+  },
+  format: combine(
+    json(),
+    timestamp(),
+    errors({ stack: true }),
+    sanitize(),
+    prettyPrint(),
+  ),
+  transports: [new transports.Console()],
+})
+
+// export const logger =
+//   process.env.NODE_ENV === 'production' ? jsonLogger : console
+export const logger = jsonLogger
