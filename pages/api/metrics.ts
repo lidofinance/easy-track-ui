@@ -23,6 +23,21 @@ export const recordBuildInfo = () => {
     .set(1)
 }
 
+export const collectChainConfig = () => {
+  const chainConfig = new Gauge({
+    name: METRICS_PREFIX + 'chain_config',
+    help: 'Default network and supported networks',
+    labelNames: ['default_chain', 'supported_chains'],
+  })
+
+  chainConfig
+    .labels(
+      publicRuntimeConfig.defaultChain,
+      publicRuntimeConfig.supportedChains,
+    )
+    .set(1)
+}
+
 const timeEthereum = async () => {
   const ethereumResponseTime = new Histogram({
     name: METRICS_PREFIX + 'ethereum_response_time',
@@ -50,6 +65,7 @@ const timeEthereum = async () => {
 export default async function m(req: NextApiRequest, res: NextApiResponse) {
   register.clear()
   recordBuildInfo()
+  collectChainConfig()
   await timeEthereum()
   collectDefaultMetrics({ prefix: METRICS_PREFIX })
 
