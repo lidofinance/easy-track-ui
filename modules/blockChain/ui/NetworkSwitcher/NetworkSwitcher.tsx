@@ -1,4 +1,6 @@
 import { InjectedConnector } from '@web3-react/injected-connector'
+import { CHAINS } from '@lido-sdk/constants'
+
 import { useWeb3 } from '@lido-sdk/web3-react'
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
@@ -9,7 +11,7 @@ import { Text } from 'modules/shared/ui/Common/Text'
 import { Title } from 'modules/shared/ui/Common/Title'
 import { NetworksBox } from './NetworkSwitcherStyle'
 
-import { Chains, getChainName } from 'modules/blockChain/chains'
+import { getChainName } from 'modules/blockChain/chains'
 
 export function NetworkSwitcher() {
   const { library } = useWeb3React()
@@ -23,7 +25,7 @@ export function NetworkSwitcher() {
     !!(window as any).ethereum?.isMetaMask
 
   const handleChangeNetwork = useCallback(
-    (switchTo: Chains) => {
+    (switchTo: CHAINS) => {
       if (!library) return
       library.send('wallet_switchEthereumChain', [
         { chainId: `0x${switchTo.toString(16)}` },

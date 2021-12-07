@@ -1,4 +1,5 @@
 import { SWRConfiguration } from 'swr'
+import { CHAINS } from '@lido-sdk/constants'
 
 import { useWeb3React } from '@web3-react/core'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
@@ -8,7 +9,7 @@ import { useContractSwr } from '../hooks/useContractSwr'
 import type { Signer, providers } from 'ethers'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
 import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
-import { Chains, getChainName } from 'modules/blockChain/chains'
+import { getChainName } from 'modules/blockChain/chains'
 import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
 type Library = Signer | providers.Provider
@@ -19,7 +20,7 @@ interface Factory {
 }
 
 type Address = {
-  [key in Chains]?: string
+  [key in CHAINS]?: string
 }
 
 type CreatorArgs<F> = {
@@ -28,7 +29,7 @@ type CreatorArgs<F> = {
 }
 
 type CallArgs = {
-  chainId: Chains
+  chainId: CHAINS
   library: Library
 }
 

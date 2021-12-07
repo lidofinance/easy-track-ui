@@ -1,11 +1,11 @@
-import { Chains } from 'modules/blockChain/chains'
+import { CHAINS } from '@lido-sdk/constants'
 
 export const SUBGRAPH_URL = {
-  [Chains.Mainnet]: 'https://api.thegraph.com/subgraphs/name/lidofinance/lido',
-  [Chains.Ropsten]: '',
-  [Chains.Rinkeby]:
+  [CHAINS.Mainnet]: 'https://api.thegraph.com/subgraphs/name/lidofinance/lido',
+  [CHAINS.Ropsten]: '',
+  [CHAINS.Rinkeby]:
     'https://easytrack-subgraph.testnet.lido.fi/subgraphs/name/bulbozaur/lido-easytrack-rinkeby',
-  [Chains.Goerli]:
+  [CHAINS.Goerli]:
     'https://api.thegraph.com/subgraphs/name/lidofinance/lido-testnet',
-  [Chains.Kovan]: '',
+  [CHAINS.Kovan]: '',
 } as const

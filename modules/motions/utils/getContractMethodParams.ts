@@ -1,9 +1,9 @@
 import { get } from 'lodash'
-import { Chains } from 'modules/blockChain/chains'
+import { CHAINS } from '@lido-sdk/constants'
 import { EvmAddressesByChain } from '../evmAddresses'
 
 const ACCESS_LISTS_MAP = {
-  [EvmAddressesByChain[Chains.Mainnet].LEGOTopUp]: {
+  [EvmAddressesByChain[CHAINS.Mainnet].LEGOTopUp]: {
     enact: {
       type: 1,
       accessList: {
@@ -15,7 +15,7 @@ const ACCESS_LISTS_MAP = {
       },
     },
   } as const,
-  [EvmAddressesByChain[Chains.Goerli].LEGOTopUp]: {
+  [EvmAddressesByChain[CHAINS.Goerli].LEGOTopUp]: {
     enact: {
       type: 1,
       accessList: {

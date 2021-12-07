@@ -6,7 +6,7 @@ import {
   getInfuraRpcUrl,
 } from 'modules/blockChain/utils/getRpcUrls'
 import getConfig from 'next/config'
-import { Chains } from 'modules/blockChain/chains'
+import { CHAINS } from '@lido-sdk/constants'
 import { getAddressList } from 'modules/config/utils/getAddressList'
 import { rpcRequests } from './rpc'
 import { METRICS_PREFIX } from 'modules/config'
@@ -15,7 +15,7 @@ const { serverRuntimeConfig } = getConfig()
 const { infuraApiKey, alchemyApiKey } = serverRuntimeConfig
 
 const { publicRuntimeConfig } = getConfig()
-const defaultChain = +publicRuntimeConfig.defaultChain as Chains
+const defaultChain = +publicRuntimeConfig.defaultChain as CHAINS
 
 export const recordBuildInfo = () => {
   const buildInfo = new Gauge({
@@ -44,7 +44,7 @@ export const collectChainConfig = () => {
     .set(1)
 }
 
-export const collectContractConfigForChain = (chainId: Chains) => {
+export const collectContractConfigForChain = (chainId: CHAINS) => {
   const contractNames = getAddressList(chainId).map(c => c.contractName)
   const contractAddrs = getAddressList(chainId).map(c => c.address)
 
