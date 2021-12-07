@@ -5,6 +5,8 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
+const envDomain = process.env.ENV_DOMAIN
+
 module.exports = {
   basePath,
   webpack5: true,
@@ -46,6 +48,25 @@ module.exports = {
   //   // return config
   // },
   async headers() {
+    const stylePolicy = "style-src 'self' 'unsafe-inline'"
+    const envDomainWithLeadingSpace = envDomain ? ' ' + envDomain : ''
+    const fontPolicy =
+      "font-src 'self' https://fonts.gstatic.com https://*.lido.fi" +
+      envDomainWithLeadingSpace
+    const imagePolicy =
+      "img-src 'self' data: https://*.lido.fi" + envDomainWithLeadingSpace
+    const defaultPolicy =
+      "default-src 'self' https://*.lido.fi" + envDomainWithLeadingSpace
+
+    const cspPolicies = [
+      stylePolicy,
+      fontPolicy,
+      imagePolicy,
+      defaultPolicy,
+    ].join('; ')
+
+    const scpValue = process.env.NODE_ENV !== 'development' ? cspPolicies : ''
+
     // https://nextjs.org/docs/advanced-features/security-headers
     return [
       {
@@ -65,6 +86,10 @@ module.exports = {
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: scpValue,
           },
         ],
       },
