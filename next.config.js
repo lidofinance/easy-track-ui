@@ -5,7 +5,7 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
-const envDomain = process.env.ENV_DOMAIN
+const cspTrustedHost = process.env.CSP_TRUSTED_HOST
 
 module.exports = {
   basePath,
@@ -49,14 +49,14 @@ module.exports = {
   // },
   async headers() {
     const stylePolicy = "style-src 'self' 'unsafe-inline'"
-    const envDomainWithLeadingSpace = envDomain ? ' ' + envDomain : ''
+    const optionalTrustedHost = cspTrustedHost ? ' ' + cspTrustedHost : ''
     const fontPolicy =
       "font-src 'self' https://fonts.gstatic.com https://*.lido.fi" +
-      envDomainWithLeadingSpace
+      optionalTrustedHost
     const imagePolicy =
-      "img-src 'self' data: https://*.lido.fi" + envDomainWithLeadingSpace
+      "img-src 'self' data: https://*.lido.fi" + optionalTrustedHost
     const defaultPolicy =
-      "default-src 'self' https://*.lido.fi" + envDomainWithLeadingSpace
+      "default-src 'self' https://*.lido.fi" + optionalTrustedHost
 
     const cspPolicies = [
       stylePolicy,
