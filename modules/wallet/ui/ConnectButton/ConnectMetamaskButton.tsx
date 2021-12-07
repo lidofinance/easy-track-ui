@@ -5,17 +5,20 @@ import { ConnectWalletButtonProps } from './types'
 import iconUrl from 'assets/icons/metamask.svg'
 
 export function ConnectMetamaskButton(props: ConnectWalletButtonProps) {
-  const { onConnect, ...rest } = props
+  const { onConnect, disabled, ...rest } = props
   const { connect } = useConnectorMetamask()
+  const isMetamaskInjected = !!(window as any).ethereum?.isMetaMask
 
   const handleConnect = useCallback(async () => {
+    if (!isMetamaskInjected) return
     onConnect?.()
     await connect()
-  }, [onConnect, connect])
+  }, [isMetamaskInjected, onConnect, connect])
 
   return (
     <ConnectButton
       {...rest}
+      disabled={!isMetamaskInjected || disabled}
       iconSrc={iconUrl}
       onClick={handleConnect}
       children="Metamask"

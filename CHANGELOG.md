@@ -1,4 +1,24 @@
-# 0.2.0 (2021-11-26)
+# [0.3.0](https://github.com/lidofinance/easy-track-ui/compare/0.2.1...0.3.0) (2021-12-03)
+
+
+### Bug Fixes
+
+* disable metamask button when no extension installed ([85cda9d](https://github.com/lidofinance/easy-track-ui/commit/85cda9d01ad9ddad5dd55dca041805c65893695d))
+* gnosis link ([d09b4e2](https://github.com/lidofinance/easy-track-ui/commit/d09b4e2a53390e69b0442cecc1bf5a93754d0ab7))
+* **logging:** fix ens name regex ([833aff9](https://github.com/lidofinance/easy-track-ui/commit/833aff9726de2d10d90a44c8d19c22f49b069a65))
+* metamask connect disabling ([c8d176b](https://github.com/lidofinance/easy-track-ui/commit/c8d176b6994ffb4b603cfac20f1a0236cea2c620))
+* **metrics:** clear metrics on request ([fcc9f7c](https://github.com/lidofinance/easy-track-ui/commit/fcc9f7c9ed372928fa36088ffbd2d6fa3113068b))
+* show network switcher only for metamask extension ([27e23f6](https://github.com/lidofinance/easy-track-ui/commit/27e23f6e8705326a4b8fec957995c11b8f8ce7fb))
+
+
+### Features
+
+* **logging:** sanitize logs ([745cf2e](https://github.com/lidofinance/easy-track-ui/commit/745cf2ed1c75a27e0257a7617eefd5d8665bc688))
+* **metrics:** add build_info and ethereum timing to metrics ([f19188c](https://github.com/lidofinance/easy-track-ui/commit/f19188c31f2fdca3a5f7a508df829bbe73907b0a))
+
+
+
+# [0.2.0](https://github.com/lidofinance/easy-track-ui/compare/616d7f7fe3a92182a0087512f6811c4e71395d93...0.2.0) (2021-11-26)
 
 
 ### Bug Fixes
