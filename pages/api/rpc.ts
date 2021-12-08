@@ -5,6 +5,7 @@ import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 import { logger } from 'modules/shared/utils/log'
 import { Counter, register } from 'prom-client'
 import { METRICS_PREFIX } from 'modules/config'
+import clone from 'just-clone'
 
 register.clear()
 
@@ -20,8 +21,8 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
   const requestInfo = {
     type: 'API request',
     path: 'rpc',
-    body: req.body,
-    query: req.query,
+    body: clone(req.body),
+    query: clone(req.query),
     method: req.method,
     stage: 'INCOMING',
   }
