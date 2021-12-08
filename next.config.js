@@ -53,19 +53,19 @@ module.exports = {
     const fontPolicy =
       "font-src 'self' https://fonts.gstatic.com " + cspTrustedHosts
     const imagePolicy = "img-src 'self' data: " + cspTrustedHosts
+    const scriptSrc = "script-src 'self' " + cspTrustedHosts
     const defaultPolicy = "default-src 'self' " + cspTrustedHosts
 
     const cspPolicies = [
       stylePolicy,
       fontPolicy,
       imagePolicy,
+      scriptSrc,
       defaultPolicy,
     ].join('; ')
 
-    const scpValue = process.env.NODE_ENV !== 'development' ? cspPolicies : ''
-
     // https://nextjs.org/docs/advanced-features/security-headers
-    return [
+    const _headers = [
       {
         source: '/(.*)',
         headers: [
@@ -84,13 +84,18 @@ module.exports = {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
           },
-          {
-            key: 'Content-Security-Policy',
-            value: scpValue,
-          },
         ],
       },
     ]
+
+    if (process.env.NODE_ENV !== 'development') {
+      _headers[0].headers.push({
+        key: 'Content-Security-Policy-Report-Only',
+        value: cspPolicies,
+      })
+    }
+
+    return _headers
   },
   devServer(configFunction) {
     return function (proxy, allowedHost) {
