@@ -7,8 +7,8 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
-let cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS || 'https://*.lido.fi'
-const cspReportOnly = process.env.CSP_REPORT_ONLY === 'true'
+const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS
+const cspReportOnly = process.env.CSP_REPORT_ONLY
 const cspReportUri = process.env.CSP_REPORT_URI
 
 module.exports = {
@@ -34,7 +34,8 @@ module.exports = {
     return config
   },
   async headers() {
-    cspTrustedHosts = cspTrustedHosts.split(',')
+    const trustedHosts = cspTrustedHosts.split(',')
+    const reportOnly = cspReportOnly === 'true'
 
     return [
       {
@@ -46,20 +47,20 @@ module.exports = {
               fontSrc: [
                 "'self'",
                 // 'https://fonts.gstatic.com',
-                ...cspTrustedHosts,
+                ...trustedHosts,
               ],
-              imgSrc: ["'self'", 'data:', ...cspTrustedHosts],
-              scriptSrc: ["'self'", ...cspTrustedHosts],
+              imgSrc: ["'self'", 'data:', ...trustedHosts],
+              scriptSrc: ["'self'", ...trustedHosts],
               connectSrc: [
                 "'self'",
                 'https://api.thegraph.com',
-                ...cspTrustedHosts,
+                ...trustedHosts,
               ],
-              defaultSrc: ["'self'", ...cspTrustedHosts],
+              defaultSrc: ["'self'", ...trustedHosts],
               reportURI: cspReportUri,
             },
           },
-          reportOnly: cspReportOnly,
+          reportOnly: reportOnly,
         }),
       },
     ]
@@ -82,6 +83,9 @@ module.exports = {
     basePath,
     infuraApiKey,
     alchemyApiKey,
+    cspTrustedHosts,
+    cspReportOnly,
+    cspReportUri,
   },
   publicRuntimeConfig: {
     defaultChain,

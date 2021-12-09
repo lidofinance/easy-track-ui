@@ -6,7 +6,13 @@ import { METRICS_PREFIX } from 'modules/config'
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig()
 const { defaultChain, supportedChains } = publicRuntimeConfig
-const { infuraApiKey, alchemyApiKey } = serverRuntimeConfig
+const {
+  infuraApiKey,
+  alchemyApiKey,
+  cspTrustedHosts,
+  cspReportOnly,
+  cspReportUri,
+} = serverRuntimeConfig
 
 // BUILD_INFO
 
@@ -22,8 +28,18 @@ export const collectBuildInfo = (): void => {
   buildInfo.labels(version, commit, branch).set(1)
 }
 
-// CHAIN CONFIG
+// CSP CONFIG
+const cspConfig = new Gauge({
+  name: METRICS_PREFIX + 'csp_config_info',
+  help: 'Content-Security Policy Configuration',
+  labelNames: ['trusted_hosts', 'report_only', 'report_uri'],
+})
 
+export const collectCspConfig = (): void => {
+  cspConfig.labels(cspTrustedHosts, cspReportOnly, cspReportUri).set(1)
+}
+
+// CHAIN CONFIG
 const chainConfig = new Gauge({
   name: METRICS_PREFIX + 'chain_config_info',
   help: 'Default network and supported networks',

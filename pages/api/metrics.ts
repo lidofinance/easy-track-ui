@@ -2,6 +2,7 @@ import { METRICS_PREFIX } from 'modules/config'
 import {
   collectBuildInfo,
   collectChainConfig,
+  collectCspConfig,
   timeAlchemy,
   timeInfura,
 } from 'modules/shared/utils/metrics'
@@ -14,6 +15,7 @@ collectDefaultMetrics({ prefix: METRICS_PREFIX })
 
 const metrics: Metrics = async (req, res) => {
   collectBuildInfo()
+  collectCspConfig()
   collectChainConfig()
   await timeInfura()
   await timeAlchemy()
