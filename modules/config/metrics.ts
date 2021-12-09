@@ -1,1 +1,1 @@
-export const METRICS_PREFIX = 'easy_track_ui_'
+export const METRICS_PREFIX = 'easytrack_ui_'
