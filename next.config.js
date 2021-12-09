@@ -1,3 +1,5 @@
+const { createSecureHeaders } = require('next-secure-headers')
+
 const basePath = process.env.BASE_PATH || ''
 const infuraApiKey = process.env.INFURA_API_KEY
 const alchemyApiKey = process.env.ALCHEMY_API_KEY
@@ -7,6 +9,7 @@ const supportedChains = process.env.SUPPORTED_CHAINS
 
 let cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS || 'https://*.lido.fi'
 const cspReportOnly = process.env.CSP_REPORT_ONLY
+const cspReportUri = process.env.CSP_REPORT_URI
 
 module.exports = {
   basePath,
@@ -30,80 +33,36 @@ module.exports = {
 
     return config
   },
-  // webpack(config) {
-  //   const fileLoaderRule = config.module.rules.find(
-  //     rule => rule.test && rule.test.test('.svg'),
-  //   )
-  //   fileLoaderRule.exclude = /\.svg$/
-  //   config.module.rules.push({
-  //     test: /\.svg$/,
-  //     loader: require.resolve('@svgr/webpack'),
-  //   })
-  //   return config
-
-  //   // config.module.rules.push({
-  //   //   test: /\.svg$/,
-  //   //   use: ['@svgr/webpack', 'url-loader'],
-  //   // })
-
-  //   // return config
-  // },
   async headers() {
-    cspTrustedHosts = cspTrustedHosts.split(',').join(' ')
+    cspTrustedHosts = cspTrustedHosts.split(',')
 
-    // 'unsafe-inline' for styled-components
-    const stylePolicy = "style-src 'self' 'unsafe-inline'"
-    const fontPolicy =
-      "font-src 'self' https://fonts.gstatic.com " + cspTrustedHosts
-    const imagePolicy = "img-src 'self' data: " + cspTrustedHosts
-    const scriptPolicy = "script-src 'self' " + cspTrustedHosts
-    const connectSrc =
-      "connect-src 'self' https://api.thegraph.com " + cspTrustedHosts
-    const defaultPolicy = "default-src 'self' " + cspTrustedHosts
-
-    const cspPolicies = [
-      stylePolicy,
-      fontPolicy,
-      imagePolicy,
-      scriptPolicy,
-      connectSrc,
-      defaultPolicy,
-    ].join('; ')
-
-    // https://nextjs.org/docs/advanced-features/security-headers
-    const _headers = [
+    return [
       {
         source: '/(.*)',
-        headers: [
-          // DNS pre-fetching for external resources
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
+        headers: createSecureHeaders({
+          contentSecurityPolicy: {
+            directives: {
+              styleSrc: ["'self'", "'unsafe-inline'"],
+              fontSrc: [
+                "'self'",
+                // 'https://fonts.gstatic.com',
+                ...cspTrustedHosts,
+              ],
+              imgSrc: ["'self'", 'data:', ...cspTrustedHosts],
+              scriptSrc: ["'self'", ...cspTrustedHosts],
+              connectSrc: [
+                "'self'",
+                // 'https://api.thegraph.com',
+                ...cspTrustedHosts,
+              ],
+              defaultSrc: ["'self'", ...cspTrustedHosts],
+              reportURI: cspReportUri,
+            },
           },
-          // HTTPS connections only, 2 years
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
-          },
-          // Explicit MIME types
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-        ],
+          reportOnly: Boolean(+cspReportOnly),
+        }),
       },
     ]
-
-    if (process.env.NODE_ENV !== 'development') {
-      _headers[0].headers.push({
-        key: +cspReportOnly
-          ? 'Content-Security-Policy-Report-Only'
-          : 'Content-Security-Policy',
-        value: cspPolicies,
-      })
-    }
-
-    return _headers
   },
   devServer(configFunction) {
     return function (proxy, allowedHost) {
