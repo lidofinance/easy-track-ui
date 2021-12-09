@@ -5,7 +5,7 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
-const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS ?? 'https://*.lido.fi'
+let cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS || 'https://*.lido.fi'
 const cspReportOnly = process.env.CSP_REPORT_ONLY
 
 module.exports = {
@@ -49,12 +49,16 @@ module.exports = {
   //   // return config
   // },
   async headers() {
+    cspTrustedHosts = cspTrustedHosts.split(',').join(' ')
+
     // 'unsafe-inline' for styled-components
     const stylePolicy = "style-src 'self' 'unsafe-inline'"
     const fontPolicy =
       "font-src 'self' https://fonts.gstatic.com " + cspTrustedHosts
     const imagePolicy = "img-src 'self' data: " + cspTrustedHosts
     const scriptPolicy = "script-src 'self' " + cspTrustedHosts
+    const connectSrc =
+      "connect-src 'self' https://api.thegraph.com " + cspTrustedHosts
     const defaultPolicy = "default-src 'self' " + cspTrustedHosts
 
     const cspPolicies = [
@@ -62,6 +66,7 @@ module.exports = {
       fontPolicy,
       imagePolicy,
       scriptPolicy,
+      connectSrc,
       defaultPolicy,
     ].join('; ')
 
