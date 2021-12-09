@@ -8,7 +8,7 @@ const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
 let cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS || 'https://*.lido.fi'
-const cspReportOnly = process.env.CSP_REPORT_ONLY
+const cspReportOnly = process.env.CSP_REPORT_ONLY === 'true'
 const cspReportUri = process.env.CSP_REPORT_URI
 
 module.exports = {
@@ -59,7 +59,7 @@ module.exports = {
               reportURI: cspReportUri,
             },
           },
-          reportOnly: Boolean(+cspReportOnly),
+          reportOnly: cspReportOnly,
         }),
       },
     ]
