@@ -6,6 +6,7 @@ const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
 const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS ?? 'https://*.lido.fi'
+const cspReportOnly = process.env.CSP_REPORT_ONLY
 
 module.exports = {
   basePath,
@@ -53,14 +54,14 @@ module.exports = {
     const fontPolicy =
       "font-src 'self' https://fonts.gstatic.com " + cspTrustedHosts
     const imagePolicy = "img-src 'self' data: " + cspTrustedHosts
-    const scriptSrc = "script-src 'self' " + cspTrustedHosts
+    const scriptPolicy = "script-src 'self' " + cspTrustedHosts
     const defaultPolicy = "default-src 'self' " + cspTrustedHosts
 
     const cspPolicies = [
       stylePolicy,
       fontPolicy,
       imagePolicy,
-      scriptSrc,
+      scriptPolicy,
       defaultPolicy,
     ].join('; ')
 
@@ -90,7 +91,9 @@ module.exports = {
 
     if (process.env.NODE_ENV !== 'development') {
       _headers[0].headers.push({
-        key: 'Content-Security-Policy-Report-Only',
+        key: +cspReportOnly
+          ? 'Content-Security-Policy-Report-Only'
+          : 'Content-Security-Policy',
         value: cspPolicies,
       })
     }
