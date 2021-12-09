@@ -45,14 +45,14 @@ module.exports = {
               styleSrc: ["'self'", "'unsafe-inline'"],
               fontSrc: [
                 "'self'",
-                // 'https://fonts.gstatic.com',
+                'https://fonts.gstatic.com',
                 ...cspTrustedHosts,
               ],
               imgSrc: ["'self'", 'data:', ...cspTrustedHosts],
               scriptSrc: ["'self'", ...cspTrustedHosts],
               connectSrc: [
                 "'self'",
-                // 'https://api.thegraph.com',
+                'https://api.thegraph.com',
                 ...cspTrustedHosts,
               ],
               defaultSrc: ["'self'", ...cspTrustedHosts],
