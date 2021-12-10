@@ -20,6 +20,8 @@ import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
 
 import { getAddressList } from 'modules/config/utils/getAddressList'
+import { withCsp } from 'modules/shared/utils/csp'
+import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
@@ -93,11 +95,7 @@ function AppRoot({ Component, pageProps }: AppProps) {
 
 const AppRootMemo = memo(AppRoot)
 
-type Props = AppProps & {
-  envConfig: React.ComponentProps<typeof ConfigProvider>['envConfig']
-}
-
-export default function App({ envConfig, ...appProps }: Props) {
+function App({ envConfig, ...appProps }: CustomAppProps) {
   return (
     <ThemeProvider theme={themeDefault}>
       <GlobalStyle />
@@ -113,6 +111,8 @@ export default function App({ envConfig, ...appProps }: Props) {
     </ThemeProvider>
   )
 }
+
+export default withCsp(App)
 
 App.getInitialProps = async (appContext: AppContext) => {
   const appProps = await NextApp.getInitialProps(appContext)
