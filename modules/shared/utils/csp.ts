@@ -13,8 +13,16 @@ const reportOnly = cspReportOnly === 'true'
 
 export const contentSecurityPolicy = {
   directives: {
-    styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"],
-    fontSrc: ["'self'", 'https://fonts.gstatic.com', ...trustedHosts],
+    styleSrc: [
+      "'self'",
+      // 'https://fonts.googleapis.com',
+      "'unsafe-inline'",
+    ],
+    fontSrc: [
+      "'self'",
+      // 'https://fonts.gstatic.com',
+      ...trustedHosts,
+    ],
     imgSrc: ["'self'", 'data:', ...trustedHosts],
     scriptSrc: ["'self'", ...trustedHosts],
     connectSrc: ["'self'", 'https://api.thegraph.com', ...trustedHosts],
