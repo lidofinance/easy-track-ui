@@ -3,7 +3,7 @@ import { useWalletConnect } from '../../hooks/useWalletConnect'
 import { useWalletConnectors } from '../../hooks/useWalletConnectors'
 import { ConnectButton } from './ConnectButton'
 import type { ConnectWalletButtonProps } from './types'
-import iconUrl from 'assets/icons/imtoken.svg'
+import { ImtokenCircle } from '@lidofinance/icons'
 import { openWindow } from 'modules/shared/utils/openWindow'
 import { isClientSide } from 'modules/shared/utils/isClientSide'
 
@@ -32,7 +32,7 @@ export function ConnectImTokenButton(props: ConnectWalletButtonProps) {
   return (
     <ConnectButton
       {...rest}
-      iconSrc={iconUrl}
+      icon={<ImtokenCircle />}
       onClick={handleConnect}
       children="imToken"
     />

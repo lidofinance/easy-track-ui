@@ -3,7 +3,7 @@ import { useWalletConnect } from '../../hooks/useWalletConnect'
 import { useWalletConnectors } from '../../hooks/useWalletConnectors'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
-import iconUrl from 'assets/icons/trust.svg'
+import { TrustCircle } from '@lidofinance/icons'
 import { openWindow } from 'modules/shared/utils/openWindow'
 import { isClientSide } from 'modules/shared/utils/isClientSide'
 
@@ -32,7 +32,7 @@ export function ConnectTrustButton(props: ConnectWalletButtonProps) {
   return (
     <ConnectButton
       {...rest}
-      iconSrc={iconUrl}
+      icon={<TrustCircle />}
       onClick={handleConnect}
       children="Trust"
     />
