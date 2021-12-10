@@ -1,15 +1,9 @@
-const { createSecureHeaders } = require('next-secure-headers')
-
 const basePath = process.env.BASE_PATH || ''
 const infuraApiKey = process.env.INFURA_API_KEY
 const alchemyApiKey = process.env.ALCHEMY_API_KEY
 
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
-
-const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS
-const cspReportOnly = process.env.CSP_REPORT_ONLY
-const cspReportUri = process.env.CSP_REPORT_URI
 
 module.exports = {
   basePath,
@@ -33,38 +27,6 @@ module.exports = {
 
     return config
   },
-  async headers() {
-    const trustedHosts = cspTrustedHosts.split(',')
-    const reportOnly = cspReportOnly === 'true'
-
-    return [
-      {
-        source: '/(.*)',
-        headers: createSecureHeaders({
-          contentSecurityPolicy: {
-            directives: {
-              styleSrc: ["'self'", "'unsafe-inline'"],
-              fontSrc: [
-                "'self'",
-                // 'https://fonts.gstatic.com',
-                ...trustedHosts,
-              ],
-              imgSrc: ["'self'", 'data:', ...trustedHosts],
-              scriptSrc: ["'self'", ...trustedHosts],
-              connectSrc: [
-                "'self'",
-                'https://api.thegraph.com',
-                ...trustedHosts,
-              ],
-              defaultSrc: ["'self'", ...trustedHosts],
-              reportURI: cspReportUri,
-            },
-          },
-          reportOnly: reportOnly,
-        }),
-      },
-    ]
-  },
   devServer(configFunction) {
     return function (proxy, allowedHost) {
       const config = configFunction(proxy, allowedHost)
@@ -83,9 +45,6 @@ module.exports = {
     basePath,
     infuraApiKey,
     alchemyApiKey,
-    cspTrustedHosts,
-    cspReportOnly,
-    cspReportUri,
   },
   publicRuntimeConfig: {
     defaultChain,
