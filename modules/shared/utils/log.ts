@@ -3,7 +3,7 @@ import { createLogger, transports, format } from 'winston'
 import { traverse } from 'object-traversal'
 import { sanitizeMessage } from './sanitize'
 
-const { json, prettyPrint, timestamp, combine, errors } = format
+const { json, timestamp, combine, errors } = format
 
 const sanitize = format(info => {
   traverse(info, context => {
@@ -19,13 +19,7 @@ const jsonLogger = createLogger({
   defaultMeta: {
     service: 'easy-track-ui',
   },
-  format: combine(
-    json(),
-    timestamp(),
-    errors({ stack: true }),
-    sanitize(),
-    prettyPrint(),
-  ),
+  format: combine(timestamp(), errors({ stack: true }), sanitize(), json()),
   transports: [new transports.Console()],
 })
 
