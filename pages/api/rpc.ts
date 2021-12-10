@@ -27,10 +27,7 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     stage: 'INCOMING',
   }
 
-  logger.info({
-    ...requestInfo,
-    message: 'Incoming request to api/rpc',
-  })
+  logger.info('Incoming request to api/rpc')
 
   try {
     const chainId = parseChainId(String(req.query.chainId))
@@ -47,26 +44,11 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     res.status(requested.status).json(responded)
 
     rpcRequests.inc({ success: 1 })
-    logger.info({
-      ...requestInfo,
-      message: 'Request to api/rpc successfully fullfilled',
-      stage: 'FULFILLED',
-    })
+    logger.info('Request to api/rpc successfully fullfilled')
   } catch (error) {
     rpcRequests.inc({ failed: 1 })
     logger.error(
-      error instanceof Error
-        ? {
-            ...error,
-            ...requestInfo,
-            message: error.message,
-            stage: 'FAILED',
-          }
-        : {
-            ...requestInfo,
-            error,
-            message: 'Something went wrong',
-          },
+      error instanceof Error ? error.message : 'Something went wrong',
     )
     res.status(500).send({ error: 'Something went wrong!' })
   }
