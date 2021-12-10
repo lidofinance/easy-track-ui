@@ -5,6 +5,10 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
+const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS
+const cspReportOnly = process.env.CSP_REPORT_ONLY
+const cspReportUri = process.env.CSP_REPORT_URI
+
 module.exports = {
   basePath,
   webpack5: true,
@@ -45,6 +49,9 @@ module.exports = {
     basePath,
     infuraApiKey,
     alchemyApiKey,
+    cspTrustedHosts,
+    cspReportOnly,
+    cspReportUri,
   },
   publicRuntimeConfig: {
     defaultChain,
