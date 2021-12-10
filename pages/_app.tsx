@@ -112,7 +112,7 @@ function App({ envConfig, ...appProps }: CustomAppProps) {
   )
 }
 
-export default withCsp(App)
+export default process.env.NODE_ENV === 'development' ? App : withCsp(App)
 
 App.getInitialProps = async (appContext: AppContext) => {
   const appProps = await NextApp.getInitialProps(appContext)
