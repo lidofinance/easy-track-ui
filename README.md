@@ -1,31 +1,60 @@
-## EasyTrack UI
+# Lido EasyTrack UI
 
-This is the front-end for [EasyTrack](https://github.com/lidofinance/easy-track)
+A UI app for interacting with Lido's [Easy Track](https://github.com/lidofinance/easy-track) governance feature.
 
-[Learn more about EasyTrack](https://github.com/lidofinance/easy-track/blob/master/specification.md)
+Learn more about [Easy Track](https://github.com/lidofinance/lido-improvement-proposals/blob/develop/LIPS/lip-3.md).
 
-## Usage
+## Pre-requisites
+
+- Node.js v12+
+- Yarn package manager
+
+This project requires an .env file which is distributed via private communication channels. A sample can be found in .env.sample
+
+## Development
+
+Step 1. Copy the contents of `.env.sample` to `.env.local`
 
 ```bash
-cp .env.sample .env.local
+cp sample.env .env.local
 ```
 
-```bash
-# fill with your secrets using any editor
-nano .env.local
-```
+Step 2. Fill out the `.env.local`. You may need to sign up for [Infura](https://infura.io/) or [Alchemy](https://www.alchemy.com/), if you haven't already, to be able to use Ethereum JSON RPC connection.
+
+Step 3. Install dependencies
 
 ```bash
 yarn install
 ```
 
+Step 4. Start the development server
+
 ```bash
 yarn dev
 ```
 
-[http://localhost:3000](http://localhost:3000)
+## Environment variables
 
-## Important dependencies
+Note! Avoid using `NEXT_PUBLIC_` environment variables as it hinders our CI pipeline. Please use server-side environment variables and pass them to the client using `getInitialProps` in `_app.js`.
+
+## Automatic versioning
+
+Note! This repo uses automatic versioning, please follow the [commit message conventions](https://www.conventionalcommits.org/en/v1.0.0/).
+
+e.g.
+
+```
+git commit -m "fix: a bug in calculation"
+git commit -m "feat: dark theme"
+```
+
+## Production
+
+```bash
+yarn build && yarn start
+```
+
+## Notable dependencies
 
 - [Next.js](https://nextjs.org/docs)
 - [Typescript](https://www.typescriptlang.org/)
