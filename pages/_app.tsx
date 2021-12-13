@@ -12,11 +12,7 @@ import {
   themeDefault,
   ToastContainer,
 } from '@lidofinance/lido-ui'
-import {
-  ProviderWeb3,
-  useAutoConnect,
-  useConnectors,
-} from '@lido-sdk/web3-react'
+import { ProviderWeb3 } from '@lido-sdk/web3-react'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
@@ -29,8 +25,6 @@ import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
 function AppRoot({ Component, pageProps }: AppProps) {
-  const connectors = useConnectors()
-  useAutoConnect(connectors)
   const chainId = useCurrentChain()
   const { supportedChainIds } = useConfig()
   const isChainSupported = useMemo(
