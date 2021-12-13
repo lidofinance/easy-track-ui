@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useConnectorTrust } from '@lido-sdk/web3-react'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
-import iconUrl from 'assets/icons/trust.svg'
+import { TrustCircle } from '@lidofinance/icons'
 
 export function ConnectTrustButton(props: ConnectWalletButtonProps) {
   const { onConnect, ...rest } = props
@@ -16,7 +16,7 @@ export function ConnectTrustButton(props: ConnectWalletButtonProps) {
   return (
     <ConnectButton
       {...rest}
-      iconSrc={iconUrl}
+      icon={<TrustCircle />}
       onClick={handleConnect}
       children="Trust"
     />

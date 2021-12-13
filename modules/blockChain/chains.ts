@@ -9,11 +9,7 @@ export const ChainNames = {
 } as const
 
 export const parseChainId = (chainId: number | string) => {
-  const parsed = Number(chainId)
-  if (!ChainNames.hasOwnProperty(chainId)) {
-    throw new Error(`Chain ${chainId} is not supported`)
-  }
-  return parsed as CHAINS
+  return Number(chainId) as CHAINS
 }
 
 export const getChainName = (chainId: number) =>

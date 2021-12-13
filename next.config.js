@@ -5,6 +5,10 @@ const alchemyApiKey = process.env.ALCHEMY_API_KEY
 const defaultChain = process.env.DEFAULT_CHAIN
 const supportedChains = process.env.SUPPORTED_CHAINS
 
+const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS
+const cspReportOnly = process.env.CSP_REPORT_ONLY
+const cspReportUri = process.env.CSP_REPORT_URI
+
 module.exports = {
   basePath,
   webpack5: true,
@@ -27,49 +31,6 @@ module.exports = {
 
     return config
   },
-  // webpack(config) {
-  //   const fileLoaderRule = config.module.rules.find(
-  //     rule => rule.test && rule.test.test('.svg'),
-  //   )
-  //   fileLoaderRule.exclude = /\.svg$/
-  //   config.module.rules.push({
-  //     test: /\.svg$/,
-  //     loader: require.resolve('@svgr/webpack'),
-  //   })
-  //   return config
-
-  //   // config.module.rules.push({
-  //   //   test: /\.svg$/,
-  //   //   use: ['@svgr/webpack', 'url-loader'],
-  //   // })
-
-  //   // return config
-  // },
-  async headers() {
-    // https://nextjs.org/docs/advanced-features/security-headers
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          // DNS pre-fetching for external resources
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          // HTTPS connections only, 2 years
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
-          },
-          // Explicit MIME types
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-        ],
-      },
-    ]
-  },
   devServer(configFunction) {
     return function (proxy, allowedHost) {
       const config = configFunction(proxy, allowedHost)
@@ -88,6 +49,9 @@ module.exports = {
     basePath,
     infuraApiKey,
     alchemyApiKey,
+    cspTrustedHosts,
+    cspReportOnly,
+    cspReportUri,
   },
   publicRuntimeConfig: {
     defaultChain,

@@ -1,3 +1,9 @@
 {
-  "conventionalCommits.scopes": ["logging", "dockerfile", "metrics", "packages"]
+  "conventionalCommits.scopes": [
+    "logging",
+    "dockerfile",
+    "metrics",
+    "packages",
+    "security"
+  ]
 }

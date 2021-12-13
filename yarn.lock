@@ -6160,6 +6160,11 @@ jsprim@^1.2.2:
     array-includes "^3.1.3"
     object.assign "^4.1.2"
 
+just-clone@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/just-clone/-/just-clone-5.0.1.tgz#e2978fe886046267cad1df7c6aabcf3aa2a1b6a9"
+  integrity sha512-y6hFQ8X4fhJTZzdNvrE9mnCQX33uN4xV0hZ+5WNgs6yCcrRzs9ieFXuYRKznWqQ/gOSZpJu0yQ6hRHLCU6ezyw==
+
 keccak256@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/keccak256/-/keccak256-1.0.3.tgz#0a9c0383a9cda753a7351811cf69eaa607043366"
@@ -6652,6 +6657,11 @@ next-connect@0.10.1:
   integrity sha512-gNpH53DtYfZhfOzmAVrE3jiEDj7kGtodeGcyUd2gvPsB+6/hQSmRVekCzNuF20+vpHnkpE8VUDQmzARzzqwpYA==
   dependencies:
     trouter "^3.1.0"
+
+next-secure-headers@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/next-secure-headers/-/next-secure-headers-2.2.0.tgz#d4eb1b00a424f811c1455d1288990a4aad3026af"
+  integrity sha512-C7OfZ9JdSJyYMz2ZBMI/WwNbt0qNjlFWX9afUp8nEUzbz6ez3JbeopdyxSZJZJAzVLIAfyk6n73rFpd4e22jRg==
 
 next@11.0.0:
   version "11.0.0"

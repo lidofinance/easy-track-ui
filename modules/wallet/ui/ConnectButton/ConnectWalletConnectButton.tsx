@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 import { useConnectorWalletConnect } from '@lido-sdk/web3-react'
+import { WalletConnectCircle } from '@lidofinance/icons'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
-import iconUrl from 'assets/icons/walletconnect.svg'
 
 export function ConnectWalletConnectButton(props: ConnectWalletButtonProps) {
   const { onConnect, ...rest } = props
@@ -16,7 +16,7 @@ export function ConnectWalletConnectButton(props: ConnectWalletButtonProps) {
   return (
     <ConnectButton
       {...rest}
-      iconSrc={iconUrl}
+      icon={<WalletConnectCircle />}
       onClick={handleConnect}
       children="WalletConnect"
     />

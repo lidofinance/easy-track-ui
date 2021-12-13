@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useConnectorImToken } from '@lido-sdk/web3-react'
 import { ConnectButton } from './ConnectButton'
 import type { ConnectWalletButtonProps } from './types'
-import iconUrl from 'assets/icons/imtoken.svg'
+import { ImtokenCircle } from '@lidofinance/icons'
 
 export function ConnectImTokenButton(props: ConnectWalletButtonProps) {
   const { onConnect, ...rest } = props
@@ -16,7 +16,7 @@ export function ConnectImTokenButton(props: ConnectWalletButtonProps) {
   return (
     <ConnectButton
       {...rest}
-      iconSrc={iconUrl}
+      icon={<ImtokenCircle />}
       onClick={handleConnect}
       children="imToken"
     />
