@@ -55,7 +55,7 @@ export const collectChainConfig = (): void => {
 export const infuraResponseTime = new Histogram({
   name: METRICS_PREFIX + 'infura_response_time_seconds',
   help: 'Infura response time',
-  buckets: [0, 0.5, 1, 5, 10, 60],
+  buckets: [0, 0.05, 0.1, 0.5, 1, 5, 10],
   labelNames: ['status'],
 })
 
@@ -86,7 +86,7 @@ export const timeInfura = async (): Promise<void> => {
 export const alchemyResponseTime = new Histogram({
   name: METRICS_PREFIX + 'alchemy_response_time_seconds',
   help: 'Alchemy response time',
-  buckets: [0.1, 1, 5, 10, 60],
+  buckets: [0, 0.05, 0.1, 0.5, 1, 5, 10],
   labelNames: ['status'],
 })
 
