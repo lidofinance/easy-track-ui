@@ -8,7 +8,7 @@ import { ResultTx, TxStatus } from '../types'
 import { PopulatedTransaction } from '@ethersproject/contracts'
 import { openWindow } from 'modules/shared/utils/openWindow'
 import { getGnosisSafeLink } from '../utils/getGnosisSafeLink'
-import { getEtherscanLink } from '../utils/getEtherscanLink'
+import { getEtherscanLink } from '@lido-sdk/helpers'
 import { ToastError } from '@lidofinance/lido-ui'
 
 type PopulateFn =

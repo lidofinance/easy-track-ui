@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useWalletDisconnect } from 'modules/wallet/hooks/useWalletDisconnect'
-import { useWalletConnectorStorage } from 'modules/wallet/hooks/useWalletConnectorStorage'
+import { useConnectorStorage, useDisconnect } from '@lido-sdk/web3-react'
 import { useGovernanceBalance } from 'modules/tokens/hooks/useGovernanceBalance'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import { useConfig } from 'modules/config/hooks/useConfig'
@@ -57,8 +56,8 @@ function WalletModalContent() {
 
 export function WalletModal(props: ModalProps) {
   const { onClose } = props
-  const [connector] = useWalletConnectorStorage()
-  const disconnect = useWalletDisconnect()
+  const [connector] = useConnectorStorage()
+  const { disconnect } = useDisconnect()
   const chainId = useCurrentChain()
   const { supportedChainIds } = useConfig()
   const isChainSupported = useMemo(
@@ -67,7 +66,7 @@ export function WalletModal(props: ModalProps) {
   )
 
   const handleDisconnect = useCallback(() => {
-    disconnect()
+    disconnect?.()
     onClose?.()
   }, [disconnect, onClose])
 

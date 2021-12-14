@@ -1,4 +1,4 @@
-import type { Chains } from 'modules/blockChain/chains'
+import { CHAINS } from '@lido-sdk/constants'
 
 export type EnvConfig = {
   defaultChain: string
@@ -6,6 +6,6 @@ export type EnvConfig = {
 }
 
 export type Config = {
-  defaultChain: Chains
-  supportedChainIds: Chains[]
+  defaultChain: CHAINS
+  supportedChainIds: CHAINS[]
 }

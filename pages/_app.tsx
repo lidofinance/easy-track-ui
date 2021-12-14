@@ -2,7 +2,6 @@ import { memo, useMemo } from 'react'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
-import { useWalletAutoConnect } from 'modules/wallet/hooks/useWalletAutoConnect'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
@@ -13,20 +12,19 @@ import {
   themeDefault,
   ToastContainer,
 } from '@lidofinance/lido-ui'
+import { ProviderWeb3 } from '@lido-sdk/web3-react'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
-import { Web3AppProvider } from 'modules/blockChain/providers/web3Provider'
-import { WalletConnectorsProvider } from 'modules/wallet/providers/walletConnectorsProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
 
 import { getAddressList } from 'modules/config/utils/getAddressList'
+import { backendRPC } from 'modules/blockChain/utils/getRpcUrls'
 import { withCsp } from 'modules/shared/utils/csp'
 import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
 function AppRoot({ Component, pageProps }: AppProps) {
-  useWalletAutoConnect()
   const chainId = useCurrentChain()
   const { supportedChainIds } = useConfig()
   const isChainSupported = useMemo(
@@ -95,18 +93,29 @@ function AppRoot({ Component, pageProps }: AppProps) {
 
 const AppRootMemo = memo(AppRoot)
 
+function Web3ProviderWrap({ children }: { children: React.ReactNode }) {
+  const { supportedChainIds, defaultChain } = useConfig()
+  return (
+    <ProviderWeb3
+      defaultChainId={defaultChain}
+      supportedChainIds={supportedChainIds}
+      rpc={backendRPC}
+    >
+      {children}
+    </ProviderWeb3>
+  )
+}
+
 function App({ envConfig, ...appProps }: CustomAppProps) {
   return (
     <ThemeProvider theme={themeDefault}>
       <GlobalStyle />
       <ConfigProvider envConfig={envConfig}>
-        <Web3AppProvider>
-          <WalletConnectorsProvider>
-            <ModalProvider>
-              <AppRootMemo {...appProps} />
-            </ModalProvider>
-          </WalletConnectorsProvider>
-        </Web3AppProvider>
+        <Web3ProviderWrap>
+          <ModalProvider>
+            <AppRootMemo {...appProps} />
+          </ModalProvider>
+        </Web3ProviderWrap>
       </ConfigProvider>
     </ThemeProvider>
   )

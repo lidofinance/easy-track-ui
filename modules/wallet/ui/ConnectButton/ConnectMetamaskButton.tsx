@@ -1,26 +1,21 @@
 import { useCallback } from 'react'
-import { useWalletConnect } from '../../hooks/useWalletConnect'
-import { useWalletConnectors } from '../../hooks/useWalletConnectors'
+import { useConnectorMetamask } from '@lido-sdk/web3-react'
 import { MetaMaskCircle } from '@lidofinance/icons'
 import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
 
 export function ConnectMetamaskButton(props: ConnectWalletButtonProps) {
-  const { onConnect, disabled, ...rest } = props
-  const connect = useWalletConnect()
-  const isMetamaskInjected = !!(window as any).ethereum?.isMetaMask
-  const { metamask: connector } = useWalletConnectors()
+  const { onConnect, ...rest } = props
+  const { connect } = useConnectorMetamask()
 
   const handleConnect = useCallback(async () => {
-    if (!isMetamaskInjected) return
     onConnect?.()
-    await connect(connector)
-  }, [isMetamaskInjected, onConnect, connect, connector])
+    await connect()
+  }, [onConnect, connect])
 
   return (
     <ConnectButton
       {...rest}
-      disabled={!isMetamaskInjected || disabled}
       icon={<MetaMaskCircle />}
       onClick={handleConnect}
       children="Metamask"

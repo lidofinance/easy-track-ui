@@ -1,11 +1,11 @@
-import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
+import { useEtherscanOpen } from '@lido-sdk/react'
 import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
 
 import { ButtonIcon, Copy } from '@lidofinance/lido-ui'
 import { Wrap } from './CopyOpenActionsStyle'
 import { ButtonExternalView } from 'modules/shared/ui/Common/ButtonExternalView'
 
-import { EtherscanEntities } from 'modules/blockChain/utils/getEtherscanLink'
+import type { EtherscanEntities } from '@lido-sdk/helpers'
 
 type Props = {
   value: string | null | undefined
@@ -14,7 +14,7 @@ type Props = {
 
 export function CopyOpenActions({ value, entity }: Props) {
   const handleCopy = useCopyToClipboard(value ?? '')
-  const handleEtherscan = useEtherscanOpener(value ?? '', entity)
+  const handleEtherscan = useEtherscanOpen(value ?? '', entity)
 
   const copyText =
     entity === 'address' ? 'address' : entity === 'tx' ? 'hash' : 'token'
