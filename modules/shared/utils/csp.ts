@@ -16,7 +16,7 @@ export const contentSecurityPolicy = {
     styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"],
     fontSrc: ["'self'", 'https://fonts.gstatic.com', ...trustedHosts],
     imgSrc: ["'self'", 'data:', ...trustedHosts],
-    scriptSrc: ["'self'", ...trustedHosts],
+    scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'", ...trustedHosts],
     connectSrc: ["'self'", 'https://api.thegraph.com', ...trustedHosts],
     defaultSrc: ["'self'", ...trustedHosts],
     reportURI: cspReportUri,
