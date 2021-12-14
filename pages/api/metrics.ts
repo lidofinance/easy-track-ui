@@ -8,11 +8,8 @@ import {
 } from 'modules/shared/utils/metrics'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { collectDefaultMetrics, register } from 'prom-client'
-import { successfulRequests } from './rpc'
 
 type Metrics = (req: NextApiRequest, res: NextApiResponse) => Promise<void>
-
-register.registerMetric(successfulRequests)
 
 collectDefaultMetrics({ prefix: METRICS_PREFIX })
 
