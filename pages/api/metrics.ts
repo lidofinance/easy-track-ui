@@ -17,6 +17,11 @@ register.registerMetric(successfulRequests)
 collectDefaultMetrics({ prefix: METRICS_PREFIX })
 
 const metrics: Metrics = async (req, res) => {
+  if (process.env.NODE_ENV === 'development') {
+    // Clear the register to avoid errors on Hot Reload
+    register.clear()
+  }
+
   collectBuildInfo()
   collectCspConfig()
   collectChainConfig()
