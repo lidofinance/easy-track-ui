@@ -1,7 +1,5 @@
-import { Web3Provider } from '@ethersproject/providers'
-
 import { useState, useEffect } from 'react'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3 } from '@lido-sdk/web3-react'
 import { useGnosisOpener } from 'modules/blockChain/hooks/useGnosisOpener'
 import { useEtherscanOpen } from '@lido-sdk/react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
@@ -51,7 +49,7 @@ type BodyRegularProps = {
 }
 
 function BodyRegular({ tx }: BodyRegularProps) {
-  const { library } = useWeb3React<Web3Provider>()
+  const { library } = useWeb3()
   const openEtherscan = useEtherscanOpen(tx.hash, 'tx')
   const [status, setStatus] = useState<TxStatus>('pending')
 

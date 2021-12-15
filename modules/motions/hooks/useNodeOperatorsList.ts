@@ -1,23 +1,15 @@
 import { useSWR } from 'modules/network/hooks/useSwr'
+import { useWeb3 } from '@lido-sdk/web3-react'
 import { ContractNodeOperatorsRegistry } from 'modules/blockChain/contracts'
-import { SWRConfiguration } from 'swr'
-import { UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
-type NodeOperator = UnpackedPromise<
-  ReturnType<
-    ReturnType<
-      typeof ContractNodeOperatorsRegistry['connect']
-    >['getNodeOperator']
-  >
->
-
-export function useNodeOperatorsList(
-  swrConfig?: SWRConfiguration<NodeOperator[]>,
-) {
+export function useNodeOperatorsList(shouldCheck: boolean) {
+  const { chainId, account } = useWeb3()
   const registry = ContractNodeOperatorsRegistry.useWeb3()
 
   const nodeOperatorsList = useSWR(
-    `${registry.address}-operators-list`,
+    shouldCheck
+      ? `${registry.address}-${chainId}-${account}-operators-list`
+      : null,
     async () => {
       const count = (await registry.getActiveNodeOperatorsCount()).toNumber()
       const nodeOperators = await Promise.all(
@@ -27,7 +19,6 @@ export function useNodeOperatorsList(
       )
       return nodeOperators
     },
-    swrConfig,
   )
 
   return nodeOperatorsList

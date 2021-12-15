@@ -21,7 +21,7 @@ const defaultConfig = {
     console.error(error)
     ToastError(error, {})
   },
-  errorRetryInterval: 10_000,
+  errorRetryInterval: 100_000,
   focusThrottleInterval: 10_000,
 }
 

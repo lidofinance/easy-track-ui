@@ -40,13 +40,7 @@ export const formParts = createMotionFormPart({
     const { walletAddress } = useWalletInfo()
 
     const doNotCheckList = currentChain === CHAINS.Rinkeby
-    const nodeOperatorsList = useNodeOperatorsList(
-      doNotCheckList
-        ? {
-            errorRetryCount: 0,
-          }
-        : undefined,
-    )
+    const nodeOperatorsList = useNodeOperatorsList(!doNotCheckList)
 
     const isNodeOperatorConnected = useMemo(
       () =>
