@@ -1,6 +1,6 @@
 import { Gauge } from 'prom-client'
 import { METRICS_PREFIX } from './constants'
-import { branch, commit } from 'build-info.json'
+import buildInfoJson from 'build-info.json'
 
 export const buildInfo = new Gauge({
   name: METRICS_PREFIX + 'build_info',
@@ -10,4 +10,4 @@ export const buildInfo = new Gauge({
 
 const version = process.env.npm_package_version ?? 'unversioned'
 
-buildInfo.labels(version, branch, commit).set(1)
+buildInfo.labels(version, buildInfoJson.branch, buildInfoJson.commit).set(1)
