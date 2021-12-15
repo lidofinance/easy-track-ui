@@ -23,7 +23,8 @@ const buildInfo = new Gauge({
 })
 
 export const collectBuildInfo = (): void => {
-  const { version, commit, branch } = buildInfoJson
+  const { commit, branch } = buildInfoJson
+  const version = process.env.npm_package_version ?? 'unversioned'
 
   buildInfo.labels(version, commit, branch).set(1)
 }
