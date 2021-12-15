@@ -17,10 +17,9 @@ export function NetworkSwitcher() {
   const { library } = useWeb3React()
   const { supportedChainIds } = useConfig()
 
-  const { active, connector } = useWeb3()
+  const { connector } = useWeb3()
 
   const isMetamaskConnected =
-    active &&
     connector instanceof InjectedConnector &&
     !!(window as any).ethereum?.isMetaMask
 

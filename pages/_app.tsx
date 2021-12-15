@@ -1,9 +1,10 @@
-import { memo, useMemo } from 'react'
+import { memo } from 'react'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useSupportedChains, ProviderWeb3 } from '@lido-sdk/web3-react'
 
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
@@ -12,7 +13,6 @@ import {
   themeDefault,
   ToastContainer,
 } from '@lidofinance/lido-ui'
-import { ProviderWeb3 } from '@lido-sdk/web3-react'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
@@ -26,11 +26,7 @@ const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
 function AppRoot({ Component, pageProps }: AppProps) {
   const chainId = useCurrentChain()
-  const { supportedChainIds } = useConfig()
-  const isChainSupported = useMemo(
-    () => supportedChainIds.includes(chainId),
-    [chainId, supportedChainIds],
-  )
+  const { isUnsupported } = useSupportedChains()
 
   return (
     <>
@@ -84,7 +80,7 @@ function AppRoot({ Component, pageProps }: AppProps) {
         ))}
       </Head>
       <PageLayout>
-        {isChainSupported ? <Component {...pageProps} /> : <NetworkSwitcher />}
+        {!isUnsupported ? <Component {...pageProps} /> : <NetworkSwitcher />}
       </PageLayout>
       <ToastContainer />
     </>
