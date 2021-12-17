@@ -3,7 +3,6 @@ import { CHAINS } from '@lido-sdk/constants'
 
 import { useWeb3 } from '@lido-sdk/web3-react'
 import { useCallback } from 'react'
-import { useWeb3React } from '@web3-react/core'
 import { useConfig } from 'modules/config/hooks/useConfig'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -14,7 +13,7 @@ import { NetworksBox } from './NetworkSwitcherStyle'
 import { getChainName } from 'modules/blockChain/chains'
 
 export function NetworkSwitcher() {
-  const { library } = useWeb3React()
+  const { library } = useWeb3()
   const { supportedChainIds } = useConfig()
 
   const { connector } = useWeb3()
