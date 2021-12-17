@@ -12,6 +12,19 @@
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated './abi/*.json'",
     "postinstall": "husky install && yarn typechain || true"
   },
+  "resolutions": {
+    "@walletconnect/core": "1.6.6",
+    "@walletconnect/types": "1.6.6",
+    "@walletconnect/utils": "1.6.6",
+    "@walletconnect/client": "1.6.6",
+    "@walletconnect/iso-crypto": "1.6.6",
+    "@walletconnect/qrcode-modal": "1.6.6",
+    "@walletconnect/browser-utils": "1.6.6",
+    "@walletconnect/socket-transport": "1.6.6",
+    "@walletconnect/http-connection": "1.6.6",
+    "@walletconnect/web3-provider": "1.6.6",
+    "@web3-react/walletconnect-connector": "6.2.4"
+  },
   "dependencies": {
     "@lido-sdk/constants": "1.2.0",
     "@lido-sdk/contracts": "1.5.2",
