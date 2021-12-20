@@ -31,7 +31,10 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
 
     res.status(requested.status).json(responded)
 
-    logger.info('Request to api/rpc successfully fullfilled', requestInfo)
+    logger.info('Request to api/rpc successfully fullfilled', {
+      ...requestInfo,
+      stage: 'FULFILLED',
+    })
   } catch (error) {
     logger.error(
       error instanceof Error ? error.message : 'Something went wrong',
