@@ -1,12 +1,12 @@
-import { Chains } from '../chains'
+import { CHAINS } from '@lido-sdk/constants'
 
 const PREFIXES = {
-  [Chains.Mainnet]: 'eth',
-  [Chains.Ropsten]: '?',
-  [Chains.Rinkeby]: 'rin',
-  [Chains.Goerli]: '?',
-  [Chains.Kovan]: '?',
+  [CHAINS.Mainnet]: 'eth',
+  [CHAINS.Ropsten]: '?',
+  [CHAINS.Rinkeby]: 'rin',
+  [CHAINS.Goerli]: '?',
+  [CHAINS.Kovan]: '?',
 } as const
 
-export const getGnosisSafeLink = (chainId: Chains, address: string) =>
+export const getGnosisSafeLink = (chainId: CHAINS, address: string) =>
   `https://gnosis-safe.io/app/${PREFIXES[chainId]}:${address}`

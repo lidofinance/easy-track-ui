@@ -1,7 +1,7 @@
-import { Chains } from 'modules/blockChain/chains'
+import { CHAINS } from '@lido-sdk/constants'
 import * as addressMaps from 'modules/blockChain/contractAddresses'
 
-export function getAddressList(chainId: Chains): {
+export function getAddressList(chainId: CHAINS): {
   contractName: string
   address: string
 }[] {

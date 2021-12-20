@@ -55,7 +55,7 @@ export type Motion = {
 }
 
 export type RawMotionOnchain = PromiseValue<
-  ReturnType<InstanceType<typeof EasyTrackAbi>['getMotions']>
+  ReturnType<EasyTrackAbi['getMotions']>
 >[0]
 
 export type RawMotionSubgraph = {

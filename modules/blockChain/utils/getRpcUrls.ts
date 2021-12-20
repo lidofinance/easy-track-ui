@@ -1,31 +1,30 @@
-import { Chains, getChainName, parseChainId } from '../chains'
+import { CHAINS } from '@lido-sdk/constants'
+import { parseChainId } from '../chains'
 import getConfig from 'next/config'
+import { getAlchemyRPCUrl, getInfuraRPCUrl, getRPCUrls } from '@lido-sdk/fetch'
 
 const { serverRuntimeConfig } = getConfig()
 const { basePath, infuraApiKey, alchemyApiKey } = serverRuntimeConfig
 
-const getName = (chainId: Chains) => getChainName(chainId).toLocaleLowerCase()
+export const getInfuraRpcUrl = (chainId: CHAINS) =>
+  getInfuraRPCUrl(chainId, infuraApiKey)
 
-export const getInfuraRpcUrl = (chainId: Chains) =>
-  `https://${getName(chainId)}.infura.io/v3/${infuraApiKey}`
+export const getAlchemyRpcUrl = (chainId: CHAINS) =>
+  getAlchemyRPCUrl(chainId, alchemyApiKey)
 
-export const getAlchemyRpcUrl = (chainId: Chains) =>
-  `https://eth-${getName(chainId)}.alchemyapi.io/v2/${alchemyApiKey}`
+export const getRpcJsonUrls = (chainId: CHAINS): string[] =>
+  getRPCUrls(chainId, {
+    infura: infuraApiKey,
+    alchemy: alchemyApiKey,
+  })
 
-export const getRpcJsonUrls = (chainId: Chains): string[] => {
-  const urls = []
-
-  if (infuraApiKey) urls.push(getInfuraRpcUrl(chainId))
-  if (alchemyApiKey) urls.push(getAlchemyRpcUrl(chainId))
-
-  if (!urls.length) {
-    throw new Error(
-      'There are no API keys in env. Please, check your configuration',
-    )
-  }
-
-  return urls
-}
-
-export const getRpcUrl = (chainId: Chains) =>
+export const getRpcUrl = (chainId: CHAINS) =>
   `${basePath ?? ''}/api/rpc?chainId=${parseChainId(chainId)}`
+
+export const backendRPC = {
+  [CHAINS.Mainnet]: getRpcUrl(CHAINS.Mainnet),
+  [CHAINS.Goerli]: getRpcUrl(CHAINS.Goerli),
+  [CHAINS.Kovan]: getRpcUrl(CHAINS.Kovan),
+  [CHAINS.Rinkeby]: getRpcUrl(CHAINS.Rinkeby),
+  [CHAINS.Ropsten]: getRpcUrl(CHAINS.Ropsten),
+}
