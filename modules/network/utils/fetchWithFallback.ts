@@ -11,6 +11,7 @@ export const ethereumResponse = new Histogram({
   help: 'Ethereum response times',
   labelNames: ['provider'],
   buckets: [0.1, 0.2, 0.3, 0.6, 1, 1.5, 2, 5],
+  registers: [],
 })
 
 export const fetchWithFallback: FetchWithFallback = async (inputs, init) => {
