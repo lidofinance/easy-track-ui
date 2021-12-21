@@ -3,17 +3,13 @@ import getConfig from 'next/config'
 import { CustomAppProps } from './utilTypes'
 
 const { serverRuntimeConfig } = getConfig()
-const {
-  cspTrustedHosts,
-  // cspReportOnly,
-  cspReportUri,
-} = serverRuntimeConfig
+const { cspTrustedHosts, cspReportOnly, cspReportUri } = serverRuntimeConfig
 
 const trustedHosts = cspTrustedHosts
   ? cspTrustedHosts.split(',')
   : ['https://*.lido.fi']
 
-// const reportOnly = cspReportOnly === 'true'
+const reportOnly = cspReportOnly === 'true'
 
 export const contentSecurityPolicy = {
   directives: {
@@ -31,7 +27,7 @@ export const contentSecurityPolicy = {
     defaultSrc: ["'self'", ...trustedHosts],
     reportURI: cspReportUri,
   },
-  reportOnly: true,
+  reportOnly,
 }
 
 export const withCsp = (
