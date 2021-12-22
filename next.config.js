@@ -31,6 +31,32 @@ module.exports = {
 
     return config
   },
+  async headers() {
+    return [
+      {
+        // Apply these headers to all routes in your application.
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'same-origin',
+          },
+        ],
+      },
+    ]
+  },
   devServer(configFunction) {
     return function (proxy, allowedHost) {
       const config = configFunction(proxy, allowedHost)
