@@ -31,7 +31,7 @@ export const contentSecurityPolicy = {
     mediaSrc: ["'self'", ...trustedHosts],
     childSrc: ["'self'", ...trustedHosts],
     objectSrc: ["'self'", ...trustedHosts],
-    defaultSrc: ["'none'"],
+    defaultSrc: ["'self'", ...trustedHosts],
     baseUri: ["'none'"],
     reportURI: cspReportUri,
   },
