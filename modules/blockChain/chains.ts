@@ -9,7 +9,7 @@ export const ChainNames = {
 } as const
 
 export const parseChainId = (chainId: number | string) => {
-  return Number(chainId) as CHAINS
+  return Number(chainId) as keyof typeof ChainNames
 }
 
 export const getChainName = (chainId: number) =>

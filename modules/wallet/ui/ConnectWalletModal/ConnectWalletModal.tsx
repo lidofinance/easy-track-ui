@@ -4,6 +4,7 @@ import { ConnectWalletModalTerms } from './ConnectWalletModalTerms'
 import {
   ConnectMetamaskButton,
   ConnectWalletConnectButton,
+  ConnectLedgerButton,
   // ConnectCoinbaseButton,
   // ConnectTrustButton,
   // ConnectImTokenButton,
@@ -31,6 +32,7 @@ export function ConnectWalletModal(props: Props) {
       <ConnectWalletModalTerms onChange={handleChange} checked={checked} />
       <ConnectMetamaskButton {...common} />
       <ConnectWalletConnectButton {...common} />
+      <ConnectLedgerButton {...common} />
       {/* <ConnectCoinbaseButton {...common} /> */}
       {/* <ConnectTrustButton {...common} /> */}
       {/* <ConnectImTokenButton {...common} /> */}

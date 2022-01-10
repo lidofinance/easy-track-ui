@@ -7,7 +7,7 @@ import type { Invert } from 'modules/shared/utils/utilTypes'
 // Addresses should be lower cased
 //
 
-export const EvmAddressesByChain: Record<CHAINS, Record<MotionType, string>> = {
+export const EvmAddressesByChain = {
   // Mainnet
   [CHAINS.Mainnet]: {
     [MotionType.NodeOperatorIncreaseLimit]:
@@ -18,15 +18,6 @@ export const EvmAddressesByChain: Record<CHAINS, Record<MotionType, string>> = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
-  } as const,
-
-  // Ropsten
-  [CHAINS.Ropsten]: {
-    [MotionType.NodeOperatorIncreaseLimit]: '0x01',
-    [MotionType.LEGOTopUp]: '0x02',
-    [MotionType.RewardProgramAdd]: '0x03',
-    [MotionType.RewardProgramRemove]: '0x04',
-    [MotionType.RewardProgramTopUp]: '0x05',
   } as const,
 
   // Rinkeby
@@ -52,16 +43,13 @@ export const EvmAddressesByChain: Record<CHAINS, Record<MotionType, string>> = {
     [MotionType.RewardProgramTopUp]:
       '0x8180949ac41EF18e844ff8dafE604a195d86Aea9',
   } as const,
-
-  // Kovan
-  [CHAINS.Kovan]: {
-    [MotionType.NodeOperatorIncreaseLimit]: '0x01',
-    [MotionType.LEGOTopUp]: '0x02',
-    [MotionType.RewardProgramAdd]: '0x03',
-    [MotionType.RewardProgramRemove]: '0x04',
-    [MotionType.RewardProgramTopUp]: '0x05',
-  } as const,
 } as const
+
+export const EvmSupportedChains = Object.keys(EvmAddressesByChain)
+  .map(v => Number(v))
+  .filter(v => Number.isFinite(v)) as EvmSupportedChain[]
+
+export type EvmSupportedChain = keyof EvmAddresses
 
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -80,23 +68,21 @@ export const EvmTypesByAdress = mapValues(
   ),
   EvmAddressesByChain,
 ) as {
-  [key in keyof EvmAddresses]: Invert<EvmAddresses[key]>
+  [key in EvmSupportedChain]: Invert<EvmAddresses[key]>
 }
 
 export const EvmAddressesByType = Object.values(MotionType).reduce(
   (res, motionType) => ({
     ...res,
-    [motionType]: Object.values(CHAINS)
-      .filter(v => typeof v === 'number')
-      .reduce(
-        (resIn, chainId) => ({
-          ...resIn,
-          [chainId]: EvmAddressesByChain[chainId as CHAINS][motionType],
-        }),
-        {} as { [C in CHAINS]: EvmAddresses[C][typeof motionType] },
-      ),
+    [motionType]: EvmSupportedChains.reduce(
+      (resIn, chainId) => ({
+        ...resIn,
+        [chainId]: EvmAddressesByChain[chainId][motionType],
+      }),
+      {} as { [C in EvmSupportedChain]: EvmAddresses[C][typeof motionType] },
+    ),
   }),
   {} as {
-    [M in MotionType]: { [C in CHAINS]: EvmAddresses[C][M] }
+    [M in MotionType]: { [C in EvmSupportedChain]: EvmAddresses[C][M] }
   },
 )
