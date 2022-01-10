@@ -13,10 +13,8 @@ import { NetworksBox } from './NetworkSwitcherStyle'
 import { getChainName } from 'modules/blockChain/chains'
 
 export function NetworkSwitcher() {
-  const { library } = useWeb3()
-  const { supportedChainIds } = useConfig()
-
   const { connector } = useWeb3()
+  const { supportedChainIds } = useConfig()
 
   const isMetamaskConnected =
     connector instanceof InjectedConnector &&
@@ -24,12 +22,14 @@ export function NetworkSwitcher() {
 
   const handleChangeNetwork = useCallback(
     (switchTo: CHAINS) => {
-      if (!library) return
-      library.send('wallet_switchEthereumChain', [
+      if (!isMetamaskConnected) return
+
+      const provider = window.ethereum as any
+      provider.send('wallet_switchEthereumChain', [
         { chainId: `0x${switchTo.toString(16)}` },
       ])
     },
-    [library],
+    [isMetamaskConnected],
   )
 
   return (
