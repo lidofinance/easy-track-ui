@@ -3,7 +3,7 @@ FROM node:14-alpine as build
 
 WORKDIR /app
 
-RUN apk add --no-cache git=2.32.0-r0
+RUN apk add --no-cache git=2.34.1-r0
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --non-interactive && yarn cache clean
 COPY . .
@@ -17,7 +17,7 @@ ENV BASE_PATH=$BASE_PATH
 ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
-RUN apk add --no-cache curl=7.79.1-r0
+RUN apk add --no-cache curl=7.80.0-r0
 COPY --from=build /app /app
 
 RUN mkdir -p /app/.next/cache/images && chown -R node:node /app/.next/cache/images
