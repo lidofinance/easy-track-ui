@@ -60,6 +60,7 @@ export function AddressPop({ children, ...badgeProps }: Props) {
           <BadgeWrap>
             <IdenticonBadge
               {...badgeProps}
+              style={{ margin: 0 }}
               diameter={30}
               symbols={80}
               onClick={handleOpen}
