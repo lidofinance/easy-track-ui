@@ -18,7 +18,7 @@ export const EvmAddressesByChain = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
-  } as const,
+  },
 
   // Rinkeby
   [CHAINS.Rinkeby]: {
@@ -30,7 +30,7 @@ export const EvmAddressesByChain = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0xbb0f594143208eCd04DC7AAe48955902A716F9F7',
-  } as const,
+  },
 
   // Goerli
   [CHAINS.Goerli]: {
@@ -42,8 +42,20 @@ export const EvmAddressesByChain = {
       '0x31B68d81125E52fE1aDfe4076F8945D1014753b5',
     [MotionType.RewardProgramTopUp]:
       '0x8180949ac41EF18e844ff8dafE604a195d86Aea9',
-  } as const,
-} as const
+  },
+}
+
+export const parseEvmSupportedChainId = (
+  chainId: CHAINS,
+): EvmSupportedChain => {
+  const numChainId = Number(chainId)
+
+  if (!(numChainId in EvmAddressesByChain)) {
+    throw new Error(`Chain ${chainId} is not supported`)
+  }
+
+  return numChainId
+}
 
 export const EvmSupportedChains = Object.keys(EvmAddressesByChain)
   .map(v => Number(v))

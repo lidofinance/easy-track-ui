@@ -6,6 +6,7 @@ const PREFIXES = {
   [CHAINS.Rinkeby]: 'rin',
   [CHAINS.Goerli]: '?',
   [CHAINS.Kovan]: '?',
+  [CHAINS.Kintsugi]: '?',
 } as const
 
 export const getGnosisSafeLink = (chainId: CHAINS, address: string) =>
