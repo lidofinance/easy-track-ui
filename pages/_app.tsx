@@ -1,17 +1,20 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useErrorMessage } from 'modules/blockChain/hooks/useErrorMessage'
 import { useSupportedChains, ProviderWeb3 } from '@lido-sdk/web3-react'
 
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
 import {
+  toast,
   ThemeProvider,
   themeDefault,
   ToastContainer,
+  ToastError,
 } from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
@@ -27,6 +30,18 @@ const basePath = getConfig().publicRuntimeConfig.basePath || ''
 function AppRoot({ Component, pageProps }: AppProps) {
   const chainId = useCurrentChain()
   const { isUnsupported } = useSupportedChains()
+  const error = useErrorMessage()
+
+  useEffect(() => {
+    if (!error || isUnsupported) return
+
+    ToastError(error, {
+      toastId: 'wallet-error',
+      autoClose: false,
+    })
+
+    return () => toast.dismiss('wallet-error')
+  }, [error, isUnsupported])
 
   return (
     <>

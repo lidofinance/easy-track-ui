@@ -8,4 +8,5 @@ export const SUBGRAPH_URL = {
   [CHAINS.Goerli]:
     'https://api.thegraph.com/subgraphs/name/lidofinance/lido-testnet',
   [CHAINS.Kovan]: '',
+  [CHAINS.Kintsugi]: '',
 } as const
