@@ -31,4 +31,8 @@ export const Icon = styled.span`
   flex: 0 0 auto;
   display: flex;
   font-size: 0;
+
+  svg {
+    width: 40px;
+  }
 `

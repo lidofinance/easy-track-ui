@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3 } from '@lido-sdk/web3-react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useCurrentChain } from './useCurrentChain'
 import { useSendTransactionGnosisWorkaround } from './useSendTransactionGnosisWorkaround'
@@ -8,7 +8,7 @@ import { ResultTx, TxStatus } from '../types'
 import { PopulatedTransaction } from '@ethersproject/contracts'
 import { openWindow } from 'modules/shared/utils/openWindow'
 import { getGnosisSafeLink } from '../utils/getGnosisSafeLink'
-import { getEtherscanLink } from '../utils/getEtherscanLink'
+import { getEtherscanLink } from '@lido-sdk/helpers'
 import { ToastError } from '@lidofinance/lido-ui'
 
 type PopulateFn =
@@ -23,7 +23,7 @@ export function useTransactionSender(
   populateTx: PopulateFn,
   { onFinish }: Options = {},
 ) {
-  const { library } = useWeb3React()
+  const { library } = useWeb3()
   const currentChain = useCurrentChain()
   const { walletAddress } = useWalletInfo()
   const [resultTx, setResultTx] = useState<ResultTx | null>(null)

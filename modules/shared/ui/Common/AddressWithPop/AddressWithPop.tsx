@@ -10,7 +10,7 @@ export function AddressWithPop({ ...badgeProps }: Props) {
   return (
     <AddressPop {...badgeProps}>
       <BadgeWrap>
-        <IdenticonBadge diameter={24} {...badgeProps} />
+        <IdenticonBadge style={{ margin: 0 }} diameter={24} {...badgeProps} />
       </BadgeWrap>
     </AddressPop>
   )

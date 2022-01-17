@@ -1,5 +1,5 @@
 import { flow, map, toPairs, fromPairs, mapValues } from 'lodash/fp'
-import { Chains } from 'modules/blockChain/chains'
+import { CHAINS } from '@lido-sdk/constants'
 import { MotionType } from './types'
 import type { Invert } from 'modules/shared/utils/utilTypes'
 
@@ -7,9 +7,9 @@ import type { Invert } from 'modules/shared/utils/utilTypes'
 // Addresses should be lower cased
 //
 
-export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
+export const EvmAddressesByChain = {
   // Mainnet
-  [Chains.Mainnet]: {
+  [CHAINS.Mainnet]: {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xFeBd8FAC16De88206d4b18764e826AF38546AfE0',
     [MotionType.LEGOTopUp]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
@@ -18,19 +18,10 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
-  } as const,
-
-  // Ropsten
-  [Chains.Ropsten]: {
-    [MotionType.NodeOperatorIncreaseLimit]: '0x01',
-    [MotionType.LEGOTopUp]: '0x02',
-    [MotionType.RewardProgramAdd]: '0x03',
-    [MotionType.RewardProgramRemove]: '0x04',
-    [MotionType.RewardProgramTopUp]: '0x05',
-  } as const,
+  },
 
   // Rinkeby
-  [Chains.Rinkeby]: {
+  [CHAINS.Rinkeby]: {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977',
     [MotionType.LEGOTopUp]: '0xdA53fF207966b3946facaC52dD22B130D507d276',
@@ -39,10 +30,10 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0xbb0f594143208eCd04DC7AAe48955902A716F9F7',
-  } as const,
+  },
 
   // Goerli
-  [Chains.Goerli]: {
+  [CHAINS.Goerli]: {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xE033673D83a8a60500BcE02aBd9007ffAB587714',
     [MotionType.LEGOTopUp]: '0xb2bcf211F103d7F13789394DD475c2274e044C4C',
@@ -51,17 +42,26 @@ export const EvmAddressesByChain: Record<Chains, Record<MotionType, string>> = {
       '0x31B68d81125E52fE1aDfe4076F8945D1014753b5',
     [MotionType.RewardProgramTopUp]:
       '0x8180949ac41EF18e844ff8dafE604a195d86Aea9',
-  } as const,
+  },
+}
 
-  // Kovan
-  [Chains.Kovan]: {
-    [MotionType.NodeOperatorIncreaseLimit]: '0x01',
-    [MotionType.LEGOTopUp]: '0x02',
-    [MotionType.RewardProgramAdd]: '0x03',
-    [MotionType.RewardProgramRemove]: '0x04',
-    [MotionType.RewardProgramTopUp]: '0x05',
-  } as const,
-} as const
+export const parseEvmSupportedChainId = (
+  chainId: CHAINS,
+): EvmSupportedChain => {
+  const numChainId = Number(chainId)
+
+  if (!(numChainId in EvmAddressesByChain)) {
+    throw new Error(`Chain ${chainId} is not supported`)
+  }
+
+  return numChainId
+}
+
+export const EvmSupportedChains = Object.keys(EvmAddressesByChain)
+  .map(v => Number(v))
+  .filter(v => Number.isFinite(v)) as EvmSupportedChain[]
+
+export type EvmSupportedChain = keyof EvmAddresses
 
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -80,21 +80,21 @@ export const EvmTypesByAdress = mapValues(
   ),
   EvmAddressesByChain,
 ) as {
-  [key in keyof EvmAddresses]: Invert<EvmAddresses[key]>
+  [key in EvmSupportedChain]: Invert<EvmAddresses[key]>
 }
 
 export const EvmAddressesByType = Object.values(MotionType).reduce(
   (res, motionType) => ({
     ...res,
-    [motionType]: Object.values(Chains).reduce(
+    [motionType]: EvmSupportedChains.reduce(
       (resIn, chainId) => ({
         ...resIn,
         [chainId]: EvmAddressesByChain[chainId][motionType],
       }),
-      {} as { [C in Chains]: EvmAddresses[C][typeof motionType] },
+      {} as { [C in EvmSupportedChain]: EvmAddresses[C][typeof motionType] },
     ),
   }),
   {} as {
-    [M in MotionType]: { [C in Chains]: EvmAddresses[C][M] }
+    [M in MotionType]: { [C in EvmSupportedChain]: EvmAddresses[C][M] }
   },
 )

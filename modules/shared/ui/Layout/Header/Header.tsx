@@ -29,7 +29,8 @@ import ArchiveSVG from './icons/archive.svg.react'
 // import InfoSVG from './icons/info.svg.react'
 import StartSVG from './icons/start.svg.react'
 
-import { getChainColor, getChainName } from 'modules/blockChain/chains'
+import { getChainName } from 'modules/blockChain/chains'
+import { getChainColor } from '@lido-sdk/constants'
 import logoSrc from 'assets/logo.com.svg'
 import * as urls from 'modules/network/utils/urls'
 

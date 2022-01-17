@@ -1,6 +1,7 @@
 import { SWRConfiguration } from 'swr'
+import { CHAINS } from '@lido-sdk/constants'
 
-import { useWeb3React } from '@web3-react/core'
+import { useWeb3 } from '@lido-sdk/web3-react'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { useContractSwr } from '../hooks/useContractSwr'
@@ -8,7 +9,7 @@ import { useContractSwr } from '../hooks/useContractSwr'
 import type { Signer, providers } from 'ethers'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
 import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
-import { Chains, getChainName } from 'modules/blockChain/chains'
+import { getChainName } from 'modules/blockChain/chains'
 import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
 type Library = Signer | providers.Provider
@@ -19,7 +20,7 @@ interface Factory {
 }
 
 type Address = {
-  [key in Chains]?: string
+  [key in CHAINS]?: string
 }
 
 type CreatorArgs<F> = {
@@ -28,7 +29,7 @@ type CreatorArgs<F> = {
 }
 
 type CallArgs = {
-  chainId: Chains
+  chainId: CHAINS
   library: Library
 }
 
@@ -49,7 +50,7 @@ export function createContractHelpers<F extends Factory>({
     return factory.connect(address[chainId] as string, library) as Instance
   }
 
-  function useRpc() {
+  function useInstanceRpc() {
     const chainId = useCurrentChain()
 
     return useGlobalMemo(
@@ -58,12 +59,12 @@ export function createContractHelpers<F extends Factory>({
           chainId,
           library: getStaticRpcBatchProvider(chainId, getRpcUrl(chainId)),
         }),
-      `contract-rpc-${address[chainId]}`,
+      `contract-rpc-${chainId}-${address[chainId]}`,
     )
   }
 
-  function useWeb3() {
-    const { library, active, account } = useWeb3React()
+  function useInstanceWeb3() {
+    const { library, active, account } = useWeb3()
     const chainId = useCurrentChain()
 
     return useGlobalMemo(
@@ -75,6 +76,7 @@ export function createContractHelpers<F extends Factory>({
       [
         'contract-web3-',
         active ? 'active' : 'inactive',
+        chainId,
         address[chainId],
         account,
       ].join('-'),
@@ -90,7 +92,8 @@ export function createContractHelpers<F extends Factory>({
       params: Parameters<Instance[M]>,
       config?: SWRConfiguration<Data>,
     ) {
-      const contractInstance = type === 'web3' ? useWeb3() : useRpc()
+      const contractInstance =
+        type === 'web3' ? useInstanceWeb3() : useInstanceRpc()
       const data = useContractSwr(contractInstance, method, params, config)
       return data
     }
@@ -103,8 +106,8 @@ export function createContractHelpers<F extends Factory>({
     address,
     factory,
     connect,
-    useRpc,
-    useWeb3,
+    useRpc: useInstanceRpc,
+    useWeb3: useInstanceWeb3,
     useSwrWeb3,
     useSwrRpc,
   }

@@ -80,7 +80,7 @@ function ActionsBody({ motion, onFinish }: Props) {
       motion.id,
       callData,
       {
-        gasLimit: 500000,
+        gasLimit: 650000,
         ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
       },
     )

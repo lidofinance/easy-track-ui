@@ -1,4 +1,5 @@
 import { utils } from 'ethers'
+import { CHAINS } from '@lido-sdk/constants'
 import { useMemo } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
@@ -10,7 +11,6 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
-import { Chains } from 'modules/blockChain/chains'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.NodeOperatorIncreaseLimit,
@@ -39,14 +39,8 @@ export const formParts = createMotionFormPart({
     const currentChain = useCurrentChain()
     const { walletAddress } = useWalletInfo()
 
-    const doNotCheckList = currentChain === Chains.Rinkeby
-    const nodeOperatorsList = useNodeOperatorsList(
-      doNotCheckList
-        ? {
-            errorRetryCount: 0,
-          }
-        : undefined,
-    )
+    const doNotCheckList = currentChain === CHAINS.Rinkeby
+    const nodeOperatorsList = useNodeOperatorsList(!doNotCheckList)
 
     const isNodeOperatorConnected = useMemo(
       () =>

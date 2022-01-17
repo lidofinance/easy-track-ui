@@ -4,11 +4,10 @@ const { serverRuntimeConfig } = getConfig()
 const { infuraApiKey, alchemyApiKey } = serverRuntimeConfig
 
 const SECRETS = {
-  infuraApiKey: infuraApiKey ? new RegExp(infuraApiKey, 'ig') : null,
-  alchemyApiKey: alchemyApiKey ? new RegExp(alchemyApiKey, 'ig') : null,
-  address: new RegExp('0x[a-fA-F0-9]{40}', 'ig'),
-  txHash: new RegExp('0x[a-fA-F0-9]{64}', 'ig'),
-  ensAddress: new RegExp('[a-zA-Z.]+\\.eth', 'gi'),
+  INFURA_API_KEY: infuraApiKey ? new RegExp(infuraApiKey, 'ig') : null,
+  ALCHEMY_API_KEY: alchemyApiKey ? new RegExp(alchemyApiKey, 'ig') : null,
+  SANITIZED_HEX: new RegExp('0x[a-fA-F0-9]+', 'ig'),
+  ENS_ADDRESS: new RegExp('[a-zA-Z.]+\\.eth', 'gi'),
 }
 
 const secretEntries = Object.entries(SECRETS)

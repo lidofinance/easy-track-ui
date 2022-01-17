@@ -1,26 +1,29 @@
 import { utils } from 'ethers'
-import { Chains, parseChainId } from 'modules/blockChain/chains'
+import { CHAINS } from '@lido-sdk/constants'
 import { MotionType } from '../types'
 import {
   EvmAddressesByChain,
   EvmTypesByAdress,
   EvmUnrecognized,
+  parseEvmSupportedChainId,
 } from '../evmAddresses'
 
-export const parseScriptFactory = (chainId: Chains, scriptFactory: string) => {
+export const parseScriptFactory = (chainId: CHAINS, scriptFactory: string) => {
   const address = utils.getAddress(scriptFactory)
-  if (!EvmTypesByAdress[parseChainId(chainId)].hasOwnProperty(address)) {
+  if (
+    !EvmTypesByAdress[parseEvmSupportedChainId(chainId)].hasOwnProperty(address)
+  ) {
     throw new Error(`Script factory ${address} not recognized`)
   }
   return address
 }
 
 export const getMotionTypeByScriptFactory = (
-  chainId: Chains,
+  chainId: CHAINS,
   scriptFactory: string,
 ): MotionType | EvmUnrecognized => {
   try {
-    return EvmTypesByAdress[parseChainId(chainId)][
+    return EvmTypesByAdress[parseEvmSupportedChainId(chainId)][
       parseScriptFactory(chainId, scriptFactory)
     ]
   } catch {
@@ -29,8 +32,8 @@ export const getMotionTypeByScriptFactory = (
 }
 
 export const getScriptFactoryByMotionType = (
-  chainId: Chains,
+  chainId: CHAINS,
   motionType: MotionType,
 ) => {
-  return EvmAddressesByChain[parseChainId(chainId)][motionType]
+  return EvmAddressesByChain[parseEvmSupportedChainId(chainId)][motionType]
 }
