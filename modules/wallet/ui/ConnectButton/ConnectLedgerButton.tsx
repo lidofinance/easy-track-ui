@@ -5,7 +5,7 @@ import { ConnectButton } from './ConnectButton'
 import { ConnectWalletButtonProps } from './types'
 
 export function ConnectLedgerButton(props: ConnectWalletButtonProps) {
-  const { onConnect, ...rest } = props
+  const { onConnect, disabled, ...rest } = props
   const { connect } = useConnectorLedger()
 
   const handleConnect = useCallback(async () => {
@@ -16,6 +16,7 @@ export function ConnectLedgerButton(props: ConnectWalletButtonProps) {
   return (
     <ConnectButton
       {...rest}
+      disabled={disabled || !connect}
       icon={<LedgerCircle />}
       onClick={handleConnect}
       children="Ledger"
