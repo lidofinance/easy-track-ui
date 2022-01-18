@@ -21,7 +21,7 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     const chainId = parseChainId(String(req.query.chainId))
 
     const urls = getRpcJsonUrls(chainId)
-    const requested = await fetchWithFallback(urls, {
+    const requested = await fetchWithFallback(urls, chainId, {
       method: 'POST',
       // Next by default parses our body for us, we don't want that here
       body: JSON.stringify(req.body),
