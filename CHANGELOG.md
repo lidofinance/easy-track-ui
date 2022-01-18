@@ -1,3 +1,17 @@
+# [0.5.0](https://github.com/lidofinance/easy-track-ui/compare/0.4.0...0.5.0) (2022-01-18)
+
+
+### Bug Fixes
+
+* **security:** disable frameguard ([f57cd77](https://github.com/lidofinance/easy-track-ui/commit/f57cd77ed0b43ad17ac821eda11ff31979e441ab))
+
+
+### Features
+
+* **metrics:** add a chainId label for requests metrics ([06ec3d4](https://github.com/lidofinance/easy-track-ui/commit/06ec3d42d1f3cb944e834771d12c1ead12b80550))
+
+
+
 # [0.4.0](https://github.com/lidofinance/easy-track-ui/compare/0.3.0...0.4.0) (2022-01-17)
 
 
