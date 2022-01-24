@@ -1,5 +1,6 @@
 import { utils } from 'ethers'
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
 
@@ -34,17 +35,24 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
+    const { setValue } = useFormContext()
     const { walletAddress } = useWalletInfo()
     const nodeOperators = useNodeOperatorsList()
 
-    const currentNodeOperator = useMemo(
-      () =>
-        nodeOperators.data?.list.find(o => o.rewardAddress === walletAddress),
-      [walletAddress, nodeOperators],
-    )
+    const [operatorId, currentNodeOperator] = useMemo(() => {
+      const idx = nodeOperators.data?.list.findIndex(
+        o => o.rewardAddress === walletAddress,
+      )
+      const operator = idx !== undefined && nodeOperators.data?.list[idx]
+      return [idx, operator]
+    }, [walletAddress, nodeOperators])
 
     const isNodeOperatorConnected =
       !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
+
+    useEffect(() => {
+      setValue(fieldNames.nodeOperatorId, operatorId)
+    }, [operatorId, fieldNames.nodeOperatorId, setValue])
 
     if (nodeOperators.initialLoading) {
       return <PageLoader />
@@ -59,8 +67,17 @@ export const formParts = createMotionFormPart({
         <Fieldset>
           <InputControl
             name={fieldNames.nodeOperatorId}
-            label="Node operator id"
+            label={
+              currentNodeOperator ? (
+                <>
+                  Node operator <b>{currentNodeOperator.name}</b> with id
+                </>
+              ) : (
+                `Node operator id is loading`
+              )
+            }
             rules={{ required: 'Field is required' }}
+            readOnly
           />
         </Fieldset>
 
