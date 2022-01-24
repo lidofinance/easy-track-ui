@@ -1,8 +1,6 @@
 import { utils } from 'ethers'
-import { CHAINS } from '@lido-sdk/constants'
 import { useMemo } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -36,22 +34,19 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const currentChain = useCurrentChain()
     const { walletAddress } = useWalletInfo()
+    const nodeOperators = useNodeOperatorsList()
 
-    const doNotCheckList = currentChain === CHAINS.Rinkeby
-    const nodeOperatorsList = useNodeOperatorsList(!doNotCheckList)
-
-    const isNodeOperatorConnected = useMemo(
+    const currentNodeOperator = useMemo(
       () =>
-        doNotCheckList ||
-        Boolean(
-          nodeOperatorsList.data?.find(o => o.rewardAddress === walletAddress),
-        ),
-      [doNotCheckList, walletAddress, nodeOperatorsList],
+        nodeOperators.data?.list.find(o => o.rewardAddress === walletAddress),
+      [walletAddress, nodeOperators],
     )
 
-    if (nodeOperatorsList.initialLoading) {
+    const isNodeOperatorConnected =
+      !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
+
+    if (nodeOperators.initialLoading) {
       return <PageLoader />
     }
 
