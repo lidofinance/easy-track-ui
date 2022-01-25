@@ -84,8 +84,31 @@ export const formParts = createMotionFormPart({
         <Fieldset>
           <InputControl
             name={fieldNames.newLimit}
-            label="New limit"
-            rules={{ required: 'Field is required' }}
+            label={
+              currentNodeOperator ? (
+                <>
+                  New limit (current limit is{' '}
+                  {currentNodeOperator.stakingLimit.toString()})
+                </>
+              ) : (
+                `New limit`
+              )
+            }
+            rules={{
+              required: 'Field is required',
+              validate: value => {
+                if (value === '') return true
+                const parsedValue = Number(value)
+                if (Number.isNaN(parsedValue)) return 'Wrong number format'
+                const limit = currentNodeOperator
+                  ? currentNodeOperator.stakingLimit.toNumber()
+                  : 0
+                if (parsedValue <= limit) {
+                  return 'New limit value should be greater than current'
+                }
+                return true
+              },
+            }}
           />
         </Fieldset>
 
