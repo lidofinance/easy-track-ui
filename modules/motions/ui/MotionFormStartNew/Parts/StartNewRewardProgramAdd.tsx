@@ -10,6 +10,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 import { ContractEvmRewardProgramAdd } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
+import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RewardProgramAdd,
@@ -18,12 +19,13 @@ export const formParts = createMotionFormPart({
       ['address', 'string'],
       [utils.getAddress(formData.address), formData.title],
     )
+    const gasLimit = await estimateGasFallback(
+      contract.estimateGas.createMotion(evmScriptFactory, encodedCallData),
+    )
     const tx = await contract.populateTransaction.createMotion(
       evmScriptFactory,
       encodedCallData,
-      {
-        gasLimit: 500000,
-      },
+      { gasLimit },
     )
     return tx
   },

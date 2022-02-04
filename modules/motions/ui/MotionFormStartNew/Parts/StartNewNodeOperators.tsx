@@ -10,6 +10,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
+import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.NodeOperatorIncreaseLimit,
@@ -18,12 +19,13 @@ export const formParts = createMotionFormPart({
       ['uint256', 'uint256'],
       [Number(formData.nodeOperatorId), Number(formData.newLimit)],
     )
+    const gasLimit = await estimateGasFallback(
+      contract.estimateGas.createMotion(evmScriptFactory, encodedCallData),
+    )
     const tx = await contract.populateTransaction.createMotion(
       evmScriptFactory,
       encodedCallData,
-      {
-        gasLimit: 500000,
-      },
+      { gasLimit },
     )
     return tx
   },

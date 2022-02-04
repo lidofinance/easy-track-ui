@@ -8,6 +8,7 @@ import { CancelButton, Wrap } from './MotionDetailedCancelButtonStyle'
 import TrashSVG from 'assets/icons/trash.svg.react'
 
 import type { Motion } from 'modules/motions/types'
+import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 type Props = {
   motion: Motion
@@ -19,11 +20,12 @@ export function MotionDetailedCancelButton({ motion, onFinish }: Props) {
 
   // Cancel Motion
   const populateCancel = useCallback(async () => {
+    const gasLimit = await estimateGasFallback(
+      contractEasyTrack.estimateGas.cancelMotion(motion.id),
+    )
     const tx = await contractEasyTrack.populateTransaction.cancelMotion(
       motion.id,
-      {
-        gasLimit: 500000,
-      },
+      { gasLimit },
     )
     return tx
   }, [contractEasyTrack, motion.id])
