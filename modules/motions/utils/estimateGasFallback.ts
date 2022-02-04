@@ -6,7 +6,7 @@ export async function estimateGasFallback(
 ) {
   try {
     const gasLimit = Number(await estimator)
-    const multiplied = gasLimit * 1.3
+    const multiplied = Math.round(gasLimit * 1.3)
     console.log(
       `Gas estimated ${gasLimit}. Using x1.3 value ${multiplied} for reliability`,
     )
