@@ -8126,9 +8126,9 @@ wcwidth@^1.0.1:
     defaults "^1.0.3"
 
 web3-ledgerhq-connector@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/web3-ledgerhq-connector/-/web3-ledgerhq-connector-1.2.2.tgz#3c715f02c493c4a52b619bf41566551642b66b52"
-  integrity sha512-TLUpgrs7JYynthkbQ6+jCr18kri2cwJTJlw8fYgb6N5FBLMBVamNMVh7+xeuTozVTIPdyz72wPy1ilh6DI0iLA==
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/web3-ledgerhq-connector/-/web3-ledgerhq-connector-1.2.3.tgz#e3331a15cbe1b82f135e83ecff97479eb12ffa0e"
+  integrity sha512-g321ggmdk1PJowedIPZYdX3sfNqKYZ4QXeBdUTAcwiK1rdhdOlHF7HbQkhlZESCdNnG+/enUPm7cdvEO6JPg3w==
   dependencies:
     "@ethersproject/abstract-signer" "^5.5.0"
     "@ethersproject/bignumber" "^5.5.0"
