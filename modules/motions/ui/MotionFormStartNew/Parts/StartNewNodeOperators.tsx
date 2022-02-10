@@ -1,8 +1,7 @@
 import { utils } from 'ethers'
-import { CHAINS } from '@lido-sdk/constants'
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -11,6 +10,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
+import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.NodeOperatorIncreaseLimit,
@@ -19,12 +19,13 @@ export const formParts = createMotionFormPart({
       ['uint256', 'uint256'],
       [Number(formData.nodeOperatorId), Number(formData.newLimit)],
     )
+    const gasLimit = await estimateGasFallback(
+      contract.estimateGas.createMotion(evmScriptFactory, encodedCallData),
+    )
     const tx = await contract.populateTransaction.createMotion(
       evmScriptFactory,
       encodedCallData,
-      {
-        gasLimit: 500000,
-      },
+      { gasLimit },
     )
     return tx
   },
@@ -36,22 +37,26 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const currentChain = useCurrentChain()
+    const { setValue } = useFormContext()
     const { walletAddress } = useWalletInfo()
+    const nodeOperators = useNodeOperatorsList()
 
-    const doNotCheckList = currentChain === CHAINS.Rinkeby
-    const nodeOperatorsList = useNodeOperatorsList(!doNotCheckList)
+    const [operatorId, currentNodeOperator] = useMemo(() => {
+      const idx = nodeOperators.data?.list.findIndex(
+        o => o.rewardAddress === walletAddress,
+      )
+      const operator = idx !== undefined && nodeOperators.data?.list[idx]
+      return [idx, operator]
+    }, [walletAddress, nodeOperators])
 
-    const isNodeOperatorConnected = useMemo(
-      () =>
-        doNotCheckList ||
-        Boolean(
-          nodeOperatorsList.data?.find(o => o.rewardAddress === walletAddress),
-        ),
-      [doNotCheckList, walletAddress, nodeOperatorsList],
-    )
+    const isNodeOperatorConnected =
+      !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
 
-    if (nodeOperatorsList.initialLoading) {
+    useEffect(() => {
+      setValue(fieldNames.nodeOperatorId, operatorId)
+    }, [operatorId, fieldNames.nodeOperatorId, setValue])
+
+    if (nodeOperators.initialLoading) {
       return <PageLoader />
     }
 
@@ -64,16 +69,48 @@ export const formParts = createMotionFormPart({
         <Fieldset>
           <InputControl
             name={fieldNames.nodeOperatorId}
-            label="Node operator id"
+            label={
+              currentNodeOperator ? (
+                <>
+                  Node operator <b>{currentNodeOperator.name}</b> with id
+                </>
+              ) : (
+                `Node operator id is loading`
+              )
+            }
             rules={{ required: 'Field is required' }}
+            readOnly
           />
         </Fieldset>
 
         <Fieldset>
           <InputControl
             name={fieldNames.newLimit}
-            label="New limit"
-            rules={{ required: 'Field is required' }}
+            label={
+              currentNodeOperator ? (
+                <>
+                  New limit (current limit is{' '}
+                  {currentNodeOperator.stakingLimit.toString()})
+                </>
+              ) : (
+                `New limit`
+              )
+            }
+            rules={{
+              required: 'Field is required',
+              validate: value => {
+                if (value === '') return true
+                const parsedValue = Number(value)
+                if (Number.isNaN(parsedValue)) return 'Wrong number format'
+                const limit = currentNodeOperator
+                  ? currentNodeOperator.stakingLimit.toNumber()
+                  : 0
+                if (parsedValue <= limit) {
+                  return 'New limit value should be greater than current'
+                }
+                return true
+              },
+            }}
           />
         </Fieldset>
 

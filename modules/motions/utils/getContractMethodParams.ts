@@ -5,7 +5,7 @@ import { EvmAddressesByChain } from '../evmAddresses'
 const ACCESS_LISTS_MAP = {
   [EvmAddressesByChain[CHAINS.Mainnet].LEGOTopUp]: {
     enact: {
-      type: 1,
+      type: 2,
       accessList: {
         '0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c': [
           '0xebb05b386a8d34882b8711d156f463690983dc47815980fb82aeeff1aa43579e',
@@ -17,7 +17,7 @@ const ACCESS_LISTS_MAP = {
   } as const,
   [EvmAddressesByChain[CHAINS.Goerli].LEGOTopUp]: {
     enact: {
-      type: 1,
+      type: 2,
       accessList: {
         '0x4333218072d5d7008546737786663c38b4d561a4': [
           '0xebb05b386a8d34882b8711d156f463690983dc47815980fb82aeeff1aa43579e',

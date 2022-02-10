@@ -19,6 +19,7 @@ import { ContractEvmLEGOTopUp } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
+import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 type TokenData = {
   address: string
@@ -35,12 +36,13 @@ export const formParts = createMotionFormPart({
         formData.tokens.map(t => utils.parseEther(t.amount)),
       ],
     )
+    const gasLimit = await estimateGasFallback(
+      contract.estimateGas.createMotion(evmScriptFactory, encodedCallData),
+    )
     const tx = await contract.populateTransaction.createMotion(
       evmScriptFactory,
       encodedCallData,
-      {
-        gasLimit: 500000,
-      },
+      { gasLimit },
     )
     return tx
   },

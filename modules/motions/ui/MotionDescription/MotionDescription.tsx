@@ -5,6 +5,8 @@ import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
 import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
+import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
+import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
 import {
   useContractEvmScript,
   // useContractEvmNodeOperatorIncreaseLimit,
@@ -29,7 +31,6 @@ import {
   EvmRemoveRewardProgramAbi,
   EvmTopUpRewardProgramsAbi,
 } from 'generated'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 type NestProps<C extends (...a: any) => Promise<any>> = {
   callData: UnpackedPromise<ReturnType<C>>
@@ -41,10 +42,14 @@ function DescNodeOperatorIncreaseLimit({
 }: NestProps<
   EvmIncreaseNodeOperatorStakingLimitAbi['decodeEVMScriptCallData']
 >) {
+  const nodeOperatorId = Number(callData._nodeOperatorId)
+  const nodeOperators = useNodeOperatorsList()
+  const nodeOperator = nodeOperators.data?.list[nodeOperatorId]
   return (
     <div>
-      Node operator with id {Number(callData._nodeOperatorId)} wants to increase
-      staking limit to {Number(callData._stakingLimit)}
+      Node operator <b>{nodeOperator ? nodeOperator.name : ''}</b> (id:{' '}
+      {nodeOperatorId}) wants to increase staking limit to{' '}
+      {Number(callData._stakingLimit)}
     </div>
   )
 }

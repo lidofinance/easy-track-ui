@@ -19,6 +19,7 @@ import { Actions, Hint, TxHint, TxStatus } from './MotionDetailedActionsStyle'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
 import { getContractMethodParams } from 'modules/motions/utils/getContractMethodParams'
+import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
   return (
@@ -61,12 +62,15 @@ function ActionsBody({ motion, onFinish }: Props) {
 
   // Submit Objection
   const populateObject = useCallback(async () => {
+    const gasLimit = await estimateGasFallback(
+      contractEasyTrack.estimateGas.objectToMotion(motion.id),
+    )
     const tx = await contractEasyTrack.populateTransaction.objectToMotion(
       motion.id,
-      { gasLimit: 500000 },
+      { gasLimit },
     )
     return tx
-  }, [contractEasyTrack.populateTransaction, motion.id])
+  }, [contractEasyTrack, motion.id])
 
   const txObject = useTransactionSender(populateObject, { onFinish })
 
@@ -76,11 +80,16 @@ function ActionsBody({ motion, onFinish }: Props) {
       contractEasyTrack,
       motion.id,
     )
+    const gasLimit = await estimateGasFallback(
+      contractEasyTrack.estimateGas.enactMotion(motion.id, callData, {
+        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
+      }),
+    )
     const tx = await contractEasyTrack.populateTransaction.enactMotion(
       motion.id,
       callData,
       {
-        gasLimit: 650000,
+        gasLimit,
         ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
       },
     )
@@ -100,7 +109,8 @@ function ActionsBody({ motion, onFinish }: Props) {
   }
 
   const showHintEnacted = Boolean(txEnact.isSuccess)
-  const showHintObjected = !showHintEnacted && txEnact.isSuccess
+  const showHintObjected =
+    !showHintEnacted && (txObject.isSuccess || Boolean(isObjected.data))
   const showHintCanObject =
     !showHintEnacted && Boolean(canObject.data && !isObjected.data)
   const showHintCanNotObject =
