@@ -109,7 +109,8 @@ function ActionsBody({ motion, onFinish }: Props) {
   }
 
   const showHintEnacted = Boolean(txEnact.isSuccess)
-  const showHintObjected = !showHintEnacted && txEnact.isSuccess
+  const showHintObjected =
+    !showHintEnacted && (txObject.isSuccess || Boolean(isObjected.data))
   const showHintCanObject =
     !showHintEnacted && Boolean(canObject.data && !isObjected.data)
   const showHintCanNotObject =
