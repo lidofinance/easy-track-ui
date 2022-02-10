@@ -9,7 +9,7 @@ export function getMotionProgress(motion: Motion, totalSupply: BigNumber) {
   const thresholdAmount = (totalSupplyNumber * thresholdPct) / 100
   const objectionsPct = (objectionsAmount / thresholdAmount) * 100
 
-  const onlyZeros = Math.round(1 - Math.log10(objectionsPct))
+  const onlyZeros = Math.ceil(1 - Math.log10(objectionsPct))
   const objectionsPctFormatted =
     onlyZeros > 1 && onlyZeros < Infinity
       ? objectionsPct.toFixed(onlyZeros - 1)
