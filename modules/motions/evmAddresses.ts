@@ -18,6 +18,9 @@ export const EvmAddressesByChain = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
+    [MotionType.ReferralPartnerAdd]: '0x',
+    [MotionType.ReferralPartnerRemove]: '0x',
+    [MotionType.ReferralPartnerTopUp]: '0x',
   },
 
   // Rinkeby
@@ -30,6 +33,9 @@ export const EvmAddressesByChain = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0xbb0f594143208eCd04DC7AAe48955902A716F9F7',
+    [MotionType.ReferralPartnerAdd]: '0x',
+    [MotionType.ReferralPartnerRemove]: '0x',
+    [MotionType.ReferralPartnerTopUp]: '0x',
   },
 
   // Goerli
@@ -42,6 +48,12 @@ export const EvmAddressesByChain = {
       '0x31B68d81125E52fE1aDfe4076F8945D1014753b5',
     [MotionType.RewardProgramTopUp]:
       '0x8180949ac41EF18e844ff8dafE604a195d86Aea9',
+    [MotionType.ReferralPartnerAdd]:
+      '0xafE3b4AaCF9ee277F2c1275c275Ad2c7dFF7522f',
+    [MotionType.ReferralPartnerRemove]:
+      '0x714553f3D285903b1f66fa3B0EACE9F8564DADfB',
+    [MotionType.ReferralPartnerTopUp]:
+      '0x87c327855E55c9486aE6869Abf1109baE8170425',
   },
 }
 

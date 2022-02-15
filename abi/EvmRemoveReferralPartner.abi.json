@@ -1,0 +1,6436 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_trustedCaller",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_referralPartnersRegistry",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_creator",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_evmScriptCallData",
+          "type": "bytes"
+        }
+      ],
+      "name": "createEVMScript",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "_evmScriptCallData",
+          "type": "bytes"
+        }
+      ],
+      "name": "decodeEVMScriptCallData",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "_referralPartner",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "referralPartnersRegistry",
+      "outputs": [
+        {
+          "internalType": "contract ReferralPartnersRegistry",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "trustedCaller",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "allSourcePaths": {
+    "14": "contracts/EVMScriptFactories/RemoveReferralPartner.sol",
+    "22": "contracts/ReferralPartnersRegistry.sol",
+    "24": "contracts/TrustedCaller.sol",
+    "26": "contracts/interfaces/IEVMScriptFactory.sol",
+    "29": "contracts/libraries/EVMScriptCreator.sol"
+  },
+  "ast": {
+    "absolutePath": "contracts/EVMScriptFactories/RemoveReferralPartner.sol",
+    "exportedSymbols": {
+      "AccessControl": [
+        5131
+      ],
+      "Context": [
+        5245
+      ],
+      "ERC165": [
+        5545
+      ],
+      "EVMScriptCreator": [
+        3764
+      ],
+      "IAccessControl": [
+        5318
+      ],
+      "IERC165": [
+        5557
+      ],
+      "IEVMScriptFactory": [
+        3426
+      ],
+      "ReferralPartnersRegistry": [
+        3107
+      ],
+      "RemoveReferralPartner": [
+        766
+      ],
+      "Strings": [
+        5521
+      ],
+      "TrustedCaller": [
+        3402
+      ]
+    },
+    "id": 767,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 666,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "89:23:14"
+      },
+      {
+        "absolutePath": "contracts/TrustedCaller.sol",
+        "file": "../TrustedCaller.sol",
+        "id": 667,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 767,
+        "sourceUnit": 3403,
+        "src": "114:30:14",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "contracts/ReferralPartnersRegistry.sol",
+        "file": "../ReferralPartnersRegistry.sol",
+        "id": 668,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 767,
+        "sourceUnit": 3108,
+        "src": "145:41:14",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "contracts/libraries/EVMScriptCreator.sol",
+        "file": "../libraries/EVMScriptCreator.sol",
+        "id": 669,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 767,
+        "sourceUnit": 3765,
+        "src": "187:43:14",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "contracts/interfaces/IEVMScriptFactory.sol",
+        "file": "../interfaces/IEVMScriptFactory.sol",
+        "id": 670,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 767,
+        "sourceUnit": 3427,
+        "src": "231:45:14",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 672,
+              "name": "TrustedCaller",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 3402,
+              "src": "425:13:14"
+            },
+            "id": 673,
+            "nodeType": "InheritanceSpecifier",
+            "src": "425:13:14"
+          },
+          {
+            "baseName": {
+              "id": 674,
+              "name": "IEVMScriptFactory",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 3426,
+              "src": "440:17:14"
+            },
+            "id": 675,
+            "nodeType": "InheritanceSpecifier",
+            "src": "440:17:14"
+          }
+        ],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 671,
+          "nodeType": "StructuredDocumentation",
+          "src": "278:113:14",
+          "text": "@author psirex, dzhon\n @notice Creates EVMScript to remove referral partner from ReferralPartnersRegistry"
+        },
+        "fullyImplemented": true,
+        "id": 766,
+        "linearizedBaseContracts": [
+          766,
+          3426,
+          3402
+        ],
+        "name": "RemoveReferralPartner",
+        "nameLocation": "400:21:14",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 678,
+            "mutability": "constant",
+            "name": "ERROR_REFERRAL_PARTNER_NOT_FOUND",
+            "nameLocation": "544:32:14",
+            "nodeType": "VariableDeclaration",
+            "scope": 766,
+            "src": "520:87:14",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_memory_ptr",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 676,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "520:6:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "value": {
+              "hexValue": "524546455252414c5f504152544e45525f4e4f545f464f554e44",
+              "id": 677,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "string",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "579:28:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_stringliteral_22c4b493a7803c73e9079b5c4b49dfc4300207396c630bbb2bea314e6dda2018",
+                "typeString": "literal_string \"REFERRAL_PARTNER_NOT_FOUND\""
+              },
+              "value": "REFERRAL_PARTNER_NOT_FOUND"
+            },
+            "visibility": "private"
+          },
+          {
+            "constant": false,
+            "documentation": {
+              "id": 679,
+              "nodeType": "StructuredDocumentation",
+              "src": "674:47:14",
+              "text": "@notice Address of ReferralPartnersRegistry"
+            },
+            "functionSelector": "edbe2dec",
+            "id": 682,
+            "mutability": "immutable",
+            "name": "referralPartnersRegistry",
+            "nameLocation": "768:24:14",
+            "nodeType": "VariableDeclaration",
+            "scope": 766,
+            "src": "726:66:14",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+              "typeString": "contract ReferralPartnersRegistry"
+            },
+            "typeName": {
+              "id": 681,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 680,
+                "name": "ReferralPartnersRegistry",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 3107,
+                "src": "726:24:14"
+              },
+              "referencedDeclaration": 3107,
+              "src": "726:24:14",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                "typeString": "contract ReferralPartnersRegistry"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 698,
+              "nodeType": "Block",
+              "src": "974:95:14",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 696,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 692,
+                      "name": "referralPartnersRegistry",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 682,
+                      "src": "984:24:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                        "typeString": "contract ReferralPartnersRegistry"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 694,
+                          "name": "_referralPartnersRegistry",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 686,
+                          "src": "1036:25:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 693,
+                        "name": "ReferralPartnersRegistry",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3107,
+                        "src": "1011:24:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_ReferralPartnersRegistry_$3107_$",
+                          "typeString": "type(contract ReferralPartnersRegistry)"
+                        }
+                      },
+                      "id": 695,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1011:51:14",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                        "typeString": "contract ReferralPartnersRegistry"
+                      }
+                    },
+                    "src": "984:78:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                      "typeString": "contract ReferralPartnersRegistry"
+                    }
+                  },
+                  "id": 697,
+                  "nodeType": "ExpressionStatement",
+                  "src": "984:78:14"
+                }
+              ]
+            },
+            "id": 699,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 689,
+                    "name": "_trustedCaller",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 684,
+                    "src": "954:14:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 690,
+                "kind": "baseConstructorSpecifier",
+                "modifierName": {
+                  "id": 688,
+                  "name": "TrustedCaller",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 3402,
+                  "src": "940:13:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "940:29:14"
+              }
+            ],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 687,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 684,
+                  "mutability": "mutable",
+                  "name": "_trustedCaller",
+                  "nameLocation": "881:14:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 699,
+                  "src": "873:22:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 683,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "873:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 686,
+                  "mutability": "mutable",
+                  "name": "_referralPartnersRegistry",
+                  "nameLocation": "905:25:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 699,
+                  "src": "897:33:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 685,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "897:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "872:59:14"
+            },
+            "returnParameters": {
+              "id": 691,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "974:0:14"
+            },
+            "scope": 766,
+            "src": "861:208:14",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "baseFunctions": [
+              3425
+            ],
+            "body": {
+              "id": 735,
+              "nodeType": "Block",
+              "src": "1557:417:14",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "arguments": [
+                              {
+                                "id": 717,
+                                "name": "_evmScriptCallData",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 704,
+                                "src": "1656:18:14",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes_memory_ptr",
+                                  "typeString": "bytes memory"
+                                }
+                              ],
+                              "id": 716,
+                              "name": "_decodeEVMScriptCallData",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 765,
+                              "src": "1631:24:14",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_internal_pure$_t_bytes_memory_ptr_$returns$_t_address_$",
+                                "typeString": "function (bytes memory) pure returns (address)"
+                              }
+                            },
+                            "id": 718,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1631:44:14",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "id": 714,
+                            "name": "referralPartnersRegistry",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 682,
+                            "src": "1588:24:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                              "typeString": "contract ReferralPartnersRegistry"
+                            }
+                          },
+                          "id": 715,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isReferralPartner",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 3071,
+                          "src": "1588:42:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (address) view external returns (bool)"
+                          }
+                        },
+                        "id": 719,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1588:88:14",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "id": 720,
+                        "name": "ERROR_REFERRAL_PARTNER_NOT_FOUND",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 678,
+                        "src": "1690:32:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 713,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        -18,
+                        -18
+                      ],
+                      "referencedDeclaration": -18,
+                      "src": "1567:7:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 721,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1567:165:14",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 722,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1567:165:14"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "arguments": [
+                          {
+                            "id": 727,
+                            "name": "referralPartnersRegistry",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 682,
+                            "src": "1819:24:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                              "typeString": "contract ReferralPartnersRegistry"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                              "typeString": "contract ReferralPartnersRegistry"
+                            }
+                          ],
+                          "id": 726,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "1811:7:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_address_$",
+                            "typeString": "type(address)"
+                          },
+                          "typeName": {
+                            "id": 725,
+                            "name": "address",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "1811:7:14",
+                            "typeDescriptions": {}
+                          }
+                        },
+                        "id": 728,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1811:33:14",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "expression": {
+                            "id": 729,
+                            "name": "referralPartnersRegistry",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 682,
+                            "src": "1862:24:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_ReferralPartnersRegistry_$3107",
+                              "typeString": "contract ReferralPartnersRegistry"
+                            }
+                          },
+                          "id": 730,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "removeReferralPartner",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 3056,
+                          "src": "1862:46:14",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
+                            "typeString": "function (address) external"
+                          }
+                        },
+                        "id": 731,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "selector",
+                        "nodeType": "MemberAccess",
+                        "src": "1862:55:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      },
+                      {
+                        "id": 732,
+                        "name": "_evmScriptCallData",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 704,
+                        "src": "1935:18:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        },
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      ],
+                      "expression": {
+                        "id": 723,
+                        "name": "EVMScriptCreator",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3764,
+                        "src": "1761:16:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_EVMScriptCreator_$3764_$",
+                          "typeString": "type(library EVMScriptCreator)"
+                        }
+                      },
+                      "id": 724,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "createEVMScript",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 3544,
+                      "src": "1761:32:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_address_$_t_bytes4_$_t_bytes_memory_ptr_$returns$_t_bytes_memory_ptr_$",
+                        "typeString": "function (address,bytes4,bytes memory) pure returns (bytes memory)"
+                      }
+                    },
+                    "id": 733,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1761:206:14",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_memory_ptr",
+                      "typeString": "bytes memory"
+                    }
+                  },
+                  "functionReturnParameters": 712,
+                  "id": 734,
+                  "nodeType": "Return",
+                  "src": "1742:225:14"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 700,
+              "nodeType": "StructuredDocumentation",
+              "src": "1142:216:14",
+              "text": "@notice Creates EVMScript to remove referral partner from ReferralPartnersRegistry\n @param _creator Address who creates EVMScript\n @param _evmScriptCallData Encoded tuple: (address _referralPartner)"
+            },
+            "functionSelector": "fea21c9c",
+            "id": 736,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 708,
+                    "name": "_creator",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 702,
+                    "src": "1512:8:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  }
+                ],
+                "id": 709,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 707,
+                  "name": "onlyTrustedCaller",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 3401,
+                  "src": "1494:17:14"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1494:27:14"
+              }
+            ],
+            "name": "createEVMScript",
+            "nameLocation": "1372:15:14",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 706,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1477:8:14"
+            },
+            "parameters": {
+              "id": 705,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 702,
+                  "mutability": "mutable",
+                  "name": "_creator",
+                  "nameLocation": "1396:8:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 736,
+                  "src": "1388:16:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 701,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1388:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 704,
+                  "mutability": "mutable",
+                  "name": "_evmScriptCallData",
+                  "nameLocation": "1419:18:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 736,
+                  "src": "1406:31:14",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 703,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1406:5:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1387:51:14"
+            },
+            "returnParameters": {
+              "id": 712,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 711,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 736,
+                  "src": "1539:12:14",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 710,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1539:5:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1538:14:14"
+            },
+            "scope": 766,
+            "src": "1363:611:14",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 748,
+              "nodeType": "Block",
+              "src": "2335:68:14",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 745,
+                        "name": "_evmScriptCallData",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 739,
+                        "src": "2377:18:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      ],
+                      "id": 744,
+                      "name": "_decodeEVMScriptCallData",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 765,
+                      "src": "2352:24:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_pure$_t_bytes_memory_ptr_$returns$_t_address_$",
+                        "typeString": "function (bytes memory) pure returns (address)"
+                      }
+                    },
+                    "id": 746,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2352:44:14",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "functionReturnParameters": 743,
+                  "id": 747,
+                  "nodeType": "Return",
+                  "src": "2345:51:14"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 737,
+              "nodeType": "StructuredDocumentation",
+              "src": "1980:207:14",
+              "text": "@notice Decodes call data used by createEVMScript method\n @param _evmScriptCallData Encoded tuple: (address _referralPartner)\n @return _referralPartner Address of referral partner to remove"
+            },
+            "functionSelector": "ecf7c690",
+            "id": 749,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "decodeEVMScriptCallData",
+            "nameLocation": "2201:23:14",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 740,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 739,
+                  "mutability": "mutable",
+                  "name": "_evmScriptCallData",
+                  "nameLocation": "2238:18:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 749,
+                  "src": "2225:31:14",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 738,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2225:5:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2224:33:14"
+            },
+            "returnParameters": {
+              "id": 743,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 742,
+                  "mutability": "mutable",
+                  "name": "_referralPartner",
+                  "nameLocation": "2313:16:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 749,
+                  "src": "2305:24:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 741,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2305:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2304:26:14"
+            },
+            "scope": 766,
+            "src": "2192:211:14",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 764,
+              "nodeType": "Block",
+              "src": "2611:65:14",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 758,
+                        "name": "_evmScriptCallData",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 751,
+                        "src": "2639:18:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        }
+                      },
+                      {
+                        "components": [
+                          {
+                            "id": 760,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "2660:7:14",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": {
+                              "id": 759,
+                              "name": "address",
+                              "nodeType": "ElementaryTypeName",
+                              "src": "2660:7:14",
+                              "typeDescriptions": {}
+                            }
+                          }
+                        ],
+                        "id": 761,
+                        "isConstant": false,
+                        "isInlineArray": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "nodeType": "TupleExpression",
+                        "src": "2659:9:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_address_$",
+                          "typeString": "type(address)"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes_memory_ptr",
+                          "typeString": "bytes memory"
+                        },
+                        {
+                          "typeIdentifier": "t_type$_t_address_$",
+                          "typeString": "type(address)"
+                        }
+                      ],
+                      "expression": {
+                        "id": 756,
+                        "name": "abi",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -1,
+                        "src": "2628:3:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_abi",
+                          "typeString": "abi"
+                        }
+                      },
+                      "id": 757,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "memberName": "decode",
+                      "nodeType": "MemberAccess",
+                      "src": "2628:10:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_abidecode_pure$__$returns$__$",
+                        "typeString": "function () pure"
+                      }
+                    },
+                    "id": 762,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2628:41:14",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    }
+                  },
+                  "functionReturnParameters": 755,
+                  "id": 763,
+                  "nodeType": "Return",
+                  "src": "2621:48:14"
+                }
+              ]
+            },
+            "id": 765,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_decodeEVMScriptCallData",
+            "nameLocation": "2494:24:14",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 752,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 751,
+                  "mutability": "mutable",
+                  "name": "_evmScriptCallData",
+                  "nameLocation": "2532:18:14",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 765,
+                  "src": "2519:31:14",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 750,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2519:5:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2518:33:14"
+            },
+            "returnParameters": {
+              "id": 755,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 754,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 765,
+                  "src": "2598:7:14",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 753,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2598:7:14",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2597:9:14"
+            },
+            "scope": 766,
+            "src": "2485:191:14",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "private"
+          }
+        ],
+        "scope": 767,
+        "src": "391:2287:14",
+        "usedErrors": []
+      }
+    ],
+    "src": "89:2590:14"
+  },
+  "bytecode": "60c060405234801561001057600080fd5b5060405161077e38038061077e83398101604081905261002f916100d2565b60408051808201909152601e81527f545255535445445f43414c4c45525f49535f5a45524f5f414444524553530000602082015282906001600160a01b0382166100955760405162461bcd60e51b815260040161008c9190610105565b60405180910390fd5b506001600160601b0319606091821b811660805291901b1660a0525061015a565b80516001600160a01b03811681146100cd57600080fd5b919050565b600080604083850312156100e557600080fd5b6100ee836100b6565b91506100fc602084016100b6565b90509250929050565b600060208083528351808285015260005b8181101561013257858101830151858201604001528201610116565b81811115610144576000604083870101525b50601f01601f1916929092016040019392505050565b60805160601c60a05160601c6105e66101986000396000818160ad0152818161018e01526102950152600081816056015261010501526105e66000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c8063268f076014610051578063ecf7c69014610095578063edbe2dec146100a8578063fea21c9c146100cf575b600080fd5b6100787f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b0390911681526020015b60405180910390f35b6100786100a3366004610447565b6100ef565b6100787f000000000000000000000000000000000000000000000000000000000000000081565b6100e26100dd3660046103d5565b610100565b60405161008c9190610509565b60006100fa826102ca565b92915050565b6060827f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316816001600160a01b0316146040518060400160405280601381526020017221a0a62622a92fa4a9afa327a92124a22222a760691b8152509061018b5760405162461bcd60e51b81526004016101829190610509565b60405180910390fd5b507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031663e1248baa6101c4856102ca565b6040516001600160e01b031960e084901b1681526001600160a01b03909116600482015260240160206040518083038186803b15801561020357600080fd5b505afa158015610217573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061023b9190610425565b6040518060400160405280601a81526020017f524546455252414c5f504152544e45525f4e4f545f464f554e440000000000008152509061028f5760405162461bcd60e51b81526004016101829190610509565b506102c27f0000000000000000000000000000000000000000000000000000000000000000633d0daf1960e01b856102e0565b949350505050565b6000818060200190518101906100fa91906103b1565b6060600160e01b84835160046102f6919061051c565b858560405160200161030c9594939291906104a8565b60405160208183030381529060405290509392505050565b600082601f83011261033557600080fd5b813567ffffffffffffffff8082111561035057610350610582565b604051601f8301601f19908116603f0116810190828211818310171561037857610378610582565b8160405283815286602085880101111561039157600080fd5b836020870160208301376000602085830101528094505050505092915050565b6000602082840312156103c357600080fd5b81516103ce81610598565b9392505050565b600080604083850312156103e857600080fd5b82356103f381610598565b9150602083013567ffffffffffffffff81111561040f57600080fd5b61041b85828601610324565b9150509250929050565b60006020828403121561043757600080fd5b815180151581146103ce57600080fd5b60006020828403121561045957600080fd5b813567ffffffffffffffff81111561047057600080fd5b6102c284828501610324565b60008151808452610494816020860160208601610552565b601f01601f19169290920160200192915050565b6001600160e01b03198681168252606086901b6bffffffffffffffffffffffff1916600483015260e085901b811660188301528316601c82015281516000906104f8816020808601908701610552565b919091016020019695505050505050565b6020815260006103ce602083018461047c565b600063ffffffff80831681851680830382111561054957634e487b7160e01b600052601160045260246000fd5b01949350505050565b60005b8381101561056d578181015183820152602001610555565b8381111561057c576000848401525b50505050565b634e487b7160e01b600052604160045260246000fd5b6001600160a01b03811681146105ad57600080fd5b5056fea2646970667358221220048b121ba13d9fa600d8dbc4e5fa2eadc2282e768057845d28dd9f6e10bc69eb64736f6c63430008060033",
+  "bytecodeSha1": "b0dd4cd55cff3dd4b5c3006b8ef2026a8ec9179a",
+  "compiler": {
+    "evm_version": "istanbul",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "version": "0.8.6+commit.11564f7e"
+  },
+  "contractName": "RemoveReferralPartner",
+  "coverageMap": {
+    "branches": {
+      "14": {
+        "RemoveReferralPartner.createEVMScript": {
+          "5": [
+            1588,
+            1676,
+            true
+          ]
+        }
+      },
+      "22": {},
+      "24": {
+        "RemoveReferralPartner.createEVMScript": {
+          "6": [
+            808,
+            832,
+            true
+          ]
+        }
+      },
+      "26": {},
+      "29": {}
+    },
+    "statements": {
+      "14": {
+        "RemoveReferralPartner._decodeEVMScriptCallData": {
+          "3": [
+            2621,
+            2669
+          ]
+        },
+        "RemoveReferralPartner.createEVMScript": {
+          "1": [
+            1567,
+            1732
+          ],
+          "2": [
+            1742,
+            1967
+          ]
+        },
+        "RemoveReferralPartner.decodeEVMScriptCallData": {
+          "0": [
+            2345,
+            2396
+          ]
+        }
+      },
+      "22": {},
+      "24": {},
+      "26": {},
+      "29": {
+        "EVMScriptCreator.createEVMScript": {
+          "4": [
+            603,
+            816
+          ]
+        }
+      }
+    }
+  },
+  "dependencies": [
+    "EVMScriptCreator",
+    "IEVMScriptFactory",
+    "ReferralPartnersRegistry",
+    "TrustedCaller"
+  ],
+  "deployedBytecode": "608060405234801561001057600080fd5b506004361061004c5760003560e01c8063268f076014610051578063ecf7c69014610095578063edbe2dec146100a8578063fea21c9c146100cf575b600080fd5b6100787f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b0390911681526020015b60405180910390f35b6100786100a3366004610447565b6100ef565b6100787f000000000000000000000000000000000000000000000000000000000000000081565b6100e26100dd3660046103d5565b610100565b60405161008c9190610509565b60006100fa826102ca565b92915050565b6060827f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316816001600160a01b0316146040518060400160405280601381526020017221a0a62622a92fa4a9afa327a92124a22222a760691b8152509061018b5760405162461bcd60e51b81526004016101829190610509565b60405180910390fd5b507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031663e1248baa6101c4856102ca565b6040516001600160e01b031960e084901b1681526001600160a01b03909116600482015260240160206040518083038186803b15801561020357600080fd5b505afa158015610217573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061023b9190610425565b6040518060400160405280601a81526020017f524546455252414c5f504152544e45525f4e4f545f464f554e440000000000008152509061028f5760405162461bcd60e51b81526004016101829190610509565b506102c27f0000000000000000000000000000000000000000000000000000000000000000633d0daf1960e01b856102e0565b949350505050565b6000818060200190518101906100fa91906103b1565b6060600160e01b84835160046102f6919061051c565b858560405160200161030c9594939291906104a8565b60405160208183030381529060405290509392505050565b600082601f83011261033557600080fd5b813567ffffffffffffffff8082111561035057610350610582565b604051601f8301601f19908116603f0116810190828211818310171561037857610378610582565b8160405283815286602085880101111561039157600080fd5b836020870160208301376000602085830101528094505050505092915050565b6000602082840312156103c357600080fd5b81516103ce81610598565b9392505050565b600080604083850312156103e857600080fd5b82356103f381610598565b9150602083013567ffffffffffffffff81111561040f57600080fd5b61041b85828601610324565b9150509250929050565b60006020828403121561043757600080fd5b815180151581146103ce57600080fd5b60006020828403121561045957600080fd5b813567ffffffffffffffff81111561047057600080fd5b6102c284828501610324565b60008151808452610494816020860160208601610552565b601f01601f19169290920160200192915050565b6001600160e01b03198681168252606086901b6bffffffffffffffffffffffff1916600483015260e085901b811660188301528316601c82015281516000906104f8816020808601908701610552565b919091016020019695505050505050565b6020815260006103ce602083018461047c565b600063ffffffff80831681851680830382111561054957634e487b7160e01b600052601160045260246000fd5b01949350505050565b60005b8381101561056d578181015183820152602001610555565b8381111561057c576000848401525b50505050565b634e487b7160e01b600052604160045260246000fd5b6001600160a01b03811681146105ad57600080fd5b5056fea2646970667358221220048b121ba13d9fa600d8dbc4e5fa2eadc2282e768057845d28dd9f6e10bc69eb64736f6c63430008060033",
+  "deployedSourceMap": "391:2287:14:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;527:38:24;;;;;;;;-1:-1:-1;;;;;3156:32:37;;;3138:51;;3126:2;3111:18;527:38:24;;;;;;;;2192:211:14;;;;;;:::i;:::-;;:::i;726:66::-;;;;;1363:611;;;;;;:::i;:::-;;:::i;:::-;;;;;;;:::i;2192:211::-;2305:24;2352:44;2377:18;2352:24;:44::i;:::-;2345:51;2192:211;-1:-1:-1;;2192:211:14:o;1363:611::-;1539:12;1512:8;819:13:24;-1:-1:-1;;;;;808:24:24;:7;-1:-1:-1;;;;;808:24:24;;834:25;;;;;;;;;;;;;-1:-1:-1;;;834:25:24;;;800:60;;;;;-1:-1:-1;;;800:60:24;;;;;;;;:::i;:::-;;;;;;;;;;1588:24:14::1;-1:-1:-1::0;;;;;1588:42:14::1;;1631:44;1656:18;1631:24;:44::i;:::-;1588:88;::::0;-1:-1:-1;;;;;;1588:88:14::1;::::0;;;;;;-1:-1:-1;;;;;3156:32:37;;;1588:88:14::1;::::0;::::1;3138:51:37::0;3111:18;;1588:88:14::1;;;;;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;::::0;::::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;1690:32;;;;;;;;;;;;;;;;::::0;1567:165:::1;;;;;-1:-1:-1::0;;;1567:165:14::1;;;;;;;;:::i;:::-;-1:-1:-1::0;1761:206:14::1;1819:24;-1:-1:-1::0;;;1935:18:14;1761:32:::1;:206::i;:::-;1742:225:::0;1363:611;-1:-1:-1;;;;1363:611:14:o;2485:191::-;2598:7;2639:18;2628:41;;;;;;;;;;;;:::i;427:396:29:-;569:22;-1:-1:-1;;;681:3:29;709:18;:25;738:1;702:37;;;;:::i;:::-;757:9;784:18;622:194;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;603:213;;427:396;;;;;:::o;14:718:37:-;56:5;109:3;102:4;94:6;90:17;86:27;76:2;;127:1;124;117:12;76:2;163:6;150:20;189:18;226:2;222;219:10;216:2;;;232:18;;:::i;:::-;307:2;301:9;275:2;361:13;;-1:-1:-1;;357:22:37;;;381:2;353:31;349:40;337:53;;;405:18;;;425:22;;;402:46;399:2;;;451:18;;:::i;:::-;491:10;487:2;480:22;526:2;518:6;511:18;572:3;565:4;560:2;552:6;548:15;544:26;541:35;538:2;;;589:1;586;579:12;538:2;653;646:4;638:6;634:17;627:4;619:6;615:17;602:54;700:1;693:4;688:2;680:6;676:15;672:26;665:37;720:6;711:15;;;;;;66:666;;;;:::o;737:259::-;815:6;868:2;856:9;847:7;843:23;839:32;836:2;;;884:1;881;874:12;836:2;916:9;910:16;935:31;960:5;935:31;:::i;:::-;985:5;826:170;-1:-1:-1;;;826:170:37:o;1001:455::-;1078:6;1086;1139:2;1127:9;1118:7;1114:23;1110:32;1107:2;;;1155:1;1152;1145:12;1107:2;1194:9;1181:23;1213:31;1238:5;1213:31;:::i;:::-;1263:5;-1:-1:-1;1319:2:37;1304:18;;1291:32;1346:18;1335:30;;1332:2;;;1378:1;1375;1368:12;1332:2;1401:49;1442:7;1433:6;1422:9;1418:22;1401:49;:::i;:::-;1391:59;;;1097:359;;;;;:::o;1461:277::-;1528:6;1581:2;1569:9;1560:7;1556:23;1552:32;1549:2;;;1597:1;1594;1587:12;1549:2;1629:9;1623:16;1682:5;1675:13;1668:21;1661:5;1658:32;1648:2;;1704:1;1701;1694:12;1743:320;1811:6;1864:2;1852:9;1843:7;1839:23;1835:32;1832:2;;;1880:1;1877;1870:12;1832:2;1920:9;1907:23;1953:18;1945:6;1942:30;1939:2;;;1985:1;1982;1975:12;1939:2;2008:49;2049:7;2040:6;2029:9;2025:22;2008:49;:::i;2068:257::-;2109:3;2147:5;2141:12;2174:6;2169:3;2162:19;2190:63;2246:6;2239:4;2234:3;2230:14;2223:4;2216:5;2212:16;2190:63;:::i;:::-;2307:2;2286:15;-1:-1:-1;;2282:29:37;2273:39;;;;2314:4;2269:50;;2117:208;-1:-1:-1;;2117:208:37:o;2330:657::-;-1:-1:-1;;;;;;2634:15:37;;;2622:28;;2687:2;2683:15;;;-1:-1:-1;;2679:53:37;2675:1;2666:11;;2659:74;2597:3;2767:16;;;2763:25;;2758:2;2749:12;;2742:47;2819:15;;2814:2;2805:12;;2798:37;2858:13;;2565:3;;2880:60;2858:13;2928:2;2919:12;;;;2902:15;;2880:60;:::i;:::-;2960:16;;;;2978:2;2956:25;;2573:414;-1:-1:-1;;;;;;2573:414:37:o;3200:217::-;3347:2;3336:9;3329:21;3310:4;3367:44;3407:2;3396:9;3392:18;3384:6;3367:44;:::i;3887:325::-;3926:3;3954:10;3991:2;3988:1;3984:10;4021:2;4018:1;4014:10;4052:3;4048:2;4044:12;4039:3;4036:21;4033:2;;;4099:10;4094:3;4090:20;4087:1;4080:31;4134:4;4131:1;4124:15;4162:4;4159:1;4152:15;4033:2;4193:13;;3934:278;-1:-1:-1;;;;3934:278:37:o;4217:258::-;4289:1;4299:113;4313:6;4310:1;4307:13;4299:113;;;4389:11;;;4383:18;4370:11;;;4363:39;4335:2;4328:10;4299:113;;;4430:6;4427:1;4424:13;4421:2;;;4465:1;4456:6;4451:3;4447:16;4440:27;4421:2;;4270:205;;;:::o;4480:127::-;4541:10;4536:3;4532:20;4529:1;4522:31;4572:4;4569:1;4562:15;4596:4;4593:1;4586:15;4612:131;-1:-1:-1;;;;;4687:31:37;;4677:42;;4667:2;;4733:1;4730;4723:12;4667:2;4657:86;:::o",
+  "language": "Solidity",
+  "natspec": {
+    "author": "psirex, dzhon",
+    "kind": "dev",
+    "methods": {
+      "createEVMScript(address,bytes)": {
+        "notice": "Creates EVMScript to remove referral partner from ReferralPartnersRegistry",
+        "params": {
+          "_creator": "Address who creates EVMScript",
+          "_evmScriptCallData": "Encoded tuple: (address _referralPartner)"
+        }
+      },
+      "decodeEVMScriptCallData(bytes)": {
+        "notice": "Decodes call data used by createEVMScript method",
+        "params": {
+          "_evmScriptCallData": "Encoded tuple: (address _referralPartner)"
+        },
+        "returns": {
+          "_referralPartner": "Address of referral partner to remove"
+        }
+      },
+      "referralPartnersRegistry()": {
+        "notice": "Address of ReferralPartnersRegistry"
+      }
+    },
+    "notice": "Creates EVMScript to remove referral partner from ReferralPartnersRegistry",
+    "version": 1
+  },
+  "offset": [
+    391,
+    2678
+  ],
+  "opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x4C JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x268F0760 EQ PUSH2 0x51 JUMPI DUP1 PUSH4 0xECF7C690 EQ PUSH2 0x95 JUMPI DUP1 PUSH4 0xEDBE2DEC EQ PUSH2 0xA8 JUMPI DUP1 PUSH4 0xFEA21C9C EQ PUSH2 0xCF JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x78 PUSH32 0x0 DUP2 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP2 AND DUP2 MSTORE PUSH1 0x20 ADD JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH2 0x78 PUSH2 0xA3 CALLDATASIZE PUSH1 0x4 PUSH2 0x447 JUMP JUMPDEST PUSH2 0xEF JUMP JUMPDEST PUSH2 0x78 PUSH32 0x0 DUP2 JUMP JUMPDEST PUSH2 0xE2 PUSH2 0xDD CALLDATASIZE PUSH1 0x4 PUSH2 0x3D5 JUMP JUMPDEST PUSH2 0x100 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH2 0x8C SWAP2 SWAP1 PUSH2 0x509 JUMP JUMPDEST PUSH1 0x0 PUSH2 0xFA DUP3 PUSH2 0x2CA JUMP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x60 DUP3 PUSH32 0x0 PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND DUP2 PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND EQ PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD PUSH1 0x40 MSTORE DUP1 PUSH1 0x13 DUP2 MSTORE PUSH1 0x20 ADD PUSH19 0x21A0A62622A92FA4A9AFA327A92124A22222A7 PUSH1 0x69 SHL DUP2 MSTORE POP SWAP1 PUSH2 0x18B JUMPI PUSH1 0x40 MLOAD PUSH3 0x461BCD PUSH1 0xE5 SHL DUP2 MSTORE PUSH1 0x4 ADD PUSH2 0x182 SWAP2 SWAP1 PUSH2 0x509 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 REVERT JUMPDEST POP PUSH32 0x0 PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND PUSH4 0xE1248BAA PUSH2 0x1C4 DUP6 PUSH2 0x2CA JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xE0 SHL SUB NOT PUSH1 0xE0 DUP5 SWAP1 SHL AND DUP2 MSTORE PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP2 AND PUSH1 0x4 DUP3 ADD MSTORE PUSH1 0x24 ADD PUSH1 0x20 PUSH1 0x40 MLOAD DUP1 DUP4 SUB DUP2 DUP7 DUP1 EXTCODESIZE ISZERO DUP1 ISZERO PUSH2 0x203 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP GAS STATICCALL ISZERO DUP1 ISZERO PUSH2 0x217 JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP POP POP POP PUSH1 0x40 MLOAD RETURNDATASIZE PUSH1 0x1F NOT PUSH1 0x1F DUP3 ADD AND DUP3 ADD DUP1 PUSH1 0x40 MSTORE POP DUP2 ADD SWAP1 PUSH2 0x23B SWAP2 SWAP1 PUSH2 0x425 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 PUSH1 0x40 ADD PUSH1 0x40 MSTORE DUP1 PUSH1 0x1A DUP2 MSTORE PUSH1 0x20 ADD PUSH32 0x524546455252414C5F504152544E45525F4E4F545F464F554E44000000000000 DUP2 MSTORE POP SWAP1 PUSH2 0x28F JUMPI PUSH1 0x40 MLOAD PUSH3 0x461BCD PUSH1 0xE5 SHL DUP2 MSTORE PUSH1 0x4 ADD PUSH2 0x182 SWAP2 SWAP1 PUSH2 0x509 JUMP JUMPDEST POP PUSH2 0x2C2 PUSH32 0x0 PUSH4 0x3D0DAF19 PUSH1 0xE0 SHL DUP6 PUSH2 0x2E0 JUMP JUMPDEST SWAP5 SWAP4 POP POP POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 DUP1 PUSH1 0x20 ADD SWAP1 MLOAD DUP2 ADD SWAP1 PUSH2 0xFA SWAP2 SWAP1 PUSH2 0x3B1 JUMP JUMPDEST PUSH1 0x60 PUSH1 0x1 PUSH1 0xE0 SHL DUP5 DUP4 MLOAD PUSH1 0x4 PUSH2 0x2F6 SWAP2 SWAP1 PUSH2 0x51C JUMP JUMPDEST DUP6 DUP6 PUSH1 0x40 MLOAD PUSH1 0x20 ADD PUSH2 0x30C SWAP6 SWAP5 SWAP4 SWAP3 SWAP2 SWAP1 PUSH2 0x4A8 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH1 0x20 DUP2 DUP4 SUB SUB DUP2 MSTORE SWAP1 PUSH1 0x40 MSTORE SWAP1 POP SWAP4 SWAP3 POP POP POP JUMP JUMPDEST PUSH1 0x0 DUP3 PUSH1 0x1F DUP4 ADD SLT PUSH2 0x335 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 CALLDATALOAD PUSH8 0xFFFFFFFFFFFFFFFF DUP1 DUP3 GT ISZERO PUSH2 0x350 JUMPI PUSH2 0x350 PUSH2 0x582 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH1 0x1F DUP4 ADD PUSH1 0x1F NOT SWAP1 DUP2 AND PUSH1 0x3F ADD AND DUP2 ADD SWAP1 DUP3 DUP3 GT DUP2 DUP4 LT OR ISZERO PUSH2 0x378 JUMPI PUSH2 0x378 PUSH2 0x582 JUMP JUMPDEST DUP2 PUSH1 0x40 MSTORE DUP4 DUP2 MSTORE DUP7 PUSH1 0x20 DUP6 DUP9 ADD ADD GT ISZERO PUSH2 0x391 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP4 PUSH1 0x20 DUP8 ADD PUSH1 0x20 DUP4 ADD CALLDATACOPY PUSH1 0x0 PUSH1 0x20 DUP6 DUP4 ADD ADD MSTORE DUP1 SWAP5 POP POP POP POP POP SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0x3C3 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 MLOAD PUSH2 0x3CE DUP2 PUSH2 0x598 JUMP JUMPDEST SWAP4 SWAP3 POP POP POP JUMP JUMPDEST PUSH1 0x0 DUP1 PUSH1 0x40 DUP4 DUP6 SUB SLT ISZERO PUSH2 0x3E8 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP3 CALLDATALOAD PUSH2 0x3F3 DUP2 PUSH2 0x598 JUMP JUMPDEST SWAP2 POP PUSH1 0x20 DUP4 ADD CALLDATALOAD PUSH8 0xFFFFFFFFFFFFFFFF DUP2 GT ISZERO PUSH2 0x40F JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x41B DUP6 DUP3 DUP7 ADD PUSH2 0x324 JUMP JUMPDEST SWAP2 POP POP SWAP3 POP SWAP3 SWAP1 POP JUMP JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0x437 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 MLOAD DUP1 ISZERO ISZERO DUP2 EQ PUSH2 0x3CE JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 PUSH1 0x20 DUP3 DUP5 SUB SLT ISZERO PUSH2 0x459 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 CALLDATALOAD PUSH8 0xFFFFFFFFFFFFFFFF DUP2 GT ISZERO PUSH2 0x470 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x2C2 DUP5 DUP3 DUP6 ADD PUSH2 0x324 JUMP JUMPDEST PUSH1 0x0 DUP2 MLOAD DUP1 DUP5 MSTORE PUSH2 0x494 DUP2 PUSH1 0x20 DUP7 ADD PUSH1 0x20 DUP7 ADD PUSH2 0x552 JUMP JUMPDEST PUSH1 0x1F ADD PUSH1 0x1F NOT AND SWAP3 SWAP1 SWAP3 ADD PUSH1 0x20 ADD SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x1 PUSH1 0x1 PUSH1 0xE0 SHL SUB NOT DUP7 DUP2 AND DUP3 MSTORE PUSH1 0x60 DUP7 SWAP1 SHL PUSH12 0xFFFFFFFFFFFFFFFFFFFFFFFF NOT AND PUSH1 0x4 DUP4 ADD MSTORE PUSH1 0xE0 DUP6 SWAP1 SHL DUP2 AND PUSH1 0x18 DUP4 ADD MSTORE DUP4 AND PUSH1 0x1C DUP3 ADD MSTORE DUP2 MLOAD PUSH1 0x0 SWAP1 PUSH2 0x4F8 DUP2 PUSH1 0x20 DUP1 DUP7 ADD SWAP1 DUP8 ADD PUSH2 0x552 JUMP JUMPDEST SWAP2 SWAP1 SWAP2 ADD PUSH1 0x20 ADD SWAP7 SWAP6 POP POP POP POP POP POP JUMP JUMPDEST PUSH1 0x20 DUP2 MSTORE PUSH1 0x0 PUSH2 0x3CE PUSH1 0x20 DUP4 ADD DUP5 PUSH2 0x47C JUMP JUMPDEST PUSH1 0x0 PUSH4 0xFFFFFFFF DUP1 DUP4 AND DUP2 DUP6 AND DUP1 DUP4 SUB DUP3 GT ISZERO PUSH2 0x549 JUMPI PUSH4 0x4E487B71 PUSH1 0xE0 SHL PUSH1 0x0 MSTORE PUSH1 0x11 PUSH1 0x4 MSTORE PUSH1 0x24 PUSH1 0x0 REVERT JUMPDEST ADD SWAP5 SWAP4 POP POP POP POP JUMP JUMPDEST PUSH1 0x0 JUMPDEST DUP4 DUP2 LT ISZERO PUSH2 0x56D JUMPI DUP2 DUP2 ADD MLOAD DUP4 DUP3 ADD MSTORE PUSH1 0x20 ADD PUSH2 0x555 JUMP JUMPDEST DUP4 DUP2 GT ISZERO PUSH2 0x57C JUMPI PUSH1 0x0 DUP5 DUP5 ADD MSTORE JUMPDEST POP POP POP POP JUMP JUMPDEST PUSH4 0x4E487B71 PUSH1 0xE0 SHL PUSH1 0x0 MSTORE PUSH1 0x41 PUSH1 0x4 MSTORE PUSH1 0x24 PUSH1 0x0 REVERT JUMPDEST PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB DUP2 AND DUP2 EQ PUSH2 0x5AD JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 DIV DUP12 SLT SHL LOG1 RETURNDATASIZE SWAP16 0xA6 STOP 0xD8 0xDB 0xC4 0xE5 STATICCALL 0x2E 0xAD 0xC2 0x28 0x2E PUSH23 0x8057845D28DD9F6E10BC69EB64736F6C63430008060033 ",
+  "pcMap": {
+    "0": {
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x80"
+    },
+    "2": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "4": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "MSTORE",
+      "path": "14"
+    },
+    "5": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "CALLVALUE",
+      "path": "14"
+    },
+    "6": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "7": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "ISZERO",
+      "path": "14"
+    },
+    "8": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x10"
+    },
+    "11": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "12": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "14": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "15": {
+      "dev": "Cannot send ether to nonpayable function",
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "REVERT",
+      "path": "14"
+    },
+    "16": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "17": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "18": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x4"
+    },
+    "20": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "CALLDATASIZE",
+      "path": "14"
+    },
+    "21": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "LT",
+      "path": "14"
+    },
+    "22": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x4C"
+    },
+    "25": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "26": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "28": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "CALLDATALOAD",
+      "path": "14"
+    },
+    "29": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0xE0"
+    },
+    "31": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "SHR",
+      "path": "14"
+    },
+    "32": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "33": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH4",
+      "path": "14",
+      "value": "0x268F0760"
+    },
+    "38": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "EQ",
+      "path": "14"
+    },
+    "39": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x51"
+    },
+    "42": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "43": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "44": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH4",
+      "path": "14",
+      "value": "0xECF7C690"
+    },
+    "49": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "EQ",
+      "path": "14"
+    },
+    "50": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x95"
+    },
+    "53": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "54": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "55": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH4",
+      "path": "14",
+      "value": "0xEDBE2DEC"
+    },
+    "60": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "EQ",
+      "path": "14"
+    },
+    "61": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0xA8"
+    },
+    "64": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "65": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "66": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH4",
+      "path": "14",
+      "value": "0xFEA21C9C"
+    },
+    "71": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "EQ",
+      "path": "14"
+    },
+    "72": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0xCF"
+    },
+    "75": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "76": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "77": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "79": {
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "80": {
+      "first_revert": true,
+      "fn": null,
+      "offset": [
+        391,
+        2678
+      ],
+      "op": "REVERT",
+      "path": "14"
+    },
+    "81": {
+      "offset": [
+        527,
+        565
+      ],
+      "op": "JUMPDEST",
+      "path": "24"
+    },
+    "82": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "PUSH2",
+      "path": "24",
+      "value": "0x78"
+    },
+    "85": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "PUSH32",
+      "path": "24",
+      "value": "0x0"
+    },
+    "118": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "DUP2",
+      "path": "24"
+    },
+    "119": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "JUMP",
+      "path": "24"
+    },
+    "120": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "JUMPDEST",
+      "path": "24"
+    },
+    "121": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x40"
+    },
+    "123": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "MLOAD",
+      "path": "24"
+    },
+    "124": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "126": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "128": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "130": {
+      "op": "SHL"
+    },
+    "131": {
+      "op": "SUB"
+    },
+    "132": {
+      "op": "SWAP1"
+    },
+    "133": {
+      "op": "SWAP2"
+    },
+    "134": {
+      "op": "AND"
+    },
+    "135": {
+      "op": "DUP2"
+    },
+    "136": {
+      "op": "MSTORE"
+    },
+    "137": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "139": {
+      "op": "ADD"
+    },
+    "140": {
+      "offset": [
+        527,
+        565
+      ],
+      "op": "JUMPDEST",
+      "path": "24"
+    },
+    "141": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x40"
+    },
+    "143": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "MLOAD",
+      "path": "24"
+    },
+    "144": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "DUP1",
+      "path": "24"
+    },
+    "145": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "SWAP2",
+      "path": "24"
+    },
+    "146": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "SUB",
+      "path": "24"
+    },
+    "147": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "SWAP1",
+      "path": "24"
+    },
+    "148": {
+      "fn": null,
+      "offset": [
+        527,
+        565
+      ],
+      "op": "RETURN",
+      "path": "24"
+    },
+    "149": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "150": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x78"
+    },
+    "153": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0xA3"
+    },
+    "156": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "CALLDATASIZE",
+      "path": "14"
+    },
+    "157": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x4"
+    },
+    "159": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x447"
+    },
+    "162": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "jump": "i",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "163": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "164": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0xEF"
+    },
+    "167": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "jump": "i",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "168": {
+      "offset": [
+        726,
+        792
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "169": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        726,
+        792
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x78"
+    },
+    "172": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        726,
+        792
+      ],
+      "op": "PUSH32",
+      "path": "14",
+      "value": "0x0"
+    },
+    "205": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        726,
+        792
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "206": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        726,
+        792
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "207": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "208": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0xE2"
+    },
+    "211": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0xDD"
+    },
+    "214": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "CALLDATASIZE",
+      "path": "14"
+    },
+    "215": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x4"
+    },
+    "217": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x3D5"
+    },
+    "220": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "221": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "222": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x100"
+    },
+    "225": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "226": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "227": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "229": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "MLOAD",
+      "path": "14"
+    },
+    "230": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x8C"
+    },
+    "233": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "SWAP2",
+      "path": "14"
+    },
+    "234": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "235": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x509"
+    },
+    "238": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "239": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "240": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2305,
+        2329
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "242": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2352,
+        2396
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "statement": 0,
+      "value": "0xFA"
+    },
+    "245": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2377,
+        2395
+      ],
+      "op": "DUP3",
+      "path": "14"
+    },
+    "246": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2352,
+        2376
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x2CA"
+    },
+    "249": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "jump": "i",
+      "offset": [
+        2352,
+        2396
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "250": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2352,
+        2396
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "251": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2345,
+        2396
+      ],
+      "op": "SWAP3",
+      "path": "14"
+    },
+    "252": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "SWAP2",
+      "path": "14"
+    },
+    "253": {
+      "op": "POP"
+    },
+    "254": {
+      "op": "POP"
+    },
+    "255": {
+      "fn": "RemoveReferralPartner.decodeEVMScriptCallData",
+      "jump": "o",
+      "offset": [
+        2192,
+        2403
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "256": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "257": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1539,
+        1551
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x60"
+    },
+    "259": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1512,
+        1520
+      ],
+      "op": "DUP3",
+      "path": "14"
+    },
+    "260": {
+      "offset": [
+        819,
+        832
+      ],
+      "op": "PUSH32",
+      "path": "24",
+      "value": "0x0"
+    },
+    "293": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "295": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "297": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "299": {
+      "op": "SHL"
+    },
+    "300": {
+      "op": "SUB"
+    },
+    "301": {
+      "offset": [
+        808,
+        832
+      ],
+      "op": "AND",
+      "path": "24"
+    },
+    "302": {
+      "offset": [
+        808,
+        815
+      ],
+      "op": "DUP2",
+      "path": "24"
+    },
+    "303": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "305": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "307": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "309": {
+      "op": "SHL"
+    },
+    "310": {
+      "op": "SUB"
+    },
+    "311": {
+      "offset": [
+        808,
+        832
+      ],
+      "op": "AND",
+      "path": "24"
+    },
+    "312": {
+      "branch": 6,
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        808,
+        832
+      ],
+      "op": "EQ",
+      "path": "24"
+    },
+    "313": {
+      "offset": [
+        834,
+        859
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x40"
+    },
+    "315": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "MLOAD",
+      "path": "24"
+    },
+    "316": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "DUP1",
+      "path": "24"
+    },
+    "317": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x40"
+    },
+    "319": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "ADD",
+      "path": "24"
+    },
+    "320": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x40"
+    },
+    "322": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "MSTORE",
+      "path": "24"
+    },
+    "323": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "DUP1",
+      "path": "24"
+    },
+    "324": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x13"
+    },
+    "326": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "DUP2",
+      "path": "24"
+    },
+    "327": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "MSTORE",
+      "path": "24"
+    },
+    "328": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x20"
+    },
+    "330": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "ADD",
+      "path": "24"
+    },
+    "331": {
+      "op": "PUSH19",
+      "value": "0x21A0A62622A92FA4A9AFA327A92124A22222A7"
+    },
+    "351": {
+      "op": "PUSH1",
+      "value": "0x69"
+    },
+    "353": {
+      "op": "SHL"
+    },
+    "354": {
+      "offset": [
+        834,
+        859
+      ],
+      "op": "DUP2",
+      "path": "24"
+    },
+    "355": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "MSTORE",
+      "path": "24"
+    },
+    "356": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        834,
+        859
+      ],
+      "op": "POP",
+      "path": "24"
+    },
+    "357": {
+      "offset": [
+        800,
+        860
+      ],
+      "op": "SWAP1",
+      "path": "24"
+    },
+    "358": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "PUSH2",
+      "path": "24",
+      "value": "0x18B"
+    },
+    "361": {
+      "branch": 6,
+      "offset": [
+        800,
+        860
+      ],
+      "op": "JUMPI",
+      "path": "24"
+    },
+    "362": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x40"
+    },
+    "364": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "MLOAD",
+      "path": "24"
+    },
+    "365": {
+      "op": "PUSH3",
+      "value": "0x461BCD"
+    },
+    "369": {
+      "op": "PUSH1",
+      "value": "0xE5"
+    },
+    "371": {
+      "op": "SHL"
+    },
+    "372": {
+      "offset": [
+        800,
+        860
+      ],
+      "op": "DUP2",
+      "path": "24"
+    },
+    "373": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "MSTORE",
+      "path": "24"
+    },
+    "374": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x4"
+    },
+    "376": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "ADD",
+      "path": "24"
+    },
+    "377": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "PUSH2",
+      "path": "24",
+      "value": "0x182"
+    },
+    "380": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "SWAP2",
+      "path": "24"
+    },
+    "381": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "SWAP1",
+      "path": "24"
+    },
+    "382": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "PUSH2",
+      "path": "24",
+      "value": "0x509"
+    },
+    "385": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "JUMP",
+      "path": "24"
+    },
+    "386": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "JUMPDEST",
+      "path": "24"
+    },
+    "387": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "PUSH1",
+      "path": "24",
+      "value": "0x40"
+    },
+    "389": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "MLOAD",
+      "path": "24"
+    },
+    "390": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "DUP1",
+      "path": "24"
+    },
+    "391": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "SWAP2",
+      "path": "24"
+    },
+    "392": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "SUB",
+      "path": "24"
+    },
+    "393": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "SWAP1",
+      "path": "24"
+    },
+    "394": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "REVERT",
+      "optimizer_revert": true,
+      "path": "24"
+    },
+    "395": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "JUMPDEST",
+      "path": "24"
+    },
+    "396": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        800,
+        860
+      ],
+      "op": "POP",
+      "path": "24"
+    },
+    "397": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1612
+      ],
+      "op": "PUSH32",
+      "path": "14",
+      "statement": 1,
+      "value": "0x0"
+    },
+    "430": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "432": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "434": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "436": {
+      "op": "SHL"
+    },
+    "437": {
+      "op": "SUB"
+    },
+    "438": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1630
+      ],
+      "op": "AND",
+      "path": "14"
+    },
+    "439": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1630
+      ],
+      "op": "PUSH4",
+      "path": "14",
+      "value": "0xE1248BAA"
+    },
+    "444": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1631,
+        1675
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x1C4"
+    },
+    "447": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1656,
+        1674
+      ],
+      "op": "DUP6",
+      "path": "14"
+    },
+    "448": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1631,
+        1655
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x2CA"
+    },
+    "451": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        1631,
+        1675
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "452": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1631,
+        1675
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "453": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "455": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "MLOAD",
+      "path": "14"
+    },
+    "456": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "458": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "460": {
+      "op": "PUSH1",
+      "value": "0xE0"
+    },
+    "462": {
+      "op": "SHL"
+    },
+    "463": {
+      "op": "SUB"
+    },
+    "464": {
+      "op": "NOT"
+    },
+    "465": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0xE0"
+    },
+    "467": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP5",
+      "path": "14"
+    },
+    "468": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "469": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "SHL",
+      "path": "14"
+    },
+    "470": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "AND",
+      "path": "14"
+    },
+    "471": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "472": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "MSTORE",
+      "path": "14"
+    },
+    "473": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "475": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "477": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "479": {
+      "op": "SHL"
+    },
+    "480": {
+      "op": "SUB"
+    },
+    "481": {
+      "op": "SWAP1"
+    },
+    "482": {
+      "op": "SWAP2"
+    },
+    "483": {
+      "op": "AND"
+    },
+    "484": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x4"
+    },
+    "486": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP3",
+      "path": "14"
+    },
+    "487": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "488": {
+      "op": "MSTORE"
+    },
+    "489": {
+      "op": "PUSH1",
+      "value": "0x24"
+    },
+    "491": {
+      "op": "ADD"
+    },
+    "492": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x20"
+    },
+    "494": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "496": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "MLOAD",
+      "path": "14"
+    },
+    "497": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "498": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP4",
+      "path": "14"
+    },
+    "499": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "SUB",
+      "path": "14"
+    },
+    "500": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "501": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP7",
+      "path": "14"
+    },
+    "502": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "503": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "EXTCODESIZE",
+      "path": "14"
+    },
+    "504": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ISZERO",
+      "path": "14"
+    },
+    "505": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "506": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ISZERO",
+      "path": "14"
+    },
+    "507": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x203"
+    },
+    "510": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "511": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "513": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "514": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "REVERT",
+      "path": "14"
+    },
+    "515": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "516": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "517": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "GAS",
+      "path": "14"
+    },
+    "518": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "STATICCALL",
+      "path": "14"
+    },
+    "519": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ISZERO",
+      "path": "14"
+    },
+    "520": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "521": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ISZERO",
+      "path": "14"
+    },
+    "522": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x217"
+    },
+    "525": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "526": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "RETURNDATASIZE",
+      "path": "14"
+    },
+    "527": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "529": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "530": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "RETURNDATACOPY",
+      "path": "14"
+    },
+    "531": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "RETURNDATASIZE",
+      "path": "14"
+    },
+    "532": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "534": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "REVERT",
+      "path": "14"
+    },
+    "535": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "536": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "537": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "538": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "539": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "540": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "542": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "MLOAD",
+      "path": "14"
+    },
+    "543": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "RETURNDATASIZE",
+      "path": "14"
+    },
+    "544": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x1F"
+    },
+    "546": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "NOT",
+      "path": "14"
+    },
+    "547": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x1F"
+    },
+    "549": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP3",
+      "path": "14"
+    },
+    "550": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "551": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "AND",
+      "path": "14"
+    },
+    "552": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP3",
+      "path": "14"
+    },
+    "553": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "554": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "555": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "557": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "MSTORE",
+      "path": "14"
+    },
+    "558": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "559": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "560": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "561": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "562": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x23B"
+    },
+    "565": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "SWAP2",
+      "path": "14"
+    },
+    "566": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "567": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x425"
+    },
+    "570": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "571": {
+      "branch": 5,
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1588,
+        1676
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "572": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "574": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "MLOAD",
+      "path": "14"
+    },
+    "575": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "576": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "578": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "579": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "581": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "MSTORE",
+      "path": "14"
+    },
+    "582": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "583": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x1A"
+    },
+    "585": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "586": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "MSTORE",
+      "path": "14"
+    },
+    "587": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x20"
+    },
+    "589": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "590": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "PUSH32",
+      "path": "14",
+      "value": "0x524546455252414C5F504152544E45525F4E4F545F464F554E44000000000000"
+    },
+    "623": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "624": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "MSTORE",
+      "path": "14"
+    },
+    "625": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1690,
+        1722
+      ],
+      "op": "POP",
+      "path": "14"
+    },
+    "626": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "627": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x28F"
+    },
+    "630": {
+      "branch": 5,
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "JUMPI",
+      "path": "14"
+    },
+    "631": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x40"
+    },
+    "633": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "MLOAD",
+      "path": "14"
+    },
+    "634": {
+      "op": "PUSH3",
+      "value": "0x461BCD"
+    },
+    "638": {
+      "op": "PUSH1",
+      "value": "0xE5"
+    },
+    "640": {
+      "op": "SHL"
+    },
+    "641": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "642": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "MSTORE",
+      "path": "14"
+    },
+    "643": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x4"
+    },
+    "645": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "646": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x182"
+    },
+    "649": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "SWAP2",
+      "path": "14"
+    },
+    "650": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "651": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x509"
+    },
+    "654": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "655": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1567,
+        1732
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "656": {
+      "op": "POP"
+    },
+    "657": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1761,
+        1967
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "statement": 2,
+      "value": "0x2C2"
+    },
+    "660": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1819,
+        1843
+      ],
+      "op": "PUSH32",
+      "path": "14",
+      "value": "0x0"
+    },
+    "693": {
+      "op": "PUSH4",
+      "value": "0x3D0DAF19"
+    },
+    "698": {
+      "op": "PUSH1",
+      "value": "0xE0"
+    },
+    "700": {
+      "op": "SHL"
+    },
+    "701": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1935,
+        1953
+      ],
+      "op": "DUP6",
+      "path": "14"
+    },
+    "702": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1761,
+        1793
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x2E0"
+    },
+    "705": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "i",
+      "offset": [
+        1761,
+        1967
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "706": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1761,
+        1967
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "707": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1742,
+        1967
+      ],
+      "op": "SWAP5",
+      "path": "14"
+    },
+    "708": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "SWAP4",
+      "path": "14"
+    },
+    "709": {
+      "op": "POP"
+    },
+    "710": {
+      "op": "POP"
+    },
+    "711": {
+      "op": "POP"
+    },
+    "712": {
+      "op": "POP"
+    },
+    "713": {
+      "fn": "RemoveReferralPartner.createEVMScript",
+      "jump": "o",
+      "offset": [
+        1363,
+        1974
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "714": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2485,
+        2676
+      ],
+      "op": "JUMPDEST",
+      "path": "14"
+    },
+    "715": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2598,
+        2605
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x0"
+    },
+    "717": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2639,
+        2657
+      ],
+      "op": "DUP2",
+      "path": "14",
+      "statement": 3
+    },
+    "718": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "DUP1",
+      "path": "14"
+    },
+    "719": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "PUSH1",
+      "path": "14",
+      "value": "0x20"
+    },
+    "721": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "722": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "723": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "MLOAD",
+      "path": "14"
+    },
+    "724": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "DUP2",
+      "path": "14"
+    },
+    "725": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "ADD",
+      "path": "14"
+    },
+    "726": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "727": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0xFA"
+    },
+    "730": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "SWAP2",
+      "path": "14"
+    },
+    "731": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "SWAP1",
+      "path": "14"
+    },
+    "732": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "PUSH2",
+      "path": "14",
+      "value": "0x3B1"
+    },
+    "735": {
+      "fn": "RemoveReferralPartner._decodeEVMScriptCallData",
+      "jump": "i",
+      "offset": [
+        2628,
+        2669
+      ],
+      "op": "JUMP",
+      "path": "14"
+    },
+    "736": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        427,
+        823
+      ],
+      "op": "JUMPDEST",
+      "path": "29"
+    },
+    "737": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        569,
+        591
+      ],
+      "op": "PUSH1",
+      "path": "29",
+      "value": "0x60"
+    },
+    "739": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "741": {
+      "op": "PUSH1",
+      "value": "0xE0"
+    },
+    "743": {
+      "op": "SHL"
+    },
+    "744": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        681,
+        684
+      ],
+      "op": "DUP5",
+      "path": "29",
+      "statement": 4
+    },
+    "745": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        709,
+        727
+      ],
+      "op": "DUP4",
+      "path": "29"
+    },
+    "746": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        709,
+        734
+      ],
+      "op": "MLOAD",
+      "path": "29"
+    },
+    "747": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        738,
+        739
+      ],
+      "op": "PUSH1",
+      "path": "29",
+      "value": "0x4"
+    },
+    "749": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        702,
+        739
+      ],
+      "op": "PUSH2",
+      "path": "29",
+      "value": "0x2F6"
+    },
+    "752": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        702,
+        739
+      ],
+      "op": "SWAP2",
+      "path": "29"
+    },
+    "753": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        702,
+        739
+      ],
+      "op": "SWAP1",
+      "path": "29"
+    },
+    "754": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        702,
+        739
+      ],
+      "op": "PUSH2",
+      "path": "29",
+      "value": "0x51C"
+    },
+    "757": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "jump": "i",
+      "offset": [
+        702,
+        739
+      ],
+      "op": "JUMP",
+      "path": "29"
+    },
+    "758": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        702,
+        739
+      ],
+      "op": "JUMPDEST",
+      "path": "29"
+    },
+    "759": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        757,
+        766
+      ],
+      "op": "DUP6",
+      "path": "29"
+    },
+    "760": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        784,
+        802
+      ],
+      "op": "DUP6",
+      "path": "29"
+    },
+    "761": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "PUSH1",
+      "path": "29",
+      "value": "0x40"
+    },
+    "763": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "MLOAD",
+      "path": "29"
+    },
+    "764": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "PUSH1",
+      "path": "29",
+      "value": "0x20"
+    },
+    "766": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "ADD",
+      "path": "29"
+    },
+    "767": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "PUSH2",
+      "path": "29",
+      "value": "0x30C"
+    },
+    "770": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SWAP6",
+      "path": "29"
+    },
+    "771": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SWAP5",
+      "path": "29"
+    },
+    "772": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SWAP4",
+      "path": "29"
+    },
+    "773": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SWAP3",
+      "path": "29"
+    },
+    "774": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SWAP2",
+      "path": "29"
+    },
+    "775": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SWAP1",
+      "path": "29"
+    },
+    "776": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "PUSH2",
+      "path": "29",
+      "value": "0x4A8"
+    },
+    "779": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "jump": "i",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "JUMP",
+      "path": "29"
+    },
+    "780": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "JUMPDEST",
+      "path": "29"
+    },
+    "781": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "PUSH1",
+      "path": "29",
+      "value": "0x40"
+    },
+    "783": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "MLOAD",
+      "path": "29"
+    },
+    "784": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "PUSH1",
+      "path": "29",
+      "value": "0x20"
+    },
+    "786": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "DUP2",
+      "path": "29"
+    },
+    "787": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "DUP4",
+      "path": "29"
+    },
+    "788": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SUB",
+      "path": "29"
+    },
+    "789": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SUB",
+      "path": "29"
+    },
+    "790": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "DUP2",
+      "path": "29"
+    },
+    "791": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "MSTORE",
+      "path": "29"
+    },
+    "792": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "SWAP1",
+      "path": "29"
+    },
+    "793": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "PUSH1",
+      "path": "29",
+      "value": "0x40"
+    },
+    "795": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        622,
+        816
+      ],
+      "op": "MSTORE",
+      "path": "29"
+    },
+    "796": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        603,
+        816
+      ],
+      "op": "SWAP1",
+      "path": "29"
+    },
+    "797": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        603,
+        816
+      ],
+      "op": "POP",
+      "path": "29"
+    },
+    "798": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        427,
+        823
+      ],
+      "op": "SWAP4",
+      "path": "29"
+    },
+    "799": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        427,
+        823
+      ],
+      "op": "SWAP3",
+      "path": "29"
+    },
+    "800": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        427,
+        823
+      ],
+      "op": "POP",
+      "path": "29"
+    },
+    "801": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        427,
+        823
+      ],
+      "op": "POP",
+      "path": "29"
+    },
+    "802": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "offset": [
+        427,
+        823
+      ],
+      "op": "POP",
+      "path": "29"
+    },
+    "803": {
+      "fn": "EVMScriptCreator.createEVMScript",
+      "jump": "o",
+      "offset": [
+        427,
+        823
+      ],
+      "op": "JUMP",
+      "path": "29"
+    },
+    "804": {
+      "op": "JUMPDEST"
+    },
+    "805": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "807": {
+      "op": "DUP3"
+    },
+    "808": {
+      "op": "PUSH1",
+      "value": "0x1F"
+    },
+    "810": {
+      "op": "DUP4"
+    },
+    "811": {
+      "op": "ADD"
+    },
+    "812": {
+      "op": "SLT"
+    },
+    "813": {
+      "op": "PUSH2",
+      "value": "0x335"
+    },
+    "816": {
+      "op": "JUMPI"
+    },
+    "817": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "819": {
+      "op": "DUP1"
+    },
+    "820": {
+      "op": "REVERT"
+    },
+    "821": {
+      "op": "JUMPDEST"
+    },
+    "822": {
+      "op": "DUP2"
+    },
+    "823": {
+      "op": "CALLDATALOAD"
+    },
+    "824": {
+      "op": "PUSH8",
+      "value": "0xFFFFFFFFFFFFFFFF"
+    },
+    "833": {
+      "op": "DUP1"
+    },
+    "834": {
+      "op": "DUP3"
+    },
+    "835": {
+      "op": "GT"
+    },
+    "836": {
+      "op": "ISZERO"
+    },
+    "837": {
+      "op": "PUSH2",
+      "value": "0x350"
+    },
+    "840": {
+      "op": "JUMPI"
+    },
+    "841": {
+      "op": "PUSH2",
+      "value": "0x350"
+    },
+    "844": {
+      "op": "PUSH2",
+      "value": "0x582"
+    },
+    "847": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "848": {
+      "op": "JUMPDEST"
+    },
+    "849": {
+      "op": "PUSH1",
+      "value": "0x40"
+    },
+    "851": {
+      "op": "MLOAD"
+    },
+    "852": {
+      "op": "PUSH1",
+      "value": "0x1F"
+    },
+    "854": {
+      "op": "DUP4"
+    },
+    "855": {
+      "op": "ADD"
+    },
+    "856": {
+      "op": "PUSH1",
+      "value": "0x1F"
+    },
+    "858": {
+      "op": "NOT"
+    },
+    "859": {
+      "op": "SWAP1"
+    },
+    "860": {
+      "op": "DUP2"
+    },
+    "861": {
+      "op": "AND"
+    },
+    "862": {
+      "op": "PUSH1",
+      "value": "0x3F"
+    },
+    "864": {
+      "op": "ADD"
+    },
+    "865": {
+      "op": "AND"
+    },
+    "866": {
+      "op": "DUP2"
+    },
+    "867": {
+      "op": "ADD"
+    },
+    "868": {
+      "op": "SWAP1"
+    },
+    "869": {
+      "op": "DUP3"
+    },
+    "870": {
+      "op": "DUP3"
+    },
+    "871": {
+      "op": "GT"
+    },
+    "872": {
+      "op": "DUP2"
+    },
+    "873": {
+      "op": "DUP4"
+    },
+    "874": {
+      "op": "LT"
+    },
+    "875": {
+      "op": "OR"
+    },
+    "876": {
+      "op": "ISZERO"
+    },
+    "877": {
+      "op": "PUSH2",
+      "value": "0x378"
+    },
+    "880": {
+      "op": "JUMPI"
+    },
+    "881": {
+      "op": "PUSH2",
+      "value": "0x378"
+    },
+    "884": {
+      "op": "PUSH2",
+      "value": "0x582"
+    },
+    "887": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "888": {
+      "op": "JUMPDEST"
+    },
+    "889": {
+      "op": "DUP2"
+    },
+    "890": {
+      "op": "PUSH1",
+      "value": "0x40"
+    },
+    "892": {
+      "op": "MSTORE"
+    },
+    "893": {
+      "op": "DUP4"
+    },
+    "894": {
+      "op": "DUP2"
+    },
+    "895": {
+      "op": "MSTORE"
+    },
+    "896": {
+      "op": "DUP7"
+    },
+    "897": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "899": {
+      "op": "DUP6"
+    },
+    "900": {
+      "op": "DUP9"
+    },
+    "901": {
+      "op": "ADD"
+    },
+    "902": {
+      "op": "ADD"
+    },
+    "903": {
+      "op": "GT"
+    },
+    "904": {
+      "op": "ISZERO"
+    },
+    "905": {
+      "op": "PUSH2",
+      "value": "0x391"
+    },
+    "908": {
+      "op": "JUMPI"
+    },
+    "909": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "911": {
+      "op": "DUP1"
+    },
+    "912": {
+      "op": "REVERT"
+    },
+    "913": {
+      "op": "JUMPDEST"
+    },
+    "914": {
+      "op": "DUP4"
+    },
+    "915": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "917": {
+      "op": "DUP8"
+    },
+    "918": {
+      "op": "ADD"
+    },
+    "919": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "921": {
+      "op": "DUP4"
+    },
+    "922": {
+      "op": "ADD"
+    },
+    "923": {
+      "op": "CALLDATACOPY"
+    },
+    "924": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "926": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "928": {
+      "op": "DUP6"
+    },
+    "929": {
+      "op": "DUP4"
+    },
+    "930": {
+      "op": "ADD"
+    },
+    "931": {
+      "op": "ADD"
+    },
+    "932": {
+      "op": "MSTORE"
+    },
+    "933": {
+      "op": "DUP1"
+    },
+    "934": {
+      "op": "SWAP5"
+    },
+    "935": {
+      "op": "POP"
+    },
+    "936": {
+      "op": "POP"
+    },
+    "937": {
+      "op": "POP"
+    },
+    "938": {
+      "op": "POP"
+    },
+    "939": {
+      "op": "POP"
+    },
+    "940": {
+      "op": "SWAP3"
+    },
+    "941": {
+      "op": "SWAP2"
+    },
+    "942": {
+      "op": "POP"
+    },
+    "943": {
+      "op": "POP"
+    },
+    "944": {
+      "jump": "o",
+      "op": "JUMP"
+    },
+    "945": {
+      "op": "JUMPDEST"
+    },
+    "946": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "948": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "950": {
+      "op": "DUP3"
+    },
+    "951": {
+      "op": "DUP5"
+    },
+    "952": {
+      "op": "SUB"
+    },
+    "953": {
+      "op": "SLT"
+    },
+    "954": {
+      "op": "ISZERO"
+    },
+    "955": {
+      "op": "PUSH2",
+      "value": "0x3C3"
+    },
+    "958": {
+      "op": "JUMPI"
+    },
+    "959": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "961": {
+      "op": "DUP1"
+    },
+    "962": {
+      "op": "REVERT"
+    },
+    "963": {
+      "op": "JUMPDEST"
+    },
+    "964": {
+      "op": "DUP2"
+    },
+    "965": {
+      "op": "MLOAD"
+    },
+    "966": {
+      "op": "PUSH2",
+      "value": "0x3CE"
+    },
+    "969": {
+      "op": "DUP2"
+    },
+    "970": {
+      "op": "PUSH2",
+      "value": "0x598"
+    },
+    "973": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "974": {
+      "op": "JUMPDEST"
+    },
+    "975": {
+      "op": "SWAP4"
+    },
+    "976": {
+      "op": "SWAP3"
+    },
+    "977": {
+      "op": "POP"
+    },
+    "978": {
+      "op": "POP"
+    },
+    "979": {
+      "op": "POP"
+    },
+    "980": {
+      "jump": "o",
+      "op": "JUMP"
+    },
+    "981": {
+      "op": "JUMPDEST"
+    },
+    "982": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "984": {
+      "op": "DUP1"
+    },
+    "985": {
+      "op": "PUSH1",
+      "value": "0x40"
+    },
+    "987": {
+      "op": "DUP4"
+    },
+    "988": {
+      "op": "DUP6"
+    },
+    "989": {
+      "op": "SUB"
+    },
+    "990": {
+      "op": "SLT"
+    },
+    "991": {
+      "op": "ISZERO"
+    },
+    "992": {
+      "op": "PUSH2",
+      "value": "0x3E8"
+    },
+    "995": {
+      "op": "JUMPI"
+    },
+    "996": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "998": {
+      "op": "DUP1"
+    },
+    "999": {
+      "op": "REVERT"
+    },
+    "1000": {
+      "op": "JUMPDEST"
+    },
+    "1001": {
+      "op": "DUP3"
+    },
+    "1002": {
+      "op": "CALLDATALOAD"
+    },
+    "1003": {
+      "op": "PUSH2",
+      "value": "0x3F3"
+    },
+    "1006": {
+      "op": "DUP2"
+    },
+    "1007": {
+      "op": "PUSH2",
+      "value": "0x598"
+    },
+    "1010": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "1011": {
+      "op": "JUMPDEST"
+    },
+    "1012": {
+      "op": "SWAP2"
+    },
+    "1013": {
+      "op": "POP"
+    },
+    "1014": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1016": {
+      "op": "DUP4"
+    },
+    "1017": {
+      "op": "ADD"
+    },
+    "1018": {
+      "op": "CALLDATALOAD"
+    },
+    "1019": {
+      "op": "PUSH8",
+      "value": "0xFFFFFFFFFFFFFFFF"
+    },
+    "1028": {
+      "op": "DUP2"
+    },
+    "1029": {
+      "op": "GT"
+    },
+    "1030": {
+      "op": "ISZERO"
+    },
+    "1031": {
+      "op": "PUSH2",
+      "value": "0x40F"
+    },
+    "1034": {
+      "op": "JUMPI"
+    },
+    "1035": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1037": {
+      "op": "DUP1"
+    },
+    "1038": {
+      "op": "REVERT"
+    },
+    "1039": {
+      "op": "JUMPDEST"
+    },
+    "1040": {
+      "op": "PUSH2",
+      "value": "0x41B"
+    },
+    "1043": {
+      "op": "DUP6"
+    },
+    "1044": {
+      "op": "DUP3"
+    },
+    "1045": {
+      "op": "DUP7"
+    },
+    "1046": {
+      "op": "ADD"
+    },
+    "1047": {
+      "op": "PUSH2",
+      "value": "0x324"
+    },
+    "1050": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "1051": {
+      "op": "JUMPDEST"
+    },
+    "1052": {
+      "op": "SWAP2"
+    },
+    "1053": {
+      "op": "POP"
+    },
+    "1054": {
+      "op": "POP"
+    },
+    "1055": {
+      "op": "SWAP3"
+    },
+    "1056": {
+      "op": "POP"
+    },
+    "1057": {
+      "op": "SWAP3"
+    },
+    "1058": {
+      "op": "SWAP1"
+    },
+    "1059": {
+      "op": "POP"
+    },
+    "1060": {
+      "jump": "o",
+      "op": "JUMP"
+    },
+    "1061": {
+      "op": "JUMPDEST"
+    },
+    "1062": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1064": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1066": {
+      "op": "DUP3"
+    },
+    "1067": {
+      "op": "DUP5"
+    },
+    "1068": {
+      "op": "SUB"
+    },
+    "1069": {
+      "op": "SLT"
+    },
+    "1070": {
+      "op": "ISZERO"
+    },
+    "1071": {
+      "op": "PUSH2",
+      "value": "0x437"
+    },
+    "1074": {
+      "op": "JUMPI"
+    },
+    "1075": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1077": {
+      "op": "DUP1"
+    },
+    "1078": {
+      "op": "REVERT"
+    },
+    "1079": {
+      "op": "JUMPDEST"
+    },
+    "1080": {
+      "op": "DUP2"
+    },
+    "1081": {
+      "op": "MLOAD"
+    },
+    "1082": {
+      "op": "DUP1"
+    },
+    "1083": {
+      "op": "ISZERO"
+    },
+    "1084": {
+      "op": "ISZERO"
+    },
+    "1085": {
+      "op": "DUP2"
+    },
+    "1086": {
+      "op": "EQ"
+    },
+    "1087": {
+      "op": "PUSH2",
+      "value": "0x3CE"
+    },
+    "1090": {
+      "op": "JUMPI"
+    },
+    "1091": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1093": {
+      "op": "DUP1"
+    },
+    "1094": {
+      "op": "REVERT"
+    },
+    "1095": {
+      "op": "JUMPDEST"
+    },
+    "1096": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1098": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1100": {
+      "op": "DUP3"
+    },
+    "1101": {
+      "op": "DUP5"
+    },
+    "1102": {
+      "op": "SUB"
+    },
+    "1103": {
+      "op": "SLT"
+    },
+    "1104": {
+      "op": "ISZERO"
+    },
+    "1105": {
+      "op": "PUSH2",
+      "value": "0x459"
+    },
+    "1108": {
+      "op": "JUMPI"
+    },
+    "1109": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1111": {
+      "op": "DUP1"
+    },
+    "1112": {
+      "op": "REVERT"
+    },
+    "1113": {
+      "op": "JUMPDEST"
+    },
+    "1114": {
+      "op": "DUP2"
+    },
+    "1115": {
+      "op": "CALLDATALOAD"
+    },
+    "1116": {
+      "op": "PUSH8",
+      "value": "0xFFFFFFFFFFFFFFFF"
+    },
+    "1125": {
+      "op": "DUP2"
+    },
+    "1126": {
+      "op": "GT"
+    },
+    "1127": {
+      "op": "ISZERO"
+    },
+    "1128": {
+      "op": "PUSH2",
+      "value": "0x470"
+    },
+    "1131": {
+      "op": "JUMPI"
+    },
+    "1132": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1134": {
+      "op": "DUP1"
+    },
+    "1135": {
+      "op": "REVERT"
+    },
+    "1136": {
+      "op": "JUMPDEST"
+    },
+    "1137": {
+      "op": "PUSH2",
+      "value": "0x2C2"
+    },
+    "1140": {
+      "op": "DUP5"
+    },
+    "1141": {
+      "op": "DUP3"
+    },
+    "1142": {
+      "op": "DUP6"
+    },
+    "1143": {
+      "op": "ADD"
+    },
+    "1144": {
+      "op": "PUSH2",
+      "value": "0x324"
+    },
+    "1147": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "1148": {
+      "op": "JUMPDEST"
+    },
+    "1149": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1151": {
+      "op": "DUP2"
+    },
+    "1152": {
+      "op": "MLOAD"
+    },
+    "1153": {
+      "op": "DUP1"
+    },
+    "1154": {
+      "op": "DUP5"
+    },
+    "1155": {
+      "op": "MSTORE"
+    },
+    "1156": {
+      "op": "PUSH2",
+      "value": "0x494"
+    },
+    "1159": {
+      "op": "DUP2"
+    },
+    "1160": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1162": {
+      "op": "DUP7"
+    },
+    "1163": {
+      "op": "ADD"
+    },
+    "1164": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1166": {
+      "op": "DUP7"
+    },
+    "1167": {
+      "op": "ADD"
+    },
+    "1168": {
+      "op": "PUSH2",
+      "value": "0x552"
+    },
+    "1171": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "1172": {
+      "op": "JUMPDEST"
+    },
+    "1173": {
+      "op": "PUSH1",
+      "value": "0x1F"
+    },
+    "1175": {
+      "op": "ADD"
+    },
+    "1176": {
+      "op": "PUSH1",
+      "value": "0x1F"
+    },
+    "1178": {
+      "op": "NOT"
+    },
+    "1179": {
+      "op": "AND"
+    },
+    "1180": {
+      "op": "SWAP3"
+    },
+    "1181": {
+      "op": "SWAP1"
+    },
+    "1182": {
+      "op": "SWAP3"
+    },
+    "1183": {
+      "op": "ADD"
+    },
+    "1184": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1186": {
+      "op": "ADD"
+    },
+    "1187": {
+      "op": "SWAP3"
+    },
+    "1188": {
+      "op": "SWAP2"
+    },
+    "1189": {
+      "op": "POP"
+    },
+    "1190": {
+      "op": "POP"
+    },
+    "1191": {
+      "jump": "o",
+      "op": "JUMP"
+    },
+    "1192": {
+      "op": "JUMPDEST"
+    },
+    "1193": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "1195": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "1197": {
+      "op": "PUSH1",
+      "value": "0xE0"
+    },
+    "1199": {
+      "op": "SHL"
+    },
+    "1200": {
+      "op": "SUB"
+    },
+    "1201": {
+      "op": "NOT"
+    },
+    "1202": {
+      "op": "DUP7"
+    },
+    "1203": {
+      "op": "DUP2"
+    },
+    "1204": {
+      "op": "AND"
+    },
+    "1205": {
+      "op": "DUP3"
+    },
+    "1206": {
+      "op": "MSTORE"
+    },
+    "1207": {
+      "op": "PUSH1",
+      "value": "0x60"
+    },
+    "1209": {
+      "op": "DUP7"
+    },
+    "1210": {
+      "op": "SWAP1"
+    },
+    "1211": {
+      "op": "SHL"
+    },
+    "1212": {
+      "op": "PUSH12",
+      "value": "0xFFFFFFFFFFFFFFFFFFFFFFFF"
+    },
+    "1225": {
+      "op": "NOT"
+    },
+    "1226": {
+      "op": "AND"
+    },
+    "1227": {
+      "op": "PUSH1",
+      "value": "0x4"
+    },
+    "1229": {
+      "op": "DUP4"
+    },
+    "1230": {
+      "op": "ADD"
+    },
+    "1231": {
+      "op": "MSTORE"
+    },
+    "1232": {
+      "op": "PUSH1",
+      "value": "0xE0"
+    },
+    "1234": {
+      "op": "DUP6"
+    },
+    "1235": {
+      "op": "SWAP1"
+    },
+    "1236": {
+      "op": "SHL"
+    },
+    "1237": {
+      "op": "DUP2"
+    },
+    "1238": {
+      "op": "AND"
+    },
+    "1239": {
+      "op": "PUSH1",
+      "value": "0x18"
+    },
+    "1241": {
+      "op": "DUP4"
+    },
+    "1242": {
+      "op": "ADD"
+    },
+    "1243": {
+      "op": "MSTORE"
+    },
+    "1244": {
+      "op": "DUP4"
+    },
+    "1245": {
+      "op": "AND"
+    },
+    "1246": {
+      "op": "PUSH1",
+      "value": "0x1C"
+    },
+    "1248": {
+      "op": "DUP3"
+    },
+    "1249": {
+      "op": "ADD"
+    },
+    "1250": {
+      "op": "MSTORE"
+    },
+    "1251": {
+      "op": "DUP2"
+    },
+    "1252": {
+      "op": "MLOAD"
+    },
+    "1253": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1255": {
+      "op": "SWAP1"
+    },
+    "1256": {
+      "op": "PUSH2",
+      "value": "0x4F8"
+    },
+    "1259": {
+      "op": "DUP2"
+    },
+    "1260": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1262": {
+      "op": "DUP1"
+    },
+    "1263": {
+      "op": "DUP7"
+    },
+    "1264": {
+      "op": "ADD"
+    },
+    "1265": {
+      "op": "SWAP1"
+    },
+    "1266": {
+      "op": "DUP8"
+    },
+    "1267": {
+      "op": "ADD"
+    },
+    "1268": {
+      "op": "PUSH2",
+      "value": "0x552"
+    },
+    "1271": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "1272": {
+      "op": "JUMPDEST"
+    },
+    "1273": {
+      "op": "SWAP2"
+    },
+    "1274": {
+      "op": "SWAP1"
+    },
+    "1275": {
+      "op": "SWAP2"
+    },
+    "1276": {
+      "op": "ADD"
+    },
+    "1277": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1279": {
+      "op": "ADD"
+    },
+    "1280": {
+      "op": "SWAP7"
+    },
+    "1281": {
+      "op": "SWAP6"
+    },
+    "1282": {
+      "op": "POP"
+    },
+    "1283": {
+      "op": "POP"
+    },
+    "1284": {
+      "op": "POP"
+    },
+    "1285": {
+      "op": "POP"
+    },
+    "1286": {
+      "op": "POP"
+    },
+    "1287": {
+      "op": "POP"
+    },
+    "1288": {
+      "jump": "o",
+      "op": "JUMP"
+    },
+    "1289": {
+      "op": "JUMPDEST"
+    },
+    "1290": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1292": {
+      "op": "DUP2"
+    },
+    "1293": {
+      "op": "MSTORE"
+    },
+    "1294": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1296": {
+      "op": "PUSH2",
+      "value": "0x3CE"
+    },
+    "1299": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1301": {
+      "op": "DUP4"
+    },
+    "1302": {
+      "op": "ADD"
+    },
+    "1303": {
+      "op": "DUP5"
+    },
+    "1304": {
+      "op": "PUSH2",
+      "value": "0x47C"
+    },
+    "1307": {
+      "jump": "i",
+      "op": "JUMP"
+    },
+    "1308": {
+      "op": "JUMPDEST"
+    },
+    "1309": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1311": {
+      "op": "PUSH4",
+      "value": "0xFFFFFFFF"
+    },
+    "1316": {
+      "op": "DUP1"
+    },
+    "1317": {
+      "op": "DUP4"
+    },
+    "1318": {
+      "op": "AND"
+    },
+    "1319": {
+      "op": "DUP2"
+    },
+    "1320": {
+      "op": "DUP6"
+    },
+    "1321": {
+      "op": "AND"
+    },
+    "1322": {
+      "op": "DUP1"
+    },
+    "1323": {
+      "op": "DUP4"
+    },
+    "1324": {
+      "op": "SUB"
+    },
+    "1325": {
+      "op": "DUP3"
+    },
+    "1326": {
+      "op": "GT"
+    },
+    "1327": {
+      "op": "ISZERO"
+    },
+    "1328": {
+      "op": "PUSH2",
+      "value": "0x549"
+    },
+    "1331": {
+      "op": "JUMPI"
+    },
+    "1332": {
+      "op": "PUSH4",
+      "value": "0x4E487B71"
+    },
+    "1337": {
+      "op": "PUSH1",
+      "value": "0xE0"
+    },
+    "1339": {
+      "op": "SHL"
+    },
+    "1340": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1342": {
+      "op": "MSTORE"
+    },
+    "1343": {
+      "op": "PUSH1",
+      "value": "0x11"
+    },
+    "1345": {
+      "op": "PUSH1",
+      "value": "0x4"
+    },
+    "1347": {
+      "op": "MSTORE"
+    },
+    "1348": {
+      "op": "PUSH1",
+      "value": "0x24"
+    },
+    "1350": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1352": {
+      "op": "REVERT"
+    },
+    "1353": {
+      "op": "JUMPDEST"
+    },
+    "1354": {
+      "op": "ADD"
+    },
+    "1355": {
+      "op": "SWAP5"
+    },
+    "1356": {
+      "op": "SWAP4"
+    },
+    "1357": {
+      "op": "POP"
+    },
+    "1358": {
+      "op": "POP"
+    },
+    "1359": {
+      "op": "POP"
+    },
+    "1360": {
+      "op": "POP"
+    },
+    "1361": {
+      "jump": "o",
+      "op": "JUMP"
+    },
+    "1362": {
+      "op": "JUMPDEST"
+    },
+    "1363": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1365": {
+      "op": "JUMPDEST"
+    },
+    "1366": {
+      "op": "DUP4"
+    },
+    "1367": {
+      "op": "DUP2"
+    },
+    "1368": {
+      "op": "LT"
+    },
+    "1369": {
+      "op": "ISZERO"
+    },
+    "1370": {
+      "op": "PUSH2",
+      "value": "0x56D"
+    },
+    "1373": {
+      "op": "JUMPI"
+    },
+    "1374": {
+      "op": "DUP2"
+    },
+    "1375": {
+      "op": "DUP2"
+    },
+    "1376": {
+      "op": "ADD"
+    },
+    "1377": {
+      "op": "MLOAD"
+    },
+    "1378": {
+      "op": "DUP4"
+    },
+    "1379": {
+      "op": "DUP3"
+    },
+    "1380": {
+      "op": "ADD"
+    },
+    "1381": {
+      "op": "MSTORE"
+    },
+    "1382": {
+      "op": "PUSH1",
+      "value": "0x20"
+    },
+    "1384": {
+      "op": "ADD"
+    },
+    "1385": {
+      "op": "PUSH2",
+      "value": "0x555"
+    },
+    "1388": {
+      "op": "JUMP"
+    },
+    "1389": {
+      "op": "JUMPDEST"
+    },
+    "1390": {
+      "op": "DUP4"
+    },
+    "1391": {
+      "op": "DUP2"
+    },
+    "1392": {
+      "op": "GT"
+    },
+    "1393": {
+      "op": "ISZERO"
+    },
+    "1394": {
+      "op": "PUSH2",
+      "value": "0x57C"
+    },
+    "1397": {
+      "op": "JUMPI"
+    },
+    "1398": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1400": {
+      "op": "DUP5"
+    },
+    "1401": {
+      "op": "DUP5"
+    },
+    "1402": {
+      "op": "ADD"
+    },
+    "1403": {
+      "op": "MSTORE"
+    },
+    "1404": {
+      "op": "JUMPDEST"
+    },
+    "1405": {
+      "op": "POP"
+    },
+    "1406": {
+      "op": "POP"
+    },
+    "1407": {
+      "op": "POP"
+    },
+    "1408": {
+      "op": "POP"
+    },
+    "1409": {
+      "jump": "o",
+      "op": "JUMP"
+    },
+    "1410": {
+      "op": "JUMPDEST"
+    },
+    "1411": {
+      "op": "PUSH4",
+      "value": "0x4E487B71"
+    },
+    "1416": {
+      "op": "PUSH1",
+      "value": "0xE0"
+    },
+    "1418": {
+      "op": "SHL"
+    },
+    "1419": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1421": {
+      "op": "MSTORE"
+    },
+    "1422": {
+      "op": "PUSH1",
+      "value": "0x41"
+    },
+    "1424": {
+      "op": "PUSH1",
+      "value": "0x4"
+    },
+    "1426": {
+      "op": "MSTORE"
+    },
+    "1427": {
+      "op": "PUSH1",
+      "value": "0x24"
+    },
+    "1429": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1431": {
+      "op": "REVERT"
+    },
+    "1432": {
+      "op": "JUMPDEST"
+    },
+    "1433": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "1435": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "1437": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "1439": {
+      "op": "SHL"
+    },
+    "1440": {
+      "op": "SUB"
+    },
+    "1441": {
+      "op": "DUP2"
+    },
+    "1442": {
+      "op": "AND"
+    },
+    "1443": {
+      "op": "DUP2"
+    },
+    "1444": {
+      "op": "EQ"
+    },
+    "1445": {
+      "op": "PUSH2",
+      "value": "0x5AD"
+    },
+    "1448": {
+      "op": "JUMPI"
+    },
+    "1449": {
+      "op": "PUSH1",
+      "value": "0x0"
+    },
+    "1451": {
+      "op": "DUP1"
+    },
+    "1452": {
+      "op": "REVERT"
+    },
+    "1453": {
+      "op": "JUMPDEST"
+    },
+    "1454": {
+      "op": "POP"
+    },
+    "1455": {
+      "jump": "o",
+      "op": "JUMP"
+    }
+  },
+  "sha1": "fc2b80a9da8a6dc4df2b8954c3e05b615d1b047e",
+  "source": "// SPDX-FileCopyrightText: 2022 Lido <info@lido.fi>\n// SPDX-License-Identifier: GPL-3.0\n\npragma solidity ^0.8.4;\n\nimport \"../TrustedCaller.sol\";\nimport \"../ReferralPartnersRegistry.sol\";\nimport \"../libraries/EVMScriptCreator.sol\";\nimport \"../interfaces/IEVMScriptFactory.sol\";\n\n/// @author psirex, dzhon\n/// @notice Creates EVMScript to remove referral partner from ReferralPartnersRegistry\ncontract RemoveReferralPartner is TrustedCaller, IEVMScriptFactory {\n    // -------------\n    // ERRORS\n    // -------------\n    string private constant ERROR_REFERRAL_PARTNER_NOT_FOUND = \"REFERRAL_PARTNER_NOT_FOUND\";\n\n    // -------------\n    // VARIABLES\n    // -------------\n\n    /// @notice Address of ReferralPartnersRegistry\n    ReferralPartnersRegistry public immutable referralPartnersRegistry;\n\n    // -------------\n    // CONSTRUCTOR\n    // -------------\n\n    constructor(address _trustedCaller, address _referralPartnersRegistry)\n        TrustedCaller(_trustedCaller)\n    {\n        referralPartnersRegistry = ReferralPartnersRegistry(_referralPartnersRegistry);\n    }\n\n    // -------------\n    // EXTERNAL METHODS\n    // -------------\n\n    /// @notice Creates EVMScript to remove referral partner from ReferralPartnersRegistry\n    /// @param _creator Address who creates EVMScript\n    /// @param _evmScriptCallData Encoded tuple: (address _referralPartner)\n    function createEVMScript(address _creator, bytes memory _evmScriptCallData)\n        external\n        view\n        override\n        onlyTrustedCaller(_creator)\n        returns (bytes memory)\n    {\n        require(\n            referralPartnersRegistry.isReferralPartner(_decodeEVMScriptCallData(_evmScriptCallData)),\n            ERROR_REFERRAL_PARTNER_NOT_FOUND\n        );\n        return\n            EVMScriptCreator.createEVMScript(\n                address(referralPartnersRegistry),\n                referralPartnersRegistry.removeReferralPartner.selector,\n                _evmScriptCallData\n            );\n    }\n\n    /// @notice Decodes call data used by createEVMScript method\n    /// @param _evmScriptCallData Encoded tuple: (address _referralPartner)\n    /// @return _referralPartner Address of referral partner to remove\n    function decodeEVMScriptCallData(bytes memory _evmScriptCallData)\n        external\n        pure\n        returns (address _referralPartner)\n    {\n        return _decodeEVMScriptCallData(_evmScriptCallData);\n    }\n\n    // ------------------\n    // PRIVATE METHODS\n    // ------------------\n\n    function _decodeEVMScriptCallData(bytes memory _evmScriptCallData)\n        private\n        pure\n        returns (address)\n    {\n        return abi.decode(_evmScriptCallData, (address));\n    }\n}\n",
+  "sourceMap": "391:2287:14:-:0;;;861:208;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;656:36:24;;;;;;;;;;;;;;;;;954:14:14;;-1:-1:-1;;;;;626:28:24;;618:75;;;;-1:-1:-1;;;618:75:24;;;;;;;;:::i;:::-;;;;;;;;;-1:-1:-1;;;;;;;703:30:24;;;;;;;;984:78:14;;;;::::1;::::0;-1:-1:-1;391:2287:14;;14:177:37;93:13;;-1:-1:-1;;;;;135:31:37;;125:42;;115:2;;181:1;178;171:12;115:2;74:117;;;:::o;196:293::-;275:6;283;336:2;324:9;315:7;311:23;307:32;304:2;;;352:1;349;342:12;304:2;375:40;405:9;375:40;:::i;:::-;365:50;;434:49;479:2;468:9;464:18;434:49;:::i;:::-;424:59;;294:195;;;;;:::o;494:597::-;606:4;635:2;664;653:9;646:21;696:6;690:13;739:6;734:2;723:9;719:18;712:34;764:1;774:140;788:6;785:1;782:13;774:140;;;883:14;;;879:23;;873:30;849:17;;;868:2;845:26;838:66;803:10;;774:140;;;932:6;929:1;926:13;923:2;;;1002:1;997:2;988:6;977:9;973:22;969:31;962:42;923:2;-1:-1:-1;1075:2:37;1054:15;-1:-1:-1;;1050:29:37;1035:45;;;;1082:2;1031:54;;615:476;-1:-1:-1;;;615:476:37:o;:::-;391:2287:14;;;;;;;;;;;;;;;;;;",
+  "sourcePath": "contracts/EVMScriptFactories/RemoveReferralPartner.sol",
+  "type": "contract"
+}

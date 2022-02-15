@@ -8,6 +8,9 @@ export const MotionType = {
   RewardProgramAdd: 'RewardProgramAdd',
   RewardProgramRemove: 'RewardProgramRemove',
   RewardProgramTopUp: 'RewardProgramTopUp',
+  ReferralPartnerAdd: 'ReferralPartnerAdd',
+  ReferralPartnerRemove: 'ReferralPartnerRemove',
+  ReferralPartnerTopUp: 'ReferralPartnerTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

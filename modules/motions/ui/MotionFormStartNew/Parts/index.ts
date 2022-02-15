@@ -5,6 +5,9 @@ import * as formLEGO from './StartNewLEGO'
 import * as formRewardProgramAdd from './StartNewRewardProgramAdd'
 import * as formRewardProgramRemove from './StartNewRewardProgramRemove'
 import * as formRewardProgramTopUp from './StartNewRewardProgramTopUp'
+import * as formReferralPartnerAdd from './StartNewReferralPartnerAdd'
+import * as formReferralPartnerRemove from './StartNewReferralPartnerRemove'
+import * as formReferralPartnerTopUp from './StartNewReferralPartnerTopUp'
 
 export const formParts = {
   [MotionType.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
@@ -12,6 +15,9 @@ export const formParts = {
   [MotionType.RewardProgramAdd]: formRewardProgramAdd.formParts,
   [MotionType.RewardProgramRemove]: formRewardProgramRemove.formParts,
   [MotionType.RewardProgramTopUp]: formRewardProgramTopUp.formParts,
+  [MotionType.ReferralPartnerAdd]: formReferralPartnerAdd.formParts,
+  [MotionType.ReferralPartnerRemove]: formReferralPartnerRemove.formParts,
+  [MotionType.ReferralPartnerTopUp]: formReferralPartnerTopUp.formParts,
 } as const
 
 export type FormData = {
