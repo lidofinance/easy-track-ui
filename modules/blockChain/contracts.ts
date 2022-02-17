@@ -73,17 +73,17 @@ export const ContractEvmRewardProgramTopUp = createContractHelpers({
 
 export const ContractEvmReferralPartnerAdd = createContractHelpers({
   factory: EvmAddReferralPartnerAbi__factory,
-  address: EvmAddressesByType[MotionType.RewardProgramAdd],
+  address: EvmAddressesByType[MotionType.ReferralPartnerAdd],
 })
 
 export const ContractEvmReferralPartnerRemove = createContractHelpers({
   factory: EvmRemoveReferralPartnerAbi__factory,
-  address: EvmAddressesByType[MotionType.RewardProgramRemove],
+  address: EvmAddressesByType[MotionType.ReferralPartnerRemove],
 })
 
 export const ContractEvmReferralPartnerTopUp = createContractHelpers({
   factory: EvmTopUpReferralPartnersAbi__factory,
-  address: EvmAddressesByType[MotionType.RewardProgramTopUp],
+  address: EvmAddressesByType[MotionType.ReferralPartnerTopUp],
 })
 
 export const ContractReferralPartnersRegistry = createContractHelpers({
