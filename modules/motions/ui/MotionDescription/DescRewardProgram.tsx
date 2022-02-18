@@ -16,7 +16,7 @@ export function DescRewardProgramAdd({
 }: NestProps<EvmAddRewardProgramAbi['decodeEVMScriptCallData']>) {
   return (
     <div>
-      Add reward program “{callData[1]}” with address{' '}
+      Add reward program <b>“{callData[1]}”</b> with address{' '}
       <AddressInlineWithPop address={callData[0]} />
     </div>
   )

@@ -16,7 +16,7 @@ export function DescReferralPartnerAdd({
 }: NestProps<EvmAddReferralPartnerAbi['decodeEVMScriptCallData']>) {
   return (
     <div>
-      Add referral partner “{callData[1]}” with address{' '}
+      Add referral partner <b>“{callData[1]}”</b> with address{' '}
       <AddressInlineWithPop address={callData[0]} />
     </div>
   )
