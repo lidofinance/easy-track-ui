@@ -3,6 +3,7 @@ import { utils } from 'ethers'
 import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useReferralPartners } from 'modules/motions/hooks/useReferralPartners'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
@@ -16,11 +17,15 @@ import {
   RemoveItemButton,
 } from '../CreateMotionFormStyle'
 
-import { ContractEvmReferralPartnerTopUp } from 'modules/blockChain/contracts'
+import {
+  ContractGovernanceToken,
+  ContractEvmReferralPartnerTopUp,
+} from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
+import { TRANSITION_LIMITS, tokenLimitError } from 'modules/motions/constants'
 
 type Program = {
   address: string
@@ -54,6 +59,7 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
+    const chainId = useCurrentChain()
     const { walletAddress } = useWalletInfo()
     const trustedCaller = ContractEvmReferralPartnerTopUp.useSwrWeb3(
       'trustedCaller',
@@ -89,6 +95,9 @@ export const formParts = createMotionFormPart({
       )
     }
 
+    const tokenAddress = ContractGovernanceToken.address[chainId] as string
+    const transitionLimit = TRANSITION_LIMITS[chainId][tokenAddress]
+
     if (trustedCaller.initialLoading || referralPartners.initialLoading) {
       return <PageLoader />
     }
@@ -123,7 +132,16 @@ export const formParts = createMotionFormPart({
                 name={`${fieldNames.programs}.${i}.amount`}
                 rules={{
                   required: 'Field is required',
-                  validate: validateToken,
+                  validate: value => {
+                    const check1 = validateToken(value)
+                    if (typeof check1 === 'string') {
+                      return check1
+                    }
+                    if (Number(value) > transitionLimit) {
+                      return tokenLimitError(governanceSymbol, transitionLimit)
+                    }
+                    return true
+                  },
                 }}
               />
             </Fieldset>

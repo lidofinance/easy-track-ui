@@ -3,6 +3,7 @@ import { utils } from 'ethers'
 import { useCallback, Fragment } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -20,6 +21,7 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
+import { TRANSITION_LIMITS, tokenLimitError } from 'modules/motions/constants'
 
 type TokenData = {
   address: string
@@ -53,6 +55,7 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
+    const chainId = useCurrentChain()
     const tokenOptions = useLegoTokenOptions()
     const fieldsArr = useFieldArray({ name: fieldNames.tokens })
     const { walletAddress } = useWalletInfo()
@@ -79,6 +82,12 @@ export const formParts = createMotionFormPart({
         ({ value }) =>
           !selectedAddresses.includes(value) || value === thatAddress,
       )
+    }
+
+    const getTokenName = (fieldIdx: number) => {
+      return tokenOptions.find(
+        ({ value }) => value === selectedTokens[fieldIdx].address,
+      )?.label
     }
 
     if (trustedCaller.initialLoading) {
@@ -111,7 +120,18 @@ export const formParts = createMotionFormPart({
                 name={`${fieldNames.tokens}.${i}.amount`}
                 rules={{
                   required: 'Field is required',
-                  validate: validateToken,
+                  validate: value => {
+                    const check1 = validateToken(value)
+                    if (typeof check1 === 'string') {
+                      return check1
+                    }
+                    const { address } = selectedTokens[i]
+                    const limit = TRANSITION_LIMITS[chainId][address]
+                    if (Number(value) > limit) {
+                      return tokenLimitError(getTokenName(i), limit)
+                    }
+                    return true
+                  },
                 }}
               />
             </Fieldset>
