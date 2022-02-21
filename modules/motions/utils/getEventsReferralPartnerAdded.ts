@@ -11,7 +11,7 @@ type RewardProgramAddedEvent = [string, string] & {
 export async function getEventsReferralPartnerAdded(
   motionContract: ContractTypeReferralPartnersRegistry,
 ) {
-  const filter = motionContract.filters.ReferralPartnerAdded()
+  const filter = motionContract.filters.RewardProgramAdded()
   const events = await motionContract.queryFilter(filter)
   return events.map(e =>
     e.decode!(e.data, e.topics),

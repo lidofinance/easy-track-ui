@@ -49,11 +49,11 @@ export const EvmAddressesByChain = {
     [MotionType.RewardProgramTopUp]:
       '0x8180949ac41EF18e844ff8dafE604a195d86Aea9',
     [MotionType.ReferralPartnerAdd]:
-      '0x1fDEdCd6fcFD009b0B1B751aceEAF16dDb228384',
+      '0xe54ca3e867C52a34d262E94606C7A9371AB820c9',
     [MotionType.ReferralPartnerRemove]:
-      '0x42b608642C6AD8f3b210093ded7dc53fc1001492',
+      '0x2A0c343087c6cFB721fFa20608A6eD0473C71275',
     [MotionType.ReferralPartnerTopUp]:
-      '0xDEbAf563F737Ee0EE7A31DFea478c5034DB3804B',
+      '0xB1E898faC74c377bEF16712Ba1CD4738606c19Ee',
   },
 }
 

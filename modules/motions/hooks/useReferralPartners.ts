@@ -10,11 +10,11 @@ export function useReferralPartners() {
   return useSWR(
     `referral-partners-${chainId}-${referalPartnersRegistry.address}`,
     async () => {
-      const [rewardProgramsData, events] = await Promise.all([
-        referalPartnersRegistry.getReferralPartners(),
+      const [referralPartners, events] = await Promise.all([
+        referalPartnersRegistry.getRewardPrograms(),
         getEventsReferralPartnerAdded(referalPartnersRegistry),
       ])
-      return rewardProgramsData.map(rewardProgram => {
+      return referralPartners.map(rewardProgram => {
         const event = events.find(e => e._referralPartner === rewardProgram)
         return {
           title: event?._title || rewardProgram,
