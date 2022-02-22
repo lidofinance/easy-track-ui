@@ -1,3 +1,12 @@
+## [0.6.1](https://github.com/lidofinance/easy-track-ui/compare/0.6.0...0.6.1) (2022-02-22)
+
+
+### Bug Fixes
+
+* **security:** opt out of image optimization and use custom loader ([ff917e7](https://github.com/lidofinance/easy-track-ui/commit/ff917e7242366c2e5baf7596818437dd7aa40251))
+
+
+
 # [0.6.0](https://github.com/lidofinance/easy-track-ui/compare/0.5.0...0.6.0) (2022-02-10)
 
 
