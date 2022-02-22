@@ -4,7 +4,6 @@ import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { useScrollLock } from 'modules/shared/hooks/useScrollLock'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { HeaderWallet } from '../HeaderWallet'
 import {
@@ -31,7 +30,7 @@ import StartSVG from './icons/start.svg.react'
 
 import { getChainName } from 'modules/blockChain/chains'
 import { getChainColor } from '@lido-sdk/constants'
-import logoSrc from 'assets/logo.com.svg'
+import LidoLogoSvg from 'assets/logo.com.svg.react'
 import * as urls from 'modules/network/utils/urls'
 
 function NavItem({
@@ -67,7 +66,7 @@ export function Header() {
       <Wrap>
         <Nav>
           <Logo>
-            <Image src={logoSrc} alt="Lido" />
+            <LidoLogoSvg />
           </Logo>
           <NavItems>
             <NavItem
