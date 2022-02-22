@@ -22,8 +22,8 @@ const EVM_CONTRACTS = {
   [MotionType.RewardProgramTopUp]: ContractEvmRewardProgramTopUp,
   [MotionType.RewardProgramRemove]: ContractEvmRewardProgramRemove,
   [MotionType.ReferralPartnerAdd]: ContractEvmReferralPartnerAdd,
-  [MotionType.ReferralPartnerTopUp]: ContractEvmReferralPartnerRemove,
-  [MotionType.ReferralPartnerRemove]: ContractEvmReferralPartnerTopUp,
+  [MotionType.ReferralPartnerTopUp]: ContractEvmReferralPartnerTopUp,
+  [MotionType.ReferralPartnerRemove]: ContractEvmReferralPartnerRemove,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
