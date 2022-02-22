@@ -1,7 +1,7 @@
 import type { ContractTypeReferralPartnersRegistry } from 'modules/blockChain/contracts'
 
 type RewardProgramAddedEvent = [string, string] & {
-  _referralPartner: string
+  _rewardProgram: string
   _title: string
   _evmScriptFactory: string
   _evmScriptCallData: string

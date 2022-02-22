@@ -15,7 +15,7 @@ export function useReferralPartners() {
         getEventsReferralPartnerAdded(referalPartnersRegistry),
       ])
       return referralPartners.map(rewardProgram => {
-        const event = events.find(e => e._referralPartner === rewardProgram)
+        const event = events.find(e => e._rewardProgram === rewardProgram)
         return {
           title: event?._title || rewardProgram,
           address: rewardProgram,
