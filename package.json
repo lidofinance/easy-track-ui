@@ -33,7 +33,7 @@
     "@lido-sdk/providers": "1.4.1",
     "@lido-sdk/react": "1.17.1",
     "@lido-sdk/web3-react": "1.16.0",
-    "@lidofinance/lido-ui": "1.10.14",
+    "@lidofinance/lido-ui": "2.0.3",
     "@typechain/ethers-v5": "8.0.5",
     "@types/lodash": "4.14.179",
     "copy-to-clipboard": "3.3.1",
