@@ -1,6 +1,7 @@
-import { ContractReferralPartnersRegistry } from 'modules/blockChain/contracts'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useMemo } from 'react'
 import { useSWR } from 'modules/network/hooks/useSwr'
+import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { ContractReferralPartnersRegistry } from 'modules/blockChain/contracts'
 import { getEventsReferralPartnerAdded } from '../utils/getEventsReferralPartnerAdded'
 
 export function useReferralPartners() {
@@ -14,13 +15,30 @@ export function useReferralPartners() {
         referalPartnersRegistry.getRewardPrograms(),
         getEventsReferralPartnerAdded(referalPartnersRegistry),
       ])
-      return referralPartners.map(rewardProgram => {
-        const event = events.find(e => e._rewardProgram === rewardProgram)
+      return referralPartners.map(referralPartner => {
+        const event = events.find(e => e._rewardProgram === referralPartner)
         return {
-          title: event?._title || rewardProgram,
-          address: rewardProgram,
+          title: event?._title || referralPartner,
+          address: referralPartner,
         }
       })
     },
   )
+}
+
+export function useReferralPartnersMap() {
+  const parters = useReferralPartners()
+
+  const result = useMemo(() => {
+    if (!parters.data) return null
+    return parters.data.reduce(
+      (res, p) => ({ [p.address]: p.title, ...res }),
+      {} as Record<string, string>,
+    )
+  }, [parters.data])
+
+  return {
+    ...parters,
+    data: result,
+  }
 }

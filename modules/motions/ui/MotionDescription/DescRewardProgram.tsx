@@ -1,3 +1,8 @@
+import { useMemo } from 'react'
+import {
+  useRewardPrograms,
+  useRewardProgramsMap,
+} from 'modules/motions/hooks/useRewardPrograms'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
@@ -27,12 +32,19 @@ export function DescRewardProgramTopUp({
   callData,
 }: NestProps<EvmTopUpRewardProgramsAbi['decodeEVMScriptCallData']>) {
   const governanceSymbol = useGovernanceSymbol()
+  const { data: rewardProgramsMap } = useRewardProgramsMap()
+
+  const programs = useMemo(() => {
+    if (!rewardProgramsMap) return null
+    return callData[0].map(address => rewardProgramsMap[address])
+  }, [callData, rewardProgramsMap])
+
   return (
     <div>
       Top up reward programs:
       {callData[0].map((address, i) => (
         <div key={i}>
-          <AddressInlineWithPop address={address} /> with{' '}
+          <b>{programs?.[i]}</b> <AddressInlineWithPop address={address} /> with{' '}
           {formatEther(callData[1][i])} {governanceSymbol.data}
         </div>
       ))}
@@ -44,9 +56,16 @@ export function DescRewardProgramTopUp({
 export function DescRewardProgramRemove({
   callData,
 }: NestProps<EvmRemoveRewardProgramAbi['decodeEVMScriptCallData']>) {
+  const { data: rewardPrograms } = useRewardPrograms()
+
+  const program = useMemo(() => {
+    if (!rewardPrograms) return null
+    return rewardPrograms.find(p => p.address === callData)
+  }, [callData, rewardPrograms])
+
   return (
     <div>
-      Remove reward program with address{' '}
+      Remove reward program with address <b>{program}</b>{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )
