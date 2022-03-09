@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
@@ -28,7 +29,7 @@ export default function MotionDetailsPage() {
   const {
     initialLoading,
     data: motion,
-    revalidate,
+    mutate,
   } = useSWR<Motion | null>(`motion-${currentChain}-${motionId}`, async () => {
     try {
       const tryActive = await fetcherStandard<Motion>(
@@ -40,6 +41,8 @@ export default function MotionDetailsPage() {
       return tryArchive
     }
   })
+
+  const revalidate = useCallback(() => mutate(), [mutate])
 
   if (initialLoading) {
     return (

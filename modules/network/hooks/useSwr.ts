@@ -1,16 +1,16 @@
 import { ToastError } from '@lidofinance/lido-ui'
 import {
   default as useSWRSource,
-  useSWRInfinite as useSWRInfiniteSource,
+  Key,
+  Fetcher,
   SWRResponse as SWRResponseSource,
   SWRConfiguration,
 } from 'swr'
 import {
-  Key,
-  KeyLoader,
-  Fetcher,
+  default as useSWRInfiniteSource,
   SWRInfiniteConfiguration,
-} from 'swr/dist/types'
+  SWRInfiniteKeyLoader,
+} from 'swr/infinite'
 
 export type SWRResponse<Data, Error = any> = SWRResponseSource<Data, Error> & {
   initialLoading: boolean
@@ -30,7 +30,7 @@ export const useSWR = <Data = unknown, Error = any>(
   fetcher: Fetcher<Data> | null,
   config?: SWRConfiguration<Data, Error>,
 ) => {
-  const result = useSWRSource(key, fetcher, {
+  const result = useSWRSource<Data>(key, fetcher, {
     ...defaultConfig,
     ...config,
   })
@@ -42,7 +42,7 @@ export const useSWR = <Data = unknown, Error = any>(
 }
 
 export const useSWRInfinite = <Data = unknown, Error = any>(
-  getKey: KeyLoader<Data>,
+  getKey: SWRInfiniteKeyLoader,
   fetcher: Fetcher<Data>,
   config?: SWRInfiniteConfiguration<Data, Error>,
 ) => {
