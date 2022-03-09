@@ -65,7 +65,7 @@ export function DescReferralPartnerRemove({
 
   return (
     <div>
-      Remove referral partner with address <b>{partner}</b>{' '}
+      Remove referral partner with address <b>{partner?.title}</b>{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )

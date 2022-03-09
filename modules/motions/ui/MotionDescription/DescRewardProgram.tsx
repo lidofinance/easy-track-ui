@@ -65,7 +65,7 @@ export function DescRewardProgramRemove({
 
   return (
     <div>
-      Remove reward program with address <b>{program}</b>{' '}
+      Remove reward program with address <b>{program?.title}</b>{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )
