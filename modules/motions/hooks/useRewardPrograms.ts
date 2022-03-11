@@ -11,17 +11,11 @@ export function useRewardPrograms() {
   return useSWR(
     `reward-programs-${chainId}-${rewardProgramRegistry.address}`,
     async () => {
-      const [rewardProgramsData, events] = await Promise.all([
-        rewardProgramRegistry.getRewardPrograms(),
-        getEventsRewardProgramAdded(rewardProgramRegistry),
-      ])
-      return rewardProgramsData.map(rewardProgram => {
-        const event = events.find(e => e._rewardProgram === rewardProgram)
-        return {
-          title: event?._title || rewardProgram,
-          address: rewardProgram,
-        }
-      })
+      const events = await getEventsRewardProgramAdded(rewardProgramRegistry)
+      return events.map(event => ({
+        title: event._title,
+        address: event._rewardProgram,
+      }))
     },
   )
 }
