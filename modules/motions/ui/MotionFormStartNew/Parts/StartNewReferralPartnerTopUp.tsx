@@ -1,10 +1,11 @@
 import { utils } from 'ethers'
 
-import { useCallback, Fragment } from 'react'
+import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
-import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
+import { useReferralPartners } from 'modules/motions/hooks/useReferralPartners'
+import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { Button } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -16,26 +17,29 @@ import {
   RemoveItemButton,
 } from '../CreateMotionFormStyle'
 
-import { ContractEvmLEGOTopUp } from 'modules/blockChain/contracts'
+import {
+  ContractGovernanceToken,
+  ContractEvmReferralPartnerTopUp,
+} from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 import { TRANSITION_LIMITS, tokenLimitError } from 'modules/motions/constants'
 
-type TokenData = {
+type Program = {
   address: string
   amount: string
 }
 
 export const formParts = createMotionFormPart({
-  motionType: MotionType.LEGOTopUp,
+  motionType: MotionType.ReferralPartnerTopUp,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const encodedCallData = new utils.AbiCoder().encode(
       ['address[]', 'uint256[]'],
       [
-        formData.tokens.map(t => utils.getAddress(t.address)),
-        formData.tokens.map(t => utils.parseEther(t.amount)),
+        formData.programs.map(p => utils.getAddress(p.address)),
+        formData.programs.map(p => utils.parseEther(p.amount)),
       ],
     )
     const gasLimit = await estimateGasFallback(
@@ -49,48 +53,52 @@ export const formParts = createMotionFormPart({
     return tx
   },
   getDefaultFormData: () => ({
-    tokens: [{ address: '', amount: '' }] as TokenData[],
+    programs: [{ address: '', amount: '' }] as Program[],
   }),
   Component: function StartNewMotionMotionFormLego({
     fieldNames,
     submitAction,
   }) {
     const chainId = useCurrentChain()
-    const tokenOptions = useLegoTokenOptions()
-    const fieldsArr = useFieldArray({ name: fieldNames.tokens })
     const { walletAddress } = useWalletInfo()
-    const trustedCaller = ContractEvmLEGOTopUp.useSwrWeb3('trustedCaller', [])
+    const trustedCaller = ContractEvmReferralPartnerTopUp.useSwrWeb3(
+      'trustedCaller',
+      [],
+    )
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
-    const handleAddToken = useCallback(
+    const referralPartners = useReferralPartners()
+    const { data: governanceSymbol } = useGovernanceSymbol()
+
+    const fieldsArr = useFieldArray({ name: fieldNames.programs })
+
+    const handleAddProgram = useCallback(
       () => fieldsArr.append({ address: '', amount: '' }),
       [fieldsArr],
     )
 
-    const handleRemoveToken = useCallback(
+    const handleRemoveProgram = useCallback(
       (i: number) => fieldsArr.remove(i),
       [fieldsArr],
     )
 
     const { watch } = useFormContext()
-    const selectedTokens: TokenData[] = watch(fieldNames.tokens)
+    const selectedPrograms: Program[] = watch(fieldNames.programs)
 
     const getFilteredOptions = (fieldIdx: number) => {
-      const thatAddress = selectedTokens[fieldIdx].address
-      const selectedAddresses = selectedTokens.map(({ address }) => address)
-      return tokenOptions.filter(
-        ({ value }) =>
-          !selectedAddresses.includes(value) || value === thatAddress,
+      if (!referralPartners.data) return []
+      const thatAddress = selectedPrograms[fieldIdx].address
+      const selectedAddresses = selectedPrograms.map(({ address }) => address)
+      return referralPartners.data.filter(
+        ({ address }) =>
+          !selectedAddresses.includes(address) || address === thatAddress,
       )
     }
 
-    const getTokenName = (fieldIdx: number) => {
-      return tokenOptions.find(
-        ({ value }) => value === selectedTokens[fieldIdx].address,
-      )?.label
-    }
+    const tokenAddress = ContractGovernanceToken.address[chainId] as string
+    const transitionLimit = TRANSITION_LIMITS[chainId][tokenAddress]
 
-    if (trustedCaller.initialLoading) {
+    if (trustedCaller.initialLoading || referralPartners.initialLoading) {
       return <PageLoader />
     }
 
@@ -104,20 +112,24 @@ export const formParts = createMotionFormPart({
           <Fragment key={item.id}>
             <Fieldset>
               <SelectControl
-                label="Token"
-                name={`${fieldNames.tokens}.${i}.address`}
+                label="Referral partner address"
+                name={`${fieldNames.programs}.${i}.address`}
                 rules={{ required: 'Field is required' }}
               >
-                {getFilteredOptions(i).map(({ label, value }, j) => (
-                  <Option key={j} value={value} children={label} />
+                {getFilteredOptions(i).map((program, j) => (
+                  <Option
+                    key={j}
+                    value={program.address}
+                    children={program.title}
+                  />
                 ))}
               </SelectControl>
             </Fieldset>
 
             <Fieldset>
               <InputControl
-                label="Amount"
-                name={`${fieldNames.tokens}.${i}.amount`}
+                label={`${governanceSymbol} Amount`}
+                name={`${fieldNames.programs}.${i}.amount`}
                 rules={{
                   required: 'Field is required',
                   validate: value => {
@@ -125,10 +137,8 @@ export const formParts = createMotionFormPart({
                     if (typeof check1 === 'string') {
                       return check1
                     }
-                    const { address } = selectedTokens[i]
-                    const limit = TRANSITION_LIMITS[chainId][address]
-                    if (Number(value) > limit) {
-                      return tokenLimitError(getTokenName(i), limit)
+                    if (Number(value) > transitionLimit) {
+                      return tokenLimitError(governanceSymbol, transitionLimit)
                     }
                     return true
                   },
@@ -137,24 +147,25 @@ export const formParts = createMotionFormPart({
             </Fieldset>
 
             {fieldsArr.fields.length > 1 && (
-              <RemoveItemButton onClick={() => handleRemoveToken(i)}>
-                Remove token {i + 1}
+              <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
+                Remove program {i + 1}
               </RemoveItemButton>
             )}
           </Fragment>
         ))}
 
-        {fieldsArr.fields.length < tokenOptions.length && (
-          <Fieldset>
-            <Button
-              type="button"
-              variant="outlined"
-              size="sm"
-              children="One more token"
-              onClick={handleAddToken}
-            />
-          </Fieldset>
-        )}
+        {referralPartners.data &&
+          fieldsArr.fields.length < referralPartners.data.length && (
+            <Fieldset>
+              <Button
+                type="button"
+                variant="outlined"
+                size="sm"
+                children="One more program"
+                onClick={handleAddProgram}
+              />
+            </Fieldset>
+          )}
 
         {submitAction}
       </>

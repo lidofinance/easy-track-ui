@@ -24,6 +24,9 @@ export function MotionFormStartNew({ onComplete }: Props) {
   const [isSubmitting, setSubmitting] = useState(false)
 
   const formMethods = useForm<FormData>({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    criteriaMode: 'all',
     defaultValues: {
       motionType: null,
       ...getDefaultFormPartsData(),
@@ -73,6 +76,9 @@ export function MotionFormStartNew({ onComplete }: Props) {
         fullwidth
         children="Submit"
         loading={isSubmitting}
+        disabled={
+          formMethods.formState.isDirty && !formMethods.formState.isValid
+        }
       />
       {isSubmitting && (
         <RetryHint>

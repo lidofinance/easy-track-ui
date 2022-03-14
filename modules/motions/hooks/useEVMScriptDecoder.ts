@@ -4,6 +4,7 @@ import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { EVMScriptDecoder } from 'evm-script-decoder/lib/EVMScriptDecoder'
 import { ABIProviderLocal } from 'evm-script-decoder/lib/ABIProviderLocal'
 
+import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
 import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
 import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
 import FinanceAbi from 'abi/Finance.abi.json'
@@ -16,6 +17,8 @@ export function useEVMScriptDecoder() {
     () =>
       new EVMScriptDecoder(
         new ABIProviderLocal({
+          [CONTRACT_ADDRESSES.ReferralPartnersRegistry[chainId]]:
+            ReferralPartnersRegistry as any,
           [CONTRACT_ADDRESSES.RewardProgramRegistry[chainId]]:
             RewardProgramRegistryAbi as any,
           [CONTRACT_ADDRESSES.NodeOperatorsRegistry[chainId]]:

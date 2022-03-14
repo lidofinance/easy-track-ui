@@ -9,6 +9,9 @@ import {
   ContractEvmRewardProgramAdd,
   ContractEvmRewardProgramRemove,
   ContractEvmRewardProgramTopUp,
+  ContractEvmReferralPartnerAdd,
+  ContractEvmReferralPartnerRemove,
+  ContractEvmReferralPartnerTopUp,
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
@@ -18,6 +21,9 @@ const EVM_CONTRACTS = {
   [MotionType.RewardProgramAdd]: ContractEvmRewardProgramAdd,
   [MotionType.RewardProgramTopUp]: ContractEvmRewardProgramTopUp,
   [MotionType.RewardProgramRemove]: ContractEvmRewardProgramRemove,
+  [MotionType.ReferralPartnerAdd]: ContractEvmReferralPartnerAdd,
+  [MotionType.ReferralPartnerTopUp]: ContractEvmReferralPartnerTopUp,
+  [MotionType.ReferralPartnerRemove]: ContractEvmReferralPartnerRemove,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
