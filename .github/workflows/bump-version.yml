@@ -18,7 +18,7 @@ jobs:
       with:
         token: ${{ secrets.REPO_ADMIN_TOKEN }}
     - name: Bump version and push tag
-      uses: TriPSs/conventional-changelog-action@v3.10.0
+      uses: TriPSs/conventional-changelog-action@v3.11.0
       with:
         github-token: ${{ secrets.REPO_ADMIN_TOKEN }}
         git-message: 'chore(release): {version}'
