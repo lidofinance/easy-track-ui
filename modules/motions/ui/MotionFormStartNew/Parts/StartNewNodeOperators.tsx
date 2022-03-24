@@ -3,6 +3,7 @@ import { useMemo, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
+import { useNodeOperatorKeysInfo } from 'modules/motions/hooks/useNodeOperatorKeysInfo'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -40,6 +41,7 @@ export const formParts = createMotionFormPart({
     const { setValue } = useFormContext()
     const { walletAddress } = useWalletInfo()
     const nodeOperators = useNodeOperatorsList()
+    const keysInfo = useNodeOperatorKeysInfo()
 
     const [operatorId, currentNodeOperator] = useMemo(() => {
       const idx = nodeOperators.data?.list.findIndex(
@@ -52,16 +54,32 @@ export const formParts = createMotionFormPart({
     const isNodeOperatorConnected =
       !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
 
+    const connectedKeysInfo = useMemo(() => {
+      if (!isNodeOperatorConnected || !keysInfo.data) return null
+      return keysInfo.data.operators.find(
+        o => utils.getAddress(o.info.rewardAddress) === walletAddress,
+      )
+    }, [isNodeOperatorConnected, keysInfo.data, walletAddress])
+
+    const isConnectedKeysValid =
+      connectedKeysInfo &&
+      connectedKeysInfo.invalid.length === 0 &&
+      connectedKeysInfo.duplicates.length === 0
+
     useEffect(() => {
       setValue(fieldNames.nodeOperatorId, operatorId)
     }, [operatorId, fieldNames.nodeOperatorId, setValue])
 
-    if (nodeOperators.initialLoading) {
+    if (nodeOperators.initialLoading || keysInfo.initialLoading) {
       return <PageLoader />
     }
 
     if (!isNodeOperatorConnected) {
       return <MessageBox>You should be connected as node operator</MessageBox>
+    }
+
+    if (!isConnectedKeysValid) {
+      return <MessageBox>Error: invalid keys found</MessageBox>
     }
 
     return (
@@ -107,6 +125,9 @@ export const formParts = createMotionFormPart({
                   : 0
                 if (parsedValue <= limit) {
                   return 'New limit value should be greater than current'
+                }
+                if (parsedValue >= connectedKeysInfo.info.totalSigningKeys) {
+                  return 'New limit value should be less than total signing keys'
                 }
                 return true
               },
