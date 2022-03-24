@@ -4,7 +4,7 @@ import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
-import { useReferralPartners } from 'modules/motions/hooks/useReferralPartners'
+import { useReferralPartnersActual } from 'modules/motions/hooks/useReferralPartners'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -67,7 +67,7 @@ export const formParts = createMotionFormPart({
     )
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
-    const referralPartners = useReferralPartners()
+    const referralPartners = useReferralPartnersActual()
     const { data: governanceSymbol } = useGovernanceSymbol()
 
     const fieldsArr = useFieldArray({ name: fieldNames.programs })

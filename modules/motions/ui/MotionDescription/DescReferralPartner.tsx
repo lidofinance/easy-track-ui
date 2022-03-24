@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import {
-  useReferralPartners,
-  useReferralPartnersMap,
+  useReferralPartnersAll,
+  useReferralPartnersMapAll,
 } from 'modules/motions/hooks/useReferralPartners'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
@@ -32,7 +32,7 @@ export function DescReferralPartnerTopUp({
   callData,
 }: NestProps<EvmTopUpReferralPartnersAbi['decodeEVMScriptCallData']>) {
   const governanceSymbol = useGovernanceSymbol()
-  const { data: referralPartnersMap } = useReferralPartnersMap()
+  const { data: referralPartnersMap } = useReferralPartnersMapAll()
 
   const programs = useMemo(() => {
     if (!referralPartnersMap) return null
@@ -56,7 +56,7 @@ export function DescReferralPartnerTopUp({
 export function DescReferralPartnerRemove({
   callData,
 }: NestProps<EvmRemoveReferralPartnerAbi['decodeEVMScriptCallData']>) {
-  const { data: referralPartners } = useReferralPartners()
+  const { data: referralPartners } = useReferralPartnersAll()
 
   const partner = useMemo(() => {
     if (!referralPartners) return null

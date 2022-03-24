@@ -1,28 +1,15 @@
 import { useMemo } from 'react'
-import { useSWR } from 'modules/network/hooks/useSwr'
+import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { ContractRewardProgramRegistry } from 'modules/blockChain/contracts'
 import { getEventsRewardProgramAdded } from '../utils/getEventsRewardProgramAdded'
 
-export function useRewardPrograms() {
-  const chainId = useCurrentChain()
-  const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
-
-  return useSWR(
-    `reward-programs-${chainId}-${rewardProgramRegistry.address}`,
-    async () => {
-      const events = await getEventsRewardProgramAdded(rewardProgramRegistry)
-      return events.map(event => ({
-        title: event._title,
-        address: event._rewardProgram,
-      }))
-    },
-  )
+type RewardProgram = {
+  title: string
+  address: string
 }
 
-export function useRewardProgramsMap() {
-  const programs = useRewardPrograms()
-
+function useRewardProgramsMap(programs: SWRResponse<RewardProgram[] | null>) {
   const result = useMemo(() => {
     if (!programs.data) return null
     return programs.data.reduce(
@@ -35,4 +22,49 @@ export function useRewardProgramsMap() {
     ...programs,
     data: result,
   }
+}
+
+export function useRewardProgramsAll() {
+  const chainId = useCurrentChain()
+  const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
+
+  return useSWR(
+    `reward-programs-all-${chainId}-${rewardProgramRegistry.address}`,
+    async () => {
+      const events = await getEventsRewardProgramAdded(rewardProgramRegistry)
+      return events.map(event => ({
+        title: event._title,
+        address: event._rewardProgram,
+      }))
+    },
+  )
+}
+
+export function useRewardProgramsActual() {
+  const chainId = useCurrentChain()
+  const programsAll = useRewardProgramsAll()
+  const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
+
+  return useSWR(
+    programsAll.data
+      ? `reward-programs-actual-${chainId}-${rewardProgramRegistry.address}`
+      : null,
+    async () => {
+      if (!programsAll.data) return null
+      const programsActual = await rewardProgramRegistry.getRewardPrograms()
+      return programsAll.data.filter(
+        p => programsActual.findIndex(addr => addr === p.address) !== -1,
+      )
+    },
+  )
+}
+
+export function useRewardProgramsMapAll() {
+  const partners = useRewardProgramsAll()
+  return useRewardProgramsMap(partners)
+}
+
+export function useRewardProgramsMapActual() {
+  const partners = useRewardProgramsActual()
+  return useRewardProgramsMap(partners)
 }

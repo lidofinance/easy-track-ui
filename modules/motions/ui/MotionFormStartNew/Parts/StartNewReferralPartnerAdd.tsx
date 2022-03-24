@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 import { useMemo } from 'react'
 import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useReferralPartners } from 'modules/motions/hooks/useReferralPartners'
+import { useReferralPartnersActual } from 'modules/motions/hooks/useReferralPartners'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -38,7 +38,7 @@ export const formParts = createMotionFormPart({
     submitAction,
   }) {
     const { walletAddress } = useWalletInfo()
-    const referralPartners = useReferralPartners()
+    const referralPartners = useReferralPartnersActual()
     const trustedCaller = ContractEvmReferralPartnerAdd.useSwrWeb3(
       'trustedCaller',
       [],
