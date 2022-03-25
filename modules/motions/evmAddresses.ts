@@ -18,9 +18,12 @@ export const EvmAddressesByChain = {
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
     [MotionType.RewardProgramTopUp]:
       '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
-    [MotionType.ReferralPartnerAdd]: '0x',
-    [MotionType.ReferralPartnerRemove]: '0x',
-    [MotionType.ReferralPartnerTopUp]: '0x',
+    [MotionType.ReferralPartnerAdd]:
+      '0x929547490Ceb6AeEdD7d72F1Ab8957c0210b6E51',
+    [MotionType.ReferralPartnerRemove]:
+      '0xE9eb838fb3A288bF59E9275Ccd7e124fDff88a9C',
+    [MotionType.ReferralPartnerTopUp]:
+      '0x54058ee0E0c87Ad813C002262cD75B98A7F59218',
   },
 
   // Rinkeby

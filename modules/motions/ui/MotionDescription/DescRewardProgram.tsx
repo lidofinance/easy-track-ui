@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import {
-  useRewardPrograms,
-  useRewardProgramsMap,
+  useRewardProgramsAll,
+  useRewardProgramsMapAll,
 } from 'modules/motions/hooks/useRewardPrograms'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
@@ -32,7 +32,7 @@ export function DescRewardProgramTopUp({
   callData,
 }: NestProps<EvmTopUpRewardProgramsAbi['decodeEVMScriptCallData']>) {
   const governanceSymbol = useGovernanceSymbol()
-  const { data: rewardProgramsMap } = useRewardProgramsMap()
+  const { data: rewardProgramsMap } = useRewardProgramsMapAll()
 
   const programs = useMemo(() => {
     if (!rewardProgramsMap) return null
@@ -56,7 +56,7 @@ export function DescRewardProgramTopUp({
 export function DescRewardProgramRemove({
   callData,
 }: NestProps<EvmRemoveRewardProgramAbi['decodeEVMScriptCallData']>) {
-  const { data: rewardPrograms } = useRewardPrograms()
+  const { data: rewardPrograms } = useRewardProgramsAll()
 
   const program = useMemo(() => {
     if (!rewardPrograms) return null

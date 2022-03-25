@@ -1,15 +1,36 @@
 import { useMemo } from 'react'
-import { useSWR } from 'modules/network/hooks/useSwr'
+import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
 import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 import { ContractReferralPartnersRegistry } from 'modules/blockChain/contracts'
 import { getEventsReferralPartnerAdded } from '../utils/getEventsReferralPartnerAdded'
 
-export function useReferralPartners() {
+type ReferralPartner = {
+  title: string
+  address: string
+}
+
+function useReferralPartnersMap(
+  partners: SWRResponse<ReferralPartner[] | null>,
+) {
+  const result = useMemo(() => {
+    if (!partners.data) return null
+    return partners.data.reduce(
+      (res, p) => ({ [p.address]: p.title, ...res }),
+      {} as Record<string, string>,
+    )
+  }, [partners.data])
+  return {
+    ...partners,
+    data: result,
+  }
+}
+
+export function useReferralPartnersAll() {
   const chainId = useCurrentChain()
   const referalPartnersRegistry = ContractReferralPartnersRegistry.useRpc()
 
   return useSWR(
-    `referral-partners-${chainId}-${referalPartnersRegistry.address}`,
+    `referral-partners-all-${chainId}-${referalPartnersRegistry.address}`,
     async () => {
       const events = await getEventsReferralPartnerAdded(
         referalPartnersRegistry,
@@ -22,19 +43,31 @@ export function useReferralPartners() {
   )
 }
 
-export function useReferralPartnersMap() {
-  const parters = useReferralPartners()
+export function useReferralPartnersActual() {
+  const chainId = useCurrentChain()
+  const partnersAll = useReferralPartnersAll()
+  const referalPartnersRegistry = ContractReferralPartnersRegistry.useRpc()
 
-  const result = useMemo(() => {
-    if (!parters.data) return null
-    return parters.data.reduce(
-      (res, p) => ({ [p.address]: p.title, ...res }),
-      {} as Record<string, string>,
-    )
-  }, [parters.data])
+  return useSWR(
+    partnersAll.data
+      ? `referral-partners-actual-${chainId}-${referalPartnersRegistry.address}`
+      : null,
+    async () => {
+      if (!partnersAll.data) return null
+      const partnersActual = await referalPartnersRegistry.getRewardPrograms()
+      return partnersAll.data.filter(
+        p => partnersActual.findIndex(addr => addr === p.address) !== -1,
+      )
+    },
+  )
+}
 
-  return {
-    ...parters,
-    data: result,
-  }
+export function useReferralPartnersMapAll() {
+  const partners = useReferralPartnersAll()
+  return useReferralPartnersMap(partners)
+}
+
+export function useReferralPartnersMapActual() {
+  const partners = useReferralPartnersActual()
+  return useReferralPartnersMap(partners)
 }
