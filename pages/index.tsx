@@ -1,5 +1,5 @@
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { Container } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
@@ -13,9 +13,9 @@ import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
 import * as urlsApi from 'modules/network/utils/urlsApi'
 
 export default function HomePage() {
-  const currentChain = useCurrentChain()
+  const { chainId } = useWeb3()
   const { initialLoading, data: motions } = useSWR<Motion[]>(
-    urlsApi.motionsListActive(currentChain),
+    urlsApi.motionsListActive(chainId),
     fetcherStandard,
   )
 

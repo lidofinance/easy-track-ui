@@ -2,8 +2,7 @@ import { utils } from 'ethers'
 
 import { useCallback, Fragment } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
 
 import { Button } from '@lidofinance/lido-ui'
@@ -55,10 +54,9 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const chainId = useCurrentChain()
+    const { chainId, walletAddress } = useWeb3()
     const tokenOptions = useLegoTokenOptions()
     const fieldsArr = useFieldArray({ name: fieldNames.tokens })
-    const { walletAddress } = useWalletInfo()
     const trustedCaller = ContractEvmLEGOTopUp.useSwrWeb3('trustedCaller', [])
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 

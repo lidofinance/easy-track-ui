@@ -1,5 +1,5 @@
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
 import { nodeOperatorsKeysInfo } from 'modules/network/utils/urlsApi'
 
@@ -36,7 +36,7 @@ type KeysInfo = {
 }
 
 export function useNodeOperatorKeysInfo() {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const nodeOperatorsInfo = useSWR<KeysInfo>(
     nodeOperatorsKeysInfo(chainId),
     fetcherStandard,

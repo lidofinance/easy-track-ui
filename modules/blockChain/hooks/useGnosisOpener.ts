@@ -1,15 +1,12 @@
 import { useCallback } from 'react'
-import { useCurrentChain } from './useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { openWindow } from 'modules/shared/utils/openWindow'
 import { getGnosisSafeLink } from '../utils/getGnosisSafeLink'
 
 export function useGnosisOpener(address: string, linkAddition?: string) {
-  const currentChain = useCurrentChain()
+  const { chainId } = useWeb3()
   return useCallback(() => {
-    const link = getGnosisSafeLink(
-      currentChain,
-      `${address}${linkAddition || ''}`,
-    )
+    const link = getGnosisSafeLink(chainId, `${address}${linkAddition || ''}`)
     openWindow(link)
-  }, [currentChain, address, linkAddition])
+  }, [chainId, address, linkAddition])
 }

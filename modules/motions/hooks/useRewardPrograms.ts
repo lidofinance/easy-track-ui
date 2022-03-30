@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractRewardProgramRegistry } from 'modules/blockChain/contracts'
 import { getEventsRewardProgramAdded } from '../utils/getEventsRewardProgramAdded'
 
@@ -25,7 +25,7 @@ function useRewardProgramsMap(programs: SWRResponse<RewardProgram[] | null>) {
 }
 
 export function useRewardProgramsAll() {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
 
   return useSWR(
@@ -41,7 +41,7 @@ export function useRewardProgramsAll() {
 }
 
 export function useRewardProgramsActual() {
-  const chainId = useCurrentChain()
+  const chainId = useWeb3()
   const programsAll = useRewardProgramsAll()
   const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
 

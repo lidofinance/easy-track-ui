@@ -1,5 +1,5 @@
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
 import { useContractEvmScript } from 'modules/motions/hooks/useContractEvmScript'
 
@@ -36,7 +36,7 @@ type Props = {
 }
 
 export function MotionDescription({ motion }: Props) {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const motionType = getMotionTypeByScriptFactory(
     chainId,
     motion.evmScriptFactory,

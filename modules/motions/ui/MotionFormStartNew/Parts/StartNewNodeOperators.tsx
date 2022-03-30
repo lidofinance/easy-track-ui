@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 import { useMemo, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
 import { useNodeOperatorKeysInfo } from 'modules/motions/hooks/useNodeOperatorKeysInfo'
 
@@ -39,7 +39,7 @@ export const formParts = createMotionFormPart({
     submitAction,
   }) {
     const { setValue } = useFormContext()
-    const { walletAddress } = useWalletInfo()
+    const { walletAddress } = useWeb3()
     const nodeOperators = useNodeOperatorsList()
     const keysInfo = useNodeOperatorKeysInfo()
 

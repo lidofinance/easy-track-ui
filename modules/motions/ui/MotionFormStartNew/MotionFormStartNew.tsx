@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { Button, ToastError } from '@lidofinance/lido-ui'
 import { Form } from 'modules/shared/ui/Controls/Form'
@@ -20,7 +20,7 @@ type Props = {
 }
 
 export function MotionFormStartNew({ onComplete }: Props) {
-  const currentChainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
 
   const formMethods = useForm<FormData>({
@@ -44,10 +44,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
         setSubmitting(true)
 
         const tx = await formParts[motionType].populateTx({
-          evmScriptFactory: getScriptFactoryByMotionType(
-            currentChainId,
-            motionType,
-          ),
+          evmScriptFactory: getScriptFactoryByMotionType(chainId, motionType),
           formData: e[motionType],
           contract: contractEasyTrack,
         })
@@ -64,7 +61,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
         setSubmitting(false)
       }
     },
-    [formMethods, currentChainId, contractEasyTrack, onComplete],
+    [formMethods, chainId, contractEasyTrack, onComplete],
   )
 
   const motionType = formMethods.watch('motionType')
