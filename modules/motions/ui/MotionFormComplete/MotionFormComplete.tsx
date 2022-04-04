@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useWeb3 } from '@lido-sdk/web3-react'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useGnosisOpener } from 'modules/blockChain/hooks/useGnosisOpener'
 import { useEtherscanOpen } from '@lido-sdk/react'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
 
 import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
@@ -28,7 +27,7 @@ type BodySafeProps = {
 
 // Can be improved with https://safe-transaction.rinkeby.gnosis.io/
 function BodySafe({ tx }: BodySafeProps) {
-  const { walletAddress } = useWalletInfo()
+  const { walletAddress } = useWeb3()
   const openGnosis = useGnosisOpener(
     String(walletAddress),
     '/transactions/queue',

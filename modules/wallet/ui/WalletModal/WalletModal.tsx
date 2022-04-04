@@ -1,10 +1,9 @@
 import { useCallback, useMemo } from 'react'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useConnectorStorage, useDisconnect } from '@lido-sdk/web3-react'
 import { useGovernanceBalance } from 'modules/tokens/hooks/useGovernanceBalance'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import { useConfig } from 'modules/config/hooks/useConfig'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
 
 import { Text } from 'modules/shared/ui/Common/Text'
 import { CopyOpenActions } from 'modules/shared/ui/Common/CopyOpenActions'
@@ -21,8 +20,11 @@ import {
 import { formatToken } from 'modules/tokens/utils/formatToken'
 
 function WalletModalContent() {
-  const { walletAddress: address } = useWalletInfo()
-  const trimmedAddress = useMemo(() => trimAddress(address ?? '', 6), [address])
+  const { walletAddress } = useWeb3()
+  const trimmedAddress = useMemo(
+    () => trimAddress(walletAddress ?? '', 6),
+    [walletAddress],
+  )
   const governanceBalance = useGovernanceBalance()
   const { data: governanceSymbol } = useGovernanceSymbol()
 
@@ -43,12 +45,12 @@ function WalletModalContent() {
       </Row>
 
       <Row>
-        <Identicon address={address ?? ''} />
+        <Identicon address={walletAddress ?? ''} />
         <Address>{trimmedAddress}</Address>
       </Row>
 
       <Row>
-        <CopyOpenActions value={address} entity="address" />
+        <CopyOpenActions value={walletAddress} entity="address" />
       </Row>
     </>
   )
@@ -58,7 +60,7 @@ export function WalletModal(props: ModalProps) {
   const { onClose } = props
   const [connector] = useConnectorStorage()
   const { disconnect } = useDisconnect()
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const { supportedChainIds } = useConfig()
   const isChainSupported = useMemo(
     () => supportedChainIds.includes(chainId),

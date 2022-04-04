@@ -1,6 +1,6 @@
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   ContractEasyTrack,
   ContractGovernanceToken,
@@ -40,7 +40,7 @@ type Props = {
 }
 
 function ActionsBody({ motion, onFinish }: Props) {
-  const { walletAddress } = useWalletInfo()
+  const { walletAddress } = useWeb3()
   const contractEasyTrack = ContractEasyTrack.useWeb3()
   const { data: governanceSymbol } = useGovernanceSymbol()
 
@@ -186,7 +186,7 @@ function AuthStub() {
 }
 
 export function MotionDetailedActions({ motion, onFinish }: Props) {
-  const { isWalletConnected } = useWalletInfo()
+  const { isWalletConnected } = useWeb3()
 
   if (!isWalletConnected) return <AuthStub />
 

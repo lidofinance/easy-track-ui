@@ -1,5 +1,5 @@
 import { utils } from 'ethers'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useReferralPartnersActual } from 'modules/motions/hooks/useReferralPartners'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -36,7 +36,7 @@ export const formParts = createMotionFormPart({
     submitAction,
   }) {
     const referralPartners = useReferralPartnersActual()
-    const { walletAddress } = useWalletInfo()
+    const { walletAddress } = useWeb3()
     const trustedCaller = ContractEvmReferralPartnerRemove.useSwrWeb3(
       'trustedCaller',
       [],

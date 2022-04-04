@@ -1,7 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { useWeb3 } from '@lido-sdk/web3-react'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useCurrentChain } from './useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSendTransactionGnosisWorkaround } from './useSendTransactionGnosisWorkaround'
 
 import { ResultTx, TxStatus } from '../types'
@@ -23,9 +21,7 @@ export function useTransactionSender(
   populateTx: PopulateFn,
   { onFinish }: Options = {},
 ) {
-  const { library } = useWeb3()
-  const currentChain = useCurrentChain()
-  const { walletAddress } = useWalletInfo()
+  const { library, chainId, walletAddress } = useWeb3()
   const [resultTx, setResultTx] = useState<ResultTx | null>(null)
   const [status, setStatus] = useState<TxStatus>('empty')
   const sendTransactionGnosisWorkaround = useSendTransactionGnosisWorkaround()
@@ -84,10 +80,10 @@ export function useTransactionSender(
     if (!resultTx) return
     const link =
       resultTx.type === 'safe'
-        ? getGnosisSafeLink(currentChain, `${walletAddress}/transaction`)
-        : getEtherscanLink(currentChain, resultTx.tx.hash, 'tx')
+        ? getGnosisSafeLink(chainId, `${walletAddress}/transaction`)
+        : getEtherscanLink(chainId, resultTx.tx.hash, 'tx')
     openWindow(link)
-  }, [currentChain, resultTx, walletAddress])
+  }, [chainId, resultTx, walletAddress])
 
   return {
     tx: resultTx,

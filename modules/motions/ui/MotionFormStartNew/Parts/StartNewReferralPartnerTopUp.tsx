@@ -2,8 +2,7 @@ import { utils } from 'ethers'
 
 import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useReferralPartnersActual } from 'modules/motions/hooks/useReferralPartners'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
@@ -59,8 +58,7 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const chainId = useCurrentChain()
-    const { walletAddress } = useWalletInfo()
+    const { chainId, walletAddress } = useWeb3()
     const trustedCaller = ContractEvmReferralPartnerTopUp.useSwrWeb3(
       'trustedCaller',
       [],

@@ -3,7 +3,7 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
 import { useConfig } from 'modules/config/hooks/useConfig'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useErrorMessage } from 'modules/blockChain/hooks/useErrorMessage'
 import { useSupportedChains, ProviderWeb3 } from '@lido-sdk/web3-react'
 
@@ -28,7 +28,7 @@ import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
 function AppRoot({ Component, pageProps }: AppProps) {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const { isUnsupported } = useSupportedChains()
   const error = useErrorMessage()
 

@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
 export function useLegoTokenOptions() {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const { data: governanceSymbol } = useGovernanceSymbol()
   return useMemo(
     () => [

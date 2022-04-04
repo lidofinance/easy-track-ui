@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useScrollLock } from 'modules/shared/hooks/useScrollLock'
 
 import Link from 'next/link'
@@ -56,7 +56,7 @@ function NavItem({
 }
 
 export function Header() {
-  const currentChain = useCurrentChain()
+  const { chainId } = useWeb3()
   const [isBurgerOpened, setBurgerOpened] = useState(false)
   const handleCloseMobileMenu = useCallback(() => setBurgerOpened(false), [])
   useScrollLock(isBurgerOpened)
@@ -90,9 +90,9 @@ export function Header() {
 
         <ActionsDesktop>
           <Network>
-            <NetworkBulb color={getChainColor(currentChain)} />
+            <NetworkBulb color={getChainColor(chainId)} />
             <Text size={14} weight={500}>
-              {getChainName(currentChain)}
+              {getChainName(chainId)}
             </Text>
           </Network>
           <HeaderWallet />
@@ -133,9 +133,9 @@ export function Header() {
               </MobileNavItems>
               <MobileNetworkWrap>
                 <Network>
-                  <NetworkBulb color={getChainColor(currentChain)} />
+                  <NetworkBulb color={getChainColor(chainId)} />
                   <Text size={14} weight={500}>
-                    {getChainName(currentChain)}
+                    {getChainName(chainId)}
                   </Text>
                 </Network>
                 <HeaderWallet />

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
 import { useMotionTimeCountdown } from 'modules/motions/hooks/useMotionTimeCountdown'
 
@@ -32,7 +32,7 @@ type Props = {
 
 export function MotionCardPreview({ motion }: Props) {
   const router = useRouter()
-  const currentChainId = useCurrentChain()
+  const { chainId } = useWeb3()
 
   const progress = useMotionProgress(motion)
 
@@ -58,7 +58,7 @@ export function MotionCardPreview({ motion }: Props) {
       <CardTitle>
         #{motion.id}{' '}
         {getMotionTypeDisplayName(
-          getMotionTypeByScriptFactory(currentChainId, motion.evmScriptFactory),
+          getMotionTypeByScriptFactory(chainId, motion.evmScriptFactory),
         )}
       </CardTitle>
 

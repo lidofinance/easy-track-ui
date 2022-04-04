@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 
 import { Container, Button } from '@lidofinance/lido-ui'
@@ -10,7 +10,7 @@ import { MessageBox } from 'modules/motions/ui/MotionFormStartNew/CreateMotionFo
 import { ResultTx } from 'modules/blockChain/types'
 
 export default function StartMotionPage() {
-  const { isWalletConnected } = useWalletInfo()
+  const { isWalletConnected } = useWeb3()
   const openConnectWalletModal = useConnectWalletModal()
   const [complete, setComplete] = useState<ResultTx | null>(null)
 

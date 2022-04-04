@@ -1,6 +1,6 @@
 import { CHAINS } from '@lido-sdk/constants'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { useWeb3 } from '@lido-sdk/web3-react'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractNodeOperatorsRegistry } from 'modules/blockChain/contracts'
 import type { UnpackedPromise } from '@lido-sdk/react/dist/esm/hooks/types'
 
