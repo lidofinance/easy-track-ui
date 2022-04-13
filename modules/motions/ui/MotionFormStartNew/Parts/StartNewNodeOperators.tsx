@@ -5,6 +5,7 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
 import { useNodeOperatorKeysInfo } from 'modules/motions/hooks/useNodeOperatorKeysInfo'
 
+import { KeysInfoBlock } from 'modules/motions/ui/KeysInfoBlock'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
@@ -56,15 +57,10 @@ export const formParts = createMotionFormPart({
 
     const connectedKeysInfo = useMemo(() => {
       if (!isNodeOperatorConnected || !keysInfo.data) return null
-      return keysInfo.data.operators.find(
+      return keysInfo.data.operators?.find(
         o => utils.getAddress(o.info.rewardAddress) === walletAddress,
       )
     }, [isNodeOperatorConnected, keysInfo.data, walletAddress])
-
-    const isConnectedKeysValid =
-      connectedKeysInfo &&
-      connectedKeysInfo.invalid.length === 0 &&
-      connectedKeysInfo.duplicates.length === 0
 
     useEffect(() => {
       setValue(fieldNames.nodeOperatorId, operatorId)
@@ -78,12 +74,22 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as node operator</MessageBox>
     }
 
+    if (!connectedKeysInfo) {
+      return <MessageBox>Error: No keys info found</MessageBox>
+    }
+
+    const isConnectedKeysValid =
+      connectedKeysInfo.invalid.length === 0 &&
+      connectedKeysInfo.duplicates.length === 0
+
     if (!isConnectedKeysValid) {
-      return <MessageBox>Error: invalid keys found</MessageBox>
+      return <KeysInfoBlock keys={connectedKeysInfo} />
     }
 
     return (
       <>
+        <KeysInfoBlock keys={connectedKeysInfo} />
+
         <Fieldset>
           <InputControl
             name={fieldNames.nodeOperatorId}

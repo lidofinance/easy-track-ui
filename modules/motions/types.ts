@@ -77,3 +77,37 @@ export type RawMotionSubgraph = {
   canceled_at?: string
   rejected_at?: string
 }
+
+export type KeysInfoOperator = {
+  invalid: string[]
+  duplicates: string[]
+  info: {
+    index: number
+    active: boolean
+    name: string
+    rewardAddress: string
+    stakingLimit: number
+    stoppedValidators: number
+    totalSigningKeys: number
+    usedSigningKeys: number
+  }
+}
+
+export type KeysInfo = {
+  operators: undefined | KeysInfoOperator[]
+  keys: {
+    signatureVerified: number
+    duplicatesVerified: number
+    total: number
+    unusedButNotNew: number
+    unused: number
+    used: number
+    unconfirmed: number
+  }
+  health: {
+    nextUpdateTime: number
+    lastUpdateTime: number
+    serverTime: number
+    status: string
+  }
+}
