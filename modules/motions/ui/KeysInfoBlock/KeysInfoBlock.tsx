@@ -29,16 +29,9 @@ export function KeysInfoBlock({ keys }: Props) {
   const hasInvalid = keys.invalid.length > 0
   const hasDuplicates = keys.duplicates.length > 0
 
-  const handleClickTooling = useCallback(() => {
+  const handleClickContact = useCallback(() => {
     window.open(
-      'https://discord.com/channels/761182643269795850/931178060999442452',
-      '_blank',
-    )
-  }, [])
-
-  const handleClickNom = useCallback(() => {
-    window.open(
-      'https://discord.com/channels/761182643269795850/951800310488248381',
+      'https://discord.com/channels/761182643269795850/892403983925256212',
       '_blank',
     )
   }, [])
@@ -110,16 +103,13 @@ export function KeysInfoBlock({ keys }: Props) {
       {(hasInvalid || hasDuplicates) && (
         <>
           <br />
-          <Button fullwidth onClick={handleClickTooling}>
-            Contact @team-tooling
-          </Button>
-          <br />
-          <br />
-          <Button fullwidth onClick={handleClickNom}>
-            Contact @team-nom
+          <Button fullwidth onClick={handleClickContact}>
+            Contact in Discord
           </Button>
         </>
       )}
+
+      <br />
     </>
   )
 }
