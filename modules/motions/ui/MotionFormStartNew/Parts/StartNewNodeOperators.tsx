@@ -132,7 +132,7 @@ export const formParts = createMotionFormPart({
                 if (parsedValue <= limit) {
                   return 'New limit value should be greater than current'
                 }
-                if (parsedValue >= connectedKeysInfo.info.totalSigningKeys) {
+                if (parsedValue > connectedKeysInfo.info.totalSigningKeys) {
                   return 'New limit value should be less than total signing keys'
                 }
                 return true
