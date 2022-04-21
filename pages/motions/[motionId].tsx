@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSubgraphUrl } from 'modules/network/hooks/useSubgraphUrl'
 
 import { Container } from '@lidofinance/lido-ui'
@@ -23,17 +23,17 @@ const ContentContainer = styled(Container).attrs({
 
 export default function MotionDetailsPage() {
   const router = useRouter()
-  const currentChain = useCurrentChain()
+  const { chainId } = useWeb3()
   const motionId = Number(router.query.motionId)
   const subgraphUrl = useSubgraphUrl()
   const {
     initialLoading,
     data: motion,
     mutate,
-  } = useSWR<Motion | null>(`motion-${currentChain}-${motionId}`, async () => {
+  } = useSWR<Motion | null>(`motion-${chainId}-${motionId}`, async () => {
     try {
       const tryActive = await fetcherStandard<Motion>(
-        urlsApi.motionDetails(motionId, currentChain),
+        urlsApi.motionDetails(motionId, chainId),
       )
       return tryActive
     } catch {

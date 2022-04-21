@@ -1,9 +1,11 @@
 import { utils } from 'ethers'
 import { useMemo, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList'
+import { useNodeOperatorKeysInfo } from 'modules/motions/hooks/useNodeOperatorKeysInfo'
 
+import { KeysInfoBlock } from 'modules/motions/ui/KeysInfoBlock'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
@@ -38,8 +40,9 @@ export const formParts = createMotionFormPart({
     submitAction,
   }) {
     const { setValue } = useFormContext()
-    const { walletAddress } = useWalletInfo()
+    const { walletAddress } = useWeb3()
     const nodeOperators = useNodeOperatorsList()
+    const keysInfo = useNodeOperatorKeysInfo()
 
     const [operatorId, currentNodeOperator] = useMemo(() => {
       const idx = nodeOperators.data?.list.findIndex(
@@ -52,11 +55,18 @@ export const formParts = createMotionFormPart({
     const isNodeOperatorConnected =
       !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
 
+    const connectedKeysInfo = useMemo(() => {
+      if (!isNodeOperatorConnected || !keysInfo.data) return null
+      return keysInfo.data.operators?.find(
+        o => utils.getAddress(o.info.rewardAddress) === walletAddress,
+      )
+    }, [isNodeOperatorConnected, keysInfo.data, walletAddress])
+
     useEffect(() => {
       setValue(fieldNames.nodeOperatorId, operatorId)
     }, [operatorId, fieldNames.nodeOperatorId, setValue])
 
-    if (nodeOperators.initialLoading) {
+    if (nodeOperators.initialLoading || keysInfo.initialLoading) {
       return <PageLoader />
     }
 
@@ -64,8 +74,22 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as node operator</MessageBox>
     }
 
+    if (!connectedKeysInfo) {
+      return <MessageBox>Error: No keys info found</MessageBox>
+    }
+
+    const isConnectedKeysValid =
+      connectedKeysInfo.invalid.length === 0 &&
+      connectedKeysInfo.duplicates.length === 0
+
+    if (!isConnectedKeysValid) {
+      return <KeysInfoBlock keys={connectedKeysInfo} />
+    }
+
     return (
       <>
+        <KeysInfoBlock keys={connectedKeysInfo} />
+
         <Fieldset>
           <InputControl
             name={fieldNames.nodeOperatorId}
@@ -107,6 +131,9 @@ export const formParts = createMotionFormPart({
                   : 0
                 if (parsedValue <= limit) {
                   return 'New limit value should be greater than current'
+                }
+                if (parsedValue > connectedKeysInfo.info.totalSigningKeys) {
+                  return 'New limit value should be less than total signing keys'
                 }
                 return true
               },

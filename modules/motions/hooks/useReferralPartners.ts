@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractReferralPartnersRegistry } from 'modules/blockChain/contracts'
 import { getEventsReferralPartnerAdded } from '../utils/getEventsReferralPartnerAdded'
 
@@ -26,7 +26,7 @@ function useReferralPartnersMap(
 }
 
 export function useReferralPartnersAll() {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const referalPartnersRegistry = ContractReferralPartnersRegistry.useRpc()
 
   return useSWR(
@@ -44,7 +44,7 @@ export function useReferralPartnersAll() {
 }
 
 export function useReferralPartnersActual() {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
   const partnersAll = useReferralPartnersAll()
   const referalPartnersRegistry = ContractReferralPartnersRegistry.useRpc()
 

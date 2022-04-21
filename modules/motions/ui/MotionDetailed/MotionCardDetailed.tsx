@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
 import { useMotionTimeCountdown } from 'modules/motions/hooks/useMotionTimeCountdown'
 
@@ -43,8 +42,7 @@ type Props = {
 }
 
 export function MotionCardDetailed({ motion, onInvalidate }: Props) {
-  const currentChainId = useCurrentChain()
-  const { walletAddress } = useWalletInfo()
+  const { chainId, walletAddress } = useWeb3()
 
   const progress = useMotionProgress(motion)
 
@@ -64,7 +62,7 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
   const isAttentionTime = diff <= motion.duration * MOTION_ATTENTION_PERIOD
 
   const motionType = getMotionTypeByScriptFactory(
-    currentChainId,
+    chainId,
     motion.evmScriptFactory,
   )
   const displayStatus = getMotionDisplayStatus({

@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 import { useMemo } from 'react'
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useRewardProgramsActual } from 'modules/motions/hooks/useRewardPrograms'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -37,7 +37,7 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const { walletAddress } = useWalletInfo()
+    const { walletAddress } = useWeb3()
     const rewardPrograms = useRewardProgramsActual()
     const trustedCaller = ContractEvmRewardProgramAdd.useSwrWeb3(
       'trustedCaller',

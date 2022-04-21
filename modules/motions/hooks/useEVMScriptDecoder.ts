@@ -1,5 +1,5 @@
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { EVMScriptDecoder } from 'evm-script-decoder/lib/EVMScriptDecoder'
 import { ABIProviderLocal } from 'evm-script-decoder/lib/ABIProviderLocal'
@@ -11,7 +11,7 @@ import FinanceAbi from 'abi/Finance.abi.json'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
 export function useEVMScriptDecoder() {
-  const chainId = useCurrentChain()
+  const { chainId } = useWeb3()
 
   return useGlobalMemo(
     () =>

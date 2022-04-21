@@ -1,8 +1,7 @@
 import { SWRConfiguration } from 'swr'
 import { CHAINS } from '@lido-sdk/constants'
 
-import { useWeb3 } from '@lido-sdk/web3-react'
-import { useCurrentChain } from 'modules/blockChain/hooks/useCurrentChain'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { useContractSwr } from '../hooks/useContractSwr'
 
@@ -51,7 +50,7 @@ export function createContractHelpers<F extends Factory>({
   }
 
   function useInstanceRpc() {
-    const chainId = useCurrentChain()
+    const { chainId } = useWeb3()
 
     return useGlobalMemo(
       () =>
@@ -64,8 +63,7 @@ export function createContractHelpers<F extends Factory>({
   }
 
   function useInstanceWeb3() {
-    const { library, active, account } = useWeb3()
-    const chainId = useCurrentChain()
+    const { library, active, account, chainId } = useWeb3()
 
     return useGlobalMemo(
       () =>

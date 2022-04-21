@@ -1,4 +1,4 @@
-import { useWalletInfo } from 'modules/wallet/hooks/useWalletInfo'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { Button } from '@lidofinance/lido-ui'
 
@@ -7,7 +7,7 @@ import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { Wrap, AddressBadge } from './HeaderWalletStyle'
 
 export function HeaderWallet() {
-  const { isWalletConnected, walletAddress } = useWalletInfo()
+  const { isWalletConnected, walletAddress } = useWeb3()
   const openWalletModal = useWalletModal()
   const openConnectWalletModal = useConnectWalletModal()
 
