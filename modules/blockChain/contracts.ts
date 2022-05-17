@@ -5,7 +5,6 @@ import {
   ReferralPartnersRegistryAbi,
   EasyTrackAbi__factory,
   NodeOperatorsAbi__factory,
-  // Erc20Abi__factory,
   MiniMeTokenAbi__factory,
   RewardProgramRegistryAbi__factory,
   ReferralPartnersRegistryAbi__factory,
