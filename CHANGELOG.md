@@ -1,4 +1,4 @@
-# [0.8.0](https://github.com/lidofinance/easy-track-ui/compare/0.7.1...0.8.0) (2022-05-17)
+# [0.9.0](https://github.com/lidofinance/easy-track-ui/compare/0.7.1...0.9.0) (2022-05-17)
 
 
 ### Bug Fixes
