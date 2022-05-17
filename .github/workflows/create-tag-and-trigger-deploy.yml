@@ -1,4 +1,4 @@
-name: Create tag
+name: Create tag and trigger deploy
 on:
   push:
     branches:
