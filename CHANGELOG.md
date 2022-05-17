@@ -1,3 +1,24 @@
+# [0.8.0](https://github.com/lidofinance/easy-track-ui/compare/0.7.1...0.8.0) (2022-05-17)
+
+
+### Bug Fixes
+
+* dockerfile ([771a106](https://github.com/lidofinance/easy-track-ui/commit/771a10668bc11d036bb3a3a28ce857bdc4619409))
+* node operator keys link ([ca8b2c3](https://github.com/lidofinance/easy-track-ui/commit/ca8b2c3d0d94cef5f0d9abf0c7616109b768e39b))
+* node operator keys validation ([eedbb8b](https://github.com/lidofinance/easy-track-ui/commit/eedbb8b28b3eb2316c8119bbff331c355722e0c2))
+* progressive referrals and partners loading ([428f98a](https://github.com/lidofinance/easy-track-ui/commit/428f98a152bacc2f01f2d9f6fd952b0ffd22dc11))
+* upgrade git version in docker file ([c6220b2](https://github.com/lidofinance/easy-track-ui/commit/c6220b2be2f220f45ec5a54b1410d1e5b8a6db2a))
+
+
+### Features
+
+* fancy node operator keys errors displaying ([5cba069](https://github.com/lidofinance/easy-track-ui/commit/5cba069fdc9ed241c87064e3d13d8afd376b7b93))
+* New relese flow ([bf9b9ac](https://github.com/lidofinance/easy-track-ui/commit/bf9b9acb44a044a1965d648f0b1444d8fc03a6ca))
+* node operator keys info ([f451fce](https://github.com/lidofinance/easy-track-ui/commit/f451fcec35d3f3e08ca122fbe56265df42aa37b1))
+* **security:** added codeowners for lockfiles ([f05f054](https://github.com/lidofinance/easy-track-ui/commit/f05f054e602630cf559bf10d1c3527f13cd42f80))
+
+
+
 ## [0.7.1](https://github.com/lidofinance/easy-track-ui/compare/0.7.0...0.7.1) (2022-03-25)
 
 
@@ -70,20 +91,6 @@
 * auto insert node operator id to motion form ([652aecb](https://github.com/lidofinance/easy-track-ui/commit/652aecb288a2c567fa1472d5522df9653434bd1e))
 * display node operator name in motion description ([1dc6261](https://github.com/lidofinance/easy-track-ui/commit/1dc626171a2bd6a18c572617f6c19d7e0362e151))
 * **metrics:** divide supported chains metrics into separate calls ([55bcebb](https://github.com/lidofinance/easy-track-ui/commit/55bcebba59f9855eb99490dc8a45466e1c224115))
-
-
-
-# [0.5.0](https://github.com/lidofinance/easy-track-ui/compare/0.4.0...0.5.0) (2022-01-18)
-
-
-### Bug Fixes
-
-* **security:** disable frameguard ([f57cd77](https://github.com/lidofinance/easy-track-ui/commit/f57cd77ed0b43ad17ac821eda11ff31979e441ab))
-
-
-### Features
-
-* **metrics:** add a chainId label for requests metrics ([06ec3d4](https://github.com/lidofinance/easy-track-ui/commit/06ec3d42d1f3cb944e834771d12c1ead12b80550))
 
 
 
