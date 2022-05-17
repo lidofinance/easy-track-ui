@@ -31,11 +31,18 @@ export function useRewardProgramsAll() {
   return useSWR(
     `reward-programs-all-${chainId}-${rewardProgramRegistry.address}`,
     async () => {
-      const events = await getEventsRewardProgramAdded(rewardProgramRegistry)
+      const events = await getEventsRewardProgramAdded(
+        chainId,
+        rewardProgramRegistry,
+      )
       return events.map(event => ({
         title: event._title,
         address: event._rewardProgram,
       }))
+    },
+    {
+      shouldRetryOnError: true,
+      errorRetryInterval: 5000,
     },
   )
 }
@@ -46,15 +53,17 @@ export function useRewardProgramsActual() {
   const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
 
   return useSWR(
-    programsAll.data
-      ? `reward-programs-actual-${chainId}-${rewardProgramRegistry.address}`
-      : null,
+    `reward-programs-actual-${chainId}-${rewardProgramRegistry.address}-${
+      programsAll.data ? 'named' : 'not_named'
+    }`,
     async () => {
-      if (!programsAll.data) return null
-      const programsActual = await rewardProgramRegistry.getRewardPrograms()
-      return programsAll.data.filter(
-        p => programsActual.findIndex(addr => addr === p.address) !== -1,
-      )
+      const addresses = await rewardProgramRegistry.getRewardPrograms()
+      if (programsAll.data) {
+        return programsAll.data.filter(
+          p => addresses.findIndex(addr => addr === p.address) !== -1,
+        )
+      }
+      return addresses.map(address => ({ title: address, address }))
     },
   )
 }

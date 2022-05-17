@@ -33,12 +33,17 @@ export function useReferralPartnersAll() {
     `referral-partners-all-${chainId}-${referalPartnersRegistry.address}`,
     async () => {
       const events = await getEventsReferralPartnerAdded(
+        chainId,
         referalPartnersRegistry,
       )
       return events.map(event => ({
         title: event._title,
         address: event._rewardProgram,
       }))
+    },
+    {
+      shouldRetryOnError: true,
+      errorRetryInterval: 5000,
     },
   )
 }
@@ -49,15 +54,17 @@ export function useReferralPartnersActual() {
   const referalPartnersRegistry = ContractReferralPartnersRegistry.useRpc()
 
   return useSWR(
-    partnersAll.data
-      ? `referral-partners-actual-${chainId}-${referalPartnersRegistry.address}`
-      : null,
+    `referral-partners-actual-${chainId}-${referalPartnersRegistry.address}-${
+      partnersAll.data ? 'named' : 'not_named'
+    }`,
     async () => {
-      if (!partnersAll.data) return null
-      const partnersActual = await referalPartnersRegistry.getRewardPrograms()
-      return partnersAll.data.filter(
-        p => partnersActual.findIndex(addr => addr === p.address) !== -1,
-      )
+      const addresses = await referalPartnersRegistry.getRewardPrograms()
+      if (partnersAll.data) {
+        return partnersAll.data.filter(
+          p => addresses.findIndex(addr => addr === p.address) !== -1,
+        )
+      }
+      return addresses.map(address => ({ title: address, address }))
     },
   )
 }
