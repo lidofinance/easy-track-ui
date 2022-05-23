@@ -7,7 +7,9 @@ export default createNextConnect().get(async (req, res) => {
   try {
     const chainId = parseChainId(String(req.query.chainId))
     const data = await fetch(
-      `https://operators.testnet.fi/api/operators?chainId=${chainId}`,
+      `https://operators.${
+        chainId === 1 ? 'lido' : 'testnet'
+      }.fi/api/operators?chainId=${chainId}`,
     )
     const parsed = await data.json()
     res.json(parsed)
