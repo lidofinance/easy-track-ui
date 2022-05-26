@@ -3,6 +3,12 @@ name: CI Build prod image
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      tag:
+        description: 'tag to deploy from'
+        default: ''
+        required: false
+        type: string
   push:
     branches:
       - "!*"
@@ -22,11 +28,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Branch name
-        id: branch_name
+        
+      - name: Tag name
+        id: tag_name
         run: |
-          echo ::set-output name=TAG::${GITHUB_REF#refs/tags/}
+          if [ ${{ inputs.tag }} = '' ]; then
+            echo ::set-output name=TAG::${GITHUB_REF#refs/tags/}
+          else
+            echo ::set-output name=TAG::${{ inputs.tag }}
+          fi
       
       - name: Build prod image
         run: .github/dispatch_workflow.py
@@ -34,5 +44,5 @@ jobs:
           APP_ID: ${{ secrets.APP_ID }}
           APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
           TARGET_REPO: "${{ secrets.TARGET_REPO }}"
-          TAG: "${{ steps.branch_name.outputs.TAG }}"
+          TAG: "${{ steps.tag_name.outputs.TAG }}"
           TARGET_WORKFLOW: "build_mainnet_easytrack_ui.yaml"
