@@ -1,12 +1,21 @@
+import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
 
+const { publicRuntimeConfig } = getConfig()
+const {
+  subgraphMainnet,
+  subgraphRopsten,
+  subgraphRinkeby,
+  subgraphGoerli,
+  subgraphKovan,
+  subgraphKintsugi,
+} = publicRuntimeConfig
+
 export const SUBGRAPH_URL = {
-  [CHAINS.Mainnet]: 'https://api.thegraph.com/subgraphs/name/lidofinance/lido',
-  [CHAINS.Ropsten]: '',
-  [CHAINS.Rinkeby]:
-    'https://easytrack-subgraph.testnet.lido.fi/subgraphs/name/bulbozaur/lido-easytrack-rinkeby',
-  [CHAINS.Goerli]:
-    'https://api.thegraph.com/subgraphs/name/lidofinance/lido-testnet',
-  [CHAINS.Kovan]: '',
-  [CHAINS.Kintsugi]: '',
+  [CHAINS.Mainnet]: subgraphMainnet,
+  [CHAINS.Ropsten]: subgraphRopsten,
+  [CHAINS.Rinkeby]: subgraphRinkeby,
+  [CHAINS.Goerli]: subgraphGoerli,
+  [CHAINS.Kovan]: subgraphKovan,
+  [CHAINS.Kintsugi]: subgraphKintsugi,
 } as const
