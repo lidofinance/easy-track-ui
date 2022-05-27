@@ -96,15 +96,15 @@ module.exports = {
     cspTrustedHosts,
     cspReportOnly,
     cspReportUri,
-  },
-  publicRuntimeConfig: {
-    defaultChain,
-    supportedChains,
     subgraphMainnet,
     subgraphRopsten,
     subgraphRinkeby,
     subgraphGoerli,
     subgraphKovan,
     subgraphKintsugi,
+  },
+  publicRuntimeConfig: {
+    defaultChain,
+    supportedChains,
   },
 }

@@ -1,0 +1,75 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+import clone from 'just-clone'
+import getConfig from 'next/config'
+import { CHAINS } from '@lido-sdk/constants'
+import { logger } from 'modules/shared/utils/log'
+import { parseChainId } from 'modules/blockChain/chains'
+
+const { serverRuntimeConfig } = getConfig()
+export const SUBGRAPH_URL = {
+  [CHAINS.Mainnet]: serverRuntimeConfig.subgraphMainnet,
+  [CHAINS.Ropsten]: serverRuntimeConfig.subgraphRopsten,
+  [CHAINS.Rinkeby]: serverRuntimeConfig.subgraphRinkeby,
+  [CHAINS.Goerli]: serverRuntimeConfig.subgraphGoerli,
+  [CHAINS.Kovan]: serverRuntimeConfig.subgraphKovan,
+  [CHAINS.Kintsugi]: serverRuntimeConfig.subgraphKintsugi,
+} as const
+
+export default async function subgraph(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  const requestInfo = {
+    type: 'API request',
+    path: 'subgraph',
+    body: clone(req.body),
+    query: clone(req.query),
+    method: req.method,
+    stage: 'INCOMING',
+  }
+
+  const parsedBody = req.body && JSON.parse(req.body)
+
+  if (!parsedBody.query) {
+    const status = 'Error: query is empry'
+    logger.error(status, requestInfo)
+    res.status(400).json({ status })
+    return
+  }
+
+  try {
+    const chainId = parseChainId(String(req.query.chainId))
+    const url = SUBGRAPH_URL[chainId]
+
+    const requested = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: req.body,
+    })
+
+    if (!requested.ok) {
+      const errorMessage = await requested.text()
+      res.status(requested.status).send(errorMessage)
+      return
+    }
+
+    const responded = await requested.json()
+    res.status(requested.status).json(responded)
+    logger.info('Request to api/subgraph successfully fullfilled', {
+      ...requestInfo,
+      stage: 'FULFILLED',
+    })
+  } catch (error) {
+    logger.error(
+      error instanceof Error ? error.message : 'Something went wrong',
+      {
+        error,
+        ...requestInfo,
+      },
+    )
+    res.status(500).send({ error: 'Something went wrong!' })
+  }
+}
