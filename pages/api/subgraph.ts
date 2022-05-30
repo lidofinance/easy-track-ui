@@ -37,10 +37,17 @@ export default async function subgraph(
     return
   }
 
-  try {
-    const chainId = parseChainId(String(req.query.chainId))
-    const url = SUBGRAPH_URL[chainId]
+  const chainId = parseChainId(String(req.query.chainId))
+  const url = SUBGRAPH_URL[chainId]
 
+  if (!url) {
+    const status = 'Error: subgraph chain is not supported'
+    logger.error(status, requestInfo)
+    res.status(400).json({ status })
+    return
+  }
+
+  try {
     const requested = await fetch(url, {
       method: 'POST',
       headers: {
