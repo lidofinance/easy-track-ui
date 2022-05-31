@@ -1,6 +1,7 @@
 import { RawMotionSubgraph } from '../types'
 import { formatMotionDataSubgraph } from '../utils/formatMotionDataSubgraph'
 import { fetcherGraphql } from 'modules/network/utils/fetcherGraphql'
+import { CHAINS } from '@lido-sdk/constants'
 
 type Response = { data: { motions: RawMotionSubgraph[] } }
 
@@ -33,17 +34,17 @@ export const getQuerySubgraphMotions = (
   }
 }`
 
-export async function fetchMotionsSubgraphList(url: string, query: string) {
-  const res = await fetcherGraphql<Response>(url, query)
+export async function fetchMotionsSubgraphList(chainId: CHAINS, query: string) {
+  const res = await fetcherGraphql<Response>(chainId, query)
   return res.data.motions.map(formatMotionDataSubgraph)
 }
 
 export async function fetchMotionsSubgraphItem(
-  url: string,
+  chainId: CHAINS,
   id: string | number,
 ) {
   const res = await fetcherGraphql<Response>(
-    url,
+    chainId,
     getQuerySubgraphMotions({ id }),
   )
   const motion = res.data.motions[0] as RawMotionSubgraph | undefined

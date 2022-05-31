@@ -3,7 +3,6 @@ import { useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useSubgraphUrl } from 'modules/network/hooks/useSubgraphUrl'
 
 import { Container } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -25,7 +24,6 @@ export default function MotionDetailsPage() {
   const router = useRouter()
   const { chainId } = useWeb3()
   const motionId = Number(router.query.motionId)
-  const subgraphUrl = useSubgraphUrl()
   const {
     initialLoading,
     data: motion,
@@ -37,7 +35,7 @@ export default function MotionDetailsPage() {
       )
       return tryActive
     } catch {
-      const tryArchive = await fetchMotionsSubgraphItem(subgraphUrl, motionId)
+      const tryArchive = await fetchMotionsSubgraphItem(chainId, motionId)
       return tryArchive
     }
   })

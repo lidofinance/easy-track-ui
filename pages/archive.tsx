@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWRInfinite } from 'modules/network/hooks/useSwr'
-import { useSubgraphUrl } from 'modules/network/hooks/useSubgraphUrl'
 
 import { Button, Container } from '@lidofinance/lido-ui'
 import { Title } from 'modules/shared/ui/Common/Title'
@@ -24,13 +24,13 @@ const LoadMoreWrap = styled.div`
 const PAGE_SIZE = 8
 
 export default function ArchivePage() {
-  const subgraphUrl = useSubgraphUrl()
+  const { chainId } = useWeb3()
 
   const { initialLoading, isValidating, data, size, setSize } = useSWRInfinite(
     (pageIndex, previousPageData) =>
       !previousPageData || previousPageData.length === PAGE_SIZE
         ? [
-            subgraphUrl,
+            chainId,
             getQuerySubgraphMotions({
               first: PAGE_SIZE,
               skip: pageIndex * PAGE_SIZE,
