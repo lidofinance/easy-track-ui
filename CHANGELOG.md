@@ -1,10 +1,12 @@
-## [0.9.1](https://github.com/lidofinance/easy-track-ui/compare/0.9.0...0.9.1) (2022-05-23)
+## [0.9.2](https://github.com/lidofinance/easy-track-ui/compare/0.9.1...0.9.2) (2022-06-01)
 
 
 ### Bug Fixes
 
 * Explicit relese wf trigger ([4c19d4c](https://github.com/lidofinance/easy-track-ui/commit/4c19d4c78e7f15c7d014c970363f575f6d470996))
 * node operators key checking mainnet support ([0cce780](https://github.com/lidofinance/easy-track-ui/commit/0cce780d5487b39859c9a2075a2225955500ca6c))
+* Release flow for the last time ([83bc962](https://github.com/lidofinance/easy-track-ui/commit/83bc962205c0776bb039a4b68befbd660583ee08))
+* Release flow secrets passing ([a7b622b](https://github.com/lidofinance/easy-track-ui/commit/a7b622b957ec24b162e8c626ff2dd922f41e9dc5))
 * WF name ([70ccb7c](https://github.com/lidofinance/easy-track-ui/commit/70ccb7c66e1d66d28e30b3e3038a322047175a39))
 
 
@@ -72,15 +74,6 @@
 * referal and reward programs bolded ([78c2b6e](https://github.com/lidofinance/easy-track-ui/commit/78c2b6eecc5f5a1478d82724c5817ac7a0ea2c0c))
 * referral partner motions ([d3df0da](https://github.com/lidofinance/easy-track-ui/commit/d3df0da89c391f09fc1be26524b309d1165b3c07))
 * transition limits ([e3046f3](https://github.com/lidofinance/easy-track-ui/commit/e3046f3e872b1fbdae1481a3786482d0a82ba93f))
-
-
-
-## [0.6.1](https://github.com/lidofinance/easy-track-ui/compare/0.6.0...0.6.1) (2022-02-22)
-
-
-### Bug Fixes
-
-* **security:** opt out of image optimization and use custom loader ([ff917e7](https://github.com/lidofinance/easy-track-ui/commit/ff917e7242366c2e5baf7596818437dd7aa40251))
 
 
 
