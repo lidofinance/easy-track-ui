@@ -30,6 +30,7 @@ export const fetchWithFallback: FetchWithFallback = async (
       .startTimer()
     const response = await fetch(input, init)
     end()
+    if (response.status >= 300) throw response.statusText
     return response
   } catch (error) {
     if (!restInputs.length) throw error
