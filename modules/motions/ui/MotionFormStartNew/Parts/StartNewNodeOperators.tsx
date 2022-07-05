@@ -45,8 +45,10 @@ export const formParts = createMotionFormPart({
     const keysInfo = useNodeOperatorKeysInfo()
 
     const [operatorId, currentNodeOperator] = useMemo(() => {
+      if (!walletAddress) return [undefined, null]
       const idx = nodeOperators.data?.list.findIndex(
-        o => o.rewardAddress.toLowerCase() === walletAddress?.toLowerCase(),
+        o =>
+          utils.getAddress(o.rewardAddress) === utils.getAddress(walletAddress),
       )
       const operator = idx !== undefined && nodeOperators.data?.list[idx]
       return [idx, operator]
@@ -56,9 +58,12 @@ export const formParts = createMotionFormPart({
       !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
 
     const connectedKeysInfo = useMemo(() => {
-      if (!isNodeOperatorConnected || !keysInfo.data) return null
+      if (!isNodeOperatorConnected || !keysInfo.data || !walletAddress)
+        return null
       return keysInfo.data.operators?.find(
-        o => utils.getAddress(o.info.rewardAddress) === walletAddress,
+        o =>
+          utils.getAddress(o.info.rewardAddress) ===
+          utils.getAddress(walletAddress),
       )
     }, [isNodeOperatorConnected, keysInfo.data, walletAddress])
 
