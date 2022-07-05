@@ -46,7 +46,7 @@ export const formParts = createMotionFormPart({
 
     const [operatorId, currentNodeOperator] = useMemo(() => {
       const idx = nodeOperators.data?.list.findIndex(
-        o => o.rewardAddress === walletAddress,
+        o => o.rewardAddress.toLowerCase() === walletAddress?.toLowerCase(),
       )
       const operator = idx !== undefined && nodeOperators.data?.list[idx]
       return [idx, operator]
