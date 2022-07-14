@@ -19,16 +19,15 @@ export default async function subgraph(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  const parsedBody = req.body && JSON.parse(req.body)
   const requestInfo = {
     type: 'API request',
     path: 'subgraph',
-    body: clone(req.body),
+    body: clone(parsedBody),
     query: clone(req.query),
     method: req.method,
     stage: 'INCOMING',
   }
-
-  const parsedBody = req.body && JSON.parse(req.body)
 
   if (!parsedBody.query) {
     const status = 'Error: query is empry'

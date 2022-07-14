@@ -1,5 +1,5 @@
-import { useSWR } from 'modules/network/hooks/useSwr'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { flow, map, orderBy } from 'lodash/fp'
+import { useMemo } from 'react'
 
 import { Container } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
@@ -8,15 +8,25 @@ import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
-import type { Motion } from 'modules/motions/types'
-import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
-import * as urlsApi from 'modules/network/utils/urlsApi'
+import { ContractEasyTrack } from 'modules/blockChain/contracts'
+import { formatMotionDataOnchain } from 'modules/motions/utils/formatMotionDataOnchain'
+import { Motion } from 'modules/motions/types'
 
 export default function HomePage() {
-  const { chainId } = useWeb3()
-  const { initialLoading, data: motions } = useSWR<Motion[]>(
-    urlsApi.motionsListActive(chainId),
-    fetcherStandard,
+  const { initialLoading, data: motionsRaw } = ContractEasyTrack.useSwrRpc(
+    'getMotions',
+    [],
+  )
+
+  const motions = useMemo(
+    () =>
+      motionsRaw
+        ? (flow(
+            map(formatMotionDataOnchain),
+            orderBy('id', 'desc'),
+          )(motionsRaw) as Motion[])
+        : null,
+    [motionsRaw],
   )
 
   return (

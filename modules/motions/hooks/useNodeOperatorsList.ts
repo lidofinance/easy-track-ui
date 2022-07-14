@@ -20,7 +20,7 @@ export function useNodeOperatorsList() {
           isRegistrySupported,
         }
       }
-      const count = (await registry.getActiveNodeOperatorsCount()).toNumber()
+      const count = (await registry.getNodeOperatorsCount()).toNumber()
       const nodeOperators = await Promise.all(
         Array.from(Array(count)).map((_, i) =>
           registry.getNodeOperator(i, true),
