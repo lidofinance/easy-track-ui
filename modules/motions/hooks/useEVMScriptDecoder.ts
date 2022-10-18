@@ -1,8 +1,8 @@
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
-import { EVMScriptDecoder } from 'evm-script-decoder/lib/EVMScriptDecoder'
-import { ABIProviderLocal } from 'evm-script-decoder/lib/ABIProviderLocal'
+import { EVMScriptDecoder } from '@lidofinance/evm-script-decoder/lib/EVMScriptDecoder'
+import { ABIProviderLocal } from '@lidofinance/evm-script-decoder/lib/ABIProviderLocal'
 
 import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
 import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
