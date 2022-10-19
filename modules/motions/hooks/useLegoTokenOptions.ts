@@ -20,6 +20,10 @@ export function useLegoTokenOptions() {
         label: 'stETH',
         value: CONTRACT_ADDRESSES.STETH[chainId],
       },
+      {
+        label: 'DAI',
+        value: CONTRACT_ADDRESSES.DAI[chainId],
+      },
     ],
     [governanceSymbol, chainId],
   )
