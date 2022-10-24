@@ -2,11 +2,11 @@ import { utils } from 'ethers'
 
 import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useRewardProgramsActual } from 'modules/motions/hooks/useRewardPrograms'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
-import { Button } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
@@ -14,6 +14,9 @@ import {
   Fieldset,
   MessageBox,
   RemoveItemButton,
+  FieldsWrapper,
+  FieldsHeader,
+  FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
 import {
@@ -108,60 +111,70 @@ export const formParts = createMotionFormPart({
       <>
         {fieldsArr.fields.map((item, i) => (
           <Fragment key={item.id}>
-            <Fieldset>
-              <SelectControl
-                label="Reward program address"
-                name={`${fieldNames.programs}.${i}.address`}
-                rules={{ required: 'Field is required' }}
-              >
-                {getFilteredOptions(i).map((program, j) => (
-                  <Option
-                    key={j}
-                    value={program.address}
-                    children={program.title}
-                  />
-                ))}
-              </SelectControl>
-            </Fieldset>
+            <FieldsWrapper>
+              <FieldsHeader>
+                <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                {fieldsArr.fields.length > 1 && (
+                  <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
+                    Remove program {i + 1}
+                  </RemoveItemButton>
+                )}
+              </FieldsHeader>
+              <Fieldset>
+                <SelectControl
+                  label="Reward program address"
+                  name={`${fieldNames.programs}.${i}.address`}
+                  rules={{ required: 'Field is required' }}
+                >
+                  {getFilteredOptions(i).map((program, j) => (
+                    <Option
+                      key={j}
+                      value={program.address}
+                      children={program.title}
+                    />
+                  ))}
+                </SelectControl>
+              </Fieldset>
 
-            <Fieldset>
-              <InputControl
-                label={`${governanceSymbol} Amount`}
-                name={`${fieldNames.programs}.${i}.amount`}
-                rules={{
-                  required: 'Field is required',
-                  validate: value => {
-                    const check1 = validateToken(value)
-                    if (typeof check1 === 'string') {
-                      return check1
-                    }
-                    if (Number(value) > transitionLimit) {
-                      return tokenLimitError(governanceSymbol, transitionLimit)
-                    }
-                    return true
-                  },
-                }}
-              />
-            </Fieldset>
-
-            {fieldsArr.fields.length > 1 && (
-              <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
-                Remove program {i + 1}
-              </RemoveItemButton>
-            )}
+              <Fieldset>
+                <InputControl
+                  label={`${governanceSymbol} Amount`}
+                  name={`${fieldNames.programs}.${i}.amount`}
+                  rules={{
+                    required: 'Field is required',
+                    validate: value => {
+                      const check1 = validateToken(value)
+                      if (typeof check1 === 'string') {
+                        return check1
+                      }
+                      if (Number(value) > transitionLimit) {
+                        return tokenLimitError(
+                          governanceSymbol,
+                          transitionLimit,
+                        )
+                      }
+                      return true
+                    },
+                  }}
+                />
+              </Fieldset>
+            </FieldsWrapper>
           </Fragment>
         ))}
 
         {rewardPrograms.data &&
           fieldsArr.fields.length < rewardPrograms.data.length && (
             <Fieldset>
-              <Button
+              <ButtonIcon
                 type="button"
-                variant="outlined"
+                variant="ghost"
                 size="sm"
-                children="One more program"
                 onClick={handleAddProgram}
-              />
+                icon={<Plus />}
+                color="secondary"
+              >
+                One more program
+              </ButtonIcon>
             </Fieldset>
           )}
 
