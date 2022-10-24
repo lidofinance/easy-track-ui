@@ -3,7 +3,10 @@ import { formatMotionDataSubgraph } from '../utils/formatMotionDataSubgraph'
 import { fetcherGraphql } from 'modules/network/utils/fetcherGraphql'
 import { CHAINS } from '@lido-sdk/constants'
 
-type Response = { data: { motions: RawMotionSubgraph[] } }
+type Response = {
+  data: { motions: RawMotionSubgraph[] }
+  errors?: { message: string }[]
+}
 
 export const getQuerySubgraphMotions = (
   arg: { skip?: number; first?: number; id?: string | number } = {},
@@ -36,6 +39,7 @@ export const getQuerySubgraphMotions = (
 
 export async function fetchMotionsSubgraphList(chainId: CHAINS, query: string) {
   const res = await fetcherGraphql<Response>(chainId, query)
+  if (res.errors) throw Error(res.errors[0].message)
   return res.data.motions.map(formatMotionDataSubgraph)
 }
 
