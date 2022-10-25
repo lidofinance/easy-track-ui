@@ -1,3 +1,19 @@
+# [0.10.0](https://github.com/lidofinance/easy-track-ui/compare/0.9.4...0.10.0) (2022-10-25)
+
+
+### Bug Fixes
+
+* error display condition ([ac8dc14](https://github.com/lidofinance/easy-track-ui/commit/ac8dc1497b3b6e3402b00583a0aa947356679329))
+* subgraph error handler ([12734ad](https://github.com/lidofinance/easy-track-ui/commit/12734ad12b74d78aff3764c9e24c30e37a0b9138))
+* testnet deploy ([778e47c](https://github.com/lidofinance/easy-track-ui/commit/778e47cf73c3b5af09900afcb1ac4ef529585ae4))
+
+
+### Features
+
+* dai token ([9eff144](https://github.com/lidofinance/easy-track-ui/commit/9eff1440ce1979386c2bdcf5665487db99f5f1c9))
+
+
+
 ## [0.9.4](https://github.com/lidofinance/easy-track-ui/compare/0.9.3...0.9.4) (2022-10-24)
 
 
@@ -127,20 +143,6 @@
 * auto insert node operator id to motion form ([652aecb](https://github.com/lidofinance/easy-track-ui/commit/652aecb288a2c567fa1472d5522df9653434bd1e))
 * display node operator name in motion description ([1dc6261](https://github.com/lidofinance/easy-track-ui/commit/1dc626171a2bd6a18c572617f6c19d7e0362e151))
 * **metrics:** divide supported chains metrics into separate calls ([55bcebb](https://github.com/lidofinance/easy-track-ui/commit/55bcebba59f9855eb99490dc8a45466e1c224115))
-
-
-
-# [0.5.0](https://github.com/lidofinance/easy-track-ui/compare/0.4.0...0.5.0) (2022-01-18)
-
-
-### Bug Fixes
-
-* **security:** disable frameguard ([f57cd77](https://github.com/lidofinance/easy-track-ui/commit/f57cd77ed0b43ad17ac821eda11ff31979e441ab))
-
-
-### Features
-
-* **metrics:** add a chainId label for requests metrics ([06ec3d4](https://github.com/lidofinance/easy-track-ui/commit/06ec3d42d1f3cb944e834771d12c1ead12b80550))
 
 
 
