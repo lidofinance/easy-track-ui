@@ -5,6 +5,7 @@ import { useSWRInfinite } from 'modules/network/hooks/useSwr'
 
 import { Button, Container } from '@lidofinance/lido-ui'
 import { Title } from 'modules/shared/ui/Common/Title'
+import { WarningBox } from 'modules/shared/ui/Common/WarningBox'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MotionsGrid } from 'modules/motions/ui/MotionsGrid'
 import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
@@ -26,19 +27,20 @@ const PAGE_SIZE = 8
 export default function ArchivePage() {
   const { chainId } = useWeb3()
 
-  const { initialLoading, isValidating, data, size, setSize } = useSWRInfinite(
-    (pageIndex, previousPageData) =>
-      !previousPageData || previousPageData.length === PAGE_SIZE
-        ? [
-            chainId,
-            getQuerySubgraphMotions({
-              first: PAGE_SIZE,
-              skip: pageIndex * PAGE_SIZE,
-            }),
-          ]
-        : null,
-    fetchMotionsSubgraphList,
-  )
+  const { initialLoading, isValidating, data, size, setSize, error } =
+    useSWRInfinite(
+      (pageIndex, previousPageData) =>
+        !previousPageData || previousPageData.length === PAGE_SIZE
+          ? [
+              chainId,
+              getQuerySubgraphMotions({
+                first: PAGE_SIZE,
+                skip: pageIndex * PAGE_SIZE,
+              }),
+            ]
+          : null,
+      fetchMotionsSubgraphList,
+    )
 
   const motions = data?.flat()
   const hasMore = data && data[data.length - 1].length === PAGE_SIZE
@@ -66,6 +68,13 @@ export default function ArchivePage() {
             loading={isValidating}
           />
         </LoadMoreWrap>
+      )}
+      {!initialLoading && error?.message === 'indexing_error' && (
+        <WarningBox>
+          Failed to fetch data from the Subgraph.
+          <br />
+          Maintainers are notified and working on a fix.
+        </WarningBox>
       )}
     </Container>
   )
