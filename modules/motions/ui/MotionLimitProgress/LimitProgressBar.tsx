@@ -1,10 +1,18 @@
 import { ProgressBarLine, SpentLine, TargetLine } from './LimitProgressBarStyle'
 
-export function LimitProgressBar() {
+type LimitProgressBarProps = {
+  progress: number
+  newProgress: number
+  negative: boolean
+}
+
+export function LimitProgressBar(props: LimitProgressBarProps) {
+  const { progress, negative, newProgress } = props
+
   return (
     <ProgressBarLine>
-      <TargetLine $negative={true} />
-      <SpentLine />
+      <TargetLine $negative={negative} $width={newProgress} />
+      <SpentLine $width={progress} $newWidth={newProgress} />
     </ProgressBarLine>
   )
 }

@@ -11,6 +11,9 @@ export const MotionType = {
   ReferralPartnerAdd: 'ReferralPartnerAdd',
   ReferralPartnerRemove: 'ReferralPartnerRemove',
   ReferralPartnerTopUp: 'ReferralPartnerTopUp',
+  AllowedRecipientAdd: 'AllowedRecipientAdd',
+  AllowedRecipientRemove: 'AllowedRecipientRemove',
+  AllowedRecipientTopUp: 'AllowedRecipientTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

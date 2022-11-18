@@ -16,6 +16,11 @@ import {
   EvmAddReferralPartnerAbi__factory,
   EvmRemoveReferralPartnerAbi__factory,
   EvmTopUpReferralPartnersAbi__factory,
+  AllowedRecipientsRegistryLDOAbi__factory,
+  AllowedRecipientsRegistryLDOAbi,
+  AddAllowedRecipientLDOAbi__factory,
+  TopUpAllowedRecipientsDAIAbi__factory,
+  RemoveAllowedRecipientLDOAbi__factory,
 } from 'generated'
 import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
@@ -24,6 +29,8 @@ import * as CONTRACT_ADDRESSES from './contractAddresses'
 export type ContractTypeEasyTrack = EasyTrackAbi
 export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
 export type ContractTypeReferralPartnersRegistry = ReferralPartnersRegistryAbi
+export type ContractTypeAllowedRecipientRegistry =
+  AllowedRecipientsRegistryLDOAbi
 
 export const ContractNodeOperatorsRegistry = createContractHelpers({
   factory: NodeOperatorsAbi__factory,
@@ -38,6 +45,26 @@ export const ContractEasyTrack = createContractHelpers({
 export const ContractRewardProgramRegistry = createContractHelpers({
   factory: RewardProgramRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.RewardProgramRegistry,
+})
+
+export const ContractAllowedRecipientRegistry = createContractHelpers({
+  factory: AllowedRecipientsRegistryLDOAbi__factory,
+  address: CONTRACT_ADDRESSES.AllowedRecipientRegistry,
+})
+
+export const ContractEvmAllowedRecipientAdd = createContractHelpers({
+  factory: AddAllowedRecipientLDOAbi__factory,
+  address: EvmAddressesByType[MotionType.AllowedRecipientAdd],
+})
+
+export const ContractEvmAllowedRecipientRemove = createContractHelpers({
+  factory: RemoveAllowedRecipientLDOAbi__factory,
+  address: EvmAddressesByType[MotionType.AllowedRecipientRemove],
+})
+
+export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
+  factory: TopUpAllowedRecipientsDAIAbi__factory,
+  address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
 })
 
 export const ContractGovernanceToken = createContractHelpers({

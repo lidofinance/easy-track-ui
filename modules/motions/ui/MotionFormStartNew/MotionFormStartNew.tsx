@@ -1,18 +1,19 @@
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-
-import { MotionLimitProgress } from 'modules/motions/ui/MotionLimitProgress'
 import { Button, ToastError } from '@lidofinance/lido-ui'
+
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, RetryHint } from './CreateMotionFormStyle'
 
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
-import { MotionType } from '../../types'
-import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
-import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
+import { MotionType } from 'modules/motions/types'
+import {
+  getScriptFactoryByMotionType,
+  getMotionTypeDisplayName,
+} from 'modules/motions/utils'
 import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
 import { ResultTx } from 'modules/blockChain/types'
 
@@ -100,7 +101,6 @@ export function MotionFormStartNew({ onComplete }: Props) {
           ))}
         </SelectControl>
       </Fieldset>
-      <MotionLimitProgress />
       {CurrentFormPart && motionType && (
         <CurrentFormPart
           fieldNames={formParts[motionType].fieldNames as any}

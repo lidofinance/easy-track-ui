@@ -12,6 +12,9 @@ import {
   ContractEvmReferralPartnerAdd,
   ContractEvmReferralPartnerRemove,
   ContractEvmReferralPartnerTopUp,
+  ContractEvmAllowedRecipientAdd,
+  ContractEvmAllowedRecipientRemove,
+  ContractEvmAllowedRecipientTopUp,
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
@@ -24,6 +27,9 @@ const EVM_CONTRACTS = {
   [MotionType.ReferralPartnerAdd]: ContractEvmReferralPartnerAdd,
   [MotionType.ReferralPartnerTopUp]: ContractEvmReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: ContractEvmReferralPartnerRemove,
+  [MotionType.AllowedRecipientAdd]: ContractEvmAllowedRecipientAdd,
+  [MotionType.AllowedRecipientRemove]: ContractEvmAllowedRecipientRemove,
+  [MotionType.AllowedRecipientTopUp]: ContractEvmAllowedRecipientTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

@@ -15,6 +15,11 @@ import {
   DescRewardProgramTopUp,
   DescRewardProgramRemove,
 } from './DescRewardProgram'
+import {
+  DescAllowedRecipientAdd,
+  DescAllowedRecipientTopUp,
+  DescAllowedRecipientRemove,
+} from './DescAllowedRecipient'
 
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
@@ -29,6 +34,9 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.ReferralPartnerAdd]: DescReferralPartnerAdd,
   [MotionType.ReferralPartnerTopUp]: DescReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: DescReferralPartnerRemove,
+  [MotionType.AllowedRecipientAdd]: DescAllowedRecipientAdd,
+  [MotionType.AllowedRecipientRemove]: DescAllowedRecipientRemove,
+  [MotionType.AllowedRecipientTopUp]: DescAllowedRecipientTopUp,
 } as const
 
 type Props = {

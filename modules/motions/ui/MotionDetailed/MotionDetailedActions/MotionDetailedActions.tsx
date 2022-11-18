@@ -17,9 +17,11 @@ import { Text } from 'modules/shared/ui/Common/Text'
 import { Actions, Hint, TxHint, TxStatus } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
-import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
-import { getContractMethodParams } from 'modules/motions/utils/getContractMethodParams'
-import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
+import {
+  getEventMotionCreated,
+  getContractMethodParams,
+  estimateGasFallback,
+} from 'modules/motions/utils'
 
 function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
   return (

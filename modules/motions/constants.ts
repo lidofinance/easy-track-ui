@@ -25,3 +25,9 @@ export const tokenLimitError = (
   transitionLimit: number,
 ) =>
   `${governanceSymbol} transition is limited by ${transitionLimit.toLocaleString()}`
+
+export const periodLimitError = (
+  governanceSymbol: string | undefined,
+  transitionLimit: number,
+) =>
+  `Insuffisient motion bank limit. Amount available for the program ${transitionLimit.toLocaleString()} ${governanceSymbol} `

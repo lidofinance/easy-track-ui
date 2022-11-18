@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 type InjectedPropsTargetLine = {
   $negative?: boolean
+  $width: number
 }
 
 export const ProgressBarLine = styled.div`
@@ -11,12 +12,13 @@ export const ProgressBarLine = styled.div`
   height: 20px;
   background: #eff2f6;
   position: relative;
+  overflow: hidden;
 `
 
-export const SpentLine = styled.div`
+export const SpentLine = styled.div<{ $width: number; $newWidth: number }>`
   background-color: ${({ theme }) => theme.colors.success};
   height: 100%;
-  width: 65%;
+  width: ${({ $width }) => $width}%;
   border-radius: ${({ theme }) => theme.borderRadiusesMap.sm + 'px'};
   overflow: hidden;
   position: relative;
@@ -31,6 +33,7 @@ export const TargetLine = styled.div<InjectedPropsTargetLine>`
   top: 0;
   overflow: hidden;
   background-color: ${({ $negative, theme }) =>
-    $negative ? theme.colors.error : theme.colors.success};
+    $negative ? theme.colors.error : 'rgba(83, 186, 149, 0.5)'};
   opacity: 0.5;
+  width: ${({ $width }) => $width}%;
 `

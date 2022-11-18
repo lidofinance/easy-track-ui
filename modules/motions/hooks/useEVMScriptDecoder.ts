@@ -7,6 +7,7 @@ import { ABIProviderLocal } from '@lidofinance/evm-script-decoder/lib/ABIProvide
 import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
 import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
 import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
+import AllowedRecipientsRegistryLDOAbi from 'abi/LDO/AllowedRecipientsRegistryLDO.abi.json'
 import FinanceAbi from 'abi/Finance.abi.json'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
@@ -24,6 +25,8 @@ export function useEVMScriptDecoder() {
           [CONTRACT_ADDRESSES.NodeOperatorsRegistry[chainId]]:
             NodeOperatorsRegistryAbi as any,
           [CONTRACT_ADDRESSES.Finance[chainId]]: FinanceAbi as any,
+          [CONTRACT_ADDRESSES.AllowedRecipientRegistry[chainId]]:
+            AllowedRecipientsRegistryLDOAbi as any,
         }),
       ),
     `evm-script-decoder-${chainId}`,
