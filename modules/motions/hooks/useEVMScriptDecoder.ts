@@ -8,6 +8,7 @@ import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
 import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
 import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
 import AllowedRecipientsRegistryLDOAbi from 'abi/LDO/AllowedRecipientsRegistryLDO.abi.json'
+import AllowedRecipientsRegistryDAIAbi from 'abi/DAI/AllowedRecipientsRegistryDAI.abi.json'
 import FinanceAbi from 'abi/Finance.abi.json'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
@@ -27,6 +28,8 @@ export function useEVMScriptDecoder() {
           [CONTRACT_ADDRESSES.Finance[chainId]]: FinanceAbi as any,
           [CONTRACT_ADDRESSES.AllowedRecipientRegistry[chainId]]:
             AllowedRecipientsRegistryLDOAbi as any,
+          [CONTRACT_ADDRESSES.SingleAllowedRecipientRegistry[chainId]]:
+            AllowedRecipientsRegistryDAIAbi as any,
         }),
       ),
     `evm-script-decoder-${chainId}`,

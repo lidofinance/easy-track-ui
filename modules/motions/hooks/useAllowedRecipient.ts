@@ -59,7 +59,7 @@ export function useAllowedRecipientActual() {
   const allowedRecipientRegistry = ContractAllowedRecipientRegistry.useRpc()
 
   return useSWR(
-    `reward-programs-actual-${chainId}-${allowedRecipientRegistry.address}-${
+    `allowed-recipients-actual-${chainId}-${allowedRecipientRegistry.address}-${
       recipientsAll.data ? 'named' : 'not_named'
     }`,
     async () => {

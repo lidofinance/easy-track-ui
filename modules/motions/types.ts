@@ -14,6 +14,7 @@ export const MotionType = {
   AllowedRecipientAdd: 'AllowedRecipientAdd',
   AllowedRecipientRemove: 'AllowedRecipientRemove',
   AllowedRecipientTopUp: 'AllowedRecipientTopUp',
+  SingleAllowedRecipientTopUp: 'SingleAllowedRecipientTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

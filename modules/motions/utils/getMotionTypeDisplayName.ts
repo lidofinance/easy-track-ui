@@ -14,6 +14,7 @@ const MotionTypeDisplayNames: Record<MotionType | EvmUnrecognized, string> = {
   [MotionType.AllowedRecipientAdd]: 'Add allowed recipient',
   [MotionType.AllowedRecipientRemove]: 'Remove allowed recipient',
   [MotionType.AllowedRecipientTopUp]: 'Top up allowed recipient',
+  [MotionType.SingleAllowedRecipientTopUp]: 'Top up single allowed recipient',
   [EvmUnrecognized]: 'Unrecognized evm factory',
 } as const
 

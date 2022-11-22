@@ -15,6 +15,7 @@ import {
   ContractEvmAllowedRecipientAdd,
   ContractEvmAllowedRecipientRemove,
   ContractEvmAllowedRecipientTopUp,
+  ContractEvmSingleAllowedRecipientTopUp,
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
@@ -30,6 +31,8 @@ const EVM_CONTRACTS = {
   [MotionType.AllowedRecipientAdd]: ContractEvmAllowedRecipientAdd,
   [MotionType.AllowedRecipientRemove]: ContractEvmAllowedRecipientRemove,
   [MotionType.AllowedRecipientTopUp]: ContractEvmAllowedRecipientTopUp,
+  [MotionType.SingleAllowedRecipientTopUp]:
+    ContractEvmSingleAllowedRecipientTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

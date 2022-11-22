@@ -11,7 +11,7 @@ import { formatEther } from 'ethers/lib/utils'
 import {
   AddAllowedRecipientLDOAbi,
   RemoveAllowedRecipientLDOAbi,
-  TopUpAllowedRecipientsDAIAbi,
+  TopUpAllowedRecipientsLDOAbi,
 } from 'generated'
 import { NestProps } from './types'
 
@@ -28,7 +28,7 @@ export function DescAllowedRecipientAdd({
 
 export function DescAllowedRecipientTopUp({
   callData,
-}: NestProps<TopUpAllowedRecipientsDAIAbi['decodeEVMScriptCallData']>) {
+}: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']>) {
   const governanceSymbol = useGovernanceSymbol()
   const { data: allowedRecipientMap } = useAllowedRecipientMapAll()
 

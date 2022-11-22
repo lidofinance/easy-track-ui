@@ -11,6 +11,7 @@ import * as formReferralPartnerTopUp from './StartNewReferralPartnerTopUp'
 import * as formAllowedRecipientAdd from './StartNewAllowedRecipientAdd'
 import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
+import * as StartNewSingleAllowedRecipientTopUp from './StartNewSingleAllowedRecipientTopUp'
 
 export const formParts = {
   [MotionType.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
@@ -24,6 +25,8 @@ export const formParts = {
   [MotionType.AllowedRecipientAdd]: formAllowedRecipientAdd.formParts,
   [MotionType.AllowedRecipientRemove]: formAllowedRecipientRemove.formParts,
   [MotionType.AllowedRecipientTopUp]: formAllowedRecipientTopUp.formParts,
+  [MotionType.SingleAllowedRecipientTopUp]:
+    StartNewSingleAllowedRecipientTopUp.formParts,
 } as const
 
 export type FormData = {

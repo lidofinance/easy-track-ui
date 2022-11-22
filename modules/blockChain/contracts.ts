@@ -19,8 +19,11 @@ import {
   AllowedRecipientsRegistryLDOAbi__factory,
   AllowedRecipientsRegistryLDOAbi,
   AddAllowedRecipientLDOAbi__factory,
-  TopUpAllowedRecipientsDAIAbi__factory,
   RemoveAllowedRecipientLDOAbi__factory,
+  TopUpAllowedRecipientsLDOAbi__factory,
+  AllowedRecipientsRegistryDAIAbi__factory,
+  AllowedRecipientsRegistryDAIAbi,
+  TopUpAllowedRecipientsDAIAbi__factory,
 } from 'generated'
 import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
@@ -31,6 +34,8 @@ export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
 export type ContractTypeReferralPartnersRegistry = ReferralPartnersRegistryAbi
 export type ContractTypeAllowedRecipientRegistry =
   AllowedRecipientsRegistryLDOAbi
+export type ContractTypeSingleAllowedRecipientRegistry =
+  AllowedRecipientsRegistryDAIAbi
 
 export const ContractNodeOperatorsRegistry = createContractHelpers({
   factory: NodeOperatorsAbi__factory,
@@ -63,8 +68,18 @@ export const ContractEvmAllowedRecipientRemove = createContractHelpers({
 })
 
 export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
-  factory: TopUpAllowedRecipientsDAIAbi__factory,
+  factory: TopUpAllowedRecipientsLDOAbi__factory,
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
+})
+
+export const ContractSingleAllowedRecipientRegistry = createContractHelpers({
+  factory: AllowedRecipientsRegistryDAIAbi__factory,
+  address: CONTRACT_ADDRESSES.SingleAllowedRecipientRegistry,
+})
+
+export const ContractEvmSingleAllowedRecipientTopUp = createContractHelpers({
+  factory: TopUpAllowedRecipientsDAIAbi__factory,
+  address: EvmAddressesByType[MotionType.SingleAllowedRecipientTopUp],
 })
 
 export const ContractGovernanceToken = createContractHelpers({

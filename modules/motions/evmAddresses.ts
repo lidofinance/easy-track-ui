@@ -27,6 +27,7 @@ export const EvmAddressesByChain = {
     [MotionType.AllowedRecipientAdd]: '0x',
     [MotionType.AllowedRecipientRemove]: '0x',
     [MotionType.AllowedRecipientTopUp]: '0x',
+    [MotionType.SingleAllowedRecipientTopUp]: '0x',
   },
 
   // Rinkeby
@@ -45,6 +46,7 @@ export const EvmAddressesByChain = {
     [MotionType.AllowedRecipientAdd]: '0x',
     [MotionType.AllowedRecipientRemove]: '0x',
     [MotionType.AllowedRecipientTopUp]: '0x',
+    [MotionType.SingleAllowedRecipientTopUp]: '0x',
   },
 
   // Goerli
@@ -69,6 +71,8 @@ export const EvmAddressesByChain = {
       '0x6c2e12D9C1d6e3dE146A7519eCbcb79c96Fe3146',
     [MotionType.AllowedRecipientTopUp]:
       '0xD928dC9E4DaBeE939d3237A4f41983Ff5B6308dB',
+    [MotionType.SingleAllowedRecipientTopUp]:
+      '0xc9f5878838b98903f814321BE98e0B871cAC100D',
   },
 }
 
