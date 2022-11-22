@@ -13,9 +13,12 @@ export const EvmAddressesByChain = {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xFeBd8FAC16De88206d4b18764e826AF38546AfE0',
     [MotionType.LEGOTopUp]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
+    // @deprecated
     [MotionType.RewardProgramAdd]: '0x9D15032b91d01d5c1D940eb919461426AB0dD4e3',
+    // @deprecated
     [MotionType.RewardProgramRemove]:
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
+    // @deprecated
     [MotionType.RewardProgramTopUp]:
       '0x77781A93C4824d2299a38AC8bBB11eb3cd6Bc3B7',
     [MotionType.ReferralPartnerAdd]:
@@ -35,9 +38,12 @@ export const EvmAddressesByChain = {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977',
     [MotionType.LEGOTopUp]: '0xdA53fF207966b3946facaC52dD22B130D507d276',
+    // @deprecated
     [MotionType.RewardProgramAdd]: '0x3129C041B372eE93a5A8756dc4EC6f154D85Bc9a',
+    // @deprecated
     [MotionType.RewardProgramRemove]:
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
+    // @deprecated
     [MotionType.RewardProgramTopUp]:
       '0xbb0f594143208eCd04DC7AAe48955902A716F9F7',
     [MotionType.ReferralPartnerAdd]: '0x',
@@ -54,9 +60,12 @@ export const EvmAddressesByChain = {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xE033673D83a8a60500BcE02aBd9007ffAB587714',
     [MotionType.LEGOTopUp]: '0xb2bcf211F103d7F13789394DD475c2274e044C4C',
+    // @deprecated
     [MotionType.RewardProgramAdd]: '0x5560d40b00EA3a64E9431f97B3c79b04e0cdF6F2',
+    // @deprecated
     [MotionType.RewardProgramRemove]:
       '0x31B68d81125E52fE1aDfe4076F8945D1014753b5',
+    // @deprecated
     [MotionType.RewardProgramTopUp]:
       '0x8180949ac41EF18e844ff8dafE604a195d86Aea9',
     [MotionType.ReferralPartnerAdd]:

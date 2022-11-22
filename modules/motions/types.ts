@@ -1,12 +1,14 @@
 import type { BigNumber } from 'ethers'
-import type { PromiseValue } from 'type-fest'
 import type { EasyTrackAbi } from 'generated'
 
 export const MotionType = {
   NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
   LEGOTopUp: 'LEGOTopUp',
+  // @deprecated
   RewardProgramAdd: 'RewardProgramAdd',
+  // @deprecated
   RewardProgramRemove: 'RewardProgramRemove',
+  // @deprecated
   RewardProgramTopUp: 'RewardProgramTopUp',
   ReferralPartnerAdd: 'ReferralPartnerAdd',
   ReferralPartnerRemove: 'ReferralPartnerRemove',
@@ -61,7 +63,7 @@ export type Motion = {
   rejected_at?: number
 }
 
-export type RawMotionOnchain = PromiseValue<
+export type RawMotionOnchain = Awaited<
   ReturnType<EasyTrackAbi['getMotions']>
 >[0]
 

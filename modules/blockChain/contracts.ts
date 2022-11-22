@@ -30,6 +30,9 @@ import { EvmAddressesByType } from 'modules/motions/evmAddresses'
 import * as CONTRACT_ADDRESSES from './contractAddresses'
 
 export type ContractTypeEasyTrack = EasyTrackAbi
+/**
+ * @deprecated since version 2.0
+ */
 export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
 export type ContractTypeReferralPartnersRegistry = ReferralPartnersRegistryAbi
 export type ContractTypeAllowedRecipientRegistry =
@@ -47,6 +50,9 @@ export const ContractEasyTrack = createContractHelpers({
   address: CONTRACT_ADDRESSES.EasyTrack,
 })
 
+/**
+ * @deprecated since version 2.0
+ */
 export const ContractRewardProgramRegistry = createContractHelpers({
   factory: RewardProgramRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.RewardProgramRegistry,
@@ -97,16 +103,25 @@ export const ContractEvmLEGOTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.LEGOTopUp],
 })
 
+/**
+ * @deprecated since version 2.0
+ */
 export const ContractEvmRewardProgramAdd = createContractHelpers({
   factory: EvmAddRewardProgramAbi__factory,
   address: EvmAddressesByType[MotionType.RewardProgramAdd],
 })
 
+/**
+ * @deprecated since version 2.0
+ */
 export const ContractEvmRewardProgramRemove = createContractHelpers({
   factory: EvmRemoveRewardProgramAbi__factory,
   address: EvmAddressesByType[MotionType.RewardProgramRemove],
 })
 
+/**
+ * @deprecated since version 2.0
+ */
 export const ContractEvmRewardProgramTopUp = createContractHelpers({
   factory: EvmTopUpRewardProgramsAbi__factory,
   address: EvmAddressesByType[MotionType.RewardProgramTopUp],

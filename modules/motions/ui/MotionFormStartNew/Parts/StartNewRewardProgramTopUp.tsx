@@ -34,6 +34,9 @@ type Program = {
   amount: string
 }
 
+/**
+ * @deprecated
+ */
 export const formParts = createMotionFormPart({
   motionType: MotionType.RewardProgramTopUp,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
