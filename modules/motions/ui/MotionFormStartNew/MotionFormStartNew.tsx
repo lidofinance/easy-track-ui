@@ -21,6 +21,12 @@ type Props = {
   onComplete: (tx: ResultTx) => void
 }
 
+const HIDDEN_MOTIONS = [
+  'RewardProgramAdd',
+  'RewardProgramRemove',
+  'RewardProgramTopUp',
+]
+
 export function MotionFormStartNew({ onComplete }: Props) {
   const { chainId } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
@@ -92,13 +98,15 @@ export function MotionFormStartNew({ onComplete }: Props) {
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
       <Fieldset>
         <SelectControl name="motionType" label="Motion type">
-          {Object.values(MotionType).map(type => (
-            <Option
-              key={type}
-              value={type}
-              children={getMotionTypeDisplayName(type)}
-            />
-          ))}
+          {Object.values(MotionType)
+            .filter(motion => !HIDDEN_MOTIONS.includes(motion))
+            .map(type => (
+              <Option
+                key={type}
+                value={type}
+                children={getMotionTypeDisplayName(type)}
+              />
+            ))}
         </SelectControl>
       </Fieldset>
       {CurrentFormPart && motionType && (

@@ -142,10 +142,10 @@ export const formParts = createMotionFormPart({
           <Fragment key={item.id}>
             <FieldsWrapper>
               <FieldsHeader>
-                <FieldsHeaderDesc>Recipient #{i + 1}</FieldsHeaderDesc>
+                <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
                 {fieldsArr.fields.length > 1 && (
                   <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
-                    Remove recipient {i + 1}
+                    Remove program {i + 1}
                   </RemoveItemButton>
                 )}
               </FieldsHeader>
@@ -153,13 +153,13 @@ export const formParts = createMotionFormPart({
                 <MotionWarningBox>
                   Please note that this program will be finished in the next
                   month. Motion bank limit for the next month may differ from
-                  this. This recipient will not be accepted if motion bank limit
+                  this. This program will not be accepted if motion bank limit
                   is reached.
                 </MotionWarningBox>
               )}
               <Fieldset>
                 <SelectControl
-                  label="Allowed recipient address"
+                  label="Reward program address"
                   name={`${fieldNames.programs}.${i}.address`}
                   rules={{ required: 'Field is required' }}
                 >
@@ -231,7 +231,7 @@ export const formParts = createMotionFormPart({
                 icon={<Plus />}
                 color="secondary"
               >
-                One more recipient
+                One more program
               </ButtonIcon>
             </Fieldset>
           )}

@@ -20,7 +20,7 @@ export function DescAllowedRecipientAdd({
 }: NestProps<AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']>) {
   return (
     <div>
-      Add allowed recipient <b>“{callData[1]}”</b> with address{' '}
+      Add reward program <b>“{callData[1]}”</b> with address{' '}
       <AddressInlineWithPop address={callData[0]} />
     </div>
   )
@@ -39,7 +39,7 @@ export function DescAllowedRecipientTopUp({
 
   return (
     <div>
-      Top up allowed recipient:
+      Top up reward programs:
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
@@ -62,7 +62,7 @@ export function DescAllowedRecipientRemove({
 
   return (
     <div>
-      Remove allowed recipient <b>{program?.title}</b> with address{' '}
+      Remove reward program <b>{program?.title}</b> with address{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )
