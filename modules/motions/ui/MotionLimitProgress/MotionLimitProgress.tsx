@@ -43,7 +43,7 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
   return (
     <MotionLimitProgressWrapper>
       <ProgressHeader>
-        <ProgressDesc>Motion bank limit</ProgressDesc>
+        <ProgressDesc>Top up limit</ProgressDesc>
         <LimitDesc>
           <span>{newSpentValue}</span>{' '}
           <Limit>

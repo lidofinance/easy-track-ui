@@ -130,7 +130,7 @@ export const formParts = createMotionFormPart({
         {periodLimitsData?.periodData && (
           <MotionLimitProgress
             spentAmount={periodLimitsData.periodData.alreadySpentAmount}
-            totalLimit={periodLimitsData.periodData.spendableBalanceInPeriod}
+            totalLimit={periodLimitsData.limits.limit}
             startDate={periodLimitsData.periodData.periodStartTimestamp}
             endDate={periodLimitsData.periodData.periodEndTimestamp}
             token={governanceSymbol}
