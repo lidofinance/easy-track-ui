@@ -81,7 +81,7 @@ export const EvmAddressesByChain = {
     [MotionType.AllowedRecipientTopUp]:
       '0xD928dC9E4DaBeE939d3237A4f41983Ff5B6308dB',
     [MotionType.SingleAllowedRecipientTopUp]:
-      '0xc9f5878838b98903f814321BE98e0B871cAC100D',
+      '0x3B51de85edA093ED14d6315d3f85F69fe5e1548d',
   },
 }
 
