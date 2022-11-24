@@ -3,7 +3,6 @@ import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
 import { LimitProgressBar } from './LimitProgressBar'
 
 import {
-  MotionLimitProgressWrapper,
   ProgressHeader,
   ProgressDesc,
   Limit,
@@ -41,7 +40,7 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
   const isNegative = newValuePercent > 100
 
   return (
-    <MotionLimitProgressWrapper>
+    <>
       <ProgressHeader>
         <ProgressDesc>Top up limit</ProgressDesc>
         <LimitDesc>
@@ -64,6 +63,6 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
           <FormattedDate format="MMM DD, YYYY" date={endDate} />
         </span>
       </ProgressPeriodWrapper>
-    </MotionLimitProgressWrapper>
+    </>
   )
 }

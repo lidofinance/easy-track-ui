@@ -8,7 +8,10 @@ import {
   useSingleAllowedRecipientActual,
   useSingleAllowedRecipientPeriodLimitsData,
 } from 'modules/motions/hooks/useSingleAllowedRecipient'
-import { MotionLimitProgress } from 'modules/motions/ui/MotionLimitProgress'
+import {
+  MotionLimitProgress,
+  MotionLimitProgressWrapper,
+} from 'modules/motions/ui/MotionLimitProgress'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -77,7 +80,7 @@ export const formParts = createMotionFormPart({
     )
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
-    const { data: periodLimitsData } =
+    const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
       useSingleAllowedRecipientPeriodLimitsData()
     const singleAllowedRecipients = useSingleAllowedRecipientActual()
     const token = { label: 'DAI', value: CONTRACT_ADDRESSES.DAI[chainId] }
@@ -116,7 +119,8 @@ export const formParts = createMotionFormPart({
 
     if (
       trustedCaller.initialLoading ||
-      singleAllowedRecipients.initialLoading
+      singleAllowedRecipients.initialLoading ||
+      periodLimitsLoading
     ) {
       return <PageLoader />
     }
@@ -128,14 +132,16 @@ export const formParts = createMotionFormPart({
     return (
       <>
         {periodLimitsData?.periodData && (
-          <MotionLimitProgress
-            spentAmount={periodLimitsData.periodData.alreadySpentAmount}
-            totalLimit={periodLimitsData.limits.limit}
-            startDate={periodLimitsData.periodData.periodStartTimestamp}
-            endDate={periodLimitsData.periodData.periodEndTimestamp}
-            token={token.label}
-            newAmount={newAmount}
-          />
+          <MotionLimitProgressWrapper>
+            <MotionLimitProgress
+              spentAmount={periodLimitsData.periodData.alreadySpentAmount}
+              totalLimit={periodLimitsData.limits.limit}
+              startDate={periodLimitsData.periodData.periodStartTimestamp}
+              endDate={periodLimitsData.periodData.periodEndTimestamp}
+              token={token.label}
+              newAmount={newAmount}
+            />
+          </MotionLimitProgressWrapper>
         )}
 
         {fieldsArr.fields.map((item, i) => (

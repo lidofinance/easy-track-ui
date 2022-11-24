@@ -9,7 +9,10 @@ import {
   useAllowedRecipientPeriodLimitsData,
 } from 'modules/motions/hooks/useAllowedRecipient'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
-import { MotionLimitProgress } from 'modules/motions/ui/MotionLimitProgress'
+import {
+  MotionLimitProgress,
+  MotionLimitProgressWrapper,
+} from 'modules/motions/ui/MotionLimitProgress'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -80,7 +83,8 @@ export const formParts = createMotionFormPart({
     )
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
-    const { data: periodLimitsData } = useAllowedRecipientPeriodLimitsData()
+    const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
+      useAllowedRecipientPeriodLimitsData()
     const allowedRecipients = useAllowedRecipientActual()
     const { data: governanceSymbol } = useGovernanceSymbol()
 
@@ -117,7 +121,11 @@ export const formParts = createMotionFormPart({
     const tokenAddress = ContractGovernanceToken.address[chainId] as string
     const transitionLimit = TRANSITION_LIMITS[chainId][tokenAddress]
 
-    if (trustedCaller.initialLoading || allowedRecipients.initialLoading) {
+    if (
+      trustedCaller.initialLoading ||
+      allowedRecipients.initialLoading ||
+      periodLimitsLoading
+    ) {
       return <PageLoader />
     }
 
@@ -128,14 +136,16 @@ export const formParts = createMotionFormPart({
     return (
       <>
         {periodLimitsData?.periodData && (
-          <MotionLimitProgress
-            spentAmount={periodLimitsData.periodData.alreadySpentAmount}
-            totalLimit={periodLimitsData.limits.limit}
-            startDate={periodLimitsData.periodData.periodStartTimestamp}
-            endDate={periodLimitsData.periodData.periodEndTimestamp}
-            token={governanceSymbol}
-            newAmount={newAmount}
-          />
+          <MotionLimitProgressWrapper>
+            <MotionLimitProgress
+              spentAmount={periodLimitsData.periodData.alreadySpentAmount}
+              totalLimit={periodLimitsData.limits.limit}
+              startDate={periodLimitsData.periodData.periodStartTimestamp}
+              endDate={periodLimitsData.periodData.periodEndTimestamp}
+              token={governanceSymbol}
+              newAmount={newAmount}
+            />
+          </MotionLimitProgressWrapper>
         )}
 
         {fieldsArr.fields.map((item, i) => (

@@ -5,11 +5,17 @@ import { useMotionTimeCountdown } from 'modules/motions/hooks/useMotionTimeCount
 
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+import {
+  getMotionTypeDisplayName,
+  getMotionDisplayStatus,
+  getMotionTypeByScriptFactory,
+} from 'modules/motions/utils'
 import { MotionDetailedObjections } from './MotionDetailedObjections'
 import { MotionDetailedTime } from './MotionDetailedTime'
 import { MotionDetailedCancelButton } from './MotionDetailedCancelButton'
 import { MotionDescription } from '../MotionDescription'
 import { MotionEvmScript } from '../MotionEvmScript'
+import { MotionDetailedLimits } from './MotionDetailedLimits'
 import { MotionDetailedActions } from './MotionDetailedActions'
 import {
   Card,
@@ -31,9 +37,6 @@ import {
 } from './MotionCardDetailedStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
-import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
-import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
-import { getMotionDisplayStatus } from 'modules/motions/utils/getMotionDisplayStatus'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 
 type Props = {
@@ -148,6 +151,8 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
           </InfoCell>
         </InfoCol>
       </InfoRow>
+
+      <MotionDetailedLimits motion={motion} motionType={motionType} />
 
       {!isArchived && (
         <MotionDetailedActions motion={motion} onFinish={onInvalidate} />
