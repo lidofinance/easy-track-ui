@@ -1,4 +1,5 @@
 import type { BigNumber } from 'ethers'
+import type { PromiseValue } from 'type-fest'
 import type { EasyTrackAbi } from 'generated'
 
 export const MotionType = {
@@ -63,7 +64,7 @@ export type Motion = {
   rejected_at?: number
 }
 
-export type RawMotionOnchain = Awaited<
+export type RawMotionOnchain = PromiseValue<
   ReturnType<EasyTrackAbi['getMotions']>
 >[0]
 
