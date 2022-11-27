@@ -33,7 +33,7 @@ export function MotionDetailedLimits() {
       </MotionDetailedLimitsWrapper>
       {isOverPeriodLimit && (
         <MotionWarningBox>
-          Motion can not be enacted because monthly top up limit was reached.
+          Motion can not be enacted because monthly top-up limit was reached.
         </MotionWarningBox>
       )}
     </>
