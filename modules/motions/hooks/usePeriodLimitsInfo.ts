@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { LimitCheckerAbi } from 'generated'
+import { LimitCheckerAbi, EasyTrackAbi } from 'generated'
 import { createContractHelpers } from 'modules/blockChain/utils/createContractHelpers'
 import {
   ContractSingleAllowedRecipientRegistry,
@@ -28,6 +28,13 @@ type UsePeriodLimitInfoProps<T> = {
   swrKey: string
 }
 
+export type usePeriodLimitsInfoResultData = {
+  limits: LimitsType
+  periodData: PeriodDataType
+  motionDuration: number
+  isEndInNextPeriod: boolean
+}
+
 type UsePeriodLimitInfo = <T extends ContractLimitsMethods>(
   data: UsePeriodLimitInfoProps<T>,
 ) => SWRResponse<{
@@ -36,6 +43,56 @@ type UsePeriodLimitInfo = <T extends ContractLimitsMethods>(
   motionDuration: number
   isEndInNextPeriod: boolean
 }>
+
+const getNextPeriod = ({
+  periodLimit,
+  periodEndTimestamp,
+  periodDurationMonths,
+}: {
+  periodLimit: string
+  periodEndTimestamp: number
+  periodDurationMonths: number
+}) => {
+  return {
+    alreadySpentAmount: '0',
+    periodStartTimestamp: moment().add(1, 'M').startOf('month').unix(),
+    periodEndTimestamp: moment
+      .unix(periodEndTimestamp)
+      .add(periodDurationMonths, 'M')
+      .startOf('month')
+      .unix(),
+    spendableBalanceInPeriod: periodLimit,
+  }
+}
+
+const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
+  easyTrack: EasyTrackAbi,
+  contract: T,
+) => {
+  const motionDuration = await easyTrack.motionDuration()
+  const limits = await getLimits(contract)
+  let periodData = await getPeriodData(contract)
+
+  const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
+  const now = moment.unix(periodData.periodEndTimestamp)
+
+  const isEndInNextPeriod = dateOfEndMotion.isAfter(now)
+
+  if (isEndInNextPeriod) {
+    periodData = getNextPeriod({
+      periodLimit: limits.limit,
+      periodEndTimestamp: periodData.periodEndTimestamp,
+      periodDurationMonths: limits.periodDurationMonths,
+    })
+  }
+
+  return {
+    limits,
+    periodData,
+    motionDuration: motionDuration.toNumber() / 60 / 60, // hours
+    isEndInNextPeriod,
+  }
+}
 
 export const usePeriodLimitsInfo: UsePeriodLimitInfo = props => {
   const { address, contract, swrKey } = props
@@ -46,21 +103,9 @@ export const usePeriodLimitsInfo: UsePeriodLimitInfo = props => {
   return useSWR(
     `${swrKey}-${chainId}-${address}`,
     async () => {
-      const motionDuration = await easyTrack.motionDuration()
-      const limits = await getLimits(contract)
-      const periodData = await getPeriodData(contract)
+      const data = await getPeriodLimitsInfo(easyTrack, contract)
 
-      const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
-      const now = moment.unix(periodData.periodEndTimestamp)
-
-      const isEndInNextPeriod = dateOfEndMotion.isAfter(now)
-
-      return {
-        limits,
-        periodData,
-        motionDuration: motionDuration.toNumber() / 60 / 60, // hours
-        isEndInNextPeriod,
-      }
+      return data
     },
     {
       shouldRetryOnError: true,
@@ -104,21 +149,9 @@ export const usePeriodLimitsInfoByMotionType = (props: {
 
       if (!isContractWithLimits(registry)) return null
 
-      const motionDuration = await easyTrack.motionDuration()
-      const limits = await getLimits(registry)
-      const periodData = await getPeriodData(registry)
+      const data = await getPeriodLimitsInfo(easyTrack, registry)
 
-      const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
-      const now = moment.unix(periodData.periodEndTimestamp)
-
-      const isEndInNextPeriod = dateOfEndMotion.isAfter(now)
-
-      return {
-        limits,
-        periodData,
-        motionDuration: motionDuration.toNumber() / 60 / 60, // hours
-        isEndInNextPeriod,
-      }
+      return data
     },
     {
       shouldRetryOnError: true,

@@ -1,47 +1,21 @@
-import { formatEther } from 'ethers/lib/utils'
 import { Divider } from '@lidofinance/lido-ui'
 
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useSWR } from 'modules/network/hooks/useSwr'
+import { MotionWarningBox } from 'modules/shared/ui/Common/MotionWarningBox'
 import { MotionLimitProgress } from 'modules/motions/ui/MotionLimitProgress'
-import { usePeriodLimitsInfoByMotionType } from 'modules/motions/hooks/usePeriodLimitsInfo'
-import { useContractEvmScript } from 'modules/motions/hooks/useContractEvmScript'
-import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
-import { EvmUnrecognized } from 'modules/motions/evmAddresses'
-import { Motion, MotionType } from 'modules/motions/types'
+import { useMotionDetailed } from 'modules/motions/hooks'
 
 import { MotionDetailedLimitsWrapper } from './MotionDetailedLimitsStyle'
 
-type MotionDetailedTimeProps = {
-  motionType: MotionType | EvmUnrecognized
-  motion: Motion
-}
-
-export function MotionDetailedLimits(props: MotionDetailedTimeProps) {
-  const { motionType, motion } = props
-  const { chainId } = useWeb3()
-  const contract = useContractEvmScript(motionType)
-  const { initialLoading: isLoadingEvent, data: createdEvent } =
-    useMotionCreatedEvent(motion.id)
-  const callDataRaw = createdEvent?._evmScriptCallData
-
-  const { data: periodLimitsData } = usePeriodLimitsInfoByMotionType({
-    motionType,
-  })
-
-  const { data: callData } = useSWR(
-    isLoadingEvent ? null : `call-data-${chainId}-${motion.id}`,
-    () => {
-      if (motionType === EvmUnrecognized || !contract || !callDataRaw) {
-        return null
-      }
-      return contract.decodeEVMScriptCallData(callDataRaw) as any
-    },
-  )
+export function MotionDetailedLimits() {
+  const {
+    isArchived,
+    periodLimitsData,
+    motionTopUpAmount,
+    motionTopUpToken,
+    isOverPeriodLimit,
+  } = useMotionDetailed()
 
   if (!periodLimitsData) return null
-
-  const amount = Number(formatEther(callData[1][0]))
 
   return (
     <>
@@ -53,10 +27,15 @@ export function MotionDetailedLimits(props: MotionDetailedTimeProps) {
           totalLimit={periodLimitsData.limits.limit}
           startDate={periodLimitsData.periodData.periodStartTimestamp}
           endDate={periodLimitsData.periodData.periodEndTimestamp}
-          token={''}
-          newAmount={amount}
+          token={motionTopUpToken}
+          newAmount={isArchived ? 0 : motionTopUpAmount}
         />
       </MotionDetailedLimitsWrapper>
+      {isOverPeriodLimit && (
+        <MotionWarningBox>
+          Motion can not be enacted because monthly top up limit was reached.
+        </MotionWarningBox>
+      )}
     </>
   )
 }

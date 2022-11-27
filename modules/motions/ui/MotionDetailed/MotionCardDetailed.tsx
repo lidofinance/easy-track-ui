@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
-import { useMotionTimeCountdown } from 'modules/motions/hooks/useMotionTimeCountdown'
 
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { useMotionDetailed } from 'modules/motions/hooks'
+
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
 import {
-  getMotionTypeDisplayName,
   getMotionDisplayStatus,
   getMotionTypeByScriptFactory,
 } from 'modules/motions/utils'
@@ -46,10 +46,8 @@ type Props = {
 
 export function MotionCardDetailed({ motion, onInvalidate }: Props) {
   const { chainId, walletAddress } = useWeb3()
-
-  const progress = useMotionProgress(motion)
-
-  const timeData = useMotionTimeCountdown(motion)
+  const { progress, isArchived, pending, timeData, motionDisplaydName } =
+    useMotionDetailed()
   const { isPassed, diff } = timeData
 
   useEffect(() => {
@@ -58,9 +56,6 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     }
   }, [isPassed, motion.status, onInvalidate])
 
-  const isArchived =
-    motion.status !== MotionStatus.ACTIVE &&
-    motion.status !== MotionStatus.PENDING
   const isAuthorConnected = walletAddress === motion.creator
   const isAttentionTime = diff <= motion.duration * MOTION_ATTENTION_PERIOD
 
@@ -74,13 +69,15 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     isAttentionTime,
   })
 
+  if (pending) return <PageLoader />
+
   return (
     <Card>
       <Header>
         <div>
           <MotionNumber>Motion #{motion.id}</MotionNumber>
           <MotionTitle>
-            {getMotionTypeDisplayName(motionType)}
+            {motionDisplaydName}
             {motionType === 'EvmUnrecognized' && (
               <>
                 <br />
@@ -152,7 +149,7 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
         </InfoCol>
       </InfoRow>
 
-      <MotionDetailedLimits motion={motion} motionType={motionType} />
+      <MotionDetailedLimits />
 
       {!isArchived && (
         <MotionDetailedActions motion={motion} onFinish={onInvalidate} />

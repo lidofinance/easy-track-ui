@@ -82,11 +82,6 @@ export function useSingleAllowedRecipientMapAll() {
   return useSingleAllowedRecipientMap(partners)
 }
 
-export function useAllowedRecipientMapActual() {
-  const partners = useSingleAllowedRecipientActual()
-  return useSingleAllowedRecipientMap(partners)
-}
-
 export function useSingleAllowedRecipientLimits() {
   const { chainId } = useWeb3()
   const allowedRecipientRegistry =

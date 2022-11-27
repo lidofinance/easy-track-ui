@@ -158,8 +158,8 @@ export const formParts = createMotionFormPart({
               {periodLimitsData?.isEndInNextPeriod && (
                 <MotionWarningBox>
                   Please note that this program will be finished in the next
-                  month. Motion bank limit for the next month may differ from
-                  this. This recipient will not be accepted if motion bank limit
+                  month. Motion top up limit for the next month may differ from
+                  this. This recipient will not be accepted if motion top limit
                   is reached.
                 </MotionWarningBox>
               )}

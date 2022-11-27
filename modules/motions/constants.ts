@@ -30,4 +30,4 @@ export const periodLimitError = (
   governanceSymbol: string | undefined,
   transitionLimit: number,
 ) =>
-  `Insuffisient motion bank limit. Amount available for the program ${transitionLimit.toLocaleString()} ${governanceSymbol} `
+  `Insuffisient motion top up limit. Amount available for the program ${transitionLimit.toLocaleString()} ${governanceSymbol} `

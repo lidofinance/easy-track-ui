@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSingleAllowedRecipientMapAll } from 'modules/motions/hooks/useSingleAllowedRecipient'
+import { useSingleAllowedRecipientMapAll } from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 

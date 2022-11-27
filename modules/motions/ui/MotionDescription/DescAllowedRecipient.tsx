@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import {
   useAllowedRecipientAll,
   useAllowedRecipientMapAll,
-} from 'modules/motions/hooks/useAllowedRecipient'
+} from 'modules/motions/hooks'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'

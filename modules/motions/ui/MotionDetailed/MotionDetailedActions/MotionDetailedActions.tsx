@@ -11,6 +11,7 @@ import {
   useTransactionSender,
   TransactionSender,
 } from 'modules/blockChain/hooks/useTransactionSender'
+import { useMotionDetailed } from 'modules/motions/hooks'
 
 import { Text } from 'modules/shared/ui/Common/Text'
 import {
@@ -50,6 +51,7 @@ function ActionsBody({ motion, onFinish }: Props) {
   const { walletAddress } = useWeb3()
   const contractEasyTrack = ContractEasyTrack.useWeb3()
   const { data: governanceSymbol } = useGovernanceSymbol()
+  const { isOverPeriodLimit } = useMotionDetailed()
 
   const balanceAt = ContractGovernanceToken.useSwrWeb3('balanceOfAt', [
     String(walletAddress),
@@ -157,7 +159,7 @@ function ActionsBody({ motion, onFinish }: Props) {
           <ButtonStyled
             size="sm"
             children="Submit objection"
-            disabled={!canObject.data}
+            disabled={!canObject.data || isOverPeriodLimit}
             onClick={txObject.send}
             loading={txObject.isPending}
           />
@@ -168,6 +170,7 @@ function ActionsBody({ motion, onFinish }: Props) {
               children="Enact"
               onClick={txEnact.send}
               loading={txEnact.isPending}
+              disabled={isOverPeriodLimit}
             />
           )}
         </Actions>
