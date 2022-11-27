@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, ToastError } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -44,6 +44,10 @@ export function MotionFormStartNew({ onComplete }: Props) {
       ...getDefaultFormPartsData(),
     },
   })
+
+  useEffect(() => {
+    formMethods.reset()
+  }, [formMethods, availableMotions])
 
   const contractEasyTrack = ContractEasyTrack.useWeb3()
 
