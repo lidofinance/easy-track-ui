@@ -19,7 +19,7 @@ import {
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
-const EVM_CONTRACTS = {
+export const EVM_CONTRACTS = {
   [MotionType.NodeOperatorIncreaseLimit]: ContractEvmNodeOperatorIncreaseLimit,
   [MotionType.LEGOTopUp]: ContractEvmLEGOTopUp,
   [MotionType.RewardProgramAdd]: ContractEvmRewardProgramAdd,

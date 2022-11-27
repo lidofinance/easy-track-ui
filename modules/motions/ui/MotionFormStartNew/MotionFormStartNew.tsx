@@ -1,12 +1,14 @@
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { Button, ToastError } from '@lidofinance/lido-ui'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, RetryHint } from './CreateMotionFormStyle'
 
+import { useAvailableMotions } from 'modules/motions/hooks'
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
@@ -30,6 +32,8 @@ const HIDDEN_MOTIONS = [
 export function MotionFormStartNew({ onComplete }: Props) {
   const { chainId } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
+
+  const availableMotions = useAvailableMotions()
 
   const formMethods = useForm<FormData>({
     mode: 'onChange',
@@ -94,12 +98,17 @@ export function MotionFormStartNew({ onComplete }: Props) {
     </>
   )
 
+  if (!availableMotions) return <PageLoader />
+
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
       <Fieldset>
         <SelectControl name="motionType" label="Motion type">
           {Object.values(MotionType)
-            .filter(motion => !HIDDEN_MOTIONS.includes(motion))
+            .filter(
+              motion =>
+                !HIDDEN_MOTIONS.includes(motion) && availableMotions[motion],
+            )
             .map(type => (
               <Option
                 key={type}

@@ -7,7 +7,7 @@ import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
-import { ContractEvmRewardProgramRemove } from 'modules/blockChain/contracts'
+import { ContractEvmAllowedRecipientRemove } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
@@ -38,7 +38,7 @@ export const formParts = createMotionFormPart({
   }) {
     const allowedRecipients = useAllowedRecipientActual()
     const { walletAddress } = useWeb3()
-    const trustedCaller = ContractEvmRewardProgramRemove.useSwrWeb3(
+    const trustedCaller = ContractEvmAllowedRecipientRemove.useSwrWeb3(
       'trustedCaller',
       [],
     )
