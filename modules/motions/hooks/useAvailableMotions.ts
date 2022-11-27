@@ -36,7 +36,8 @@ export const useAvailableMotions = () => {
     return operator
   }, [walletAddress, nodeOperators])
   const isNodeOperatorConnected =
-    !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
+    (nodeOperators.data && !nodeOperators.data.isRegistrySupported) ||
+    Boolean(currentNodeOperator)
 
   const nodeOperatorIncreaseLimitAddressMap =
     EvmAddressesByType[MotionType.NodeOperatorIncreaseLimit]
@@ -90,5 +91,10 @@ export const useAvailableMotions = () => {
     getTrustedConnectionInfo()
   }, [getTrustedConnectionInfo])
 
-  return availableMotions
+  const notHaveAvailableMotions = useMemo(() => {
+    if (!availableMotions) return true
+    return Object.values(availableMotions).every(value => !value)
+  }, [availableMotions])
+
+  return { availableMotions, notHaveAvailableMotions }
 }

@@ -6,7 +6,7 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { Fieldset, RetryHint } from './CreateMotionFormStyle'
+import { Fieldset, RetryHint, MessageBox } from './CreateMotionFormStyle'
 
 import { useAvailableMotions } from 'modules/motions/hooks'
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
@@ -33,7 +33,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
   const { chainId } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
 
-  const availableMotions = useAvailableMotions()
+  const { availableMotions, notHaveAvailableMotions } = useAvailableMotions()
 
   const formMethods = useForm<FormData>({
     mode: 'onChange',
@@ -99,6 +99,12 @@ export function MotionFormStartNew({ onComplete }: Props) {
   )
 
   if (!availableMotions) return <PageLoader />
+  if (notHaveAvailableMotions)
+    return (
+      <MessageBox>
+        You should be connected as trusted caller or as node operator
+      </MessageBox>
+    )
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
