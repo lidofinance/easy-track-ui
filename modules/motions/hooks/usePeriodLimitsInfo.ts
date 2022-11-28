@@ -26,6 +26,7 @@ type UsePeriodLimitInfoProps<T> = {
   address: string
   contract: T
   swrKey: string
+  isPending?: boolean
 }
 
 export type usePeriodLimitsInfoResultData = {
@@ -68,17 +69,18 @@ const getNextPeriod = ({
 const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
   easyTrack: EasyTrackAbi,
   contract: T,
+  isPending?: boolean,
 ) => {
   const motionDuration = await easyTrack.motionDuration()
   const limits = await getLimits(contract)
   let periodData = await getPeriodData(contract)
 
   const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
-  const now = moment.unix(periodData.periodEndTimestamp)
+  const periodEnd = moment.unix(periodData.periodEndTimestamp)
 
-  const isEndInNextPeriod = dateOfEndMotion.isAfter(now)
+  const isEndInNextPeriod = dateOfEndMotion.isAfter(periodEnd)
 
-  if (isEndInNextPeriod) {
+  if (isEndInNextPeriod && !isPending) {
     periodData = getNextPeriod({
       periodLimit: limits.limit,
       periodEndTimestamp: periodData.periodEndTimestamp,
@@ -95,7 +97,7 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
 }
 
 export const usePeriodLimitsInfo: UsePeriodLimitInfo = props => {
-  const { address, contract, swrKey } = props
+  const { address, contract, swrKey, isPending } = props
   const { chainId } = useWeb3()
 
   const easyTrack = ContractEasyTrack.useRpc()
@@ -103,7 +105,7 @@ export const usePeriodLimitsInfo: UsePeriodLimitInfo = props => {
   return useSWR(
     `${swrKey}-${chainId}-${address}`,
     async () => {
-      const data = await getPeriodLimitsInfo(easyTrack, contract)
+      const data = await getPeriodLimitsInfo(easyTrack, contract, isPending)
 
       return data
     },
@@ -134,8 +136,9 @@ const registryByMotionType: {
 
 export const usePeriodLimitsInfoByMotionType = (props: {
   motionType: MotionType | EvmUnrecognized
+  isPending?: boolean
 }) => {
-  const { motionType } = props
+  const { motionType, isPending } = props
   const { chainId } = useWeb3()
   const swrKey = `${motionType}-period-limits-data`
   const easyTrack = ContractEasyTrack.useRpc()
@@ -149,7 +152,7 @@ export const usePeriodLimitsInfoByMotionType = (props: {
 
       if (!isContractWithLimits(registry)) return null
 
-      const data = await getPeriodLimitsInfo(easyTrack, registry)
+      const data = await getPeriodLimitsInfo(easyTrack, registry, isPending)
 
       return data
     },

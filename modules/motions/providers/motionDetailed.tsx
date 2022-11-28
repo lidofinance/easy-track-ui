@@ -57,9 +57,11 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
   const progress = useMotionProgress(motion)
   const timeData = useMotionTimeCountdown(motion)
 
+  const isPending = motion.status === MotionStatus.PENDING
   const { data: periodLimitsData, initialLoading: isPeriodLimitsDataLoading } =
     usePeriodLimitsInfoByMotionType({
       motionType,
+      isPending,
     })
   const { data: createdEvent, initialLoading: isEventLoading } =
     useMotionCreatedEvent(motion.id)

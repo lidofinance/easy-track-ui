@@ -159,8 +159,7 @@ export const formParts = createMotionFormPart({
                 <MotionWarningBox>
                   Please note that this program will be finished in the next
                   month. Motion top up limit for the next month may differ from
-                  this. This recipient will not be accepted if motion top limit
-                  is reached.
+                  this.
                 </MotionWarningBox>
               )}
               <Fieldset>

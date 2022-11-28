@@ -163,8 +163,7 @@ export const formParts = createMotionFormPart({
                 <MotionWarningBox>
                   Please note that this program will be finished in the next
                   month. Motion bank limit for the next month may differ from
-                  this. This program will not be accepted if motion bank limit
-                  is reached.
+                  this.
                 </MotionWarningBox>
               )}
               <Fieldset>

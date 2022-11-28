@@ -2,7 +2,7 @@ import { Divider } from '@lidofinance/lido-ui'
 
 import { MotionWarningBox } from 'modules/shared/ui/Common/MotionWarningBox'
 import { MotionLimitProgress } from 'modules/motions/ui/MotionLimitProgress'
-import { useMotionDetailed } from 'modules/motions/hooks'
+import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
 
 import { MotionDetailedLimitsWrapper } from './MotionDetailedLimitsStyle'
 
@@ -15,7 +15,7 @@ export function MotionDetailedLimits() {
     isOverPeriodLimit,
   } = useMotionDetailed()
 
-  if (!periodLimitsData) return null
+  if (!periodLimitsData || isArchived) return null
 
   return (
     <>
@@ -28,7 +28,7 @@ export function MotionDetailedLimits() {
           startDate={periodLimitsData.periodData.periodStartTimestamp}
           endDate={periodLimitsData.periodData.periodEndTimestamp}
           token={motionTopUpToken}
-          newAmount={isArchived ? 0 : motionTopUpAmount}
+          newAmount={motionTopUpAmount}
         />
       </MotionDetailedLimitsWrapper>
       {isOverPeriodLimit && (

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useMotionDetailed } from 'modules/motions/hooks'
+import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'

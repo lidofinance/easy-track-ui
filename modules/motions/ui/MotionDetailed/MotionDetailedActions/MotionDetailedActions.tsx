@@ -11,7 +11,7 @@ import {
   useTransactionSender,
   TransactionSender,
 } from 'modules/blockChain/hooks/useTransactionSender'
-import { useMotionDetailed } from 'modules/motions/hooks'
+import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
 
 import { Text } from 'modules/shared/ui/Common/Text'
 import {
