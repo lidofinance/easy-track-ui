@@ -20,7 +20,6 @@ export function MotionDetailedLimits() {
   return (
     <>
       <Divider indents="md" />
-
       <MotionDetailedLimitsWrapper>
         <MotionLimitProgress
           spentAmount={periodLimitsData.periodData.alreadySpentAmount}
