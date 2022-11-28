@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { Fragment, useCallback } from 'react'
+import { Fragment, useCallback, useEffect } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -100,7 +100,7 @@ export const formParts = createMotionFormPart({
       [fieldsArr],
     )
 
-    const { watch } = useFormContext()
+    const { watch, setValue } = useFormContext()
     const selectedPrograms: Program[] = watch(fieldNames.programs)
 
     const newAmount = selectedPrograms.reduce(
@@ -110,13 +110,23 @@ export const formParts = createMotionFormPart({
 
     const getFilteredOptions = (fieldIdx: number) => {
       if (!allowedRecipients.data) return []
-      const thatAddress = selectedPrograms[fieldIdx].address
+      const thatAddress = selectedPrograms[fieldIdx]?.address
       const selectedAddresses = selectedPrograms.map(({ address }) => address)
       return allowedRecipients.data.filter(
         ({ address }) =>
           !selectedAddresses.includes(address) || address === thatAddress,
       )
     }
+
+    useEffect(() => {
+      const recipientsCount = allowedRecipients.data?.length || 0
+      const isMoreThanOne = recipientsCount > 1
+
+      if (isMoreThanOne) return
+
+      const recipientAddress = allowedRecipients.data?.[0].address || ''
+      setValue(fieldNames.programs, [{ address: recipientAddress }])
+    }, [fieldNames.programs, setValue, allowedRecipients.data])
 
     const tokenAddress = ContractGovernanceToken.address[chainId] as string
     const transitionLimit = TRANSITION_LIMITS[chainId][tokenAddress]
