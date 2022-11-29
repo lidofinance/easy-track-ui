@@ -2,7 +2,7 @@ import moment from 'moment'
 import { LimitCheckerAbi, EasyTrackAbi } from 'generated'
 import { createContractHelpers } from 'modules/blockChain/utils/createContractHelpers'
 import {
-  ContractSingleAllowedRecipientRegistry,
+  ContractLegoDAIRegistry,
   ContractEasyTrack,
   ContractAllowedRecipientRegistry,
 } from 'modules/blockChain/contracts'
@@ -129,8 +129,7 @@ const isContractWithLimits = (
 const registryByMotionType: {
   [key in MotionType]?: ReturnType<typeof createContractHelpers>
 } = {
-  [MotionType.SingleAllowedRecipientTopUp]:
-    ContractSingleAllowedRecipientRegistry,
+  [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
 }
 

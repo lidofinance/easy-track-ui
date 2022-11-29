@@ -5,9 +5,9 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
-  useSingleAllowedRecipientActual,
-  useSingleAllowedRecipientPeriodLimitsData,
-} from 'modules/motions/hooks/useSingleAllowedRecipient'
+  useLegoDAIActual,
+  useLegoDAIPeriodLimitsData,
+} from 'modules/motions/hooks/useLegoDAI'
 import {
   MotionLimitProgress,
   MotionLimitProgressWrapper,
@@ -27,7 +27,7 @@ import {
   FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
-import { ContractEvmSingleAllowedRecipientTopUp } from 'modules/blockChain/contracts'
+import { ContractEvmLegoDAITopUp } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
@@ -47,7 +47,7 @@ type Program = {
 }
 
 export const formParts = createMotionFormPart({
-  motionType: MotionType.SingleAllowedRecipientTopUp,
+  motionType: MotionType.LegoDAITopUp,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const encodedCallData = new utils.AbiCoder().encode(
       ['address[]', 'uint256[]'],
@@ -74,15 +74,15 @@ export const formParts = createMotionFormPart({
     submitAction,
   }) {
     const { chainId, walletAddress } = useWeb3()
-    const trustedCaller = ContractEvmSingleAllowedRecipientTopUp.useSwrWeb3(
+    const trustedCaller = ContractEvmLegoDAITopUp.useSwrWeb3(
       'trustedCaller',
       [],
     )
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
     const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
-      useSingleAllowedRecipientPeriodLimitsData()
-    const singleAllowedRecipients = useSingleAllowedRecipientActual()
+      useLegoDAIPeriodLimitsData()
+    const legoDAIRecipients = useLegoDAIActual()
     const token = { label: 'DAI', value: CONTRACT_ADDRESSES.DAI[chainId] }
 
     const fieldsArr = useFieldArray({ name: fieldNames.programs })
@@ -106,30 +106,30 @@ export const formParts = createMotionFormPart({
     )
 
     const getFilteredOptions = (fieldIdx: number) => {
-      if (!singleAllowedRecipients.data) return []
+      if (!legoDAIRecipients.data) return []
       const thatAddress = selectedPrograms[fieldIdx]?.address
       const selectedAddresses = selectedPrograms.map(({ address }) => address)
-      return singleAllowedRecipients.data.filter(
+      return legoDAIRecipients.data.filter(
         ({ address }) =>
           !selectedAddresses.includes(address) || address === thatAddress,
       )
     }
 
     useEffect(() => {
-      const recipientsCount = singleAllowedRecipients.data?.length || 0
+      const recipientsCount = legoDAIRecipients.data?.length || 0
       const isMoreThanOne = recipientsCount > 1
 
       if (isMoreThanOne) return
 
-      const recipientAddress = singleAllowedRecipients.data?.[0].address || ''
+      const recipientAddress = legoDAIRecipients.data?.[0].address || ''
       setValue(fieldNames.programs, [{ address: recipientAddress }])
-    }, [fieldNames.programs, setValue, singleAllowedRecipients.data])
+    }, [fieldNames.programs, setValue, legoDAIRecipients.data])
 
     const transitionLimit = TRANSITION_LIMITS[chainId][token.value || '']
 
     if (
       trustedCaller.initialLoading ||
-      singleAllowedRecipients.initialLoading ||
+      legoDAIRecipients.initialLoading ||
       periodLimitsLoading
     ) {
       return <PageLoader />
@@ -174,7 +174,7 @@ export const formParts = createMotionFormPart({
               )}
               <Fieldset>
                 <SelectControl
-                  label="Allowed single recipient address"
+                  label="LEGO DAI recipient address"
                   name={`${fieldNames.programs}.${i}.address`}
                   rules={{ required: 'Field is required' }}
                 >
@@ -232,8 +232,8 @@ export const formParts = createMotionFormPart({
           </Fragment>
         ))}
 
-        {singleAllowedRecipients.data &&
-          fieldsArr.fields.length < singleAllowedRecipients.data.length && (
+        {legoDAIRecipients.data &&
+          fieldsArr.fields.length < legoDAIRecipients.data.length && (
             <Fieldset>
               <ButtonIcon
                 type="button"

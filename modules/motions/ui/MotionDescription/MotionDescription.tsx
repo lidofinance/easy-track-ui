@@ -21,7 +21,7 @@ import {
   DescAllowedRecipientRemove,
 } from './DescAllowedRecipient'
 
-import { DescSingleAllowedRecipientTopUp } from './DescSingleAllowedRecipient'
+import { DescLegoDAITopUp } from './DescLegoDAI'
 
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
@@ -39,7 +39,7 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.AllowedRecipientAdd]: DescAllowedRecipientAdd,
   [MotionType.AllowedRecipientRemove]: DescAllowedRecipientRemove,
   [MotionType.AllowedRecipientTopUp]: DescAllowedRecipientTopUp,
-  [MotionType.SingleAllowedRecipientTopUp]: DescSingleAllowedRecipientTopUp,
+  [MotionType.LegoDAITopUp]: DescLegoDAITopUp,
 } as const
 
 type Props = {

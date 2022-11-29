@@ -1,18 +1,18 @@
 import { useMemo } from 'react'
-import { useSingleAllowedRecipientMapAll } from 'modules/motions/hooks'
+import { useLegoDAIMapAll } from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 
 import { formatEther } from 'ethers/lib/utils'
-import { TopUpAllowedRecipientsDAIAbi } from 'generated'
+import { LegoDAITopUpAbi } from 'generated'
 import { NestProps } from './types'
 
 const TOKEN = 'DAI'
 
-export function DescSingleAllowedRecipientTopUp({
+export function DescLegoDAITopUp({
   callData,
-}: NestProps<TopUpAllowedRecipientsDAIAbi['decodeEVMScriptCallData']>) {
-  const { data: allowedRecipientMap } = useSingleAllowedRecipientMapAll()
+}: NestProps<LegoDAITopUpAbi['decodeEVMScriptCallData']>) {
+  const { data: allowedRecipientMap } = useLegoDAIMapAll()
 
   const recipients = useMemo(() => {
     if (!allowedRecipientMap) return null

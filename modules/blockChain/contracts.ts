@@ -21,9 +21,9 @@ import {
   AddAllowedRecipientLDOAbi__factory,
   RemoveAllowedRecipientLDOAbi__factory,
   TopUpAllowedRecipientsLDOAbi__factory,
-  AllowedRecipientsRegistryDAIAbi__factory,
-  AllowedRecipientsRegistryDAIAbi,
-  TopUpAllowedRecipientsDAIAbi__factory,
+  LegoDAIRegistryAbi__factory,
+  LegoDAIRegistryAbi,
+  LegoDAITopUpAbi__factory,
 } from 'generated'
 import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
@@ -37,8 +37,7 @@ export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
 export type ContractTypeReferralPartnersRegistry = ReferralPartnersRegistryAbi
 export type ContractTypeAllowedRecipientRegistry =
   AllowedRecipientsRegistryLDOAbi
-export type ContractTypeSingleAllowedRecipientRegistry =
-  AllowedRecipientsRegistryDAIAbi
+export type ContractTypeLegoDAIRegistry = LegoDAIRegistryAbi
 
 export const ContractNodeOperatorsRegistry = createContractHelpers({
   factory: NodeOperatorsAbi__factory,
@@ -78,14 +77,14 @@ export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
 })
 
-export const ContractSingleAllowedRecipientRegistry = createContractHelpers({
-  factory: AllowedRecipientsRegistryDAIAbi__factory,
-  address: CONTRACT_ADDRESSES.SingleAllowedRecipientRegistry,
+export const ContractLegoDAIRegistry = createContractHelpers({
+  factory: LegoDAIRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.LegoDAIRegistry,
 })
 
-export const ContractEvmSingleAllowedRecipientTopUp = createContractHelpers({
-  factory: TopUpAllowedRecipientsDAIAbi__factory,
-  address: EvmAddressesByType[MotionType.SingleAllowedRecipientTopUp],
+export const ContractEvmLegoDAITopUp = createContractHelpers({
+  factory: LegoDAITopUpAbi__factory,
+  address: EvmAddressesByType[MotionType.LegoDAITopUp],
 })
 
 export const ContractGovernanceToken = createContractHelpers({

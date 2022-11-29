@@ -17,7 +17,7 @@ const MotionTypeDisplayNames: Record<MotionType | EvmUnrecognized, string> = {
   [MotionType.AllowedRecipientAdd]: 'Add reward program',
   [MotionType.AllowedRecipientRemove]: 'Remove reward program',
   [MotionType.AllowedRecipientTopUp]: 'Top up reward program',
-  [MotionType.SingleAllowedRecipientTopUp]: 'Top up single allowed recipient',
+  [MotionType.LegoDAITopUp]: 'Top up LEGO DAI recipient',
   [EvmUnrecognized]: 'Unrecognized evm factory',
 } as const
 
