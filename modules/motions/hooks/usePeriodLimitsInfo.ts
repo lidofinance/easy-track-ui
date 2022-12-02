@@ -75,7 +75,9 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
   let periodData = await getPeriodData(contract)
 
   const dateOfStartMotion = moment.unix(periodData.periodStartTimestamp)
-  const isStartInPrevPeriod = moment().isAfter(dateOfStartMotion)
+  const isStartInPrevPeriod = moment()
+    .startOf('month')
+    .isAfter(dateOfStartMotion)
 
   const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
   const periodEnd = isStartInPrevPeriod
