@@ -45,20 +45,19 @@ type UsePeriodLimitInfo = <T extends ContractLimitsMethods>(
   isEndInNextPeriod: boolean
 }>
 
-const getNextPeriod = ({
+const getNewPeriod = ({
   periodLimit,
-  periodEndTimestamp,
   periodDurationMonths,
+  newPeriodStartTime,
 }: {
   periodLimit: string
-  periodEndTimestamp: number
   periodDurationMonths: number
+  newPeriodStartTime: moment.Moment
 }) => {
   return {
     alreadySpentAmount: '0',
-    periodStartTimestamp: moment().add(1, 'M').startOf('month').unix(),
-    periodEndTimestamp: moment
-      .unix(periodEndTimestamp)
+    periodStartTimestamp: newPeriodStartTime.unix(),
+    periodEndTimestamp: newPeriodStartTime
       .add(periodDurationMonths, 'M')
       .startOf('month')
       .unix(),
@@ -75,16 +74,34 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
   const limits = await getLimits(contract)
   let periodData = await getPeriodData(contract)
 
+  const dateOfStartMotion = moment.unix(periodData.periodStartTimestamp)
+  const isStartInPrevPeriod = moment().isAfter(dateOfStartMotion)
+
   const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
-  const periodEnd = moment.unix(periodData.periodEndTimestamp)
+  const periodEnd = isStartInPrevPeriod
+    ? moment()
+        .startOf('month')
+        .add(limits.periodDurationMonths, 'M')
+        .startOf('month')
+    : moment.unix(periodData.periodEndTimestamp)
 
   const isEndInNextPeriod = dateOfEndMotion.isAfter(periodEnd)
 
   if (isEndInNextPeriod && !isPending) {
-    periodData = getNextPeriod({
+    periodData = getNewPeriod({
       periodLimit: limits.limit,
-      periodEndTimestamp: periodData.periodEndTimestamp,
       periodDurationMonths: limits.periodDurationMonths,
+      newPeriodStartTime: moment()
+        .add(limits.periodDurationMonths, 'M')
+        .startOf('month'),
+    })
+  }
+
+  if (isStartInPrevPeriod) {
+    periodData = getNewPeriod({
+      periodLimit: limits.limit,
+      periodDurationMonths: limits.periodDurationMonths,
+      newPeriodStartTime: moment().startOf('month'),
     })
   }
 

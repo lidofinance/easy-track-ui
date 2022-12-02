@@ -8,7 +8,7 @@ import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, RetryHint, MessageBox } from './CreateMotionFormStyle'
 
-import { useAvailableMotions } from 'modules/motions/hooks'
+import { useAvailableMotions, HIDDEN_MOTIONS } from 'modules/motions/hooks'
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
@@ -22,12 +22,6 @@ import { ResultTx } from 'modules/blockChain/types'
 type Props = {
   onComplete: (tx: ResultTx) => void
 }
-
-const HIDDEN_MOTIONS = [
-  'RewardProgramAdd',
-  'RewardProgramRemove',
-  'RewardProgramTopUp',
-]
 
 export function MotionFormStartNew({ onComplete }: Props) {
   const { chainId } = useWeb3()

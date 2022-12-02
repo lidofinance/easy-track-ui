@@ -12,6 +12,12 @@ import { MotionType } from 'modules/motions/types'
 import { useNodeOperatorsList } from './useNodeOperatorsList'
 import { EVM_CONTRACTS } from './useContractEvmScript'
 
+export const HIDDEN_MOTIONS = [
+  'RewardProgramAdd',
+  'RewardProgramRemove',
+  'RewardProgramTopUp',
+]
+
 const isHasTrustedCaller = (
   contract: unknown,
 ): contract is { trustedCaller: () => string } => {
@@ -75,6 +81,8 @@ export const useAvailableMotions = () => {
         if (!contractAddress) return acc
         const contractType =
           EvmTypesByAdress[parseEvmSupportedChainId(chainId)][contractAddress]
+
+        if (HIDDEN_MOTIONS.includes(contractType)) return acc
         acc[contractType] = cur.value === walletAddress
 
         return acc
