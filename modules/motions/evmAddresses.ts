@@ -27,10 +27,19 @@ export const EvmAddressesByChain = {
       '0xE9eb838fb3A288bF59E9275Ccd7e124fDff88a9C',
     [MotionType.ReferralPartnerTopUp]:
       '0x54058ee0E0c87Ad813C002262cD75B98A7F59218',
-    [MotionType.AllowedRecipientAdd]: '0x',
-    [MotionType.AllowedRecipientRemove]: '0x',
-    [MotionType.AllowedRecipientTopUp]: '0x',
-    [MotionType.LegoDAITopUp]: '0x',
+    [MotionType.AllowedRecipientAdd]:
+      '0x1dCFc37719A99d73a0ce25CeEcbeFbF39938cF2C',
+    [MotionType.AllowedRecipientRemove]:
+      '0x00BB68a12180a8f7E20D8422ba9F81c07A19A79E',
+    [MotionType.AllowedRecipientTopUp]:
+      '0x85d703B2A4BaD713b596c647badac9A1e95bB03d',
+    [MotionType.LegoLDOTopUp]: '0x00caAeF11EC545B192f16313F53912E453c91458',
+    [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
+    [MotionType.RccDAITopUp]: '0x84f74733ede9bFD53c1B3Ea96338867C94EC313e',
+    [MotionType.PmlDAITopUp]: '0x4E6D3A5023A38cE2C4c5456d3760357fD93A22cD',
+    [MotionType.AtcDAITopUp]: '0x67Fb97ABB9035E2e93A7e3761a0d0571c5d7CD07',
+    [MotionType.GasFunderETHTopUp]:
+      '0x41F9daC5F89092dD6061E59578A2611849317dc8',
   },
 
   // Rinkeby
@@ -52,7 +61,12 @@ export const EvmAddressesByChain = {
     [MotionType.AllowedRecipientAdd]: '0x',
     [MotionType.AllowedRecipientRemove]: '0x',
     [MotionType.AllowedRecipientTopUp]: '0x',
+    [MotionType.LegoLDOTopUp]: '0x',
     [MotionType.LegoDAITopUp]: '0x',
+    [MotionType.RccDAITopUp]: '0x',
+    [MotionType.PmlDAITopUp]: '0x',
+    [MotionType.AtcDAITopUp]: '0x',
+    [MotionType.GasFunderETHTopUp]: '0x',
   },
 
   // Goerli
@@ -80,7 +94,12 @@ export const EvmAddressesByChain = {
       '0x6c2e12D9C1d6e3dE146A7519eCbcb79c96Fe3146',
     [MotionType.AllowedRecipientTopUp]:
       '0xD928dC9E4DaBeE939d3237A4f41983Ff5B6308dB',
+    [MotionType.LegoLDOTopUp]: '0x',
     [MotionType.LegoDAITopUp]: '0x3B51de85edA093ED14d6315d3f85F69fe5e1548d',
+    [MotionType.RccDAITopUp]: '0x',
+    [MotionType.PmlDAITopUp]: '0x',
+    [MotionType.AtcDAITopUp]: '0x',
+    [MotionType.GasFunderETHTopUp]: '0x',
   },
 }
 

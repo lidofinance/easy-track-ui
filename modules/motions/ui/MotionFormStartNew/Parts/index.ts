@@ -11,7 +11,7 @@ import * as formReferralPartnerTopUp from './StartNewReferralPartnerTopUp'
 import * as formAllowedRecipientAdd from './StartNewAllowedRecipientAdd'
 import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
-import * as StartNewLegoDAITopUp from './StartNewLegoDAITopUp'
+import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
 
 export const formParts = {
   [MotionType.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
@@ -25,7 +25,24 @@ export const formParts = {
   [MotionType.AllowedRecipientAdd]: formAllowedRecipientAdd.formParts,
   [MotionType.AllowedRecipientRemove]: formAllowedRecipientRemove.formParts,
   [MotionType.AllowedRecipientTopUp]: formAllowedRecipientTopUp.formParts,
-  [MotionType.LegoDAITopUp]: StartNewLegoDAITopUp.formParts,
+  [MotionType.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: 'LegoLDO',
+  }),
+  [MotionType.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: 'LegoDAI',
+  }),
+  [MotionType.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: 'RccDAI',
+  }),
+  [MotionType.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: 'PmlDAI',
+  }),
+  [MotionType.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: 'AtcDAI',
+  }),
+  [MotionType.GasFunderETHTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: 'GasFunderETH',
+  }),
 } as const
 
 export type FormData = {

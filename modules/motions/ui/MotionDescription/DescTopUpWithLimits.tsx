@@ -1,18 +1,21 @@
 import { useMemo } from 'react'
-import { useLegoDAIMapAll } from 'modules/motions/hooks'
+import { useMapAll, REGISTRY_WITH_LIMITS_MAP } from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 
 import { formatEther } from 'ethers/lib/utils'
-import { LegoDAITopUpAbi } from 'generated'
+import { TopUpWithLimitsAbi } from 'generated'
 import { NestProps } from './types'
 
 const TOKEN = 'DAI'
 
-export function DescLegoDAITopUp({
+export function DescTopUpWithLimits({
   callData,
-}: NestProps<LegoDAITopUpAbi['decodeEVMScriptCallData']>) {
-  const { data: allowedRecipientMap } = useLegoDAIMapAll()
+  registryType,
+}: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_MAP
+}) {
+  const { data: allowedRecipientMap } = useMapAll({ registryType })
 
   const recipients = useMemo(() => {
     if (!allowedRecipientMap) return null

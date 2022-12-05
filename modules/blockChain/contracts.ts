@@ -21,9 +21,9 @@ import {
   AddAllowedRecipientLDOAbi__factory,
   RemoveAllowedRecipientLDOAbi__factory,
   TopUpAllowedRecipientsLDOAbi__factory,
-  LegoDAIRegistryAbi__factory,
-  LegoDAIRegistryAbi,
-  LegoDAITopUpAbi__factory,
+  RegistryWithLimitsAbi__factory,
+  RegistryWithLimitsAbi,
+  TopUpWithLimitsAbi__factory,
 } from 'generated'
 import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
@@ -31,13 +31,13 @@ import * as CONTRACT_ADDRESSES from './contractAddresses'
 
 export type ContractTypeEasyTrack = EasyTrackAbi
 /**
- * @deprecated since version 2.0
+ * @deprecated
  */
 export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
 export type ContractTypeReferralPartnersRegistry = ReferralPartnersRegistryAbi
 export type ContractTypeAllowedRecipientRegistry =
   AllowedRecipientsRegistryLDOAbi
-export type ContractTypeLegoDAIRegistry = LegoDAIRegistryAbi
+export type ContractTypeRegistryWithLimits = RegistryWithLimitsAbi
 
 export const ContractNodeOperatorsRegistry = createContractHelpers({
   factory: NodeOperatorsAbi__factory,
@@ -50,7 +50,7 @@ export const ContractEasyTrack = createContractHelpers({
 })
 
 /**
- * @deprecated since version 2.0
+ * @deprecated
  */
 export const ContractRewardProgramRegistry = createContractHelpers({
   factory: RewardProgramRegistryAbi__factory,
@@ -77,14 +77,64 @@ export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
 })
 
+export const ContractLegoLDORegistry = createContractHelpers({
+  factory: RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.LegoLDORegistry,
+})
+
+export const ContractEvmLegoLDOTopUp = createContractHelpers({
+  factory: TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.LegoLDOTopUp],
+})
+
 export const ContractLegoDAIRegistry = createContractHelpers({
-  factory: LegoDAIRegistryAbi__factory,
+  factory: RegistryWithLimitsAbi__factory,
   address: CONTRACT_ADDRESSES.LegoDAIRegistry,
 })
 
 export const ContractEvmLegoDAITopUp = createContractHelpers({
-  factory: LegoDAITopUpAbi__factory,
+  factory: TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.LegoDAITopUp],
+})
+
+export const ContractRccDAIRegistry = createContractHelpers({
+  factory: RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.RccDAIRegistry,
+})
+
+export const ContractEvmRccDAITopUp = createContractHelpers({
+  factory: TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.RccDAITopUp],
+})
+
+export const ContractPmlDAIRegistry = createContractHelpers({
+  factory: RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.PmlDAIRegistry,
+})
+
+export const ContractEvmPmlDAITopUp = createContractHelpers({
+  factory: TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.PmlDAITopUp],
+})
+
+export const ContractAtcDAIRegistry = createContractHelpers({
+  factory: RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.AtcDAIRegistry,
+})
+
+export const ContractEvmAtcDAITopUp = createContractHelpers({
+  factory: TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.AtcDAITopUp],
+})
+
+export const ContractGasFunderETHRegistry = createContractHelpers({
+  factory: RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.gasFunderETHRegistry,
+})
+
+export const ContractEvmGasFunderETHTopUp = createContractHelpers({
+  factory: TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.GasFunderETHTopUp],
 })
 
 export const ContractGovernanceToken = createContractHelpers({
@@ -103,7 +153,7 @@ export const ContractEvmLEGOTopUp = createContractHelpers({
 })
 
 /**
- * @deprecated since version 2.0
+ * @deprecated
  */
 export const ContractEvmRewardProgramAdd = createContractHelpers({
   factory: EvmAddRewardProgramAbi__factory,
@@ -111,7 +161,7 @@ export const ContractEvmRewardProgramAdd = createContractHelpers({
 })
 
 /**
- * @deprecated since version 2.0
+ * @deprecated
  */
 export const ContractEvmRewardProgramRemove = createContractHelpers({
   factory: EvmRemoveRewardProgramAbi__factory,
@@ -119,7 +169,7 @@ export const ContractEvmRewardProgramRemove = createContractHelpers({
 })
 
 /**
- * @deprecated since version 2.0
+ * @deprecated
  */
 export const ContractEvmRewardProgramTopUp = createContractHelpers({
   factory: EvmTopUpRewardProgramsAbi__factory,

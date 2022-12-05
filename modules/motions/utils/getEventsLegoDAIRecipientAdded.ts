@@ -1,8 +1,8 @@
 import { get } from 'lodash'
 import { CHAINS } from '@lido-sdk/constants'
-import type { ContractTypeLegoDAIRegistry } from 'modules/blockChain/contracts'
+import type { ContractTypeRegistryWithLimits } from 'modules/blockChain/contracts'
 
-type LegoDAIRecipientAddedEvent = [string, string] & {
+type RecipientAddedEvent = [string, string] & {
   _recipient: string
   _title: string
   _evmScriptFactory: string
@@ -14,16 +14,14 @@ const FROM_BLOCK = {
   [CHAINS.Mainnet]: 13676800,
 }
 
-export async function getEventsLegoDAIRecipientAdded(
+export async function getEventsRecipientAdded(
   chainId: CHAINS,
-  motionContract: ContractTypeLegoDAIRegistry,
+  motionContract: ContractTypeRegistryWithLimits,
 ) {
   const filter = motionContract.filters.RecipientAdded()
   const events = await motionContract.queryFilter(
     filter,
     get(FROM_BLOCK, chainId, undefined),
   )
-  return events.map(e =>
-    e.decode!(e.data, e.topics),
-  ) as LegoDAIRecipientAddedEvent[]
+  return events.map(e => e.decode!(e.data, e.topics)) as RecipientAddedEvent[]
 }

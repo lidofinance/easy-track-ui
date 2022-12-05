@@ -21,11 +21,13 @@ import {
   DescAllowedRecipientRemove,
 } from './DescAllowedRecipient'
 
-import { DescLegoDAITopUp } from './DescLegoDAI'
+import { DescTopUpWithLimits } from './DescTopUpWithLimits'
 
+import { TopUpWithLimitsAbi } from 'generated'
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
+import { NestProps } from './types'
 
 const MOTION_DESCRIPTIONS = {
   [MotionType.NodeOperatorIncreaseLimit]: DescNodeOperatorIncreaseLimit,
@@ -39,7 +41,24 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.AllowedRecipientAdd]: DescAllowedRecipientAdd,
   [MotionType.AllowedRecipientRemove]: DescAllowedRecipientRemove,
   [MotionType.AllowedRecipientTopUp]: DescAllowedRecipientTopUp,
-  [MotionType.LegoDAITopUp]: DescLegoDAITopUp,
+  [MotionType.LegoLDOTopUp]: (
+    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
+  ) => <DescTopUpWithLimits {...props} registryType="LegoLDO" />,
+  [MotionType.LegoDAITopUp]: (
+    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
+  ) => <DescTopUpWithLimits {...props} registryType="LegoDAI" />,
+  [MotionType.RccDAITopUp]: (
+    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
+  ) => <DescTopUpWithLimits {...props} registryType="RccDAI" />,
+  [MotionType.PmlDAITopUp]: (
+    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
+  ) => <DescTopUpWithLimits {...props} registryType="PmlDAI" />,
+  [MotionType.AtcDAITopUp]: (
+    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
+  ) => <DescTopUpWithLimits {...props} registryType="AtcDAI" />,
+  [MotionType.GasFunderETHTopUp]: (
+    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
+  ) => <DescTopUpWithLimits {...props} registryType="GasFunderETH" />,
 } as const
 
 type Props = {

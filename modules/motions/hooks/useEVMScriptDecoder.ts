@@ -8,7 +8,7 @@ import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
 import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
 import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
 import AllowedRecipientsRegistryLDOAbi from 'abi/LDO/AllowedRecipientsRegistryLDO.abi.json'
-import LegoDAIRegistryAbi from 'abi/Lego/LegoDAIRegistry.abi.json'
+import RegistryWithLimitsAbi from 'abi/TopUp/RegistryWithLimits.abi.json'
 import FinanceAbi from 'abi/Finance.abi.json'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
@@ -28,8 +28,18 @@ export function useEVMScriptDecoder() {
           [CONTRACT_ADDRESSES.Finance[chainId]]: FinanceAbi as any,
           [CONTRACT_ADDRESSES.AllowedRecipientRegistry[chainId]]:
             AllowedRecipientsRegistryLDOAbi as any,
+          [CONTRACT_ADDRESSES.LegoLDORegistry[chainId]]:
+            RegistryWithLimitsAbi as any,
           [CONTRACT_ADDRESSES.LegoDAIRegistry[chainId]]:
-            LegoDAIRegistryAbi as any,
+            RegistryWithLimitsAbi as any,
+          [CONTRACT_ADDRESSES.RccDAIRegistry[chainId]]:
+            RegistryWithLimitsAbi as any,
+          [CONTRACT_ADDRESSES.PmlDAIRegistry[chainId]]:
+            RegistryWithLimitsAbi as any,
+          [CONTRACT_ADDRESSES.AtcDAIRegistry[chainId]]:
+            RegistryWithLimitsAbi as any,
+          [CONTRACT_ADDRESSES.gasFunderETHRegistry[chainId]]:
+            RegistryWithLimitsAbi as any,
         }),
       ),
     `evm-script-decoder-${chainId}`,

@@ -17,7 +17,12 @@ export const MotionType = {
   AllowedRecipientAdd: 'AllowedRecipientAdd',
   AllowedRecipientRemove: 'AllowedRecipientRemove',
   AllowedRecipientTopUp: 'AllowedRecipientTopUp',
+  LegoLDOTopUp: 'LegoLDOTopUp',
   LegoDAITopUp: 'LegoDAITopUp',
+  RccDAITopUp: 'RccDAITopUp',
+  PmlDAITopUp: 'PmlDAITopUp',
+  AtcDAITopUp: 'AtcDAITopUp',
+  GasFunderETHTopUp: 'GasFunderETHTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
