@@ -16,6 +16,11 @@ import {
   ContractEvmAllowedRecipientRemove,
   ContractEvmAllowedRecipientTopUp,
   ContractEvmLegoDAITopUp,
+  ContractEvmLegoLDOTopUp,
+  ContractEvmRccDAITopUp,
+  ContractEvmPmlDAITopUp,
+  ContractEvmAtcDAITopUp,
+  ContractEvmGasFunderETHTopUp,
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
@@ -31,7 +36,12 @@ export const EVM_CONTRACTS = {
   [MotionType.AllowedRecipientAdd]: ContractEvmAllowedRecipientAdd,
   [MotionType.AllowedRecipientRemove]: ContractEvmAllowedRecipientRemove,
   [MotionType.AllowedRecipientTopUp]: ContractEvmAllowedRecipientTopUp,
+  [MotionType.LegoLDOTopUp]: ContractEvmLegoLDOTopUp,
   [MotionType.LegoDAITopUp]: ContractEvmLegoDAITopUp,
+  [MotionType.RccDAITopUp]: ContractEvmRccDAITopUp,
+  [MotionType.PmlDAITopUp]: ContractEvmPmlDAITopUp,
+  [MotionType.AtcDAITopUp]: ContractEvmAtcDAITopUp,
+  [MotionType.GasFunderETHTopUp]: ContractEvmGasFunderETHTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
