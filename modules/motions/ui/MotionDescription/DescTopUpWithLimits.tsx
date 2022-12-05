@@ -1,13 +1,15 @@
 import { useMemo } from 'react'
-import { useMapAll, REGISTRY_WITH_LIMITS_MAP } from 'modules/motions/hooks'
+import {
+  useMapAll,
+  REGISTRY_WITH_LIMITS_MAP,
+  useTokenBytTopUpType,
+} from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 
 import { formatEther } from 'ethers/lib/utils'
 import { TopUpWithLimitsAbi } from 'generated'
 import { NestProps } from './types'
-
-const TOKEN = 'DAI'
 
 export function DescTopUpWithLimits({
   callData,
@@ -16,6 +18,7 @@ export function DescTopUpWithLimits({
   registryType: keyof typeof REGISTRY_WITH_LIMITS_MAP
 }) {
   const { data: allowedRecipientMap } = useMapAll({ registryType })
+  const token = useTokenBytTopUpType({ registryType })
 
   const recipients = useMemo(() => {
     if (!allowedRecipientMap) return null
@@ -28,7 +31,7 @@ export function DescTopUpWithLimits({
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
-          with {formatEther(callData[1][i])} {TOKEN}
+          with {formatEther(callData[1][i])} {token.label}
         </div>
       ))}
     </div>
