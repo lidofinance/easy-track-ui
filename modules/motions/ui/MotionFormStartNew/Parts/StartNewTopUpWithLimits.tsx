@@ -198,7 +198,7 @@ export const formParts = ({
                 )}
                 <Fieldset>
                   <SelectControl
-                    label="LEGO DAI recipient address"
+                    label="Top up recipient address"
                     name={`${fieldNames.programs}.${i}.address`}
                     rules={{ required: 'Field is required' }}
                   >
