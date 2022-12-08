@@ -5,6 +5,11 @@ import {
   ContractLegoDAIRegistry,
   ContractEasyTrack,
   ContractAllowedRecipientRegistry,
+  ContractLegoLDORegistry,
+  ContractRccDAIRegistry,
+  ContractAtcDAIRegistry,
+  ContractGasFunderETHRegistry,
+  ContractPmlDAIRegistry,
 } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
@@ -148,7 +153,12 @@ const isContractWithLimits = (
 const registryByMotionType: {
   [key in MotionType]?: ReturnType<typeof createContractHelpers>
 } = {
+  [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
   [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
+  [MotionType.RccDAITopUp]: ContractRccDAIRegistry,
+  [MotionType.PmlDAITopUp]: ContractPmlDAIRegistry,
+  [MotionType.AtcDAITopUp]: ContractAtcDAIRegistry,
+  [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
 }
 

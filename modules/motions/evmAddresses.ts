@@ -94,11 +94,11 @@ export const EvmAddressesByChain = {
       '0x6c2e12D9C1d6e3dE146A7519eCbcb79c96Fe3146',
     [MotionType.AllowedRecipientTopUp]:
       '0xD928dC9E4DaBeE939d3237A4f41983Ff5B6308dB',
-    [MotionType.LegoLDOTopUp]: '0x',
-    [MotionType.LegoDAITopUp]: '0x3B51de85edA093ED14d6315d3f85F69fe5e1548d',
-    [MotionType.RccDAITopUp]: '0x',
-    [MotionType.PmlDAITopUp]: '0x',
-    [MotionType.AtcDAITopUp]: '0x',
+    [MotionType.LegoLDOTopUp]: '0xc39Dd5B66968e364D99e0c9E7089049351AB89CA',
+    [MotionType.LegoDAITopUp]: '0xbf44eC2b23cA105F8a62e0587900a09A473288c6',
+    [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',
+    [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
+    [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
     [MotionType.GasFunderETHTopUp]: '0x',
   },
 }

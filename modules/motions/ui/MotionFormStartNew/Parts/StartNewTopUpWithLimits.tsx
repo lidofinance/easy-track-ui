@@ -50,12 +50,30 @@ import {
 } from 'modules/motions/constants'
 
 export const TOPUP_WITH_LIMITS_MAP = {
-  LegoLDO: ContractEvmLegoLDOTopUp,
-  LegoDAI: ContractEvmLegoDAITopUp,
-  RccDAI: ContractEvmRccDAITopUp,
-  PmlDAI: ContractEvmPmlDAITopUp,
-  AtcDAI: ContractEvmAtcDAITopUp,
-  GasFunderETH: ContractEvmGasFunderETHTopUp,
+  LegoLDO: {
+    evmContract: ContractEvmLegoLDOTopUp,
+    motionType: MotionType.LegoLDOTopUp,
+  },
+  LegoDAI: {
+    evmContract: ContractEvmLegoDAITopUp,
+    motionType: MotionType.LegoDAITopUp,
+  },
+  RccDAI: {
+    evmContract: ContractEvmRccDAITopUp,
+    motionType: MotionType.RccDAITopUp,
+  },
+  PmlDAI: {
+    evmContract: ContractEvmPmlDAITopUp,
+    motionType: MotionType.PmlDAITopUp,
+  },
+  AtcDAI: {
+    evmContract: ContractEvmAtcDAITopUp,
+    motionType: MotionType.AtcDAITopUp,
+  },
+  GasFunderETH: {
+    evmContract: ContractEvmGasFunderETHTopUp,
+    motionType: MotionType.GasFunderETHTopUp,
+  },
 }
 
 type Program = {
@@ -69,7 +87,7 @@ export const formParts = ({
   registryType: keyof typeof REGISTRY_WITH_LIMITS_MAP
 }) =>
   createMotionFormPart({
-    motionType: MotionType.LegoDAITopUp,
+    motionType: TOPUP_WITH_LIMITS_MAP[registryType].motionType,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
       const encodedCallData = new utils.AbiCoder().encode(
         ['address[]', 'uint256[]'],
@@ -96,14 +114,14 @@ export const formParts = ({
       submitAction,
     }) {
       const { chainId, walletAddress } = useWeb3()
-      const trustedCaller = TOPUP_WITH_LIMITS_MAP[registryType].useSwrWeb3(
-        'trustedCaller',
-        [],
-      )
+      const trustedCaller = TOPUP_WITH_LIMITS_MAP[
+        registryType
+      ].evmContract.useSwrWeb3('trustedCaller', [])
       const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
       const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
         usePeriodLimitsData({ registryType })
+
       const legoDAIRecipients = useActual({ registryType })
       const token = useTokenBytTopUpType({ registryType })
 
