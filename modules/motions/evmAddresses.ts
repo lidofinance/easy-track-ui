@@ -89,7 +89,7 @@ export const EvmAddressesByChain = {
     [MotionType.ReferralPartnerTopUp]:
       '0xB1E898faC74c377bEF16712Ba1CD4738606c19Ee',
     [MotionType.AllowedRecipientAdd]:
-      '0x3ef70849fdbee7b1f0a43179a3f788a8949b8abe',
+      '0x3Ef70849FdBEe7b1F0A43179A3f788A8949b8abe',
     [MotionType.AllowedRecipientRemove]:
       '0x6c2e12D9C1d6e3dE146A7519eCbcb79c96Fe3146',
     [MotionType.AllowedRecipientTopUp]:
