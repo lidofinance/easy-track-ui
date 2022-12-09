@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { TxStatus as TxStatusType } from 'modules/blockChain/types'
 
@@ -38,4 +39,9 @@ export const TxStatus = styled.span<TxStatusProps>`
       : status === 'success'
       ? theme.colors.success
       : theme.colors.error};
+`
+
+export const ButtonStyled = styled(Button)`
+  flex-grow: 1;
+  flex-basis: 40%;
 `

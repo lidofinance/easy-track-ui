@@ -1,15 +1,20 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-
 import { Button, ToastError } from '@lidofinance/lido-ui'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import {
+  useAvailableMotions,
+  HIDDEN_MOTIONS,
+} from 'modules/motions/hooks/useAvailableMotions'
+
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { Fieldset, RetryHint } from './CreateMotionFormStyle'
+import { Fieldset, RetryHint, MessageBox } from './CreateMotionFormStyle'
 
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
-import { MotionType } from '../../types'
+import { MotionType } from 'modules/motions/types'
 import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
 import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
 import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
@@ -23,6 +28,8 @@ export function MotionFormStartNew({ onComplete }: Props) {
   const { chainId } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
 
+  const { availableMotions, notHaveAvailableMotions } = useAvailableMotions()
+
   const formMethods = useForm<FormData>({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -32,6 +39,10 @@ export function MotionFormStartNew({ onComplete }: Props) {
       ...getDefaultFormPartsData(),
     },
   })
+
+  useEffect(() => {
+    formMethods.reset()
+  }, [formMethods, availableMotions])
 
   const contractEasyTrack = ContractEasyTrack.useWeb3()
 
@@ -43,11 +54,13 @@ export function MotionFormStartNew({ onComplete }: Props) {
 
         setSubmitting(true)
 
-        const tx = await formParts[motionType].populateTx({
+        const tx = await formParts[motionType]?.populateTx({
           evmScriptFactory: getScriptFactoryByMotionType(chainId, motionType),
           formData: e[motionType],
           contract: contractEasyTrack,
         })
+
+        if (!tx) return
 
         const res = await sendTransactionGnosisWorkaround(
           contractEasyTrack.signer,
@@ -65,7 +78,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
   )
 
   const motionType = formMethods.watch('motionType')
-  const CurrentFormPart = motionType ? formParts[motionType].Component : null
+  const CurrentFormPart = motionType ? formParts[motionType]?.Component : null
   const submitAction = (
     <>
       <Button
@@ -86,22 +99,35 @@ export function MotionFormStartNew({ onComplete }: Props) {
     </>
   )
 
+  if (!availableMotions) return <PageLoader />
+  if (notHaveAvailableMotions)
+    return (
+      <MessageBox>
+        You should be connected as trusted caller or as node operator
+      </MessageBox>
+    )
+
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
       <Fieldset>
         <SelectControl name="motionType" label="Motion type">
-          {Object.values(MotionType).map(type => (
-            <Option
-              key={type}
-              value={type}
-              children={getMotionTypeDisplayName(type)}
-            />
-          ))}
+          {Object.values(MotionType)
+            .filter(
+              motion =>
+                !HIDDEN_MOTIONS.includes(motion) && availableMotions[motion],
+            )
+            .map(type => (
+              <Option
+                key={type}
+                value={type}
+                children={getMotionTypeDisplayName(type)}
+              />
+            ))}
         </SelectControl>
       </Fieldset>
       {CurrentFormPart && motionType && (
         <CurrentFormPart
-          fieldNames={formParts[motionType].fieldNames as any}
+          fieldNames={formParts[motionType]?.fieldNames as any}
           submitAction={submitAction}
         />
       )}

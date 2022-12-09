@@ -16,6 +16,9 @@ import {
 import { NestProps } from './types'
 
 // RewardProgramAdd
+/**
+ * @deprecated
+ */
 export function DescRewardProgramAdd({
   callData,
 }: NestProps<EvmAddRewardProgramAbi['decodeEVMScriptCallData']>) {
@@ -28,6 +31,9 @@ export function DescRewardProgramAdd({
 }
 
 // RewardProgramTopUp
+/**
+ * @deprecated
+ */
 export function DescRewardProgramTopUp({
   callData,
 }: NestProps<EvmTopUpRewardProgramsAbi['decodeEVMScriptCallData']>) {
@@ -53,6 +59,9 @@ export function DescRewardProgramTopUp({
 }
 
 // RewardProgramRemove
+/**
+ * @deprecated
+ */
 export function DescRewardProgramRemove({
   callData,
 }: NestProps<EvmRemoveRewardProgramAbi['decodeEVMScriptCallData']>) {

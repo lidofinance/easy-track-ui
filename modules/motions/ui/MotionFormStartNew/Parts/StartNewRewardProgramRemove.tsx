@@ -11,6 +11,9 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
+/**
+ * @deprecated
+ */
 export const formParts = createMotionFormPart({
   motionType: MotionType.RewardProgramRemove,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {

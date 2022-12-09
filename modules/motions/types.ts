@@ -5,12 +5,24 @@ import type { EasyTrackAbi } from 'generated'
 export const MotionType = {
   NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
   LEGOTopUp: 'LEGOTopUp',
+  // @deprecated
   RewardProgramAdd: 'RewardProgramAdd',
+  // @deprecated
   RewardProgramRemove: 'RewardProgramRemove',
+  // @deprecated
   RewardProgramTopUp: 'RewardProgramTopUp',
   ReferralPartnerAdd: 'ReferralPartnerAdd',
   ReferralPartnerRemove: 'ReferralPartnerRemove',
   ReferralPartnerTopUp: 'ReferralPartnerTopUp',
+  AllowedRecipientAdd: 'AllowedRecipientAdd',
+  AllowedRecipientRemove: 'AllowedRecipientRemove',
+  AllowedRecipientTopUp: 'AllowedRecipientTopUp',
+  LegoLDOTopUp: 'LegoLDOTopUp',
+  LegoDAITopUp: 'LegoDAITopUp',
+  RccDAITopUp: 'RccDAITopUp',
+  PmlDAITopUp: 'PmlDAITopUp',
+  AtcDAITopUp: 'AtcDAITopUp',
+  GasFunderETHTopUp: 'GasFunderETHTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

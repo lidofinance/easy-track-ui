@@ -18,11 +18,22 @@ export const formParts = {
   [MotionType.ReferralPartnerAdd]: formReferralPartnerAdd.formParts,
   [MotionType.ReferralPartnerRemove]: formReferralPartnerRemove.formParts,
   [MotionType.ReferralPartnerTopUp]: formReferralPartnerTopUp.formParts,
+  [MotionType.AllowedRecipientAdd]: null,
+  [MotionType.AllowedRecipientRemove]: null,
+  [MotionType.AllowedRecipientTopUp]: null,
+  [MotionType.LegoLDOTopUp]: null,
+  [MotionType.LegoDAITopUp]: null,
+  [MotionType.RccDAITopUp]: null,
+  [MotionType.PmlDAITopUp]: null,
+  [MotionType.AtcDAITopUp]: null,
+  [MotionType.GasFunderETHTopUp]: null,
 } as const
 
 export type FormData = {
   motionType: MotionType | null
 } & {
+  // TODO: will be fixed when adding formParts
+  // @ts-ignore
   [key in MotionType]: ReturnType<typeof formParts[key]['getDefaultFormData']>
 }
 
@@ -30,7 +41,7 @@ export const getDefaultFormPartsData = () => {
   return Object.entries(formParts).reduce(
     (res, [type, part]) => ({
       ...res,
-      [type]: part.getDefaultFormData(),
+      [type]: part?.getDefaultFormData(),
     }),
     {} as { [key in MotionType]: FormData[key] },
   )

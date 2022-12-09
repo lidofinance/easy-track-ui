@@ -15,10 +15,23 @@ import {
   DescRewardProgramTopUp,
   DescRewardProgramRemove,
 } from './DescRewardProgram'
+import {
+  DescAllowedRecipientAdd,
+  DescAllowedRecipientTopUp,
+  DescAllowedRecipientRemove,
+} from './DescAllowedRecipient'
 
+import { DescTopUpWithLimits } from './DescTopUpWithLimits'
+
+import { TopUpWithLimitsAbi } from 'generated'
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
+import { NestProps } from './types'
+
+type DescWithLimitsProps = NestProps<
+  TopUpWithLimitsAbi['decodeEVMScriptCallData']
+>
 
 const MOTION_DESCRIPTIONS = {
   [MotionType.NodeOperatorIncreaseLimit]: DescNodeOperatorIncreaseLimit,
@@ -29,6 +42,30 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.ReferralPartnerAdd]: DescReferralPartnerAdd,
   [MotionType.ReferralPartnerTopUp]: DescReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: DescReferralPartnerRemove,
+  [MotionType.AllowedRecipientAdd]: DescAllowedRecipientAdd,
+  [MotionType.AllowedRecipientRemove]: DescAllowedRecipientRemove,
+  [MotionType.AllowedRecipientTopUp]: DescAllowedRecipientTopUp,
+  [MotionType.LegoLDOTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.LegoLDOTopUp} />
+  ),
+  [MotionType.LegoDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.LegoDAITopUp} />
+  ),
+  [MotionType.RccDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.RccDAITopUp} />
+  ),
+  [MotionType.PmlDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.PmlDAITopUp} />
+  ),
+  [MotionType.AtcDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.AtcDAITopUp} />
+  ),
+  [MotionType.GasFunderETHTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.GasFunderETHTopUp}
+    />
+  ),
 } as const
 
 type Props = {
