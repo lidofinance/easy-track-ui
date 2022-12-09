@@ -12,13 +12,17 @@ import { MotionType } from 'modules/motions/types'
 import { useNodeOperatorsList } from './useNodeOperatorsList'
 import { EVM_CONTRACTS } from './useContractEvmScript'
 
+// hide new contracts in create form
 export const HIDDEN_MOTIONS = [
-  'RewardProgramAdd',
-  'RewardProgramRemove',
-  'RewardProgramTopUp',
   'AllowedRecipientAdd',
   'AllowedRecipientRemove',
   'AllowedRecipientTopUp',
+  'LegoLDOTopUp',
+  'LegoDAITopUp',
+  'RccDAITopUp',
+  'PmlDAITopUp',
+  'AtcDAITopUp',
+  'GasFunderETHTopUp',
 ]
 
 const isHasTrustedCaller = (
