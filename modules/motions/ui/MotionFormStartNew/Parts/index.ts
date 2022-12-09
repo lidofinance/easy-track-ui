@@ -26,22 +26,22 @@ export const formParts = {
   [MotionType.AllowedRecipientRemove]: formAllowedRecipientRemove.formParts,
   [MotionType.AllowedRecipientTopUp]: formAllowedRecipientTopUp.formParts,
   [MotionType.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: 'LegoLDO',
+    registryType: MotionType.LegoLDOTopUp,
   }),
   [MotionType.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: 'LegoDAI',
+    registryType: MotionType.LegoDAITopUp,
   }),
   [MotionType.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: 'RccDAI',
+    registryType: MotionType.RccDAITopUp,
   }),
   [MotionType.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: 'PmlDAI',
+    registryType: MotionType.PmlDAITopUp,
   }),
   [MotionType.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: 'AtcDAI',
+    registryType: MotionType.AtcDAITopUp,
   }),
   [MotionType.GasFunderETHTopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: 'GasFunderETH',
+    registryType: MotionType.GasFunderETHTopUp,
   }),
 } as const
 

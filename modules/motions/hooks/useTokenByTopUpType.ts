@@ -1,45 +1,48 @@
 import { CHAINS } from '@lido-sdk/constants'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
-import { REGISTRY_WITH_LIMITS_MAP } from 'modules/motions/hooks/useRegistryWithLimits'
+import { REGISTRY_WITH_LIMITS_BY_MOTION_TYPE } from 'modules/motions/hooks/useRegistryWithLimits'
 import { ContractGovernanceToken } from 'modules/blockChain/contracts'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
+import { MotionType } from 'modules/motions/types'
 
-const TOKEN: Record<
-  keyof typeof REGISTRY_WITH_LIMITS_MAP,
-  { label: string; value: (chainId: CHAINS) => string }
-> = {
-  LegoLDO: {
+const TOKEN = {
+  [MotionType.LegoLDOTopUp]: {
     label: 'LDO',
     value: (chainId: CHAINS) =>
       ContractGovernanceToken.address[chainId] as string,
   },
-  LegoDAI: {
+  [MotionType.LegoDAITopUp]: {
     label: 'DAI',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
   },
-  RccDAI: {
+  [MotionType.RccDAITopUp]: {
     label: 'DAI',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
   },
-  PmlDAI: {
+  [MotionType.PmlDAITopUp]: {
     label: 'DAI',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
   },
-  AtcDAI: {
+  [MotionType.AtcDAITopUp]: {
     label: 'DAI',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
   },
-  GasFunderETH: {
+  [MotionType.GasFunderETHTopUp]: {
     label: 'ETH',
     value: () => '0x0000000000000000000000000000000000000000',
+  },
+  [MotionType.AllowedRecipientTopUp]: {
+    label: 'LDO',
+    value: (chainId: CHAINS) =>
+      ContractGovernanceToken.address[chainId] as string,
   },
 }
 
 export const useTokenBytTopUpType = ({
   registryType,
 }: {
-  registryType: keyof typeof REGISTRY_WITH_LIMITS_MAP
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }) => {
   const { chainId } = useWeb3()
 
@@ -49,7 +52,7 @@ export const useTokenBytTopUpType = ({
   )
   const governanceAddress = ContractGovernanceToken.address[chainId] as string
 
-  if (registryType === 'LegoLDO')
+  if (registryType === MotionType.LegoLDOTopUp)
     return { label: governanceSymbol, address: governanceAddress }
 
   const label = TOKEN[registryType].label

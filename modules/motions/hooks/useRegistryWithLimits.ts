@@ -8,26 +8,30 @@ import {
   ContractPmlDAIRegistry,
   ContractAtcDAIRegistry,
   ContractGasFunderETHRegistry,
+  ContractAllowedRecipientRegistry,
 } from 'modules/blockChain/contracts'
-import { usePeriodLimitsInfo } from 'modules/motions/hooks/usePeriodLimitsInfo'
 import { getLimits, getEventsRecipientAdded } from 'modules/motions/utils'
+import { MotionType } from 'modules/motions/types'
+
+import { usePeriodLimitsInfo } from './usePeriodLimitsInfo'
 
 type AllowedRecipient = {
   title: string
   address: string
 }
 
-export const REGISTRY_WITH_LIMITS_MAP = {
-  LegoLDO: ContractLegoLDORegistry,
-  LegoDAI: ContractLegoDAIRegistry,
-  RccDAI: ContractRccDAIRegistry,
-  PmlDAI: ContractPmlDAIRegistry,
-  AtcDAI: ContractAtcDAIRegistry,
-  GasFunderETH: ContractGasFunderETHRegistry,
+export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
+  [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
+  [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
+  [MotionType.RccDAITopUp]: ContractRccDAIRegistry,
+  [MotionType.PmlDAITopUp]: ContractPmlDAIRegistry,
+  [MotionType.AtcDAITopUp]: ContractAtcDAIRegistry,
+  [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
+  [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
 }
 
 type HookArgs = {
-  registryType: keyof typeof REGISTRY_WITH_LIMITS_MAP
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }
 
 function useMap(programs: SWRResponse<AllowedRecipient[] | null>) {
@@ -47,10 +51,10 @@ function useMap(programs: SWRResponse<AllowedRecipient[] | null>) {
 
 export function useAll({ registryType }: HookArgs) {
   const { chainId } = useWeb3()
-  const registry = REGISTRY_WITH_LIMITS_MAP[registryType].useRpc()
+  const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
   return useSWR(
-    `single-allowed-recipients-all-${chainId}-${registry.address}`,
+    `single-allowed-recipients-all-${chainId}-${registry.address || ''}`,
     async () => {
       const events = await getEventsRecipientAdded(chainId, registry)
       return events.map(event => ({
@@ -68,7 +72,7 @@ export function useAll({ registryType }: HookArgs) {
 export function useActual({ registryType }: HookArgs) {
   const chainId = useWeb3()
   const recipientsAll = useAll({ registryType })
-  const registry = REGISTRY_WITH_LIMITS_MAP[registryType].useRpc()
+  const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
   return useSWR(
     `single-allowed-recipients-actual-${chainId}-${registry.address}-${
@@ -93,7 +97,7 @@ export function useMapAll({ registryType }: HookArgs) {
 
 export function useLimits({ registryType }: HookArgs) {
   const { chainId } = useWeb3()
-  const registry = REGISTRY_WITH_LIMITS_MAP[registryType].useRpc()
+  const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
   return useSWR(
     `single-allowed-recipients-limits-${chainId}-${registry.address}`,
@@ -109,7 +113,7 @@ export function useLimits({ registryType }: HookArgs) {
 }
 
 export function usePeriodLimitsData({ registryType }: HookArgs) {
-  const registry = REGISTRY_WITH_LIMITS_MAP[registryType].useRpc()
+  const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
   return usePeriodLimitsInfo({
     address: registry.address,

@@ -7,7 +7,6 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   useActual,
   usePeriodLimitsData,
-  REGISTRY_WITH_LIMITS_MAP,
   useTokenBytTopUpType,
 } from 'modules/motions/hooks'
 import {
@@ -50,27 +49,27 @@ import {
 } from 'modules/motions/constants'
 
 export const TOPUP_WITH_LIMITS_MAP = {
-  LegoLDO: {
+  [MotionType.LegoLDOTopUp]: {
     evmContract: ContractEvmLegoLDOTopUp,
     motionType: MotionType.LegoLDOTopUp,
   },
-  LegoDAI: {
+  [MotionType.LegoDAITopUp]: {
     evmContract: ContractEvmLegoDAITopUp,
     motionType: MotionType.LegoDAITopUp,
   },
-  RccDAI: {
+  [MotionType.RccDAITopUp]: {
     evmContract: ContractEvmRccDAITopUp,
     motionType: MotionType.RccDAITopUp,
   },
-  PmlDAI: {
+  [MotionType.PmlDAITopUp]: {
     evmContract: ContractEvmPmlDAITopUp,
     motionType: MotionType.PmlDAITopUp,
   },
-  AtcDAI: {
+  [MotionType.AtcDAITopUp]: {
     evmContract: ContractEvmAtcDAITopUp,
     motionType: MotionType.AtcDAITopUp,
   },
-  GasFunderETH: {
+  [MotionType.GasFunderETHTopUp]: {
     evmContract: ContractEvmGasFunderETHTopUp,
     motionType: MotionType.GasFunderETHTopUp,
   },
@@ -84,7 +83,7 @@ type Program = {
 export const formParts = ({
   registryType,
 }: {
-  registryType: keyof typeof REGISTRY_WITH_LIMITS_MAP
+  registryType: keyof typeof TOPUP_WITH_LIMITS_MAP
 }) =>
   createMotionFormPart({
     motionType: TOPUP_WITH_LIMITS_MAP[registryType].motionType,

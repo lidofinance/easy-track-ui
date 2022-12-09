@@ -1,6 +1,9 @@
 import { get } from 'lodash'
 import { CHAINS } from '@lido-sdk/constants'
-import type { ContractTypeRegistryWithLimits } from 'modules/blockChain/contracts'
+import type {
+  ContractTypeRegistryWithLimits,
+  ContractTypeAllowedRecipientRegistry,
+} from 'modules/blockChain/contracts'
 
 type RecipientAddedEvent = [string, string] & {
   _recipient: string
@@ -16,7 +19,9 @@ const FROM_BLOCK = {
 
 export async function getEventsRecipientAdded(
   chainId: CHAINS,
-  motionContract: ContractTypeRegistryWithLimits,
+  motionContract:
+    | ContractTypeRegistryWithLimits
+    | ContractTypeAllowedRecipientRegistry,
 ) {
   const filter = motionContract.filters.RecipientAdded()
   const events = await motionContract.queryFilter(
