@@ -1,4 +1,3 @@
-export * from './useAllowedRecipient'
 export * from './useContractEvmScript'
 export * from './useEVMScriptDecoder'
 export * from './useLegoTokenOptions'

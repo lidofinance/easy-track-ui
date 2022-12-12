@@ -30,7 +30,6 @@ type ContractLimitsMethods = {
 type UsePeriodLimitInfoProps<T> = {
   address: string
   contract: T
-  swrKey: string
   isPending?: boolean
 }
 
@@ -121,13 +120,13 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
 }
 
 export const usePeriodLimitsInfo: UsePeriodLimitInfo = props => {
-  const { address, contract, swrKey, isPending } = props
+  const { address, contract, isPending } = props
   const { chainId } = useWeb3()
 
   const easyTrack = ContractEasyTrack.useRpc()
 
   return useSWR(
-    `${swrKey}-${chainId}-${address}`,
+    `period-limits-${chainId}-${address}`,
     async () => {
       const data = await getPeriodLimitsInfo(easyTrack, contract, isPending)
 

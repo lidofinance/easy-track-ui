@@ -10,7 +10,7 @@ import {
   ContractGasFunderETHRegistry,
   ContractAllowedRecipientRegistry,
 } from 'modules/blockChain/contracts'
-import { getLimits, getEventsRecipientAdded } from 'modules/motions/utils'
+import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
 
 import { usePeriodLimitsInfo } from './usePeriodLimitsInfo'
@@ -28,6 +28,8 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.AtcDAITopUp]: ContractAtcDAIRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
+  [MotionType.AllowedRecipientRemove]: ContractAllowedRecipientRegistry,
+  [MotionType.AllowedRecipientAdd]: ContractAllowedRecipientRegistry,
 }
 
 type HookArgs = {
@@ -95,29 +97,11 @@ export function useMapAll({ registryType }: HookArgs) {
   return useMap(partners)
 }
 
-export function useLimits({ registryType }: HookArgs) {
-  const { chainId } = useWeb3()
-  const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
-
-  return useSWR(
-    `single-allowed-recipients-limits-${chainId}-${registry.address}`,
-    async () => {
-      const data = await getLimits(registry)
-      return data
-    },
-    {
-      shouldRetryOnError: true,
-      errorRetryInterval: 5000,
-    },
-  )
-}
-
 export function usePeriodLimitsData({ registryType }: HookArgs) {
   const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
   return usePeriodLimitsInfo({
     address: registry.address,
     contract: registry,
-    swrKey: 'registry-period-limits-data',
   })
 }

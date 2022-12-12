@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useAllowedRecipientActual } from 'modules/motions/hooks/useAllowedRecipient'
+import { useActual } from 'modules/motions/hooks'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
@@ -35,7 +35,9 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const allowedRecipients = useAllowedRecipientActual()
+    const allowedRecipients = useActual({
+      registryType: MotionType.AllowedRecipientRemove,
+    })
     const { walletAddress } = useWeb3()
     const trustedCaller = ContractEvmAllowedRecipientRemove.useSwrWeb3(
       'trustedCaller',

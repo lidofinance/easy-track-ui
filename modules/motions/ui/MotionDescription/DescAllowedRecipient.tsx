@@ -1,11 +1,9 @@
 import { useMemo } from 'react'
-import {
-  useAllowedRecipientAll,
-  useAllowedRecipientMapAll,
-} from 'modules/motions/hooks'
+import { useMapAll, useAll } from 'modules/motions/hooks'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
+import { MotionType } from 'modules/motions/types'
 
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -30,7 +28,9 @@ export function DescAllowedRecipientTopUp({
   callData,
 }: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']>) {
   const governanceSymbol = useGovernanceSymbol()
-  const { data: allowedRecipientMap } = useAllowedRecipientMapAll()
+  const { data: allowedRecipientMap } = useMapAll({
+    registryType: MotionType.AllowedRecipientTopUp,
+  })
 
   const recipients = useMemo(() => {
     if (!allowedRecipientMap) return null
@@ -53,7 +53,9 @@ export function DescAllowedRecipientTopUp({
 export function DescAllowedRecipientRemove({
   callData,
 }: NestProps<RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']>) {
-  const { data: allowedRecipients } = useAllowedRecipientAll()
+  const { data: allowedRecipients } = useAll({
+    registryType: MotionType.AllowedRecipientRemove,
+  })
 
   const program = useMemo(() => {
     if (!allowedRecipients) return null

@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 import { useMemo } from 'react'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useAllowedRecipientActual } from 'modules/motions/hooks/useAllowedRecipient'
+import { useActual } from 'modules/motions/hooks/useRegistryWithLimits'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -38,7 +38,9 @@ export const formParts = createMotionFormPart({
     submitAction,
   }) {
     const { walletAddress } = useWeb3()
-    const allowedRecipients = useAllowedRecipientActual()
+    const allowedRecipients = useActual({
+      registryType: MotionType.AllowedRecipientAdd,
+    })
     const trustedCaller = ContractEvmAllowedRecipientAdd.useSwrWeb3(
       'trustedCaller',
       [],

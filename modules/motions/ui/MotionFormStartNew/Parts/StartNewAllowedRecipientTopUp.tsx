@@ -5,9 +5,9 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
-  useAllowedRecipientActual,
-  useAllowedRecipientPeriodLimitsData,
-} from 'modules/motions/hooks/useAllowedRecipient'
+  usePeriodLimitsData,
+  useActual,
+} from 'modules/motions/hooks/useRegistryWithLimits'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import {
   MotionLimitProgress,
@@ -84,8 +84,10 @@ export const formParts = createMotionFormPart({
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
     const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
-      useAllowedRecipientPeriodLimitsData()
-    const allowedRecipients = useAllowedRecipientActual()
+      usePeriodLimitsData({ registryType: MotionType.AllowedRecipientTopUp })
+    const allowedRecipients = useActual({
+      registryType: MotionType.AllowedRecipientTopUp,
+    })
     const { data: governanceSymbol } = useGovernanceSymbol()
 
     const fieldsArr = useFieldArray({ name: fieldNames.programs })
