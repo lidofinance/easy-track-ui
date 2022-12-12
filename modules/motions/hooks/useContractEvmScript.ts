@@ -12,10 +12,19 @@ import {
   ContractEvmReferralPartnerAdd,
   ContractEvmReferralPartnerRemove,
   ContractEvmReferralPartnerTopUp,
+  ContractEvmAllowedRecipientAdd,
+  ContractEvmAllowedRecipientRemove,
+  ContractEvmAllowedRecipientTopUp,
+  ContractEvmLegoDAITopUp,
+  ContractEvmLegoLDOTopUp,
+  ContractEvmRccDAITopUp,
+  ContractEvmPmlDAITopUp,
+  ContractEvmAtcDAITopUp,
+  ContractEvmGasFunderETHTopUp,
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
-const EVM_CONTRACTS = {
+export const EVM_CONTRACTS = {
   [MotionType.NodeOperatorIncreaseLimit]: ContractEvmNodeOperatorIncreaseLimit,
   [MotionType.LEGOTopUp]: ContractEvmLEGOTopUp,
   [MotionType.RewardProgramAdd]: ContractEvmRewardProgramAdd,
@@ -24,6 +33,15 @@ const EVM_CONTRACTS = {
   [MotionType.ReferralPartnerAdd]: ContractEvmReferralPartnerAdd,
   [MotionType.ReferralPartnerTopUp]: ContractEvmReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: ContractEvmReferralPartnerRemove,
+  [MotionType.AllowedRecipientAdd]: ContractEvmAllowedRecipientAdd,
+  [MotionType.AllowedRecipientRemove]: ContractEvmAllowedRecipientRemove,
+  [MotionType.AllowedRecipientTopUp]: ContractEvmAllowedRecipientTopUp,
+  [MotionType.LegoLDOTopUp]: ContractEvmLegoLDOTopUp,
+  [MotionType.LegoDAITopUp]: ContractEvmLegoDAITopUp,
+  [MotionType.RccDAITopUp]: ContractEvmRccDAITopUp,
+  [MotionType.PmlDAITopUp]: ContractEvmPmlDAITopUp,
+  [MotionType.AtcDAITopUp]: ContractEvmAtcDAITopUp,
+  [MotionType.GasFunderETHTopUp]: ContractEvmGasFunderETHTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
