@@ -1,3 +1,19 @@
+# [0.11.0](https://github.com/lidofinance/easy-track-ui/compare/0.10.0...0.11.0) (2022-12-12)
+
+
+### Bug Fixes
+
+* fix contract address ([11a8407](https://github.com/lidofinance/easy-track-ui/commit/11a840794853faad530aaa03b396a52d47b40df9))
+* fix recipients name in preview motion ([ebc2693](https://github.com/lidofinance/easy-track-ui/commit/ebc2693f8f2427f6cd566868c176aa1a98e747b8))
+* hide new contracts in create form ([7734eef](https://github.com/lidofinance/easy-track-ui/commit/7734eefd5dd1459205ce926ab15e913aeb820206))
+
+
+### Features
+
+* add display new contratcts ([0014a11](https://github.com/lidofinance/easy-track-ui/commit/0014a11714b0e37d707538644f9c9f5529db2efb))
+
+
+
 # [0.10.0](https://github.com/lidofinance/easy-track-ui/compare/0.9.4...0.10.0) (2022-10-25)
 
 
@@ -42,10 +58,18 @@
 
 ### Bug Fixes
 
-* Explicit relese wf trigger ([4c19d4c](https://github.com/lidofinance/easy-track-ui/commit/4c19d4c78e7f15c7d014c970363f575f6d470996))
-* node operators key checking mainnet support ([0cce780](https://github.com/lidofinance/easy-track-ui/commit/0cce780d5487b39859c9a2075a2225955500ca6c))
 * Release flow for the last time ([83bc962](https://github.com/lidofinance/easy-track-ui/commit/83bc962205c0776bb039a4b68befbd660583ee08))
 * Release flow secrets passing ([a7b622b](https://github.com/lidofinance/easy-track-ui/commit/a7b622b957ec24b162e8c626ff2dd922f41e9dc5))
+
+
+
+## [0.9.1](https://github.com/lidofinance/easy-track-ui/compare/0.9.0...0.9.1) (2022-05-23)
+
+
+### Bug Fixes
+
+* Explicit relese wf trigger ([4c19d4c](https://github.com/lidofinance/easy-track-ui/commit/4c19d4c78e7f15c7d014c970363f575f6d470996))
+* node operators key checking mainnet support ([0cce780](https://github.com/lidofinance/easy-track-ui/commit/0cce780d5487b39859c9a2075a2225955500ca6c))
 * WF name ([70ccb7c](https://github.com/lidofinance/easy-track-ui/commit/70ccb7c66e1d66d28e30b3e3038a322047175a39))
 
 
@@ -122,27 +146,6 @@
 ### Bug Fixes
 
 * **security:** opt out of image optimization and use custom loader ([ff917e7](https://github.com/lidofinance/easy-track-ui/commit/ff917e7242366c2e5baf7596818437dd7aa40251))
-
-
-
-# [0.6.0](https://github.com/lidofinance/easy-track-ui/compare/0.5.0...0.6.0) (2022-02-10)
-
-
-### Bug Fixes
-
-* access lists with transaction type 2 ([b9e9136](https://github.com/lidofinance/easy-track-ui/commit/b9e9136b4601a32243a1ad80ae166a369b9fb858))
-* disable access lists ([a70abd0](https://github.com/lidofinance/easy-track-ui/commit/a70abd02027771992819cd19bb0a1478aa097a12))
-* estimate rounding ([699e1d3](https://github.com/lidofinance/easy-track-ui/commit/699e1d3672f90eb1a5d0c75b181a6284ad68e230))
-* objection status displaying ([c567411](https://github.com/lidofinance/easy-track-ui/commit/c5674116f4c9b2baec9cfb2d3149e8fccb9de88d))
-* update ledgerhq connector ([61ed103](https://github.com/lidofinance/easy-track-ui/commit/61ed10389be2ec26cffaa7345c7a17c034188c29))
-* update web3-ledgerhq-connector ([174645f](https://github.com/lidofinance/easy-track-ui/commit/174645f21a0ae382d4943e773d50082d12bfa476))
-
-
-### Features
-
-* auto insert node operator id to motion form ([652aecb](https://github.com/lidofinance/easy-track-ui/commit/652aecb288a2c567fa1472d5522df9653434bd1e))
-* display node operator name in motion description ([1dc6261](https://github.com/lidofinance/easy-track-ui/commit/1dc626171a2bd6a18c572617f6c19d7e0362e151))
-* **metrics:** divide supported chains metrics into separate calls ([55bcebb](https://github.com/lidofinance/easy-track-ui/commit/55bcebba59f9855eb99490dc8a45466e1c224115))
 
 
 
