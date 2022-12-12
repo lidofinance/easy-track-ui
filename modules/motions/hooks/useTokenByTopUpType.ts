@@ -1,10 +1,10 @@
 import { CHAINS } from '@lido-sdk/constants'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
-import { REGISTRY_WITH_LIMITS_BY_MOTION_TYPE } from 'modules/motions/hooks/useRegistryWithLimits'
 import { ContractGovernanceToken } from 'modules/blockChain/contracts'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 import { MotionType } from 'modules/motions/types'
+import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 
 const TOKEN = {
   [MotionType.LegoLDOTopUp]: {
@@ -39,10 +39,16 @@ const TOKEN = {
   },
 }
 
-export const useTokenBytTopUpType = ({
+const isTopUpType = (type: unknown): type is keyof typeof TOKEN => {
+  if (typeof type !== 'string') return false
+  if (type in TOKEN) return true
+  return false
+}
+
+export const useTokenByTopUpType = ({
   registryType,
 }: {
-  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+  registryType: MotionType | EvmUnrecognized
 }) => {
   const { chainId } = useWeb3()
 
@@ -52,8 +58,13 @@ export const useTokenBytTopUpType = ({
   )
   const governanceAddress = ContractGovernanceToken.address[chainId] as string
 
-  if (registryType === MotionType.LegoLDOTopUp)
+  if (
+    registryType === MotionType.LegoLDOTopUp ||
+    registryType === MotionType.AllowedRecipientTopUp
+  )
     return { label: governanceSymbol, address: governanceAddress }
+
+  if (!isTopUpType(registryType)) return { label: '', address: '' }
 
   const label = TOKEN[registryType].label
   const address = TOKEN[registryType].value(chainId)

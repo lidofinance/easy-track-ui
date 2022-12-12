@@ -33,14 +33,16 @@ type UsePeriodLimitInfoProps<T> = {
   isPending?: boolean
 }
 
-type UsePeriodLimitInfo = <T extends ContractLimitsMethods>(
-  data: UsePeriodLimitInfoProps<T>,
-) => SWRResponse<{
+export type UsePeriodLimitsInfoResultData = {
   limits: LimitsType
   periodData: PeriodDataType
   motionDuration: number
   isEndInNextPeriod: boolean
-}>
+}
+
+type UsePeriodLimitInfo = <T extends ContractLimitsMethods>(
+  data: UsePeriodLimitInfoProps<T>,
+) => SWRResponse<UsePeriodLimitsInfoResultData>
 
 const getNewPeriod = ({
   periodLimit,

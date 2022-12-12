@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import {
   useMapAll,
   REGISTRY_WITH_LIMITS_BY_MOTION_TYPE,
-  useTokenBytTopUpType,
+  useTokenByTopUpType,
 } from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
@@ -18,7 +18,7 @@ export function DescTopUpWithLimits({
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }) {
   const { data: allowedRecipientMap } = useMapAll({ registryType })
-  const token = useTokenBytTopUpType({ registryType })
+  const token = useTokenByTopUpType({ registryType })
 
   const recipients = useMemo(() => {
     if (!allowedRecipientMap) return null

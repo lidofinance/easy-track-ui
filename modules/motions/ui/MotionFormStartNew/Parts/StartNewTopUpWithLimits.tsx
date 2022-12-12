@@ -7,7 +7,7 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   useActual,
   usePeriodLimitsData,
-  useTokenBytTopUpType,
+  useTokenByTopUpType,
 } from 'modules/motions/hooks'
 import {
   MotionLimitProgress,
@@ -122,7 +122,7 @@ export const formParts = ({
         usePeriodLimitsData({ registryType })
 
       const legoDAIRecipients = useActual({ registryType })
-      const token = useTokenBytTopUpType({ registryType })
+      const token = useTokenByTopUpType({ registryType })
 
       const fieldsArr = useFieldArray({ name: fieldNames.programs })
 
