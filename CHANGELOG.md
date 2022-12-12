@@ -1,3 +1,7 @@
+## [0.11.1](https://github.com/lidofinance/easy-track-ui/compare/0.11.0...0.11.1) (2022-12-12)
+
+
+
 # [0.11.0](https://github.com/lidofinance/easy-track-ui/compare/0.10.0...0.11.0) (2022-12-12)
 
 
@@ -137,15 +141,6 @@
 * referal and reward programs bolded ([78c2b6e](https://github.com/lidofinance/easy-track-ui/commit/78c2b6eecc5f5a1478d82724c5817ac7a0ea2c0c))
 * referral partner motions ([d3df0da](https://github.com/lidofinance/easy-track-ui/commit/d3df0da89c391f09fc1be26524b309d1165b3c07))
 * transition limits ([e3046f3](https://github.com/lidofinance/easy-track-ui/commit/e3046f3e872b1fbdae1481a3786482d0a82ba93f))
-
-
-
-## [0.6.1](https://github.com/lidofinance/easy-track-ui/compare/0.6.0...0.6.1) (2022-02-22)
-
-
-### Bug Fixes
-
-* **security:** opt out of image optimization and use custom loader ([ff917e7](https://github.com/lidofinance/easy-track-ui/commit/ff917e7242366c2e5baf7596818437dd7aa40251))
 
 
 
