@@ -1,6 +1,5 @@
 import { utils } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-// import { useRewardProgramsActual } from 'modules/motions/hooks/useRewardPrograms'
 import { useAllowedRecipientActual } from 'modules/motions/hooks/useAllowedRecipient'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
