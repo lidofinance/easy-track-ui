@@ -3,7 +3,7 @@ type InputValue = {
   amount: string
 }
 
-export function checkInputsLargeThenLimit({
+export function checkInputsGreaterThanLimit({
   spendableBalanceInPeriod,
   inputValues,
   currentValue,

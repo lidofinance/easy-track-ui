@@ -37,7 +37,7 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
     101,
   )
 
-  const isNegative = newValuePercent > 100
+  const isAboveTheLimit = newValuePercent > 100
 
   return (
     <>
@@ -52,7 +52,7 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
       </ProgressHeader>
       <LimitProgressBar
         progress={progressPercent}
-        negative={isNegative}
+        negative={isAboveTheLimit}
         newProgress={newValuePercent}
       />
       <ProgressPeriodWrapper>

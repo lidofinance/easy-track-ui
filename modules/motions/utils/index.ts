@@ -1,4 +1,4 @@
-export * from './checkInputsLargeThenLimit'
+export * from './checkInputsGreaterThanLimit'
 export * from './estimateGasFallback'
 export * from './formatMotionDataOnchain'
 export * from './formatMotionDataSubgraph'

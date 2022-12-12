@@ -33,13 +33,6 @@ type UsePeriodLimitInfoProps<T> = {
   isPending?: boolean
 }
 
-export type usePeriodLimitsInfoResultData = {
-  limits: LimitsType
-  periodData: PeriodDataType
-  motionDuration: number
-  isEndInNextPeriod: boolean
-}
-
 type UsePeriodLimitInfo = <T extends ContractLimitsMethods>(
   data: UsePeriodLimitInfoProps<T>,
 ) => SWRResponse<{
@@ -57,7 +50,7 @@ const getNewPeriod = ({
   periodLimit: string
   periodDurationMonths: number
   newPeriodStartTime: moment.Moment
-}) => {
+}): PeriodDataType => {
   return {
     alreadySpentAmount: '0',
     periodStartTimestamp: newPeriodStartTime.unix(),
@@ -74,9 +67,11 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
   contract: T,
   isPending?: boolean,
 ) => {
-  const motionDuration = await easyTrack.motionDuration()
-  const limits = await getLimits(contract)
-  let periodData = await getPeriodData(contract)
+  let [motionDuration, limits, periodData] = await Promise.all([
+    easyTrack.motionDuration(),
+    getLimits(contract),
+    getPeriodData(contract),
+  ])
 
   const dateOfStartMotion = moment.unix(periodData.periodStartTimestamp)
   const isStartInPrevPeriod = moment()

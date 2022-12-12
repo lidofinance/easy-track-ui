@@ -36,7 +36,7 @@ import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 import {
   estimateGasFallback,
-  checkInputsLargeThenLimit,
+  checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
 import {
   TRANSITION_LIMITS,
@@ -212,13 +212,15 @@ export const formParts = createMotionFormPart({
                         )
                       }
 
-                      const isLargeThenPeriodLimit = checkInputsLargeThenLimit({
-                        inputValues: selectedPrograms,
-                        spendableBalanceInPeriod: Number(
-                          periodLimitsData?.periodData.spendableBalanceInPeriod,
-                        ),
-                        currentValue: { value, index: i },
-                      })
+                      const isLargeThenPeriodLimit =
+                        checkInputsGreaterThanLimit({
+                          inputValues: selectedPrograms,
+                          spendableBalanceInPeriod: Number(
+                            periodLimitsData?.periodData
+                              .spendableBalanceInPeriod,
+                          ),
+                          currentValue: { value, index: i },
+                        })
 
                       if (
                         periodLimitsData?.periodData.spendableBalanceInPeriod &&
