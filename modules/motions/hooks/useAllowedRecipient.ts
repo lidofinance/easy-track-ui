@@ -71,7 +71,7 @@ export function useAllowedRecipientActual() {
 }
 
 export function useAllowedRecipientMapAll() {
-  const partners = useAllowedRecipientActual()
+  const partners = useAllowedRecipientAll()
   return useAllowedRecipientMap(partners)
 }
 

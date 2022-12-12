@@ -89,6 +89,6 @@ export function useActual({ registryType }: HookArgs) {
 }
 
 export function useMapAll({ registryType }: HookArgs) {
-  const partners = useActual({ registryType })
+  const partners = useAll({ registryType })
   return useMap(partners)
 }
