@@ -14,7 +14,13 @@ import {
 
 import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
-import { Actions, Hint, TxHint, TxStatus } from './MotionDetailedActionsStyle'
+import {
+  Actions,
+  Hint,
+  TxHint,
+  TxStatus,
+  ButtonStyled,
+} from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
@@ -147,7 +153,7 @@ function ActionsBody({ motion, onFinish }: Props) {
 
       {!txEnact.isSuccess && (
         <Actions>
-          <Button
+          <ButtonStyled
             size="sm"
             children="Submit objection"
             disabled={!canObject.data}
@@ -155,7 +161,7 @@ function ActionsBody({ motion, onFinish }: Props) {
             loading={txObject.isPending}
           />
           {motion.status === MotionStatus.PENDING && (
-            <Button
+            <ButtonStyled
               size="sm"
               variant="outlined"
               children="Enact"
@@ -175,7 +181,7 @@ function AuthStub() {
     <>
       <Hint>Connect your wallet to interact with this motion</Hint>
       <Actions>
-        <Button
+        <ButtonStyled
           size="sm"
           children="Connect wallet"
           onClick={checkWalletConnect}

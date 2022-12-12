@@ -5,7 +5,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
 
-import { Button } from '@lidofinance/lido-ui'
+import { ButtonIcon, Plus } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
@@ -13,6 +13,9 @@ import {
   Fieldset,
   MessageBox,
   RemoveItemButton,
+  FieldsWrapper,
+  FieldsHeader,
+  FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
 import { ContractEvmLEGOTopUp } from 'modules/blockChain/contracts'
@@ -100,56 +103,62 @@ export const formParts = createMotionFormPart({
       <>
         {fieldsArr.fields.map((item, i) => (
           <Fragment key={item.id}>
-            <Fieldset>
-              <SelectControl
-                label="Token"
-                name={`${fieldNames.tokens}.${i}.address`}
-                rules={{ required: 'Field is required' }}
-              >
-                {getFilteredOptions(i).map(({ label, value }, j) => (
-                  <Option key={j} value={value} children={label} />
-                ))}
-              </SelectControl>
-            </Fieldset>
+            <FieldsWrapper>
+              <FieldsHeader>
+                <FieldsHeaderDesc>Token #{i + 1}</FieldsHeaderDesc>
+                {fieldsArr.fields.length > 1 && (
+                  <RemoveItemButton onClick={() => handleRemoveToken(i)}>
+                    Remove token
+                  </RemoveItemButton>
+                )}
+              </FieldsHeader>
+              <Fieldset>
+                <SelectControl
+                  label="Token"
+                  name={`${fieldNames.tokens}.${i}.address`}
+                  rules={{ required: 'Field is required' }}
+                >
+                  {getFilteredOptions(i).map(({ label, value }, j) => (
+                    <Option key={j} value={value} children={label} />
+                  ))}
+                </SelectControl>
+              </Fieldset>
 
-            <Fieldset>
-              <InputControl
-                label="Amount"
-                name={`${fieldNames.tokens}.${i}.amount`}
-                rules={{
-                  required: 'Field is required',
-                  validate: value => {
-                    const check1 = validateToken(value)
-                    if (typeof check1 === 'string') {
-                      return check1
-                    }
-                    const { address } = selectedTokens[i]
-                    const limit = TRANSITION_LIMITS[chainId][address]
-                    if (Number(value) > limit) {
-                      return tokenLimitError(getTokenName(i), limit)
-                    }
-                    return true
-                  },
-                }}
-              />
-            </Fieldset>
-
-            {fieldsArr.fields.length > 1 && (
-              <RemoveItemButton onClick={() => handleRemoveToken(i)}>
-                Remove token {i + 1}
-              </RemoveItemButton>
-            )}
+              <Fieldset>
+                <InputControl
+                  label="Amount"
+                  name={`${fieldNames.tokens}.${i}.amount`}
+                  rules={{
+                    required: 'Field is required',
+                    validate: value => {
+                      const check1 = validateToken(value)
+                      if (typeof check1 === 'string') {
+                        return check1
+                      }
+                      const { address } = selectedTokens[i]
+                      const limit = TRANSITION_LIMITS[chainId][address]
+                      if (Number(value) > limit) {
+                        return tokenLimitError(getTokenName(i), limit)
+                      }
+                      return true
+                    },
+                  }}
+                />
+              </Fieldset>
+            </FieldsWrapper>
           </Fragment>
         ))}
 
         {fieldsArr.fields.length < tokenOptions.length && (
           <Fieldset>
-            <Button
+            <ButtonIcon
               type="button"
-              variant="outlined"
+              variant="ghost"
               size="sm"
               children="One more token"
               onClick={handleAddToken}
+              icon={<Plus />}
+              color="secondary"
             />
           </Fieldset>
         )}

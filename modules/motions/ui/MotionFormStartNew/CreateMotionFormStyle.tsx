@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Text } from 'modules/shared/ui/Common/Text'
 import TrashSVG from 'assets/icons/trash.svg.react'
+import { Block } from 'modules/shared/ui/Common/Block'
 
 export const Fieldset = styled.div`
   display: flex;
@@ -11,6 +12,25 @@ export const Fieldset = styled.div`
   & > * {
     width: 100%;
   }
+`
+
+export const FieldsWrapper = styled(Block)`
+  margin-bottom: 20px;
+  ${Fieldset}:last-of-type {
+    margin-bottom: 0;
+  }
+`
+
+export const FieldsHeader = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+`
+
+export const FieldsHeaderDesc = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 19px;
 `
 
 const RemoveItemButtonWrap = styled(Text).attrs({
@@ -27,6 +47,8 @@ const RemoveItemButtonWrap = styled(Text).attrs({
   margin-right: 0;
   cursor: pointer;
   transition: opacity ease ${({ theme }) => theme.duration.med};
+  color: ${({ theme }) => theme.colors.error};
+  font-weight: 700;
 
   & svg {
     display: block;
