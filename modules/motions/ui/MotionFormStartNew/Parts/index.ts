@@ -48,6 +48,8 @@ export const formParts = {
 export type FormData = {
   motionType: MotionType | null
 } & {
+  // TODO: will be fixed when adding formParts
+  // @ts-ignore
   [key in MotionType]: ReturnType<typeof formParts[key]['getDefaultFormData']>
 }
 

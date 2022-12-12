@@ -29,6 +29,10 @@ import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { NestProps } from './types'
 
+type DescWithLimitsProps = NestProps<
+  TopUpWithLimitsAbi['decodeEVMScriptCallData']
+>
+
 const MOTION_DESCRIPTIONS = {
   [MotionType.NodeOperatorIncreaseLimit]: DescNodeOperatorIncreaseLimit,
   [MotionType.LEGOTopUp]: DescLEGOTopUp,
@@ -41,28 +45,22 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.AllowedRecipientAdd]: DescAllowedRecipientAdd,
   [MotionType.AllowedRecipientRemove]: DescAllowedRecipientRemove,
   [MotionType.AllowedRecipientTopUp]: DescAllowedRecipientTopUp,
-  [MotionType.LegoLDOTopUp]: (
-    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
-  ) => (
+  [MotionType.LegoLDOTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits {...props} registryType={MotionType.LegoLDOTopUp} />
   ),
-  [MotionType.LegoDAITopUp]: (
-    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
-  ) => (
+  [MotionType.LegoDAITopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits {...props} registryType={MotionType.LegoDAITopUp} />
   ),
-  [MotionType.RccDAITopUp]: (
-    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
-  ) => <DescTopUpWithLimits {...props} registryType={MotionType.RccDAITopUp} />,
-  [MotionType.PmlDAITopUp]: (
-    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
-  ) => <DescTopUpWithLimits {...props} registryType={MotionType.PmlDAITopUp} />,
-  [MotionType.AtcDAITopUp]: (
-    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
-  ) => <DescTopUpWithLimits {...props} registryType={MotionType.AtcDAITopUp} />,
-  [MotionType.GasFunderETHTopUp]: (
-    props: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']>,
-  ) => (
+  [MotionType.RccDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.RccDAITopUp} />
+  ),
+  [MotionType.PmlDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.PmlDAITopUp} />
+  ),
+  [MotionType.AtcDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.AtcDAITopUp} />
+  ),
+  [MotionType.GasFunderETHTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits
       {...props}
       registryType={MotionType.GasFunderETHTopUp}

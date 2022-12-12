@@ -2,11 +2,11 @@ import { utils } from 'ethers'
 
 import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
-import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useRewardProgramsActual } from 'modules/motions/hooks/useRewardPrograms'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'

@@ -10,6 +10,8 @@ import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
 import AllowedRecipientsRegistryLDOAbi from 'abi/LDO/AllowedRecipientsRegistryLDO.abi.json'
 import RegistryWithLimitsAbi from 'abi/TopUp/RegistryWithLimits.abi.json'
 import FinanceAbi from 'abi/Finance.abi.json'
+import AllowedRecipientsRegistryLDOAbi from 'abi/newReward/AllowedRecipientsRegistryLDO.abi.json'
+import RegistryWithLimitsAbi from 'abi/topUp/RegistryWithLimits.abi.json'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
 export function useEVMScriptDecoder() {
