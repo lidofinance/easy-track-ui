@@ -161,7 +161,9 @@ export const formParts = ({
         if (isMoreThanOne) return
 
         const recipientAddress = legoDAIRecipients.data?.[0].address || ''
-        setValue(fieldNames.programs, [{ address: recipientAddress }])
+        setValue(fieldNames.programs, [
+          { address: recipientAddress, amount: '' },
+        ])
       }, [fieldNames.programs, setValue, legoDAIRecipients.data])
 
       const transitionLimit = TRANSITION_LIMITS[chainId][token.address || '']
