@@ -26,8 +26,5 @@ export const tokenLimitError = (
 ) =>
   `${governanceSymbol} transition is limited by ${transitionLimit.toLocaleString()}`
 
-export const periodLimitError = (
-  governanceSymbol: string | undefined,
-  transitionLimit: number,
-) =>
-  `Insuffisient motion top-up limit. Amount available for the program ${transitionLimit.toLocaleString()} ${governanceSymbol} `
+export const periodLimitError = () =>
+  'The top-up is higher than the remaining current period limit'

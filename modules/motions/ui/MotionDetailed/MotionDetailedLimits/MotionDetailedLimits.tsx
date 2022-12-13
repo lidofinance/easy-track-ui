@@ -1,6 +1,6 @@
 import { Divider } from '@lidofinance/lido-ui'
 
-import { MotionWarningBox } from 'modules/shared/ui/Common/MotionWarningBox'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { MotionLimitProgress } from 'modules/motions/ui/MotionLimitProgress'
 import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
 
@@ -13,6 +13,7 @@ export function MotionDetailedLimits() {
     motionTopUpAmount,
     motionTopUpToken,
     isOverPeriodLimit,
+    isCanEnactInNextPeriod,
   } = useMotionDetailed()
 
   if (!periodLimitsData || isArchived) return null
@@ -30,10 +31,16 @@ export function MotionDetailedLimits() {
           newAmount={motionTopUpAmount}
         />
       </MotionDetailedLimitsWrapper>
-      {isOverPeriodLimit && (
-        <MotionWarningBox>
-          Motion can not be enacted because monthly top-up limit was reached.
-        </MotionWarningBox>
+      {isOverPeriodLimit && !isCanEnactInNextPeriod && (
+        <MotionInfoBox $variant="error">
+          Motion can’t be enacted as the transfer value is greater than the
+          period limit.
+        </MotionInfoBox>
+      )}
+      {isCanEnactInNextPeriod && isOverPeriodLimit && (
+        <MotionInfoBox>
+          Motion can’t be enacted before the period limits are replenished.
+        </MotionInfoBox>
       )}
     </>
   )

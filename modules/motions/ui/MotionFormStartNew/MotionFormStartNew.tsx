@@ -100,7 +100,8 @@ export function MotionFormStartNew({ onComplete }: Props) {
   if (notHaveAvailableMotions)
     return (
       <MessageBox>
-        You should be connected as trusted caller or as node operator
+        Only Trusted Callers & Node Operator have access to Easy Track motion
+        creation
       </MessageBox>
     )
 

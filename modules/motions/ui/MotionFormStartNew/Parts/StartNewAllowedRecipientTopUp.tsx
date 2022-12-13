@@ -17,7 +17,7 @@ import {
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { MotionWarningBox } from 'modules/shared/ui/Common/MotionWarningBox'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import {
   Fieldset,
   MessageBox,
@@ -172,11 +172,10 @@ export const formParts = createMotionFormPart({
                 )}
               </FieldsHeader>
               {periodLimitsData?.isEndInNextPeriod && (
-                <MotionWarningBox>
-                  Please note that this program will be finished in the next
-                  month. Motion bank limit for the next month may differ from
-                  this.
-                </MotionWarningBox>
+                <MotionInfoBox>
+                  The motion is ending in the next period. The transfer limit
+                  would be replenished by that time.
+                </MotionInfoBox>
               )}
               <Fieldset>
                 <SelectControl
@@ -226,13 +225,7 @@ export const formParts = createMotionFormPart({
                         periodLimitsData?.periodData.spendableBalanceInPeriod &&
                         isLargeThenPeriodLimit
                       ) {
-                        return periodLimitError(
-                          governanceSymbol,
-                          Number(
-                            periodLimitsData.periodData
-                              .spendableBalanceInPeriod,
-                          ),
-                        )
+                        return periodLimitError()
                       }
                       return true
                     },

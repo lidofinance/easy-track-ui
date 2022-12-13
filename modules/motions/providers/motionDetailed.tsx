@@ -23,6 +23,7 @@ import { Motion, MotionStatus } from 'modules/motions/types'
 export type MotionDetailedValue = {
   isArchived: boolean
   isOverPeriodLimit: boolean
+  isCanEnactInNextPeriod?: boolean
   pending: boolean
   periodLimitsData?: UsePeriodLimitsInfoResultData | null
   progress: {
@@ -90,16 +91,18 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
     isCallDataLoading || isEventLoading || isPeriodLimitsDataLoading
 
   const newSpentAmount =
-    Number(periodLimitsData?.periodData.alreadySpentAmount) +
-    Number(motionTopUpAmount)
+    Number(periodLimitsData?.periodData.alreadySpentAmount) + motionTopUpAmount
   const isOverPeriodLimit =
     newSpentAmount > Number(periodLimitsData?.limits.limit)
+  const isCanEnactInNextPeriod =
+    motionTopUpAmount <= Number(periodLimitsData?.limits.limit)
 
   const value = useMemo(
     () => ({
       isArchived,
       pending,
       isOverPeriodLimit,
+      isCanEnactInNextPeriod,
       timeData,
       motionTopUpAmount,
       motionTopUpToken,
@@ -109,13 +112,14 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
     }),
     [
       isArchived,
+      pending,
       isOverPeriodLimit,
+      isCanEnactInNextPeriod,
+      timeData,
       motionTopUpAmount,
       motionTopUpToken,
-      pending,
       periodLimitsData,
       progress,
-      timeData,
       motionDisplaydName,
     ],
   )
