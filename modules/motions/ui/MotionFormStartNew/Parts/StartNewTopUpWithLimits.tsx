@@ -234,6 +234,7 @@ export const formParts = ({
                   <InputControl
                     label={`${token.label} Amount`}
                     name={`${fieldNames.programs}.${i}.amount`}
+                    autoFocus
                     rules={{
                       required: 'Field is required',
                       validate: value => {
