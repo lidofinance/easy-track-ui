@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useActual } from 'modules/motions/hooks'
+import { useRecipientActual } from 'modules/motions/hooks'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
@@ -35,7 +35,7 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const allowedRecipients = useActual({
+    const allowedRecipients = useRecipientActual({
       registryType: MotionType.AllowedRecipientRemove,
     })
     const { walletAddress } = useWeb3()

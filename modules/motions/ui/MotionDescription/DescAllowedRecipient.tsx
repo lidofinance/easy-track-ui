@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useMapAll, useAll } from 'modules/motions/hooks'
+import { useRecipientMapAll, useRecipientAll } from 'modules/motions/hooks'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
@@ -28,7 +28,7 @@ export function DescAllowedRecipientTopUp({
   callData,
 }: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']>) {
   const governanceSymbol = useGovernanceSymbol()
-  const { data: allowedRecipientMap } = useMapAll({
+  const { data: allowedRecipientMap } = useRecipientMapAll({
     registryType: MotionType.AllowedRecipientTopUp,
   })
 
@@ -53,7 +53,7 @@ export function DescAllowedRecipientTopUp({
 export function DescAllowedRecipientRemove({
   callData,
 }: NestProps<RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']>) {
-  const { data: allowedRecipients } = useAll({
+  const { data: allowedRecipients } = useRecipientAll({
     registryType: MotionType.AllowedRecipientRemove,
   })
 

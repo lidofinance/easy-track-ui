@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import {
-  useMapAll,
+  useRecipientMapAll,
   REGISTRY_WITH_LIMITS_BY_MOTION_TYPE,
   useTokenByTopUpType,
 } from 'modules/motions/hooks'
@@ -17,7 +17,7 @@ export function DescTopUpWithLimits({
 }: NestProps<TopUpWithLimitsAbi['decodeEVMScriptCallData']> & {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }) {
-  const { data: allowedRecipientMap } = useMapAll({ registryType })
+  const { data: allowedRecipientMap } = useRecipientMapAll({ registryType })
   const token = useTokenByTopUpType({ registryType })
 
   const recipients = useMemo(() => {

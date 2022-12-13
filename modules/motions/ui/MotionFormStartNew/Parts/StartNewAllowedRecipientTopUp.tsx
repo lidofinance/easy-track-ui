@@ -6,7 +6,7 @@ import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   usePeriodLimitsData,
-  useActual,
+  useRecipientActual,
 } from 'modules/motions/hooks/useRegistryWithLimits'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import {
@@ -85,7 +85,7 @@ export const formParts = createMotionFormPart({
 
     const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
       usePeriodLimitsData({ registryType: MotionType.AllowedRecipientTopUp })
-    const allowedRecipients = useActual({
+    const allowedRecipients = useRecipientActual({
       registryType: MotionType.AllowedRecipientTopUp,
     })
     const { data: governanceSymbol } = useGovernanceSymbol()

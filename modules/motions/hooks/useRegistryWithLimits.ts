@@ -36,7 +36,7 @@ type HookArgs = {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }
 
-function useMap(programs: SWRResponse<AllowedRecipient[] | null>) {
+function useRecipientMap(programs: SWRResponse<AllowedRecipient[] | null>) {
   const result = useMemo(() => {
     if (!programs.data) return null
     return programs.data.reduce(
@@ -51,7 +51,7 @@ function useMap(programs: SWRResponse<AllowedRecipient[] | null>) {
   }
 }
 
-export function useAll({ registryType }: HookArgs) {
+export function useRecipientAll({ registryType }: HookArgs) {
   const { chainId } = useWeb3()
   const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
@@ -71,9 +71,9 @@ export function useAll({ registryType }: HookArgs) {
   )
 }
 
-export function useActual({ registryType }: HookArgs) {
+export function useRecipientActual({ registryType }: HookArgs) {
   const chainId = useWeb3()
-  const recipientsAll = useAll({ registryType })
+  const recipientsAll = useRecipientAll({ registryType })
   const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
   return useSWR(
@@ -92,9 +92,9 @@ export function useActual({ registryType }: HookArgs) {
   )
 }
 
-export function useMapAll({ registryType }: HookArgs) {
-  const partners = useAll({ registryType })
-  return useMap(partners)
+export function useRecipientMapAll({ registryType }: HookArgs) {
+  const partners = useRecipientAll({ registryType })
+  return useRecipientMap(partners)
 }
 
 export function usePeriodLimitsData({ registryType }: HookArgs) {
