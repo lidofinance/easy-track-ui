@@ -17,11 +17,19 @@ type MotionLimitProgressProps = {
   endDate: number
   token?: string
   newAmount: number
+  showAmountChange?: boolean
 }
 
 export function MotionLimitProgress(props: MotionLimitProgressProps) {
-  const { spentAmount, totalLimit, startDate, endDate, token, newAmount } =
-    props
+  const {
+    spentAmount,
+    totalLimit,
+    startDate,
+    endDate,
+    token,
+    newAmount,
+    showAmountChange,
+  } = props
 
   const isValidNewValue = Number.isInteger(newAmount)
   const newSpentValue = isValidNewValue ? Number(spentAmount) + newAmount : 0
@@ -39,12 +47,20 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
 
   const isAboveTheLimit = newValuePercent > 100
 
+  const amount = showAmountChange ? (
+    <span>
+      {Number(spentAmount)} + {newAmount}
+    </span>
+  ) : (
+    <span>{newSpentValue}</span>
+  )
+
   return (
     <>
       <ProgressHeader>
         <ProgressDesc>Top up limit</ProgressDesc>
         <LimitDesc>
-          <span>{newSpentValue}</span>{' '}
+          {amount}{' '}
           <Limit>
             / {totalLimit} {token}
           </Limit>

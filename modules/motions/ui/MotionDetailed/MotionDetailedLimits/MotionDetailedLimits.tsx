@@ -29,6 +29,7 @@ export function MotionDetailedLimits() {
           endDate={periodLimitsData.periodData.periodEndTimestamp}
           token={motionTopUpToken}
           newAmount={motionTopUpAmount}
+          showAmountChange
         />
       </MotionDetailedLimitsWrapper>
       {isOverPeriodLimit && !isCanEnactInNextPeriod && (
