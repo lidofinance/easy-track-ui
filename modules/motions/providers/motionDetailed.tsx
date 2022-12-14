@@ -84,7 +84,7 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
     motion.status !== MotionStatus.ACTIVE &&
     motion.status !== MotionStatus.PENDING
   const motionTopUpAmount: number =
-    (callData?.[1]?.[0]._isBigNumber && Number(formatEther(callData[1][0]))) ||
+    (callData?.[1]?.[0]?._isBigNumber && Number(formatEther(callData[1][0]))) ||
     0 // TODO: refactor
   const motionTopUpToken = topUpToken.label || ''
   const pending =
