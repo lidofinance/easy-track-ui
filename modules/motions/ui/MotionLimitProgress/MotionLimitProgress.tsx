@@ -49,10 +49,11 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
 
   const amount = showAmountChange ? (
     <span>
-      {Number(spentAmount)} + {newAmount}
+      {Number(spentAmount).toLocaleString('en-EN')} +{' '}
+      {newAmount.toLocaleString('en-EN')}
     </span>
   ) : (
-    <span>{newSpentValue}</span>
+    <span>{newSpentValue.toLocaleString('en-EN')}</span>
   )
 
   return (
@@ -62,7 +63,7 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
         <LimitDesc>
           {amount}{' '}
           <Limit>
-            / {totalLimit} {token}
+            / {Number(totalLimit).toLocaleString('en-EN')} {token}
           </Limit>
         </LimitDesc>
       </ProgressHeader>

@@ -43,7 +43,8 @@ export function DescAllowedRecipientTopUp({
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
-          with {formatEther(callData[1][i])} {governanceSymbol.data}
+          with {Number(formatEther(callData[1][i])).toLocaleString('en-EN')}{' '}
+          {governanceSymbol.data}
         </div>
       ))}
     </div>
