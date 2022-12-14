@@ -2,21 +2,20 @@ import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, ToastError } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import {
-  useAvailableMotions,
-  HIDDEN_MOTIONS,
-} from 'modules/motions/hooks/useAvailableMotions'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, RetryHint, MessageBox } from './CreateMotionFormStyle'
 
+import { useAvailableMotions, HIDDEN_MOTIONS } from 'modules/motions/hooks'
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
-import { getScriptFactoryByMotionType } from 'modules/motions/utils/getMotionType'
-import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
+import {
+  getScriptFactoryByMotionType,
+  getMotionTypeDisplayName,
+} from 'modules/motions/utils'
 import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
 import { ResultTx } from 'modules/blockChain/types'
 
@@ -54,13 +53,11 @@ export function MotionFormStartNew({ onComplete }: Props) {
 
         setSubmitting(true)
 
-        const tx = await formParts[motionType]?.populateTx({
+        const tx = await formParts[motionType].populateTx({
           evmScriptFactory: getScriptFactoryByMotionType(chainId, motionType),
           formData: e[motionType],
           contract: contractEasyTrack,
         })
-
-        if (!tx) return
 
         const res = await sendTransactionGnosisWorkaround(
           contractEasyTrack.signer,
@@ -78,7 +75,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
   )
 
   const motionType = formMethods.watch('motionType')
-  const CurrentFormPart = motionType ? formParts[motionType]?.Component : null
+  const CurrentFormPart = motionType ? formParts[motionType].Component : null
   const submitAction = (
     <>
       <Button
@@ -103,7 +100,8 @@ export function MotionFormStartNew({ onComplete }: Props) {
   if (notHaveAvailableMotions)
     return (
       <MessageBox>
-        You should be connected as trusted caller or as node operator
+        Only Trusted Callers & Node Operator have access to Easy Track motion
+        creation
       </MessageBox>
     )
 
@@ -127,7 +125,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
       </Fieldset>
       {CurrentFormPart && motionType && (
         <CurrentFormPart
-          fieldNames={formParts[motionType]?.fieldNames as any}
+          fieldNames={formParts[motionType].fieldNames as any}
           submitAction={submitAction}
         />
       )}

@@ -25,3 +25,6 @@ export const tokenLimitError = (
   transitionLimit: number,
 ) =>
   `${governanceSymbol} transition is limited by ${transitionLimit.toLocaleString()}`
+
+export const periodLimitError = () =>
+  'The top-up is higher than the remaining current period limit'

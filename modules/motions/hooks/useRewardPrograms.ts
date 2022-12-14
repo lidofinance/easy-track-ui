@@ -9,6 +9,9 @@ type RewardProgram = {
   address: string
 }
 
+/**
+ * @deprecated
+ */
 function useRewardProgramsMap(programs: SWRResponse<RewardProgram[] | null>) {
   const result = useMemo(() => {
     if (!programs.data) return null
@@ -24,6 +27,9 @@ function useRewardProgramsMap(programs: SWRResponse<RewardProgram[] | null>) {
   }
 }
 
+/**
+ * @deprecated
+ */
 export function useRewardProgramsAll() {
   const { chainId } = useWeb3()
   const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
@@ -47,6 +53,9 @@ export function useRewardProgramsAll() {
   )
 }
 
+/**
+ * @deprecated
+ */
 export function useRewardProgramsActual() {
   const chainId = useWeb3()
   const programsAll = useRewardProgramsAll()
@@ -68,11 +77,17 @@ export function useRewardProgramsActual() {
   )
 }
 
+/**
+ * @deprecated
+ */
 export function useRewardProgramsMapAll() {
   const partners = useRewardProgramsAll()
   return useRewardProgramsMap(partners)
 }
 
+/**
+ * @deprecated
+ */
 export function useRewardProgramsMapActual() {
   const partners = useRewardProgramsActual()
   return useRewardProgramsMap(partners)
