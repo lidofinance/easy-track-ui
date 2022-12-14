@@ -16,6 +16,7 @@ export const HIDDEN_MOTIONS = [
   'RewardProgramAdd',
   'RewardProgramRemove',
   'RewardProgramTopUp',
+  'LEGOTopUp',
 ]
 
 const isHasTrustedCaller = (
