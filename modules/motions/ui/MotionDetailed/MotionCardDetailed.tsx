@@ -1,15 +1,21 @@
 import { useEffect } from 'react'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useMotionProgress } from 'modules/motions/hooks/useMotionProgress'
-import { useMotionTimeCountdown } from 'modules/motions/hooks/useMotionTimeCountdown'
 
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
+
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+import {
+  getMotionDisplayStatus,
+  getMotionTypeByScriptFactory,
+} from 'modules/motions/utils'
 import { MotionDetailedObjections } from './MotionDetailedObjections'
 import { MotionDetailedTime } from './MotionDetailedTime'
 import { MotionDetailedCancelButton } from './MotionDetailedCancelButton'
 import { MotionDescription } from '../MotionDescription'
 import { MotionEvmScript } from '../MotionEvmScript'
+import { MotionDetailedLimits } from './MotionDetailedLimits'
 import { MotionDetailedActions } from './MotionDetailedActions'
 import {
   Card,
@@ -31,9 +37,6 @@ import {
 } from './MotionCardDetailedStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
-import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
-import { getMotionTypeDisplayName } from 'modules/motions/utils/getMotionTypeDisplayName'
-import { getMotionDisplayStatus } from 'modules/motions/utils/getMotionDisplayStatus'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 
 type Props = {
@@ -43,10 +46,8 @@ type Props = {
 
 export function MotionCardDetailed({ motion, onInvalidate }: Props) {
   const { chainId, walletAddress } = useWeb3()
-
-  const progress = useMotionProgress(motion)
-
-  const timeData = useMotionTimeCountdown(motion)
+  const { progress, isArchived, pending, timeData, motionDisplaydName } =
+    useMotionDetailed()
   const { isPassed, diff } = timeData
 
   useEffect(() => {
@@ -55,9 +56,6 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     }
   }, [isPassed, motion.status, onInvalidate])
 
-  const isArchived =
-    motion.status !== MotionStatus.ACTIVE &&
-    motion.status !== MotionStatus.PENDING
   const isAuthorConnected = walletAddress === motion.creator
   const isAttentionTime = diff <= motion.duration * MOTION_ATTENTION_PERIOD
 
@@ -71,13 +69,15 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     isAttentionTime,
   })
 
+  if (pending) return <PageLoader />
+
   return (
     <Card>
       <Header>
         <div>
           <MotionNumber>Motion #{motion.id}</MotionNumber>
           <MotionTitle>
-            {getMotionTypeDisplayName(motionType)}
+            {motionDisplaydName}
             {motionType === 'EvmUnrecognized' && (
               <>
                 <br />
@@ -148,6 +148,8 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
           </InfoCell>
         </InfoCol>
       </InfoRow>
+
+      <MotionDetailedLimits />
 
       {!isArchived && (
         <MotionDetailedActions motion={motion} onFinish={onInvalidate} />

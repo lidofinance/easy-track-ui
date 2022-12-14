@@ -16,6 +16,7 @@ export const Fieldset = styled.div`
 
 export const FieldsWrapper = styled(Block)`
   margin-bottom: 20px;
+
   ${Fieldset}:last-of-type {
     margin-bottom: 0;
   }
@@ -37,7 +38,6 @@ const RemoveItemButtonWrap = styled(Text).attrs({
   size: 12,
   weight: 500,
 })`
-  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: center;

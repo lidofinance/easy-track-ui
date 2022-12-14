@@ -11,8 +11,8 @@ import {
   useTransactionSender,
   TransactionSender,
 } from 'modules/blockChain/hooks/useTransactionSender'
+import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
 
-import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
 import {
   Actions,
@@ -23,9 +23,11 @@ import {
 } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
-import { getEventMotionCreated } from 'modules/motions/utils/getEventMotionCreation'
-import { getContractMethodParams } from 'modules/motions/utils/getContractMethodParams'
-import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
+import {
+  getEventMotionCreated,
+  getContractMethodParams,
+  estimateGasFallback,
+} from 'modules/motions/utils'
 
 function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
   return (
@@ -49,6 +51,7 @@ function ActionsBody({ motion, onFinish }: Props) {
   const { walletAddress } = useWeb3()
   const contractEasyTrack = ContractEasyTrack.useWeb3()
   const { data: governanceSymbol } = useGovernanceSymbol()
+  const { isOverPeriodLimit } = useMotionDetailed()
 
   const balanceAt = ContractGovernanceToken.useSwrWeb3('balanceOfAt', [
     String(walletAddress),
@@ -156,7 +159,7 @@ function ActionsBody({ motion, onFinish }: Props) {
           <ButtonStyled
             size="sm"
             children="Submit objection"
-            disabled={!canObject.data}
+            disabled={!canObject.data || isOverPeriodLimit}
             onClick={txObject.send}
             loading={txObject.isPending}
           />
@@ -167,6 +170,7 @@ function ActionsBody({ motion, onFinish }: Props) {
               children="Enact"
               onClick={txEnact.send}
               loading={txEnact.isPending}
+              disabled={isOverPeriodLimit}
             />
           )}
         </Actions>

@@ -7,9 +7,9 @@ import { ABIProviderLocal } from '@lidofinance/evm-script-decoder/lib/ABIProvide
 import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
 import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
 import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
-import FinanceAbi from 'abi/Finance.abi.json'
 import AllowedRecipientsRegistryLDOAbi from 'abi/newReward/AllowedRecipientsRegistryLDO.abi.json'
-import RegistryWithLimitsAbi from 'abi/topUp/RegistryWithLimits.abi.json'
+import RegistryWithLimitsAbi from 'abi/TopUp/RegistryWithLimits.abi.json'
+import FinanceAbi from 'abi/Finance.abi.json'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
 
 export function useEVMScriptDecoder() {
