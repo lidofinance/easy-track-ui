@@ -101,7 +101,6 @@ export function usePeriodLimitsData({ registryType }: HookArgs) {
   const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 
   return usePeriodLimitsInfo({
-    address: registry.address,
     contract: registry,
   })
 }

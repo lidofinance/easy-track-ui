@@ -25,10 +25,10 @@ import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 type ContractLimitsMethods = {
   getLimitParameters: LimitCheckerAbi['getLimitParameters']
   getPeriodState: LimitCheckerAbi['getPeriodState']
+  address: string
 }
 
 type UsePeriodLimitInfoProps<T> = {
-  address: string
   contract: T
   isPending?: boolean
 }
@@ -117,8 +117,9 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
 }
 
 export const usePeriodLimitsInfo: UsePeriodLimitInfo = props => {
-  const { address, contract, isPending } = props
+  const { contract, isPending } = props
   const { chainId } = useWeb3()
+  const { address } = contract
 
   const easyTrack = ContractEasyTrack.useRpc()
 
