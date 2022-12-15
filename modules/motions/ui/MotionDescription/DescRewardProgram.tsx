@@ -51,7 +51,8 @@ export function DescRewardProgramTopUp({
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{programs?.[i]}</b> <AddressInlineWithPop address={address} /> with{' '}
-          {formatEther(callData[1][i])} {governanceSymbol.data}
+          {Number(formatEther(callData[1][i])).toLocaleString('en-EN')}{' '}
+          {governanceSymbol.data}
         </div>
       ))}
     </div>

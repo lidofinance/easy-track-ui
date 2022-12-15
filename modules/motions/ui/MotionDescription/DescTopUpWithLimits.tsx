@@ -31,7 +31,8 @@ export function DescTopUpWithLimits({
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
-          with {formatEther(callData[1][i])} {token.label}
+          with {Number(formatEther(callData[1][i])).toLocaleString('en-EN')}{' '}
+          {token.label}
         </div>
       ))}
     </div>
