@@ -1,3 +1,57 @@
+# [0.12.0](https://github.com/lidofinance/easy-track-ui/compare/0.11.1...0.12.0) (2022-12-15)
+
+
+### Bug Fixes
+
+* add deprecated flags ([b90a9ce](https://github.com/lidofinance/easy-track-ui/commit/b90a9cefbcbb83e95116a457a35226d48dec7074))
+* add format numbers for old motions ([fbdb5dd](https://github.com/lidofinance/easy-track-ui/commit/fbdb5dd8411411381f226f15629a24608bd31578))
+* add reset form data after change address ([0909689](https://github.com/lidofinance/easy-track-ui/commit/090968966ea709e5c8e41d4fde276537be79445d))
+* change address for goerli ([7a45c56](https://github.com/lidofinance/easy-track-ui/commit/7a45c56651b480385c172587a7d6d6f13dc8e995))
+* change button styles in motion card ([efc0404](https://github.com/lidofinance/easy-track-ui/commit/efc0404f0a2f32574b7f8169b7c6b21817a144eb))
+* change limits hook args ([97ecc37](https://github.com/lidofinance/easy-track-ui/commit/97ecc37af13a58d06cc4b7ab6fd7c4201b57d6ba))
+* fix after pull develop ([7f3e048](https://github.com/lidofinance/easy-track-ui/commit/7f3e048799dc66fa5ad8316de193b08d3854721a))
+* fix calc date period ([2c2081d](https://github.com/lidofinance/easy-track-ui/commit/2c2081d5bdc8f31eb50c460b7c4facdac9ccdd99))
+* fix calc start period time ([0d0babd](https://github.com/lidofinance/easy-track-ui/commit/0d0babd5de3af2ade4e95e72a61c52426bf605ce))
+* fix code style ([9cea1cf](https://github.com/lidofinance/easy-track-ui/commit/9cea1cf03729c858609b59aa24c6acf2ff44ba7e))
+* fix display ldo token in limits ([99ed121](https://github.com/lidofinance/easy-track-ui/commit/99ed1218b1873d0646d804ea6f75b053975ae255))
+* fix display limits for pending motions ([8023b01](https://github.com/lidofinance/easy-track-ui/commit/8023b012ac33757a1808811671441c077edcf978))
+* fix display token in motion desc ([ba1737c](https://github.com/lidofinance/easy-track-ui/commit/ba1737c41f8e98bf799a643a4c12c764de434374))
+* fix display total limit ([732862e](https://github.com/lidofinance/easy-track-ui/commit/732862e9124cd5e95f32a1a62c47fc5ad9d27ac5))
+* fix filed placeholder ([237dc65](https://github.com/lidofinance/easy-track-ui/commit/237dc653be36c832ef06ef81a27a4243be855c1a))
+* fix motion detailed ([8270e45](https://github.com/lidofinance/easy-track-ui/commit/8270e457ea1d4d0dc460205e6b561e58b8f88cb7))
+* fix show progress current amount ([2145dd4](https://github.com/lidofinance/easy-track-ui/commit/2145dd4be59bd49f7e9cad927272349757954a60))
+* fix top-up messages ([7d9916b](https://github.com/lidofinance/easy-track-ui/commit/7d9916b5e383dbb0ab1580f24d54cfc0107257da))
+* fix types ([1964d65](https://github.com/lidofinance/easy-track-ui/commit/1964d657528cfb2e8c1bf0cb7400d31c56b5754e))
+* fix types ([717ddeb](https://github.com/lidofinance/easy-track-ui/commit/717ddeb0a66f9140abcb68a2db8e85e0549c4257))
+* fix types and async requests ([b0ef037](https://github.com/lidofinance/easy-track-ui/commit/b0ef037a240db9298776c71f7c6e5e12a1ac1fdf))
+* remove comment ([8d6cf72](https://github.com/lidofinance/easy-track-ui/commit/8d6cf72a7ceeb8e94e228340675be0f38cfe49fc))
+* remove useAllowedRecipient ([e26e4a6](https://github.com/lidofinance/easy-track-ui/commit/e26e4a69c3b8840532a8d862ca63ab049c9faf2a))
+* rename hooks ([4f8b77f](https://github.com/lidofinance/easy-track-ui/commit/4f8b77f3fa3c94280b6e70b1e75734f22764162f))
+* update types ([08bdda5](https://github.com/lidofinance/easy-track-ui/commit/08bdda5a462055e37f7b9b88923be5aaf25c044a))
+
+
+### Features
+
+* add autofocus for top up limits ([b4d680c](https://github.com/lidofinance/easy-track-ui/commit/b4d680c98b8cc85334977ad88376c9ed07cf0748))
+* add components for limits ([48f4400](https://github.com/lidofinance/easy-track-ui/commit/48f4400347767f6454950740d6faa92f406206ed))
+* add filter for motions by trusted caller ([e8483c9](https://github.com/lidofinance/easy-track-ui/commit/e8483c922b355547d240847353697ed05a06f553))
+* add format for number in limits and motion top-up desc ([56bc123](https://github.com/lidofinance/easy-track-ui/commit/56bc123ac0233d77863da8d586261e85ea2a1d5b))
+* add goerli contracts, fix display limits ([7825ed9](https://github.com/lidofinance/easy-track-ui/commit/7825ed94748decacbb6d3d73c52069a5a980ea04))
+* add message for empty motion types ([1300cb4](https://github.com/lidofinance/easy-track-ui/commit/1300cb4b9e25ff576d68b3ab73c405c5a8a6f138))
+* add motion details provider, add show limints to motion card ([5cb0393](https://github.com/lidofinance/easy-track-ui/commit/5cb039348c5d92a12d271d07dab2e020ae1f0baa))
+* add new allowed recipient contrancts - add/remove/topup ([f7fb5c0](https://github.com/lidofinance/easy-track-ui/commit/f7fb5c09352915e7028b81340e5d493d3a633a56))
+* add new top-up contracts for mainnet, add universal create/display motion comps ([4a542c2](https://github.com/lidofinance/easy-track-ui/commit/4a542c2bb1b24e1ee6c84c258779c1f9ed401ebe))
+* add select first value in addresses ([078440a](https://github.com/lidofinance/easy-track-ui/commit/078440a8560f4ab88b0bc89750bc5316f4c983d4))
+* add show limits to motion details card ([96dd78d](https://github.com/lidofinance/easy-track-ui/commit/96dd78db7cafb5f451b9b0ae197d072aa156d658))
+* add single recipient registry ([259616c](https://github.com/lidofinance/easy-track-ui/commit/259616c6474da6f4f600356fefcd4f92cf2d3da0))
+* change show amount on motion card ([5054605](https://github.com/lidofinance/easy-track-ui/commit/505460598cfd7cda31c5f730052605eaafa90cbf))
+* change text for limits ([e699bac](https://github.com/lidofinance/easy-track-ui/commit/e699bac39941530afddbb7e7248af3796f0b6f9a))
+* hide old lego program ([a61cbcf](https://github.com/lidofinance/easy-track-ui/commit/a61cbcf7587a83335708800aeb4aab1054a4a165))
+* hide old reward propgram, add new ([c203ded](https://github.com/lidofinance/easy-track-ui/commit/c203ded820902093cff1b9452f83f5499cbf740e))
+* rename contract and motion to LEGO DAI ([73833d0](https://github.com/lidofinance/easy-track-ui/commit/73833d076a17bd089144d002079393eb360e572b))
+
+
+
 ## [0.11.1](https://github.com/lidofinance/easy-track-ui/compare/0.11.0...0.11.1) (2022-12-12)
 
 
@@ -105,42 +159,6 @@
 ### Bug Fixes
 
 * do not display removed referral partners and reward programs ([10d514e](https://github.com/lidofinance/easy-track-ui/commit/10d514e90ee97d75d5fa7a94ae10012120e3db91))
-
-
-
-# [0.7.0](https://github.com/lidofinance/easy-track-ui/compare/0.6.1...0.7.0) (2022-03-14)
-
-
-### Bug Fixes
-
-* abi's format ([93f9ed0](https://github.com/lidofinance/easy-track-ui/commit/93f9ed017952bf9e638aed07b6fb2f21e296536f))
-* **deps:** pin dependencies ([88f48f3](https://github.com/lidofinance/easy-track-ui/commit/88f48f3d091385407c2160eda8e2d15104bb8c14))
-* **deps:** pin dependency @lido-sdk/web3-react to v ([3fb4f4a](https://github.com/lidofinance/easy-track-ui/commit/3fb4f4a0c7a41adcd9234c5e83a5ec06ae5b932e))
-* **deps:** update dependency @lido-sdk/web3-react to v1.16.0 ([75b90d6](https://github.com/lidofinance/easy-track-ui/commit/75b90d65d317b6fb91b0e3aeb172a113383b6820))
-* **deps:** update dependency @lidofinance/lido-ui to v1.10.14 ([ed1b666](https://github.com/lidofinance/easy-track-ui/commit/ed1b666b9bf11f2e68c99f7b3c75fc84c79d74e6))
-* **deps:** update dependency @types/lodash to v4.14.179 ([22b9abd](https://github.com/lidofinance/easy-track-ui/commit/22b9abd56e99499d8a703fb41eaa77d4ff6b4bf7))
-* **deps:** update dependency ethers to v5.5.4 ([dae68ba](https://github.com/lidofinance/easy-track-ui/commit/dae68bae75216cc09e73538f88a518caeecb3058))
-* **deps:** update dependency next to v12.1.0 [security] ([9dc51a3](https://github.com/lidofinance/easy-track-ui/commit/9dc51a3a0c3210ee047e3103d59fb74b1ce1b8bd))
-* **deps:** update dependency styled-components to v5.3.3 ([d96c9d6](https://github.com/lidofinance/easy-track-ui/commit/d96c9d621c2ae4bce302213739262fb0aef8d005))
-* **deps:** update dependency swr to v0.5.7 ([5a6166e](https://github.com/lidofinance/easy-track-ui/commit/5a6166e4956404606c58fec07d3e26642ae5f8ca))
-* **deps:** update dependency swr to v1 ([95bcaad](https://github.com/lidofinance/easy-track-ui/commit/95bcaad7ab4f9e92a0ab484dbb7acae8ede9edc6))
-* display deleted reward program and referral partner names ([6c67dc0](https://github.com/lidofinance/easy-track-ui/commit/6c67dc01de11a415022fc2d88fbe3d989c56cad8))
-* evm call data decoding mapping ([8883609](https://github.com/lidofinance/easy-track-ui/commit/8883609ec30be35b2a78c00bb84c035140c364bb))
-* referral addresses mapping ([448a075](https://github.com/lidofinance/easy-track-ui/commit/448a075644452771814d9eeea0919c4fc2f1b77d))
-* referral partner and reward program adjust descriptions for removing ([94388ec](https://github.com/lidofinance/easy-track-ui/commit/94388ec52442e1214e149d5846976519728b6c20))
-* referral partner name displaying ([dfa0b53](https://github.com/lidofinance/easy-track-ui/commit/dfa0b53bfc21de2afac5f9ba2de1d97624494bbc))
-* referral partners and reward programs description crash ([5faa09b](https://github.com/lidofinance/easy-track-ui/commit/5faa09bcac7f05a2c91d537182f388ba9f2f2478))
-* security policy for walletconnect images ([783888b](https://github.com/lidofinance/easy-track-ui/commit/783888b167c0395315622029eb517afb8b32fc22))
-
-
-### Features
-
-* disable submit button when form contain errors ([87da142](https://github.com/lidofinance/easy-track-ui/commit/87da142a65d2d3ceb41b4de76dfbf1560e20b828))
-* display reward program and referral partner names in descriptions ([8f309e2](https://github.com/lidofinance/easy-track-ui/commit/8f309e212a186cb3ddc027beaa737ddc1996c2ca))
-* **metrics:** export contract addresses by chain ([4911fb8](https://github.com/lidofinance/easy-track-ui/commit/4911fb8b95af54adf50a6a23494128205aa45814))
-* referal and reward programs bolded ([78c2b6e](https://github.com/lidofinance/easy-track-ui/commit/78c2b6eecc5f5a1478d82724c5817ac7a0ea2c0c))
-* referral partner motions ([d3df0da](https://github.com/lidofinance/easy-track-ui/commit/d3df0da89c391f09fc1be26524b309d1165b3c07))
-* transition limits ([e3046f3](https://github.com/lidofinance/easy-track-ui/commit/e3046f3e872b1fbdae1481a3786482d0a82ba93f))
 
 
 
