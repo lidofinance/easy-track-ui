@@ -26,7 +26,7 @@ export function DescLEGOTopUp({
       Top up LEGO program with:
       {callData[0].map((_, i) => (
         <div key={i}>
-          {formatEther(callData[1][i])}{' '}
+          {Number(formatEther(callData[1][i])).toLocaleString('en-EN')}{' '}
           {formattedTokens[i] || (
             <>
               token with address{' '}
