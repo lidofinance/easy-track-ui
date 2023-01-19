@@ -1,3 +1,7 @@
+## [0.12.1](https://github.com/lidofinance/easy-track-ui/compare/0.12.0...0.12.1) (2023-01-19)
+
+
+
 # [0.12.0](https://github.com/lidofinance/easy-track-ui/compare/0.11.1...0.12.0) (2022-12-15)
 
 
@@ -150,15 +154,6 @@
 * New relese flow ([bf9b9ac](https://github.com/lidofinance/easy-track-ui/commit/bf9b9acb44a044a1965d648f0b1444d8fc03a6ca))
 * node operator keys info ([f451fce](https://github.com/lidofinance/easy-track-ui/commit/f451fcec35d3f3e08ca122fbe56265df42aa37b1))
 * **security:** added codeowners for lockfiles ([f05f054](https://github.com/lidofinance/easy-track-ui/commit/f05f054e602630cf559bf10d1c3527f13cd42f80))
-
-
-
-## [0.7.1](https://github.com/lidofinance/easy-track-ui/compare/0.7.0...0.7.1) (2022-03-25)
-
-
-### Bug Fixes
-
-* do not display removed referral partners and reward programs ([10d514e](https://github.com/lidofinance/easy-track-ui/commit/10d514e90ee97d75d5fa7a94ae10012120e3db91))
 
 
 
