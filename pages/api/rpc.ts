@@ -1,9 +1,14 @@
+import getConfig from 'next/config'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { parseChainId } from 'modules/blockChain/chains'
-import { getRpcJsonUrls } from 'modules/blockChain/utils/getRpcUrls'
+import { getAlchemyRPCUrl, getInfuraRPCUrl } from '@lido-sdk/fetch'
+
 import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 import { logger } from 'modules/shared/utils/log'
 import clone from 'just-clone'
+
+const { serverRuntimeConfig } = getConfig()
+const { infuraApiKey, alchemyApiKey } = serverRuntimeConfig
 
 export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
   const requestInfo = {
@@ -20,7 +25,11 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
   try {
     const chainId = parseChainId(String(req.query.chainId))
 
-    const urls = getRpcJsonUrls(chainId)
+    const urls = [
+      alchemyApiKey ? getAlchemyRPCUrl(chainId, alchemyApiKey) : '',
+      infuraApiKey ? getInfuraRPCUrl(chainId, infuraApiKey) : '',
+    ].filter(Boolean)
+
     const requested = await fetchWithFallback(urls, chainId, {
       method: 'POST',
       // Next by default parses our body for us, we don't want that here

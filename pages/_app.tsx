@@ -21,7 +21,7 @@ import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
 
 import { getAddressList } from 'modules/config/utils/getAddressList'
-import { backendRPC } from 'modules/blockChain/utils/getRpcUrls'
+import { backendRPC } from 'modules/blockChain/utils/getBackendRpcUrl'
 import { withCsp } from 'modules/shared/utils/csp'
 import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 

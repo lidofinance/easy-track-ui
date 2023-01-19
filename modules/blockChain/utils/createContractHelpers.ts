@@ -7,7 +7,7 @@ import { useContractSwr } from '../hooks/useContractSwr'
 
 import type { Signer, providers } from 'ethers'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
-import { getRpcUrl } from 'modules/blockChain/utils/getRpcUrls'
+import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
 import { getChainName } from 'modules/blockChain/chains'
 import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
 
@@ -54,7 +54,7 @@ export function createContractHelpers<F extends Factory>({
   }
 
   function connectRpc({ chainId }: CallRpcArgs) {
-    const library = getStaticRpcBatchProvider(chainId, getRpcUrl(chainId))
+    const library = getStaticRpcBatchProvider(chainId, getBackendRpcUrl(chainId))
     return connect({ chainId, library })
   }
 
