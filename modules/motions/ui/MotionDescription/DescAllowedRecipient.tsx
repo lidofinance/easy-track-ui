@@ -7,6 +7,7 @@ import {
 } from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
+import { MotionTypeDisplayNames } from 'modules/motions/utils'
 
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -18,10 +19,15 @@ import { NestProps } from './types'
 
 export function DescAllowedRecipientAdd({
   callData,
-}: NestProps<AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']>) {
+  registryType,
+}: NestProps<AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+}) {
+  const name = MotionTypeDisplayNames[registryType]
+
   return (
     <div>
-      Add reward program <b>“{callData[1]}”</b> with address{' '}
+      ${name} <b>“{callData[1]}”</b> with address{' '}
       <AddressInlineWithPop address={callData[0]} />
     </div>
   )
@@ -43,9 +49,11 @@ export function DescAllowedRecipientTopUp({
     return callData[0].map(address => allowedRecipientMap[address])
   }, [callData, allowedRecipientMap])
 
+  const name = MotionTypeDisplayNames[registryType]
+
   return (
     <div>
-      Top up reward programs:
+      ${name}:
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
@@ -72,9 +80,11 @@ export function DescAllowedRecipientRemove({
     return allowedRecipients.find(p => p.address === callData)
   }, [callData, allowedRecipients])
 
+  const name = MotionTypeDisplayNames[registryType]
+
   return (
     <div>
-      Remove reward program <b>{program?.title}</b> with address{' '}
+      ${name} <b>{program?.title}</b> with address{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )

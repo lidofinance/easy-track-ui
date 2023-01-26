@@ -1,7 +1,10 @@
 import { EvmUnrecognized } from '../evmAddresses'
 import { MotionType } from '../types'
 
-const MotionTypeDisplayNames: Record<MotionType | EvmUnrecognized, string> = {
+export const MotionTypeDisplayNames: Record<
+  MotionType | EvmUnrecognized,
+  string
+> = {
   [MotionType.NodeOperatorIncreaseLimit]:
     'Increase node operator staking limit',
   [MotionType.LEGOTopUp]: 'Top up LEGO',
@@ -17,9 +20,9 @@ const MotionTypeDisplayNames: Record<MotionType | EvmUnrecognized, string> = {
   [MotionType.AllowedRecipientAdd]: 'Add reward program',
   [MotionType.AllowedRecipientRemove]: 'Remove reward program',
   [MotionType.AllowedRecipientTopUp]: 'Top up reward program',
-  [MotionType.AllowedRecipientAddDai]: 'Add reward program DAI',
-  [MotionType.AllowedRecipientRemoveDai]: 'Remove reward program DAI',
-  [MotionType.AllowedRecipientTopUpDai]: 'Top up reward program DAI',
+  [MotionType.AllowedRecipientAddDai]: 'Add DAI referral program',
+  [MotionType.AllowedRecipientRemoveDai]: 'Remove DAI referral program',
+  [MotionType.AllowedRecipientTopUpDai]: 'Top up DAI referral program',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.RccDAITopUp]: 'Top up RCC DAI',
