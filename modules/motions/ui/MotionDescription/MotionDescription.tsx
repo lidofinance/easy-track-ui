@@ -23,7 +23,7 @@ import {
 
 import { DescTopUpWithLimits } from './DescTopUpWithLimits'
 
-import { TopUpWithLimitsAbi } from 'generated'
+import { TopUpWithLimitsAbi, RemoveAllowedRecipientLDOAbi } from 'generated'
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
@@ -31,6 +31,10 @@ import { NestProps } from './types'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
+>
+
+type DescAllowedRecipientRemoveProps = NestProps<
+  RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']
 >
 
 const MOTION_DESCRIPTIONS = {
@@ -43,7 +47,14 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.ReferralPartnerTopUp]: DescReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: DescReferralPartnerRemove,
   [MotionType.AllowedRecipientAdd]: DescAllowedRecipientAdd,
-  [MotionType.AllowedRecipientRemove]: DescAllowedRecipientRemove,
+  [MotionType.AllowedRecipientRemove]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.AllowedRecipientRemove}
+    />
+  ),
   [MotionType.AllowedRecipientTopUp]: (props: DescWithLimitsProps) => (
     <DescAllowedRecipientTopUp
       {...props}
@@ -51,7 +62,14 @@ const MOTION_DESCRIPTIONS = {
     />
   ),
   [MotionType.AllowedRecipientAddDai]: DescAllowedRecipientAdd,
-  [MotionType.AllowedRecipientRemoveDai]: DescAllowedRecipientRemove,
+  [MotionType.AllowedRecipientRemoveDai]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.AllowedRecipientRemoveDai}
+    />
+  ),
   [MotionType.AllowedRecipientTopUpDai]: (props: DescWithLimitsProps) => (
     <DescAllowedRecipientTopUp
       {...props}

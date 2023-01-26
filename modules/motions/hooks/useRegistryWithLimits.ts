@@ -64,7 +64,7 @@ export function useRecipientAll({ registryType }: HookArgs) {
     async () => {
       const events = await getEventsRecipientAdded(chainId, registry)
       return events.map(event => ({
-        title: event._title,
+        title: event._title || event._recipient, // for allowed recipient from referral
         address: event._recipient,
       }))
     },

@@ -7,7 +7,6 @@ import {
 } from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
-import { MotionType } from 'modules/motions/types'
 
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -36,7 +35,7 @@ export function DescAllowedRecipientTopUp({
 }) {
   const token = useTokenByTopUpType({ registryType })
   const { data: allowedRecipientMap } = useRecipientMapAll({
-    registryType: MotionType.AllowedRecipientTopUp,
+    registryType,
   })
 
   const recipients = useMemo(() => {
@@ -60,9 +59,12 @@ export function DescAllowedRecipientTopUp({
 
 export function DescAllowedRecipientRemove({
   callData,
-}: NestProps<RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']>) {
+  registryType,
+}: NestProps<RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+}) {
   const { data: allowedRecipients } = useRecipientAll({
-    registryType: MotionType.AllowedRecipientRemove,
+    registryType,
   })
 
   const program = useMemo(() => {
