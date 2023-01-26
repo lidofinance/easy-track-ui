@@ -33,6 +33,9 @@ export const EvmAddressesByChain = {
       '0x00BB68a12180a8f7E20D8422ba9F81c07A19A79E',
     [MotionType.AllowedRecipientTopUp]:
       '0x85d703B2A4BaD713b596c647badac9A1e95bB03d',
+    [MotionType.AllowedRecipientAddDai]: '0x',
+    [MotionType.AllowedRecipientRemoveDai]: '0x',
+    [MotionType.AllowedRecipientTopUpDai]: '0x',
     [MotionType.LegoLDOTopUp]: '0x00caAeF11EC545B192f16313F53912E453c91458',
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.RccDAITopUp]: '0x84f74733ede9bFD53c1B3Ea96338867C94EC313e',
@@ -61,6 +64,9 @@ export const EvmAddressesByChain = {
     [MotionType.AllowedRecipientAdd]: '0x',
     [MotionType.AllowedRecipientRemove]: '0x',
     [MotionType.AllowedRecipientTopUp]: '0x',
+    [MotionType.AllowedRecipientAddDai]: '0x',
+    [MotionType.AllowedRecipientRemoveDai]: '0x',
+    [MotionType.AllowedRecipientTopUpDai]: '0x',
     [MotionType.LegoLDOTopUp]: '0x',
     [MotionType.LegoDAITopUp]: '0x',
     [MotionType.RccDAITopUp]: '0x',
@@ -94,6 +100,12 @@ export const EvmAddressesByChain = {
       '0x6c2e12D9C1d6e3dE146A7519eCbcb79c96Fe3146',
     [MotionType.AllowedRecipientTopUp]:
       '0xD928dC9E4DaBeE939d3237A4f41983Ff5B6308dB',
+    [MotionType.AllowedRecipientAddDai]:
+      '0x734458219BE229F6631F083ea574EBACa2f9bEaf',
+    [MotionType.AllowedRecipientRemoveDai]:
+      '0x5FEC0bcd7519C4fE41eca5Fe1dD94345fA100A67',
+    [MotionType.AllowedRecipientTopUpDai]:
+      '0x9534A77029D57E249c467E5A1E0854cc26Cd75A0',
     [MotionType.LegoLDOTopUp]: '0xc39Dd5B66968e364D99e0c9E7089049351AB89CA',
     [MotionType.LegoDAITopUp]: '0xbf44eC2b23cA105F8a62e0587900a09A473288c6',
     [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',

@@ -1,6 +1,10 @@
 import { useMemo } from 'react'
-import { useRecipientMapAll, useRecipientAll } from 'modules/motions/hooks'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
+import {
+  useRecipientMapAll,
+  useRecipientAll,
+  REGISTRY_WITH_LIMITS_BY_MOTION_TYPE,
+  useTokenByTopUpType,
+} from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 import { MotionType } from 'modules/motions/types'
@@ -26,8 +30,11 @@ export function DescAllowedRecipientAdd({
 
 export function DescAllowedRecipientTopUp({
   callData,
-}: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']>) {
-  const governanceSymbol = useGovernanceSymbol()
+  registryType,
+}: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+}) {
+  const token = useTokenByTopUpType({ registryType })
   const { data: allowedRecipientMap } = useRecipientMapAll({
     registryType: MotionType.AllowedRecipientTopUp,
   })
@@ -44,7 +51,7 @@ export function DescAllowedRecipientTopUp({
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
           with {Number(formatEther(callData[1][i])).toLocaleString('en-EN')}{' '}
-          {governanceSymbol.data}
+          {token.label}
         </div>
       ))}
     </div>

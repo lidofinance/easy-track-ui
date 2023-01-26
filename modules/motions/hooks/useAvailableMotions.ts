@@ -28,7 +28,7 @@ const isHasTrustedCaller = (
 }
 
 export const useAvailableMotions = () => {
-  const { chainId, walletAddress, library } = useWeb3()
+  const { chainId, walletAddress } = useWeb3()
   const [availableMotions, setAvailableMotions] =
     useState<Record<MotionType, boolean>>()
 
@@ -63,10 +63,7 @@ export const useAvailableMotions = () => {
   const getTrustedConnectionInfo = useCallback(async () => {
     const promiseResult = await Promise.allSettled(
       contracts.map(contract => {
-        const connectedContract = contract.connect({
-          chainId,
-          library: library?.getSigner(),
-        })
+        const connectedContract = contract.connectRpc({ chainId })
 
         if (!isHasTrustedCaller(connectedContract)) return null
 
@@ -94,7 +91,7 @@ export const useAvailableMotions = () => {
     )
 
     setAvailableMotions(trustedCallerConnectedMap)
-  }, [chainId, contracts, isNodeOperatorConnected, library, walletAddress])
+  }, [chainId, contracts, isNodeOperatorConnected, walletAddress])
 
   useEffect(() => {
     getTrustedConnectionInfo()
