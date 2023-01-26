@@ -83,7 +83,7 @@ export const formParts = ({
                 <Option
                   key={i}
                   value={program.address}
-                  children={`${program.title}`}
+                  children={`${program.title || program.address}`}
                 />
               ))}
             </SelectControl>
