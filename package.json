@@ -52,7 +52,7 @@
     "lodash": "4.17.21",
     "memory-cache": "0.2.0",
     "mkdirp": "1.0.4",
-    "moment": "2.29.1",
+    "moment": "2.29.4",
     "moment-duration-format": "2.3.2",
     "next": "12.1.0",
     "next-connect": "0.12.2",
