@@ -27,7 +27,7 @@ export function DescAllowedRecipientAdd({
 
   return (
     <div>
-      ${name} <b>“{callData[1]}”</b> with address{' '}
+      {name} <b>“{callData[1]}”</b> with address{' '}
       <AddressInlineWithPop address={callData[0]} />
     </div>
   )
