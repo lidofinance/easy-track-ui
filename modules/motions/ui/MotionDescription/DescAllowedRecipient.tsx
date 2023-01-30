@@ -53,7 +53,7 @@ export function DescAllowedRecipientTopUp({
 
   return (
     <div>
-      ${name}:
+      {name}:
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
@@ -84,7 +84,7 @@ export function DescAllowedRecipientRemove({
 
   return (
     <div>
-      ${name} <b>{program?.title}</b> with address{' '}
+      {name} <b>{program?.title}</b> with address{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )
