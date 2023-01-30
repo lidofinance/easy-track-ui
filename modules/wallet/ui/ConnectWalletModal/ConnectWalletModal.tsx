@@ -5,6 +5,9 @@ import { WalletsModalForEth } from '@reef-knot/connect-wallet-modal'
 type WalletModalForEthProps = React.ComponentProps<typeof WalletsModalForEth>
 
 const HIDDEN_WALLETS: WalletModalForEthProps['hiddenWallets'] = [
+  'Coinbase',
+  'Trust',
+  'ImToken',
   'Coin98',
   'MathWallet',
   'Tally',
