@@ -1,9 +1,13 @@
 import { useMemo } from 'react'
-import { useRecipientMapAll, useRecipientAll } from 'modules/motions/hooks'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
+import {
+  useRecipientMapAll,
+  useRecipientAll,
+  REGISTRY_WITH_LIMITS_BY_MOTION_TYPE,
+  useTokenByTopUpType,
+} from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
-import { MotionType } from 'modules/motions/types'
+import { MotionTypeDisplayNames } from 'modules/motions/utils'
 
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -15,10 +19,15 @@ import { NestProps } from './types'
 
 export function DescAllowedRecipientAdd({
   callData,
-}: NestProps<AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']>) {
+  registryType,
+}: NestProps<AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+}) {
+  const name = MotionTypeDisplayNames[registryType]
+
   return (
     <div>
-      Add reward program <b>“{callData[1]}”</b> with address{' '}
+      {name} <b>“{callData[1]}”</b> with address{' '}
       <AddressInlineWithPop address={callData[0]} />
     </div>
   )
@@ -26,10 +35,13 @@ export function DescAllowedRecipientAdd({
 
 export function DescAllowedRecipientTopUp({
   callData,
-}: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']>) {
-  const governanceSymbol = useGovernanceSymbol()
+  registryType,
+}: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+}) {
+  const token = useTokenByTopUpType({ registryType })
   const { data: allowedRecipientMap } = useRecipientMapAll({
-    registryType: MotionType.AllowedRecipientTopUp,
+    registryType,
   })
 
   const recipients = useMemo(() => {
@@ -37,14 +49,16 @@ export function DescAllowedRecipientTopUp({
     return callData[0].map(address => allowedRecipientMap[address])
   }, [callData, allowedRecipientMap])
 
+  const name = MotionTypeDisplayNames[registryType]
+
   return (
     <div>
-      Top up reward programs:
+      ${name}:
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{recipients?.[i]}</b> <AddressInlineWithPop address={address} />{' '}
           with {Number(formatEther(callData[1][i])).toLocaleString('en-EN')}{' '}
-          {governanceSymbol.data}
+          {token.label}
         </div>
       ))}
     </div>
@@ -53,9 +67,12 @@ export function DescAllowedRecipientTopUp({
 
 export function DescAllowedRecipientRemove({
   callData,
-}: NestProps<RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']>) {
+  registryType,
+}: NestProps<RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+}) {
   const { data: allowedRecipients } = useRecipientAll({
-    registryType: MotionType.AllowedRecipientRemove,
+    registryType,
   })
 
   const program = useMemo(() => {
@@ -63,9 +80,11 @@ export function DescAllowedRecipientRemove({
     return allowedRecipients.find(p => p.address === callData)
   }, [callData, allowedRecipients])
 
+  const name = MotionTypeDisplayNames[registryType]
+
   return (
     <div>
-      Remove reward program <b>{program?.title}</b> with address{' '}
+      ${name} <b>{program?.title}</b> with address{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )
