@@ -15,6 +15,9 @@ import {
   ContractEvmAllowedRecipientAdd,
   ContractEvmAllowedRecipientRemove,
   ContractEvmAllowedRecipientTopUp,
+  ContractEvmAllowedRecipientAddDai,
+  ContractEvmAllowedRecipientRemoveDai,
+  ContractEvmAllowedRecipientTopUpDai,
   ContractEvmLegoDAITopUp,
   ContractEvmLegoLDOTopUp,
   ContractEvmRccDAITopUp,
@@ -36,6 +39,9 @@ export const EVM_CONTRACTS = {
   [MotionType.AllowedRecipientAdd]: ContractEvmAllowedRecipientAdd,
   [MotionType.AllowedRecipientRemove]: ContractEvmAllowedRecipientRemove,
   [MotionType.AllowedRecipientTopUp]: ContractEvmAllowedRecipientTopUp,
+  [MotionType.AllowedRecipientAddDai]: ContractEvmAllowedRecipientAddDai,
+  [MotionType.AllowedRecipientRemoveDai]: ContractEvmAllowedRecipientRemoveDai,
+  [MotionType.AllowedRecipientTopUpDai]: ContractEvmAllowedRecipientTopUpDai,
   [MotionType.LegoLDOTopUp]: ContractEvmLegoLDOTopUp,
   [MotionType.LegoDAITopUp]: ContractEvmLegoDAITopUp,
   [MotionType.RccDAITopUp]: ContractEvmRccDAITopUp,
@@ -51,7 +57,10 @@ export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
 
   const contract = useGlobalMemo(() => {
     if (motionType === EvmUnrecognized) return null
-    const library = getStaticRpcBatchProvider(chainId, getBackendRpcUrl(chainId))
+    const library = getStaticRpcBatchProvider(
+      chainId,
+      getBackendRpcUrl(chainId),
+    )
     return EVM_CONTRACTS[motionType as MotionType].connect({ chainId, library })
   }, `evm-contract-${chainId}-${motionType}`)
 

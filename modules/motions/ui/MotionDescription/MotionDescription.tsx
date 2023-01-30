@@ -23,7 +23,11 @@ import {
 
 import { DescTopUpWithLimits } from './DescTopUpWithLimits'
 
-import { TopUpWithLimitsAbi } from 'generated'
+import {
+  TopUpWithLimitsAbi,
+  RemoveAllowedRecipientLDOAbi,
+  AddAllowedRecipientLDOAbi,
+} from 'generated'
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
@@ -31,6 +35,12 @@ import { NestProps } from './types'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
+>
+type DescAllowedRecipientRemoveProps = NestProps<
+  RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']
+>
+type DescAllowedRecipientAddProps = NestProps<
+  AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']
 >
 
 const MOTION_DESCRIPTIONS = {
@@ -42,9 +52,48 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.ReferralPartnerAdd]: DescReferralPartnerAdd,
   [MotionType.ReferralPartnerTopUp]: DescReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: DescReferralPartnerRemove,
-  [MotionType.AllowedRecipientAdd]: DescAllowedRecipientAdd,
-  [MotionType.AllowedRecipientRemove]: DescAllowedRecipientRemove,
-  [MotionType.AllowedRecipientTopUp]: DescAllowedRecipientTopUp,
+  [MotionType.AllowedRecipientAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.AllowedRecipientAdd}
+    />
+  ),
+  [MotionType.AllowedRecipientRemove]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.AllowedRecipientRemove}
+    />
+  ),
+  [MotionType.AllowedRecipientTopUp]: (props: DescWithLimitsProps) => (
+    <DescAllowedRecipientTopUp
+      {...props}
+      registryType={MotionType.AllowedRecipientTopUp}
+    />
+  ),
+  [MotionType.AllowedRecipientAddDai]: (
+    props: DescAllowedRecipientAddProps,
+  ) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.AllowedRecipientAddDai}
+    />
+  ),
+  [MotionType.AllowedRecipientRemoveDai]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.AllowedRecipientRemoveDai}
+    />
+  ),
+  [MotionType.AllowedRecipientTopUpDai]: (props: DescWithLimitsProps) => (
+    <DescAllowedRecipientTopUp
+      {...props}
+      registryType={MotionType.AllowedRecipientTopUpDai}
+    />
+  ),
   [MotionType.LegoLDOTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits {...props} registryType={MotionType.LegoLDOTopUp} />
   ),
