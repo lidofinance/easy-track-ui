@@ -1,3 +1,24 @@
+# [0.13.0](https://github.com/lidofinance/easy-track-ui/compare/0.12.1...0.13.0) (2023-01-30)
+
+
+### Bug Fixes
+
+* change logic of display recipient name ([1d92c09](https://github.com/lidofinance/easy-track-ui/commit/1d92c09cbc00feac47b1fc9ba8b3400f712b817c))
+* fix browserlist ([c340833](https://github.com/lidofinance/easy-track-ui/commit/c340833badd0cc6986105b5d17da0b893100a3d3))
+* fix motion desc ([769950d](https://github.com/lidofinance/easy-track-ui/commit/769950decb1ca68ae55c16856c5a79d1d7a97ecc))
+* fix motions desc - add/remove ([ec398a7](https://github.com/lidofinance/easy-track-ui/commit/ec398a7049fb543732cad1cc4fd9b99abd4d3de2))
+* fix recipient title and desc ([765e528](https://github.com/lidofinance/easy-track-ui/commit/765e52887dd479dd65665beeeed55134795e6508))
+
+
+### Features
+
+* add eth-ui to codeowners ([605100a](https://github.com/lidofinance/easy-track-ui/commit/605100a23530305cbe7c24f67502f0dcd543ce73))
+* add mainnet addresses ([8f4784a](https://github.com/lidofinance/easy-track-ui/commit/8f4784af2b12506d4923163ca836d5b7f03deb94))
+* add new reward program DAI ([a3c91ad](https://github.com/lidofinance/easy-track-ui/commit/a3c91ad855a65410f53b70d76357726a2901c35d))
+* rename new program ([fe07d9f](https://github.com/lidofinance/easy-track-ui/commit/fe07d9fd488f5d395f0f15627097d91dbd309bd3))
+
+
+
 ## [0.12.1](https://github.com/lidofinance/easy-track-ui/compare/0.12.0...0.12.1) (2023-01-19)
 
 
@@ -133,27 +154,6 @@
 * Explicit relese wf trigger ([4c19d4c](https://github.com/lidofinance/easy-track-ui/commit/4c19d4c78e7f15c7d014c970363f575f6d470996))
 * node operators key checking mainnet support ([0cce780](https://github.com/lidofinance/easy-track-ui/commit/0cce780d5487b39859c9a2075a2225955500ca6c))
 * WF name ([70ccb7c](https://github.com/lidofinance/easy-track-ui/commit/70ccb7c66e1d66d28e30b3e3038a322047175a39))
-
-
-
-# [0.9.0](https://github.com/lidofinance/easy-track-ui/compare/0.7.1...0.9.0) (2022-05-17)
-
-
-### Bug Fixes
-
-* dockerfile ([771a106](https://github.com/lidofinance/easy-track-ui/commit/771a10668bc11d036bb3a3a28ce857bdc4619409))
-* node operator keys link ([ca8b2c3](https://github.com/lidofinance/easy-track-ui/commit/ca8b2c3d0d94cef5f0d9abf0c7616109b768e39b))
-* node operator keys validation ([eedbb8b](https://github.com/lidofinance/easy-track-ui/commit/eedbb8b28b3eb2316c8119bbff331c355722e0c2))
-* progressive referrals and partners loading ([428f98a](https://github.com/lidofinance/easy-track-ui/commit/428f98a152bacc2f01f2d9f6fd952b0ffd22dc11))
-* upgrade git version in docker file ([c6220b2](https://github.com/lidofinance/easy-track-ui/commit/c6220b2be2f220f45ec5a54b1410d1e5b8a6db2a))
-
-
-### Features
-
-* fancy node operator keys errors displaying ([5cba069](https://github.com/lidofinance/easy-track-ui/commit/5cba069fdc9ed241c87064e3d13d8afd376b7b93))
-* New relese flow ([bf9b9ac](https://github.com/lidofinance/easy-track-ui/commit/bf9b9acb44a044a1965d648f0b1444d8fc03a6ca))
-* node operator keys info ([f451fce](https://github.com/lidofinance/easy-track-ui/commit/f451fcec35d3f3e08ca122fbe56265df42aa37b1))
-* **security:** added codeowners for lockfiles ([f05f054](https://github.com/lidofinance/easy-track-ui/commit/f05f054e602630cf559bf10d1c3527f13cd42f80))
 
 
 
