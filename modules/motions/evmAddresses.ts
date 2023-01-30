@@ -33,9 +33,12 @@ export const EvmAddressesByChain = {
       '0x00BB68a12180a8f7E20D8422ba9F81c07A19A79E',
     [MotionType.AllowedRecipientTopUp]:
       '0x85d703B2A4BaD713b596c647badac9A1e95bB03d',
-    [MotionType.AllowedRecipientAddDai]: '0x',
-    [MotionType.AllowedRecipientRemoveDai]: '0x',
-    [MotionType.AllowedRecipientTopUpDai]: '0x',
+    [MotionType.AllowedRecipientAddDai]:
+      '0x8F06a7f244F6Bb4B68Cd6dB05213042bFc0d7151',
+    [MotionType.AllowedRecipientRemoveDai]:
+      '0xd8f9B72Cd97388f23814ECF429cd18815F6352c1',
+    [MotionType.AllowedRecipientTopUpDai]:
+      '0x009ffa22ce4388d2F5De128Ca8E6fD229A312450',
     [MotionType.LegoLDOTopUp]: '0x00caAeF11EC545B192f16313F53912E453c91458',
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.RccDAITopUp]: '0x84f74733ede9bFD53c1B3Ea96338867C94EC313e',
