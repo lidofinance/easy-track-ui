@@ -77,6 +77,26 @@ export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
 })
 
+export const ContractAllowedRecipientDaiRegistry = createContractHelpers({
+  factory: AllowedRecipientsRegistryLDOAbi__factory,
+  address: CONTRACT_ADDRESSES.AllowedRecipientDaiRegistry,
+})
+
+export const ContractEvmAllowedRecipientAddDai = createContractHelpers({
+  factory: AddAllowedRecipientLDOAbi__factory,
+  address: EvmAddressesByType[MotionType.AllowedRecipientAddDai],
+})
+
+export const ContractEvmAllowedRecipientRemoveDai = createContractHelpers({
+  factory: RemoveAllowedRecipientLDOAbi__factory,
+  address: EvmAddressesByType[MotionType.AllowedRecipientRemoveDai],
+})
+
+export const ContractEvmAllowedRecipientTopUpDai = createContractHelpers({
+  factory: TopUpAllowedRecipientsLDOAbi__factory,
+  address: EvmAddressesByType[MotionType.AllowedRecipientTopUpDai],
+})
+
 export const ContractLegoLDORegistry = createContractHelpers({
   factory: RegistryWithLimitsAbi__factory,
   address: CONTRACT_ADDRESSES.LegoLDORegistry,

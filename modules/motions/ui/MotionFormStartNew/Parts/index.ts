@@ -22,9 +22,24 @@ export const formParts = {
   [MotionType.ReferralPartnerAdd]: formReferralPartnerAdd.formParts,
   [MotionType.ReferralPartnerRemove]: formReferralPartnerRemove.formParts,
   [MotionType.ReferralPartnerTopUp]: formReferralPartnerTopUp.formParts,
-  [MotionType.AllowedRecipientAdd]: formAllowedRecipientAdd.formParts,
-  [MotionType.AllowedRecipientRemove]: formAllowedRecipientRemove.formParts,
-  [MotionType.AllowedRecipientTopUp]: formAllowedRecipientTopUp.formParts,
+  [MotionType.AllowedRecipientAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionType.AllowedRecipientAdd,
+  }),
+  [MotionType.AllowedRecipientRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionType.AllowedRecipientRemove,
+  }),
+  [MotionType.AllowedRecipientTopUp]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionType.AllowedRecipientTopUp,
+  }),
+  [MotionType.AllowedRecipientAddDai]: formAllowedRecipientAdd.formParts({
+    registryType: MotionType.AllowedRecipientAddDai,
+  }),
+  [MotionType.AllowedRecipientRemoveDai]: formAllowedRecipientRemove.formParts({
+    registryType: MotionType.AllowedRecipientRemoveDai,
+  }),
+  [MotionType.AllowedRecipientTopUpDai]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionType.AllowedRecipientTopUpDai,
+  }),
   [MotionType.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionType.LegoLDOTopUp,
   }),
