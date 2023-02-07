@@ -2,14 +2,20 @@ import styled from 'styled-components'
 
 export const Actions = styled.div`
   display: flex;
-  margin-bottom: -1px;
 
   & > * {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 
     &:before {
+      border-bottom: none;
       border-color: ${({ theme }) => theme.colors.border};
+    }
+
+    &:not(:first-child) {
+      &:before {
+        border-left: none;
+      }
     }
 
     &:hover {

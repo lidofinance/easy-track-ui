@@ -30,7 +30,7 @@ function BodySafe({ tx }: BodySafeProps) {
   const { walletAddress } = useWeb3()
   const openGnosis = useGnosisOpener(
     String(walletAddress),
-    '/transactions/queue',
+    `/transactions/tx?id=multisig_${String(walletAddress)}_${tx.safeTxHash}`,
   )
   return (
     <div>
