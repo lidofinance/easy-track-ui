@@ -2,16 +2,17 @@ import {
   FormProvider,
   UseFormReturn,
   UseFormHandleSubmit,
+  FieldValues,
 } from 'react-hook-form'
 
-type Props<TFieldValues> = {
+type Props<TFieldValues extends FieldValues> = {
   formMethods: UseFormReturn<TFieldValues>
   onSubmit: Parameters<UseFormHandleSubmit<TFieldValues>>[0]
   className?: string
   children?: React.ReactNode
 }
 
-export function Form<TFieldValues>({
+export function Form<TFieldValues extends FieldValues>({
   formMethods,
   onSubmit,
   className,

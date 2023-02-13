@@ -9,7 +9,11 @@ import type { Signer, providers } from 'ethers'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
 import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
 import { getChainName } from 'modules/blockChain/chains'
-import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
+import { FilterMethods } from 'modules/shared/utils/utilTypes'
+import {
+  AsyncMethodParameters,
+  AsyncMethodReturns,
+} from 'modules/types/filter-async-methods'
 
 type Library = Signer | providers.Provider
 
@@ -54,7 +58,10 @@ export function createContractHelpers<F extends Factory>({
   }
 
   function connectRpc({ chainId }: CallRpcArgs) {
-    const library = getStaticRpcBatchProvider(chainId, getBackendRpcUrl(chainId))
+    const library = getStaticRpcBatchProvider(
+      chainId,
+      getBackendRpcUrl(chainId),
+    )
     return connect({ chainId, library })
   }
 
@@ -87,10 +94,10 @@ export function createContractHelpers<F extends Factory>({
   const getUseSwr = function (type: 'web3' | 'rpc') {
     return function <
       M extends FilterMethods<Instance>,
-      Data extends UnpackedPromise<ReturnType<Instance[M]>>,
+      Data extends AsyncMethodReturns<Instance, M>,
     >(
       method: M | null,
-      params: Parameters<Instance[M]>,
+      params: AsyncMethodParameters<Instance, M>,
       config?: SWRConfiguration<Data>,
     ) {
       const contractInstance =

@@ -19,7 +19,7 @@ type Args<FormData> = {
   }>
 }
 
-export function createMotionFormPart<FormData>({
+export function createMotionFormPart<FormData extends object>({
   motionType,
   populateTx,
   Component,
