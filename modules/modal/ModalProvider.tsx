@@ -1,8 +1,16 @@
-import { memo, useMemo, useCallback, createContext, useRef } from 'react'
+import {
+  memo,
+  useMemo,
+  useCallback,
+  createContext,
+  useRef,
+  ComponentType,
+  ReactNode,
+} from 'react'
 import type { ModalProps } from '@lidofinance/lido-ui'
 import { useForceUpdate } from 'modules/shared/hooks/useForceUpdate'
 
-export type Modal = React.ComponentType<ModalProps>
+export type Modal = ComponentType<ModalProps>
 
 type ModalContextValue = {
   openModal: (modal: Modal) => void
@@ -11,11 +19,11 @@ type ModalContextValue = {
 export const modalContext = createContext({} as ModalContextValue)
 
 type Props = {
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 function ModalProviderRaw({ children }: Props) {
-  const stateRef = useRef(null as Modal | null)
+  const stateRef = useRef<Modal | null>(null)
   const update = useForceUpdate()
 
   const openModal = useCallback(

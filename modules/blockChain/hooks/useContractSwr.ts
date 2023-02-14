@@ -1,15 +1,19 @@
 import { SWRConfiguration } from 'swr'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { FilterMethods, UnpackedPromise } from 'modules/shared/utils/utilTypes'
+import { FilterMethods } from 'modules/shared/utils/utilTypes'
+import {
+  AsyncMethodParameters,
+  AsyncMethodReturns,
+} from 'modules/types/filter-async-methods'
 
 export function useContractSwr<
   Contract,
   Method extends FilterMethods<Contract>,
-  Data extends UnpackedPromise<ReturnType<Contract[Method]>>,
+  Data extends AsyncMethodReturns<Contract, Method>,
 >(
   contract: Contract,
   method: Method | null,
-  params: Parameters<Contract[Method]>,
+  params: AsyncMethodParameters<Contract, Method>,
   config?: SWRConfiguration<Data>,
 ) {
   const shouldFetch = method !== null
@@ -18,7 +22,7 @@ export function useContractSwr<
 
   return useSWR<Data>(
     shouldFetch ? args : null,
-    () => (method !== null ? contract[method](...params) : null),
+    () => (method !== null ? (contract as any)[method](...params) : null),
     config,
   )
 }
