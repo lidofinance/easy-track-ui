@@ -72,26 +72,28 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.AllowedRecipientTopUp}
     />
   ),
-  [MotionType.AllowedRecipientAddDai]: (
+  [MotionType.AllowedRecipientAddReferralDai]: (
     props: DescAllowedRecipientAddProps,
   ) => (
     <DescAllowedRecipientAdd
       {...props}
-      registryType={MotionType.AllowedRecipientAddDai}
+      registryType={MotionType.AllowedRecipientAddReferralDai}
     />
   ),
-  [MotionType.AllowedRecipientRemoveDai]: (
+  [MotionType.AllowedRecipientRemoveReferralDai]: (
     props: DescAllowedRecipientRemoveProps,
   ) => (
     <DescAllowedRecipientRemove
       {...props}
-      registryType={MotionType.AllowedRecipientRemoveDai}
+      registryType={MotionType.AllowedRecipientRemoveReferralDai}
     />
   ),
-  [MotionType.AllowedRecipientTopUpDai]: (props: DescWithLimitsProps) => (
+  [MotionType.AllowedRecipientTopUpReferralDai]: (
+    props: DescWithLimitsProps,
+  ) => (
     <DescAllowedRecipientTopUp
       {...props}
-      registryType={MotionType.AllowedRecipientTopUpDai}
+      registryType={MotionType.AllowedRecipientTopUpReferralDai}
     />
   ),
   [MotionType.LegoLDOTopUp]: (props: DescWithLimitsProps) => (

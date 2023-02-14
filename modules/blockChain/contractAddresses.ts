@@ -78,7 +78,7 @@ export const AllowedRecipientRegistry = {
   [CHAINS.Kintsugi]: '0x0000000000000000000000000000000000000000',
 }
 
-export const AllowedRecipientDaiRegistry = {
+export const AllowedRecipientReferralDaiRegistry = {
   [CHAINS.Mainnet]: '0xa295C212B44a48D07746d70d32Aa6Ca9b09Fb846',
   [CHAINS.Ropsten]: '0x0000000000000000000000000000000000000000',
   [CHAINS.Rinkeby]: '0x0000000000000000000000000000000000000000',

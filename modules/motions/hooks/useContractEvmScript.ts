@@ -15,9 +15,9 @@ import {
   ContractEvmAllowedRecipientAdd,
   ContractEvmAllowedRecipientRemove,
   ContractEvmAllowedRecipientTopUp,
-  ContractEvmAllowedRecipientAddDai,
-  ContractEvmAllowedRecipientRemoveDai,
-  ContractEvmAllowedRecipientTopUpDai,
+  ContractEvmAllowedRecipientAddReferralDai,
+  ContractEvmAllowedRecipientRemoveReferralDai,
+  ContractEvmAllowedRecipientTopUpReferralDai,
   ContractEvmLegoDAITopUp,
   ContractEvmLegoLDOTopUp,
   ContractEvmRccDAITopUp,
@@ -39,9 +39,12 @@ export const EVM_CONTRACTS = {
   [MotionType.AllowedRecipientAdd]: ContractEvmAllowedRecipientAdd,
   [MotionType.AllowedRecipientRemove]: ContractEvmAllowedRecipientRemove,
   [MotionType.AllowedRecipientTopUp]: ContractEvmAllowedRecipientTopUp,
-  [MotionType.AllowedRecipientAddDai]: ContractEvmAllowedRecipientAddDai,
-  [MotionType.AllowedRecipientRemoveDai]: ContractEvmAllowedRecipientRemoveDai,
-  [MotionType.AllowedRecipientTopUpDai]: ContractEvmAllowedRecipientTopUpDai,
+  [MotionType.AllowedRecipientAddReferralDai]:
+    ContractEvmAllowedRecipientAddReferralDai,
+  [MotionType.AllowedRecipientRemoveReferralDai]:
+    ContractEvmAllowedRecipientRemoveReferralDai,
+  [MotionType.AllowedRecipientTopUpReferralDai]:
+    ContractEvmAllowedRecipientTopUpReferralDai,
   [MotionType.LegoLDOTopUp]: ContractEvmLegoLDOTopUp,
   [MotionType.LegoDAITopUp]: ContractEvmLegoDAITopUp,
   [MotionType.RccDAITopUp]: ContractEvmRccDAITopUp,

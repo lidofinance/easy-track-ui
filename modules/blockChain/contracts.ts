@@ -77,25 +77,28 @@ export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
 })
 
-export const ContractAllowedRecipientDaiRegistry = createContractHelpers({
-  factory: AllowedRecipientsRegistryLDOAbi__factory,
-  address: CONTRACT_ADDRESSES.AllowedRecipientDaiRegistry,
-})
+export const ContractAllowedRecipientReferralDaiRegistry =
+  createContractHelpers({
+    factory: AllowedRecipientsRegistryLDOAbi__factory,
+    address: CONTRACT_ADDRESSES.AllowedRecipientReferralDaiRegistry,
+  })
 
-export const ContractEvmAllowedRecipientAddDai = createContractHelpers({
+export const ContractEvmAllowedRecipientAddReferralDai = createContractHelpers({
   factory: AddAllowedRecipientLDOAbi__factory,
-  address: EvmAddressesByType[MotionType.AllowedRecipientAddDai],
+  address: EvmAddressesByType[MotionType.AllowedRecipientAddReferralDai],
 })
 
-export const ContractEvmAllowedRecipientRemoveDai = createContractHelpers({
-  factory: RemoveAllowedRecipientLDOAbi__factory,
-  address: EvmAddressesByType[MotionType.AllowedRecipientRemoveDai],
-})
+export const ContractEvmAllowedRecipientRemoveReferralDai =
+  createContractHelpers({
+    factory: RemoveAllowedRecipientLDOAbi__factory,
+    address: EvmAddressesByType[MotionType.AllowedRecipientRemoveReferralDai],
+  })
 
-export const ContractEvmAllowedRecipientTopUpDai = createContractHelpers({
-  factory: TopUpAllowedRecipientsLDOAbi__factory,
-  address: EvmAddressesByType[MotionType.AllowedRecipientTopUpDai],
-})
+export const ContractEvmAllowedRecipientTopUpReferralDai =
+  createContractHelpers({
+    factory: TopUpAllowedRecipientsLDOAbi__factory,
+    address: EvmAddressesByType[MotionType.AllowedRecipientTopUpReferralDai],
+  })
 
 export const ContractLegoLDORegistry = createContractHelpers({
   factory: RegistryWithLimitsAbi__factory,

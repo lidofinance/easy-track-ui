@@ -29,7 +29,7 @@ import {
 
 import {
   ContractEvmAllowedRecipientTopUp,
-  ContractEvmAllowedRecipientTopUpDai,
+  ContractEvmAllowedRecipientTopUpReferralDai,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -54,9 +54,9 @@ export const ALLOWED_RECIPIENT_TOPUP_MAP = {
     evmContract: ContractEvmAllowedRecipientTopUp,
     motionType: MotionType.AllowedRecipientTopUp,
   },
-  [MotionType.AllowedRecipientTopUpDai]: {
-    evmContract: ContractEvmAllowedRecipientTopUpDai,
-    motionType: MotionType.AllowedRecipientTopUpDai,
+  [MotionType.AllowedRecipientTopUpReferralDai]: {
+    evmContract: ContractEvmAllowedRecipientTopUpReferralDai,
+    motionType: MotionType.AllowedRecipientTopUpReferralDai,
   },
 }
 

@@ -31,15 +31,18 @@ export const formParts = {
   [MotionType.AllowedRecipientTopUp]: formAllowedRecipientTopUp.formParts({
     registryType: MotionType.AllowedRecipientTopUp,
   }),
-  [MotionType.AllowedRecipientAddDai]: formAllowedRecipientAdd.formParts({
-    registryType: MotionType.AllowedRecipientAddDai,
-  }),
-  [MotionType.AllowedRecipientRemoveDai]: formAllowedRecipientRemove.formParts({
-    registryType: MotionType.AllowedRecipientRemoveDai,
-  }),
-  [MotionType.AllowedRecipientTopUpDai]: formAllowedRecipientTopUp.formParts({
-    registryType: MotionType.AllowedRecipientTopUpDai,
-  }),
+  [MotionType.AllowedRecipientAddReferralDai]:
+    formAllowedRecipientAdd.formParts({
+      registryType: MotionType.AllowedRecipientAddReferralDai,
+    }),
+  [MotionType.AllowedRecipientRemoveReferralDai]:
+    formAllowedRecipientRemove.formParts({
+      registryType: MotionType.AllowedRecipientRemoveReferralDai,
+    }),
+  [MotionType.AllowedRecipientTopUpReferralDai]:
+    formAllowedRecipientTopUp.formParts({
+      registryType: MotionType.AllowedRecipientTopUpReferralDai,
+    }),
   [MotionType.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionType.LegoLDOTopUp,
   }),
