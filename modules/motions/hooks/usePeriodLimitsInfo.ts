@@ -6,6 +6,7 @@ import {
   ContractEasyTrack,
   ContractAllowedRecipientRegistry,
   ContractAllowedRecipientReferralDaiRegistry,
+  ContractAllowedRecipientTrpLdoRegistry,
   ContractLegoLDORegistry,
   ContractRccDAIRegistry,
   ContractAtcDAIRegistry,
@@ -160,6 +161,8 @@ const registryByMotionType: {
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
   [MotionType.AllowedRecipientTopUpReferralDai]:
     ContractAllowedRecipientReferralDaiRegistry,
+  [MotionType.AllowedRecipientTopUpTrpLdo]:
+    ContractAllowedRecipientTrpLdoRegistry,
 }
 
 export const usePeriodLimitsInfoByMotionType = (props: {

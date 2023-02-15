@@ -43,6 +43,11 @@ export const formParts = {
     formAllowedRecipientTopUp.formParts({
       registryType: MotionType.AllowedRecipientTopUpReferralDai,
     }),
+  [MotionType.AllowedRecipientTopUpTrpLdo]: formAllowedRecipientTopUp.formParts(
+    {
+      registryType: MotionType.AllowedRecipientTopUpTrpLdo,
+    },
+  ),
   [MotionType.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionType.LegoLDOTopUp,
   }),

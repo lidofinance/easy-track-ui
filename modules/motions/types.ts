@@ -20,6 +20,7 @@ export const MotionType = {
   AllowedRecipientAddReferralDai: 'AllowedRecipientAddReferralDai',
   AllowedRecipientRemoveReferralDai: 'AllowedRecipientRemoveReferralDai',
   AllowedRecipientTopUpReferralDai: 'AllowedRecipientTopUpReferralDai',
+  AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
   LegoDAITopUp: 'LegoDAITopUp',
   RccDAITopUp: 'RccDAITopUp',

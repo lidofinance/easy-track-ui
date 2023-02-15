@@ -96,6 +96,12 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.AllowedRecipientTopUpReferralDai}
     />
   ),
+  [MotionType.AllowedRecipientTopUpTrpLdo]: (props: DescWithLimitsProps) => (
+    <DescAllowedRecipientTopUp
+      {...props}
+      registryType={MotionType.AllowedRecipientTopUpTrpLdo}
+    />
+  ),
   [MotionType.LegoLDOTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits {...props} registryType={MotionType.LegoLDOTopUp} />
   ),

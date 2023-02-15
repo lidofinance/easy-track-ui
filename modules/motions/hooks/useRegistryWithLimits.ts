@@ -10,6 +10,7 @@ import {
   ContractGasFunderETHRegistry,
   ContractAllowedRecipientRegistry,
   ContractAllowedRecipientReferralDaiRegistry,
+  ContractAllowedRecipientTrpLdoRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -37,6 +38,8 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
     ContractAllowedRecipientReferralDaiRegistry,
   [MotionType.AllowedRecipientAddReferralDai]:
     ContractAllowedRecipientReferralDaiRegistry,
+  [MotionType.AllowedRecipientTopUpTrpLdo]:
+    ContractAllowedRecipientTrpLdoRegistry,
 }
 
 type HookArgs = {

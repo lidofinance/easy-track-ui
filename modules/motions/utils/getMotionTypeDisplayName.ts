@@ -23,6 +23,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.AllowedRecipientAddReferralDai]: 'Add DAI referral program',
   [MotionType.AllowedRecipientRemoveReferralDai]: 'Remove DAI referral program',
   [MotionType.AllowedRecipientTopUpReferralDai]: 'Top up DAI referral program',
+  [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.RccDAITopUp]: 'Top up RCC DAI',

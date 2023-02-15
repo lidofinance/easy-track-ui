@@ -77,6 +77,7 @@ export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
 })
 
+// DAI Referral
 export const ContractAllowedRecipientReferralDaiRegistry =
   createContractHelpers({
     factory: AllowedRecipientsRegistryLDOAbi__factory,
@@ -99,6 +100,17 @@ export const ContractEvmAllowedRecipientTopUpReferralDai =
     factory: TopUpAllowedRecipientsLDOAbi__factory,
     address: EvmAddressesByType[MotionType.AllowedRecipientTopUpReferralDai],
   })
+
+// LDO TRP
+export const ContractAllowedRecipientTrpLdoRegistry = createContractHelpers({
+  factory: AllowedRecipientsRegistryLDOAbi__factory,
+  address: CONTRACT_ADDRESSES.AllowedRecipientTrpLdoRegistry,
+})
+
+export const ContractEvmAllowedRecipientTopUpTrpLdo = createContractHelpers({
+  factory: TopUpAllowedRecipientsLDOAbi__factory,
+  address: EvmAddressesByType[MotionType.AllowedRecipientTopUpTrpLdo],
+})
 
 export const ContractLegoLDORegistry = createContractHelpers({
   factory: RegistryWithLimitsAbi__factory,

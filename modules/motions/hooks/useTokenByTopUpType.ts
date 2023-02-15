@@ -41,6 +41,11 @@ const TOKEN = {
     label: 'DAI',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
   },
+  [MotionType.AllowedRecipientTopUpTrpLdo]: {
+    label: 'LDO',
+    value: (chainId: CHAINS) =>
+      ContractGovernanceToken.address[chainId] as string,
+  },
 }
 
 const isTopUpType = (type: unknown): type is keyof typeof TOKEN => {
