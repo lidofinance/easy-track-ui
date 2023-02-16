@@ -29,7 +29,8 @@ import {
 
 import {
   ContractEvmAllowedRecipientTopUp,
-  ContractEvmAllowedRecipientTopUpDai,
+  ContractEvmAllowedRecipientTopUpReferralDai,
+  ContractEvmAllowedRecipientTopUpTrpLdo,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -54,9 +55,13 @@ export const ALLOWED_RECIPIENT_TOPUP_MAP = {
     evmContract: ContractEvmAllowedRecipientTopUp,
     motionType: MotionType.AllowedRecipientTopUp,
   },
-  [MotionType.AllowedRecipientTopUpDai]: {
-    evmContract: ContractEvmAllowedRecipientTopUpDai,
-    motionType: MotionType.AllowedRecipientTopUpDai,
+  [MotionType.AllowedRecipientTopUpReferralDai]: {
+    evmContract: ContractEvmAllowedRecipientTopUpReferralDai,
+    motionType: MotionType.AllowedRecipientTopUpReferralDai,
+  },
+  [MotionType.AllowedRecipientTopUpTrpLdo]: {
+    evmContract: ContractEvmAllowedRecipientTopUpTrpLdo,
+    motionType: MotionType.AllowedRecipientTopUpTrpLdo,
   },
 }
 
@@ -180,7 +185,9 @@ export const formParts = ({
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
-                  <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                  {fieldsArr.fields.length > 1 && (
+                    <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                  )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
                       Remove program {i + 1}

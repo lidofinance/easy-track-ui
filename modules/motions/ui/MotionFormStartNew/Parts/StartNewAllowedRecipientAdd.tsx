@@ -9,7 +9,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
 import {
   ContractEvmAllowedRecipientAdd,
-  ContractEvmAllowedRecipientAddDai,
+  ContractEvmAllowedRecipientAddReferralDai,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -20,9 +20,9 @@ export const ALLOWED_RECIPIENT_ADD_MAP = {
     evmContract: ContractEvmAllowedRecipientAdd,
     motionType: MotionType.AllowedRecipientAdd,
   },
-  [MotionType.AllowedRecipientAddDai]: {
-    evmContract: ContractEvmAllowedRecipientAddDai,
-    motionType: MotionType.AllowedRecipientAddDai,
+  [MotionType.AllowedRecipientAddReferralDai]: {
+    evmContract: ContractEvmAllowedRecipientAddReferralDai,
+    motionType: MotionType.AllowedRecipientAddReferralDai,
   },
 }
 

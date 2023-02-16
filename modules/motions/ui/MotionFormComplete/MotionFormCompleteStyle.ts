@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Text } from 'modules/shared/ui/Common/Text'
-import { Loader } from '@lidofinance/loaders'
+import { Loader } from '@lidofinance/lido-ui'
 import { TxStatus } from 'modules/blockChain/types'
 
 export const Hash = styled(Text).attrs({

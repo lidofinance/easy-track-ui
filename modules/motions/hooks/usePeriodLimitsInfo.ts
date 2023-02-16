@@ -5,7 +5,8 @@ import {
   ContractLegoDAIRegistry,
   ContractEasyTrack,
   ContractAllowedRecipientRegistry,
-  ContractAllowedRecipientDaiRegistry,
+  ContractAllowedRecipientReferralDaiRegistry,
+  ContractAllowedRecipientTrpLdoRegistry,
   ContractLegoLDORegistry,
   ContractRccDAIRegistry,
   ContractAtcDAIRegistry,
@@ -158,7 +159,10 @@ const registryByMotionType: {
   [MotionType.AtcDAITopUp]: ContractAtcDAIRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
-  [MotionType.AllowedRecipientTopUpDai]: ContractAllowedRecipientDaiRegistry,
+  [MotionType.AllowedRecipientTopUpReferralDai]:
+    ContractAllowedRecipientReferralDaiRegistry,
+  [MotionType.AllowedRecipientTopUpTrpLdo]:
+    ContractAllowedRecipientTrpLdoRegistry,
 }
 
 export const usePeriodLimitsInfoByMotionType = (props: {

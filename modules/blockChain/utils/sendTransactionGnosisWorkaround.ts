@@ -11,9 +11,7 @@ export async function sendTransactionGnosisWorkaround(
   signer: Signer,
   transaction: PopulatedTransaction,
 ): Promise<ResultTx> {
-  const provider = (signer.provider as any)?.provider
-  const isGnosisSafe = checkConnectedToSafe(provider)
-
+  const isGnosisSafe = checkConnectedToSafe(signer.provider as any)
   const pendingToastId = ToastInfo(`Confirm transaction in your wallet`, {})
 
   if (isGnosisSafe) {
