@@ -28,7 +28,9 @@ export function useEVMScriptDecoder() {
           [CONTRACT_ADDRESSES.Finance[chainId]]: FinanceAbi as any,
           [CONTRACT_ADDRESSES.AllowedRecipientRegistry[chainId]]:
             AllowedRecipientsRegistryLDOAbi as any,
-          [CONTRACT_ADDRESSES.AllowedRecipientDaiRegistry[chainId]]:
+          [CONTRACT_ADDRESSES.AllowedRecipientReferralDaiRegistry[chainId]]:
+            AllowedRecipientsRegistryLDOAbi as any,
+          [CONTRACT_ADDRESSES.AllowedRecipientTrpLdoRegistry[chainId]]:
             AllowedRecipientsRegistryLDOAbi as any,
           [CONTRACT_ADDRESSES.LegoLDORegistry[chainId]]:
             RegistryWithLimitsAbi as any,

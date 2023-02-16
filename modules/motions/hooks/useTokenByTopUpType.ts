@@ -37,9 +37,14 @@ const TOKEN = {
     value: (chainId: CHAINS) =>
       ContractGovernanceToken.address[chainId] as string,
   },
-  [MotionType.AllowedRecipientTopUpDai]: {
+  [MotionType.AllowedRecipientTopUpReferralDai]: {
     label: 'DAI',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
+  },
+  [MotionType.AllowedRecipientTopUpTrpLdo]: {
+    label: 'LDO',
+    value: (chainId: CHAINS) =>
+      ContractGovernanceToken.address[chainId] as string,
   },
 }
 
