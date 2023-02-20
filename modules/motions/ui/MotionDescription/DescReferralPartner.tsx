@@ -21,7 +21,7 @@ export function DescReferralPartnerAdd({
 }: NestProps<EvmAddReferralPartnerAbi['decodeEVMScriptCallData']>) {
   return (
     <div>
-      Add referral partner <b>“{callData[1]}”</b> with address{' '}
+      Add LDO referral partner <b>“{callData[1]}”</b> with address{' '}
       <AddressInlineWithPop address={callData[0]} />
     </div>
   )
@@ -65,7 +65,7 @@ export function DescReferralPartnerRemove({
 
   return (
     <div>
-      Remove referral partner <b>{partner?.title}</b> with address{' '}
+      Remove LDO referral partner <b>{partner?.title}</b> with address{' '}
       <AddressInlineWithPop address={callData} />
     </div>
   )
