@@ -41,7 +41,7 @@ export function DescReferralPartnerTopUp({
 
   return (
     <div>
-      Top up referral partner:
+      Top up LDO referral partner:
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{programs?.[i]}</b> <AddressInlineWithPop address={address} /> with{' '}
