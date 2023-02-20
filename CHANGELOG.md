@@ -1,3 +1,24 @@
+# [0.14.0](https://github.com/lidofinance/easy-track-ui/compare/0.13.0...0.14.0) (2023-02-20)
+
+
+### Bug Fixes
+
+* fix wallet modal ([3b2106f](https://github.com/lidofinance/easy-track-ui/commit/3b2106f23abb1f5cbad19b3eaab7ad9356312836))
+* gnosis transaction finishing ([315678d](https://github.com/lidofinance/easy-track-ui/commit/315678d3c3e2f39f89fe55c531ef0bdbf66d0e3b))
+* rename add/remove motions ([786275e](https://github.com/lidofinance/easy-track-ui/commit/786275e9a929993e9be14d5542fe18b8799827f2))
+* rename in motion description ([4cd3016](https://github.com/lidofinance/easy-track-ui/commit/4cd30160de2743d0d4e2bef589c6dd5ed12e0753))
+* rename referral motions ([28f1b6b](https://github.com/lidofinance/easy-track-ui/commit/28f1b6ba8c4ede921a2e74ab38c1b7d49909d9a9))
+
+
+### Features
+
+* add new trp factory ([1e81938](https://github.com/lidofinance/easy-track-ui/commit/1e8193816129fabc090ac695e333aed66f682c58))
+* bump react, react-dom & next versions ([b09a4c2](https://github.com/lidofinance/easy-track-ui/commit/b09a4c27af6122df061c351b578d589a2abab3e5))
+* bump typescript & fix errors ([5abc112](https://github.com/lidofinance/easy-track-ui/commit/5abc112d6bc4a1d1731814533372b210f9bd95e5))
+* rename referral factory ([0e54b0d](https://github.com/lidofinance/easy-track-ui/commit/0e54b0dac30aece10b3a2761fe4ca2e7fc0ae9a7))
+
+
+
 # [0.13.0](https://github.com/lidofinance/easy-track-ui/compare/0.12.1...0.13.0) (2023-01-30)
 
 
@@ -143,17 +164,6 @@
 
 * Release flow for the last time ([83bc962](https://github.com/lidofinance/easy-track-ui/commit/83bc962205c0776bb039a4b68befbd660583ee08))
 * Release flow secrets passing ([a7b622b](https://github.com/lidofinance/easy-track-ui/commit/a7b622b957ec24b162e8c626ff2dd922f41e9dc5))
-
-
-
-## [0.9.1](https://github.com/lidofinance/easy-track-ui/compare/0.9.0...0.9.1) (2022-05-23)
-
-
-### Bug Fixes
-
-* Explicit relese wf trigger ([4c19d4c](https://github.com/lidofinance/easy-track-ui/commit/4c19d4c78e7f15c7d014c970363f575f6d470996))
-* node operators key checking mainnet support ([0cce780](https://github.com/lidofinance/easy-track-ui/commit/0cce780d5487b39859c9a2075a2225955500ca6c))
-* WF name ([70ccb7c](https://github.com/lidofinance/easy-track-ui/commit/70ccb7c66e1d66d28e30b3e3038a322047175a39))
 
 
 
