@@ -77,13 +77,11 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
     getPeriodData(contract),
   ])
 
-  const dateOfStartMotion = moment.unix(periodData.periodStartTimestamp)
-  const isStartInPrevPeriod = moment()
-    .startOf('month')
-    .isAfter(dateOfStartMotion)
+  const dateOfEndMotionPeriod = moment.unix(periodData.periodEndTimestamp)
+  const isStartInNextPeriod = moment().isAfter(dateOfEndMotionPeriod)
 
   const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
-  const periodEnd = isStartInPrevPeriod
+  const periodEnd = isStartInNextPeriod
     ? moment()
         .startOf('month')
         .add(limits.periodDurationMonths, 'M')
@@ -102,11 +100,24 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
     })
   }
 
-  if (isStartInPrevPeriod) {
+  if (isStartInNextPeriod) {
+    const diffMonthCount = moment()
+      .startOf('month')
+      .diff(dateOfEndMotionPeriod.startOf('month'), 'months')
+    const periodRatio = Math.ceil(diffMonthCount / limits.periodDurationMonths)
+
+    const newPeriodStartTime =
+      diffMonthCount >= limits.periodDurationMonths
+        ? dateOfEndMotionPeriod.add(
+            limits.periodDurationMonths * periodRatio,
+            'M',
+          )
+        : dateOfEndMotionPeriod
+
     periodData = getNewPeriod({
       periodLimit: limits.limit,
       periodDurationMonths: limits.periodDurationMonths,
-      newPeriodStartTime: moment().startOf('month'),
+      newPeriodStartTime,
     })
   }
 

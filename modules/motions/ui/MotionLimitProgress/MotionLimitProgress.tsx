@@ -32,7 +32,9 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
   } = props
 
   const isValidNewValue = Number.isInteger(newAmount)
-  const newSpentValue = isValidNewValue ? Number(spentAmount) + newAmount : 0
+  const newSpentValue = isValidNewValue
+    ? Number(spentAmount) + newAmount
+    : Number(spentAmount)
 
   const progressPercent = clamp(
     Number(spentAmount) / (Number(totalLimit) / 100),
