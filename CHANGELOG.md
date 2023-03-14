@@ -1,3 +1,12 @@
+## [0.14.1](https://github.com/lidofinance/easy-track-ui/compare/0.14.0...0.14.1) (2023-03-14)
+
+
+### Bug Fixes
+
+* fix calc current period spent amount, update calc period start ([6ddc9af](https://github.com/lidofinance/easy-track-ui/commit/6ddc9af32897dbe5e75eb50ec2cf789fa9592a1d))
+
+
+
 # [0.14.0](https://github.com/lidofinance/easy-track-ui/compare/0.13.0...0.14.0) (2023-02-20)
 
 
@@ -154,16 +163,6 @@
 * node operator address compare in lower case ([502cb9a](https://github.com/lidofinance/easy-track-ui/commit/502cb9ae2a5322eb0274c3ea03566e7893598e01))
 * node operators counting ([8c7780c](https://github.com/lidofinance/easy-track-ui/commit/8c7780c8c2e9a4798946e5b8f5c5dd512d85b4d6))
 * subgraph logs format ([b47ab98](https://github.com/lidofinance/easy-track-ui/commit/b47ab980f3cdb7120b82587e689095a96bdf09b0))
-
-
-
-## [0.9.2](https://github.com/lidofinance/easy-track-ui/compare/0.9.1...0.9.2) (2022-06-01)
-
-
-### Bug Fixes
-
-* Release flow for the last time ([83bc962](https://github.com/lidofinance/easy-track-ui/commit/83bc962205c0776bb039a4b68befbd660583ee08))
-* Release flow secrets passing ([a7b622b](https://github.com/lidofinance/easy-track-ui/commit/a7b622b957ec24b162e8c626ff2dd922f41e9dc5))
 
 
 
