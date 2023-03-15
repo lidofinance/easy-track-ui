@@ -208,7 +208,7 @@ describe('calcPeriodData', () => {
     })
   })
 
-  it('Motion start in next N period', () => {
+  it('Motion start in next N period and end in next period', () => {
     const motionDuration = BigNumber.from(MONTH_HOURS_SECONDS) // seconds
     const limits = {
       limit: '1000',
@@ -250,6 +250,51 @@ describe('calcPeriodData', () => {
       periodData: expectPeriodData,
       motionDuration: motionDuration.toNumber() / 60 / 60, // hours
       isEndInNextPeriod: true,
+    })
+  })
+
+  it('Motion start in next N period and end in current', () => {
+    const motionDuration = BigNumber.from(MONTH_HOURS_SECONDS) // seconds
+    const limits = {
+      limit: '1000',
+      periodDurationMonths: 2, // month
+    }
+    const periodData = {
+      alreadySpentAmount: '500',
+      spendableBalanceInPeriod: '500',
+      periodStartTimestamp: moment().subtract(6, 'month').unix(),
+      periodEndTimestamp: moment().subtract(4, 'month').unix(),
+    }
+    const isPending = false
+
+    const result = calcPeriodData({
+      motionDuration,
+      limits,
+      periodData,
+      isPending,
+    })
+
+    const newStartTime = moment
+      .unix(periodData.periodStartTimestamp)
+      .add(6, 'M')
+      .startOf('month')
+    const newEndTime = moment(newStartTime)
+      .add(limits.periodDurationMonths, 'M')
+      .startOf('month')
+
+    const expectPeriodData = {
+      ...periodData,
+      periodStartTimestamp: newStartTime.unix(),
+      periodEndTimestamp: newEndTime.unix(),
+      alreadySpentAmount: '0',
+      spendableBalanceInPeriod: limits.limit,
+    }
+
+    expect(result).toEqual({
+      limits,
+      periodData: expectPeriodData,
+      motionDuration: motionDuration.toNumber() / 60 / 60, // hours
+      isEndInNextPeriod: false,
     })
   })
 })
