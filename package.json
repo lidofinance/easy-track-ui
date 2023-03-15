@@ -10,7 +10,8 @@
     "lint:dockerfile": "dockerfilelint Dockerfile",
     "lint:fix": "yarn lint --fix",
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated './abi/**/*.json'",
-    "postinstall": "husky install && yarn typechain || true"
+    "postinstall": "husky install && yarn typechain || true",
+    "test": "jest"
   },
   "lint-staged": {
     "./**/*.{ts,tsx}": [
@@ -61,6 +62,7 @@
     "@commitlint/prompt": "17.3.0",
     "@svgr/webpack": "6.2.1",
     "@types/cors": "2.8.12",
+    "@types/jest": "^29.4.2",
     "@types/memory-cache": "0.2.2",
     "@types/moment-duration-format": "2.2.3",
     "@types/react": "^17",
@@ -75,6 +77,7 @@
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-prettier": "4.0.0",
     "husky": "7.0.4",
+    "jest": "^29.5.0",
     "lint-staged": "13.1.0",
     "prettier": "2.5.1",
     "type-fest": "2.12.0",

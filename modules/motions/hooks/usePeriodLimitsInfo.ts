@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { LimitCheckerAbi, EasyTrackAbi } from 'generated'
 import { createContractHelpers } from 'modules/blockChain/utils/createContractHelpers'
 import {
@@ -24,6 +23,8 @@ import {
 import { MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 
+import { calcPeriodData } from './utils'
+
 type ContractLimitsMethods = {
   getLimitParameters: LimitCheckerAbi['getLimitParameters']
   getPeriodState: LimitCheckerAbi['getPeriodState']
@@ -46,26 +47,6 @@ type UsePeriodLimitInfo = <T extends ContractLimitsMethods>(
   data: UsePeriodLimitInfoProps<T>,
 ) => SWRResponse<UsePeriodLimitsInfoResultData>
 
-const getNewPeriod = ({
-  periodLimit,
-  periodDurationMonths,
-  newPeriodStartTime,
-}: {
-  periodLimit: string
-  periodDurationMonths: number
-  newPeriodStartTime: moment.Moment
-}): PeriodDataType => {
-  return {
-    alreadySpentAmount: '0',
-    periodStartTimestamp: newPeriodStartTime.unix(),
-    periodEndTimestamp: newPeriodStartTime
-      .add(periodDurationMonths, 'M')
-      .startOf('month')
-      .unix(),
-    spendableBalanceInPeriod: periodLimit,
-  }
-}
-
 const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
   easyTrack: EasyTrackAbi,
   contract: T,
@@ -77,56 +58,12 @@ const getPeriodLimitsInfo = async <T extends ContractLimitsMethods>(
     getPeriodData(contract),
   ])
 
-  const dateOfEndMotionPeriod = moment.unix(periodData.periodEndTimestamp)
-  const isStartInNextPeriod = moment().isAfter(dateOfEndMotionPeriod)
-
-  const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
-  const periodEnd = isStartInNextPeriod
-    ? moment()
-        .startOf('month')
-        .add(limits.periodDurationMonths, 'M')
-        .startOf('month')
-    : moment.unix(periodData.periodEndTimestamp)
-
-  const isEndInNextPeriod = dateOfEndMotion.isAfter(periodEnd)
-
-  if (isEndInNextPeriod && !isPending) {
-    periodData = getNewPeriod({
-      periodLimit: limits.limit,
-      periodDurationMonths: limits.periodDurationMonths,
-      newPeriodStartTime: moment()
-        .add(limits.periodDurationMonths, 'M')
-        .startOf('month'),
-    })
-  }
-
-  if (isStartInNextPeriod) {
-    const diffMonthCount = moment()
-      .startOf('month')
-      .diff(dateOfEndMotionPeriod.startOf('month'), 'months')
-    const periodRatio = Math.ceil(diffMonthCount / limits.periodDurationMonths)
-
-    const newPeriodStartTime =
-      diffMonthCount >= limits.periodDurationMonths
-        ? dateOfEndMotionPeriod.add(
-            limits.periodDurationMonths * periodRatio,
-            'M',
-          )
-        : dateOfEndMotionPeriod
-
-    periodData = getNewPeriod({
-      periodLimit: limits.limit,
-      periodDurationMonths: limits.periodDurationMonths,
-      newPeriodStartTime,
-    })
-  }
-
-  return {
+  return calcPeriodData({
+    motionDuration,
     limits,
     periodData,
-    motionDuration: motionDuration.toNumber() / 60 / 60, // hours
-    isEndInNextPeriod,
-  }
+    isPending,
+  })
 }
 
 export const usePeriodLimitsInfo: UsePeriodLimitInfo = props => {
