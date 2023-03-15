@@ -6,6 +6,11 @@ const EIGTH_HOURS_SECONDS = 8 * 60 * 60
 const MONTH_HOURS_SECONDS = 30 * 24 * 60 * 60
 
 describe('calcPeriodData', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it('Motion start in current period', () => {
     const motionDuration = BigNumber.from(EIGTH_HOURS_SECONDS) // seconds
     const limits = {
@@ -80,13 +85,24 @@ describe('calcPeriodData', () => {
     const motionDuration = BigNumber.from(EIGTH_HOURS_SECONDS) // seconds
     const limits = {
       limit: '1000',
-      periodDurationMonths: 1,
+      periodDurationMonths: 2,
     }
+
+    const startOfMonth = moment().startOf('month')
+    const endOfMonth = moment().endOf('month')
+    const currentDateMock = moment(endOfMonth).subtract(5, 'hours')
+
+    jest
+      .spyOn(Date, 'now')
+      .mockImplementation(() =>
+        new Date(currentDateMock.toISOString()).getTime(),
+      )
+
     const periodData = {
       alreadySpentAmount: '500',
       spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment().unix() - EIGTH_HOURS_SECONDS,
-      periodEndTimestamp: moment().unix() + EIGTH_HOURS_SECONDS / 2,
+      periodStartTimestamp: moment(startOfMonth).subtract(1, 'month').unix(),
+      periodEndTimestamp: moment(endOfMonth).unix(),
     }
     const isPending = false
 
@@ -97,7 +113,8 @@ describe('calcPeriodData', () => {
       isPending,
     })
 
-    const newStartTime = moment()
+    const newStartTime = moment
+      .unix(periodData.periodStartTimestamp)
       .add(limits.periodDurationMonths, 'M')
       .startOf('month')
     const newEndTime = moment(newStartTime)

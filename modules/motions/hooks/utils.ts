@@ -53,7 +53,8 @@ export const calcPeriodData = ({
     currentPeriodData = getNewPeriod({
       periodLimit: limits.limit,
       periodDurationMonths: limits.periodDurationMonths,
-      newPeriodStartTime: moment()
+      newPeriodStartTime: moment
+        .unix(periodData.periodStartTimestamp)
         .add(limits.periodDurationMonths, 'M')
         .startOf('month'),
     })
