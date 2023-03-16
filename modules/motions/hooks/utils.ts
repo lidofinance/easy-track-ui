@@ -64,7 +64,8 @@ export const calcPeriodData = ({
     const diffMonthCount = moment()
       .startOf('month')
       .diff(dateOfEndMotionPeriod.startOf('month'), 'months')
-    const periodRatio = Math.ceil(diffMonthCount / limits.periodDurationMonths)
+    let periodRatio = Math.ceil(diffMonthCount / limits.periodDurationMonths)
+    if (isEndInNextPeriod) periodRatio += 1
 
     const newPeriodStartTime =
       diffMonthCount >= limits.periodDurationMonths
