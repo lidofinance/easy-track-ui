@@ -1,3 +1,19 @@
+# [0.15.0](https://github.com/lidofinance/easy-track-ui/compare/0.14.1...0.15.0) (2023-03-16)
+
+
+### Bug Fixes
+
+* fix case when motion end in next period ([5f43ca1](https://github.com/lidofinance/easy-track-ui/commit/5f43ca19b7f473e0dadf5a0268b6c96d4bd0042c))
+* fix case when motion end in next period ([0e3b237](https://github.com/lidofinance/easy-track-ui/commit/0e3b2371fc940fd0493c1167adfcbfcb9b02150a))
+
+
+### Features
+
+* add more limits tests ([7b64e4b](https://github.com/lidofinance/easy-track-ui/commit/7b64e4b510f19b6093c21ed5d985b7c1c5d95f17))
+* add tests for calc period limit ([101e941](https://github.com/lidofinance/easy-track-ui/commit/101e9415d9f8d6995241dbdbb1f6e91b7e8745cd))
+
+
+
 ## [0.14.1](https://github.com/lidofinance/easy-track-ui/compare/0.14.0...0.14.1) (2023-03-14)
 
 
@@ -150,19 +166,6 @@
 
 * error display condition ([d444c21](https://github.com/lidofinance/easy-track-ui/commit/d444c215a29e22494fad961d69dbe62f8a04af48))
 * subgraph error handler ([de723b3](https://github.com/lidofinance/easy-track-ui/commit/de723b35636d83c18167c4c87ec122e29274acba))
-
-
-
-## [0.9.3](https://github.com/lidofinance/easy-track-ui/compare/0.9.2...0.9.3) (2022-07-14)
-
-
-### Bug Fixes
-
-* dockerfile ([f022025](https://github.com/lidofinance/easy-track-ui/commit/f02202572b47dbe9cbc6bd03a97cc694716e9564))
-* fetch with fallback throwing by status ([471cf5b](https://github.com/lidofinance/easy-track-ui/commit/471cf5b87c5de20832df7c76b55e8511af4518cb))
-* node operator address compare in lower case ([502cb9a](https://github.com/lidofinance/easy-track-ui/commit/502cb9ae2a5322eb0274c3ea03566e7893598e01))
-* node operators counting ([8c7780c](https://github.com/lidofinance/easy-track-ui/commit/8c7780c8c2e9a4798946e5b8f5c5dd512d85b4d6))
-* subgraph logs format ([b47ab98](https://github.com/lidofinance/easy-track-ui/commit/b47ab980f3cdb7120b82587e689095a96bdf09b0))
 
 
 
