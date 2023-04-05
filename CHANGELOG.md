@@ -1,3 +1,12 @@
+## [0.15.1](https://github.com/lidofinance/easy-track-ui/compare/0.15.0...0.15.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* error message after cancel tx ([8465201](https://github.com/lidofinance/easy-track-ui/commit/846520139f51458ccb9b47d504969e6d472ec2f2))
+
+
+
 # [0.15.0](https://github.com/lidofinance/easy-track-ui/compare/0.14.1...0.15.0) (2023-03-16)
 
 
@@ -156,16 +165,6 @@
 ### Features
 
 * dai token ([9eff144](https://github.com/lidofinance/easy-track-ui/commit/9eff1440ce1979386c2bdcf5665487db99f5f1c9))
-
-
-
-## [0.9.4](https://github.com/lidofinance/easy-track-ui/compare/0.9.3...0.9.4) (2022-10-24)
-
-
-### Bug Fixes
-
-* error display condition ([d444c21](https://github.com/lidofinance/easy-track-ui/commit/d444c215a29e22494fad961d69dbe62f8a04af48))
-* subgraph error handler ([de723b3](https://github.com/lidofinance/easy-track-ui/commit/de723b35636d83c18167c4c87ec122e29274acba))
 
 
 
