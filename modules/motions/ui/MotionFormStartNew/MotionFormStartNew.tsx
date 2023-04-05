@@ -18,6 +18,7 @@ import {
 } from 'modules/motions/utils'
 import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
 import { ResultTx } from 'modules/blockChain/types'
+import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
 
 type Props = {
   onComplete: (tx: ResultTx) => void
@@ -67,7 +68,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
         onComplete(res)
       } catch (error: any) {
         console.error(error)
-        ToastError(error.message || (error as any).toString(), {})
+        ToastError(getErrorMessage(error), {})
         setSubmitting(false)
       }
     },
