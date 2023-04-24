@@ -1,3 +1,7 @@
+# This file is no longer used by semantic-release
+For the latest release notes, please see the [GitHub releases page](https://github.com/lidofinance/easy-track-ui/releases).
+
+
 ## [0.9.4](https://github.com/lidofinance/easy-track-ui/compare/0.9.3...0.9.4) (2022-10-24)
 
 
