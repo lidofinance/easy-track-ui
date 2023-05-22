@@ -123,14 +123,16 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.GasFunderETHTopUp}
     />
   ),
-  [MotionType.StethRewardProgramAdd]: (props: DescWithLimitsProps) => (
-    <DescTopUpWithLimits
+  [MotionType.StethRewardProgramAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
       {...props}
       registryType={MotionType.StethRewardProgramAdd}
     />
   ),
-  [MotionType.StethRewardProgramRemove]: (props: DescWithLimitsProps) => (
-    <DescTopUpWithLimits
+  [MotionType.StethRewardProgramRemove]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
       {...props}
       registryType={MotionType.StethRewardProgramRemove}
     />
