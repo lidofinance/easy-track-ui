@@ -25,6 +25,9 @@ import {
   ContractEvmPmlDAITopUp,
   ContractEvmAtcDAITopUp,
   ContractEvmGasFunderETHTopUp,
+  ContractStethRewardProgramAdd,
+  ContractStethRewardProgramRemove,
+  ContractStethRewardProgramTopUp,
 } from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
 
@@ -54,6 +57,9 @@ export const EVM_CONTRACTS = {
   [MotionType.PmlDAITopUp]: ContractEvmPmlDAITopUp,
   [MotionType.AtcDAITopUp]: ContractEvmAtcDAITopUp,
   [MotionType.GasFunderETHTopUp]: ContractEvmGasFunderETHTopUp,
+  [MotionType.StethRewardProgramAdd]: ContractStethRewardProgramAdd,
+  [MotionType.StethRewardProgramRemove]: ContractStethRewardProgramRemove,
+  [MotionType.StethRewardProgramTopUp]: ContractStethRewardProgramTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
