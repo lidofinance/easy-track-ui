@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useWeb3 as useWeb3ReefKnot } from '@reef-knot/web3-react'
+import { useWeb3 as useWeb3ReefKnot } from 'reef-knot/web3-react'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { parseChainId } from '../chains'
 
