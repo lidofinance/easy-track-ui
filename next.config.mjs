@@ -2,8 +2,8 @@ const basePath = process.env.BASE_PATH || ''
 const infuraApiKey = process.env.INFURA_API_KEY
 const alchemyApiKey = process.env.ALCHEMY_API_KEY
 
-const defaultChain = process.env.DEFAULT_CHAIN
-const supportedChains = process.env.SUPPORTED_CHAINS
+const defaultChain = process.env.DEFAULT_CHAIN || '1'
+const supportedChains = process.env.SUPPORTED_CHAINS || '1,4,5'
 
 const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS
 const cspReportOnly = process.env.CSP_REPORT_ONLY
@@ -18,7 +18,7 @@ const subgraphKintsugi = process.env.SUBGRAPH_KINTSUGI
 
 const walletconnectProjectId = process.env.WALLETCONNECT_PROJECT_ID
 
-module.exports = {
+export default {
   basePath,
   webpack5: true,
   experimental: {

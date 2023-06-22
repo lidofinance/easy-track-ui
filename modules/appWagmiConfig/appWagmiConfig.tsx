@@ -4,40 +4,62 @@ import * as wagmiChains from 'wagmi/chains'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { getConnectors } from 'reef-knot/core-react'
 import getConfig from 'next/config'
-import { useConfig } from 'modules/config/hooks/useConfig'
-import {
-  backendRPC,
-  getBackendRpcUrl,
-} from 'modules/blockChain/utils/getBackendRpcUrl'
+import { CHAINS } from '@lido-sdk/constants'
+import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
 
 const { publicRuntimeConfig } = getConfig()
 
-export const AppWagmiConfig: FC = ({ children }) => {
-  const { supportedChainIds } = useConfig()
+let supportedChainIds: number[] = []
+if (publicRuntimeConfig.supportedChains != null) {
+  supportedChainIds = publicRuntimeConfig.supportedChains
+    .split(',')
+    .map((chainId: string) => parseInt(chainId))
+    .filter((chainId: number) => !Number.isNaN(chainId))
+} else if (publicRuntimeConfig.defaultChain != null) {
+  supportedChainIds = [parseInt(publicRuntimeConfig.defaultChain)]
+}
 
-  const supportedChains = Object.values(wagmiChains).filter(chain =>
-    supportedChainIds.includes(chain.id),
-  )
+const wagmiChainsArray = Object.values(wagmiChains)
+const supportedChains = wagmiChainsArray.filter(chain =>
+  supportedChainIds.includes(chain.id),
+)
+const defaultChain = wagmiChainsArray.find(
+  chain => chain.id === parseInt(publicRuntimeConfig.defaultChain),
+)
 
-  const connectors = getConnectors({
-    rpc: backendRPC,
-    walletconnectProjectId: publicRuntimeConfig.walletconnectProjectId,
-  })
+const backendRPC = supportedChainIds.reduce<Record<number, string>>(
+  (res, curr) => ({ ...res, [curr]: getBackendRpcUrl(curr) }),
+  {
+    // Required by reef-knot
+    [CHAINS.Mainnet]: getBackendRpcUrl(CHAINS.Mainnet),
+  },
+)
 
-  const { provider, webSocketProvider } = configureChains(supportedChains, [
+const { chains, provider, webSocketProvider } = configureChains(
+  supportedChains,
+  [
     jsonRpcProvider({
       rpc: chain => ({
-        http: getBackendRpcUrl(chain.id),
+        http: backendRPC[chain.id],
       }),
     }),
-  ])
+  ],
+)
 
-  const client = createClient({
-    connectors,
-    autoConnect: true,
-    provider,
-    webSocketProvider,
-  })
+const connectors = getConnectors({
+  chains,
+  defaultChain,
+  rpc: backendRPC,
+  walletconnectProjectId: publicRuntimeConfig.walletconnectProjectId,
+})
 
+const client = createClient({
+  connectors,
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+})
+
+export const AppWagmiConfig: FC = ({ children }) => {
   return <WagmiConfig client={client}>{children}</WagmiConfig>
 }
