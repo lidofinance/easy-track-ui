@@ -2,18 +2,17 @@ import styled, { css, keyframes } from 'styled-components'
 import { BREAKPOINT_MOBILE } from 'modules/globalStyles'
 
 export const Wrap = styled.div`
+  position: relative;
   margin-bottom: 30px;
   padding: 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 99;
+  margin-bottom: ${({ theme }) => theme.spaceMap.xxl}px;
 
-  @media (max-width: ${BREAKPOINT_MOBILE}) {
-    position: fixed;
-    left: 20px;
-    top: 0;
-    right: 20px;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    margin-bottom: ${({ theme }) => theme.spaceMap.lg}px;
   }
 `
 
@@ -183,6 +182,9 @@ export const MobileMenuScroll = styled.div`
 `
 
 export const MobileNavItems = styled.div`
+  position: absolute;
+  top: 100%;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;

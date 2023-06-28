@@ -6,16 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:dockerfile": "dockerfilelint Dockerfile",
+    "lint": "eslint --ext ts,tsx,js,jsx .",
     "lint:fix": "yarn lint --fix",
+    "lint:dockerfile": "dockerfilelint Dockerfile",
     "typechain": "typechain --target=ethers-v5 --out-dir ./generated './abi/**/*.json'",
     "postinstall": "husky install && yarn typechain || true",
     "test": "jest"
   },
   "type": "module",
   "lint-staged": {
-    "./**/*.{ts,tsx}": [
+    "./**/*.{ts,tsx,js,jsx}": [
       "eslint --ignore-path .gitignore --max-warnings=0"
     ],
     "./**/*.{ts,tsx,css,md,json}": [
