@@ -2,11 +2,9 @@ import { memo, useEffect } from 'react'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
-import { useConfig } from 'modules/config/hooks/useConfig'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useErrorMessage } from 'modules/blockChain/hooks/useErrorMessage'
-import { useSupportedChains, ProviderWeb3 } from '@reef-knot/web3-react'
-
+import { useSupportedChains } from 'reef-knot/web3-react'
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
 import {
@@ -19,11 +17,11 @@ import {
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
-
 import { getAddressList } from 'modules/config/utils/getAddressList'
-import { backendRPC } from 'modules/blockChain/utils/getBackendRpcUrl'
 import { withCsp } from 'modules/shared/utils/csp'
 import { CustomAppProps } from 'modules/shared/utils/utilTypes'
+import { AppProviderWeb3 } from 'modules/appProviderWeb3'
+import { AppWagmiConfig } from 'modules/appWagmiConfig'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
@@ -104,29 +102,18 @@ function AppRoot({ Component, pageProps }: AppProps) {
 
 const AppRootMemo = memo(AppRoot)
 
-function Web3ProviderWrap({ children }: { children: React.ReactNode }) {
-  const { supportedChainIds, defaultChain } = useConfig()
-  return (
-    <ProviderWeb3
-      defaultChainId={defaultChain}
-      supportedChainIds={supportedChainIds}
-      rpc={backendRPC}
-    >
-      {children}
-    </ProviderWeb3>
-  )
-}
-
 function App({ envConfig, ...appProps }: CustomAppProps) {
   return (
     <ThemeProvider theme={themeLight}>
       <GlobalStyle />
       <ConfigProvider envConfig={envConfig}>
-        <Web3ProviderWrap>
-          <ModalProvider>
-            <AppRootMemo {...appProps} />
-          </ModalProvider>
-        </Web3ProviderWrap>
+        <AppWagmiConfig>
+          <AppProviderWeb3>
+            <ModalProvider>
+              <AppRootMemo {...appProps} />
+            </ModalProvider>
+          </AppProviderWeb3>
+        </AppWagmiConfig>
       </ConfigProvider>
     </ThemeProvider>
   )
