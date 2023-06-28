@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useScrollLock } from 'modules/shared/hooks/useScrollLock'
-
 import Link from 'next/link'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { HeaderWallet } from '../HeaderWallet'
@@ -27,11 +26,11 @@ import ActiveMotionsSVG from './icons/active_motions.svg.react'
 import ArchiveSVG from './icons/archive.svg.react'
 // import InfoSVG from './icons/info.svg.react'
 import StartSVG from './icons/start.svg.react'
-
 import { getChainName } from 'modules/blockChain/chains'
 import { getChainColor } from '@lido-sdk/constants'
 import LidoLogoSvg from 'assets/logo.com.svg.react'
 import * as urls from 'modules/network/utils/urls'
+import { NoSSRWrapper } from 'modules/shared/ui/Utils/NoSSRWrapper'
 
 function NavItem({
   link,
@@ -95,7 +94,9 @@ export function Header() {
               {getChainName(chainId)}
             </Text>
           </Network>
-          <HeaderWallet />
+          <NoSSRWrapper>
+            <HeaderWallet />
+          </NoSSRWrapper>
         </ActionsDesktop>
 
         <BurgerWrap
