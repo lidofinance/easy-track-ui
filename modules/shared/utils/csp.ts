@@ -27,6 +27,8 @@ export const contentSecurityPolicy = {
       "'self'",
       'wss://*.walletconnect.org',
       'https://*.walletconnect.org',
+      'wss://*.walletconnect.com',
+      'https://*.walletconnect.com',
       ...trustedHosts,
     ],
     prefetchSrc: ["'self'", ...trustedHosts],
