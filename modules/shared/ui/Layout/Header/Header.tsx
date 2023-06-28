@@ -109,40 +109,42 @@ export function Header() {
         </BurgerWrap>
 
         {isBurgerOpened && (
-          <MobileMenu>
-            <MobileMenuScroll>
-              <MobileNavItems>
-                <NavItem
-                  link={urls.home}
-                  icon={<ActiveMotionsSVG />}
-                  children="Active motions"
-                  onClick={handleCloseMobileMenu}
-                />
-                <NavItem
-                  link={urls.archive}
-                  icon={<ArchiveSVG />}
-                  children="Archive"
-                  onClick={handleCloseMobileMenu}
-                />
-                <NavItem
-                  link={urls.startMotion}
-                  icon={<StartSVG />}
-                  children="Start motion"
-                  onClick={handleCloseMobileMenu}
-                />
-                {/* <NavItem link={urls.about} icon={<InfoSVG />} children="About" /> */}
-              </MobileNavItems>
-              <MobileNetworkWrap>
-                <Network>
-                  <NetworkBulb color={getChainColor(chainId)} />
-                  <Text size={14} weight={500}>
-                    {getChainName(chainId)}
-                  </Text>
-                </Network>
-                <HeaderWallet />
-              </MobileNetworkWrap>
-            </MobileMenuScroll>
-          </MobileMenu>
+          <>
+            <MobileNavItems>
+              <NavItem
+                link={urls.home}
+                icon={<ActiveMotionsSVG />}
+                children="Active motions"
+                onClick={handleCloseMobileMenu}
+              />
+              <NavItem
+                link={urls.archive}
+                icon={<ArchiveSVG />}
+                children="Archive"
+                onClick={handleCloseMobileMenu}
+              />
+              <NavItem
+                link={urls.startMotion}
+                icon={<StartSVG />}
+                children="Start motion"
+                onClick={handleCloseMobileMenu}
+              />
+            </MobileNavItems>
+
+            <MobileMenu>
+              <MobileMenuScroll>
+                <MobileNetworkWrap>
+                  <Network>
+                    <NetworkBulb color={getChainColor(chainId)} />
+                    <Text size={14} weight={500}>
+                      {getChainName(chainId)}
+                    </Text>
+                  </Network>
+                  <HeaderWallet />
+                </MobileNetworkWrap>
+              </MobileMenuScroll>
+            </MobileMenu>
+          </>
         )}
       </Wrap>
       <MobileSpacer />
