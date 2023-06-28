@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, ToastError } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { useAvailableMotions, HIDDEN_MOTIONS } from 'modules/motions/hooks'
+import { useSendTransactionGnosisWorkaround } from 'modules/blockChain/hooks/useSendTransactionGnosisWorkaround'
 
+import { Button, ToastError } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, RetryHint, MessageBox } from './CreateMotionFormStyle'
 
-import { useAvailableMotions, HIDDEN_MOTIONS } from 'modules/motions/hooks'
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
@@ -16,7 +17,6 @@ import {
   getScriptFactoryByMotionType,
   getMotionTypeDisplayName,
 } from 'modules/motions/utils'
-import { sendTransactionGnosisWorkaround } from 'modules/blockChain/utils/sendTransactionGnosisWorkaround'
 import { ResultTx } from 'modules/blockChain/types'
 import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
 
@@ -27,6 +27,7 @@ type Props = {
 export function MotionFormStartNew({ onComplete }: Props) {
   const { chainId } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
+  const sendTransaction = useSendTransactionGnosisWorkaround()
 
   const { availableMotions, notHaveAvailableMotions } = useAvailableMotions()
 
@@ -60,10 +61,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
           contract: contractEasyTrack,
         })
 
-        const res = await sendTransactionGnosisWorkaround(
-          contractEasyTrack.signer,
-          tx,
-        )
+        const res = await sendTransaction(tx)
 
         onComplete(res)
       } catch (error: any) {
@@ -72,7 +70,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
         setSubmitting(false)
       }
     },
-    [formMethods, chainId, contractEasyTrack, onComplete],
+    [formMethods, chainId, contractEasyTrack, sendTransaction, onComplete],
   )
 
   const motionType = formMethods.watch('motionType')
