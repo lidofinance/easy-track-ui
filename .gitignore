@@ -10,6 +10,7 @@
 
 # generated
 /generated
+tsconfig.tsbuildinfo
 
 # next.js
 /.next/
