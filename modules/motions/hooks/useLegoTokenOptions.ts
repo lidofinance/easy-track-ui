@@ -14,15 +14,15 @@ export function useLegoTokenOptions() {
       },
       {
         label: governanceSymbol || '',
-        value: CONTRACT_ADDRESSES.GovernanceToken[chainId],
+        value: CONTRACT_ADDRESSES.GovernanceToken[chainId]!,
       },
       {
         label: 'stETH',
-        value: CONTRACT_ADDRESSES.STETH[chainId],
+        value: CONTRACT_ADDRESSES.STETH[chainId]!,
       },
       {
         label: 'DAI',
-        value: CONTRACT_ADDRESSES.DAI[chainId],
+        value: CONTRACT_ADDRESSES.DAI[chainId]!,
       },
     ],
     [governanceSymbol, chainId],

@@ -10,11 +10,7 @@ const cspReportOnly = process.env.CSP_REPORT_ONLY
 const cspReportUri = process.env.CSP_REPORT_URI
 
 const subgraphMainnet = process.env.SUBGRAPH_MAINNET
-const subgraphRopsten = process.env.SUBGRAPH_ROPSTEN
-const subgraphRinkeby = process.env.SUBGRAPH_RINKEBY
 const subgraphGoerli = process.env.SUBGRAPH_GOERLI
-const subgraphKovan = process.env.SUBGRAPH_KOVAN
-const subgraphKintsugi = process.env.SUBGRAPH_KINTSUGI
 
 const walletconnectProjectId = process.env.WALLETCONNECT_PROJECT_ID
 
@@ -29,7 +25,7 @@ export default {
     // <https://github.com/vercel/next.js/blob/v12.3.4/packages/next/build/webpack-config.ts#L417>
     // Presumably, it is true by default in next v13 and won't be needed
     esmExternals: true,
-  },  
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg.react$/i,
@@ -108,11 +104,7 @@ export default {
     cspReportOnly,
     cspReportUri,
     subgraphMainnet,
-    subgraphRopsten,
-    subgraphRinkeby,
     subgraphGoerli,
-    subgraphKovan,
-    subgraphKintsugi,
   },
   publicRuntimeConfig: {
     defaultChain,

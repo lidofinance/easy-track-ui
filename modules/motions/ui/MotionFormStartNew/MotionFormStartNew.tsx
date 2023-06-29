@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useAvailableMotions, HIDDEN_MOTIONS } from 'modules/motions/hooks'
+import { useAvailableMotions } from 'modules/motions/hooks'
 import { useSendTransactionGnosisWorkaround } from 'modules/blockChain/hooks/useSendTransactionGnosisWorkaround'
 
 import { Button, ToastError } from '@lidofinance/lido-ui'
@@ -12,13 +12,13 @@ import { Fieldset, RetryHint, MessageBox } from './CreateMotionFormStyle'
 
 import { formParts, FormData, getDefaultFormPartsData } from './Parts'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
 import {
   getScriptFactoryByMotionType,
   getMotionTypeDisplayName,
 } from 'modules/motions/utils'
 import { ResultTx } from 'modules/blockChain/types'
 import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
+import { MotionTypeForms } from 'modules/motions/types'
 
 type Props = {
   onComplete: (tx: ResultTx) => void
@@ -96,24 +96,22 @@ export function MotionFormStartNew({ onComplete }: Props) {
   )
 
   if (!availableMotions) return <PageLoader />
-  if (notHaveAvailableMotions)
+  if (notHaveAvailableMotions) {
     return (
       <MessageBox>
         Only Trusted Callers & Node Operator have access to Easy Track motion
         creation
       </MessageBox>
     )
+  }
 
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
       <Fieldset>
         <SelectControl name="motionType" label="Motion type">
-          {Object.values(MotionType)
-            .filter(
-              motion =>
-                !HIDDEN_MOTIONS.includes(motion) && availableMotions[motion],
-            )
-            .map(type => (
+          {Object.values(MotionTypeForms)
+            .filter(motion => Boolean(availableMotions[motion]))
+            .map((type: MotionTypeForms) => (
               <Option
                 key={type}
                 value={type}

@@ -1,16 +1,8 @@
 import getConfig from 'next/config'
 
 const { serverRuntimeConfig } = getConfig()
-const {
-  infuraApiKey,
-  alchemyApiKey,
-  subgraphMainnet,
-  subgraphRopsten,
-  subgraphRinkeby,
-  subgraphGoerli,
-  subgraphKovan,
-  subgraphKintsugi,
-} = serverRuntimeConfig
+const { infuraApiKey, alchemyApiKey, subgraphMainnet, subgraphGoerli } =
+  serverRuntimeConfig
 
 const SECRETS = {
   INFURA_API_KEY: infuraApiKey ? new RegExp(infuraApiKey, 'ig') : null,
@@ -18,13 +10,7 @@ const SECRETS = {
   SANITIZED_HEX: new RegExp('0x[a-fA-F0-9]+', 'ig'),
   ENS_ADDRESS: new RegExp('[a-zA-Z.]+\\.eth', 'gi'),
   SUBGRAPH_MAINNET: subgraphMainnet ? new RegExp(subgraphMainnet, 'ig') : null,
-  SUBGRAPH_ROPSTEN: subgraphRopsten ? new RegExp(subgraphRopsten, 'ig') : null,
-  SUBGRAPH_RINKEBY: subgraphRinkeby ? new RegExp(subgraphRinkeby, 'ig') : null,
   SUBGRAPH_GOERLI: subgraphGoerli ? new RegExp(subgraphGoerli, 'ig') : null,
-  SUBGRAPH_KOVAN: subgraphKovan ? new RegExp(subgraphKovan, 'ig') : null,
-  SUBGRAPH_KINTSUGI: subgraphKintsugi
-    ? new RegExp(subgraphKintsugi, 'ig')
-    : null,
 }
 
 const secretEntries = Object.entries(SECRETS)
