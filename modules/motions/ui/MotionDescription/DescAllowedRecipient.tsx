@@ -11,16 +11,16 @@ import { MotionTypeDisplayNames } from 'modules/motions/utils'
 
 import { formatEther } from 'ethers/lib/utils'
 import {
-  AddAllowedRecipientLDOAbi,
-  RemoveAllowedRecipientLDOAbi,
-  TopUpAllowedRecipientsLDOAbi,
+  AddAllowedRecipientAbi,
+  RemoveAllowedRecipientAbi,
+  TopUpAllowedRecipientsAbi,
 } from 'generated'
 import { NestProps } from './types'
 
 export function DescAllowedRecipientAdd({
   callData,
   registryType,
-}: NestProps<AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']> & {
+}: NestProps<AddAllowedRecipientAbi['decodeEVMScriptCallData']> & {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }) {
   const name = MotionTypeDisplayNames[registryType]
@@ -36,7 +36,7 @@ export function DescAllowedRecipientAdd({
 export function DescAllowedRecipientTopUp({
   callData,
   registryType,
-}: NestProps<TopUpAllowedRecipientsLDOAbi['decodeEVMScriptCallData']> & {
+}: NestProps<TopUpAllowedRecipientsAbi['decodeEVMScriptCallData']> & {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }) {
   const token = useTokenByTopUpType({ registryType })
@@ -68,7 +68,7 @@ export function DescAllowedRecipientTopUp({
 export function DescAllowedRecipientRemove({
   callData,
   registryType,
-}: NestProps<RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']> & {
+}: NestProps<RemoveAllowedRecipientAbi['decodeEVMScriptCallData']> & {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }) {
   const { data: allowedRecipients } = useRecipientAll({

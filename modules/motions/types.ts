@@ -27,6 +27,9 @@ export const MotionType = {
   PmlDAITopUp: 'PmlDAITopUp',
   AtcDAITopUp: 'AtcDAITopUp',
   GasFunderETHTopUp: 'GasFunderETHTopUp',
+  StethRewardProgramAdd: 'StethRewardProgramAdd',
+  StethRewardProgramRemove: 'StethRewardProgramRemove',
+  StethRewardProgramTopUp: 'StethRewardProgramTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

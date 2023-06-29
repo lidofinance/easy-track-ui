@@ -66,6 +66,15 @@ export const formParts = {
   [MotionType.GasFunderETHTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionType.GasFunderETHTopUp,
   }),
+  [MotionType.StethRewardProgramAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionType.StethRewardProgramAdd,
+  }),
+  [MotionType.StethRewardProgramRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionType.StethRewardProgramRemove,
+  }),
+  [MotionType.StethRewardProgramTopUp]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionType.StethRewardProgramTopUp,
+  }),
 } as const
 
 export type FormData = {

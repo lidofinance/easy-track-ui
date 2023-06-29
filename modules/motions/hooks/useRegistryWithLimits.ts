@@ -11,6 +11,7 @@ import {
   ContractAllowedRecipientRegistry,
   ContractAllowedRecipientReferralDaiRegistry,
   ContractAllowedRecipientTrpLdoRegistry,
+  ContractStethRewardProgramRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -40,6 +41,9 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
     ContractAllowedRecipientReferralDaiRegistry,
   [MotionType.AllowedRecipientTopUpTrpLdo]:
     ContractAllowedRecipientTrpLdoRegistry,
+  [MotionType.StethRewardProgramAdd]: ContractStethRewardProgramRegistry,
+  [MotionType.StethRewardProgramRemove]: ContractStethRewardProgramRegistry,
+  [MotionType.StethRewardProgramTopUp]: ContractStethRewardProgramRegistry,
 }
 
 type HookArgs = {

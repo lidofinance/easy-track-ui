@@ -48,6 +48,12 @@ export const EvmAddressesByChain = {
     [MotionType.AtcDAITopUp]: '0x67Fb97ABB9035E2e93A7e3761a0d0571c5d7CD07',
     [MotionType.GasFunderETHTopUp]:
       '0x41F9daC5F89092dD6061E59578A2611849317dc8',
+    [MotionType.StethRewardProgramAdd]:
+      '0x935cb3366Faf2cFC415B2099d1F974Fd27202b77',
+    [MotionType.StethRewardProgramRemove]:
+      '0x22010d1747CaFc370b1f1FBBa61022A313c5693b',
+    [MotionType.StethRewardProgramTopUp]:
+      '0x1F2b79FE297B7098875930bBA6dd17068103897E',
   },
 
   // Rinkeby
@@ -79,6 +85,9 @@ export const EvmAddressesByChain = {
     [MotionType.PmlDAITopUp]: '0x',
     [MotionType.AtcDAITopUp]: '0x',
     [MotionType.GasFunderETHTopUp]: '0x',
+    [MotionType.StethRewardProgramAdd]: '0x',
+    [MotionType.StethRewardProgramRemove]: '0x',
+    [MotionType.StethRewardProgramTopUp]: '0x',
   },
 
   // Goerli
@@ -120,6 +129,12 @@ export const EvmAddressesByChain = {
     [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
     [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
     [MotionType.GasFunderETHTopUp]: '0x',
+    [MotionType.StethRewardProgramAdd]:
+      '0x785A8B1CDC03Bb191670Ed4696e9ED5B11Af910A',
+    [MotionType.StethRewardProgramRemove]:
+      '0xEFEa524D1739800fF6F7d2532ED4C8508220239a',
+    [MotionType.StethRewardProgramTopUp]:
+      '0xF2f7FC1E8879c10D4579Bc82D5FEa923A5a228dE',
   },
 }
 

@@ -30,6 +30,9 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.PmlDAITopUp]: 'Top up PML DAI',
   [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
   [MotionType.GasFunderETHTopUp]: 'Top up Gas Funder ETH',
+  [MotionType.StethRewardProgramAdd]: 'Add stETH reward program',
+  [MotionType.StethRewardProgramRemove]: 'Remove stETH reward program',
+  [MotionType.StethRewardProgramTopUp]: 'Top up stETH reward program',
   [EvmUnrecognized]: 'Unrecognized evm factory',
 } as const
 

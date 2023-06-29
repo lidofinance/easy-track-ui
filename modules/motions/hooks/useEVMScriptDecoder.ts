@@ -7,7 +7,7 @@ import { ABIProviderLocal } from '@lidofinance/evm-script-decoder/lib/ABIProvide
 import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
 import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
 import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
-import AllowedRecipientsRegistryLDOAbi from 'abi/newReward/AllowedRecipientsRegistryLDO.abi.json'
+import AllowedRecipientsRegistryAbi from 'abi/newReward/AllowedRecipientsRegistry.abi.json'
 import RegistryWithLimitsAbi from 'abi/TopUp/RegistryWithLimits.abi.json'
 import FinanceAbi from 'abi/Finance.abi.json'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
@@ -27,11 +27,11 @@ export function useEVMScriptDecoder() {
             NodeOperatorsRegistryAbi as any,
           [CONTRACT_ADDRESSES.Finance[chainId]]: FinanceAbi as any,
           [CONTRACT_ADDRESSES.AllowedRecipientRegistry[chainId]]:
-            AllowedRecipientsRegistryLDOAbi as any,
+            AllowedRecipientsRegistryAbi as any,
           [CONTRACT_ADDRESSES.AllowedRecipientReferralDaiRegistry[chainId]]:
-            AllowedRecipientsRegistryLDOAbi as any,
+            AllowedRecipientsRegistryAbi as any,
           [CONTRACT_ADDRESSES.AllowedRecipientTrpLdoRegistry[chainId]]:
-            AllowedRecipientsRegistryLDOAbi as any,
+            AllowedRecipientsRegistryAbi as any,
           [CONTRACT_ADDRESSES.LegoLDORegistry[chainId]]:
             RegistryWithLimitsAbi as any,
           [CONTRACT_ADDRESSES.LegoDAIRegistry[chainId]]:
@@ -43,6 +43,8 @@ export function useEVMScriptDecoder() {
           [CONTRACT_ADDRESSES.AtcDAIRegistry[chainId]]:
             RegistryWithLimitsAbi as any,
           [CONTRACT_ADDRESSES.gasFunderETHRegistry[chainId]]:
+            RegistryWithLimitsAbi as any,
+          [CONTRACT_ADDRESSES.StethRewardProgramRegistry[chainId]]:
             RegistryWithLimitsAbi as any,
         }),
       ),

@@ -31,6 +31,7 @@ import {
   ContractEvmAllowedRecipientTopUp,
   ContractEvmAllowedRecipientTopUpReferralDai,
   ContractEvmAllowedRecipientTopUpTrpLdo,
+  ContractStethRewardProgramTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -62,6 +63,10 @@ export const ALLOWED_RECIPIENT_TOPUP_MAP = {
   [MotionType.AllowedRecipientTopUpTrpLdo]: {
     evmContract: ContractEvmAllowedRecipientTopUpTrpLdo,
     motionType: MotionType.AllowedRecipientTopUpTrpLdo,
+  },
+  [MotionType.StethRewardProgramTopUp]: {
+    evmContract: ContractStethRewardProgramTopUp,
+    motionType: MotionType.StethRewardProgramTopUp,
   },
 }
 

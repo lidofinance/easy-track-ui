@@ -11,6 +11,7 @@ import {
   ContractAtcDAIRegistry,
   ContractGasFunderETHRegistry,
   ContractPmlDAIRegistry,
+  ContractStethRewardProgramRegistry,
 } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
@@ -111,6 +112,7 @@ const registryByMotionType: {
     ContractAllowedRecipientReferralDaiRegistry,
   [MotionType.AllowedRecipientTopUpTrpLdo]:
     ContractAllowedRecipientTrpLdoRegistry,
+  [MotionType.StethRewardProgramTopUp]: ContractStethRewardProgramRegistry,
 }
 
 export const usePeriodLimitsInfoByMotionType = (props: {
