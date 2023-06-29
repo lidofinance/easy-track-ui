@@ -8,26 +8,21 @@ import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
 import {
-  ContractEvmAllowedRecipientAdd,
-  ContractEvmAllowedRecipientAddReferralDai,
+  ContractStethGasSupplyAdd,
   ContractStethRewardProgramAdd,
 } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
+import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 export const ALLOWED_RECIPIENT_ADD_MAP = {
-  [MotionType.AllowedRecipientAdd]: {
-    evmContract: ContractEvmAllowedRecipientAdd,
-    motionType: MotionType.AllowedRecipientAdd,
-  },
-  [MotionType.AllowedRecipientAddReferralDai]: {
-    evmContract: ContractEvmAllowedRecipientAddReferralDai,
-    motionType: MotionType.AllowedRecipientAddReferralDai,
-  },
-  [MotionType.StethRewardProgramAdd]: {
+  [MotionTypeForms.StethRewardProgramAdd]: {
     evmContract: ContractStethRewardProgramAdd,
-    motionType: MotionType.StethRewardProgramAdd,
+    motionType: MotionTypeForms.StethRewardProgramAdd,
+  },
+  [MotionTypeForms.StethGasSupplyAdd]: {
+    evmContract: ContractStethGasSupplyAdd,
+    motionType: MotionTypeForms.StethGasSupplyAdd,
   },
 }
 

@@ -28,12 +28,11 @@ import {
 } from '../CreateMotionFormStyle'
 
 import {
-  ContractEvmAllowedRecipientTopUp,
-  ContractEvmAllowedRecipientTopUpReferralDai,
   ContractEvmAllowedRecipientTopUpTrpLdo,
+  ContractStethGasSupplyTopUp,
   ContractStethRewardProgramTopUp,
 } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
+import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 import {
@@ -52,21 +51,17 @@ type Program = {
 }
 
 export const ALLOWED_RECIPIENT_TOPUP_MAP = {
-  [MotionType.AllowedRecipientTopUp]: {
-    evmContract: ContractEvmAllowedRecipientTopUp,
-    motionType: MotionType.AllowedRecipientTopUp,
-  },
-  [MotionType.AllowedRecipientTopUpReferralDai]: {
-    evmContract: ContractEvmAllowedRecipientTopUpReferralDai,
-    motionType: MotionType.AllowedRecipientTopUpReferralDai,
-  },
-  [MotionType.AllowedRecipientTopUpTrpLdo]: {
+  [MotionTypeForms.AllowedRecipientTopUpTrpLdo]: {
     evmContract: ContractEvmAllowedRecipientTopUpTrpLdo,
-    motionType: MotionType.AllowedRecipientTopUpTrpLdo,
+    motionType: MotionTypeForms.AllowedRecipientTopUpTrpLdo,
   },
-  [MotionType.StethRewardProgramTopUp]: {
+  [MotionTypeForms.StethRewardProgramTopUp]: {
     evmContract: ContractStethRewardProgramTopUp,
-    motionType: MotionType.StethRewardProgramTopUp,
+    motionType: MotionTypeForms.StethRewardProgramTopUp,
+  },
+  [MotionTypeForms.StethGasSupplyTopUp]: {
+    evmContract: ContractStethGasSupplyTopUp,
+    motionType: MotionTypeForms.StethGasSupplyTopUp,
   },
 }
 

@@ -80,7 +80,7 @@ export const useTokenByTopUpType = ({
   if (!isTopUpType(registryType)) return { label: '', address: '' }
 
   const label = TOKEN[registryType].label
-  const address = TOKEN[registryType].value(chainId)
+  const address = TOKEN[registryType].value(chainId)!
 
   return { label, address }
 }

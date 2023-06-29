@@ -4,50 +4,45 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { EVMScriptDecoder } from '@lidofinance/evm-script-decoder/lib/EVMScriptDecoder'
 import { ABIProviderLocal } from '@lidofinance/evm-script-decoder/lib/ABIProviderLocal'
 
-import ReferralPartnersRegistry from 'abi/ReferralPartnersRegistry.abi.json'
-import RewardProgramRegistryAbi from 'abi/RewardProgramRegistry.abi.json'
-import NodeOperatorsRegistryAbi from 'abi/NodeOperators.abi.json'
-import AllowedRecipientsRegistryAbi from 'abi/newReward/AllowedRecipientsRegistry.abi.json'
-import RegistryWithLimitsAbi from 'abi/TopUp/RegistryWithLimits.abi.json'
-import FinanceAbi from 'abi/Finance.abi.json'
-import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
+import * as abis from 'generated'
+import * as ADDR from 'modules/blockChain/contractAddresses'
 
 export function useEVMScriptDecoder() {
   const { chainId } = useWeb3()
 
-  return useGlobalMemo(
-    () =>
-      new EVMScriptDecoder(
-        new ABIProviderLocal({
-          [CONTRACT_ADDRESSES.ReferralPartnersRegistry[chainId]]:
-            ReferralPartnersRegistry as any,
-          [CONTRACT_ADDRESSES.RewardProgramRegistry[chainId]]:
-            RewardProgramRegistryAbi as any,
-          [CONTRACT_ADDRESSES.NodeOperatorsRegistry[chainId]]:
-            NodeOperatorsRegistryAbi as any,
-          [CONTRACT_ADDRESSES.Finance[chainId]]: FinanceAbi as any,
-          [CONTRACT_ADDRESSES.AllowedRecipientRegistry[chainId]]:
-            AllowedRecipientsRegistryAbi as any,
-          [CONTRACT_ADDRESSES.AllowedRecipientReferralDaiRegistry[chainId]]:
-            AllowedRecipientsRegistryAbi as any,
-          [CONTRACT_ADDRESSES.AllowedRecipientTrpLdoRegistry[chainId]]:
-            AllowedRecipientsRegistryAbi as any,
-          [CONTRACT_ADDRESSES.LegoLDORegistry[chainId]]:
-            RegistryWithLimitsAbi as any,
-          [CONTRACT_ADDRESSES.LegoDAIRegistry[chainId]]:
-            RegistryWithLimitsAbi as any,
-          [CONTRACT_ADDRESSES.RccDAIRegistry[chainId]]:
-            RegistryWithLimitsAbi as any,
-          [CONTRACT_ADDRESSES.PmlDAIRegistry[chainId]]:
-            RegistryWithLimitsAbi as any,
-          [CONTRACT_ADDRESSES.AtcDAIRegistry[chainId]]:
-            RegistryWithLimitsAbi as any,
-          [CONTRACT_ADDRESSES.gasFunderETHRegistry[chainId]]:
-            RegistryWithLimitsAbi as any,
-          [CONTRACT_ADDRESSES.StethRewardProgramRegistry[chainId]]:
-            RegistryWithLimitsAbi as any,
-        }),
-      ),
-    `evm-script-decoder-${chainId}`,
-  )
+  return useGlobalMemo(() => {
+    const KEYS = Object.keys(ADDR).reduce(
+      (keys, contractName: keyof typeof ADDR) => ({
+        ...keys,
+        [contractName]: ADDR[contractName][chainId]!,
+      }),
+      {} as Record<keyof typeof ADDR, string>,
+    )
+
+    return new EVMScriptDecoder(
+      new ABIProviderLocal({
+        [KEYS.ReferralPartnersRegistry]: abis
+          .ReferralPartnersRegistryAbi__factory.abi as any,
+        [KEYS.RewardProgramRegistry]:
+          abis.RewardProgramRegistryAbi__factory.abi,
+        [KEYS.NodeOperatorsRegistry]: abis.NodeOperatorsAbi__factory.abi,
+        [KEYS.Finance]: abis.FinanceAbi__factory.abi,
+        [KEYS.AllowedRecipientRegistry]:
+          abis.AllowedRecipientsRegistryAbi__factory.abi,
+        [KEYS.AllowedRecipientReferralDaiRegistry]:
+          abis.AllowedRecipientsRegistryAbi__factory.abi,
+        [KEYS.AllowedRecipientTrpLdoRegistry]:
+          abis.AllowedRecipientsRegistryAbi__factory.abi,
+        [KEYS.LegoLDORegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.LegoDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.RccDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.PmlDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.AtcDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.gasFunderETHRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.StethRewardProgramRegistry]:
+          abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.StethGasSupplyRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+      }),
+    )
+  }, `evm-script-decoder-${chainId}`)
 }

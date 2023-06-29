@@ -143,6 +143,27 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.StethRewardProgramTopUp}
     />
   ),
+
+  [MotionType.StethGasSupplyAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.StethGasSupplyAdd}
+    />
+  ),
+  [MotionType.StethGasSupplyRemove]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.StethGasSupplyRemove}
+    />
+  ),
+  [MotionType.StethGasSupplyTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.StethGasSupplyTopUp}
+    />
+  ),
 } as const
 
 type Props = {

@@ -9,7 +9,4 @@ export const getBackendRpcUrl = (chainId: CHAINS) => {
 export const backendRPC = {
   [CHAINS.Mainnet]: getBackendRpcUrl(CHAINS.Mainnet),
   [CHAINS.Goerli]: getBackendRpcUrl(CHAINS.Goerli),
-  [CHAINS.Kovan]: getBackendRpcUrl(CHAINS.Kovan),
-  [CHAINS.Rinkeby]: getBackendRpcUrl(CHAINS.Rinkeby),
-  [CHAINS.Ropsten]: getBackendRpcUrl(CHAINS.Ropsten),
 }

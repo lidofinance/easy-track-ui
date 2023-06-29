@@ -7,26 +7,21 @@ import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
 import {
-  ContractEvmAllowedRecipientRemove,
-  ContractEvmAllowedRecipientRemoveReferralDai,
+  ContractStethGasSupplyRemove,
   ContractStethRewardProgramRemove,
 } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
+import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 
 export const ALLOWED_RECIPIENT_REMOVE_MAP = {
-  [MotionType.AllowedRecipientRemove]: {
-    evmContract: ContractEvmAllowedRecipientRemove,
-    motionType: MotionType.AllowedRecipientRemove,
-  },
-  [MotionType.AllowedRecipientRemoveReferralDai]: {
-    evmContract: ContractEvmAllowedRecipientRemoveReferralDai,
-    motionType: MotionType.AllowedRecipientRemoveReferralDai,
-  },
-  [MotionType.StethRewardProgramRemove]: {
+  [MotionTypeForms.StethRewardProgramRemove]: {
     evmContract: ContractStethRewardProgramRemove,
-    motionType: MotionType.StethRewardProgramRemove,
+    motionType: MotionTypeForms.StethRewardProgramRemove,
+  },
+  [MotionTypeForms.StethGasSupplyRemove]: {
+    evmContract: ContractStethGasSupplyRemove,
+    motionType: MotionTypeForms.StethGasSupplyRemove,
   },
 }
 
