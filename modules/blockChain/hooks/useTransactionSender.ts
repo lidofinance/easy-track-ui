@@ -81,7 +81,11 @@ export function useTransactionSender(
     if (!resultTx) return
     const link =
       resultTx.type === 'safe'
-        ? getGnosisSafeLink(chainId, `${walletAddress}`)
+        ? getGnosisSafeLink(
+            chainId,
+            String(walletAddress),
+            resultTx.tx.safeTxHash,
+          )
         : getEtherscanLink(chainId, resultTx.tx.hash, 'tx')
     openWindow(link)
   }, [chainId, resultTx, walletAddress])
