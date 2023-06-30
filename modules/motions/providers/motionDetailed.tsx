@@ -1,4 +1,4 @@
-import { FC, createContext, useMemo } from 'react'
+import { FC, createContext, useMemo, useCallback } from 'react'
 import { formatEther } from 'ethers/lib/utils'
 
 import { useSWR } from 'modules/network/hooks/useSwr'
@@ -6,6 +6,9 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   getMotionTypeByScriptFactory,
   getMotionTypeDisplayName,
+  getEventMotionCreated,
+  getContractMethodParams,
+  estimateGasFallback,
 } from 'modules/motions/utils'
 import {
   useMotionProgress,
@@ -17,8 +20,10 @@ import {
   MotionTimeData,
   useTokenByTopUpType,
 } from 'modules/motions/hooks'
+import { useTransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { Motion, MotionStatus } from 'modules/motions/types'
+import { ContractEasyTrack } from 'modules/blockChain/contracts'
 
 export type MotionDetailedValue = {
   isArchived: boolean
@@ -37,16 +42,19 @@ export type MotionDetailedValue = {
   motionTopUpToken: string
   timeData: MotionTimeData
   motionDisplaydName: string
+  txObject: ReturnType<typeof useTransactionSender>
+  txEnact: ReturnType<typeof useTransactionSender>
 }
 
 export const MotionDetailedContext = createContext({} as MotionDetailedValue)
 
 type MotionDetailedProps = {
   motion: Motion
+  onInvalidate?: () => void
 }
 
 export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
-  const { children, motion } = props
+  const { children, motion, onInvalidate } = props
   const { chainId } = useWeb3()
 
   const motionType = getMotionTypeByScriptFactory(
@@ -97,6 +105,50 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
   const isCanEnactInNextPeriod =
     motionTopUpAmount <= Number(periodLimitsData?.limits.limit)
 
+  const contractEasyTrack = ContractEasyTrack.useWeb3()
+
+  // Submit Objection
+  const populateObject = useCallback(async () => {
+    const gasLimit = await estimateGasFallback(
+      contractEasyTrack.estimateGas.objectToMotion(motion.id),
+    )
+    const tx = await contractEasyTrack.populateTransaction.objectToMotion(
+      motion.id,
+      { gasLimit },
+    )
+    return tx
+  }, [contractEasyTrack, motion.id])
+
+  const txObject = useTransactionSender(populateObject, {
+    onFinish: onInvalidate,
+  })
+
+  // Enact Motion
+  const populateEnact = useCallback(async () => {
+    const { _evmScriptCallData: _callData } = await getEventMotionCreated(
+      contractEasyTrack,
+      motion.id,
+    )
+    const gasLimit = await estimateGasFallback(
+      contractEasyTrack.estimateGas.enactMotion(motion.id, _callData, {
+        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
+      }),
+    )
+    const tx = await contractEasyTrack.populateTransaction.enactMotion(
+      motion.id,
+      _callData,
+      {
+        gasLimit,
+        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
+      },
+    )
+    return tx
+  }, [contractEasyTrack, motion.evmScriptFactory, motion.id])
+
+  const txEnact = useTransactionSender(populateEnact, {
+    onFinish: onInvalidate,
+  })
+
   const value = useMemo(
     () => ({
       isArchived,
@@ -109,6 +161,8 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       periodLimitsData,
       progress,
       motionDisplaydName,
+      txObject,
+      txEnact,
     }),
     [
       isArchived,
@@ -121,6 +175,8 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       periodLimitsData,
       progress,
       motionDisplaydName,
+      txObject,
+      txEnact,
     ],
   )
 
