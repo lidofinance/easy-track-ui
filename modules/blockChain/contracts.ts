@@ -16,11 +16,11 @@ import {
   EvmAddReferralPartnerAbi__factory,
   EvmRemoveReferralPartnerAbi__factory,
   EvmTopUpReferralPartnersAbi__factory,
-  AllowedRecipientsRegistryLDOAbi__factory,
-  AllowedRecipientsRegistryLDOAbi,
-  AddAllowedRecipientLDOAbi__factory,
-  RemoveAllowedRecipientLDOAbi__factory,
-  TopUpAllowedRecipientsLDOAbi__factory,
+  AllowedRecipientsRegistryAbi__factory,
+  AllowedRecipientsRegistryAbi,
+  AddAllowedRecipientAbi__factory,
+  RemoveAllowedRecipientAbi__factory,
+  TopUpAllowedRecipientsAbi__factory,
   RegistryWithLimitsAbi__factory,
   RegistryWithLimitsAbi,
   TopUpWithLimitsAbi__factory,
@@ -35,8 +35,7 @@ export type ContractTypeEasyTrack = EasyTrackAbi
  */
 export type ContractTypeRewardProgramRegistry = RewardProgramRegistryAbi
 export type ContractTypeReferralPartnersRegistry = ReferralPartnersRegistryAbi
-export type ContractTypeAllowedRecipientRegistry =
-  AllowedRecipientsRegistryLDOAbi
+export type ContractTypeAllowedRecipientRegistry = AllowedRecipientsRegistryAbi
 export type ContractTypeRegistryWithLimits = RegistryWithLimitsAbi
 
 export const ContractNodeOperatorsRegistry = createContractHelpers({
@@ -58,57 +57,57 @@ export const ContractRewardProgramRegistry = createContractHelpers({
 })
 
 export const ContractAllowedRecipientRegistry = createContractHelpers({
-  factory: AllowedRecipientsRegistryLDOAbi__factory,
+  factory: AllowedRecipientsRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.AllowedRecipientRegistry,
 })
 
 export const ContractEvmAllowedRecipientAdd = createContractHelpers({
-  factory: AddAllowedRecipientLDOAbi__factory,
+  factory: AddAllowedRecipientAbi__factory,
   address: EvmAddressesByType[MotionType.AllowedRecipientAdd],
 })
 
 export const ContractEvmAllowedRecipientRemove = createContractHelpers({
-  factory: RemoveAllowedRecipientLDOAbi__factory,
+  factory: RemoveAllowedRecipientAbi__factory,
   address: EvmAddressesByType[MotionType.AllowedRecipientRemove],
 })
 
 export const ContractEvmAllowedRecipientTopUp = createContractHelpers({
-  factory: TopUpAllowedRecipientsLDOAbi__factory,
+  factory: TopUpAllowedRecipientsAbi__factory,
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUp],
 })
 
 // DAI Referral
 export const ContractAllowedRecipientReferralDaiRegistry =
   createContractHelpers({
-    factory: AllowedRecipientsRegistryLDOAbi__factory,
+    factory: AllowedRecipientsRegistryAbi__factory,
     address: CONTRACT_ADDRESSES.AllowedRecipientReferralDaiRegistry,
   })
 
 export const ContractEvmAllowedRecipientAddReferralDai = createContractHelpers({
-  factory: AddAllowedRecipientLDOAbi__factory,
+  factory: AddAllowedRecipientAbi__factory,
   address: EvmAddressesByType[MotionType.AllowedRecipientAddReferralDai],
 })
 
 export const ContractEvmAllowedRecipientRemoveReferralDai =
   createContractHelpers({
-    factory: RemoveAllowedRecipientLDOAbi__factory,
+    factory: RemoveAllowedRecipientAbi__factory,
     address: EvmAddressesByType[MotionType.AllowedRecipientRemoveReferralDai],
   })
 
 export const ContractEvmAllowedRecipientTopUpReferralDai =
   createContractHelpers({
-    factory: TopUpAllowedRecipientsLDOAbi__factory,
+    factory: TopUpAllowedRecipientsAbi__factory,
     address: EvmAddressesByType[MotionType.AllowedRecipientTopUpReferralDai],
   })
 
 // LDO TRP
 export const ContractAllowedRecipientTrpLdoRegistry = createContractHelpers({
-  factory: AllowedRecipientsRegistryLDOAbi__factory,
+  factory: AllowedRecipientsRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.AllowedRecipientTrpLdoRegistry,
 })
 
 export const ContractEvmAllowedRecipientTopUpTrpLdo = createContractHelpers({
-  factory: TopUpAllowedRecipientsLDOAbi__factory,
+  factory: TopUpAllowedRecipientsAbi__factory,
   address: EvmAddressesByType[MotionType.AllowedRecipientTopUpTrpLdo],
 })
 
@@ -229,4 +228,44 @@ export const ContractEvmReferralPartnerTopUp = createContractHelpers({
 export const ContractReferralPartnersRegistry = createContractHelpers({
   factory: ReferralPartnersRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.ReferralPartnersRegistry,
+})
+
+export const ContractStethRewardProgramRegistry = createContractHelpers({
+  factory: AllowedRecipientsRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.StethRewardProgramRegistry,
+})
+
+export const ContractStethRewardProgramAdd = createContractHelpers({
+  factory: AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.StethRewardProgramAdd],
+})
+
+export const ContractStethRewardProgramRemove = createContractHelpers({
+  factory: RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.StethRewardProgramRemove],
+})
+
+export const ContractStethRewardProgramTopUp = createContractHelpers({
+  factory: TopUpAllowedRecipientsAbi__factory,
+  address: EvmAddressesByType[MotionType.StethRewardProgramTopUp],
+})
+
+export const ContractStethGasSupplyRegistry = createContractHelpers({
+  factory: AllowedRecipientsRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.StethGasSupplyRegistry,
+})
+
+export const ContractStethGasSupplyAdd = createContractHelpers({
+  factory: AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.StethGasSupplyAdd],
+})
+
+export const ContractStethGasSupplyRemove = createContractHelpers({
+  factory: RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.StethGasSupplyRemove],
+})
+
+export const ContractStethGasSupplyTopUp = createContractHelpers({
+  factory: TopUpAllowedRecipientsAbi__factory,
+  address: EvmAddressesByType[MotionType.StethGasSupplyTopUp],
 })

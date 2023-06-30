@@ -8,11 +8,25 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.NodeOperatorIncreaseLimit]:
     'Increase node operator staking limit',
   [MotionType.LEGOTopUp]: 'Top up LEGO',
-  // @deprecated
+  [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
+  [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
+  [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
+  [MotionType.RccDAITopUp]: 'Top up RCC DAI',
+  [MotionType.PmlDAITopUp]: 'Top up PML DAI',
+  [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
+  [MotionType.GasFunderETHTopUp]: 'Top up Gas Funder ETH',
+  [MotionType.StethRewardProgramAdd]: 'Add stETH reward program',
+  [MotionType.StethRewardProgramRemove]: 'Remove stETH reward program',
+  [MotionType.StethRewardProgramTopUp]: 'Top up stETH reward programs',
+  [MotionType.StethGasSupplyAdd]: 'Add stETH Gas Supply recipient',
+  [MotionType.StethGasSupplyRemove]: 'Remove stETH Gas Supply recipient',
+  [MotionType.StethGasSupplyTopUp]: 'Top up stETH Gas Supply recipients',
+  [EvmUnrecognized]: 'Unrecognized evm factory',
+
+  // next motion types are retired
+  // we are keeping them here to display history data
   [MotionType.RewardProgramAdd]: 'Add reward program',
-  // @deprecated
   [MotionType.RewardProgramRemove]: 'Remove reward program',
-  // @deprecated
   [MotionType.RewardProgramTopUp]: 'Top up reward program',
   [MotionType.ReferralPartnerAdd]: 'Add LDO referral partner',
   [MotionType.ReferralPartnerRemove]: 'Remove LDO referral partner',
@@ -23,14 +37,6 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.AllowedRecipientAddReferralDai]: 'Add DAI referral partner',
   [MotionType.AllowedRecipientRemoveReferralDai]: 'Remove DAI referral partner',
   [MotionType.AllowedRecipientTopUpReferralDai]: 'Top up DAI referral partner',
-  [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
-  [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
-  [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
-  [MotionType.RccDAITopUp]: 'Top up RCC DAI',
-  [MotionType.PmlDAITopUp]: 'Top up PML DAI',
-  [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
-  [MotionType.GasFunderETHTopUp]: 'Top up Gas Funder ETH',
-  [EvmUnrecognized]: 'Unrecognized evm factory',
 } as const
 
 export function getMotionTypeDisplayName(

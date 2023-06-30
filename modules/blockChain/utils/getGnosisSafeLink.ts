@@ -6,9 +6,11 @@ const PREFIXES = {
   [CHAINS.Goerli]: 'gor',
 } as const
 
-export const getGnosisSafeLink = (chainId: CHAINS, address: string) =>
-  `https://app.safe.global/transactions/history?safe=${get(
-    PREFIXES,
-    chainId,
-    '?',
-  )}:${address}`
+export const getGnosisSafeLink = (
+  chainId: CHAINS,
+  address: string,
+  txHash: string,
+) => {
+  const chain = get(PREFIXES, chainId, '?')
+  return `https://app.safe.global/transactions/tx?safe=${chain}:${address}&id=multisig_${address}_${txHash}`
+}

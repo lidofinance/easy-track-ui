@@ -7,17 +7,10 @@ import {
   EvmTypesByAdress,
   parseEvmSupportedChainId,
 } from 'modules/motions/evmAddresses'
-import { MotionType } from 'modules/motions/types'
 
 import { useNodeOperatorsList } from './useNodeOperatorsList'
 import { EVM_CONTRACTS } from './useContractEvmScript'
-
-export const HIDDEN_MOTIONS = [
-  'RewardProgramAdd',
-  'RewardProgramRemove',
-  'RewardProgramTopUp',
-  'LEGOTopUp',
-]
+import { MotionTypeForms } from 'modules/motions/types'
 
 const isHasTrustedCaller = (
   contract: unknown,
@@ -30,7 +23,7 @@ const isHasTrustedCaller = (
 export const useAvailableMotions = () => {
   const { chainId, walletAddress } = useWeb3()
   const [availableMotions, setAvailableMotions] =
-    useState<Record<MotionType, boolean>>()
+    useState<Record<MotionTypeForms, boolean>>()
 
   const nodeOperators = useNodeOperatorsList()
   const currentNodeOperator = useMemo(() => {
@@ -47,18 +40,16 @@ export const useAvailableMotions = () => {
     Boolean(currentNodeOperator)
 
   const nodeOperatorIncreaseLimitAddressMap =
-    EvmAddressesByType[MotionType.NodeOperatorIncreaseLimit]
+    EvmAddressesByType[MotionTypeForms.NodeOperatorIncreaseLimit]
   const nodeOperatorIncreaseLimitAddress =
     nodeOperatorIncreaseLimitAddressMap[parseEvmSupportedChainId(chainId)]
 
-  const contracts = useMemo(
-    () =>
-      Object.values(EVM_CONTRACTS).filter(
-        contract =>
-          contract.address[chainId] !== nodeOperatorIncreaseLimitAddress,
-      ),
-    [chainId, nodeOperatorIncreaseLimitAddress],
-  )
+  const contracts = useMemo(() => {
+    return Object.values(EVM_CONTRACTS).filter(
+      contract =>
+        contract.address[chainId] !== nodeOperatorIncreaseLimitAddress,
+    )
+  }, [chainId, nodeOperatorIncreaseLimitAddress])
 
   const getTrustedConnectionInfo = useCallback(async () => {
     const promiseResult = await Promise.allSettled(
@@ -80,14 +71,15 @@ export const useAvailableMotions = () => {
         const contractType =
           EvmTypesByAdress[parseEvmSupportedChainId(chainId)][contractAddress]
 
-        if (HIDDEN_MOTIONS.includes(contractType)) return acc
-        acc[contractType] = cur.value === walletAddress
+        if (!Object.keys(MotionTypeForms).includes(contractType)) return acc
+
+        acc[contractType as MotionTypeForms] = cur.value === walletAddress
 
         return acc
       },
       {
-        [MotionType.NodeOperatorIncreaseLimit]: isNodeOperatorConnected,
-      } as Record<MotionType, boolean>,
+        [MotionTypeForms.NodeOperatorIncreaseLimit]: isNodeOperatorConnected,
+      } as Record<MotionTypeForms, boolean>,
     )
 
     setAvailableMotions(trustedCallerConnectedMap)

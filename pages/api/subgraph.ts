@@ -6,13 +6,9 @@ import { logger } from 'modules/shared/utils/log'
 import { parseChainId } from 'modules/blockChain/chains'
 
 const { serverRuntimeConfig } = getConfig()
-export const SUBGRAPH_URL = {
+export const SUBGRAPH_URL: Partial<Record<CHAINS, string>> = {
   [CHAINS.Mainnet]: serverRuntimeConfig.subgraphMainnet,
-  [CHAINS.Ropsten]: serverRuntimeConfig.subgraphRopsten,
-  [CHAINS.Rinkeby]: serverRuntimeConfig.subgraphRinkeby,
   [CHAINS.Goerli]: serverRuntimeConfig.subgraphGoerli,
-  [CHAINS.Kovan]: serverRuntimeConfig.subgraphKovan,
-  [CHAINS.Kintsugi]: serverRuntimeConfig.subgraphKintsugi,
 } as const
 
 export default async function subgraph(

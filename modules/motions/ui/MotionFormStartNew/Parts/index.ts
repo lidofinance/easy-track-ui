@@ -1,79 +1,65 @@
-import { MotionType } from 'modules/motions/types'
+import { MotionTypeForms } from 'modules/motions/types'
 
 import * as formNodeOperators from './StartNewNodeOperators'
 import * as formLEGO from './StartNewLEGO'
-import * as formRewardProgramAdd from './StartNewRewardProgramAdd'
-import * as formRewardProgramRemove from './StartNewRewardProgramRemove'
-import * as formRewardProgramTopUp from './StartNewRewardProgramTopUp'
-import * as formReferralPartnerAdd from './StartNewReferralPartnerAdd'
-import * as formReferralPartnerRemove from './StartNewReferralPartnerRemove'
-import * as formReferralPartnerTopUp from './StartNewReferralPartnerTopUp'
 import * as formAllowedRecipientAdd from './StartNewAllowedRecipientAdd'
 import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
 import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
 
 export const formParts = {
-  [MotionType.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
-  [MotionType.LEGOTopUp]: formLEGO.formParts,
-  [MotionType.RewardProgramAdd]: formRewardProgramAdd.formParts,
-  [MotionType.RewardProgramRemove]: formRewardProgramRemove.formParts,
-  [MotionType.RewardProgramTopUp]: formRewardProgramTopUp.formParts,
-  [MotionType.ReferralPartnerAdd]: formReferralPartnerAdd.formParts,
-  [MotionType.ReferralPartnerRemove]: formReferralPartnerRemove.formParts,
-  [MotionType.ReferralPartnerTopUp]: formReferralPartnerTopUp.formParts,
-  [MotionType.AllowedRecipientAdd]: formAllowedRecipientAdd.formParts({
-    registryType: MotionType.AllowedRecipientAdd,
-  }),
-  [MotionType.AllowedRecipientRemove]: formAllowedRecipientRemove.formParts({
-    registryType: MotionType.AllowedRecipientRemove,
-  }),
-  [MotionType.AllowedRecipientTopUp]: formAllowedRecipientTopUp.formParts({
-    registryType: MotionType.AllowedRecipientTopUp,
-  }),
-  [MotionType.AllowedRecipientAddReferralDai]:
-    formAllowedRecipientAdd.formParts({
-      registryType: MotionType.AllowedRecipientAddReferralDai,
-    }),
-  [MotionType.AllowedRecipientRemoveReferralDai]:
-    formAllowedRecipientRemove.formParts({
-      registryType: MotionType.AllowedRecipientRemoveReferralDai,
-    }),
-  [MotionType.AllowedRecipientTopUpReferralDai]:
+  [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
+  [MotionTypeForms.LEGOTopUp]: formLEGO.formParts,
+  [MotionTypeForms.AllowedRecipientTopUpTrpLdo]:
     formAllowedRecipientTopUp.formParts({
-      registryType: MotionType.AllowedRecipientTopUpReferralDai,
+      registryType: MotionTypeForms.AllowedRecipientTopUpTrpLdo,
     }),
-  [MotionType.AllowedRecipientTopUpTrpLdo]: formAllowedRecipientTopUp.formParts(
-    {
-      registryType: MotionType.AllowedRecipientTopUpTrpLdo,
-    },
-  ),
-  [MotionType.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionType.LegoLDOTopUp,
+  [MotionTypeForms.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.LegoLDOTopUp,
   }),
-  [MotionType.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionType.LegoDAITopUp,
+  [MotionTypeForms.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.LegoDAITopUp,
   }),
-  [MotionType.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionType.RccDAITopUp,
+  [MotionTypeForms.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.RccDAITopUp,
   }),
-  [MotionType.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionType.PmlDAITopUp,
+  [MotionTypeForms.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.PmlDAITopUp,
   }),
-  [MotionType.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionType.AtcDAITopUp,
+  [MotionTypeForms.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.AtcDAITopUp,
   }),
-  [MotionType.GasFunderETHTopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionType.GasFunderETHTopUp,
+  [MotionTypeForms.GasFunderETHTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.GasFunderETHTopUp,
+  }),
+  [MotionTypeForms.StethRewardProgramAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.StethRewardProgramAdd,
+  }),
+  [MotionTypeForms.StethRewardProgramRemove]:
+    formAllowedRecipientRemove.formParts({
+      registryType: MotionTypeForms.StethRewardProgramRemove,
+    }),
+  [MotionTypeForms.StethRewardProgramTopUp]:
+    formAllowedRecipientTopUp.formParts({
+      registryType: MotionTypeForms.StethRewardProgramTopUp,
+    }),
+  [MotionTypeForms.StethGasSupplyAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.StethGasSupplyAdd,
+  }),
+  [MotionTypeForms.StethGasSupplyRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionTypeForms.StethGasSupplyRemove,
+  }),
+  [MotionTypeForms.StethGasSupplyTopUp]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionTypeForms.StethGasSupplyTopUp,
   }),
 } as const
 
 export type FormData = {
-  motionType: MotionType | null
+  motionType: MotionTypeForms | null
 } & {
-  // TODO: will be fixed when adding formParts
-  // @ts-ignore
-  [key in MotionType]: ReturnType<typeof formParts[key]['getDefaultFormData']>
+  [key in MotionTypeForms]: ReturnType<
+    typeof formParts[key]['getDefaultFormData']
+  >
 }
 
 export const getDefaultFormPartsData = () => {
@@ -82,6 +68,6 @@ export const getDefaultFormPartsData = () => {
       ...res,
       [type]: part.getDefaultFormData(),
     }),
-    {} as { [key in MotionType]: FormData[key] },
+    {} as { [key in MotionTypeForms]: FormData[key] },
   )
 }

@@ -46,6 +46,10 @@ const TOKEN = {
     value: (chainId: CHAINS) =>
       ContractGovernanceToken.address[chainId] as string,
   },
+  [MotionType.StethRewardProgramTopUp]: {
+    label: 'stETH',
+    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
+  },
 }
 
 const isTopUpType = (type: unknown): type is keyof typeof TOKEN => {
@@ -76,7 +80,7 @@ export const useTokenByTopUpType = ({
   if (!isTopUpType(registryType)) return { label: '', address: '' }
 
   const label = TOKEN[registryType].label
-  const address = TOKEN[registryType].value(chainId)
+  const address = TOKEN[registryType].value(chainId)!
 
   return { label, address }
 }

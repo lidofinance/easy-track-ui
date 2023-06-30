@@ -5,11 +5,24 @@ import type { EasyTrackAbi } from 'generated'
 export const MotionType = {
   NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
   LEGOTopUp: 'LEGOTopUp',
-  // @deprecated
+  AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
+  LegoLDOTopUp: 'LegoLDOTopUp',
+  LegoDAITopUp: 'LegoDAITopUp',
+  RccDAITopUp: 'RccDAITopUp',
+  PmlDAITopUp: 'PmlDAITopUp',
+  AtcDAITopUp: 'AtcDAITopUp',
+  GasFunderETHTopUp: 'GasFunderETHTopUp',
+  StethRewardProgramAdd: 'StethRewardProgramAdd',
+  StethRewardProgramRemove: 'StethRewardProgramRemove',
+  StethRewardProgramTopUp: 'StethRewardProgramTopUp',
+  StethGasSupplyAdd: 'StethGasSupplyAdd',
+  StethGasSupplyRemove: 'StethGasSupplyRemove',
+  StethGasSupplyTopUp: 'StethGasSupplyTopUp',
+
+  // next motion types are retired
+  // we are keeping them here to display history data
   RewardProgramAdd: 'RewardProgramAdd',
-  // @deprecated
   RewardProgramRemove: 'RewardProgramRemove',
-  // @deprecated
   RewardProgramTopUp: 'RewardProgramTopUp',
   ReferralPartnerAdd: 'ReferralPartnerAdd',
   ReferralPartnerRemove: 'ReferralPartnerRemove',
@@ -20,17 +33,33 @@ export const MotionType = {
   AllowedRecipientAddReferralDai: 'AllowedRecipientAddReferralDai',
   AllowedRecipientRemoveReferralDai: 'AllowedRecipientRemoveReferralDai',
   AllowedRecipientTopUpReferralDai: 'AllowedRecipientTopUpReferralDai',
-  AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
-  LegoLDOTopUp: 'LegoLDOTopUp',
-  LegoDAITopUp: 'LegoDAITopUp',
-  RccDAITopUp: 'RccDAITopUp',
-  PmlDAITopUp: 'PmlDAITopUp',
-  AtcDAITopUp: 'AtcDAITopUp',
-  GasFunderETHTopUp: 'GasFunderETHTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type MotionType = typeof MotionType[keyof typeof MotionType]
+
+// Only motions currently supported to start
+export const MotionTypeForms = {
+  NodeOperatorIncreaseLimit: MotionType.NodeOperatorIncreaseLimit,
+  LEGOTopUp: MotionType.LEGOTopUp,
+  AllowedRecipientTopUpTrpLdo: MotionType.AllowedRecipientTopUpTrpLdo,
+  LegoLDOTopUp: MotionType.LegoLDOTopUp,
+  LegoDAITopUp: MotionType.LegoDAITopUp,
+  RccDAITopUp: MotionType.RccDAITopUp,
+  PmlDAITopUp: MotionType.PmlDAITopUp,
+  AtcDAITopUp: MotionType.AtcDAITopUp,
+  GasFunderETHTopUp: MotionType.GasFunderETHTopUp,
+  StethRewardProgramAdd: MotionType.StethRewardProgramAdd,
+  StethRewardProgramRemove: MotionType.StethRewardProgramRemove,
+  StethRewardProgramTopUp: MotionType.StethRewardProgramTopUp,
+  StethGasSupplyAdd: MotionType.StethGasSupplyAdd,
+  StethGasSupplyRemove: MotionType.StethGasSupplyRemove,
+  StethGasSupplyTopUp: MotionType.StethGasSupplyTopUp,
+} as const
+// intentionally
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type MotionTypeForms =
+  typeof MotionTypeForms[keyof typeof MotionTypeForms]
 
 export const MotionStatus = {
   ACTIVE: 'ACTIVE',

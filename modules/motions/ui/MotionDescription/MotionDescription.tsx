@@ -25,8 +25,8 @@ import { DescTopUpWithLimits } from './DescTopUpWithLimits'
 
 import {
   TopUpWithLimitsAbi,
-  RemoveAllowedRecipientLDOAbi,
-  AddAllowedRecipientLDOAbi,
+  RemoveAllowedRecipientAbi,
+  AddAllowedRecipientAbi,
 } from 'generated'
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
@@ -37,10 +37,10 @@ type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
 >
 type DescAllowedRecipientRemoveProps = NestProps<
-  RemoveAllowedRecipientLDOAbi['decodeEVMScriptCallData']
+  RemoveAllowedRecipientAbi['decodeEVMScriptCallData']
 >
 type DescAllowedRecipientAddProps = NestProps<
-  AddAllowedRecipientLDOAbi['decodeEVMScriptCallData']
+  AddAllowedRecipientAbi['decodeEVMScriptCallData']
 >
 
 const MOTION_DESCRIPTIONS = {
@@ -121,6 +121,47 @@ const MOTION_DESCRIPTIONS = {
     <DescTopUpWithLimits
       {...props}
       registryType={MotionType.GasFunderETHTopUp}
+    />
+  ),
+  [MotionType.StethRewardProgramAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.StethRewardProgramAdd}
+    />
+  ),
+  [MotionType.StethRewardProgramRemove]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.StethRewardProgramRemove}
+    />
+  ),
+  [MotionType.StethRewardProgramTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.StethRewardProgramTopUp}
+    />
+  ),
+
+  [MotionType.StethGasSupplyAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.StethGasSupplyAdd}
+    />
+  ),
+  [MotionType.StethGasSupplyRemove]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.StethGasSupplyRemove}
+    />
+  ),
+  [MotionType.StethGasSupplyTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.StethGasSupplyTopUp}
     />
   ),
 } as const
