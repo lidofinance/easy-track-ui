@@ -56,7 +56,7 @@ export default function MotionDetailsPage() {
 
   return (
     <ContentContainer>
-      <MotionDetailedProvider motion={motion}>
+      <MotionDetailedProvider motion={motion} onInvalidate={revalidate}>
         <MotionCardDetailed motion={motion} onInvalidate={revalidate} />
       </MotionDetailedProvider>
     </ContentContainer>
