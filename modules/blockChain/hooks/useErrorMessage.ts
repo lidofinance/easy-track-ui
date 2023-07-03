@@ -1,23 +1,21 @@
-import { useSupportedChains, useConnectorError } from 'reef-knot/web3-react'
-import { CHAINS } from '@lido-sdk/constants'
 import { useMemo } from 'react'
+import { useConfig } from 'modules/config/hooks/useConfig'
+import { useSupportedChains, useConnectorError } from 'reef-knot/web3-react'
 
-export const useErrorMessage = (): string | undefined => {
+import { getChainName } from 'modules/blockChain/chains'
+
+export function useErrorMessage() {
   const error = useConnectorError()
-  const { isUnsupported, supportedChains } = useSupportedChains()
+  const { isUnsupported } = useSupportedChains()
+  const { supportedChainIds } = useConfig()
 
   const chains = useMemo(() => {
-    const chainNames = supportedChains.map(
-      ({ chainId, name }) => CHAINS[chainId] || name,
-    )
-    const lastChain = chainNames.pop()
-    const chainsArray = [chainNames.join(', '), lastChain]
-
-    return chainsArray.filter(chain => chain).join(' or ')
-  }, [supportedChains])
+    const networksList = supportedChainIds.map(chainId => getChainName(chainId))
+    return networksList.join(' / ')
+  }, [supportedChainIds])
 
   if (isUnsupported) {
-    return `Unsupported chain. Please switch to ${chains} in your wallet`
+    return `Unsupported chain. Please switch to ${chains} in your wallet.`
   }
 
   return error?.message
