@@ -151,9 +151,7 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
 
       <MotionDetailedLimits />
 
-      {!isArchived && (
-        <MotionDetailedActions motion={motion} onFinish={onInvalidate} />
-      )}
+      {!isArchived && <MotionDetailedActions motion={motion} />}
     </Card>
   )
 }

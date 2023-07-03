@@ -1,5 +1,4 @@
 import { formatEther } from 'ethers/lib/utils'
-import { useCallback } from 'react'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   ContractEasyTrack,
@@ -7,10 +6,7 @@ import {
 } from 'modules/blockChain/contracts'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
-import {
-  useTransactionSender,
-  TransactionSender,
-} from 'modules/blockChain/hooks/useTransactionSender'
+import { TransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
 import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
 
 import { Text } from 'modules/shared/ui/Common/Text'
@@ -23,11 +19,6 @@ import {
 } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
-import {
-  getEventMotionCreated,
-  getContractMethodParams,
-  estimateGasFallback,
-} from 'modules/motions/utils'
 
 function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
   return (
@@ -44,14 +35,12 @@ function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
 
 type Props = {
   motion: Motion
-  onFinish?: () => void
 }
 
-function ActionsBody({ motion, onFinish }: Props) {
+function ActionsBody({ motion }: Props) {
   const { walletAddress } = useWeb3()
-  const contractEasyTrack = ContractEasyTrack.useWeb3()
   const { data: governanceSymbol } = useGovernanceSymbol()
-  const { isOverPeriodLimit } = useMotionDetailed()
+  const { isOverPeriodLimit, txEnact, txObject } = useMotionDetailed()
 
   const balanceAt = ContractGovernanceToken.useSwrWeb3('balanceOfAt', [
     String(walletAddress),
@@ -68,44 +57,6 @@ function ActionsBody({ motion, onFinish }: Props) {
     motion.id,
     String(walletAddress),
   ])
-
-  // Submit Objection
-  const populateObject = useCallback(async () => {
-    const gasLimit = await estimateGasFallback(
-      contractEasyTrack.estimateGas.objectToMotion(motion.id),
-    )
-    const tx = await contractEasyTrack.populateTransaction.objectToMotion(
-      motion.id,
-      { gasLimit },
-    )
-    return tx
-  }, [contractEasyTrack, motion.id])
-
-  const txObject = useTransactionSender(populateObject, { onFinish })
-
-  // Enact Motion
-  const populateEnact = useCallback(async () => {
-    const { _evmScriptCallData: callData } = await getEventMotionCreated(
-      contractEasyTrack,
-      motion.id,
-    )
-    const gasLimit = await estimateGasFallback(
-      contractEasyTrack.estimateGas.enactMotion(motion.id, callData, {
-        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
-      }),
-    )
-    const tx = await contractEasyTrack.populateTransaction.enactMotion(
-      motion.id,
-      callData,
-      {
-        gasLimit,
-        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
-      },
-    )
-    return tx
-  }, [contractEasyTrack, motion.evmScriptFactory, motion.id])
-
-  const txEnact = useTransactionSender(populateEnact, { onFinish })
 
   // Loader
   const isLoadingActions =
@@ -195,10 +146,10 @@ function AuthStub() {
   )
 }
 
-export function MotionDetailedActions({ motion, onFinish }: Props) {
+export function MotionDetailedActions({ motion }: Props) {
   const { isWalletConnected } = useWeb3()
 
   if (!isWalletConnected) return <AuthStub />
 
-  return <ActionsBody motion={motion} onFinish={onFinish} />
+  return <ActionsBody motion={motion} />
 }
