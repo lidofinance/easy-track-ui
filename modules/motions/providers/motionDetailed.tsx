@@ -7,7 +7,6 @@ import {
   getMotionTypeByScriptFactory,
   getMotionTypeDisplayName,
   getEventMotionCreated,
-  getContractMethodParams,
   estimateGasFallback,
 } from 'modules/motions/utils'
 import {
@@ -130,20 +129,17 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       motion.id,
     )
     const gasLimit = await estimateGasFallback(
-      contractEasyTrack.estimateGas.enactMotion(motion.id, _callData, {
-        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
-      }),
+      contractEasyTrack.estimateGas.enactMotion(motion.id, _callData),
     )
     const tx = await contractEasyTrack.populateTransaction.enactMotion(
       motion.id,
       _callData,
       {
         gasLimit,
-        ...getContractMethodParams(motion.evmScriptFactory, 'enact'),
       },
     )
     return tx
-  }, [contractEasyTrack, motion.evmScriptFactory, motion.id])
+  }, [contractEasyTrack, motion.id])
 
   const txEnact = useTransactionSender(populateEnact, {
     onFinish: onInvalidate,
