@@ -48,7 +48,7 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.StethGasSupplyAdd]: ContractStethGasSupplyRegistry,
   [MotionType.StethGasSupplyRemove]: ContractStethGasSupplyRegistry,
   [MotionType.StethGasSupplyTopUp]: ContractStethGasSupplyRegistry,
-}
+} as const
 
 type HookArgs = {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE

@@ -7,14 +7,12 @@ export const MotionTypeDisplayNames: Record<
 > = {
   [MotionType.NodeOperatorIncreaseLimit]:
     'Increase node operator staking limit',
-  [MotionType.LEGOTopUp]: 'Top up LEGO',
   [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.RccDAITopUp]: 'Top up RCC DAI',
   [MotionType.PmlDAITopUp]: 'Top up PML DAI',
   [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
-  [MotionType.GasFunderETHTopUp]: 'Top up Gas Funder ETH',
   [MotionType.StethRewardProgramAdd]: 'Add stETH reward program',
   [MotionType.StethRewardProgramRemove]: 'Remove stETH reward program',
   [MotionType.StethRewardProgramTopUp]: 'Top up stETH reward programs',
@@ -25,6 +23,8 @@ export const MotionTypeDisplayNames: Record<
 
   // next motion types are retired
   // we are keeping them here to display history data
+  [MotionType.LEGOTopUp]: 'Top up LEGO',
+  [MotionType.GasFunderETHTopUp]: 'Top up Gas Funder ETH',
   [MotionType.RewardProgramAdd]: 'Add reward program',
   [MotionType.RewardProgramRemove]: 'Remove reward program',
   [MotionType.RewardProgramTopUp]: 'Top up reward program',
