@@ -95,3 +95,13 @@ export const StethGasSupplyRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x49d1363016aA899bba09ae972a1BF200dDf8C55F',
   [CHAINS.Goerli]: '0xF08a5f00824D4554a1FBebaE726609418dc819fb',
 }
+
+export const AragonACL: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb',
+  [CHAINS.Goerli]: '0xb3cf58412a00282934d3c3e73f49347567516e98',
+}
+
+export const EVMScriptExecutor: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xF0211b7660680B49De1A7E9f25C65660F0a13Fea',
+  [CHAINS.Goerli]: '0x3c9AcA237b838c59612d79198685e7f20C7fE783',
+}

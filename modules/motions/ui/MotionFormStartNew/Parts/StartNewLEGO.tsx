@@ -4,6 +4,7 @@ import { useCallback, Fragment } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useLegoTokenOptions } from 'modules/motions/hooks/useLegoTokenOptions'
+import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
 
 import { ButtonIcon, Plus } from '@lidofinance/lido-ui'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -23,7 +24,7 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
-import { TRANSITION_LIMITS, tokenLimitError } from 'modules/motions/constants'
+import { tokenLimitError } from 'modules/motions/constants'
 
 type TokenData = {
   address: string
@@ -57,11 +58,12 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const { chainId, walletAddress } = useWeb3()
+    const { walletAddress } = useWeb3()
     const tokenOptions = useLegoTokenOptions()
     const fieldsArr = useFieldArray({ name: fieldNames.tokens })
     const trustedCaller = ContractEvmLEGOTopUp.useSwrWeb3('trustedCaller', [])
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
+    const { data: limits } = useTransitionLimits()
 
     const handleAddToken = useCallback(
       () => fieldsArr.append({ address: '', amount: '' }),
@@ -136,8 +138,8 @@ export const formParts = createMotionFormPart({
                         return check1
                       }
                       const { address } = selectedTokens[i]
-                      const limit = TRANSITION_LIMITS[chainId][address]
-                      if (Number(value) > limit) {
+                      const limit = limits?.[address]
+                      if (limit && Number(value) > limit) {
                         return tokenLimitError(getTokenName(i), limit)
                       }
                       return true

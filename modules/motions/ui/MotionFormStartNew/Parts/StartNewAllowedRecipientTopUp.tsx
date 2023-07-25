@@ -9,6 +9,7 @@ import {
   usePeriodLimitsData,
   useTokenByTopUpType,
 } from 'modules/motions/hooks'
+import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
 import {
   MotionLimitProgress,
   MotionLimitProgressWrapper,
@@ -39,11 +40,7 @@ import {
   estimateGasFallback,
   checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
-import {
-  TRANSITION_LIMITS,
-  tokenLimitError,
-  periodLimitError,
-} from 'modules/motions/constants'
+import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
 
 type Program = {
   address: string
@@ -97,7 +94,7 @@ export const formParts = ({
       fieldNames,
       submitAction,
     }) {
-      const { chainId, walletAddress } = useWeb3()
+      const { walletAddress } = useWeb3()
       const trustedCaller = ALLOWED_RECIPIENT_TOPUP_MAP[
         registryType
       ].evmContract.useSwrWeb3('trustedCaller', [])
@@ -150,7 +147,8 @@ export const formParts = ({
         setValue(fieldNames.programs, [{ address: recipientAddress }])
       }, [fieldNames.programs, setValue, allowedRecipients.data])
 
-      const transitionLimit = TRANSITION_LIMITS[chainId][token.address]
+      const { data: limits } = useTransitionLimits()
+      const transitionLimit = limits?.[utils.getAddress(token.address)]
 
       if (
         trustedCaller.initialLoading ||
@@ -227,7 +225,10 @@ export const formParts = ({
                         if (typeof check1 === 'string') {
                           return check1
                         }
-                        if (Number(value) > transitionLimit) {
+                        if (
+                          transitionLimit &&
+                          Number(value) > transitionLimit
+                        ) {
                           return tokenLimitError(token.label, transitionLimit)
                         }
 

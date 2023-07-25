@@ -24,6 +24,9 @@ import {
   RegistryWithLimitsAbi__factory,
   RegistryWithLimitsAbi,
   TopUpWithLimitsAbi__factory,
+  AragonACLAbi__factory,
+  EVMScriptExecutorAbi__factory,
+  FinanceAbi__factory,
 } from 'generated'
 import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
@@ -46,6 +49,21 @@ export const ContractNodeOperatorsRegistry = createContractHelpers({
 export const ContractEasyTrack = createContractHelpers({
   factory: EasyTrackAbi__factory,
   address: CONTRACT_ADDRESSES.EasyTrack,
+})
+
+export const ContractAragonAcl = createContractHelpers({
+  factory: AragonACLAbi__factory,
+  address: CONTRACT_ADDRESSES.AragonACL,
+})
+
+export const ContractEVMScriptExecutor = createContractHelpers({
+  factory: EVMScriptExecutorAbi__factory,
+  address: CONTRACT_ADDRESSES.EVMScriptExecutor,
+})
+
+export const ContractFinance = createContractHelpers({
+  factory: FinanceAbi__factory,
+  address: CONTRACT_ADDRESSES.Finance,
 })
 
 /**
