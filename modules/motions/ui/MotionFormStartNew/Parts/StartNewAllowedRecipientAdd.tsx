@@ -10,6 +10,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 import {
   ContractStethGasSupplyAdd,
   ContractStethRewardProgramAdd,
+  ContractRewardsShareProgramAdd,
 } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -23,6 +24,10 @@ export const ALLOWED_RECIPIENT_ADD_MAP = {
   [MotionTypeForms.StethGasSupplyAdd]: {
     evmContract: ContractStethGasSupplyAdd,
     motionType: MotionTypeForms.StethGasSupplyAdd,
+  },
+  [MotionTypeForms.RewardsShareProgramAdd]: {
+    evmContract: ContractRewardsShareProgramAdd,
+    motionType: MotionTypeForms.RewardsShareProgramAdd,
   },
 }
 

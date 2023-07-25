@@ -47,6 +47,17 @@ export const formParts = {
   [MotionTypeForms.StethGasSupplyTopUp]: formAllowedRecipientTopUp.formParts({
     registryType: MotionTypeForms.StethGasSupplyTopUp,
   }),
+  [MotionTypeForms.RewardsShareProgramAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.RewardsShareProgramAdd,
+  }),
+  [MotionTypeForms.RewardsShareProgramRemove]:
+    formAllowedRecipientRemove.formParts({
+      registryType: MotionTypeForms.RewardsShareProgramRemove,
+    }),
+  [MotionTypeForms.RewardsShareProgramTopUp]:
+    formAllowedRecipientTopUp.formParts({
+      registryType: MotionTypeForms.RewardsShareProgramTopUp,
+    }),
 } as const
 
 export type FormData = {

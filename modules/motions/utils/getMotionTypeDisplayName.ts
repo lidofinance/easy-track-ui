@@ -19,6 +19,11 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.StethGasSupplyAdd]: 'Add stETH Gas Supply recipient',
   [MotionType.StethGasSupplyRemove]: 'Remove stETH Gas Supply recipient',
   [MotionType.StethGasSupplyTopUp]: 'Top up stETH Gas Supply recipients',
+  [MotionType.RewardsShareProgramAdd]: 'Add Rewards Share Program participant',
+  [MotionType.RewardsShareProgramRemove]:
+    'Remove Rewards Share Program participant',
+  [MotionType.RewardsShareProgramTopUp]:
+    'Top up Rewards Share Program participants',
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
   // next motion types are retired
