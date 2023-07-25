@@ -1,7 +1,6 @@
 import { MotionTypeForms } from 'modules/motions/types'
 
 import * as formNodeOperators from './StartNewNodeOperators'
-import * as formLEGO from './StartNewLEGO'
 import * as formAllowedRecipientAdd from './StartNewAllowedRecipientAdd'
 import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
@@ -9,7 +8,6 @@ import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
-  [MotionTypeForms.LEGOTopUp]: formLEGO.formParts,
   [MotionTypeForms.AllowedRecipientTopUpTrpLdo]:
     formAllowedRecipientTopUp.formParts({
       registryType: MotionTypeForms.AllowedRecipientTopUpTrpLdo,
@@ -28,9 +26,6 @@ export const formParts = {
   }),
   [MotionTypeForms.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.AtcDAITopUp,
-  }),
-  [MotionTypeForms.GasFunderETHTopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.GasFunderETHTopUp,
   }),
   [MotionTypeForms.StethRewardProgramAdd]: formAllowedRecipientAdd.formParts({
     registryType: MotionTypeForms.StethRewardProgramAdd,

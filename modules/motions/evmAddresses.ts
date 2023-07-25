@@ -12,7 +12,6 @@ export const EvmAddressesByChain = {
   [CHAINS.Mainnet]: {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xFeBd8FAC16De88206d4b18764e826AF38546AfE0',
-    [MotionType.LEGOTopUp]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
     [MotionType.AllowedRecipientTopUpTrpLdo]:
       '0xBd2b6dC189EefD51B273F5cb2d99BA1ce565fb8C',
     [MotionType.LegoLDOTopUp]: '0x00caAeF11EC545B192f16313F53912E453c91458',
@@ -20,8 +19,6 @@ export const EvmAddressesByChain = {
     [MotionType.RccDAITopUp]: '0x84f74733ede9bFD53c1B3Ea96338867C94EC313e',
     [MotionType.PmlDAITopUp]: '0x4E6D3A5023A38cE2C4c5456d3760357fD93A22cD',
     [MotionType.AtcDAITopUp]: '0x67Fb97ABB9035E2e93A7e3761a0d0571c5d7CD07',
-    [MotionType.GasFunderETHTopUp]:
-      '0x41F9daC5F89092dD6061E59578A2611849317dc8',
     [MotionType.StethRewardProgramAdd]:
       '0x935cb3366Faf2cFC415B2099d1F974Fd27202b77',
     [MotionType.StethRewardProgramRemove]:
@@ -37,6 +34,9 @@ export const EvmAddressesByChain = {
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
+    [MotionType.LEGOTopUp]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
+    [MotionType.GasFunderETHTopUp]:
+      '0x41F9daC5F89092dD6061E59578A2611849317dc8',
     [MotionType.RewardProgramAdd]: '0x9D15032b91d01d5c1D940eb919461426AB0dD4e3',
     [MotionType.RewardProgramRemove]:
       '0xc21e5e72Ffc223f02fC410aAedE3084a63963932',
@@ -66,7 +66,6 @@ export const EvmAddressesByChain = {
   [CHAINS.Goerli]: {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0xE033673D83a8a60500BcE02aBd9007ffAB587714',
-    [MotionType.LEGOTopUp]: '0xb2bcf211F103d7F13789394DD475c2274e044C4C',
     [MotionType.AllowedRecipientTopUpTrpLdo]:
       '0x43f33C52156d1Fb2eA24d82aBfD342E69835E79f',
     [MotionType.LegoLDOTopUp]: '0xc39Dd5B66968e364D99e0c9E7089049351AB89CA',
@@ -74,7 +73,6 @@ export const EvmAddressesByChain = {
     [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',
     [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
     [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
-    [MotionType.GasFunderETHTopUp]: '0x',
     [MotionType.StethRewardProgramAdd]:
       '0x785A8B1CDC03Bb191670Ed4696e9ED5B11Af910A',
     [MotionType.StethRewardProgramRemove]:
@@ -90,6 +88,8 @@ export const EvmAddressesByChain = {
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
+    [MotionType.LEGOTopUp]: '0xb2bcf211F103d7F13789394DD475c2274e044C4C',
+    [MotionType.GasFunderETHTopUp]: '0x',
     [MotionType.RewardProgramAdd]: '0x5560d40b00EA3a64E9431f97B3c79b04e0cdF6F2',
     [MotionType.RewardProgramRemove]:
       '0x31B68d81125E52fE1aDfe4076F8945D1014753b5',
