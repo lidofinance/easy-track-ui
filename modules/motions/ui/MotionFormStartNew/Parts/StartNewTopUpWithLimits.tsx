@@ -164,7 +164,8 @@ export const formParts = ({
       }, [fieldNames.programs, setValue, legoDAIRecipients.data])
 
       const { data: limits } = useTransitionLimits()
-      const transitionLimit = limits?.[utils.getAddress(token.address)]
+      const transitionLimit =
+        token.address && limits?.[utils.getAddress(token.address)]
 
       if (
         trustedCaller.initialLoading ||
