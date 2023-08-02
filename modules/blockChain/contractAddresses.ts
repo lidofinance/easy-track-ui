@@ -95,3 +95,8 @@ export const StethGasSupplyRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x49d1363016aA899bba09ae972a1BF200dDf8C55F',
   [CHAINS.Goerli]: '0xF08a5f00824D4554a1FBebaE726609418dc819fb',
 }
+
+export const RewardsShareProgramRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xdc7300622948a7AdaF339783F6991F9cdDD79776',
+  [CHAINS.Goerli]: '0x8b59609f4bEa230E565Ae0C3C7b6913746Df1cF2',
+}

@@ -31,6 +31,12 @@ export const EvmAddressesByChain = {
       '0x7E8eFfAb3083fB26aCE6832bFcA4C377905F97d7',
     [MotionType.StethGasSupplyTopUp]:
       '0x200dA0b6a9905A377CF8D469664C65dB267009d1',
+    [MotionType.RewardsShareProgramAdd]:
+      '0x1F809D2cb72a5Ab13778811742050eDa876129b6',
+    [MotionType.RewardsShareProgramRemove]:
+      '0xd30Dc38EdEfc21875257e8A3123503075226E14B',
+    [MotionType.RewardsShareProgramTopUp]:
+      '0xbD08f9D6BF1D25Cc7407E4855dF1d46C2043B3Ea',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -85,6 +91,12 @@ export const EvmAddressesByChain = {
       '0x48D01979eD9e6CE70a6496B111F5728f9a547C96',
     [MotionType.StethGasSupplyTopUp]:
       '0x960CcA0BE6419e9684796Ce3ABE980E8a2d0cd80',
+    [MotionType.RewardsShareProgramAdd]:
+      '0x51916FC3D24CbE19c5e981ae8650668A1F5cF19B',
+    [MotionType.RewardsShareProgramRemove]:
+      '0x932aab3D6057ed2Beef95471414831C4535600E9',
+    [MotionType.RewardsShareProgramTopUp]:
+      '0x5Bb391170899A7b8455A442cca65078ff3E1639C',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data

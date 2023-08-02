@@ -42,6 +42,8 @@ export function useEVMScriptDecoder() {
         [KEYS.StethRewardProgramRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.StethGasSupplyRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.RewardsShareProgramRegistry]:
+          abis.RegistryWithLimitsAbi__factory.abi,
       }),
     )
   }, `evm-script-decoder-${chainId}`)
