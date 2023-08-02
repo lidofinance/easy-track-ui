@@ -50,6 +50,14 @@ const TOKEN = {
     label: 'stETH',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
   },
+  [MotionType.StethGasSupplyTopUp]: {
+    label: 'stETH',
+    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
+  },
+  [MotionType.RewardsShareProgramTopUp]: {
+    label: 'stETH',
+    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
+  },
 }
 
 const isTopUpType = (type: unknown): type is keyof typeof TOKEN => {

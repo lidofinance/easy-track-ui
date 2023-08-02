@@ -36,6 +36,7 @@
     "@lidofinance/lido-ui": "3.2.0",
     "@typechain/ethers-v5": "9.0.0",
     "@types/lodash": "4.14.179",
+    "bignumber.js": "^9.1.1",
     "copy-to-clipboard": "3.3.1",
     "cors": "2.8.5",
     "ethers": "5.5.4",
