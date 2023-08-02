@@ -287,3 +287,23 @@ export const ContractStethGasSupplyTopUp = createContractHelpers({
   factory: TopUpAllowedRecipientsAbi__factory,
   address: EvmAddressesByType[MotionType.StethGasSupplyTopUp],
 })
+
+export const ContractRewardsShareProgramRegistry = createContractHelpers({
+  factory: AllowedRecipientsRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.RewardsShareProgramRegistry,
+})
+
+export const ContractRewardsShareProgramAdd = createContractHelpers({
+  factory: AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.RewardsShareProgramAdd],
+})
+
+export const ContractRewardsShareProgramRemove = createContractHelpers({
+  factory: RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.RewardsShareProgramRemove],
+})
+
+export const ContractRewardsShareProgramTopUp = createContractHelpers({
+  factory: TopUpAllowedRecipientsAbi__factory,
+  address: EvmAddressesByType[MotionType.RewardsShareProgramTopUp],
+})

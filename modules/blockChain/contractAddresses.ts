@@ -105,3 +105,8 @@ export const EVMScriptExecutor: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xF0211b7660680B49De1A7E9f25C65660F0a13Fea',
   [CHAINS.Goerli]: '0x3c9AcA237b838c59612d79198685e7f20C7fE783',
 }
+
+export const RewardsShareProgramRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xdc7300622948a7AdaF339783F6991F9cdDD79776',
+  [CHAINS.Goerli]: '0x8b59609f4bEa230E565Ae0C3C7b6913746Df1cF2',
+}
