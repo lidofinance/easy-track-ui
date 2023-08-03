@@ -9,6 +9,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 import {
   ContractStethGasSupplyRemove,
   ContractStethRewardProgramRemove,
+  ContractRewardsShareProgramRemove,
 } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -22,6 +23,10 @@ export const ALLOWED_RECIPIENT_REMOVE_MAP = {
   [MotionTypeForms.StethGasSupplyRemove]: {
     evmContract: ContractStethGasSupplyRemove,
     motionType: MotionTypeForms.StethGasSupplyRemove,
+  },
+  [MotionTypeForms.RewardsShareProgramRemove]: {
+    evmContract: ContractRewardsShareProgramRemove,
+    motionType: MotionTypeForms.RewardsShareProgramRemove,
   },
 }
 

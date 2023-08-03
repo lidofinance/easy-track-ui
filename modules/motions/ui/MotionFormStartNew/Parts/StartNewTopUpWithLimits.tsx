@@ -9,6 +9,7 @@ import {
   usePeriodLimitsData,
   useTokenByTopUpType,
 } from 'modules/motions/hooks'
+import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
 import {
   MotionLimitProgress,
   MotionLimitProgressWrapper,
@@ -42,11 +43,7 @@ import {
   estimateGasFallback,
   checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
-import {
-  TRANSITION_LIMITS,
-  tokenLimitError,
-  periodLimitError,
-} from 'modules/motions/constants'
+import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
 
 export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.LegoLDOTopUp]: {
@@ -112,7 +109,7 @@ export const formParts = ({
       fieldNames,
       submitAction,
     }) {
-      const { chainId, walletAddress } = useWeb3()
+      const { walletAddress } = useWeb3()
       const trustedCaller = TOPUP_WITH_LIMITS_MAP[
         registryType
       ].evmContract.useSwrWeb3('trustedCaller', [])
@@ -166,7 +163,9 @@ export const formParts = ({
         ])
       }, [fieldNames.programs, setValue, legoDAIRecipients.data])
 
-      const transitionLimit = TRANSITION_LIMITS[chainId][token.address || '']
+      const { data: limits } = useTransitionLimits()
+      const transitionLimit =
+        token.address && limits?.[utils.getAddress(token.address)]
 
       if (
         trustedCaller.initialLoading ||
@@ -242,7 +241,10 @@ export const formParts = ({
                         if (typeof check1 === 'string') {
                           return check1
                         }
-                        if (Number(value) > transitionLimit) {
+                        if (
+                          transitionLimit &&
+                          Number(value) > transitionLimit
+                        ) {
                           return tokenLimitError(token.label, transitionLimit)
                         }
 

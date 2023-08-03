@@ -17,6 +17,9 @@ export const MotionTypeForms = {
   StethGasSupplyAdd: 'StethGasSupplyAdd',
   StethGasSupplyRemove: 'StethGasSupplyRemove',
   StethGasSupplyTopUp: 'StethGasSupplyTopUp',
+  RewardsShareProgramAdd: 'RewardsShareProgramAdd',
+  RewardsShareProgramRemove: 'RewardsShareProgramRemove',
+  RewardsShareProgramTopUp: 'RewardsShareProgramTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
