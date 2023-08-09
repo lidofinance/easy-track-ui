@@ -16,7 +16,7 @@ import {
 } from 'modules/motions/ui/MotionLimitProgress'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
+import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import {
@@ -221,7 +221,7 @@ export const formParts = ({
                 </Fieldset>
 
                 <Fieldset>
-                  <InputControl
+                  <InputNumberControl
                     label={`${token.label} Amount`}
                     name={`${fieldNames.programs}.${i}.amount`}
                     rules={{
