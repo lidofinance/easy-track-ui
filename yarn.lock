@@ -2584,6 +2584,11 @@
     ua-parser-js "^1.0.2"
     use-callback-ref "1.2.5"
 
+"@lidofinance/next-cache-files-middleware@^0.33.0":
+  version "0.33.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/next-cache-files-middleware/-/next-cache-files-middleware-0.33.0.tgz#a648b884632ff29ce32ca49c46d9ca9491790fa1"
+  integrity sha512-XxTnYewxE4+cenhtfZBGWtyVVbQAZI9Hbys0/0n9uMJtNpi5R2I8DctzltN0sbAbku/2KfCRwJzRUp41ClZ+dw==
+
 "@lit-labs/ssr-dom-shim@^1.0.0", "@lit-labs/ssr-dom-shim@^1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.1.1.tgz#64df34e2f12e68e78ac57e571d25ec07fa460ca9"
