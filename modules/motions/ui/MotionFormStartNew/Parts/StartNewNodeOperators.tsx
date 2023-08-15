@@ -8,6 +8,7 @@ import { useNodeOperatorKeysInfo } from 'modules/motions/hooks/useNodeOperatorKe
 import { KeysInfoBlock } from 'modules/motions/ui/KeysInfoBlock'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
+import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 
 import { MotionType } from 'modules/motions/types'
@@ -113,7 +114,7 @@ export const formParts = createMotionFormPart({
         </Fieldset>
 
         <Fieldset>
-          <InputControl
+          <InputNumberControl
             name={fieldNames.newLimit}
             label={
               currentNodeOperator ? (

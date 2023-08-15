@@ -31,7 +31,7 @@ export function MotionLimitProgress(props: MotionLimitProgressProps) {
     showAmountChange,
   } = props
 
-  const isValidNewValue = Number.isInteger(newAmount)
+  const isValidNewValue = !Number.isNaN(Number(newAmount))
   const newSpentValue = isValidNewValue
     ? Number(spentAmount) + newAmount
     : Number(spentAmount)
