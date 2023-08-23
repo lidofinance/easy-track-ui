@@ -4,7 +4,6 @@ import { parseChainId } from 'modules/blockChain/chains'
 import { getAlchemyRPCUrl, getInfuraRPCUrl } from '@lido-sdk/fetch'
 
 import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
-import { logger } from 'modules/shared/utils/log'
 import clone from 'just-clone'
 
 const { serverRuntimeConfig } = getConfig()
@@ -20,7 +19,7 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
     stage: 'INCOMING',
   }
 
-  logger.info('Incoming request to api/rpc', requestInfo)
+  console.info('Incoming request to api/rpc', requestInfo)
 
   try {
     const chainId = parseChainId(String(req.query.chainId))
@@ -40,12 +39,12 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
 
     res.status(requested.status).json(responded)
 
-    logger.info('Request to api/rpc successfully fullfilled', {
+    console.info('Request to api/rpc successfully fullfilled', {
       ...requestInfo,
       stage: 'FULFILLED',
     })
   } catch (error) {
-    logger.error(
+    console.error(
       error instanceof Error ? error.message : 'Something went wrong',
       error,
     )
