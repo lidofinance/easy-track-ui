@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_OPTIONS='-r next-logger' next start",
     "lint": "eslint --ext ts,tsx,js,jsx .",
     "lint:fix": "yarn lint --fix",
     "lint:dockerfile": "dockerfilelint Dockerfile",
@@ -35,6 +35,7 @@
     "@lidofinance/evm-script-decoder": "0.2.2",
     "@lidofinance/lido-ui": "3.2.0",
     "@lidofinance/next-cache-files-middleware": "^0.33.0",
+    "@lidofinance/satanizer": "^0.35.0",
     "@typechain/ethers-v5": "9.0.0",
     "@types/lodash": "4.14.179",
     "bignumber.js": "^9.1.1",
@@ -49,8 +50,8 @@
     "moment-duration-format": "2.3.2",
     "next": "^12",
     "next-connect": "0.12.2",
+    "next-logger": "^3.0.2",
     "next-secure-headers": "2.2.0",
-    "object-traversal": "1.0.0",
     "prom-client": "14.0.1",
     "react": "^17",
     "react-dom": "^17",
@@ -60,8 +61,7 @@
     "styled-components": "5.3.3",
     "swr": "1.2.2",
     "typechain": "7.0.1",
-    "wagmi": "0.12.17",
-    "winston": "3.6.0"
+    "wagmi": "0.12.17"
   },
   "devDependencies": {
     "@commitlint/cli": "17.3.0",
