@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import clone from 'just-clone'
 import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
-import { logger } from 'modules/shared/utils/log'
 import { parseChainId } from 'modules/blockChain/chains'
 
 const { serverRuntimeConfig } = getConfig()
@@ -27,7 +26,7 @@ export default async function subgraph(
 
   if (!parsedBody.query) {
     const status = 'Error: query is empry'
-    logger.error(status, requestInfo)
+    console.error(status, requestInfo)
     res.status(400).json({ status })
     return
   }
@@ -37,7 +36,7 @@ export default async function subgraph(
 
   if (!url) {
     const status = 'Error: subgraph chain is not supported'
-    logger.error(status, requestInfo)
+    console.error(status, requestInfo)
     res.status(400).json({ status })
     return
   }
@@ -60,12 +59,12 @@ export default async function subgraph(
 
     const responded = await requested.json()
     res.status(requested.status).json(responded)
-    logger.info('Request to api/subgraph successfully fullfilled', {
+    console.info('Request to api/subgraph successfully fullfilled', {
       ...requestInfo,
       stage: 'FULFILLED',
     })
   } catch (error) {
-    logger.error(
+    console.error(
       error instanceof Error ? error.message : 'Something went wrong',
       {
         error,
