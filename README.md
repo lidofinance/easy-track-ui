@@ -16,10 +16,10 @@ This project requires an .env file which is distributed via private communicatio
 Step 1. Copy the contents of `.env.sample` to `.env.local`
 
 ```bash
-cp sample.env .env.local
+cp .env.sample .env.local
 ```
 
-Step 2. Fill out the `.env.local`. You may need to sign up for [Infura](https://infura.io/) or [Alchemy](https://www.alchemy.com/), if you haven't already, to be able to use Ethereum JSON RPC connection.
+Step 2. Fill out the `.env.local`. You will need to provide RPC provider urls with keys included.
 
 Step 3. Install dependencies
 
