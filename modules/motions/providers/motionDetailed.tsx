@@ -1,12 +1,12 @@
 import { FC, createContext, useMemo, useCallback } from 'react'
 import { formatEther } from 'ethers/lib/utils'
+import invariant from 'tiny-invariant'
 
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   getMotionTypeByScriptFactory,
   getMotionTypeDisplayName,
-  getEventMotionCreated,
   estimateGasFallback,
 } from 'modules/motions/utils'
 import {
@@ -124,22 +124,19 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
 
   // Enact Motion
   const populateEnact = useCallback(async () => {
-    const { _evmScriptCallData: _callData } = await getEventMotionCreated(
-      contractEasyTrack,
-      motion.id,
-    )
+    invariant(callDataRaw, 'enact action: call data must be presented')
     const gasLimit = await estimateGasFallback(
-      contractEasyTrack.estimateGas.enactMotion(motion.id, _callData),
+      contractEasyTrack.estimateGas.enactMotion(motion.id, callDataRaw),
     )
     const tx = await contractEasyTrack.populateTransaction.enactMotion(
       motion.id,
-      _callData,
+      callDataRaw,
       {
         gasLimit,
       },
     )
     return tx
-  }, [contractEasyTrack, motion.id])
+  }, [contractEasyTrack, motion.id, callDataRaw])
 
   const txEnact = useTransactionSender(populateEnact, {
     onFinish: onInvalidate,
