@@ -4,7 +4,9 @@ import type { EasyTrackAbi } from 'generated'
 
 // Only motions currently supported to start
 export const MotionTypeForms = {
+  // old node operator
   NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
+  // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
   LegoDAITopUp: 'LegoDAITopUp',
@@ -20,6 +22,17 @@ export const MotionTypeForms = {
   RewardsShareProgramAdd: 'RewardsShareProgramAdd',
   RewardsShareProgramRemove: 'RewardsShareProgramRemove',
   RewardsShareProgramTopUp: 'RewardsShareProgramTopUp',
+  // ET DVT
+  SDVTNodeOperatorsAdd: 'SDVTNodeOperatorsAdd',
+  SDVTNodeOperatorsActivate: 'SDVTNodeOperatorsActivate',
+  SDVTNodeOperatorsDeactivate: 'SDVTNodeOperatorsDeactivate',
+  SDVTVettedValidatorsLimitIncrease: 'SDVTVettedValidatorsLimitIncrease',
+  SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
+  SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
+  SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
+  SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
+  SDVTManageSigningKeysRoleManagerRenounce:
+    'SDVTManageSigningKeysRoleManagerRenounce',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

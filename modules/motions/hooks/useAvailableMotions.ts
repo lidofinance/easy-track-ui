@@ -81,7 +81,6 @@ export const useAvailableMotions = () => {
         [MotionTypeForms.NodeOperatorIncreaseLimit]: isNodeOperatorConnected,
       } as Record<MotionTypeForms, boolean>,
     )
-
     setAvailableMotions(trustedCallerConnectedMap)
   }, [chainId, contracts, isNodeOperatorConnected, walletAddress])
 

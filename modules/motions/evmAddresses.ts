@@ -3,10 +3,6 @@ import { CHAINS } from '@lido-sdk/constants'
 import { MotionType } from './types'
 import type { Invert } from 'modules/shared/utils/utilTypes'
 
-//
-// Addresses should be lower cased
-//
-
 export const EvmAddressesByChain = {
   // Mainnet
   [CHAINS.Mainnet]: {
@@ -37,6 +33,15 @@ export const EvmAddressesByChain = {
       '0xd30Dc38EdEfc21875257e8A3123503075226E14B',
     [MotionType.RewardsShareProgramTopUp]:
       '0xbD08f9D6BF1D25Cc7407E4855dF1d46C2043B3Ea',
+    [MotionType.SDVTNodeOperatorsAdd]: '',
+    [MotionType.SDVTNodeOperatorsActivate]: '',
+    [MotionType.SDVTNodeOperatorsDeactivate]: '',
+    [MotionType.SDVTVettedValidatorsLimitIncrease]: '',
+    [MotionType.SDVTVettedValidatorsLimitsSet]: '',
+    [MotionType.SDVTNodeOperatorNamesSet]: '',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]: '',
+    [MotionType.SDVTNodeOperatorManagerChange]: '',
+    [MotionType.SDVTManageSigningKeysRoleManagerRenounce]: '',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -97,6 +102,24 @@ export const EvmAddressesByChain = {
       '0x932aab3D6057ed2Beef95471414831C4535600E9',
     [MotionType.RewardsShareProgramTopUp]:
       '0x5Bb391170899A7b8455A442cca65078ff3E1639C',
+
+    [MotionType.SDVTNodeOperatorsAdd]:
+      '0x083a26e5285610b91Fd74040B81C9b5a13523bbf',
+    [MotionType.SDVTNodeOperatorsActivate]:
+      '0x7983F6879C0C06a9718bAf90e6E0ebD3e7243A3F',
+    [MotionType.SDVTNodeOperatorsDeactivate]:
+      '0x47a8C2f54513d1d2445Ced353237F4ed406d16f2',
+    [MotionType.SDVTVettedValidatorsLimitIncrease]:
+      '0xA7AFa4E0Ce9d2A50C96Fe770D3cDd3259DAc0D76',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0xB634357735a3b63645b54A2D928CE1b09caffC9d',
+    [MotionType.SDVTNodeOperatorNamesSet]:
+      '0x827e3C09A6044afF2f5cF78BB064bB8a40B4C13F',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+      '0x2e565f073FeBD66cb24dD9CA66Bffe6CeFd0B7Af',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0x8A33BA98C7165BDb61af1468fd5BD8aF22B3d87d',
+    [MotionType.SDVTManageSigningKeysRoleManagerRenounce]: '',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data

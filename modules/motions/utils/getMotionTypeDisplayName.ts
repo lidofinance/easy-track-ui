@@ -24,6 +24,20 @@ export const MotionTypeDisplayNames: Record<
     'Remove Rewards Share Program participant',
   [MotionType.RewardsShareProgramTopUp]:
     'Top up Rewards Share Program participants',
+  [MotionType.SDVTNodeOperatorsAdd]: 'Add Node Operators',
+  [MotionType.SDVTNodeOperatorsActivate]: 'Activate Node Operators',
+  [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate Node Operators',
+  [MotionType.SDVTVettedValidatorsLimitIncrease]:
+    'Increase Vetted Validators Limit',
+  [MotionType.SDVTVettedValidatorsLimitsSet]:
+    'Set SDVTVetted Validators Limits',
+  [MotionType.SDVTNodeOperatorNamesSet]: 'Set Node Operator Names',
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    'Set Node Operator Reward Addresses',
+  [MotionType.SDVTNodeOperatorManagerChange]: 'Change Node Operator Manager',
+  [MotionType.SDVTManageSigningKeysRoleManagerRenounce]:
+    'Renounce Manage Signing Keys Role Manager',
+
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
   // next motion types are retired

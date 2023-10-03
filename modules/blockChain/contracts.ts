@@ -282,3 +282,13 @@ export const ContractRewardsShareProgramTopUp = createContractHelpers({
   factory: TypeChain.TopUpAllowedRecipientsAbi__factory,
   address: EvmAddressesByType[MotionType.RewardsShareProgramTopUp],
 })
+
+export const ContractSDVTRegistry = createContractHelpers({
+  factory: TypeChain.SDVTRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.SDVTRegistry,
+})
+
+export const ContractSDVTNodeOperatorsAdd = createContractHelpers({
+  factory: TypeChain.AddNodeOperatorAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsAdd],
+})
