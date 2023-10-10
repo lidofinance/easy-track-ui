@@ -2,73 +2,13 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "proxyType",
-    "outputs": [{ "name": "proxyTypeId", "type": "uint256" }],
-    "payable": false,
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "isDepositable",
-    "outputs": [{ "name": "", "type": "bool" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "implementation",
-    "outputs": [{ "name": "", "type": "address" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "appId",
-    "outputs": [{ "name": "", "type": "bytes32" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "kernel",
-    "outputs": [{ "name": "", "type": "address" }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "name": "_kernel", "type": "address" },
-      { "name": "_appId", "type": "bytes32" },
-      { "name": "_initializePayload", "type": "bytes" }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  { "payable": true, "stateMutability": "payable", "type": "fallback" },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": false, "name": "sender", "type": "address" },
-      { "indexed": false, "name": "value", "type": "uint256" }
-    ],
-    "name": "ProxyDeposit",
-    "type": "event"
-  },
-  {
-    "constant": true,
-    "inputs": [],
     "name": "hasInitialized",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -76,8 +16,14 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "createBurnedPermission",
     "outputs": [],
@@ -88,8 +34,14 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "burnPermissionManager",
     "outputs": [],
@@ -100,9 +52,18 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_entity", "type": "address" },
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_entity",
+        "type": "address"
+      },
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "grantPermission",
     "outputs": [],
@@ -113,12 +74,26 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_entity", "type": "address" },
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_entity",
+        "type": "address"
+      },
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "getPermissionParamsLength",
-    "outputs": [{ "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -126,14 +101,34 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_paramsHash", "type": "bytes32" },
-      { "name": "_who", "type": "address" },
-      { "name": "_where", "type": "address" },
-      { "name": "_what", "type": "bytes32" },
-      { "name": "_how", "type": "uint256[]" }
+      {
+        "name": "_paramsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "_who",
+        "type": "address"
+      },
+      {
+        "name": "_where",
+        "type": "address"
+      },
+      {
+        "name": "_what",
+        "type": "bytes32"
+      },
+      {
+        "name": "_how",
+        "type": "uint256[]"
+      }
     ],
     "name": "evalParams",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -142,16 +137,31 @@
     "constant": true,
     "inputs": [],
     "name": "NO_PERMISSION",
-    "outputs": [{ "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{ "name": "_script", "type": "bytes" }],
+    "inputs": [
+      {
+        "name": "_script",
+        "type": "bytes"
+      }
+    ],
     "name": "getEVMScriptExecutor",
-    "outputs": [{ "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -160,7 +170,12 @@
     "constant": true,
     "inputs": [],
     "name": "getRecoveryVault",
-    "outputs": [{ "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -169,7 +184,12 @@
     "constant": true,
     "inputs": [],
     "name": "CREATE_PERMISSIONS_ROLE",
-    "outputs": [{ "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -177,10 +197,22 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_entity", "type": "address" },
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" },
-      { "name": "_params", "type": "uint256[]" }
+      {
+        "name": "_entity",
+        "type": "address"
+      },
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      },
+      {
+        "name": "_params",
+        "type": "uint256[]"
+      }
     ],
     "name": "grantPermissionP",
     "outputs": [],
@@ -191,21 +223,59 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_who", "type": "address" },
-      { "name": "_where", "type": "address" },
-      { "name": "_what", "type": "bytes32" }
+      {
+        "name": "_who",
+        "type": "address"
+      },
+      {
+        "name": "_where",
+        "type": "address"
+      },
+      {
+        "name": "_what",
+        "type": "bytes32"
+      }
     ],
     "name": "hasPermission",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{ "name": "token", "type": "address" }],
+    "inputs": [
+      {
+        "name": "token",
+        "type": "address"
+      }
+    ],
     "name": "allowRecoverability",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "appId",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -214,7 +284,12 @@
     "constant": true,
     "inputs": [],
     "name": "getInitializationBlock",
-    "outputs": [{ "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -222,9 +297,18 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_entity", "type": "address" },
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_entity",
+        "type": "address"
+      },
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "revokePermission",
     "outputs": [],
@@ -234,7 +318,12 @@
   },
   {
     "constant": false,
-    "inputs": [{ "name": "_token", "type": "address" }],
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      }
+    ],
     "name": "transferToVault",
     "outputs": [],
     "payable": false,
@@ -244,16 +333,37 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_entity", "type": "address" },
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" },
-      { "name": "_index", "type": "uint256" }
+      {
+        "name": "_entity",
+        "type": "address"
+      },
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      },
+      {
+        "name": "_index",
+        "type": "uint256"
+      }
     ],
     "name": "getPermissionParam",
     "outputs": [
-      { "name": "", "type": "uint8" },
-      { "name": "", "type": "uint8" },
-      { "name": "", "type": "uint240" }
+      {
+        "name": "",
+        "type": "uint8"
+      },
+      {
+        "name": "",
+        "type": "uint8"
+      },
+      {
+        "name": "",
+        "type": "uint240"
+      }
     ],
     "payable": false,
     "stateMutability": "view",
@@ -262,12 +372,26 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_sender", "type": "address" },
-      { "name": "_role", "type": "bytes32" },
-      { "name": "_params", "type": "uint256[]" }
+      {
+        "name": "_sender",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      },
+      {
+        "name": "_params",
+        "type": "uint256[]"
+      }
     ],
     "name": "canPerform",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -276,7 +400,12 @@
     "constant": true,
     "inputs": [],
     "name": "getEVMScriptRegistry",
-    "outputs": [{ "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -285,7 +414,12 @@
     "constant": true,
     "inputs": [],
     "name": "ANY_ENTITY",
-    "outputs": [{ "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -293,8 +427,14 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "removePermissionManager",
     "outputs": [],
@@ -305,9 +445,18 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_newManager", "type": "address" },
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_newManager",
+        "type": "address"
+      },
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "setPermissionManager",
     "outputs": [],
@@ -318,11 +467,22 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" }
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      }
     ],
     "name": "getPermissionManager",
-    "outputs": [{ "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -330,10 +490,22 @@
   {
     "constant": false,
     "inputs": [
-      { "name": "_entity", "type": "address" },
-      { "name": "_app", "type": "address" },
-      { "name": "_role", "type": "bytes32" },
-      { "name": "_manager", "type": "address" }
+      {
+        "name": "_entity",
+        "type": "address"
+      },
+      {
+        "name": "_app",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      },
+      {
+        "name": "_manager",
+        "type": "address"
+      }
     ],
     "name": "createPermission",
     "outputs": [],
@@ -343,7 +515,12 @@
   },
   {
     "constant": false,
-    "inputs": [{ "name": "_permissionsCreator", "type": "address" }],
+    "inputs": [
+      {
+        "name": "_permissionsCreator",
+        "type": "address"
+      }
+    ],
     "name": "initialize",
     "outputs": [],
     "payable": false,
@@ -354,7 +531,26 @@
     "constant": true,
     "inputs": [],
     "name": "EMPTY_PARAM_HASH",
-    "outputs": [{ "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "kernel",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -363,7 +559,12 @@
     "constant": true,
     "inputs": [],
     "name": "isPetrified",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -372,7 +573,12 @@
     "constant": true,
     "inputs": [],
     "name": "BURN_ENTITY",
-    "outputs": [{ "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -380,13 +586,30 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_who", "type": "address" },
-      { "name": "_where", "type": "address" },
-      { "name": "_what", "type": "bytes32" },
-      { "name": "_how", "type": "uint256[]" }
+      {
+        "name": "_who",
+        "type": "address"
+      },
+      {
+        "name": "_where",
+        "type": "address"
+      },
+      {
+        "name": "_what",
+        "type": "bytes32"
+      },
+      {
+        "name": "_how",
+        "type": "uint256[]"
+      }
     ],
     "name": "hasPermission",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -394,13 +617,30 @@
   {
     "constant": true,
     "inputs": [
-      { "name": "_who", "type": "address" },
-      { "name": "_where", "type": "address" },
-      { "name": "_what", "type": "bytes32" },
-      { "name": "_how", "type": "bytes" }
+      {
+        "name": "_who",
+        "type": "address"
+      },
+      {
+        "name": "_where",
+        "type": "address"
+      },
+      {
+        "name": "_what",
+        "type": "bytes32"
+      },
+      {
+        "name": "_how",
+        "type": "bytes"
+      }
     ],
     "name": "hasPermission",
-    "outputs": [{ "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -408,10 +648,26 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "name": "entity", "type": "address" },
-      { "indexed": true, "name": "app", "type": "address" },
-      { "indexed": true, "name": "role", "type": "bytes32" },
-      { "indexed": false, "name": "allowed", "type": "bool" }
+      {
+        "indexed": true,
+        "name": "entity",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "app",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "allowed",
+        "type": "bool"
+      }
     ],
     "name": "SetPermission",
     "type": "event"
@@ -419,10 +675,26 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "name": "entity", "type": "address" },
-      { "indexed": true, "name": "app", "type": "address" },
-      { "indexed": true, "name": "role", "type": "bytes32" },
-      { "indexed": false, "name": "paramsHash", "type": "bytes32" }
+      {
+        "indexed": true,
+        "name": "entity",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "app",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "name": "paramsHash",
+        "type": "bytes32"
+      }
     ],
     "name": "SetPermissionParams",
     "type": "event"
@@ -430,9 +702,21 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "name": "app", "type": "address" },
-      { "indexed": true, "name": "role", "type": "bytes32" },
-      { "indexed": true, "name": "manager", "type": "address" }
+      {
+        "indexed": true,
+        "name": "app",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "name": "manager",
+        "type": "address"
+      }
     ],
     "name": "ChangePermissionManager",
     "type": "event"
@@ -440,12 +724,50 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": true, "name": "executor", "type": "address" },
-      { "indexed": false, "name": "script", "type": "bytes" },
-      { "indexed": false, "name": "input", "type": "bytes" },
-      { "indexed": false, "name": "returnData", "type": "bytes" }
+      {
+        "indexed": true,
+        "name": "executor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "script",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "name": "input",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "name": "returnData",
+        "type": "bytes"
+      }
     ],
     "name": "ScriptResult",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RecoverToVault",
     "type": "event"
   }
 ]

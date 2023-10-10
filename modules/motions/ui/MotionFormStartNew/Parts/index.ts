@@ -62,6 +62,39 @@ export const formParts = {
   [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts({
     registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
   }),
+  // TODO: template fill correct data
+  [MotionTypeForms.SDVTNodeOperatorsActivate]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
+  [MotionTypeForms.SDVTNodeOperatorsDeactivate]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
+  [MotionTypeForms.SDVTVettedValidatorsLimitIncrease]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
+  [MotionTypeForms.SDVTVettedValidatorsLimitsSet]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
+  [MotionTypeForms.SDVTNodeOperatorNamesSet]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
+  [MotionTypeForms.SDVTNodeOperatorRewardAddressesSet]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
+  [MotionTypeForms.SDVTNodeOperatorManagerChange]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
+  [MotionTypeForms.SDVTManageSigningKeysRoleManagerRenounce]:
+    StartSDVTNodeOperatorsAdd.formParts({
+      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
+    }),
 } as const
 
 export type FormData = {
