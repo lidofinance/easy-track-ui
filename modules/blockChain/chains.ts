@@ -7,10 +7,11 @@ export const ChainNames = {
   [CHAINS.Goerli]: 'Goerli',
   [CHAINS.Kovan]: 'Kovan',
   [CHAINS.Kintsugi]: 'Kintsugi',
+  [CHAINS.Holesky]: 'Holesky',
 } as const
 
 export const parseChainId = (chainId: number | string) => {
-  return Number(chainId) as CHAINS
+  return Number(chainId) as keyof typeof ChainNames
 }
 
 export const getChainName = (chainId: number) =>

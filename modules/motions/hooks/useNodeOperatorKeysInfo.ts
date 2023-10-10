@@ -5,9 +5,9 @@ import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
 import type { KeysInfo } from '../types'
 
 export function useNodeOperatorKeysInfo() {
-  const { chainId } = useWeb3()
+  const { chainId, walletAddress } = useWeb3()
   const nodeOperatorsInfo = useSWR<KeysInfo>(
-    nodeOperatorsKeysInfo(chainId),
+    nodeOperatorsKeysInfo(chainId, `${walletAddress}`),
     fetcherStandard,
   )
   return nodeOperatorsInfo
