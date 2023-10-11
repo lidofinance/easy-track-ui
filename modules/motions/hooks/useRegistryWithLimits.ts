@@ -14,7 +14,6 @@ import {
   ContractStethRewardProgramRegistry,
   ContractStethGasSupplyRegistry,
   ContractRewardsShareProgramRegistry,
-  ContractSDVTRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -53,7 +52,6 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.RewardsShareProgramAdd]: ContractRewardsShareProgramRegistry,
   [MotionType.RewardsShareProgramRemove]: ContractRewardsShareProgramRegistry,
   [MotionType.RewardsShareProgramTopUp]: ContractRewardsShareProgramRegistry,
-  [MotionType.SDVTNodeOperatorsAdd]: ContractSDVTRegistry,
 } as const
 
 type HookArgs = {

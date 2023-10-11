@@ -25,14 +25,11 @@ export const MotionTypeForms = {
   // ET DVT
   SDVTNodeOperatorsAdd: 'SDVTNodeOperatorsAdd',
   SDVTNodeOperatorsActivate: 'SDVTNodeOperatorsActivate',
-  SDVTNodeOperatorsDeactivate: 'SDVTNodeOperatorsDeactivate',
-  SDVTVettedValidatorsLimitIncrease: 'SDVTVettedValidatorsLimitIncrease',
-  SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
-  SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
-  SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
-  SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
-  SDVTManageSigningKeysRoleManagerRenounce:
-    'SDVTManageSigningKeysRoleManagerRenounce',
+  // SDVTNodeOperatorsDeactivate: 'SDVTNodeOperatorsDeactivate',
+  // SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
+  // SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
+  // SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
+  // SDVTNodeOperatorManagerTransfer: 'SDVTNodeOperatorManagerTransfer',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

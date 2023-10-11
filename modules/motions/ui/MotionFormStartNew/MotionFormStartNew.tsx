@@ -55,8 +55,19 @@ export function MotionFormStartNew({ onComplete }: Props) {
 
         setSubmitting(true)
 
+        const evmScriptFactory = getScriptFactoryByMotionType(
+          chainId,
+          motionType,
+        )
+
+        if (!evmScriptFactory) {
+          throw new Error(
+            `EVM script factory for motion type ${motionType} in chain ${chainId} not found`,
+          )
+        }
+
         const tx = await formParts[motionType].populateTx({
-          evmScriptFactory: getScriptFactoryByMotionType(chainId, motionType),
+          evmScriptFactory,
           formData: e[motionType],
           contract: contractEasyTrack,
         })
