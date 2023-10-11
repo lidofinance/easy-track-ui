@@ -22,13 +22,11 @@ export const GovernanceToken: ChainAddressMap = {
 export const RewardProgramRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x3129c041b372ee93a5a8756dc4ec6f154d85bc9a',
   [CHAINS.Goerli]: '0x28a08f61AE129d0d8BD4380Ae5647e7Add0527ca',
-  [CHAINS.Holesky]: '',
 }
 
 export const ReferralPartnersRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xfCaD241D9D2A2766979A2de208E8210eDf7b7D4F',
   [CHAINS.Goerli]: '0x4CB0c9987fd670069e4b24c653981E86b261A2ca',
-  [CHAINS.Holesky]: '',
 }
 
 export const STETH: ChainAddressMap = {
@@ -40,7 +38,6 @@ export const STETH: ChainAddressMap = {
 export const DAI: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
   [CHAINS.Goerli]: '0x11fE4B6AE13d2a6055C8D9cF65c55bac32B5d844',
-  [CHAINS.Holesky]: '',
 }
 
 export const Finance: ChainAddressMap = {
@@ -52,49 +49,41 @@ export const Finance: ChainAddressMap = {
 export const AllowedRecipientRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xAa47c268e6b2D4ac7d7f7Ffb28A39484f5212c2A',
   [CHAINS.Goerli]: '0xaDA19288575f611A6487365f0fE2A742a90BB2C6',
-  [CHAINS.Holesky]: '',
 }
 
 export const AllowedRecipientReferralDaiRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xa295C212B44a48D07746d70d32Aa6Ca9b09Fb846',
   [CHAINS.Goerli]: '0x8fB566b1e78e603a86b97ada5FcA858764dF4088',
-  [CHAINS.Holesky]: '',
 }
 
 export const AllowedRecipientTrpLdoRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x231Ac69A1A37649C6B06a71Ab32DdD92158C80b8',
   [CHAINS.Goerli]: '0x8C96a6522aEc036C4a384f8B7e05D93d6f3Dae39',
-  [CHAINS.Holesky]: '',
 }
 
 export const LegoLDORegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x97615f72c3428A393d65A84A3ea6BBD9ad6C0D74',
   [CHAINS.Goerli]: '0x6342213719839c56fEe817539863aFB9821B03cb',
-  [CHAINS.Holesky]: '',
 }
 
 export const LegoDAIRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xb0FE4D300334461523D9d61AaD90D0494e1Abb43',
   [CHAINS.Goerli]: '0x5884f5849414D4317d175fEc144e2F87f699B082',
-  [CHAINS.Holesky]: '',
 }
 
 export const RccDAIRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDc1A0C7849150f466F07d48b38eAA6cE99079f80',
   [CHAINS.Goerli]: '0x1440E8aDbE3a42a9EDB4b30059df8F6c35205a15',
-  [CHAINS.Holesky]: '',
 }
 
 export const PmlDAIRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDFfCD3BF14796a62a804c1B16F877Cf7120379dB',
   [CHAINS.Goerli]: '0xAadfBd1ADE92d85c967f4aE096141F0F802F46Db',
-  [CHAINS.Holesky]: '',
 }
 
 export const AtcDAIRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xe07305F43B11F230EaA951002F6a55a16419B707',
   [CHAINS.Goerli]: '0xedD3B813275e1A88c2283FAfa5bf5396938ef59e',
-  [CHAINS.Holesky]: '',
 }
 
 export const gasFunderETHRegistry: ChainAddressMap = {
@@ -106,13 +95,11 @@ export const gasFunderETHRegistry: ChainAddressMap = {
 export const StethRewardProgramRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x48c4929630099b217136b64089E8543dB0E5163a',
   [CHAINS.Goerli]: '0x78797efCca6C537BF92FA6b25cBb14A6f1c128A0',
-  [CHAINS.Holesky]: '',
 }
 
 export const StethGasSupplyRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x49d1363016aA899bba09ae972a1BF200dDf8C55F',
   [CHAINS.Goerli]: '0xF08a5f00824D4554a1FBebaE726609418dc819fb',
-  [CHAINS.Holesky]: '',
 }
 
 export const AragonACL: ChainAddressMap = {
@@ -130,5 +117,4 @@ export const EVMScriptExecutor: ChainAddressMap = {
 export const RewardsShareProgramRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xdc7300622948a7AdaF339783F6991F9cdDD79776',
   [CHAINS.Goerli]: '0x8b59609f4bEa230E565Ae0C3C7b6913746Df1cF2',
-  [CHAINS.Holesky]: '',
 }
