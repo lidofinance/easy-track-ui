@@ -3,9 +3,11 @@ import { parseChainId } from 'modules/blockChain/chains'
 import { fetch } from '@lido-sdk/fetch'
 import { CHAINS } from '@lido-sdk/constants'
 import { KeysInfo } from 'modules/motions/types'
+import { utils } from 'ethers'
 
 export type Module = {
   id: number
+  stakingModuleAddress: string
 }
 
 export type KeysInfoOperatorNew = {
@@ -30,55 +32,56 @@ export type KeysInfoNew = {
   }
 }
 
-const requestMainNet = async (chainId: number) => {
+const requestMainnetOperators = async (chainId: number) => {
   const data = await fetch(
-    `https://operators.li.fi/api/operators?chainId=${chainId}`,
+    `https://operators.lido.fi/api/operators?chainId=${chainId}`,
   )
   return data.json()
 }
-const requestTestNet = async (chainId: number) => {
+const requestTestnetOperators = async (chainId: number) => {
   const data = await fetch(
     `https://operators.testnet.fi/api/operators?chainId=${chainId}`,
   )
   return data.json()
 }
 
-const requestHoleskyNet = async (chainId: number, walletAddress: string) => {
+const requestHoleskyOperators = async (
+  chainId: number,
+  moduleAddress: string,
+  walletAddress: string,
+) => {
   const api = 'https://operators-holesky.testnet.fi/api'
+  console.log(`${api}/modules?chainId=${chainId}`)
   const modulesResp = await fetch(`${api}/modules?chainId=${chainId}`)
-  const modules = (await modulesResp.json()) as Module[]
+  const modules: Module[] = await modulesResp.json()
 
-  const moduleStatisticsReq = modules.map(item =>
-    fetch(`${api}/moduleStatistics?moduleId=${item.id}&chainId=${chainId}`),
+  const module = modules.find(
+    item =>
+      utils.getAddress(item.stakingModuleAddress) ===
+      utils.getAddress(moduleAddress),
   )
-  const moduleStatisticsResp = await Promise.all(moduleStatisticsReq)
-  const moduleStatistics = (await Promise.all(
-    moduleStatisticsResp.map(item => item.json()),
-  )) as KeysInfoNew[]
-
-  let moduleId = NaN
-  let operatorId = NaN
-
-  moduleStatistics.forEach(module =>
-    module.operators?.forEach(operator => {
-      if (operator.rewardAddress === walletAddress) {
-        moduleId = module.summary.moduleId
-        operatorId = operator.id
-      }
-    }),
-  )
-
   const result: KeysInfo = {}
+  if (!module) {
+    return result
+  }
+  const moduleStatisticsResp = await fetch(
+    `${api}/moduleStatistics?moduleId=${module.id}&chainId=${chainId}`,
+  )
+  const moduleStatistics: KeysInfoNew = await moduleStatisticsResp.json()
 
-  if (isNaN(moduleId) || isNaN(operatorId)) {
+  const operator = moduleStatistics.operators?.find(
+    item =>
+      utils.getAddress(item.rewardAddress) === utils.getAddress(walletAddress),
+  )
+  if (!operator) {
     return result
   }
 
   const operatorStatisticsResp = await fetch(
-    `${api}/operatorStatistics?moduleId=${moduleId}&operatorId=${operatorId}&chainId=${chainId}`,
+    `${api}/operatorStatistics?moduleId=${module.id}&operatorId=${operator.id}&chainId=${chainId}`,
   )
-  const operatorStatistics =
-    (await operatorStatisticsResp.json()) as KeysInfoOperatorNew
+  const operatorStatistics: KeysInfoOperatorNew =
+    await operatorStatisticsResp.json()
 
   result.operators = [
     {
@@ -96,7 +99,7 @@ const requestHoleskyNet = async (chainId: number, walletAddress: string) => {
       },
     },
   ]
-
+  console.log('result', result)
   return result
 }
 
@@ -104,14 +107,19 @@ export default createNextConnect().get(async (req, res) => {
   try {
     const chainId = parseChainId(String(req.query.chainId))
     const walletAddress = String(req.query.walletAddress)
+    const moduleAddress = String(req.query.moduleAddress)
 
     let result
     if (chainId === CHAINS.Mainnet) {
-      result = await requestMainNet(chainId)
+      result = await requestMainnetOperators(chainId)
     } else if (chainId === CHAINS.Holesky) {
-      result = await requestHoleskyNet(chainId, walletAddress)
+      result = await requestHoleskyOperators(
+        chainId,
+        moduleAddress,
+        walletAddress,
+      )
     } else {
-      result = await requestTestNet(chainId)
+      result = await requestTestnetOperators(chainId)
     }
 
     res.json(result)
