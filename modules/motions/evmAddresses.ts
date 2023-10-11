@@ -126,6 +126,44 @@ export const EvmAddressesByChain = {
     [MotionType.AllowedRecipientTopUpReferralDai]:
       '0x9534A77029D57E249c467E5A1E0854cc26Cd75A0',
   },
+
+  // Holesky
+  [CHAINS.Holesky]: {
+    [MotionType.NodeOperatorIncreaseLimit]:
+      '0x18Ff3bD97739bf910cDCDb8d138976c6afDB4449',
+    [MotionType.AllowedRecipientTopUpTrpLdo]: '',
+    [MotionType.LegoLDOTopUp]: '',
+    [MotionType.LegoDAITopUp]: '',
+    [MotionType.RccDAITopUp]: '',
+    [MotionType.PmlDAITopUp]: '',
+    [MotionType.AtcDAITopUp]: '',
+    [MotionType.StethRewardProgramAdd]: '',
+    [MotionType.StethRewardProgramRemove]: '',
+    [MotionType.StethRewardProgramTopUp]: '',
+    [MotionType.StethGasSupplyAdd]: '',
+    [MotionType.StethGasSupplyRemove]: '',
+    [MotionType.StethGasSupplyTopUp]: '',
+    [MotionType.RewardsShareProgramAdd]: '',
+    [MotionType.RewardsShareProgramRemove]: '',
+    [MotionType.RewardsShareProgramTopUp]: '',
+
+    // next motion factories are @deprecated
+    // we are keeping them here to display history data
+    [MotionType.LEGOTopUp]: '',
+    [MotionType.GasFunderETHTopUp]: '0x',
+    [MotionType.RewardProgramAdd]: '',
+    [MotionType.RewardProgramRemove]: '',
+    [MotionType.RewardProgramTopUp]: '',
+    [MotionType.ReferralPartnerAdd]: '',
+    [MotionType.ReferralPartnerRemove]: '',
+    [MotionType.ReferralPartnerTopUp]: '',
+    [MotionType.AllowedRecipientAdd]: '',
+    [MotionType.AllowedRecipientRemove]: '',
+    [MotionType.AllowedRecipientTopUp]: '',
+    [MotionType.AllowedRecipientAddReferralDai]: '',
+    [MotionType.AllowedRecipientRemoveReferralDai]: '',
+    [MotionType.AllowedRecipientTopUpReferralDai]: '',
+  },
 }
 
 export const parseEvmSupportedChainId = (

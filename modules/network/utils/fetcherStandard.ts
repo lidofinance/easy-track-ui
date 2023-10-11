@@ -15,7 +15,6 @@ export const fetcherStandard: FetcherStandard = async (
   params = DEFAULT_PARAMS,
 ) => {
   const response = await fetch(url, params)
-
   if (!response.ok) {
     throw new Error('An error occurred while fetching the data.')
   }

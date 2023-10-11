@@ -135,20 +135,5 @@ export type KeysInfoOperator = {
 }
 
 export type KeysInfo = {
-  operators: undefined | KeysInfoOperator[]
-  keys: {
-    signatureVerified: number
-    duplicatesVerified: number
-    total: number
-    unusedButNotNew: number
-    unused: number
-    used: number
-    unconfirmed: number
-  }
-  health: {
-    nextUpdateTime: number
-    lastUpdateTime: number
-    serverTime: number
-    status: string
-  }
+  operators?: KeysInfoOperator[]
 }
