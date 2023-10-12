@@ -6,6 +6,7 @@ import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
 import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
 import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
+import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
@@ -62,6 +63,8 @@ export const formParts = {
   [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts({
     registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
   }),
+  [MotionTypeForms.SDVTNodeOperatorsActivate]:
+    StartNewSDVTNodeOperatorsActivate.formParts,
 } as const
 
 export type FormData = {

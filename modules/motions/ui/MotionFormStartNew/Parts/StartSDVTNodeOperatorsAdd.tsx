@@ -1,42 +1,42 @@
 import { utils } from 'ethers'
 
-import { Fragment, useCallback, useEffect } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
-import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import {
-  useRecipientActual,
-  usePeriodLimitsData,
-  useTokenByTopUpType,
-} from 'modules/motions/hooks'
-import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
-import {
-  MotionLimitProgress,
-  MotionLimitProgressWrapper,
-} from 'modules/motions/ui/MotionLimitProgress'
+// import { Fragment, useCallback, useEffect } from 'react'
+// import { useFieldArray, useFormContext } from 'react-hook-form'
+// import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
+// import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+// import {
+//   useRecipientActual,
+//   usePeriodLimitsData,
+//   useTokenByTopUpType,
+// } from 'modules/motions/hooks'
+// import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
+// import {
+//   MotionLimitProgress,
+//   MotionLimitProgressWrapper,
+// } from 'modules/motions/ui/MotionLimitProgress'
 
-import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
-import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
-import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
-import {
-  Fieldset,
-  MessageBox,
-  RemoveItemButton,
-  FieldsWrapper,
-  FieldsHeader,
-  FieldsHeaderDesc,
-} from '../CreateMotionFormStyle'
+// import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
+// import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
+// import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
+// import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
+// import {
+//   Fieldset,
+//   MessageBox,
+//   RemoveItemButton,
+//   FieldsWrapper,
+//   FieldsHeader,
+//   FieldsHeaderDesc,
+// } from '../CreateMotionFormStyle'
 
 import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
-import { validateToken } from 'modules/tokens/utils/validateToken'
+// import { validateToken } from 'modules/tokens/utils/validateToken'
 import {
   estimateGasFallback,
-  checkInputsGreaterThanLimit,
+  // checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
-import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
+// import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
 
 type Program = {
   address: string
@@ -82,80 +82,83 @@ export const formParts = ({
       fieldNames,
       submitAction,
     }) {
-      const { walletAddress } = useWeb3()
-      const trustedCaller = ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[
-        registryType
-      ].evmContract.useSwrWeb3('trustedCaller', [])
-      const isTrustedCallerConnected = trustedCaller.data === walletAddress
+      // TODO: bring code back
+      console.log('fieldNames', fieldNames)
+      console.log('submitAction', submitAction)
+      // const { walletAddress } = useWeb3()
+      // const trustedCaller = ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[
+      //   registryType
+      // ].evmContract.useSwrWeb3('trustedCaller', [])
+      // const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
-      const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
-        usePeriodLimitsData({ registryType })
-      const allowedRecipients = useRecipientActual({ registryType })
-      const token = useTokenByTopUpType({ registryType })
+      // const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
+      //   usePeriodLimitsData({ registryType })
+      // const allowedRecipients = useRecipientActual({ registryType })
+      // const token = useTokenByTopUpType({ registryType })
 
-      const fieldsArr = useFieldArray({ name: fieldNames.programs })
+      // const fieldsArr = useFieldArray({ name: fieldNames.programs })
 
-      const handleAddProgram = useCallback(
-        () => fieldsArr.append({ address: '', amount: '' }),
-        [fieldsArr],
-      )
+      // const handleAddProgram = useCallback(
+      //   () => fieldsArr.append({ address: '', amount: '' }),
+      //   [fieldsArr],
+      // )
 
-      const handleRemoveProgram = useCallback(
-        (i: number) => fieldsArr.remove(i),
-        [fieldsArr],
-      )
+      // const handleRemoveProgram = useCallback(
+      //   (i: number) => fieldsArr.remove(i),
+      //   [fieldsArr],
+      // )
 
-      const { watch, setValue } = useFormContext()
-      const selectedPrograms: Program[] = watch(fieldNames.programs)
+      // const { watch } = useFormContext()
+      // const selectedPrograms: Program[] = watch(fieldNames.programs)
 
-      const newAmount = selectedPrograms.reduce(
-        (acc, program) => acc + Number(program.amount),
-        0,
-      )
+      // const newAmount = selectedPrograms.reduce(
+      //   (acc, program) => acc + Number(program.amount),
+      //   0,
+      // )
 
-      const getFilteredOptions = (fieldIdx: number) => {
-        if (!allowedRecipients.data) return []
-        const thatAddress = selectedPrograms[fieldIdx]?.address
-        const selectedAddresses = selectedPrograms.map(({ address }) => address)
-        return allowedRecipients.data.filter(
-          ({ address }) =>
-            !selectedAddresses.includes(address) || address === thatAddress,
-        )
-      }
+      // const getFilteredOptions = (fieldIdx: number) => {
+      //   if (!allowedRecipients.data) return []
+      //   const thatAddress = selectedPrograms[fieldIdx]?.address
+      //   const selectedAddresses = selectedPrograms.map(({ address }) => address)
+      //   return allowedRecipients.data.filter(
+      //     ({ address }) =>
+      //       !selectedAddresses.includes(address) || address === thatAddress,
+      //   )
+      // }
 
-      useEffect(() => {
-        const recipientsCount = allowedRecipients.data?.length || 0
-        const isMoreThanOne = recipientsCount > 1
+      // useEffect(() => {
+      //   const recipientsCount = allowedRecipients.data?.length || 0
+      //   const isMoreThanOne = recipientsCount > 1
 
-        if (isMoreThanOne) return
+      //   if (isMoreThanOne) return
 
-        const recipientAddress = allowedRecipients.data?.[0]?.address || ''
-        if (!recipientAddress) return
+      //   const recipientAddress = allowedRecipients.data?.[0]?.address || ''
+      //   if (!recipientAddress) return
 
-        setValue(fieldNames.programs, [{ address: recipientAddress }])
-      }, [fieldNames.programs, setValue, allowedRecipients.data])
+      //   setValue(fieldNames.programs, [{ address: recipientAddress }])
+      // }, [fieldNames.programs, setValue, allowedRecipients.data])
 
-      const { data: limits } = useTransitionLimits()
-      const transitionLimit =
-        token.address && limits?.[utils.getAddress(token.address)]
+      // const { data: limits } = useTransitionLimits()
+      // const transitionLimit =
+      //   token.address && limits?.[utils.getAddress(token.address)]
 
-      if (
-        trustedCaller.initialLoading ||
-        allowedRecipients.initialLoading ||
-        periodLimitsLoading
-      ) {
-        return <PageLoader />
-      }
+      // if (
+      //   trustedCaller.initialLoading
+      //   // allowedRecipients.initialLoading ||
+      //   // periodLimitsLoading
+      // ) {
+      //   return <PageLoader />
+      // }
 
-      if (!isTrustedCallerConnected) {
-        return (
-          <MessageBox>You should be connected as trusted caller</MessageBox>
-        )
-      }
+      // if (!isTrustedCallerConnected) {
+      //   return (
+      //     <MessageBox>You should be connected as trusted caller</MessageBox>
+      //   )
+      // }
 
       return (
         <>
-          {periodLimitsData?.periodData && (
+          {/* {periodLimitsData?.periodData && (
             <MotionLimitProgressWrapper>
               <MotionLimitProgress
                 spentAmount={periodLimitsData.periodData.alreadySpentAmount}
@@ -263,7 +266,7 @@ export const formParts = ({
               </Fieldset>
             )}
 
-          {submitAction}
+          {submitAction} */}
         </>
       )
     },
