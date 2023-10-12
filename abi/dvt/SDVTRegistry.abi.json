@@ -256,7 +256,566 @@
     "constant": true,
     "inputs": [],
     "name": "appId",
-    "outputs": [{ "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getActiveNodeOperatorsCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "name": "_rewardAddress",
+        "type": "address"
+      }
+    ],
+    "name": "addNodeOperator",
+    "outputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getContractVersion",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getInitializationBlock",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getUnusedSigningKeyCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "onRewardsMinted",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "MANAGE_NODE_OPERATOR_ROLE",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "onWithdrawalCredentialsChanged",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      }
+    ],
+    "name": "activateNodeOperator",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      },
+      {
+        "name": "_rewardAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setNodeOperatorRewardAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      },
+      {
+        "name": "_fullInfo",
+        "type": "bool"
+      }
+    ],
+    "name": "getNodeOperator",
+    "outputs": [
+      {
+        "name": "active",
+        "type": "bool"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "rewardAddress",
+        "type": "address"
+      },
+      {
+        "name": "totalVettedValidators",
+        "type": "uint64"
+      },
+      {
+        "name": "totalExitedValidators",
+        "type": "uint64"
+      },
+      {
+        "name": "totalAddedValidators",
+        "type": "uint64"
+      },
+      {
+        "name": "totalDepositedValidators",
+        "type": "uint64"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_locator",
+        "type": "address"
+      },
+      {
+        "name": "_type",
+        "type": "bytes32"
+      },
+      {
+        "name": "_stuckPenaltyDelay",
+        "type": "uint256"
+      }
+    ],
+    "name": "finalizeUpgrade_v2",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getStakingModuleSummary",
+    "outputs": [
+      {
+        "name": "totalExitedValidators",
+        "type": "uint256"
+      },
+      {
+        "name": "totalDepositedValidators",
+        "type": "uint256"
+      },
+      {
+        "name": "depositableValidatorsCount",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_nodeOperatorIds",
+        "type": "bytes"
+      },
+      {
+        "name": "_exitedValidatorsCounts",
+        "type": "bytes"
+      }
+    ],
+    "name": "updateExitedValidatorsCount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_nodeOperatorIds",
+        "type": "bytes"
+      },
+      {
+        "name": "_stuckValidatorsCounts",
+        "type": "bytes"
+      }
+    ],
+    "name": "updateStuckValidatorsCount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      }
+    ],
+    "name": "transferToVault",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_sender",
+        "type": "address"
+      },
+      {
+        "name": "_role",
+        "type": "bytes32"
+      },
+      {
+        "name": "_params",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "canPerform",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      },
+      {
+        "name": "_refundedValidatorsCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateRefundedValidatorsCount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getEVMScriptRegistry",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getNodeOperatorsCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      },
+      {
+        "name": "_isTargetLimitActive",
+        "type": "bool"
+      },
+      {
+        "name": "_targetLimit",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateTargetValidatorsLimits",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      },
+      {
+        "name": "_vettedSigningKeysCount",
+        "type": "uint64"
+      }
+    ],
+    "name": "setNodeOperatorStakingLimit",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNodeOperatorSummary",
+    "outputs": [
+      {
+        "name": "isTargetLimitActive",
+        "type": "bool"
+      },
+      {
+        "name": "targetValidatorsCount",
+        "type": "uint256"
+      },
+      {
+        "name": "stuckValidatorsCount",
+        "type": "uint256"
+      },
+      {
+        "name": "refundedValidatorsCount",
+        "type": "uint256"
+      },
+      {
+        "name": "stuckPenaltyEndTimestamp",
+        "type": "uint256"
+      },
+      {
+        "name": "totalExitedValidators",
+        "type": "uint256"
+      },
+      {
+        "name": "totalDepositedValidators",
+        "type": "uint256"
+      },
+      {
+        "name": "depositableValidatorsCount",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_nodeOperatorId",
+        "type": "uint256"
+      },
+      {
+        "name": "_index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getSigningKey",
+    "outputs": [
+      {
+        "name": "key",
+        "type": "bytes"
+      },
+      {
+        "name": "depositSignature",
+        "type": "bytes"
+      },
+      {
+        "name": "used",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "MAX_NODE_OPERATOR_NAME_LENGTH",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_depositsCount",
+        "type": "uint256"
+      },
+      {
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "obtainDepositData",
+    "outputs": [
+      {
+        "name": "publicKeys",
+        "type": "bytes"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getKeysOpIndex",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getNonce",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -584,7 +1143,12 @@
     "constant": true,
     "inputs": [],
     "name": "kernel",
-    "outputs": [{ "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"

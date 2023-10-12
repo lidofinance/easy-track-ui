@@ -16,6 +16,7 @@ type Args<FormData> = {
   Component: React.ComponentType<{
     fieldNames: Record<keyof FormData, string>
     submitAction: React.ReactNode
+    getValues: any
   }>
 }
 

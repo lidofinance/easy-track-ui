@@ -1,46 +1,36 @@
-import { utils } from 'ethers'
+import { utils, constants } from 'ethers'
 
-// import { Fragment, useCallback, useEffect } from 'react'
-// import { useFieldArray, useFormContext } from 'react-hook-form'
-// import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
-// import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-// import {
-//   useRecipientActual,
-//   usePeriodLimitsData,
-//   useTokenByTopUpType,
-// } from 'modules/motions/hooks'
-// import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
-// import {
-//   MotionLimitProgress,
-//   MotionLimitProgressWrapper,
-// } from 'modules/motions/ui/MotionLimitProgress'
+import { Fragment, useCallback, useEffect, useState } from 'react'
+import { useFieldArray, useForm, useFormState } from 'react-hook-form'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 
-// import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
-// import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
-// import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
-// import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
-// import {
-//   Fieldset,
-//   MessageBox,
-//   RemoveItemButton,
-//   FieldsWrapper,
-//   FieldsHeader,
-//   FieldsHeaderDesc,
-// } from '../CreateMotionFormStyle'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+
+import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
+import { InputControl } from 'modules/shared/ui/Controls/Input'
+import {
+  Fieldset,
+  MessageBox,
+  RemoveItemButton,
+  FieldsWrapper,
+  FieldsHeader,
+  FieldsHeaderDesc,
+  ErrorBox,
+} from '../CreateMotionFormStyle'
 
 import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
-// import { validateToken } from 'modules/tokens/utils/validateToken'
+import { estimateGasFallback } from 'modules/motions/utils'
 import {
-  estimateGasFallback,
-  // checkInputsGreaterThanLimit,
-} from 'modules/motions/utils'
-// import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
+  useSDVTOperatorNameLimit,
+  useSDVTOperatorsCounts,
+} from 'modules/motions/hooks'
 
-type Program = {
-  address: string
-  amount: string
+type NodeOperator = {
+  name: string
+  rewardAddress: string
+  managerAddress: string
 }
 
 export const ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP = {
@@ -50,6 +40,14 @@ export const ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP = {
   },
 }
 
+// DONE: The current number of node operators in the registry MUST be equal to the _nodeOperatorsCount
+// DONE: (exec also) The total number of node operators in the registry, after adding the new ones, MUST NOT exceed nodeOperatorsRegistry.MAX_NODE_OPERATORS_COUNT()
+// DONE: Manager addresses MUST NOT have duplicates
+// TODO: Manager addresses MUST NOT be used as managers for previously added node operators
+// TODO: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
+// DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
+// DONE: The names of newly added node operators MUST NOT be an empty string
+// DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
 export const formParts = ({
   registryType,
 }: {
@@ -58,11 +56,16 @@ export const formParts = ({
   createMotionFormPart({
     motionType: ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[registryType].motionType,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
+      console.log(formData)
       const encodedCallData = new utils.AbiCoder().encode(
-        ['address[]', 'uint256[]'],
+        ['uint256', 'tuple(string, address, address)[]'],
         [
-          formData.programs.map(p => utils.getAddress(p.address)),
-          formData.programs.map(p => utils.parseEther(p.amount)),
+          Number(formData.nodeOperatorsCount[0]?.current),
+          formData.nodeOperators.map(item => [
+            item.name,
+            utils.getAddress(item.rewardAddress),
+            utils.getAddress(item.managerAddress),
+          ]),
         ],
       )
       const gasLimit = await estimateGasFallback(
@@ -76,171 +79,133 @@ export const formParts = ({
       return tx
     },
     getDefaultFormData: () => ({
-      programs: [{ address: '', amount: '' }] as Program[],
+      nodeOperators: [
+        { name: '', rewardAddress: '', managerAddress: '' },
+      ] as NodeOperator[],
+      nodeOperatorsCount: [{ current: '' }] as { current: string }[],
     }),
     Component: function StartNewMotionMotionFormLego({
       fieldNames,
       submitAction,
+      getValues,
     }) {
-      // TODO: bring code back
-      console.log('fieldNames', fieldNames)
-      console.log('submitAction', submitAction)
-      // const { walletAddress } = useWeb3()
-      // const trustedCaller = ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[
-      //   registryType
-      // ].evmContract.useSwrWeb3('trustedCaller', [])
-      // const isTrustedCallerConnected = trustedCaller.data === walletAddress
+      const { walletAddress } = useWeb3()
+      const trustedCaller = ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[
+        registryType
+      ].evmContract.useSwrWeb3('trustedCaller', [])
+      const isTrustedCallerConnected = trustedCaller.data === walletAddress
+      const [hasDuplicateManagers, setHasDuplicateManagers] = useState(false)
 
-      // const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
-      //   usePeriodLimitsData({ registryType })
-      // const allowedRecipients = useRecipientActual({ registryType })
-      // const token = useTokenByTopUpType({ registryType })
+      const { data: NONameLength, initialLoading: NONameLengthLoading } =
+        useSDVTOperatorNameLimit()
+      const { data: NOCounts, initialLoading: maxOperatorsLoading } =
+        useSDVTOperatorsCounts()
 
-      // const fieldsArr = useFieldArray({ name: fieldNames.programs })
+      const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
+      const { update } = useFieldArray({ name: fieldNames.nodeOperatorsCount })
+      const { isValid } = useFormState()
+      const { setValue } = useForm()
 
-      // const handleAddProgram = useCallback(
-      //   () => fieldsArr.append({ address: '', amount: '' }),
-      //   [fieldsArr],
-      // )
+      useEffect(() => {
+        update(0, { count: `${NOCounts?.current}` })
+      }, [setValue, fieldNames.nodeOperators, update, NOCounts])
 
-      // const handleRemoveProgram = useCallback(
-      //   (i: number) => fieldsArr.remove(i),
-      //   [fieldsArr],
-      // )
+      const handleAddNodeOperator = useCallback(() => {
+        const nodeOperators = getValues().SDVTNodeOperatorsAdd
+          .nodeOperators as NodeOperator[]
+        const managerAddressList = nodeOperators.map(
+          item => item.managerAddress,
+        )
+        const uniqManagerAddressList = Array.from(new Set(managerAddressList))
+        if (managerAddressList.length !== uniqManagerAddressList.length) {
+          setHasDuplicateManagers(true)
+          return
+        }
+        fieldsArr.append({ name: '', rewardAddress: '', managerAddress: '' })
+      }, [fieldsArr, setHasDuplicateManagers, getValues])
 
-      // const { watch } = useFormContext()
-      // const selectedPrograms: Program[] = watch(fieldNames.programs)
+      const handleRemoveNodeOperator = useCallback(
+        (i: number) => fieldsArr.remove(i),
+        [fieldsArr],
+      )
 
-      // const newAmount = selectedPrograms.reduce(
-      //   (acc, program) => acc + Number(program.amount),
-      //   0,
-      // )
+      // const { watch, setValue } = useFormContext()
 
-      // const getFilteredOptions = (fieldIdx: number) => {
-      //   if (!allowedRecipients.data) return []
-      //   const thatAddress = selectedPrograms[fieldIdx]?.address
-      //   const selectedAddresses = selectedPrograms.map(({ address }) => address)
-      //   return allowedRecipients.data.filter(
-      //     ({ address }) =>
-      //       !selectedAddresses.includes(address) || address === thatAddress,
-      //   )
-      // }
+      if (
+        trustedCaller.initialLoading ||
+        NONameLengthLoading ||
+        maxOperatorsLoading
+        // || periodLimitsLoading
+      ) {
+        return <PageLoader />
+      }
 
-      // useEffect(() => {
-      //   const recipientsCount = allowedRecipients.data?.length || 0
-      //   const isMoreThanOne = recipientsCount > 1
-
-      //   if (isMoreThanOne) return
-
-      //   const recipientAddress = allowedRecipients.data?.[0]?.address || ''
-      //   if (!recipientAddress) return
-
-      //   setValue(fieldNames.programs, [{ address: recipientAddress }])
-      // }, [fieldNames.programs, setValue, allowedRecipients.data])
-
-      // const { data: limits } = useTransitionLimits()
-      // const transitionLimit =
-      //   token.address && limits?.[utils.getAddress(token.address)]
-
-      // if (
-      //   trustedCaller.initialLoading
-      //   // allowedRecipients.initialLoading ||
-      //   // periodLimitsLoading
-      // ) {
-      //   return <PageLoader />
-      // }
-
-      // if (!isTrustedCallerConnected) {
-      //   return (
-      //     <MessageBox>You should be connected as trusted caller</MessageBox>
-      //   )
-      // }
+      if (!isTrustedCallerConnected) {
+        return (
+          <MessageBox>You should be connected as trusted caller</MessageBox>
+        )
+      }
 
       return (
         <>
-          {/* {periodLimitsData?.periodData && (
-            <MotionLimitProgressWrapper>
-              <MotionLimitProgress
-                spentAmount={periodLimitsData.periodData.alreadySpentAmount}
-                totalLimit={periodLimitsData.limits.limit}
-                startDate={periodLimitsData.periodData.periodStartTimestamp}
-                endDate={periodLimitsData.periodData.periodEndTimestamp}
-                token={token.label}
-                newAmount={newAmount}
-              />
-            </MotionLimitProgressWrapper>
-          )}
-
           {fieldsArr.fields.map((item, i) => (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>NodeOperator #{i + 1}</FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
-                      Remove program {i + 1}
+                    <RemoveItemButton
+                      onClick={() => handleRemoveNodeOperator(i)}
+                    >
+                      Remove node operator {i + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
-                {periodLimitsData?.isEndInNextPeriod && (
-                  <MotionInfoBox>
-                    The motion is ending in the next period. The transfer limit
-                    would be replenished by that time.
-                  </MotionInfoBox>
-                )}
-                <Fieldset>
-                  <SelectControl
-                    label="Reward program address"
-                    name={`${fieldNames.programs}.${i}.address`}
-                    rules={{ required: 'Field is required' }}
-                  >
-                    {getFilteredOptions(i).map((program, j) => (
-                      <Option
-                        key={j}
-                        value={program.address}
-                        children={program.title || program.address}
-                      />
-                    ))}
-                  </SelectControl>
-                </Fieldset>
 
                 <Fieldset>
-                  <InputNumberControl
-                    label={`${token.label} Amount`}
-                    name={`${fieldNames.programs}.${i}.amount`}
+                  <InputControl
+                    label="Name"
+                    name={`${fieldNames.nodeOperators}.${i}.name`}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        const check1 = validateToken(value)
-                        if (typeof check1 === 'string') {
-                          return check1
-                        }
-                        if (
-                          transitionLimit &&
-                          Number(value) > transitionLimit
-                        ) {
-                          return tokenLimitError(token.label, transitionLimit)
-                        }
+                        if (!NONameLength || value.length > NONameLength)
+                          return 'Name is too long'
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
 
-                        const isLargeThenPeriodLimit =
-                          checkInputsGreaterThanLimit({
-                            inputValues: selectedPrograms,
-                            spendableBalanceInPeriod: Number(
-                              periodLimitsData?.periodData
-                                .spendableBalanceInPeriod,
-                            ),
-                            currentValue: { value, index: i },
-                          })
+                <Fieldset>
+                  <InputControl
+                    label="Reward address"
+                    name={`${fieldNames.nodeOperators}.${i}.rewardAddress`}
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        if (!utils.isAddress(value))
+                          return 'Address is not valid'
+                        if (value === constants.AddressZero)
+                          return 'Should not be zero address'
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
 
-                        if (
-                          periodLimitsData?.periodData
-                            .spendableBalanceInPeriod &&
-                          isLargeThenPeriodLimit
-                        ) {
-                          return periodLimitError()
-                        }
+                <Fieldset>
+                  <InputControl
+                    label={`Manager address`}
+                    name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        if (!utils.isAddress(value))
+                          return 'Address is not valid'
+                        console.log(fieldsArr.fields)
                         return true
                       },
                     }}
@@ -249,24 +214,29 @@ export const formParts = ({
               </FieldsWrapper>
             </Fragment>
           ))}
-
-          {allowedRecipients.data &&
-            fieldsArr.fields.length < allowedRecipients.data.length && (
+          {hasDuplicateManagers && (
+            <ErrorBox>
+              Different node operators can&apos;t have same manager address
+            </ErrorBox>
+          )}
+          {isValid &&
+            NOCounts &&
+            NOCounts.max > fieldsArr.fields.length + NOCounts.current && (
               <Fieldset>
                 <ButtonIcon
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={handleAddProgram}
+                  onClick={handleAddNodeOperator}
                   icon={<Plus />}
                   color="secondary"
                 >
-                  One more program
+                  One more node operator
                 </ButtonIcon>
               </Fieldset>
             )}
 
-          {submitAction} */}
+          {submitAction}
         </>
       )
     },
