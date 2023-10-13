@@ -5,8 +5,6 @@ import { Invert } from 'modules/shared/utils/utilTypes'
 
 const EvmSupportedChains = [CHAINS.Mainnet, CHAINS.Goerli] as const
 
-// intentionally
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 type EvmSupportedChain = typeof EvmSupportedChains[number]
 
 type EvmAddresses = Record<
