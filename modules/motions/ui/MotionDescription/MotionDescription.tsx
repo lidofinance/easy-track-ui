@@ -33,6 +33,7 @@ import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { NestProps } from './types'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
+import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
 import { DescWrap } from './MotionDescriptionStyle'
 
 type DescWithLimitsProps = NestProps<
@@ -190,7 +191,7 @@ const MOTION_DESCRIPTIONS = {
     />
   ),
   [MotionType.SDVTNodeOperatorsAdd]: () => <h1>TODO:add desc</h1>,
-  [MotionType.SDVTNodeOperatorsActivate]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTNodeOperatorsActivate]: DescSDVTNodeOperatorsActivate,
   [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
   // [MotionType.SDVTVettedValidatorsLimitIncrease]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTVettedValidatorsLimitsSet]: () => <h1>TODO:add desc</h1>,
