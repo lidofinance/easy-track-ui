@@ -303,10 +303,10 @@ export const ContractSDVTNodeOperatorsDeactivate = createContractHelpers({
   address: EvmAddressesByType[MotionType.SDVTNodeOperatorsDeactivate],
 })
 
-// export const ContractSDVTVettedValidatorsLimitsSet = createContractHelpers({
-//   factory: TypeChain.SetVettedValidatorsLimitsAbi__factory,
-//   address: EvmAddressesByType[MotionType.SDVTVettedValidatorsLimitsSet],
-// })
+export const ContractSDVTVettedValidatorsLimitsSet = createContractHelpers({
+  factory: TypeChain.SetVettedValidatorsLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTVettedValidatorsLimitsSet],
+})
 
 // export const ContractSDVTNodeOperatorNamesSet = createContractHelpers({
 //   factory: TypeChain.SetNodeOperatorsNameAbi__factory,
