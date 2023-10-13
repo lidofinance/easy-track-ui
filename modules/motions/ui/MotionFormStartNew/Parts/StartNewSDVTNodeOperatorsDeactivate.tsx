@@ -106,7 +106,7 @@ export const formParts = createMotionFormPart({
         managerAddress: '',
       })
 
-    const isManagerAddressCanPerformRole = async (
+    const getCanAddressManageKeys = async (
       address: string,
       nodeOperatorId: string,
     ) => {
@@ -185,13 +185,13 @@ export const formParts = createMotionFormPart({
                         if (!utils.isAddress(value))
                           return 'Address is not valid'
 
-                        const isManagerAddressValid =
-                          await isManagerAddressCanPerformRole(
+                        const canAddressManageKeys =
+                          await getCanAddressManageKeys(
                             value,
                             selectedPrograms[i].nodeOperatorId,
                           )
 
-                        if (!isManagerAddressValid) {
+                        if (!canAddressManageKeys) {
                           return 'Address is not allowed to manage signing keys'
                         }
                       },
