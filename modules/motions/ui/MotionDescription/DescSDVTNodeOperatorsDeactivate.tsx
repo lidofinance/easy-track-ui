@@ -9,19 +9,20 @@ export function DescSDVTNodeOperatorsDeactivate({
 }: NestProps<DeactivateNodeOperatorsAbi['decodeEVMScriptCallData']>) {
   const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
   return (
-    <div>
-      {callData.map(program => {
+    <>
+      {callData.map((program, index) => {
         const nodeOperatorId = program.nodeOperatorId.toNumber()
         const nodeOperator = nodeOperatorsList?.[nodeOperatorId]
         return (
           <div key={nodeOperatorId}>
-            Node operator <b>{nodeOperator ? nodeOperator.name : ''}</b> (id:{' '}
-            {nodeOperatorId}) will be deactivated and <b>MANAGE_SIGNING_KEYS</b>{' '}
-            role <br /> will be revoked from its&apos; manager address{' '}
-            <AddressInlineWithPop address={program.managerAddress} />.
+            Deactivate Node Operator{' '}
+            <b>{nodeOperator ? nodeOperator.name : ''}</b> (id: {nodeOperatorId}
+            ) and revoke <b>MANAGE_SIGNING_KEYS</b> role from{' '}
+            <AddressInlineWithPop address={program.managerAddress} />
+            {index === program.length - 1 ? '.' : '; '}
           </div>
         )
       })}
-    </div>
+    </>
   )
 }

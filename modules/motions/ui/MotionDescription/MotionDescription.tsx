@@ -33,6 +33,7 @@ import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { NestProps } from './types'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
+import { DescWrap } from './MotionDescriptionStyle'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -236,5 +237,9 @@ export function MotionDescription({ motion }: Props) {
 
   const Desc = MOTION_DESCRIPTIONS[motionType]
 
-  return <Desc callData={callData} />
+  return (
+    <DescWrap>
+      <Desc callData={callData} />
+    </DescWrap>
+  )
 }
