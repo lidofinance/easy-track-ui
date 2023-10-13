@@ -59,7 +59,7 @@
             "type": "address"
           }
         ],
-        "internalType": "struct TransferNodeOperatorManager.PermissionInput[]",
+        "internalType": "struct ChangeNodeOperatorManager.PermissionInput[]",
         "name": "",
         "type": "tuple[]"
       }

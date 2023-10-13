@@ -103,19 +103,21 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RewardsShareProgramTopUp]:
       '0x5Bb391170899A7b8455A442cca65078ff3E1639C',
     [MotionType.SDVTNodeOperatorsAdd]:
-      '0x083a26e5285610b91Fd74040B81C9b5a13523bbf',
+      '0x69ab4BeD4D136F1e22c6072277BA5E52A246672B',
     [MotionType.SDVTNodeOperatorsActivate]:
-      '0x7983F6879C0C06a9718bAf90e6E0ebD3e7243A3F',
+      '0x4C0e79308f2E672b9dB9f2E6fD183Ec6025eFc37',
     [MotionType.SDVTNodeOperatorsDeactivate]:
-      '0x47a8C2f54513d1d2445Ced353237F4ed406d16f2',
+      '0x2b956B578D0f44E0BD484d1A63c8A164BBEf6B58',
     // [MotionType.SDVTVettedValidatorsLimitsSet]:
-    //   '0xB634357735a3b63645b54A2D928CE1b09caffC9d',
+    //   '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
     // [MotionType.SDVTNodeOperatorNamesSet]:
-    //   '0x827e3C09A6044afF2f5cF78BB064bB8a40B4C13F',
+    //   '0xc8b9F2bfFFF2f2B8F9C32A7b39a5AAa0644Fe632',
     // [MotionType.SDVTNodeOperatorRewardAddressesSet]:
-    //   '0x2e565f073FeBD66cb24dD9CA66Bffe6CeFd0B7Af',
-    // [MotionType.SDVTNodeOperatorManagerTransfer]:
-    //   '0x8A33BA98C7165BDb61af1468fd5BD8aF22B3d87d',
+    //   '0x85350e579C71a78810305f860380a3315b3e6Ed9',
+    // [MotionType.SDVTNodeOperatorManagerChange]:
+    //   '0x2Ed0FB58ba7637f972100Db7427614C9E30Ed684',
+    // [MotionType.SDVTTargetValidatorLimitsUpdate]:
+    //   '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data

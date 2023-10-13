@@ -320,7 +320,12 @@ export const ContractSDVTNodeOperatorsDeactivate = createContractHelpers({
 //   },
 // )
 
-// export const ContractSDVTNodeOperatorManagerTransfer = createContractHelpers({
+// export const ContractSDVTNodeOperatorManagerChange = createContractHelpers({
 //   factory: TypeChain.TransferNodeOperatorManagerAbi__factory,
 //   address: EvmAddressesByType[MotionType.SDVTNodeOperatorManager],
+// })
+
+// export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
+//   factory: TypeChain.UpdateTargetValidatorLimitsAbi__factory,
+//   address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
 // })

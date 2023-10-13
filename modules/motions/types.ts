@@ -29,7 +29,8 @@ export const MotionTypeForms = {
   // SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
   // SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
   // SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
-  // SDVTNodeOperatorManagerTransfer: 'SDVTNodeOperatorManagerTransfer',
+  // SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
+  // SDVTTargetValidatorLimitsUpdate: 'SDVTTargetValidatorLimitsUpdate',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
