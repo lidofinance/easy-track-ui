@@ -112,6 +112,5 @@ export const RewardsShareProgramRegistry: ChainAddressMap = {
 }
 
 export const SDVTRegistry: ChainAddressMap = {
-  [CHAINS.Mainnet]: '',
   [CHAINS.Goerli]: '0x6370FA71b9Fd83aFC4196ee189a0d348C90E93b0',
 }

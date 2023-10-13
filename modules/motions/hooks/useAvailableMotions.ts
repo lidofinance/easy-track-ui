@@ -71,7 +71,11 @@ export const useAvailableMotions = () => {
         const contractType =
           EvmTypesByAdress[parseEvmSupportedChainId(chainId)][contractAddress]
 
-        if (!Object.keys(MotionTypeForms).includes(contractType)) return acc
+        if (
+          !contractType ||
+          !Object.keys(MotionTypeForms).includes(contractType)
+        )
+          return acc
 
         acc[contractType as MotionTypeForms] = cur.value === walletAddress
 

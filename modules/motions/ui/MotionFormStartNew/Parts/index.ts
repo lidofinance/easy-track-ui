@@ -6,6 +6,8 @@ import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
 import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
 import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
+import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
+import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
@@ -62,39 +64,10 @@ export const formParts = {
   [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts({
     registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
   }),
-  // TODO: template fill correct data
   [MotionTypeForms.SDVTNodeOperatorsActivate]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
+    StartNewSDVTNodeOperatorsActivate.formParts,
   [MotionTypeForms.SDVTNodeOperatorsDeactivate]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
-  [MotionTypeForms.SDVTVettedValidatorsLimitIncrease]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
-  [MotionTypeForms.SDVTVettedValidatorsLimitsSet]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
-  [MotionTypeForms.SDVTNodeOperatorNamesSet]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
-  [MotionTypeForms.SDVTNodeOperatorRewardAddressesSet]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
-  [MotionTypeForms.SDVTNodeOperatorManagerChange]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
-  [MotionTypeForms.SDVTManageSigningKeysRoleManagerRenounce]:
-    StartSDVTNodeOperatorsAdd.formParts({
-      registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-    }),
+    StartNewSDVTNodeOperatorsDeactivate.formParts,
 } as const
 
 export type FormData = {

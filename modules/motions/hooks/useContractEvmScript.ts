@@ -51,20 +51,9 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractRewardsShareProgramTopUp,
   [MotionType.SDVTNodeOperatorsAdd]: CONTRACTS.ContractSDVTNodeOperatorsAdd,
   [MotionType.SDVTNodeOperatorsActivate]:
-    CONTRACTS.ContractSDVTNodeOperatorsAdd,
+    CONTRACTS.ContractSDVTNodeOperatorsActivate,
   [MotionType.SDVTNodeOperatorsDeactivate]:
-    CONTRACTS.ContractSDVTNodeOperatorsAdd,
-  [MotionType.SDVTVettedValidatorsLimitIncrease]:
-    CONTRACTS.ContractSDVTNodeOperatorsAdd,
-  [MotionType.SDVTVettedValidatorsLimitsSet]:
-    CONTRACTS.ContractSDVTNodeOperatorsAdd,
-  [MotionType.SDVTNodeOperatorNamesSet]: CONTRACTS.ContractSDVTNodeOperatorsAdd,
-  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
-    CONTRACTS.ContractSDVTNodeOperatorsAdd,
-  [MotionType.SDVTNodeOperatorManagerChange]:
-    CONTRACTS.ContractSDVTNodeOperatorsAdd,
-  [MotionType.SDVTManageSigningKeysRoleManagerRenounce]:
-    CONTRACTS.ContractSDVTNodeOperatorsAdd,
+    CONTRACTS.ContractSDVTNodeOperatorsDeactivate,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
