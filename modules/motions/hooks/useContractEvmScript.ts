@@ -52,6 +52,8 @@ export const EVM_CONTRACTS = {
   [MotionType.SDVTNodeOperatorsAdd]: CONTRACTS.ContractSDVTNodeOperatorsAdd,
   [MotionType.SDVTNodeOperatorsActivate]:
     CONTRACTS.ContractSDVTNodeOperatorsActivate,
+  [MotionType.SDVTNodeOperatorsDeactivate]:
+    CONTRACTS.ContractSDVTNodeOperatorsDeactivate,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

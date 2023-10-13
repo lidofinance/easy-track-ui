@@ -298,10 +298,10 @@ export const ContractSDVTNodeOperatorsActivate = createContractHelpers({
   address: EvmAddressesByType[MotionType.SDVTNodeOperatorsActivate],
 })
 
-// export const ContractSDVTNodeOperatorsDeactivate = createContractHelpers({
-//   factory: TypeChain.DeactivateNodeOperatorsAbi__factory,
-//   address: EvmAddressesByType[MotionType.SDVTNodeOperatorsDeactivate],
-// })
+export const ContractSDVTNodeOperatorsDeactivate = createContractHelpers({
+  factory: TypeChain.DeactivateNodeOperatorsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsDeactivate],
+})
 
 // export const ContractSDVTVettedValidatorsLimitsSet = createContractHelpers({
 //   factory: TypeChain.SetVettedValidatorsLimitsAbi__factory,

@@ -32,6 +32,7 @@ import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { NestProps } from './types'
+import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -189,7 +190,7 @@ const MOTION_DESCRIPTIONS = {
   ),
   [MotionType.SDVTNodeOperatorsAdd]: () => <h1>TODO:add desc</h1>,
   [MotionType.SDVTNodeOperatorsActivate]: () => <h1>TODO:add desc</h1>,
-  // [MotionType.SDVTNodeOperatorsDeactivate]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
   // [MotionType.SDVTVettedValidatorsLimitIncrease]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTVettedValidatorsLimitsSet]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTNodeOperatorNamesSet]: () => <h1>TODO:add desc</h1>,

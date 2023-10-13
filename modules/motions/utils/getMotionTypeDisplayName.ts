@@ -26,7 +26,7 @@ export const MotionTypeDisplayNames: Record<
     'Top up Rewards Share Program participants',
   [MotionType.SDVTNodeOperatorsAdd]: 'Add Node Operators',
   [MotionType.SDVTNodeOperatorsActivate]: 'Activate Node Operators',
-  // [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate Node Operators',
+  [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate Node Operators',
   // [MotionType.SDVTVettedValidatorsLimitsSet]:
   //   'Set SDVTVetted Validators Limits',
   // [MotionType.SDVTNodeOperatorNamesSet]: 'Set Node Operator Names',
