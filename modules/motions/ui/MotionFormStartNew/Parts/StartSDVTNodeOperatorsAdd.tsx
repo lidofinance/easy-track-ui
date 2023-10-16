@@ -18,7 +18,12 @@ import {
   ErrorBox,
 } from '../CreateMotionFormStyle'
 
-import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
+import {
+  ContractAragonAcl,
+  ContractSDVTNodeOperatorsAdd,
+  ContractSDVTRegistry,
+} from 'modules/blockChain/contracts'
+
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
@@ -43,8 +48,8 @@ export const ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP = {
 // DONE: The current number of node operators in the registry MUST be equal to the _nodeOperatorsCount
 // DONE: (exec also) The total number of node operators in the registry, after adding the new ones, MUST NOT exceed nodeOperatorsRegistry.MAX_NODE_OPERATORS_COUNT()
 // DONE: Manager addresses MUST NOT have duplicates
-// TODO: Manager addresses MUST NOT be used as managers for previously added node operators
-// TODO: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
+// DONE: Manager addresses MUST NOT be used as managers for previously added node operators
+// DONE: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
 // DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
 // DONE: The names of newly added node operators MUST NOT be an empty string
 // DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
@@ -105,6 +110,25 @@ export const formParts = ({
       const { update } = useFieldArray({ name: fieldNames.nodeOperatorsCount })
       const { isValid } = useFormState()
       const { setValue } = useForm()
+
+      const contractAragonAcl = ContractAragonAcl.useRpc()
+      const sdvtRegistry = ContractSDVTRegistry.useRpc()
+
+      const checkIsAlreadyManager = async (address: string) => {
+        const MANAGE_SIGNING_KEYS_ROLE =
+          await sdvtRegistry.MANAGE_SIGNING_KEYS()
+        const result = await contractAragonAcl.getPermissionParamsLength(
+          address,
+          sdvtRegistry.address,
+          MANAGE_SIGNING_KEYS_ROLE,
+        )
+        return !result.isZero()
+      }
+
+      const checkIsLidoRewardAddress = async (address: string) => {
+        const lidoRewardAddress = await sdvtRegistry.getLocator()
+        return address === lidoRewardAddress
+      }
 
       useEffect(() => {
         update(0, { count: `${NOCounts?.current}` })
@@ -185,11 +209,18 @@ export const formParts = ({
                     name={`${fieldNames.nodeOperators}.${i}.rewardAddress`}
                     rules={{
                       required: 'Field is required',
-                      validate: value => {
-                        if (!utils.isAddress(value))
+                      validate: async value => {
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
-                        if (value === constants.AddressZero)
+                        }
+                        if (value === constants.AddressZero) {
                           return 'Should not be zero address'
+                        }
+                        const isLidoRewardAddress =
+                          await checkIsLidoRewardAddress(value)
+                        if (isLidoRewardAddress) {
+                          return 'Address is LIDO reward address'
+                        }
                         return true
                       },
                     }}
@@ -202,10 +233,16 @@ export const formParts = ({
                     name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
                     rules={{
                       required: 'Field is required',
-                      validate: value => {
-                        if (!utils.isAddress(value))
+                      validate: async value => {
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
-                        console.log(fieldsArr.fields)
+                        }
+                        const isAlreadyManager = await checkIsAlreadyManager(
+                          value,
+                        )
+                        if (isAlreadyManager) {
+                          return 'Address already has a signing keys manager role'
+                        }
                         return true
                       },
                     }}
