@@ -38,13 +38,6 @@ type NodeOperator = {
   managerAddress: string
 }
 
-export const ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP = {
-  [MotionTypeForms.SDVTNodeOperatorsAdd]: {
-    evmContract: ContractSDVTNodeOperatorsAdd,
-    motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
-  },
-}
-
 // DONE: The current number of node operators in the registry MUST be equal to the _nodeOperatorsCount
 // DONE: (exec also) The total number of node operators in the registry, after adding the new ones, MUST NOT exceed nodeOperatorsRegistry.MAX_NODE_OPERATORS_COUNT()
 // DONE: Manager addresses MUST NOT have duplicates
@@ -53,13 +46,11 @@ export const ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP = {
 // DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
 // DONE: The names of newly added node operators MUST NOT be an empty string
 // DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
-export const formParts = ({
-  registryType,
-}: {
-  registryType: keyof typeof ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP
+export const formParts = ({}: {
+  registryType: typeof MotionTypeForms.SDVTNodeOperatorsAdd
 }) =>
   createMotionFormPart({
-    motionType: ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[registryType].motionType,
+    motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
       const encodedCallData = new utils.AbiCoder().encode(
         ['uint256', 'tuple(string, address, address)[]'],
@@ -94,9 +85,10 @@ export const formParts = ({
       getValues,
     }) {
       const { walletAddress } = useWeb3()
-      const trustedCaller = ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[
-        registryType
-      ].evmContract.useSwrWeb3('trustedCaller', [])
+      const trustedCaller = ContractSDVTNodeOperatorsAdd.useSwrWeb3(
+        'trustedCaller',
+        [],
+      )
       const isTrustedCallerConnected = trustedCaller.data === walletAddress
       const [hasDuplicateManagers, setHasDuplicateManagers] = useState(false)
 
