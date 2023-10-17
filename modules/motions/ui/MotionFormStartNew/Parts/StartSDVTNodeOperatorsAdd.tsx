@@ -61,11 +61,10 @@ export const formParts = ({
   createMotionFormPart({
     motionType: ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[registryType].motionType,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
-      console.log(formData)
       const encodedCallData = new utils.AbiCoder().encode(
         ['uint256', 'tuple(string, address, address)[]'],
         [
-          Number(formData.nodeOperatorsCount[0]?.current),
+          Number(formData.nodeOperatorsCount[0]?.count),
           formData.nodeOperators.map(item => [
             item.name,
             utils.getAddress(item.rewardAddress),
@@ -87,7 +86,7 @@ export const formParts = ({
       nodeOperators: [
         { name: '', rewardAddress: '', managerAddress: '' },
       ] as NodeOperator[],
-      nodeOperatorsCount: [{ current: '' }] as { current: string }[],
+      nodeOperatorsCount: [{ count: '' }] as { count: string }[],
     }),
     Component: function StartNewMotionMotionFormLego({
       fieldNames,
@@ -134,7 +133,7 @@ export const formParts = ({
         update(0, { count: `${NOCounts?.current}` })
       }, [setValue, fieldNames.nodeOperators, update, NOCounts])
 
-      const handleAddNodeOperator = useCallback(() => {
+      const handleAddNodeOperators = useCallback(() => {
         const nodeOperators = getValues().SDVTNodeOperatorsAdd
           .nodeOperators as NodeOperator[]
         const managerAddressList = nodeOperators.map(
@@ -153,13 +152,10 @@ export const formParts = ({
         [fieldsArr],
       )
 
-      // const { watch, setValue } = useFormContext()
-
       if (
         trustedCaller.initialLoading ||
         NONameLengthLoading ||
         maxOperatorsLoading
-        // || periodLimitsLoading
       ) {
         return <PageLoader />
       }
@@ -195,7 +191,7 @@ export const formParts = ({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!NONameLength || value.length > NONameLength)
+                        if (!NONameLength || value?.length > NONameLength)
                           return 'Name is too long'
                         return true
                       },
@@ -264,7 +260,7 @@ export const formParts = ({
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={handleAddNodeOperator}
+                  onClick={handleAddNodeOperators}
                   icon={<Plus />}
                   color="secondary"
                 >
