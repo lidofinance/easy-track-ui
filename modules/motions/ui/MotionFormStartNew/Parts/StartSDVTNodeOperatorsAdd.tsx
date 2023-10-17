@@ -1,7 +1,7 @@
 import { utils, constants } from 'ethers'
 
 import { Fragment, useCallback, useEffect, useState } from 'react'
-import { useFieldArray, useForm, useFormState } from 'react-hook-form'
+import { useFieldArray, useFormState } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -46,7 +46,9 @@ type NodeOperator = {
 // DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
 // DONE: The names of newly added node operators MUST NOT be an empty string
 // DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
-export const formParts = ({}: {
+export const formParts = ({
+  registryType,
+}: {
   registryType: typeof MotionTypeForms.SDVTNodeOperatorsAdd
 }) =>
   createMotionFormPart({
@@ -55,7 +57,7 @@ export const formParts = ({}: {
       const encodedCallData = new utils.AbiCoder().encode(
         ['uint256', 'tuple(string, address, address)[]'],
         [
-          Number(formData.nodeOperatorsCount[0]?.count),
+          Number(formData.nodeOperatorsCount),
           formData.nodeOperators.map(item => [
             item.name,
             utils.getAddress(item.rewardAddress),
@@ -83,6 +85,8 @@ export const formParts = ({}: {
       fieldNames,
       submitAction,
       getValues,
+      setValue,
+      register,
     }) {
       const { walletAddress } = useWeb3()
       const trustedCaller = ContractSDVTNodeOperatorsAdd.useSwrWeb3(
@@ -97,10 +101,9 @@ export const formParts = ({}: {
       const { data: NOCounts, initialLoading: maxOperatorsLoading } =
         useSDVTOperatorsCounts()
 
+      register(`${registryType}.nodeOperatorsCount`)
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-      const { update } = useFieldArray({ name: fieldNames.nodeOperatorsCount })
       const { isValid } = useFormState()
-      const { setValue } = useForm()
 
       const contractAragonAcl = ContractAragonAcl.useRpc()
       const sdvtRegistry = ContractSDVTRegistry.useRpc()
@@ -122,8 +125,8 @@ export const formParts = ({}: {
       }
 
       useEffect(() => {
-        update(0, { count: `${NOCounts?.current}` })
-      }, [setValue, fieldNames.nodeOperators, update, NOCounts])
+        setValue(`${registryType}.nodeOperatorsCount`, `${NOCounts?.current}`)
+      }, [setValue, fieldNames.nodeOperators, NOCounts])
 
       const handleAddNodeOperators = useCallback(() => {
         const nodeOperators = getValues().SDVTNodeOperatorsAdd
