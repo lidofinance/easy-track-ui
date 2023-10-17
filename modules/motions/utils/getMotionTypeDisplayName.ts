@@ -30,8 +30,8 @@ export const MotionTypeDisplayNames: Record<
   // [MotionType.SDVTVettedValidatorsLimitsSet]:
   //   'Set SDVTVetted Validators Limits',
   // [MotionType.SDVTNodeOperatorNamesSet]: 'Set Node Operator Names',
-  // [MotionType.SDVTNodeOperatorRewardAddressesSet]:
-  //   'Set Node Operator Reward Addresses',
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    'Set Node Operators Reward Addresses',
   // [MotionType.SDVTNodeOperatorManagerChange]:
   //   'Change Node Operator Manager',
 
