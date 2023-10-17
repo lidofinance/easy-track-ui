@@ -79,7 +79,7 @@ export const formParts = ({
       nodeOperators: [
         { name: '', rewardAddress: '', managerAddress: '' },
       ] as NodeOperator[],
-      nodeOperatorsCount: [{ count: '' }] as { count: string }[],
+      nodeOperatorsCount: 'NaN',
     }),
     Component: function StartNewMotionMotionFormLego({
       fieldNames,
