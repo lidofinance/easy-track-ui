@@ -46,18 +46,14 @@ type NodeOperator = {
 // DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
 // DONE: The names of newly added node operators MUST NOT be an empty string
 // DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
-export const formParts = ({
-  registryType,
-}: {
-  registryType: typeof MotionTypeForms.SDVTNodeOperatorsAdd
-}) =>
+export const formParts = () =>
   createMotionFormPart({
     motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
       const encodedCallData = new utils.AbiCoder().encode(
         ['uint256', 'tuple(string, address, address)[]'],
         [
-          Number(formData.nodeOperatorsCount),
+          formData.nodeOperatorsCount,
           formData.nodeOperators.map(item => [
             item.name,
             utils.getAddress(item.rewardAddress),
@@ -79,7 +75,7 @@ export const formParts = ({
       nodeOperators: [
         { name: '', rewardAddress: '', managerAddress: '' },
       ] as NodeOperator[],
-      nodeOperatorsCount: 'NaN',
+      nodeOperatorsCount: NaN,
     }),
     Component: function StartNewMotionMotionFormLego({
       fieldNames,
@@ -101,7 +97,8 @@ export const formParts = ({
       const { data: NOCounts, initialLoading: maxOperatorsLoading } =
         useSDVTOperatorsCounts()
 
-      register(`${registryType}.nodeOperatorsCount`)
+      const keyNodeOperatorsCount = `${MotionTypeForms.SDVTNodeOperatorsAdd}.nodeOperatorsCount`
+      register(keyNodeOperatorsCount)
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
       const { isValid } = useFormState()
 
@@ -126,9 +123,9 @@ export const formParts = ({
 
       useEffect(() => {
         if (typeof NOCounts?.current === 'number') {
-          setValue(`${registryType}.nodeOperatorsCount`, `${NOCounts.current}`)
+          setValue(keyNodeOperatorsCount, NOCounts.current)
         }
-      }, [setValue, fieldNames.nodeOperators, NOCounts])
+      }, [setValue, fieldNames.nodeOperators, NOCounts, keyNodeOperatorsCount])
 
       const handleAddNodeOperators = useCallback(() => {
         const nodeOperators = getValues().SDVTNodeOperatorsAdd

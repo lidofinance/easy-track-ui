@@ -13,7 +13,7 @@ export function DescSDVTNodeOperatorsAdd({
         return (
           <div key={nodeOperator.managerAddress}>
             Add Node Operator <b>{nodeOperator.name}</b>(id:{' '}
-            {Number(nodeOperatorsCount) + index + 1}){' '}
+            {Number(nodeOperatorsCount) + index}){' '}
             <AddressInlineWithPop address={nodeOperator.rewardAddress} /> and
             set <b>MANAGE_SIGNING_KEYS</b> role to{' '}
             <AddressInlineWithPop address={nodeOperator.managerAddress} />
