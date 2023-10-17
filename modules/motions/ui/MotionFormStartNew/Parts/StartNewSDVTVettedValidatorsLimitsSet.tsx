@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
 import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
@@ -24,24 +24,24 @@ import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateToken } from 'modules/tokens/utils/validateToken'
 
-type Program = {
-  nodeOperatorId: string
+type NodeOperator = {
+  id: string
   vettedValidatorsLimit: string
 }
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTVettedValidatorsLimitsSet,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
-    const sortedPrograms = formData.programs.sort(
-      (a, b) => Number(a.nodeOperatorId) - Number(b.nodeOperatorId),
+    const sortedNodeOperators = formData.nodeOperators.sort(
+      (a, b) => Number(a.id) - Number(b.id),
     )
 
     const encodedCallData = new utils.AbiCoder().encode(
       ['tuple(uint256 nodeOperatorId, uint256 stakingLimit)[]'],
       [
-        sortedPrograms.map(program => ({
-          nodeOperatorId: Number(program.nodeOperatorId),
-          managerAddress: Number(program.vettedValidatorsLimit),
+        sortedNodeOperators.map(nodeOperator => ({
+          nodeOperatorId: Number(nodeOperator.id),
+          stakingLimit: Number(nodeOperator.vettedValidatorsLimit),
         })),
       ],
     )
@@ -56,17 +56,14 @@ export const formParts = createMotionFormPart({
     return tx
   },
   getDefaultFormData: () => ({
-    programs: [
+    nodeOperators: [
       {
-        nodeOperatorId: '',
+        id: '',
         vettedValidatorsLimit: '',
       },
-    ] as Program[],
+    ] as NodeOperator[],
   }),
-  Component: function StartNewMotionMotionFormLego({
-    fieldNames,
-    submitAction,
-  }) {
+  Component: ({ fieldNames, submitAction }) => {
     const { walletAddress } = useWeb3()
     const {
       data: nodeOperatorsList,
@@ -82,26 +79,27 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const fieldsArr = useFieldArray({ name: fieldNames.programs })
+    const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
     const { watch } = useFormContext()
-    const selectedPrograms: Program[] = watch(fieldNames.programs)
+    const { isValid } = useFormState()
+    const selectedNodeOperators: NodeOperator[] = watch(
+      fieldNames.nodeOperators,
+    )
 
     const getFilteredOptions = (fieldIdx: number) => {
-      if (!nodeOperatorsList?.length) return []
-      const selectedIds = selectedPrograms.map(({ nodeOperatorId }) =>
-        parseInt(nodeOperatorId),
-      )
-      const thisId = parseInt(selectedPrograms[fieldIdx]?.nodeOperatorId)
-      return nodeOperatorsList.filter(
+      if (!nodeOperatorsWithValidators?.length) return []
+      const selectedIds = selectedNodeOperators.map(({ id }) => parseInt(id))
+      const thisId = parseInt(selectedNodeOperators[fieldIdx]?.id)
+      return nodeOperatorsWithValidators.filter(
         ({ id }) => !selectedIds.includes(id) || id === thisId,
       )
     }
 
     const handleAddProgram = () =>
       fieldsArr.append({
-        nodeOperatorId: '',
-        managerAddress: '',
-      })
+        id: '',
+        vettedValidatorsLimit: '',
+      } as NodeOperator)
 
     if (trustedCaller.initialLoading || isNodeOperatorsDataLoading) {
       return <PageLoader />
@@ -125,19 +123,19 @@ export const formParts = createMotionFormPart({
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove program {i + 1}
+                      Remove update {i + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
 
                 <Fieldset>
                   <SelectControl
-                    label="Node Operator"
-                    name={`${fieldNames.programs}.${i}.nodeOperatorId`}
+                    label="Node operator"
+                    name={`${fieldNames.nodeOperators}.${i}.id`}
                     rules={{ required: 'Field is required' }}
                   >
                     {getFilteredOptions(i).map(nodeOperator => (
@@ -152,8 +150,8 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputNumberControl
-                    label="Vetted Validators Limit"
-                    name={`${fieldNames.programs}.${i}.vettedValidatorsLimit`}
+                    label="Vetted validators limit"
+                    name={`${fieldNames.nodeOperators}.${i}.vettedValidatorsLimit`}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
@@ -163,9 +161,8 @@ export const formParts = createMotionFormPart({
                         }
 
                         const totalValidatorsCount =
-                          nodeOperatorsList[
-                            Number(selectedPrograms[i].nodeOperatorId)
-                          ].totalAddedValidators
+                          nodeOperatorsList[Number(selectedNodeOperators[i].id)]
+                            .totalAddedValidators
 
                         if (totalValidatorsCount.lt(value)) {
                           return `Value should be less than ${totalValidatorsCount.toString()}`
@@ -181,20 +178,21 @@ export const formParts = createMotionFormPart({
           )
         })}
 
-        {selectedPrograms.length < nodeOperatorsList.length && (
-          <Fieldset>
-            <ButtonIcon
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={handleAddProgram}
-              icon={<Plus />}
-              color="secondary"
-            >
-              One more program
-            </ButtonIcon>
-          </Fieldset>
-        )}
+        {selectedNodeOperators.length < nodeOperatorsWithValidators.length &&
+          isValid && (
+            <Fieldset>
+              <ButtonIcon
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleAddProgram}
+                icon={<Plus />}
+                color="secondary"
+              >
+                One more update
+              </ButtonIcon>
+            </Fieldset>
+          )}
 
         {submitAction}
       </>

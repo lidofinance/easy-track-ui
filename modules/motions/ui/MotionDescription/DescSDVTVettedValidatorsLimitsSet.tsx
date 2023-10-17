@@ -14,9 +14,8 @@ export function DescSDVTVettedValidatorsLimitsSet({
         const nodeOperator = nodeOperatorsList?.[nodeOperatorId]
         return (
           <div key={nodeOperatorId}>
-            Set Node Operator
-            <b>{nodeOperator ? nodeOperator.name : ''}</b> (id: {nodeOperatorId}
-            ) vetted validators limit to{' '}
+            Set Node Operator <b>{nodeOperator ? nodeOperator.name : ''}</b>{' '}
+            (id: {nodeOperatorId}) vetted validators limit to{' '}
             <b>{program.stakingLimit.toString()}</b>
           </div>
         )

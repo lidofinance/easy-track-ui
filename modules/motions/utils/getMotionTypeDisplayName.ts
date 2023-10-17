@@ -27,7 +27,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTNodeOperatorsAdd]: 'Add Node Operators',
   [MotionType.SDVTNodeOperatorsActivate]: 'Activate Node Operators',
   [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate Node Operators',
-  [MotionType.SDVTVettedValidatorsLimitsSet]: 'Set Vetted Validators Limits',
+  [MotionType.SDVTVettedValidatorsLimitsSet]: 'Set vetted validators limits',
   // [MotionType.SDVTNodeOperatorNamesSet]: 'Set Node Operator Names',
   // [MotionType.SDVTNodeOperatorRewardAddressesSet]:
   //   'Set Node Operator Reward Addresses',
