@@ -125,7 +125,9 @@ export const formParts = ({
       }
 
       useEffect(() => {
-        setValue(`${registryType}.nodeOperatorsCount`, `${NOCounts?.current}`)
+        if (typeof NOCounts?.current === 'number') {
+          setValue(`${registryType}.nodeOperatorsCount`, `${NOCounts.current}`)
+        }
       }, [setValue, fieldNames.nodeOperators, NOCounts])
 
       const handleAddNodeOperators = useCallback(() => {
