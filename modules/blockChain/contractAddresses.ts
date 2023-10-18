@@ -16,11 +16,6 @@ export const GovernanceToken: ChainAddressMap = {
   [CHAINS.Goerli]: '0x56340274fB5a72af1A3C6609061c451De7961Bd4',
 }
 
-export const StEthToken: ChainAddressMap = {
-  [CHAINS.Mainnet]: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
-  [CHAINS.Goerli]: '0x1643E812aE58766192Cf7D2Cf9567dF2C37e9B7F',
-}
-
 export const RewardProgramRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x3129c041b372ee93a5a8756dc4ec6f154d85bc9a',
   [CHAINS.Goerli]: '0x28a08f61AE129d0d8BD4380Ae5647e7Add0527ca',

@@ -31,7 +31,7 @@ import {
   useSDVTOperatorNameLimit,
   useSDVTOperatorsCounts,
 } from 'modules/motions/hooks'
-import { StEthToken } from 'modules/blockChain/contractAddresses'
+import { STETH } from 'modules/blockChain/contractAddresses'
 
 type NodeOperator = {
   name: string
@@ -116,7 +116,7 @@ export const formParts = () =>
       }
 
       const checkIsLidoRewardAddress = (address: string) => {
-        return address === StEthToken[chainId]
+        return address === STETH[chainId]
       }
 
       useEffect(() => {
