@@ -3,7 +3,7 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
 
 export function useSDVTOperatorsCounts() {
-  const chainId = useWeb3()
+  const { chainId } = useWeb3()
   const registry = ContractSDVTRegistry.useRpc()
 
   return useSWR(
@@ -19,7 +19,7 @@ export function useSDVTOperatorsCounts() {
 }
 
 export function useSDVTOperatorNameLimit() {
-  const chainId = useWeb3()
+  const { chainId } = useWeb3()
   const registry = ContractSDVTRegistry.useRpc()
 
   return useSWR(
