@@ -135,7 +135,6 @@ export function MotionFormStartNew({ onComplete }: Props) {
         <CurrentFormPart
           fieldNames={formParts[motionType].fieldNames as any}
           submitAction={submitAction}
-          getValues={formMethods.getValues}
         />
       )}
     </Form>

@@ -33,6 +33,7 @@ import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { NestProps } from './types'
 import { DescWrap } from './MotionDescriptionStyle'
+import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
 import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
@@ -191,7 +192,7 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.RewardsShareProgramTopUp}
     />
   ),
-  [MotionType.SDVTNodeOperatorsAdd]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTNodeOperatorsAdd]: DescSDVTNodeOperatorsAdd,
   [MotionType.SDVTNodeOperatorsActivate]: DescSDVTNodeOperatorsActivate,
   [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
   // [MotionType.SDVTVettedValidatorsLimitIncrease]: () => <h1>TODO:add desc</h1>,
