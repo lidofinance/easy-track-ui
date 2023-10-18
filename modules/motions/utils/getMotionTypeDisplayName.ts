@@ -32,8 +32,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTNodeOperatorNamesSet]: 'Set Node Operators Names',
   // [MotionType.SDVTNodeOperatorRewardAddressesSet]:
   //   'Set Node Operator Reward Addresses',
-  // [MotionType.SDVTNodeOperatorManagerChange]:
-  //   'Change Node Operator Manager',
+  [MotionType.SDVTNodeOperatorManagerChange]: 'Change Node Operators Managers',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 

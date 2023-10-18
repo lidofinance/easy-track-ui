@@ -5,7 +5,7 @@ import { Invert } from 'modules/shared/utils/utilTypes'
 
 const EvmSupportedChains = [CHAINS.Mainnet, CHAINS.Goerli] as const
 
-type EvmSupportedChain = typeof EvmSupportedChains[number]
+export type EvmSupportedChain = typeof EvmSupportedChains[number]
 
 type EvmAddresses = Record<
   EvmSupportedChain,
@@ -114,8 +114,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xc8b9F2bfFFF2f2B8F9C32A7b39a5AAa0644Fe632',
     // [MotionType.SDVTNodeOperatorRewardAddressesSet]:
     //   '0x85350e579C71a78810305f860380a3315b3e6Ed9',
-    // [MotionType.SDVTNodeOperatorManagerChange]:
-    //   '0x2Ed0FB58ba7637f972100Db7427614C9E30Ed684',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0x2Ed0FB58ba7637f972100Db7427614C9E30Ed684',
     // [MotionType.SDVTTargetValidatorLimitsUpdate]:
     //   '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
 
