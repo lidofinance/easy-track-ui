@@ -8,6 +8,7 @@ import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
 import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
 import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
 import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
+import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
@@ -66,6 +67,8 @@ export const formParts = {
     StartNewSDVTNodeOperatorsActivate.formParts,
   [MotionTypeForms.SDVTNodeOperatorsDeactivate]:
     StartNewSDVTNodeOperatorsDeactivate.formParts,
+  [MotionTypeForms.SDVTNodeOperatorManagerChange]:
+    StartNewSDVTNodeOperatorManagersChange.formParts,
 } as const
 
 export type FormData = {
