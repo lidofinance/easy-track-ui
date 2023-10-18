@@ -1,7 +1,7 @@
 import { utils, constants } from 'ethers'
 
 import { Fragment, useCallback, useEffect, useState } from 'react'
-import { useFieldArray, useFormState } from 'react-hook-form'
+import { useFieldArray, useFormState, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -81,10 +81,8 @@ export const formParts = () =>
     Component: function StartNewMotionMotionFormLego({
       fieldNames,
       submitAction,
-      getValues,
-      setValue,
-      register,
     }) {
+      const { getValues, setValue, register } = useFormContext()
       const { walletAddress, chainId } = useWeb3()
       const trustedCaller = ContractSDVTNodeOperatorsAdd.useSwrWeb3(
         'trustedCaller',
