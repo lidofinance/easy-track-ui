@@ -24,15 +24,15 @@ export const MotionTypeDisplayNames: Record<
     'Remove Rewards Share Program participant',
   [MotionType.RewardsShareProgramTopUp]:
     'Top up Rewards Share Program participants',
-  [MotionType.SDVTNodeOperatorsAdd]: 'Add Node Operators',
-  [MotionType.SDVTNodeOperatorsActivate]: 'Activate Node Operators',
-  [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate Node Operators',
+  [MotionType.SDVTNodeOperatorsAdd]: 'Add node operators',
+  [MotionType.SDVTNodeOperatorsActivate]: 'Activate node operators',
+  [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate node operators',
   // [MotionType.SDVTVettedValidatorsLimitsSet]:
   //   'Set SDVTVetted Validators Limits',
-  [MotionType.SDVTNodeOperatorNamesSet]: 'Set Node Operators Names',
+  [MotionType.SDVTNodeOperatorNamesSet]: 'Set node operators names',
   // [MotionType.SDVTNodeOperatorRewardAddressesSet]:
   //   'Set Node Operator Reward Addresses',
-  [MotionType.SDVTNodeOperatorManagerChange]: 'Change Node Operators Managers',
+  [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 

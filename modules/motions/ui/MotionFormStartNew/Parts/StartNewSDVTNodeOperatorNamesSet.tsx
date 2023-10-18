@@ -26,7 +26,7 @@ import { useSDVTOperatorNameLimit } from 'modules/motions/hooks'
 
 type NodeOperator = {
   id: string
-  newName: string
+  name: string
 }
 
 export const formParts = createMotionFormPart({
@@ -41,7 +41,7 @@ export const formParts = createMotionFormPart({
       [
         sortedNodeOperators.map(nodeOperator => ({
           nodeOperatorId: Number(nodeOperator.id),
-          name: nodeOperator.newName,
+          name: nodeOperator.name,
         })),
       ],
     )
@@ -59,7 +59,7 @@ export const formParts = createMotionFormPart({
     nodeOperators: [
       {
         id: '',
-        newName: '',
+        name: '',
       },
     ] as NodeOperator[],
   }),
@@ -101,7 +101,7 @@ export const formParts = createMotionFormPart({
       }
 
       for (const nodeOperator of selectedNodeOperators) {
-        result[parseInt(nodeOperator.id)] = nodeOperator.newName
+        result[parseInt(nodeOperator.id)] = nodeOperator.name
       }
 
       const invertedRecord: Record<string, number | undefined> = {}
@@ -126,7 +126,7 @@ export const formParts = createMotionFormPart({
       )
     }
 
-    const handleAddNodeOperator = () =>
+    const handleAddUpdate = () =>
       fieldsArr.append({
         nodeOperatorId: '',
         name: '',
@@ -157,18 +157,18 @@ export const formParts = createMotionFormPart({
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Node Operator #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove Node Operator {i + 1}
+                      Remove update {i + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
 
                 <Fieldset>
                   <SelectControl
-                    label="Node Operator"
+                    label="Node operator"
                     name={`${fieldNames.nodeOperators}.${i}.id`}
                     rules={{ required: 'Field is required' }}
                     disabled={isFieldDisabled}
@@ -185,15 +185,12 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.newName`}
-                    label="New Name"
+                    name={`${fieldNames.nodeOperators}.${i}.name`}
+                    label="Name"
                     disabled={isFieldDisabled}
                     rules={{
                       required: 'Field is required',
-                      validate: (value: string | undefined) => {
-                        if (!value?.length) {
-                          return 'Field is required'
-                        }
+                      validate: (value: string) => {
                         const currentId = Number(selectedNodeOperators[i].id)
 
                         const nodeOperator = nodeOperatorsList[currentId]
@@ -233,11 +230,11 @@ export const formParts = createMotionFormPart({
               type="button"
               variant="ghost"
               size="sm"
-              onClick={handleAddNodeOperator}
+              onClick={handleAddUpdate}
               icon={<Plus />}
               color="secondary"
             >
-              One more Node Operator
+              One more update
             </ButtonIcon>
           </Fieldset>
         )}
