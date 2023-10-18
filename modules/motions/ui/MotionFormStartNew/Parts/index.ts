@@ -9,6 +9,7 @@ import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
 import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
 import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
 import * as StartNewSDVTNodeOperatorRewardAddressesSet from './StartNewSDVTNodeOperatorRewardAddressesSet'
+import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
@@ -62,15 +63,15 @@ export const formParts = {
     formAllowedRecipientTopUp.formParts({
       registryType: MotionTypeForms.RewardsShareProgramTopUp,
     }),
-  [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts({
-    registryType: MotionTypeForms.SDVTNodeOperatorsAdd,
-  }),
+  [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts(),
   [MotionTypeForms.SDVTNodeOperatorsActivate]:
     StartNewSDVTNodeOperatorsActivate.formParts,
   [MotionTypeForms.SDVTNodeOperatorsDeactivate]:
     StartNewSDVTNodeOperatorsDeactivate.formParts,
   [MotionTypeForms.SDVTNodeOperatorRewardAddressesSet]:
     StartNewSDVTNodeOperatorRewardAddressesSet.formParts,
+  [MotionTypeForms.SDVTNodeOperatorManagerChange]:
+    StartNewSDVTNodeOperatorManagersChange.formParts,
 } as const
 
 export type FormData = {

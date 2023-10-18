@@ -29,7 +29,7 @@ export const MotionTypeForms = {
   // SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
   // SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
   SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
-  // SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
+  SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
   // SDVTTargetValidatorLimitsUpdate: 'SDVTTargetValidatorLimitsUpdate',
 } as const
 // intentionally

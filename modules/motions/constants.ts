@@ -8,3 +8,6 @@ export const tokenLimitError = (
 
 export const periodLimitError = () =>
   'The top-up is higher than the remaining current period limit'
+
+export const noSigningKeysRoleError =
+  'Address is not allowed to manage signing keys'
