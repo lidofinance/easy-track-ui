@@ -94,7 +94,7 @@ export function useRecipientAll({ registryType }: HookArgs) {
 }
 
 export function useRecipientActual({ registryType }: HookArgs) {
-  const chainId = useWeb3()
+  const { chainId } = useWeb3()
   const recipientsAll = useRecipientAll({ registryType })
   const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 

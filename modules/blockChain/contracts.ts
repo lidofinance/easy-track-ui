@@ -289,7 +289,7 @@ export const ContractSDVTRegistry = createContractHelpers({
 })
 
 export const ContractSDVTNodeOperatorsAdd = createContractHelpers({
-  factory: TypeChain.AddNodeOperatorAbi__factory,
+  factory: TypeChain.AddNodeOperatorsAbi__factory,
   address: EvmAddressesByType[MotionType.SDVTNodeOperatorsAdd],
 })
 
