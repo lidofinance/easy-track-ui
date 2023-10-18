@@ -37,6 +37,7 @@ import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
 import { DescSDVTTargetValidatorLimitsUpdate } from './DescSDVTTargetValidatorLimitsUpdate'
+import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -199,9 +200,10 @@ const MOTION_DESCRIPTIONS = {
   // [MotionType.SDVTVettedValidatorsLimitsSet]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTNodeOperatorNamesSet]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTNodeOperatorRewardAddressesSet]: () => <h1>TODO:add desc</h1>,
-  // [MotionType.SDVTNodeOperatorManagerChange]: () => <h1>TODO:add desc</h1>,
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     DescSDVTTargetValidatorLimitsUpdate,
+  [MotionType.SDVTNodeOperatorManagerChange]:
+    DescSDVTNodeOperatorManagersChange,
   // [MotionType.SDVTManageSigningKeysRoleManagerRenounce]: () => (
   //   <h1>TODO:add desc</h1>
   // ),

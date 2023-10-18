@@ -15,16 +15,15 @@ import {
   FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
-import {
-  ContractSDVTNodeOperatorsDeactivate,
-  ContractSDVTRegistry,
-} from 'modules/blockChain/contracts'
+import { ContractSDVTNodeOperatorsDeactivate } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
+import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressForManageSigningKeysRole'
+import { noSigningKeysRoleError } from 'modules/motions/constants'
 
 type Program = {
   nodeOperatorId: string
@@ -69,7 +68,7 @@ export const formParts = createMotionFormPart({
     fieldNames,
     submitAction,
   }) {
-    const { walletAddress } = useWeb3()
+    const { walletAddress, chainId } = useWeb3()
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
@@ -79,7 +78,6 @@ export const formParts = createMotionFormPart({
       nodeOperator => nodeOperator.active,
     )
 
-    const sdvtRegistry = ContractSDVTRegistry.useRpc()
     const trustedCaller = ContractSDVTNodeOperatorsDeactivate.useSwrWeb3(
       'trustedCaller',
       [],
@@ -105,14 +103,6 @@ export const formParts = createMotionFormPart({
         nodeOperatorId: '',
         managerAddress: '',
       })
-
-    const getCanAddressManageKeys = async (
-      address: string,
-      nodeOperatorId: string,
-    ) => {
-      const role = await sdvtRegistry.MANAGE_SIGNING_KEYS()
-      return sdvtRegistry.canPerform(address, role, [nodeOperatorId])
-    }
 
     if (trustedCaller.initialLoading || isNodeOperatorsDataLoading) {
       return <PageLoader />
@@ -186,13 +176,14 @@ export const formParts = createMotionFormPart({
                           return 'Address is not valid'
 
                         const canAddressManageKeys =
-                          await getCanAddressManageKeys(
+                          await checkAddressForManageSigningKeysRole(
                             value,
                             selectedPrograms[i].nodeOperatorId,
+                            chainId,
                           )
 
                         if (!canAddressManageKeys) {
-                          return 'Address is not allowed to manage signing keys'
+                          return noSigningKeysRoleError
                         }
                       },
                     }}

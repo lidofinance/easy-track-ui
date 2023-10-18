@@ -56,6 +56,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTNodeOperatorsDeactivate,
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     CONTRACTS.ContractSDVTTargetValidatorLimitsUpdate,
+  [MotionType.SDVTNodeOperatorManagerChange]:
+    CONTRACTS.ContractSDVTNodeOperatorManagerChange,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
