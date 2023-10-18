@@ -36,6 +36,8 @@ import { DescWrap } from './MotionDescriptionStyle'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
 import { DescSDVTVettedValidatorsLimitsSet } from './DescSDVTVettedValidatorsLimitsSet'
+import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
+import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -191,13 +193,14 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.RewardsShareProgramTopUp}
     />
   ),
-  [MotionType.SDVTNodeOperatorsAdd]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTNodeOperatorsAdd]: DescSDVTNodeOperatorsAdd,
   [MotionType.SDVTNodeOperatorsActivate]: DescSDVTNodeOperatorsActivate,
   [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
   [MotionType.SDVTVettedValidatorsLimitsSet]: DescSDVTVettedValidatorsLimitsSet,
   // [MotionType.SDVTNodeOperatorNamesSet]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTNodeOperatorRewardAddressesSet]: () => <h1>TODO:add desc</h1>,
-  // [MotionType.SDVTNodeOperatorManagerChange]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTNodeOperatorManagerChange]:
+    DescSDVTNodeOperatorManagersChange,
   // [MotionType.SDVTManageSigningKeysRoleManagerRenounce]: () => (
   //   <h1>TODO:add desc</h1>
   // ),

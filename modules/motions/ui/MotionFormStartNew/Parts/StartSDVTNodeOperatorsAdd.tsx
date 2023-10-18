@@ -1,7 +1,7 @@
 import { utils, constants } from 'ethers'
 
 import { Fragment, useCallback, useEffect, useState } from 'react'
-import { useFieldArray, useForm, useFormState } from 'react-hook-form'
+import { useFieldArray, useFormState, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -18,7 +18,12 @@ import {
   ErrorBox,
 } from '../CreateMotionFormStyle'
 
-import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
+import {
+  ContractAragonAcl,
+  ContractSDVTNodeOperatorsAdd,
+  ContractSDVTRegistry,
+} from 'modules/blockChain/contracts'
+
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
@@ -26,6 +31,7 @@ import {
   useSDVTOperatorNameLimit,
   useSDVTOperatorsCounts,
 } from 'modules/motions/hooks'
+import { STETH } from 'modules/blockChain/contractAddresses'
 
 type NodeOperator = {
   name: string
@@ -33,34 +39,22 @@ type NodeOperator = {
   managerAddress: string
 }
 
-export const ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP = {
-  [MotionTypeForms.SDVTNodeOperatorsAdd]: {
-    evmContract: ContractSDVTNodeOperatorsAdd,
-    motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
-  },
-}
-
 // DONE: The current number of node operators in the registry MUST be equal to the _nodeOperatorsCount
 // DONE: (exec also) The total number of node operators in the registry, after adding the new ones, MUST NOT exceed nodeOperatorsRegistry.MAX_NODE_OPERATORS_COUNT()
 // DONE: Manager addresses MUST NOT have duplicates
-// TODO: Manager addresses MUST NOT be used as managers for previously added node operators
-// TODO: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
+// DONE: Manager addresses MUST NOT be used as managers for previously added node operators
+// DONE: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
 // DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
 // DONE: The names of newly added node operators MUST NOT be an empty string
 // DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
-export const formParts = ({
-  registryType,
-}: {
-  registryType: keyof typeof ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP
-}) =>
+export const formParts = () =>
   createMotionFormPart({
-    motionType: ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[registryType].motionType,
+    motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
-      console.log(formData)
       const encodedCallData = new utils.AbiCoder().encode(
         ['uint256', 'tuple(string, address, address)[]'],
         [
-          Number(formData.nodeOperatorsCount[0]?.current),
+          formData.nodeOperatorsCount,
           formData.nodeOperators.map(item => [
             item.name,
             utils.getAddress(item.rewardAddress),
@@ -82,17 +76,18 @@ export const formParts = ({
       nodeOperators: [
         { name: '', rewardAddress: '', managerAddress: '' },
       ] as NodeOperator[],
-      nodeOperatorsCount: [{ current: '' }] as { current: string }[],
+      nodeOperatorsCount: NaN,
     }),
     Component: function StartNewMotionMotionFormLego({
       fieldNames,
       submitAction,
-      getValues,
     }) {
-      const { walletAddress } = useWeb3()
-      const trustedCaller = ALLOWED_SDVT_NODE_OPERATORS_ADD_MAP[
-        registryType
-      ].evmContract.useSwrWeb3('trustedCaller', [])
+      const { getValues, setValue, register } = useFormContext()
+      const { walletAddress, chainId } = useWeb3()
+      const trustedCaller = ContractSDVTNodeOperatorsAdd.useSwrWeb3(
+        'trustedCaller',
+        [],
+      )
       const isTrustedCallerConnected = trustedCaller.data === walletAddress
       const [hasDuplicateManagers, setHasDuplicateManagers] = useState(false)
 
@@ -101,16 +96,36 @@ export const formParts = ({
       const { data: NOCounts, initialLoading: maxOperatorsLoading } =
         useSDVTOperatorsCounts()
 
+      const keyNodeOperatorsCount = `${MotionTypeForms.SDVTNodeOperatorsAdd}.nodeOperatorsCount`
+      register(keyNodeOperatorsCount)
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-      const { update } = useFieldArray({ name: fieldNames.nodeOperatorsCount })
       const { isValid } = useFormState()
-      const { setValue } = useForm()
+
+      const contractAragonAcl = ContractAragonAcl.useRpc()
+      const sdvtRegistry = ContractSDVTRegistry.useRpc()
+
+      const checkIsAlreadyManager = async (address: string) => {
+        const MANAGE_SIGNING_KEYS_ROLE =
+          await sdvtRegistry.MANAGE_SIGNING_KEYS()
+        const result = await contractAragonAcl.getPermissionParamsLength(
+          address,
+          sdvtRegistry.address,
+          MANAGE_SIGNING_KEYS_ROLE,
+        )
+        return !result.isZero()
+      }
+
+      const checkIsLidoRewardAddress = (address: string) => {
+        return address === STETH[chainId]
+      }
 
       useEffect(() => {
-        update(0, { count: `${NOCounts?.current}` })
-      }, [setValue, fieldNames.nodeOperators, update, NOCounts])
+        if (typeof NOCounts?.current === 'number') {
+          setValue(keyNodeOperatorsCount, NOCounts.current)
+        }
+      }, [setValue, fieldNames.nodeOperators, NOCounts, keyNodeOperatorsCount])
 
-      const handleAddNodeOperator = useCallback(() => {
+      const handleAddNodeOperators = useCallback(() => {
         const nodeOperators = getValues().SDVTNodeOperatorsAdd
           .nodeOperators as NodeOperator[]
         const managerAddressList = nodeOperators.map(
@@ -129,13 +144,10 @@ export const formParts = ({
         [fieldsArr],
       )
 
-      // const { watch, setValue } = useFormContext()
-
       if (
         trustedCaller.initialLoading ||
         NONameLengthLoading ||
         maxOperatorsLoading
-        // || periodLimitsLoading
       ) {
         return <PageLoader />
       }
@@ -171,7 +183,7 @@ export const formParts = ({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!NONameLength || value.length > NONameLength)
+                        if (!NONameLength || value?.length > NONameLength)
                           return 'Name is too long'
                         return true
                       },
@@ -185,11 +197,18 @@ export const formParts = ({
                     name={`${fieldNames.nodeOperators}.${i}.rewardAddress`}
                     rules={{
                       required: 'Field is required',
-                      validate: value => {
-                        if (!utils.isAddress(value))
+                      validate: async value => {
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
-                        if (value === constants.AddressZero)
+                        }
+                        if (value === constants.AddressZero) {
                           return 'Should not be zero address'
+                        }
+                        const isLidoRewardAddress =
+                          await checkIsLidoRewardAddress(value)
+                        if (isLidoRewardAddress) {
+                          return 'Address is LIDO reward address'
+                        }
                         return true
                       },
                     }}
@@ -202,10 +221,16 @@ export const formParts = ({
                     name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
                     rules={{
                       required: 'Field is required',
-                      validate: value => {
-                        if (!utils.isAddress(value))
+                      validate: async value => {
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
-                        console.log(fieldsArr.fields)
+                        }
+                        const isAlreadyManager = await checkIsAlreadyManager(
+                          value,
+                        )
+                        if (isAlreadyManager) {
+                          return 'Address already has a signing keys manager role'
+                        }
                         return true
                       },
                     }}
@@ -227,7 +252,7 @@ export const formParts = ({
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={handleAddNodeOperator}
+                  onClick={handleAddNodeOperators}
                   icon={<Plus />}
                   color="secondary"
                 >
