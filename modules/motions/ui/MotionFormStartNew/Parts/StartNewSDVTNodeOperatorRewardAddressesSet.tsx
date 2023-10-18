@@ -114,7 +114,9 @@ export const formParts = createMotionFormPart({
     }, [nodeOperatorsList, selectedNodeOperators])
 
     const getFilteredOptions = (fieldIdx: number) => {
-      if (!nodeOperatorsList?.length) return []
+      if (!nodeOperatorsList?.length) {
+        return []
+      }
       const selectedIds = selectedNodeOperators.map(({ id }) => parseInt(id))
       const thisId = parseInt(selectedNodeOperators[fieldIdx]?.id)
       return nodeOperatorsList.filter(
@@ -122,7 +124,7 @@ export const formParts = createMotionFormPart({
       )
     }
 
-    const handleAddProgram = () =>
+    const handleAddUpdate = () =>
       fieldsArr.append({
         id: '',
         newRewardAddress: '',
@@ -148,11 +150,11 @@ export const formParts = createMotionFormPart({
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove program {i + 1}
+                      Remove update {i + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -223,11 +225,11 @@ export const formParts = createMotionFormPart({
               type="button"
               variant="ghost"
               size="sm"
-              onClick={handleAddProgram}
+              onClick={handleAddUpdate}
               icon={<Plus />}
               color="secondary"
             >
-              One more program
+              One more update
             </ButtonIcon>
           </Fieldset>
         )}
