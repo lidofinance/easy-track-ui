@@ -31,6 +31,7 @@ import {
   useSDVTOperatorNameLimit,
   useSDVTOperatorsCounts,
 } from 'modules/motions/hooks'
+import { StEthToken } from 'modules/blockChain/contractAddresses'
 
 type NodeOperator = {
   name: string
@@ -84,7 +85,7 @@ export const formParts = () =>
       setValue,
       register,
     }) {
-      const { walletAddress } = useWeb3()
+      const { walletAddress, chainId } = useWeb3()
       const trustedCaller = ContractSDVTNodeOperatorsAdd.useSwrWeb3(
         'trustedCaller',
         [],
@@ -116,9 +117,8 @@ export const formParts = () =>
         return !result.isZero()
       }
 
-      const checkIsLidoRewardAddress = async (address: string) => {
-        const lidoRewardAddress = await sdvtRegistry.getLocator()
-        return address === lidoRewardAddress
+      const checkIsLidoRewardAddress = (address: string) => {
+        return address === StEthToken[chainId]
       }
 
       useEffect(() => {
