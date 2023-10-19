@@ -17,16 +17,20 @@ export function DescSDVTTargetValidatorLimitsUpdate({
 
         const nodeOperatorName = nodeOperator ? nodeOperator.name : ''
 
+        if (!item.isTargetLimitActive) {
+          return (
+            <div key={nodeOperatorId}>
+              Disable target validator limit for Node Operator{' '}
+              <b>{nodeOperatorName}</b> (id: {nodeOperatorId})
+            </div>
+          )
+        }
+
         return (
           <div key={nodeOperatorId}>
-            Update Node Operator <b>{nodeOperatorName}</b> (id: {nodeOperatorId}
-            ): set <b>isTargetLimitActive</b> to{' '}
-            <b>{item.isTargetLimitActive ? 'true' : 'false'}</b>, set{' '}
-            <b>targetValidatorsCount</b>
-            {nodeOperator?.targetValidatorsCount
-              ? ` from ${nodeOperator.targetValidatorsCount}`
-              : ''}{' '}
-            to {item.targetLimit.toString()}
+            Set target validator limit for Node Operator{' '}
+            <b>{nodeOperatorName}</b> (id: {nodeOperatorId}){' '}
+            {`to ${item.targetLimit}`}
             {index === callData.length - 1 ? '.' : '; '}
           </div>
         )
