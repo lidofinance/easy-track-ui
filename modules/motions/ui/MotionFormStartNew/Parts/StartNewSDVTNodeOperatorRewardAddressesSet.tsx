@@ -85,35 +85,14 @@ export const formParts = createMotionFormPart({
       fieldNames.nodeOperators,
     )
 
-    const nodeOperatorRewardAddressesMap = useMemo(() => {
-      const result: Record<number, string | undefined> = {}
-
-      if (nodeOperatorsList?.length) {
-        for (const nodeOperator of nodeOperatorsList) {
-          result[nodeOperator.id] = nodeOperator.rewardAddress
-        }
-      }
-
-      for (const nodeOperator of selectedNodeOperators) {
-        if (nodeOperator.newRewardAddress) {
-          result[parseInt(nodeOperator.id)] = utils.getAddress(
-            nodeOperator.newRewardAddress,
-          )
-        }
-      }
-
-      const invertedRecord: Record<string, number | undefined> = {}
-      for (const key in result) {
-        if (result.hasOwnProperty(key)) {
-          const value = result[key]
-          if (value) {
-            invertedRecord[value] = parseInt(key)
-          }
-        }
-      }
-
-      return invertedRecord
-    }, [nodeOperatorsList, selectedNodeOperators])
+    const rewardAddressesMap = useMemo(
+      () =>
+        nodeOperatorsList?.reduce((acc, item) => {
+          acc[item.rewardAddress] = item.id
+          return acc
+        }, {} as Record<string, number | undefined>) ?? {},
+      [nodeOperatorsList],
+    )
 
     const getFilteredOptions = (fieldIdx: number) => {
       if (!nodeOperatorsList?.length) {
@@ -189,15 +168,31 @@ export const formParts = createMotionFormPart({
 
                         const valueAddress = utils.getAddress(value)
 
-                        const currentId = Number(selectedNodeOperators[i].id)
-                        const idInAdrressMap =
-                          nodeOperatorRewardAddressesMap[valueAddress]
+                        const idInAdrressMap = rewardAddressesMap[valueAddress]
 
-                        if (
-                          typeof idInAdrressMap === 'number' &&
-                          idInAdrressMap !== currentId
-                        ) {
+                        /*
+                        Although the specification does not state this,
+                        according to the code, the new reward address should not match
+                        any of the reward addresses of other operator nodes.
+                        */
+                        if (typeof idInAdrressMap === 'number') {
                           return 'Address must not be in use by another node operator'
+                        }
+
+                        const addressInSelectedNodeOperatorsIndex =
+                          selectedNodeOperators.findIndex(
+                            ({ newRewardAddress, id }) =>
+                              newRewardAddress &&
+                              utils.getAddress(newRewardAddress) ===
+                                utils.getAddress(valueAddress) &&
+                              id !== selectedNodeOperators[i].id,
+                          )
+
+                        /*
+                        Same as above, each reward address must be unique within the update.
+                        */
+                        if (addressInSelectedNodeOperatorsIndex !== -1) {
+                          return 'This address is already in use by another update'
                         }
 
                         if (valueAddress === constants.AddressZero) {
