@@ -92,35 +92,18 @@ export const formParts = createMotionFormPart({
       fieldNames.nodeOperators,
     )
 
-    const nodeOperatorManagerAddressesMap = useMemo(() => {
-      const result: Record<number, string | undefined> = {}
-
-      if (activeNodeOperators?.length) {
-        for (const nodeOperator of activeNodeOperators) {
-          if (nodeOperator.managerAddress) {
-            result[nodeOperator.id] = nodeOperator.managerAddress
+    const managerAddressesMap = useMemo(
+      () =>
+        nodeOperatorsList?.reduce((acc, item) => {
+          if (!item.managerAddress) {
+            return acc
           }
-        }
-      }
 
-      for (const nodeOperator of selectedNodeOperators) {
-        if (nodeOperator.newManagerAddress) {
-          result[parseInt(nodeOperator.id)] = utils.getAddress(
-            nodeOperator.newManagerAddress,
-          )
-        }
-      }
-
-      const invertedRecord: Record<string, number | undefined> = {}
-      for (const key in result) {
-        const value = result[key]
-        if (value) {
-          invertedRecord[value] = parseInt(key)
-        }
-      }
-
-      return invertedRecord
-    }, [activeNodeOperators, selectedNodeOperators])
+          acc[item.managerAddress] = item.id
+          return acc
+        }, {} as Record<string, number | undefined>) ?? {},
+      [nodeOperatorsList],
+    )
 
     const getFilteredOptions = (fieldIdx: number) => {
       if (!activeNodeOperators?.length) return []
@@ -131,7 +114,7 @@ export const formParts = createMotionFormPart({
       )
     }
 
-    const handleAddProgram = () =>
+    const handleAddUpdate = () =>
       fieldsArr.append({
         id: '',
         oldManagerAddress: '',
@@ -158,11 +141,11 @@ export const formParts = createMotionFormPart({
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove program {i + 1}
+                      Remove update {i + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -240,16 +223,22 @@ export const formParts = createMotionFormPart({
 
                         const valueAddress = utils.getAddress(value)
 
-                        const currentId = Number(selectedNodeOperators[i].id)
-
-                        const idInAdrressMap =
-                          nodeOperatorManagerAddressesMap[valueAddress]
-
-                        if (
-                          typeof idInAdrressMap === 'number' &&
-                          idInAdrressMap !== currentId
-                        ) {
+                        const idInAdrressMap = managerAddressesMap[valueAddress]
+                        if (typeof idInAdrressMap === 'number') {
                           return 'Address must not be in use by another node operator'
+                        }
+
+                        const addressInSelectedNodeOperatorsIndex =
+                          selectedNodeOperators.findIndex(
+                            ({ newManagerAddress, id }) =>
+                              newManagerAddress &&
+                              utils.getAddress(newManagerAddress) ===
+                                utils.getAddress(valueAddress) &&
+                              id !== selectedNodeOperators[i].id,
+                          )
+
+                        if (addressInSelectedNodeOperatorsIndex !== -1) {
+                          return 'This address is already in use by another update'
                         }
 
                         if (valueAddress === constants.AddressZero) {
@@ -281,11 +270,11 @@ export const formParts = createMotionFormPart({
               type="button"
               variant="ghost"
               size="sm"
-              onClick={handleAddProgram}
+              onClick={handleAddUpdate}
               icon={<Plus />}
               color="secondary"
             >
-              One more program
+              One more update
             </ButtonIcon>
           </Fieldset>
         )}
