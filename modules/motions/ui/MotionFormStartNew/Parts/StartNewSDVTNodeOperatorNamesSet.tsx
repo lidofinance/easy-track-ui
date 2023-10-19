@@ -63,10 +63,7 @@ export const formParts = createMotionFormPart({
       },
     ] as NodeOperator[],
   }),
-  Component: function StartNewMotionMotionFormLego({
-    fieldNames,
-    submitAction,
-  }) {
+  Component: ({ fieldNames, submitAction }) => {
     const { walletAddress } = useWeb3()
     const {
       data: nodeOperatorsList,
@@ -91,31 +88,14 @@ export const formParts = createMotionFormPart({
       fieldNames.nodeOperators,
     )
 
-    const nodeOperatorNamesMap = useMemo(() => {
-      const result: Record<number, string | undefined> = {}
-
-      if (nodeOperatorsList?.length) {
-        for (const nodeOperator of nodeOperatorsList) {
-          result[nodeOperator.id] = nodeOperator.name
-        }
-      }
-
-      for (const nodeOperator of selectedNodeOperators) {
-        result[parseInt(nodeOperator.id)] = nodeOperator.name
-      }
-
-      const invertedRecord: Record<string, number | undefined> = {}
-      for (const key in result) {
-        if (result.hasOwnProperty(key)) {
-          const value = result[key]
-          if (value) {
-            invertedRecord[value] = parseInt(key)
-          }
-        }
-      }
-
-      return invertedRecord
-    }, [nodeOperatorsList, selectedNodeOperators])
+    const nodeOperatorNamesMap = useMemo(
+      () =>
+        nodeOperatorsList?.reduce((acc, item) => {
+          acc[item.name] = item.id
+          return acc
+        }, {} as Record<string, number | undefined>) ?? {},
+      [nodeOperatorsList],
+    )
 
     const getFilteredOptions = (fieldIdx: number) => {
       if (!nodeOperatorsList?.length) return []
@@ -150,79 +130,73 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => {
-          const isFieldDisabled = i !== fieldsArr.fields.length - 1
-          return (
-            <Fragment key={item.id}>
-              <FieldsWrapper>
-                <FieldsHeader>
-                  {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
-                  )}
-                  {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove update {i + 1}
-                    </RemoveItemButton>
-                  )}
-                </FieldsHeader>
+        {fieldsArr.fields.map((item, i) => (
+          <Fragment key={item.id}>
+            <FieldsWrapper>
+              <FieldsHeader>
+                {fieldsArr.fields.length > 1 && (
+                  <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                )}
+                {fieldsArr.fields.length > 1 && (
+                  <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
+                    Remove update {i + 1}
+                  </RemoveItemButton>
+                )}
+              </FieldsHeader>
 
-                <Fieldset>
-                  <SelectControl
-                    label="Node operator"
-                    name={`${fieldNames.nodeOperators}.${i}.id`}
-                    rules={{ required: 'Field is required' }}
-                    disabled={isFieldDisabled}
-                  >
-                    {getFilteredOptions(i).map(nodeOperator => (
-                      <Option
-                        key={nodeOperator.id}
-                        value={nodeOperator.id}
-                        children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
-                      />
-                    ))}
-                  </SelectControl>
-                </Fieldset>
+              <Fieldset>
+                <SelectControl
+                  label="Node operator"
+                  name={`${fieldNames.nodeOperators}.${i}.id`}
+                  rules={{ required: 'Field is required' }}
+                >
+                  {getFilteredOptions(i).map(nodeOperator => (
+                    <Option
+                      key={nodeOperator.id}
+                      value={nodeOperator.id}
+                      children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
+                    />
+                  ))}
+                </SelectControl>
+              </Fieldset>
 
-                <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.name`}
-                    label="Name"
-                    disabled={isFieldDisabled}
-                    rules={{
-                      required: 'Field is required',
-                      validate: (value: string) => {
-                        const currentId = Number(selectedNodeOperators[i].id)
+              <Fieldset>
+                <InputControl
+                  name={`${fieldNames.nodeOperators}.${i}.name`}
+                  label="Name"
+                  rules={{
+                    required: 'Field is required',
+                    validate: (value: string) => {
+                      const idInNamesMap = nodeOperatorNamesMap[value]
 
-                        const nodeOperator = nodeOperatorsList[currentId]
+                      if (typeof idInNamesMap === 'number') {
+                        return 'Name must not be in use by another node operator'
+                      }
 
-                        const oldName = nodeOperator.name
+                      const nameInSelectedNodeOperatorsIndex =
+                        selectedNodeOperators.findIndex(
+                          ({ name, id }) =>
+                            name &&
+                            name.toLowerCase() === value.toLowerCase() &&
+                            id !== selectedNodeOperators[i].id,
+                        )
 
-                        if (value === oldName) {
-                          return 'Name must be different from the old one'
-                        }
+                      if (nameInSelectedNodeOperatorsIndex !== -1) {
+                        return 'Name is already in use by another update'
+                      }
 
-                        const idInNameMap = nodeOperatorNamesMap[value]
+                      if (maxNodeOperatorNameLength?.lt(value.length)) {
+                        return `Name must be less or equal than ${maxNodeOperatorNameLength} characters`
+                      }
 
-                        if (
-                          typeof idInNameMap === 'number' &&
-                          idInNameMap !== currentId
-                        ) {
-                          return 'Name must be unique'
-                        }
-
-                        if (maxNodeOperatorNameLength?.lt(value.length)) {
-                          return `Name must be less or equal than ${maxNodeOperatorNameLength} characters`
-                        }
-
-                        return true
-                      },
-                    }}
-                  />
-                </Fieldset>
-              </FieldsWrapper>
-            </Fragment>
-          )
-        })}
+                      return true
+                    },
+                  }}
+                />
+              </Fieldset>
+            </FieldsWrapper>
+          </Fragment>
+        ))}
 
         {selectedNodeOperators.length < nodeOperatorsList.length && isValid && (
           <Fieldset>
