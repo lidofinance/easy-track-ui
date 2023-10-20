@@ -86,7 +86,7 @@ export const formParts = createMotionFormPart({
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch, setValue } = useFormContext()
+    const { watch } = useFormContext()
     const { isValid } = useFormState()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
@@ -156,14 +156,12 @@ export const formParts = createMotionFormPart({
                     name={`${fieldNames.nodeOperators}.${i}.id`}
                     rules={{ required: 'Field is required' }}
                     onChange={(value: string) => {
-                      const nodeOperatorId = Number(value)
-                      const managerAddress =
-                        nodeOperatorsList[nodeOperatorId]?.managerAddress
+                      const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      if (managerAddress) {
-                        const newNodeOperators = [...selectedNodeOperators]
-                        newNodeOperators[i].oldManagerAddress = managerAddress
-                        setValue(fieldNames.nodeOperators, newNodeOperators)
+                      if (nodeOperator.managerAddress) {
+                        fieldsArr.update(i, {
+                          oldManagerAddress: nodeOperator.managerAddress,
+                        })
                       }
                     }}
                   >

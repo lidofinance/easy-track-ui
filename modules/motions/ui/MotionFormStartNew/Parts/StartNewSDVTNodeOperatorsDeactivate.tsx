@@ -142,9 +142,11 @@ export const formParts = createMotionFormPart({
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      fieldsArr.update(i, {
-                        managerAddress: nodeOperator.managerAddress,
-                      })
+                      if (nodeOperator.managerAddress) {
+                        fieldsArr.update(i, {
+                          managerAddress: nodeOperator.managerAddress,
+                        })
+                      }
                     }}
                   >
                     {getFilteredOptions(i).map(nodeOperator => (
