@@ -35,6 +35,7 @@ import { NestProps } from './types'
 import { DescWrap } from './MotionDescriptionStyle'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
+import { DescSDVTNodeOperatorRewardAddressesSet } from './DescSDVTNodeOperatorRewardAddressesSet'
 import { DescSDVTNodeOperatorNamesSet } from './DescSDVTNodeOperatorNamesSet'
 import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
 import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
@@ -198,6 +199,8 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
   // [MotionType.SDVTVettedValidatorsLimitIncrease]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTVettedValidatorsLimitsSet]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    DescSDVTNodeOperatorRewardAddressesSet,
   [MotionType.SDVTNodeOperatorNamesSet]: DescSDVTNodeOperatorNamesSet,
   // [MotionType.SDVTNodeOperatorRewardAddressesSet]: () => <h1>TODO:add desc</h1>,
   [MotionType.SDVTNodeOperatorManagerChange]:

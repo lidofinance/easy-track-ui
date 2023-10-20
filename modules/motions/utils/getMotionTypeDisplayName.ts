@@ -29,9 +29,10 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate node operators',
   // [MotionType.SDVTVettedValidatorsLimitsSet]:
   //   'Set SDVTVetted Validators Limits',
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    'Set Node Operators Reward Addresses',
+  [MotionType.SDVTNodeOperatorManagerChange]: 'Change Node Operators Managers',
   [MotionType.SDVTNodeOperatorNamesSet]: 'Set node operators names',
-  // [MotionType.SDVTNodeOperatorRewardAddressesSet]:
-  //   'Set Node Operator Reward Addresses',
   [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',

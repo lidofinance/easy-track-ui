@@ -54,6 +54,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTNodeOperatorsActivate,
   [MotionType.SDVTNodeOperatorsDeactivate]:
     CONTRACTS.ContractSDVTNodeOperatorsDeactivate,
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    CONTRACTS.ContractSDVTNodeOperatorRewardAddressesSet,
   [MotionType.SDVTNodeOperatorNamesSet]:
     CONTRACTS.ContractSDVTNodeOperatorNamesSet,
   [MotionType.SDVTNodeOperatorManagerChange]:
