@@ -22,7 +22,7 @@ import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
-import { validateToken } from 'modules/tokens/utils/validateToken'
+import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 
 type NodeOperator = {
   id: string
@@ -68,7 +68,7 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList()
+    } = useSDVTNodeOperatorsList({ withSummary: true })
 
     const nodeOperatorsWithValidators = nodeOperatorsList?.filter(
       nodeOperator => nodeOperator.totalAddedValidators.gt(0),
@@ -155,17 +155,29 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        const check1 = validateToken(value)
-                        if (typeof check1 === 'string') {
-                          return check1
+                        const uintError = validateUintValue(value)
+                        if (uintError) {
+                          return uintError
                         }
 
-                        const totalValidatorsCount =
-                          nodeOperatorsList[Number(selectedNodeOperators[i].id)]
-                            .totalAddedValidators
+                        const nodeOperatorId = parseInt(
+                          selectedNodeOperators[i].id,
+                        )
 
-                        if (totalValidatorsCount.lt(value)) {
-                          return `Value must be less or equal than ${totalValidatorsCount}`
+                        if (isNaN(nodeOperatorId)) {
+                          return 'Select node operator first'
+                        }
+
+                        const nodeOperator = nodeOperatorsList[nodeOperatorId]
+
+                        const { totalAddedValidators, isTargetLimitActive } =
+                          nodeOperator
+
+                        if (
+                          isTargetLimitActive &&
+                          totalAddedValidators.lt(value)
+                        ) {
+                          return `Value must be less or equal than ${totalAddedValidators}`
                         }
 
                         return true
