@@ -64,10 +64,7 @@ export const formParts = createMotionFormPart({
       },
     ] as NodeOperator[],
   }),
-  Component: function StartNewMotionMotionFormLego({
-    fieldNames,
-    submitAction,
-  }) {
+  Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
     const {
       data: nodeOperatorsList,

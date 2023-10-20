@@ -63,10 +63,7 @@ export const formParts = createMotionFormPart({
       },
     ] as NodeOperator[],
   }),
-  Component: function StartNewMotionMotionFormLego({
-    fieldNames,
-    submitAction,
-  }) {
+  Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
     const {
       data: nodeOperatorsList,
@@ -169,24 +166,24 @@ export const formParts = createMotionFormPart({
 
                         const valueAddress = utils.getAddress(value)
 
-                        const idInAdrressMap = rewardAddressesMap[valueAddress]
+                        const idInAddressMap = rewardAddressesMap[valueAddress]
 
                         /*
                         Although the specification does not yet state this,
                         according to the code, the new reward address should not match
                         any of the reward addresses of other operator nodes.
                         */
-                        if (typeof idInAdrressMap === 'number') {
+                        if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
 
                         const addressInSelectedNodeOperatorsIndex =
                           selectedNodeOperators.findIndex(
-                            ({ newRewardAddress, id }) =>
+                            ({ newRewardAddress }, index) =>
                               newRewardAddress &&
                               utils.getAddress(newRewardAddress) ===
                                 utils.getAddress(valueAddress) &&
-                              id !== selectedNodeOperators[i].id,
+                              i !== index,
                           )
 
                         /*

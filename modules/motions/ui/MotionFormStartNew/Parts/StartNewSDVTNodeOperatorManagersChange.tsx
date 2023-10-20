@@ -229,18 +229,18 @@ export const formParts = createMotionFormPart({
                         the new manager address should not match
                         any of the manager addresses of other operator nodes.
                         */
-                        const idInAdrressMap = managerAddressesMap[valueAddress]
-                        if (typeof idInAdrressMap === 'number') {
+                        const idInAddressMap = managerAddressesMap[valueAddress]
+                        if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
 
                         const addressInSelectedNodeOperatorsIndex =
                           selectedNodeOperators.findIndex(
-                            ({ newManagerAddress, id }) =>
+                            ({ newManagerAddress }, index) =>
                               newManagerAddress &&
                               utils.getAddress(newManagerAddress) ===
                                 utils.getAddress(valueAddress) &&
-                              id !== selectedNodeOperators[i].id,
+                              i !== index,
                           )
 
                         if (addressInSelectedNodeOperatorsIndex !== -1) {

@@ -167,18 +167,18 @@ export const formParts = createMotionFormPart({
                   rules={{
                     required: 'Field is required',
                     validate: (value: string) => {
-                      const idInNamesMap = nodeOperatorNamesMap[value]
+                      const idInNameMap = nodeOperatorNamesMap[value]
 
-                      if (typeof idInNamesMap === 'number') {
+                      if (typeof idInNameMap === 'number') {
                         return 'Name must not be in use by another node operator'
                       }
 
                       const nameInSelectedNodeOperatorsIndex =
                         selectedNodeOperators.findIndex(
-                          ({ name, id }) =>
+                          ({ name }, index) =>
                             name &&
                             name.toLowerCase() === value.toLowerCase() &&
-                            id !== selectedNodeOperators[i].id,
+                            i !== index,
                         )
 
                       if (nameInSelectedNodeOperatorsIndex !== -1) {
@@ -186,7 +186,7 @@ export const formParts = createMotionFormPart({
                       }
 
                       if (maxNodeOperatorNameLength?.lt(value.length)) {
-                        return `Name must be less or equal than ${maxNodeOperatorNameLength} characters`
+                        return `Name length must be less or equal than ${maxNodeOperatorNameLength} characters`
                       }
 
                       return true
