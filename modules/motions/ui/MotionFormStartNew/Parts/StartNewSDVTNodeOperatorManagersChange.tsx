@@ -152,7 +152,7 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <SelectControl
-                    label="Node Operator"
+                    label="Node operator"
                     name={`${fieldNames.nodeOperators}.${i}.id`}
                     rules={{ required: 'Field is required' }}
                     onChange={(value: string) => {
@@ -180,7 +180,7 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${i}.oldManagerAddress`}
-                    label="Manager Address"
+                    label="Manager address"
                     disabled={
                       !!nodeOperatorsList[Number(selectedNodeOperators[i].id)]
                         .managerAddress
@@ -188,8 +188,9 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value))
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
+                        }
 
                         const valueAddress = utils.getAddress(value)
                         if (valueAddress === constants.AddressZero) {
@@ -214,12 +215,13 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${i}.newManagerAddress`}
-                    label="New Manager Address"
+                    label="New manager address"
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value))
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
+                        }
 
                         const valueAddress = utils.getAddress(value)
 
@@ -238,7 +240,7 @@ export const formParts = createMotionFormPart({
                           )
 
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
-                          return 'This address is already in use by another update'
+                          return 'Address is already in use by another update'
                         }
 
                         if (valueAddress === constants.AddressZero) {

@@ -169,8 +169,9 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value))
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
+                        }
 
                         const canAddressManageKeys =
                           await checkIsAddressManagerOfNodeOperator(

@@ -142,7 +142,7 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <SelectControl
-                    label="Node Operator"
+                    label="Node operator"
                     name={`${fieldNames.nodeOperators}.${i}.id`}
                     rules={{ required: 'Field is required' }}
                   >
@@ -159,12 +159,13 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${i}.newRewardAddress`}
-                    label="New Reward Address"
+                    label="New reward address"
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!utils.isAddress(value))
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
+                        }
 
                         const valueAddress = utils.getAddress(value)
 
@@ -192,7 +193,7 @@ export const formParts = createMotionFormPart({
                         Same as above, each reward address must be unique within the update.
                         */
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
-                          return 'This address is already in use by another update'
+                          return 'Address is already in use by another update'
                         }
 
                         if (valueAddress === constants.AddressZero) {

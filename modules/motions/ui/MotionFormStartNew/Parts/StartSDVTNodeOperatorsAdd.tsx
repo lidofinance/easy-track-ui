@@ -95,10 +95,6 @@ export const formParts = () =>
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
       const { isValid } = useFormState()
 
-      const checkIsLidoRewardAddress = (address: string) => {
-        return address === STETH[chainId]
-      }
-
       useEffect(() => {
         if (typeof NOCounts?.current === 'number') {
           setValue(keyNodeOperatorsCount, NOCounts.current)
@@ -177,17 +173,22 @@ export const formParts = () =>
                     name={`${fieldNames.nodeOperators}.${i}.rewardAddress`}
                     rules={{
                       required: 'Field is required',
-                      validate: async value => {
+                      validate: value => {
                         if (!utils.isAddress(value)) {
                           return 'Address is not valid'
                         }
-                        if (value === constants.AddressZero) {
-                          return 'Should not be zero address'
+                        const valueAddress = utils.getAddress(value)
+                        if (valueAddress === constants.AddressZero) {
+                          return 'Address must not be zero address'
                         }
-                        const isLidoRewardAddress =
-                          await checkIsLidoRewardAddress(value)
-                        if (isLidoRewardAddress) {
-                          return 'Address is LIDO reward address'
+
+                        const stETHAddress = STETH[chainId]
+
+                        if (
+                          stETHAddress &&
+                          valueAddress === utils.getAddress(stETHAddress)
+                        ) {
+                          return 'Address must not be stETH address'
                         }
                         return true
                       },
