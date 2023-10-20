@@ -15,38 +15,33 @@ import {
   FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
-import { ContractSDVTNodeOperatorManagerChange } from 'modules/blockChain/contracts'
+import { ContractSDVTNodeOperatorRewardAddressesSet } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressForManageSigningKeysRole'
-import { noSigningKeysRoleError } from 'modules/motions/constants'
+import { STETH } from 'modules/blockChain/contractAddresses'
 
 type NodeOperator = {
   id: string
-  oldManagerAddress: string
-  newManagerAddress: string
+  newRewardAddress: string
 }
 
 export const formParts = createMotionFormPart({
-  motionType: MotionType.SDVTNodeOperatorManagerChange,
+  motionType: MotionType.SDVTNodeOperatorRewardAddressesSet,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
     )
 
     const encodedCallData = new utils.AbiCoder().encode(
-      [
-        'tuple(uint256 nodeOperatorId, address oldManagerAddress, address newManagerAddress)[]',
-      ],
+      ['tuple(uint256 nodeOperatorId, address rewardAddress)[]'],
       [
         sortedNodeOperators.map(nodeOperator => ({
           nodeOperatorId: Number(nodeOperator.id),
-          oldManagerAddress: utils.getAddress(nodeOperator.oldManagerAddress),
-          newManagerAddress: utils.getAddress(nodeOperator.newManagerAddress),
+          rewardAddress: utils.getAddress(nodeOperator.newRewardAddress),
         })),
       ],
     )
@@ -64,52 +59,48 @@ export const formParts = createMotionFormPart({
     nodeOperators: [
       {
         id: '',
-        oldManagerAddress: '',
-        newManagerAddress: '',
+        newRewardAddress: '',
       },
     ] as NodeOperator[],
   }),
-  Component: ({ fieldNames, submitAction }) => {
+  Component: function StartNewMotionMotionFormLego({
+    fieldNames,
+    submitAction,
+  }) {
     const { walletAddress, chainId } = useWeb3()
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList()
 
-    const activeNodeOperators = nodeOperatorsList?.filter(
-      nodeOperator => nodeOperator.active,
-    )
-
-    const trustedCaller = ContractSDVTNodeOperatorManagerChange.useSwrWeb3(
+    const trustedCaller = ContractSDVTNodeOperatorRewardAddressesSet.useSwrWeb3(
       'trustedCaller',
       [],
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch, setValue } = useFormContext()
+    const { watch } = useFormContext()
     const { isValid } = useFormState()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
     )
 
-    const managerAddressesMap = useMemo(
+    const rewardAddressesMap = useMemo(
       () =>
         nodeOperatorsList?.reduce((acc, item) => {
-          if (!item.managerAddress) {
-            return acc
-          }
-
-          acc[item.managerAddress] = item.id
+          acc[item.rewardAddress] = item.id
           return acc
         }, {} as Record<string, number | undefined>) ?? {},
       [nodeOperatorsList],
     )
 
     const getFilteredOptions = (fieldIdx: number) => {
-      if (!activeNodeOperators?.length) return []
+      if (!nodeOperatorsList?.length) {
+        return []
+      }
       const selectedIds = selectedNodeOperators.map(({ id }) => parseInt(id))
       const thisId = parseInt(selectedNodeOperators[fieldIdx]?.id)
-      return activeNodeOperators.filter(
+      return nodeOperatorsList.filter(
         ({ id }) => !selectedIds.includes(id) || id === thisId,
       )
     }
@@ -117,8 +108,7 @@ export const formParts = createMotionFormPart({
     const handleAddUpdate = () =>
       fieldsArr.append({
         id: '',
-        oldManagerAddress: '',
-        newManagerAddress: '',
+        newRewardAddress: '',
       } as NodeOperator)
 
     if (trustedCaller.initialLoading || isNodeOperatorsDataLoading) {
@@ -129,8 +119,8 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
-    if (!nodeOperatorsList?.length || !activeNodeOperators?.length) {
-      return <MessageBox>There are no active node operators</MessageBox>
+    if (!nodeOperatorsList?.length) {
+      return <MessageBox>Node operators list is empty</MessageBox>
     }
 
     return (
@@ -155,17 +145,6 @@ export const formParts = createMotionFormPart({
                     label="Node Operator"
                     name={`${fieldNames.nodeOperators}.${i}.id`}
                     rules={{ required: 'Field is required' }}
-                    onChange={(value: string) => {
-                      const nodeOperatorId = Number(value)
-                      const managerAddress =
-                        nodeOperatorsList[nodeOperatorId]?.managerAddress
-
-                      if (managerAddress) {
-                        const newNodeOperators = [...selectedNodeOperators]
-                        newNodeOperators[i].oldManagerAddress = managerAddress
-                        setValue(fieldNames.nodeOperators, newNodeOperators)
-                      }
-                    }}
                   >
                     {getFilteredOptions(i).map(nodeOperator => (
                       <Option
@@ -179,64 +158,39 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.oldManagerAddress`}
-                    label="Manager Address"
-                    disabled={
-                      !!nodeOperatorsList[Number(selectedNodeOperators[i].id)]
-                        .managerAddress
-                    }
+                    name={`${fieldNames.nodeOperators}.${i}.newRewardAddress`}
+                    label="New Reward Address"
                     rules={{
                       required: 'Field is required',
-                      validate: async value => {
-                        if (!utils.isAddress(value))
-                          return 'Address is not valid'
-
-                        const valueAddress = utils.getAddress(value)
-                        if (valueAddress === constants.AddressZero) {
-                          return 'Address must not be zero address'
-                        }
-
-                        const canAddressManageKeys =
-                          await checkAddressForManageSigningKeysRole(
-                            valueAddress,
-                            selectedNodeOperators[i].id,
-                            chainId,
-                          )
-
-                        if (!canAddressManageKeys) {
-                          return noSigningKeysRoleError
-                        }
-                      },
-                    }}
-                  />
-                </Fieldset>
-
-                <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.newManagerAddress`}
-                    label="New Manager Address"
-                    rules={{
-                      required: 'Field is required',
-                      validate: async value => {
+                      validate: value => {
                         if (!utils.isAddress(value))
                           return 'Address is not valid'
 
                         const valueAddress = utils.getAddress(value)
 
-                        const idInAdrressMap = managerAddressesMap[valueAddress]
+                        const idInAdrressMap = rewardAddressesMap[valueAddress]
+
+                        /*
+                        Although the specification does not state this,
+                        according to the code, the new reward address should not match
+                        any of the reward addresses of other operator nodes.
+                        */
                         if (typeof idInAdrressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
 
                         const addressInSelectedNodeOperatorsIndex =
                           selectedNodeOperators.findIndex(
-                            ({ newManagerAddress, id }) =>
-                              newManagerAddress &&
-                              utils.getAddress(newManagerAddress) ===
+                            ({ newRewardAddress, id }) =>
+                              newRewardAddress &&
+                              utils.getAddress(newRewardAddress) ===
                                 utils.getAddress(valueAddress) &&
                               id !== selectedNodeOperators[i].id,
                           )
 
+                        /*
+                        Same as above, each reward address must be unique within the update.
+                        */
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
                           return 'This address is already in use by another update'
                         }
@@ -245,15 +199,13 @@ export const formParts = createMotionFormPart({
                           return 'Address must not be zero address'
                         }
 
-                        const canAddressManageKeys =
-                          await checkAddressForManageSigningKeysRole(
-                            valueAddress,
-                            selectedNodeOperators[i].id,
-                            chainId,
-                          )
+                        const stETHAddress = STETH[chainId]
 
-                        if (canAddressManageKeys) {
-                          return 'Address already has a signing keys manager role'
+                        if (
+                          stETHAddress &&
+                          valueAddress === utils.getAddress(stETHAddress)
+                        ) {
+                          return 'Address must not be stETH address'
                         }
                       },
                     }}
@@ -264,7 +216,7 @@ export const formParts = createMotionFormPart({
           )
         })}
 
-        {selectedNodeOperators.length < activeNodeOperators.length && isValid && (
+        {selectedNodeOperators.length < nodeOperatorsList.length && isValid && (
           <Fieldset>
             <ButtonIcon
               type="button"
