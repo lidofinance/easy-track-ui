@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
 import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
@@ -15,35 +15,33 @@ import {
   FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
-import {
-  ContractSDVTNodeOperatorsActivate,
-  ContractSDVTRegistry,
-} from 'modules/blockChain/contracts'
+import { ContractSDVTNodeOperatorsActivate } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
+import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 
-type Program = {
-  nodeOperatorId: string
+type NodeOperator = {
+  id: string
   managerAddress: string
 }
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTNodeOperatorsActivate,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
-    const sortedPrograms = formData.programs.sort(
-      (a, b) => Number(a.nodeOperatorId) - Number(b.nodeOperatorId),
+    const sortedNodeOperators = formData.nodeOperators.sort(
+      (a, b) => Number(a.id) - Number(b.id),
     )
 
     const encodedCallData = new utils.AbiCoder().encode(
       ['tuple(uint256 nodeOperatorId, address managerAddress)[]'],
       [
-        sortedPrograms.map(program => ({
-          nodeOperatorId: Number(program.nodeOperatorId),
-          managerAddress: utils.getAddress(program.managerAddress),
+        sortedNodeOperators.map(nodeOperator => ({
+          nodeOperatorId: Number(nodeOperator.id),
+          managerAddress: utils.getAddress(nodeOperator.managerAddress),
         })),
       ],
     )
@@ -58,18 +56,15 @@ export const formParts = createMotionFormPart({
     return tx
   },
   getDefaultFormData: () => ({
-    programs: [
+    nodeOperators: [
       {
-        nodeOperatorId: '',
+        id: '',
         managerAddress: '',
       },
-    ] as Program[],
+    ] as NodeOperator[],
   }),
-  Component: function StartNewMotionMotionFormLego({
-    fieldNames,
-    submitAction,
-  }) {
-    const { walletAddress } = useWeb3()
+  Component: ({ fieldNames, submitAction }) => {
+    const { walletAddress, chainId } = useWeb3()
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
@@ -79,40 +74,32 @@ export const formParts = createMotionFormPart({
       nodeOperator => !nodeOperator.active,
     )
 
-    const sdvtRegistry = ContractSDVTRegistry.useRpc()
     const trustedCaller = ContractSDVTNodeOperatorsActivate.useSwrWeb3(
       'trustedCaller',
       [],
     )
 
-    const fieldsArr = useFieldArray({ name: fieldNames.programs })
-    const { watch, setValue } = useFormContext()
-    const selectedPrograms: Program[] = watch(fieldNames.programs)
+    const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
+    const { watch } = useFormContext()
+    const { isValid } = useFormState()
+    const selectedNodeOperators: NodeOperator[] = watch(
+      fieldNames.nodeOperators,
+    )
 
     const getFilteredOptions = (fieldIdx: number) => {
       if (!deactivatedNodeOperators?.length) return []
-      const selectedIds = selectedPrograms.map(({ nodeOperatorId }) =>
-        parseInt(nodeOperatorId),
-      )
-      const thisId = parseInt(selectedPrograms[fieldIdx]?.nodeOperatorId)
+      const selectedIds = selectedNodeOperators.map(({ id }) => parseInt(id))
+      const thisId = parseInt(selectedNodeOperators[fieldIdx]?.id)
       return deactivatedNodeOperators.filter(
         ({ id }) => !selectedIds.includes(id) || id === thisId,
       )
     }
 
-    const handleAddProgram = () =>
+    const handleAddUpdate = () =>
       fieldsArr.append({
-        nodeOperatorId: '',
+        id: '',
         managerAddress: '',
-      })
-
-    const getCanAddressManageKeys = async (
-      address: string,
-      nodeOperatorId: string,
-    ) => {
-      const role = await sdvtRegistry.MANAGE_SIGNING_KEYS()
-      return sdvtRegistry.canPerform(address, role, [nodeOperatorId])
-    }
+      } as NodeOperator)
 
     if (trustedCaller.initialLoading || isNodeOperatorsDataLoading) {
       return <PageLoader />
@@ -134,30 +121,26 @@ export const formParts = createMotionFormPart({
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Program #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove program {i + 1}
+                      Remove update {i + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
 
                 <Fieldset>
                   <SelectControl
-                    label="Node Operator"
-                    name={`${fieldNames.programs}.${i}.nodeOperatorId`}
+                    label="Node operator"
+                    name={`${fieldNames.nodeOperators}.${i}.id`}
                     rules={{ required: 'Field is required' }}
-                    onChange={(nodeOperatorId: string) => {
-                      const nodeOperatorIdNum = Number(nodeOperatorId)
-                      const managerAddress =
-                        nodeOperatorsList[nodeOperatorIdNum]?.managerAddress
+                    onChange={(value: string) => {
+                      const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      if (managerAddress) {
-                        const newPrograms = [...selectedPrograms]
-                        newPrograms[i].managerAddress = managerAddress
-                        setValue(fieldNames.programs, newPrograms)
-                      }
+                      fieldsArr.update(i, {
+                        managerAddress: nodeOperator.managerAddress,
+                      })
                     }}
                   >
                     {getFilteredOptions(i).map(nodeOperator => (
@@ -172,18 +155,19 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.programs}.${i}.managerAddress`}
-                    label="Manager Address"
+                    name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
+                    label="Manager address"
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value))
+                        if (!utils.isAddress(value)) {
                           return 'Address is not valid'
+                        }
 
                         const canAddressManageKeys =
-                          await getCanAddressManageKeys(
-                            value,
-                            selectedPrograms[i].nodeOperatorId,
+                          await checkAddressForManageSigningKeysRole(
+                            utils.getAddress(value),
+                            chainId,
                           )
 
                         if (canAddressManageKeys) {
@@ -198,20 +182,21 @@ export const formParts = createMotionFormPart({
           )
         })}
 
-        {selectedPrograms.length < deactivatedNodeOperators.length && (
-          <Fieldset>
-            <ButtonIcon
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={handleAddProgram}
-              icon={<Plus />}
-              color="secondary"
-            >
-              One more program
-            </ButtonIcon>
-          </Fieldset>
-        )}
+        {selectedNodeOperators.length < deactivatedNodeOperators.length &&
+          isValid && (
+            <Fieldset>
+              <ButtonIcon
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleAddUpdate}
+                icon={<Plus />}
+                color="secondary"
+              >
+                One more update
+              </ButtonIcon>
+            </Fieldset>
+          )}
 
         {submitAction}
       </>

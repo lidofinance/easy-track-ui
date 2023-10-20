@@ -15,9 +15,10 @@ export function DescSDVTNodeOperatorManagersChange({
         const nodeOperator = nodeOperatorsList?.[nodeOperatorId]
         return (
           <div key={nodeOperatorId}>
-            Change Node Operator <b>{nodeOperator ? nodeOperator.name : ''}</b>{' '}
-            (id: {nodeOperatorId}) manager address from{' '}
-            <AddressInlineWithPop address={item.oldManagerAddress} /> to{' '}
+            Update Node Operator <b>{nodeOperator ? nodeOperator.name : ''}</b>{' '}
+            (id: {nodeOperatorId}): revoke <b>MANAGE_SIGNING_KEYS</b> role from{' '}
+            <AddressInlineWithPop address={item.oldManagerAddress} />, add{' '}
+            <b>MANAGE_SIGNING_KEYS</b> role to{' '}
             <AddressInlineWithPop address={item.newManagerAddress} />
             {index === callData.length - 1 ? '.' : '; '}
           </div>
