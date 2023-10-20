@@ -18,11 +18,7 @@ import {
   ErrorBox,
 } from '../CreateMotionFormStyle'
 
-import {
-  ContractAragonAcl,
-  ContractSDVTNodeOperatorsAdd,
-  ContractSDVTRegistry,
-} from 'modules/blockChain/contracts'
+import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
 
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -32,6 +28,7 @@ import {
   useSDVTOperatorsCounts,
 } from 'modules/motions/hooks'
 import { STETH } from 'modules/blockChain/contractAddresses'
+import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 
 type NodeOperator = {
   name: string
@@ -78,10 +75,7 @@ export const formParts = () =>
       ] as NodeOperator[],
       nodeOperatorsCount: NaN,
     }),
-    Component: function StartNewMotionMotionFormLego({
-      fieldNames,
-      submitAction,
-    }) {
+    Component: ({ fieldNames, submitAction }) => {
       const { getValues, setValue, register } = useFormContext()
       const { walletAddress, chainId } = useWeb3()
       const trustedCaller = ContractSDVTNodeOperatorsAdd.useSwrWeb3(
@@ -100,20 +94,6 @@ export const formParts = () =>
       register(keyNodeOperatorsCount)
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
       const { isValid } = useFormState()
-
-      const contractAragonAcl = ContractAragonAcl.useRpc()
-      const sdvtRegistry = ContractSDVTRegistry.useRpc()
-
-      const checkIsAlreadyManager = async (address: string) => {
-        const MANAGE_SIGNING_KEYS_ROLE =
-          await sdvtRegistry.MANAGE_SIGNING_KEYS()
-        const result = await contractAragonAcl.getPermissionParamsLength(
-          address,
-          sdvtRegistry.address,
-          MANAGE_SIGNING_KEYS_ROLE,
-        )
-        return !result.isZero()
-      }
 
       const checkIsLidoRewardAddress = (address: string) => {
         return address === STETH[chainId]
@@ -225,9 +205,13 @@ export const formParts = () =>
                         if (!utils.isAddress(value)) {
                           return 'Address is not valid'
                         }
-                        const isAlreadyManager = await checkIsAlreadyManager(
-                          value,
-                        )
+
+                        const isAlreadyManager =
+                          await checkAddressForManageSigningKeysRole(
+                            value,
+                            chainId,
+                          )
+
                         if (isAlreadyManager) {
                           return 'Address already has a signing keys manager role'
                         }

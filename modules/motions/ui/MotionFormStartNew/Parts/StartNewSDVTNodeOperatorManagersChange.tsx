@@ -22,7 +22,7 @@ import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressForManageSigningKeysRole'
+import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/checkAddressManagerRole'
 import { noSigningKeysRoleError } from 'modules/motions/constants'
 
 type NodeOperator = {
@@ -197,7 +197,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         const canAddressManageKeys =
-                          await checkAddressForManageSigningKeysRole(
+                          await checkIsAddressManagerOfNodeOperator(
                             valueAddress,
                             selectedNodeOperators[i].id,
                             chainId,
@@ -246,7 +246,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         const canAddressManageKeys =
-                          await checkAddressForManageSigningKeysRole(
+                          await checkIsAddressManagerOfNodeOperator(
                             valueAddress,
                             selectedNodeOperators[i].id,
                             chainId,

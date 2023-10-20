@@ -22,7 +22,7 @@ import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressForManageSigningKeysRole'
+import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/checkAddressManagerRole'
 import { noSigningKeysRoleError } from 'modules/motions/constants'
 
 type NodeOperator = {
@@ -162,7 +162,7 @@ export const formParts = createMotionFormPart({
                     name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
                     label="Manager address"
                     disabled={Boolean(
-                      selectedNodeOperators[i].id &&
+                      !selectedNodeOperators[i].id ||
                         !!nodeOperatorsList[Number(selectedNodeOperators[i].id)]
                           .managerAddress,
                     )}
@@ -173,7 +173,7 @@ export const formParts = createMotionFormPart({
                           return 'Address is not valid'
 
                         const canAddressManageKeys =
-                          await checkAddressForManageSigningKeysRole(
+                          await checkIsAddressManagerOfNodeOperator(
                             value,
                             selectedNodeOperators[i].id,
                             chainId,
