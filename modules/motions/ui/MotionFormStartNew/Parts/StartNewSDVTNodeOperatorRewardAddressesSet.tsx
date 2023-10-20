@@ -172,7 +172,7 @@ export const formParts = createMotionFormPart({
                         const idInAdrressMap = rewardAddressesMap[valueAddress]
 
                         /*
-                        Although the specification does not state this,
+                        Although the specification does not yet state this,
                         according to the code, the new reward address should not match
                         any of the reward addresses of other operator nodes.
                         */
