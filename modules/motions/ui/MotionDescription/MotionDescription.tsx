@@ -33,10 +33,12 @@ import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { NestProps } from './types'
 import { DescWrap } from './MotionDescriptionStyle'
-import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
 import { DescSDVTTargetValidatorLimitsUpdate } from './DescSDVTTargetValidatorLimitsUpdate'
+import { DescSDVTNodeOperatorRewardAddressesSet } from './DescSDVTNodeOperatorRewardAddressesSet'
+import { DescSDVTNodeOperatorNamesSet } from './DescSDVTNodeOperatorNamesSet'
+import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
 import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
 
 type DescWithLimitsProps = NestProps<
@@ -198,7 +200,9 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
   // [MotionType.SDVTVettedValidatorsLimitIncrease]: () => <h1>TODO:add desc</h1>,
   // [MotionType.SDVTVettedValidatorsLimitsSet]: () => <h1>TODO:add desc</h1>,
-  // [MotionType.SDVTNodeOperatorNamesSet]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    DescSDVTNodeOperatorRewardAddressesSet,
+  [MotionType.SDVTNodeOperatorNamesSet]: DescSDVTNodeOperatorNamesSet,
   // [MotionType.SDVTNodeOperatorRewardAddressesSet]: () => <h1>TODO:add desc</h1>,
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     DescSDVTTargetValidatorLimitsUpdate,
