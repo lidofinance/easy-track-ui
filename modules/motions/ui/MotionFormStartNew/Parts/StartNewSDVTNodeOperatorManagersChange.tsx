@@ -113,9 +113,11 @@ export const formParts = createMotionFormPart({
 
       const invertedRecord: Record<string, number | undefined> = {}
       for (const key in result) {
-        const value = result[key]
-        if (value) {
-          invertedRecord[value] = parseInt(key)
+        if (result.hasOwnProperty(key)) {
+          const value = result[key]
+          if (value) {
+            invertedRecord[value] = parseInt(key)
+          }
         }
       }
 
