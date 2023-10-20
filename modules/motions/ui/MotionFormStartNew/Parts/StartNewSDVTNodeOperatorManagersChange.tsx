@@ -180,6 +180,7 @@ export const formParts = createMotionFormPart({
                     name={`${fieldNames.nodeOperators}.${i}.oldManagerAddress`}
                     label="Manager address"
                     disabled={
+                      !selectedNodeOperators[i].id ||
                       !!nodeOperatorsList[Number(selectedNodeOperators[i].id)]
                         .managerAddress
                     }
