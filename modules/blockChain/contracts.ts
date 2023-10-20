@@ -325,7 +325,7 @@ export const ContractSDVTNodeOperatorManagerChange = createContractHelpers({
   address: EvmAddressesByType[MotionType.SDVTNodeOperatorManagerChange],
 })
 
-// export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
-//   factory: TypeChain.UpdateTargetValidatorLimitsAbi__factory,
-//   address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
-// })
+export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
+  factory: TypeChain.UpdateTargetValidatorLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
+})

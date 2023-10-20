@@ -110,14 +110,14 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x2b956B578D0f44E0BD484d1A63c8A164BBEf6B58',
     // [MotionType.SDVTVettedValidatorsLimitsSet]:
     //   '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
+    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+      '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
     [MotionType.SDVTNodeOperatorRewardAddressesSet]:
       '0x85350e579C71a78810305f860380a3315b3e6Ed9',
     [MotionType.SDVTNodeOperatorNamesSet]:
       '0xc8b9F2bfFFF2f2B8F9C32A7b39a5AAa0644Fe632',
     [MotionType.SDVTNodeOperatorManagerChange]:
       '0x2Ed0FB58ba7637f972100Db7427614C9E30Ed684',
-    // [MotionType.SDVTTargetValidatorLimitsUpdate]:
-    //   '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
