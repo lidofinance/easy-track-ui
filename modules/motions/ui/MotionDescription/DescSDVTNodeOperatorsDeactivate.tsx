@@ -19,7 +19,7 @@ export function DescSDVTNodeOperatorsDeactivate({
             <b>{nodeOperator ? nodeOperator.name : ''}</b> (id: {nodeOperatorId}
             ) and revoke <b>MANAGE_SIGNING_KEYS</b> role from{' '}
             <AddressInlineWithPop address={program.managerAddress} />
-            {index === program.length - 1 ? '.' : '; '}
+            {index === callData.length - 1 ? '.' : '; '}
           </div>
         )
       })}

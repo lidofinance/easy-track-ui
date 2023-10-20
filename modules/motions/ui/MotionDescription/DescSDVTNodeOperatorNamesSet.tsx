@@ -1,12 +1,11 @@
-import { ActivateNodeOperatorsAbi } from 'generated'
+import { SetNodeOperatorNamesAbi } from 'generated'
 import { NestProps } from './types'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 
-// ActivateNodeOperators
-export function DescSDVTNodeOperatorsActivate({
+// SetNodeOperatorNames
+export function DescSDVTNodeOperatorNamesSet({
   callData,
-}: NestProps<ActivateNodeOperatorsAbi['decodeEVMScriptCallData']>) {
+}: NestProps<SetNodeOperatorNamesAbi['decodeEVMScriptCallData']>) {
   const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
   return (
     <>
@@ -15,10 +14,8 @@ export function DescSDVTNodeOperatorsActivate({
         const nodeOperator = nodeOperatorsList?.[nodeOperatorId]
         return (
           <div key={nodeOperatorId}>
-            Activate Node Operator{' '}
-            <b>{nodeOperator ? nodeOperator.name : ''}</b> (id: {nodeOperatorId}
-            ) and set <b>MANAGE_SIGNING_KEYS</b> role to{' '}
-            <AddressInlineWithPop address={program.managerAddress} />
+            Change Node Operator <b>{nodeOperator ? nodeOperator.name : ''}</b>{' '}
+            (id: {nodeOperatorId}) name to <b>{program.name}</b>
             {index === callData.length - 1 ? '.' : '; '}
           </div>
         )
