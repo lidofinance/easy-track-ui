@@ -3,7 +3,7 @@ import { NestProps } from './types'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 
-// SetNodeOperatorNames
+// SetNodeOperatorRewardAddresses
 export function DescSDVTNodeOperatorRewardAddressesSet({
   callData,
 }: NestProps<SetNodeOperatorRewardAddressesAbi['decodeEVMScriptCallData']>) {
