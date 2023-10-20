@@ -8,6 +8,7 @@ import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
 import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
 import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
 import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
+import * as StartNewSDVTVettedValidatorsLimitsSet from './StartNewSDVTVettedValidatorsLimitsSet'
 import * as StartNewSDVTTargetValidatorLimitsUpdate from './StartNewSDVTTargetValidatorLimitsUpdate'
 import * as StartNewSDVTNodeOperatorRewardAddressesSet from './StartNewSDVTNodeOperatorRewardAddressesSet'
 import * as StartNewSDVTNodeOperatorNamesSet from './StartNewSDVTNodeOperatorNamesSet'
@@ -70,6 +71,8 @@ export const formParts = {
     StartNewSDVTNodeOperatorsActivate.formParts,
   [MotionTypeForms.SDVTNodeOperatorsDeactivate]:
     StartNewSDVTNodeOperatorsDeactivate.formParts,
+  [MotionTypeForms.SDVTVettedValidatorsLimitsSet]:
+    StartNewSDVTVettedValidatorsLimitsSet.formParts,
   [MotionTypeForms.SDVTTargetValidatorLimitsUpdate]:
     StartNewSDVTTargetValidatorLimitsUpdate.formParts,
   [MotionTypeForms.SDVTNodeOperatorRewardAddressesSet]:

@@ -108,8 +108,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x4C0e79308f2E672b9dB9f2E6fD183Ec6025eFc37',
     [MotionType.SDVTNodeOperatorsDeactivate]:
       '0x2b956B578D0f44E0BD484d1A63c8A164BBEf6B58',
-    // [MotionType.SDVTVettedValidatorsLimitsSet]:
-    //   '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
     [MotionType.SDVTTargetValidatorLimitsUpdate]:
       '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
     [MotionType.SDVTNodeOperatorRewardAddressesSet]:

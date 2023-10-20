@@ -35,6 +35,7 @@ import { NestProps } from './types'
 import { DescWrap } from './MotionDescriptionStyle'
 import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
+import { DescSDVTVettedValidatorsLimitsSet } from './DescSDVTVettedValidatorsLimitsSet'
 import { DescSDVTTargetValidatorLimitsUpdate } from './DescSDVTTargetValidatorLimitsUpdate'
 import { DescSDVTNodeOperatorRewardAddressesSet } from './DescSDVTNodeOperatorRewardAddressesSet'
 import { DescSDVTNodeOperatorNamesSet } from './DescSDVTNodeOperatorNamesSet'
@@ -198,19 +199,14 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.SDVTNodeOperatorsAdd]: DescSDVTNodeOperatorsAdd,
   [MotionType.SDVTNodeOperatorsActivate]: DescSDVTNodeOperatorsActivate,
   [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
-  // [MotionType.SDVTVettedValidatorsLimitIncrease]: () => <h1>TODO:add desc</h1>,
-  // [MotionType.SDVTVettedValidatorsLimitsSet]: () => <h1>TODO:add desc</h1>,
+  [MotionType.SDVTVettedValidatorsLimitsSet]: DescSDVTVettedValidatorsLimitsSet,
   [MotionType.SDVTNodeOperatorRewardAddressesSet]:
     DescSDVTNodeOperatorRewardAddressesSet,
   [MotionType.SDVTNodeOperatorNamesSet]: DescSDVTNodeOperatorNamesSet,
-  // [MotionType.SDVTNodeOperatorRewardAddressesSet]: () => <h1>TODO:add desc</h1>,
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     DescSDVTTargetValidatorLimitsUpdate,
   [MotionType.SDVTNodeOperatorManagerChange]:
     DescSDVTNodeOperatorManagersChange,
-  // [MotionType.SDVTManageSigningKeysRoleManagerRenounce]: () => (
-  //   <h1>TODO:add desc</h1>
-  // ),
 } as const
 
 type Props = {
