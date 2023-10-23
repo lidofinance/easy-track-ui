@@ -118,3 +118,8 @@ export const RewardsShareProgramRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xdc7300622948a7AdaF339783F6991F9cdDD79776',
   [CHAINS.Goerli]: '0x8b59609f4bEa230E565Ae0C3C7b6913746Df1cF2',
 }
+
+export const SDVTRegistry: ChainAddressMap = {
+  [CHAINS.Goerli]: '0x6370FA71b9Fd83aFC4196ee189a0d348C90E93b0',
+  [CHAINS.Holesky]: '0x11a93807078f8BB880c1BD0ee4C387537de4b4b6',
+}

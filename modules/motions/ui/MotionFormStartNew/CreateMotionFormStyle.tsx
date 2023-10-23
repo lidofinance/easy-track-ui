@@ -85,6 +85,14 @@ export const MessageBox = styled.div`
   border-radius: ${({ theme }) => theme.borderRadiusesMap.md + 'px'};
 `
 
+export const ErrorBox = styled.div`
+  margin-bottom: 20px;
+  padding: 20px 15px;
+  font-size: 14px;
+  background-color: rgba(255, 0, 0, 0.25);
+  border-radius: ${({ theme }) => theme.borderRadiusesMap.md + 'px'};
+`
+
 export const RetryHint = styled(Text).attrs({
   size: 12,
   weight: 500,

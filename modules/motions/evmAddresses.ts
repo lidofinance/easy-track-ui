@@ -1,13 +1,22 @@
 import { flow, map, toPairs, fromPairs, mapValues } from 'lodash/fp'
 import { CHAINS } from '@lido-sdk/constants'
 import { MotionType } from './types'
-import type { Invert } from 'modules/shared/utils/utilTypes'
+import { Invert } from 'modules/shared/utils/utilTypes'
 
-//
-// Addresses should be lower cased
-//
+const EvmSupportedChains = [
+  CHAINS.Mainnet,
+  CHAINS.Goerli,
+  CHAINS.Holesky,
+] as const
 
-export const EvmAddressesByChain = {
+export type EvmSupportedChain = typeof EvmSupportedChains[number]
+
+type EvmAddresses = Record<
+  EvmSupportedChain,
+  Partial<Record<MotionType, string>>
+>
+
+export const EvmAddressesByChain: EvmAddresses = {
   // Mainnet
   [CHAINS.Mainnet]: {
     [MotionType.NodeOperatorIncreaseLimit]:
@@ -97,6 +106,22 @@ export const EvmAddressesByChain = {
       '0x932aab3D6057ed2Beef95471414831C4535600E9',
     [MotionType.RewardsShareProgramTopUp]:
       '0x5Bb391170899A7b8455A442cca65078ff3E1639C',
+    [MotionType.SDVTNodeOperatorsAdd]:
+      '0x69ab4BeD4D136F1e22c6072277BA5E52A246672B',
+    [MotionType.SDVTNodeOperatorsActivate]:
+      '0x4C0e79308f2E672b9dB9f2E6fD183Ec6025eFc37',
+    [MotionType.SDVTNodeOperatorsDeactivate]:
+      '0x2b956B578D0f44E0BD484d1A63c8A164BBEf6B58',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
+    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+      '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+      '0x85350e579C71a78810305f860380a3315b3e6Ed9',
+    [MotionType.SDVTNodeOperatorNamesSet]:
+      '0xc8b9F2bfFFF2f2B8F9C32A7b39a5AAa0644Fe632',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0x2Ed0FB58ba7637f972100Db7427614C9E30Ed684',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -147,6 +172,23 @@ export const EvmAddressesByChain = {
     [MotionType.RewardsShareProgramRemove]: '',
     [MotionType.RewardsShareProgramTopUp]: '',
 
+    [MotionType.SDVTNodeOperatorsAdd]:
+      '0xeF5233A5bbF243149E35B353A73FFa8931FDA02b',
+    [MotionType.SDVTNodeOperatorsActivate]:
+      '0x5b4A9048176D5bA182ceec8e673D8aA6927A40D6',
+    [MotionType.SDVTNodeOperatorsDeactivate]:
+      '0x88d247cdf4ff4A4AAA8B3DD9dd22D1b89219FB3B',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0x30Cb36DBb0596aD9Cf5159BD2c4B1456c18e47E8',
+    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+      '0xC91a676A69Eb49be9ECa1954fE6fc861AE07A9A2',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+      '0x6Bfc576018C7f3D2a9180974E5c8e6CFa021f617',
+    [MotionType.SDVTNodeOperatorNamesSet]:
+      '0x4792BaC0a262200fA7d3b68e7622bFc1c2c3a72d',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0xb8C4728bc0826bA5864D02FA53148de7A44C2f7E',
+
     // next motion factories are @deprecated
     // we are keeping them here to display history data
     [MotionType.LEGOTopUp]: '',
@@ -178,16 +220,6 @@ export const parseEvmSupportedChainId = (
   return numChainId
 }
 
-export const EvmSupportedChains = Object.keys(EvmAddressesByChain)
-  .map(v => Number(v))
-  .filter(v => Number.isFinite(v)) as EvmSupportedChain[]
-
-export type EvmSupportedChain = keyof EvmAddresses
-
-// intentionally
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export type EvmAddresses = typeof EvmAddressesByChain
-
 export const EvmUnrecognized = 'EvmUnrecognized'
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -207,13 +239,17 @@ export const EvmTypesByAdress = mapValues(
 export const EvmAddressesByType = Object.values(MotionType).reduce(
   (res, motionType) => ({
     ...res,
-    [motionType]: EvmSupportedChains.reduce(
-      (resIn, chainId) => ({
+    [motionType]: EvmSupportedChains.reduce((resIn, chainId) => {
+      const address = EvmAddressesByChain[chainId][motionType]
+      if (!address) {
+        return resIn
+      }
+
+      return {
         ...resIn,
-        [chainId]: EvmAddressesByChain[chainId][motionType],
-      }),
-      {} as { [C in EvmSupportedChain]: EvmAddresses[C][typeof motionType] },
-    ),
+        [chainId]: address,
+      }
+    }, {} as { [C in EvmSupportedChain]: EvmAddresses[C][typeof motionType] }),
   }),
   {} as {
     [M in MotionType]: { [C in EvmSupportedChain]: EvmAddresses[C][M] }

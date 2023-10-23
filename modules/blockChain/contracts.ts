@@ -282,3 +282,50 @@ export const ContractRewardsShareProgramTopUp = createContractHelpers({
   factory: TypeChain.TopUpAllowedRecipientsAbi__factory,
   address: EvmAddressesByType[MotionType.RewardsShareProgramTopUp],
 })
+
+export const ContractSDVTRegistry = createContractHelpers({
+  factory: TypeChain.SDVTRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.SDVTRegistry,
+})
+
+export const ContractSDVTNodeOperatorsAdd = createContractHelpers({
+  factory: TypeChain.AddNodeOperatorsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsAdd],
+})
+
+export const ContractSDVTNodeOperatorsActivate = createContractHelpers({
+  factory: TypeChain.ActivateNodeOperatorsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsActivate],
+})
+
+export const ContractSDVTNodeOperatorsDeactivate = createContractHelpers({
+  factory: TypeChain.DeactivateNodeOperatorsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsDeactivate],
+})
+
+export const ContractSDVTVettedValidatorsLimitsSet = createContractHelpers({
+  factory: TypeChain.SetVettedValidatorsLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTVettedValidatorsLimitsSet],
+})
+
+export const ContractSDVTNodeOperatorNamesSet = createContractHelpers({
+  factory: TypeChain.SetNodeOperatorNamesAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorNamesSet],
+})
+
+export const ContractSDVTNodeOperatorRewardAddressesSet = createContractHelpers(
+  {
+    factory: TypeChain.SetNodeOperatorRewardAddressesAbi__factory,
+    address: EvmAddressesByType[MotionType.SDVTNodeOperatorRewardAddressesSet],
+  },
+)
+
+export const ContractSDVTNodeOperatorManagerChange = createContractHelpers({
+  factory: TypeChain.ChangeNodeOperatorManagersAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorManagerChange],
+})
+
+export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
+  factory: TypeChain.UpdateTargetValidatorLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
+})

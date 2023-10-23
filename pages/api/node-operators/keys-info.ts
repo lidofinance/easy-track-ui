@@ -51,7 +51,6 @@ const requestHoleskyOperators = async (
   walletAddress: string,
 ) => {
   const api = 'https://operators-holesky.testnet.fi/api'
-  console.log(`${api}/modules?chainId=${chainId}`)
   const modulesResp = await fetch(`${api}/modules?chainId=${chainId}`)
   const modules: Module[] = await modulesResp.json()
 
@@ -99,7 +98,6 @@ const requestHoleskyOperators = async (
       },
     },
   ]
-  console.log('result', result)
   return result
 }
 

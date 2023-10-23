@@ -32,6 +32,15 @@ import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { getMotionTypeByScriptFactory } from 'modules/motions/utils/getMotionType'
 import { NestProps } from './types'
+import { DescWrap } from './MotionDescriptionStyle'
+import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactivate'
+import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
+import { DescSDVTVettedValidatorsLimitsSet } from './DescSDVTVettedValidatorsLimitsSet'
+import { DescSDVTTargetValidatorLimitsUpdate } from './DescSDVTTargetValidatorLimitsUpdate'
+import { DescSDVTNodeOperatorRewardAddressesSet } from './DescSDVTNodeOperatorRewardAddressesSet'
+import { DescSDVTNodeOperatorNamesSet } from './DescSDVTNodeOperatorNamesSet'
+import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
+import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -187,6 +196,17 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.RewardsShareProgramTopUp}
     />
   ),
+  [MotionType.SDVTNodeOperatorsAdd]: DescSDVTNodeOperatorsAdd,
+  [MotionType.SDVTNodeOperatorsActivate]: DescSDVTNodeOperatorsActivate,
+  [MotionType.SDVTNodeOperatorsDeactivate]: DescSDVTNodeOperatorsDeactivate,
+  [MotionType.SDVTVettedValidatorsLimitsSet]: DescSDVTVettedValidatorsLimitsSet,
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    DescSDVTNodeOperatorRewardAddressesSet,
+  [MotionType.SDVTNodeOperatorNamesSet]: DescSDVTNodeOperatorNamesSet,
+  [MotionType.SDVTTargetValidatorLimitsUpdate]:
+    DescSDVTTargetValidatorLimitsUpdate,
+  [MotionType.SDVTNodeOperatorManagerChange]:
+    DescSDVTNodeOperatorManagersChange,
 } as const
 
 type Props = {
@@ -224,5 +244,9 @@ export function MotionDescription({ motion }: Props) {
 
   const Desc = MOTION_DESCRIPTIONS[motionType]
 
-  return <Desc callData={callData} />
+  return (
+    <DescWrap>
+      <Desc callData={callData} />
+    </DescWrap>
+  )
 }

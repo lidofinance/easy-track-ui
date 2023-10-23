@@ -23,9 +23,11 @@ export const getMotionTypeByScriptFactory = (
   scriptFactory: string,
 ): MotionType | EvmUnrecognized => {
   try {
-    return EvmTypesByAdress[parseEvmSupportedChainId(chainId)][
-      parseScriptFactory(chainId, scriptFactory)
-    ]
+    return (
+      EvmTypesByAdress[parseEvmSupportedChainId(chainId)][
+        parseScriptFactory(chainId, scriptFactory)
+      ] ?? EvmUnrecognized
+    )
   } catch {
     return EvmUnrecognized
   }
