@@ -86,7 +86,7 @@ export const formParts = createMotionFormPart({
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch, setValue } = useFormContext()
+    const { watch } = useFormContext()
     const { isValid } = useFormState()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
@@ -135,17 +135,21 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => {
+        {fieldsArr.fields.map((item, fieldIndex) => {
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>
+                      Update #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove update {i + 1}
+                    <RemoveItemButton
+                      onClick={() => fieldsArr.remove(fieldIndex)}
+                    >
+                      Remove update {fieldIndex + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -153,21 +157,19 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <SelectControl
                     label="Node operator"
-                    name={`${fieldNames.nodeOperators}.${i}.id`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     rules={{ required: 'Field is required' }}
                     onChange={(value: string) => {
-                      const nodeOperatorId = Number(value)
-                      const managerAddress =
-                        nodeOperatorsList[nodeOperatorId]?.managerAddress
+                      const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      if (managerAddress) {
-                        const newNodeOperators = [...selectedNodeOperators]
-                        newNodeOperators[i].oldManagerAddress = managerAddress
-                        setValue(fieldNames.nodeOperators, newNodeOperators)
+                      if (nodeOperator.managerAddress) {
+                        fieldsArr.update(fieldIndex, {
+                          oldManagerAddress: nodeOperator.managerAddress,
+                        })
                       }
                     }}
                   >
-                    {getFilteredOptions(i).map(nodeOperator => (
+                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
                       <Option
                         key={nodeOperator.id}
                         value={nodeOperator.id}
@@ -179,11 +181,13 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.oldManagerAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`}
                     label="Manager address"
                     disabled={
-                      !!nodeOperatorsList[Number(selectedNodeOperators[i].id)]
-                        .managerAddress
+                      !selectedNodeOperators[fieldIndex].id ||
+                      !!nodeOperatorsList[
+                        Number(selectedNodeOperators[fieldIndex].id)
+                      ].managerAddress
                     }
                     rules={{
                       required: 'Field is required',
@@ -200,7 +204,7 @@ export const formParts = createMotionFormPart({
                         const canAddressManageKeys =
                           await checkIsAddressManagerOfNodeOperator(
                             valueAddress,
-                            selectedNodeOperators[i].id,
+                            selectedNodeOperators[fieldIndex].id,
                             chainId,
                           )
 
@@ -214,7 +218,7 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.newManagerAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.newManagerAddress`}
                     label="New manager address"
                     rules={{
                       required: 'Field is required',
@@ -225,18 +229,23 @@ export const formParts = createMotionFormPart({
 
                         const valueAddress = utils.getAddress(value)
 
-                        const idInAdrressMap = managerAddressesMap[valueAddress]
-                        if (typeof idInAdrressMap === 'number') {
+                        /*
+                        Although the specification does not yet state this,
+                        the new manager address should not match
+                        any of the manager addresses of other operator nodes.
+                        */
+                        const idInAddressMap = managerAddressesMap[valueAddress]
+                        if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
 
                         const addressInSelectedNodeOperatorsIndex =
                           selectedNodeOperators.findIndex(
-                            ({ newManagerAddress, id }) =>
+                            ({ newManagerAddress }, index) =>
                               newManagerAddress &&
                               utils.getAddress(newManagerAddress) ===
                                 utils.getAddress(valueAddress) &&
-                              id !== selectedNodeOperators[i].id,
+                              fieldIndex !== index,
                           )
 
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
@@ -250,7 +259,7 @@ export const formParts = createMotionFormPart({
                         const canAddressManageKeys =
                           await checkIsAddressManagerOfNodeOperator(
                             valueAddress,
-                            selectedNodeOperators[i].id,
+                            selectedNodeOperators[fieldIndex].id,
                             chainId,
                           )
 

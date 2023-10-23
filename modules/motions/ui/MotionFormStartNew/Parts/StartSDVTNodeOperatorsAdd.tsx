@@ -1,6 +1,6 @@
 import { utils, constants } from 'ethers'
 
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo } from 'react'
 import { useFieldArray, useFormState, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 
@@ -15,7 +15,6 @@ import {
   FieldsWrapper,
   FieldsHeader,
   FieldsHeaderDesc,
-  ErrorBox,
 } from '../CreateMotionFormStyle'
 
 import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
@@ -29,6 +28,7 @@ import {
 } from 'modules/motions/hooks'
 import { STETH } from 'modules/blockChain/contractAddresses'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
+import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 
 type NodeOperator = {
   name: string
@@ -49,14 +49,17 @@ export const formParts = () =>
     motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
       const encodedCallData = new utils.AbiCoder().encode(
-        ['uint256', 'tuple(string, address, address)[]'],
+        [
+          'uint256 nodeOperatorsCount',
+          'tuple(string name, address rewardAddress, address managerAddress)[]',
+        ],
         [
           formData.nodeOperatorsCount,
-          formData.nodeOperators.map(item => [
-            item.name,
-            utils.getAddress(item.rewardAddress),
-            utils.getAddress(item.managerAddress),
-          ]),
+          formData.nodeOperators.map(item => ({
+            name: item.name,
+            rewardAddress: utils.getAddress(item.rewardAddress),
+            managerAddress: utils.getAddress(item.managerAddress),
+          })),
         ],
       )
       const gasLimit = await estimateGasFallback(
@@ -76,54 +79,71 @@ export const formParts = () =>
       nodeOperatorsCount: NaN,
     }),
     Component: ({ fieldNames, submitAction }) => {
-      const { getValues, setValue, register } = useFormContext()
+      const { setValue, watch } = useFormContext()
       const { walletAddress, chainId } = useWeb3()
       const trustedCaller = ContractSDVTNodeOperatorsAdd.useSwrWeb3(
         'trustedCaller',
         [],
       )
       const isTrustedCallerConnected = trustedCaller.data === walletAddress
-      const [hasDuplicateManagers, setHasDuplicateManagers] = useState(false)
 
-      const { data: NONameLength, initialLoading: NONameLengthLoading } =
-        useSDVTOperatorNameLimit()
+      const {
+        data: nodeOperatorsList,
+        initialLoading: isNodeOperatorsListLoading,
+      } = useSDVTNodeOperatorsList()
+      const {
+        data: maxNodeOperatorNameLength,
+        initialLoading: NONameLengthLoading,
+      } = useSDVTOperatorNameLimit()
       const { data: NOCounts, initialLoading: maxOperatorsLoading } =
         useSDVTOperatorsCounts()
 
-      const keyNodeOperatorsCount = `${MotionTypeForms.SDVTNodeOperatorsAdd}.nodeOperatorsCount`
-      register(keyNodeOperatorsCount)
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
       const { isValid } = useFormState()
+      const selectedNodeOperators: NodeOperator[] = watch(
+        fieldNames.nodeOperators,
+      )
 
       useEffect(() => {
         if (typeof NOCounts?.current === 'number') {
-          setValue(keyNodeOperatorsCount, NOCounts.current)
+          setValue(fieldNames.nodeOperatorsCount, NOCounts.current)
         }
-      }, [setValue, fieldNames.nodeOperators, NOCounts, keyNodeOperatorsCount])
+      }, [setValue, NOCounts, fieldNames.nodeOperatorsCount])
 
-      const handleAddNodeOperators = useCallback(() => {
-        const nodeOperators = getValues().SDVTNodeOperatorsAdd
-          .nodeOperators as NodeOperator[]
-        const managerAddressList = nodeOperators.map(
-          item => item.managerAddress,
-        )
-        const uniqManagerAddressList = Array.from(new Set(managerAddressList))
-        if (managerAddressList.length !== uniqManagerAddressList.length) {
-          setHasDuplicateManagers(true)
-          return
+      const nodeOperatorsDetailsMaps = useMemo(() => {
+        const result: Record<
+          'name' | 'rewardAddress' | 'managerAddress',
+          Record<string, number | undefined>
+        > = { name: {}, rewardAddress: {}, managerAddress: {} }
+        if (!nodeOperatorsList) return result
+
+        for (const nodeOperator of nodeOperatorsList) {
+          result['name'][nodeOperator.name] = nodeOperator.id
+          result['rewardAddress'][nodeOperator.rewardAddress] = nodeOperator.id
+          if (nodeOperator.managerAddress) {
+            result['managerAddress'][nodeOperator.managerAddress] =
+              nodeOperator.id
+          }
         }
-        fieldsArr.append({ name: '', rewardAddress: '', managerAddress: '' })
-      }, [fieldsArr, setHasDuplicateManagers, getValues])
 
-      const handleRemoveNodeOperator = useCallback(
-        (i: number) => fieldsArr.remove(i),
-        [fieldsArr],
-      )
+        return result
+      }, [nodeOperatorsList])
+
+      const handleAddNodeOperators = () =>
+        fieldsArr.append({
+          name: '',
+          rewardAddress: '',
+          managerAddress: '',
+        } as NodeOperator)
+
+      const handleRemoveNodeOperator = (fieldIndex: number) =>
+        fieldsArr.remove(fieldIndex)
 
       if (
         trustedCaller.initialLoading ||
         NONameLengthLoading ||
-        maxOperatorsLoading
+        maxOperatorsLoading ||
+        isNodeOperatorsListLoading
       ) {
         return <PageLoader />
       }
@@ -136,18 +156,20 @@ export const formParts = () =>
 
       return (
         <>
-          {fieldsArr.fields.map((item, i) => (
+          {fieldsArr.fields.map((item, fieldIndex) => (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>NodeOperator #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>
+                      NodeOperator #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton
-                      onClick={() => handleRemoveNodeOperator(i)}
+                      onClick={() => handleRemoveNodeOperator(fieldIndex)}
                     >
-                      Remove node operator {i + 1}
+                      Remove node operator {fieldIndex + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -155,12 +177,32 @@ export const formParts = () =>
                 <Fieldset>
                   <InputControl
                     label="Name"
-                    name={`${fieldNames.nodeOperators}.${i}.name`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.name`}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!NONameLength || value?.length > NONameLength)
-                          return 'Name is too long'
+                        const idInNameMap =
+                          nodeOperatorsDetailsMaps['name'][value]
+
+                        if (typeof idInNameMap === 'number') {
+                          return 'Name must not be in use by another node operator'
+                        }
+
+                        const nameInSelectedNodeOperatorsIndex =
+                          selectedNodeOperators.findIndex(
+                            ({ name }, index) =>
+                              name.toLowerCase() === value.toLowerCase() &&
+                              fieldIndex !== index,
+                          )
+
+                        if (nameInSelectedNodeOperatorsIndex !== -1) {
+                          return 'Name is already in use by another update'
+                        }
+
+                        if (maxNodeOperatorNameLength?.lt(value.length)) {
+                          return `Name length must be less or equal than ${maxNodeOperatorNameLength} characters`
+                        }
+
                         return true
                       },
                     }}
@@ -170,7 +212,7 @@ export const formParts = () =>
                 <Fieldset>
                   <InputControl
                     label="Reward address"
-                    name={`${fieldNames.nodeOperators}.${i}.rewardAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.rewardAddress`}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
@@ -190,6 +232,29 @@ export const formParts = () =>
                         ) {
                           return 'Address must not be stETH address'
                         }
+
+                        const idInAddressMap =
+                          nodeOperatorsDetailsMaps['rewardAddress'][
+                            valueAddress
+                          ]
+
+                        if (typeof idInAddressMap === 'number') {
+                          return 'Address must not be in use by another node operator'
+                        }
+
+                        const addressInSelectedNodeOperatorsIndex =
+                          selectedNodeOperators.findIndex(
+                            ({ rewardAddress }, index) =>
+                              rewardAddress &&
+                              utils.getAddress(rewardAddress) ===
+                                utils.getAddress(valueAddress) &&
+                              fieldIndex !== index,
+                          )
+
+                        if (addressInSelectedNodeOperatorsIndex !== -1) {
+                          return 'Address is already in use by another update'
+                        }
+
                         return true
                       },
                     }}
@@ -199,12 +264,35 @@ export const formParts = () =>
                 <Fieldset>
                   <InputControl
                     label={`Manager address`}
-                    name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`}
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
                         if (!utils.isAddress(value)) {
                           return 'Address is not valid'
+                        }
+
+                        const valueAddress = utils.getAddress(value)
+                        const idInAddressMap =
+                          nodeOperatorsDetailsMaps['managerAddress'][
+                            valueAddress
+                          ]
+
+                        if (typeof idInAddressMap === 'number') {
+                          return 'Address must not be in use by another node operator'
+                        }
+
+                        const addressInSelectedNodeOperatorsIndex =
+                          selectedNodeOperators.findIndex(
+                            ({ managerAddress }, index) =>
+                              managerAddress &&
+                              utils.getAddress(managerAddress) ===
+                                utils.getAddress(valueAddress) &&
+                              fieldIndex !== index,
+                          )
+
+                        if (addressInSelectedNodeOperatorsIndex !== -1) {
+                          return 'Address is already in use by another update'
                         }
 
                         const isAlreadyManager =
@@ -224,11 +312,6 @@ export const formParts = () =>
               </FieldsWrapper>
             </Fragment>
           ))}
-          {hasDuplicateManagers && (
-            <ErrorBox>
-              Different node operators can&apos;t have same manager address
-            </ErrorBox>
-          )}
           {isValid &&
             NOCounts &&
             NOCounts.max > fieldsArr.fields.length + NOCounts.current && (

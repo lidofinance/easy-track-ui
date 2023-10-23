@@ -10,15 +10,15 @@ export function DescSDVTNodeOperatorsDeactivate({
   const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
   return (
     <>
-      {callData.map((program, index) => {
-        const nodeOperatorId = program.nodeOperatorId.toNumber()
+      {callData.map((item, index) => {
+        const nodeOperatorId = item.nodeOperatorId.toNumber()
         const nodeOperator = nodeOperatorsList?.[nodeOperatorId]
         return (
           <div key={nodeOperatorId}>
             Deactivate Node Operator{' '}
             <b>{nodeOperator ? nodeOperator.name : ''}</b> (id: {nodeOperatorId}
             ) and revoke <b>MANAGE_SIGNING_KEYS</b> role from{' '}
-            <AddressInlineWithPop address={program.managerAddress} />
+            <AddressInlineWithPop address={item.managerAddress} />
             {index === callData.length - 1 ? '.' : '; '}
           </div>
         )

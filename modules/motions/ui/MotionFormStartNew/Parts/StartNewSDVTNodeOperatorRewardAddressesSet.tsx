@@ -63,10 +63,7 @@ export const formParts = createMotionFormPart({
       },
     ] as NodeOperator[],
   }),
-  Component: function StartNewMotionMotionFormLego({
-    fieldNames,
-    submitAction,
-  }) {
+  Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
     const {
       data: nodeOperatorsList,
@@ -125,17 +122,21 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => {
+        {fieldsArr.fields.map((item, fieldIndex) => {
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>
+                      Update #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove update {i + 1}
+                    <RemoveItemButton
+                      onClick={() => fieldsArr.remove(fieldIndex)}
+                    >
+                      Remove update {fieldIndex + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -143,10 +144,10 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <SelectControl
                     label="Node operator"
-                    name={`${fieldNames.nodeOperators}.${i}.id`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     rules={{ required: 'Field is required' }}
                   >
-                    {getFilteredOptions(i).map(nodeOperator => (
+                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
                       <Option
                         key={nodeOperator.id}
                         value={nodeOperator.id}
@@ -158,7 +159,7 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.newRewardAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.newRewardAddress`}
                     label="New reward address"
                     rules={{
                       required: 'Field is required',
@@ -169,24 +170,24 @@ export const formParts = createMotionFormPart({
 
                         const valueAddress = utils.getAddress(value)
 
-                        const idInAdrressMap = rewardAddressesMap[valueAddress]
+                        const idInAddressMap = rewardAddressesMap[valueAddress]
 
                         /*
-                        Although the specification does not state this,
+                        Although the specification does not yet state this,
                         according to the code, the new reward address should not match
                         any of the reward addresses of other operator nodes.
                         */
-                        if (typeof idInAdrressMap === 'number') {
+                        if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
 
                         const addressInSelectedNodeOperatorsIndex =
                           selectedNodeOperators.findIndex(
-                            ({ newRewardAddress, id }) =>
+                            ({ newRewardAddress }, index) =>
                               newRewardAddress &&
                               utils.getAddress(newRewardAddress) ===
                                 utils.getAddress(valueAddress) &&
-                              id !== selectedNodeOperators[i].id,
+                              fieldIndex !== index,
                           )
 
                         /*
