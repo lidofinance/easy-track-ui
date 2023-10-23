@@ -47,6 +47,7 @@ export const useAvailableMotions = () => {
   const contracts = useMemo(() => {
     return Object.values(EVM_CONTRACTS).filter(
       contract =>
+        contract.address[chainId] &&
         contract.address[chainId] !== nodeOperatorIncreaseLimitAddress,
     )
   }, [chainId, nodeOperatorIncreaseLimitAddress])
