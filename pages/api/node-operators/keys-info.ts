@@ -1,17 +1,128 @@
 import { createNextConnect } from 'modules/shared/utils/createNextConnect'
 import { parseChainId } from 'modules/blockChain/chains'
 import { fetch } from '@lido-sdk/fetch'
+import { CHAINS } from '@lido-sdk/constants'
+import { KeysInfo } from 'modules/motions/types'
+import { utils } from 'ethers'
+
+export type Module = {
+  id: number
+  stakingModuleAddress: string
+}
+
+export type KeysInfoOperatorNew = {
+  id: number
+  active: boolean
+  name: string
+  rewardAddress: string
+  totalSigningKeys: number
+  usedSigningKeys: number
+  stakingLimit: number
+  stoppedValidators: number
+  unusedBellowStakingLimit: number
+  unusedOverStakingLimit: number
+  duplicates: string[]
+  invalid: string[]
+}
+
+export type KeysInfoNew = {
+  operators: undefined | KeysInfoOperatorNew[]
+  summary: {
+    moduleId: number
+  }
+}
+
+const requestMainnetOperators = async (chainId: number) => {
+  const data = await fetch(
+    `https://operators.lido.fi/api/operators?chainId=${chainId}`,
+  )
+  return data.json()
+}
+const requestTestnetOperators = async (chainId: number) => {
+  const data = await fetch(
+    `https://operators.testnet.fi/api/operators?chainId=${chainId}`,
+  )
+  return data.json()
+}
+
+const requestHoleskyOperators = async (
+  chainId: number,
+  moduleAddress: string,
+  walletAddress: string,
+) => {
+  const api = 'https://operators-holesky.testnet.fi/api'
+  console.log(`${api}/modules?chainId=${chainId}`)
+  const modulesResp = await fetch(`${api}/modules?chainId=${chainId}`)
+  const modules: Module[] = await modulesResp.json()
+
+  const module = modules.find(
+    item =>
+      utils.getAddress(item.stakingModuleAddress) ===
+      utils.getAddress(moduleAddress),
+  )
+  const result: KeysInfo = {}
+  if (!module) {
+    return result
+  }
+  const moduleStatisticsResp = await fetch(
+    `${api}/moduleStatistics?moduleId=${module.id}&chainId=${chainId}`,
+  )
+  const moduleStatistics: KeysInfoNew = await moduleStatisticsResp.json()
+
+  const operator = moduleStatistics.operators?.find(
+    item =>
+      utils.getAddress(item.rewardAddress) === utils.getAddress(walletAddress),
+  )
+  if (!operator) {
+    return result
+  }
+
+  const operatorStatisticsResp = await fetch(
+    `${api}/operatorStatistics?moduleId=${module.id}&operatorId=${operator.id}&chainId=${chainId}`,
+  )
+  const operatorStatistics: KeysInfoOperatorNew =
+    await operatorStatisticsResp.json()
+
+  result.operators = [
+    {
+      invalid: operatorStatistics.invalid,
+      duplicates: operatorStatistics.duplicates,
+      info: {
+        index: operatorStatistics.id,
+        active: operatorStatistics.active,
+        name: operatorStatistics.name,
+        rewardAddress: operatorStatistics.rewardAddress,
+        stakingLimit: operatorStatistics.stakingLimit,
+        stoppedValidators: operatorStatistics.stoppedValidators,
+        totalSigningKeys: operatorStatistics.totalSigningKeys,
+        usedSigningKeys: operatorStatistics.usedSigningKeys,
+      },
+    },
+  ]
+  console.log('result', result)
+  return result
+}
 
 export default createNextConnect().get(async (req, res) => {
   try {
     const chainId = parseChainId(String(req.query.chainId))
-    const data = await fetch(
-      `https://operators.${
-        chainId === 1 ? 'lido' : 'testnet'
-      }.fi/api/operators?chainId=${chainId}`,
-    )
-    const parsed = await data.json()
-    res.json(parsed)
+    const walletAddress = String(req.query.walletAddress)
+    const moduleAddress = String(req.query.moduleAddress)
+
+    let result
+    if (chainId === CHAINS.Mainnet) {
+      result = await requestMainnetOperators(chainId)
+    } else if (chainId === CHAINS.Holesky) {
+      result = await requestHoleskyOperators(
+        chainId,
+        moduleAddress,
+        walletAddress,
+      )
+    } else {
+      result = await requestTestnetOperators(chainId)
+    }
+
+    res.json(result)
   } catch (e) {
     console.error(e)
     res.status(500).send({ error: 'Something went wrong!' })
