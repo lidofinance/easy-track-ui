@@ -64,10 +64,7 @@ export const formParts = createMotionFormPart({
       },
     ] as NodeOperator[],
   }),
-  Component: function StartNewMotionMotionFormLego({
-    fieldNames,
-    submitAction,
-  }) {
+  Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
     const {
       data: nodeOperatorsList,
@@ -119,17 +116,21 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => {
+        {fieldsArr.fields.map((item, fieldIndex) => {
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>
+                      Update #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove update {i + 1}
+                    <RemoveItemButton
+                      onClick={() => fieldsArr.remove(fieldIndex)}
+                    >
+                      Remove update {fieldIndex + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -137,17 +138,19 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <SelectControl
                     label="Node operator"
-                    name={`${fieldNames.nodeOperators}.${i}.id`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     rules={{ required: 'Field is required' }}
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      fieldsArr.update(i, {
-                        managerAddress: nodeOperator.managerAddress,
-                      })
+                      if (nodeOperator.managerAddress) {
+                        fieldsArr.update(fieldIndex, {
+                          managerAddress: nodeOperator.managerAddress,
+                        })
+                      }
                     }}
                   >
-                    {getFilteredOptions(i).map(nodeOperator => (
+                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
                       <Option
                         key={nodeOperator.id}
                         value={nodeOperator.id}
@@ -159,12 +162,13 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`}
                     label="Manager address"
                     disabled={Boolean(
-                      !selectedNodeOperators[i].id ||
-                        !!nodeOperatorsList[Number(selectedNodeOperators[i].id)]
-                          .managerAddress,
+                      !selectedNodeOperators[fieldIndex].id ||
+                        !!nodeOperatorsList[
+                          Number(selectedNodeOperators[fieldIndex].id)
+                        ].managerAddress,
                     )}
                     rules={{
                       required: 'Field is required',
@@ -176,7 +180,7 @@ export const formParts = createMotionFormPart({
                         const canAddressManageKeys =
                           await checkIsAddressManagerOfNodeOperator(
                             value,
-                            selectedNodeOperators[i].id,
+                            selectedNodeOperators[fieldIndex].id,
                             chainId,
                           )
 

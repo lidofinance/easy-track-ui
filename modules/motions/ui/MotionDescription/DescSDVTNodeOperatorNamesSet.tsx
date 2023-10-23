@@ -9,13 +9,13 @@ export function DescSDVTNodeOperatorNamesSet({
   const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
   return (
     <>
-      {callData.map((program, index) => {
-        const nodeOperatorId = program.nodeOperatorId.toNumber()
+      {callData.map((item, index) => {
+        const nodeOperatorId = item.nodeOperatorId.toNumber()
         const nodeOperator = nodeOperatorsList?.[nodeOperatorId]
         return (
           <div key={nodeOperatorId}>
             Change Node Operator <b>{nodeOperator ? nodeOperator.name : ''}</b>{' '}
-            (id: {nodeOperatorId}) name to <b>{program.name}</b>
+            (id: {nodeOperatorId}) name to <b>{item.name}</b>
             {index === callData.length - 1 ? '.' : '; '}
           </div>
         )

@@ -30,7 +30,7 @@ export function DescSDVTTargetValidatorLimitsUpdate({
           <div key={nodeOperatorId}>
             Set target validator limit for Node Operator{' '}
             <b>{nodeOperatorName}</b> (id: {nodeOperatorId}){' '}
-            {`to ${item.targetLimit}`}
+            {`from ${nodeOperator?.targetValidatorsCount} to ${item.targetLimit}`}
             {index === callData.length - 1 ? '.' : '; '}
           </div>
         )

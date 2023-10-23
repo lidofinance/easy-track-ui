@@ -130,16 +130,18 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => (
+        {fieldsArr.fields.map((item, fieldIndex) => (
           <Fragment key={item.id}>
             <FieldsWrapper>
               <FieldsHeader>
                 {fieldsArr.fields.length > 1 && (
-                  <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                  <FieldsHeaderDesc>Update #{fieldIndex + 1}</FieldsHeaderDesc>
                 )}
                 {fieldsArr.fields.length > 1 && (
-                  <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                    Remove update {i + 1}
+                  <RemoveItemButton
+                    onClick={() => fieldsArr.remove(fieldIndex)}
+                  >
+                    Remove update {fieldIndex + 1}
                   </RemoveItemButton>
                 )}
               </FieldsHeader>
@@ -147,10 +149,10 @@ export const formParts = createMotionFormPart({
               <Fieldset>
                 <SelectControl
                   label="Node operator"
-                  name={`${fieldNames.nodeOperators}.${i}.id`}
+                  name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                   rules={{ required: 'Field is required' }}
                 >
-                  {getFilteredOptions(i).map(nodeOperator => (
+                  {getFilteredOptions(fieldIndex).map(nodeOperator => (
                     <Option
                       key={nodeOperator.id}
                       value={nodeOperator.id}
@@ -162,23 +164,23 @@ export const formParts = createMotionFormPart({
 
               <Fieldset>
                 <InputControl
-                  name={`${fieldNames.nodeOperators}.${i}.name`}
+                  name={`${fieldNames.nodeOperators}.${fieldIndex}.name`}
                   label="Name"
                   rules={{
                     required: 'Field is required',
                     validate: (value: string) => {
-                      const idInNamesMap = nodeOperatorNamesMap[value]
+                      const idInNameMap = nodeOperatorNamesMap[value]
 
-                      if (typeof idInNamesMap === 'number') {
+                      if (typeof idInNameMap === 'number') {
                         return 'Name must not be in use by another node operator'
                       }
 
                       const nameInSelectedNodeOperatorsIndex =
                         selectedNodeOperators.findIndex(
-                          ({ name, id }) =>
+                          ({ name }, index) =>
                             name &&
                             name.toLowerCase() === value.toLowerCase() &&
-                            id !== selectedNodeOperators[i].id,
+                            fieldIndex !== index,
                         )
 
                       if (nameInSelectedNodeOperatorsIndex !== -1) {
@@ -186,7 +188,7 @@ export const formParts = createMotionFormPart({
                       }
 
                       if (maxNodeOperatorNameLength?.lt(value.length)) {
-                        return `Name must be less or equal than ${maxNodeOperatorNameLength} characters`
+                        return `Name length must be less or equal than ${maxNodeOperatorNameLength} characters`
                       }
 
                       return true
