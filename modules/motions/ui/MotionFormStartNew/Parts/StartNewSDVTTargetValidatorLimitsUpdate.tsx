@@ -123,17 +123,21 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => {
+        {fieldsArr.fields.map((item, fieldIndex) => {
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>
+                      Update #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove update {i + 1}
+                    <RemoveItemButton
+                      onClick={() => fieldsArr.remove(fieldIndex)}
+                    >
+                      Remove update {fieldIndex + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -141,12 +145,12 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <SelectControl
                     label="Node operator"
-                    name={`${fieldNames.nodeOperators}.${i}.id`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     rules={{ required: 'Field is required' }}
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      fieldsArr.update(i, {
+                      fieldsArr.update(fieldIndex, {
                         isTargetLimitActive:
                           nodeOperator.isTargetLimitActive ?? false,
                         targetLimit:
@@ -154,7 +158,7 @@ export const formParts = createMotionFormPart({
                       })
                     }}
                   >
-                    {getFilteredOptions(i).map(nodeOperator => (
+                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
                       <Option
                         key={nodeOperator.id}
                         value={nodeOperator.id}
@@ -167,11 +171,11 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <CheckboxControl
                     label="Target validator limit active"
-                    name={`${fieldNames.nodeOperators}.${i}.isTargetLimitActive`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.isTargetLimitActive`}
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {
                       if (event.target.checked === false) {
                         setValue(
-                          `${fieldNames.nodeOperators}.${i}.targetLimit`,
+                          `${fieldNames.nodeOperators}.${fieldIndex}.targetLimit`,
                           '0',
                         )
                       }
@@ -181,9 +185,11 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.targetLimit`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.targetLimit`}
                     label="Target validator limit"
-                    disabled={!selectedNodeOperators[i]?.isTargetLimitActive}
+                    disabled={
+                      !selectedNodeOperators[fieldIndex]?.isTargetLimitActive
+                    }
                     rules={{
                       required: 'Field is required',
                       validate: value => {

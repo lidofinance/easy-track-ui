@@ -136,7 +136,8 @@ export const formParts = () =>
           managerAddress: '',
         } as NodeOperator)
 
-      const handleRemoveNodeOperator = (i: number) => fieldsArr.remove(i)
+      const handleRemoveNodeOperator = (fieldIndex: number) =>
+        fieldsArr.remove(fieldIndex)
 
       if (
         trustedCaller.initialLoading ||
@@ -155,18 +156,20 @@ export const formParts = () =>
 
       return (
         <>
-          {fieldsArr.fields.map((item, i) => (
+          {fieldsArr.fields.map((item, fieldIndex) => (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>NodeOperator #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>
+                      NodeOperator #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton
-                      onClick={() => handleRemoveNodeOperator(i)}
+                      onClick={() => handleRemoveNodeOperator(fieldIndex)}
                     >
-                      Remove node operator {i + 1}
+                      Remove node operator {fieldIndex + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -174,7 +177,7 @@ export const formParts = () =>
                 <Fieldset>
                   <InputControl
                     label="Name"
-                    name={`${fieldNames.nodeOperators}.${i}.name`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.name`}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
@@ -189,7 +192,7 @@ export const formParts = () =>
                           selectedNodeOperators.findIndex(
                             ({ name }, index) =>
                               name.toLowerCase() === value.toLowerCase() &&
-                              i !== index,
+                              fieldIndex !== index,
                           )
 
                         if (nameInSelectedNodeOperatorsIndex !== -1) {
@@ -209,7 +212,7 @@ export const formParts = () =>
                 <Fieldset>
                   <InputControl
                     label="Reward address"
-                    name={`${fieldNames.nodeOperators}.${i}.rewardAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.rewardAddress`}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
@@ -245,7 +248,7 @@ export const formParts = () =>
                               rewardAddress &&
                               utils.getAddress(rewardAddress) ===
                                 utils.getAddress(valueAddress) &&
-                              i !== index,
+                              fieldIndex !== index,
                           )
 
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
@@ -261,7 +264,7 @@ export const formParts = () =>
                 <Fieldset>
                   <InputControl
                     label={`Manager address`}
-                    name={`${fieldNames.nodeOperators}.${i}.managerAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`}
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
@@ -285,7 +288,7 @@ export const formParts = () =>
                               managerAddress &&
                               utils.getAddress(managerAddress) ===
                                 utils.getAddress(valueAddress) &&
-                              i !== index,
+                              fieldIndex !== index,
                           )
 
                         if (addressInSelectedNodeOperatorsIndex !== -1) {

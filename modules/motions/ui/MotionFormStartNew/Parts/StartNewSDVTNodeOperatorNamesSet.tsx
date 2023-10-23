@@ -130,16 +130,18 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => (
+        {fieldsArr.fields.map((item, fieldIndex) => (
           <Fragment key={item.id}>
             <FieldsWrapper>
               <FieldsHeader>
                 {fieldsArr.fields.length > 1 && (
-                  <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                  <FieldsHeaderDesc>Update #{fieldIndex + 1}</FieldsHeaderDesc>
                 )}
                 {fieldsArr.fields.length > 1 && (
-                  <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                    Remove update {i + 1}
+                  <RemoveItemButton
+                    onClick={() => fieldsArr.remove(fieldIndex)}
+                  >
+                    Remove update {fieldIndex + 1}
                   </RemoveItemButton>
                 )}
               </FieldsHeader>
@@ -147,10 +149,10 @@ export const formParts = createMotionFormPart({
               <Fieldset>
                 <SelectControl
                   label="Node operator"
-                  name={`${fieldNames.nodeOperators}.${i}.id`}
+                  name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                   rules={{ required: 'Field is required' }}
                 >
-                  {getFilteredOptions(i).map(nodeOperator => (
+                  {getFilteredOptions(fieldIndex).map(nodeOperator => (
                     <Option
                       key={nodeOperator.id}
                       value={nodeOperator.id}
@@ -162,7 +164,7 @@ export const formParts = createMotionFormPart({
 
               <Fieldset>
                 <InputControl
-                  name={`${fieldNames.nodeOperators}.${i}.name`}
+                  name={`${fieldNames.nodeOperators}.${fieldIndex}.name`}
                   label="Name"
                   rules={{
                     required: 'Field is required',
@@ -178,7 +180,7 @@ export const formParts = createMotionFormPart({
                           ({ name }, index) =>
                             name &&
                             name.toLowerCase() === value.toLowerCase() &&
-                            i !== index,
+                            fieldIndex !== index,
                         )
 
                       if (nameInSelectedNodeOperatorsIndex !== -1) {

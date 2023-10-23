@@ -122,17 +122,21 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {fieldsArr.fields.map((item, i) => {
+        {fieldsArr.fields.map((item, fieldIndex) => {
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
-                    <FieldsHeaderDesc>Update #{i + 1}</FieldsHeaderDesc>
+                    <FieldsHeaderDesc>
+                      Update #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => fieldsArr.remove(i)}>
-                      Remove update {i + 1}
+                    <RemoveItemButton
+                      onClick={() => fieldsArr.remove(fieldIndex)}
+                    >
+                      Remove update {fieldIndex + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -140,10 +144,10 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <SelectControl
                     label="Node operator"
-                    name={`${fieldNames.nodeOperators}.${i}.id`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     rules={{ required: 'Field is required' }}
                   >
-                    {getFilteredOptions(i).map(nodeOperator => (
+                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
                       <Option
                         key={nodeOperator.id}
                         value={nodeOperator.id}
@@ -155,7 +159,7 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputControl
-                    name={`${fieldNames.nodeOperators}.${i}.newRewardAddress`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.newRewardAddress`}
                     label="New reward address"
                     rules={{
                       required: 'Field is required',
@@ -183,7 +187,7 @@ export const formParts = createMotionFormPart({
                               newRewardAddress &&
                               utils.getAddress(newRewardAddress) ===
                                 utils.getAddress(valueAddress) &&
-                              i !== index,
+                              fieldIndex !== index,
                           )
 
                         /*
