@@ -14,6 +14,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
+import { NodeOperatorsRegistry } from 'modules/blockChain/contractAddresses'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.NodeOperatorIncreaseLimit,
@@ -43,7 +44,7 @@ export const formParts = createMotionFormPart({
     const { setValue } = useFormContext()
     const { walletAddress } = useWeb3()
     const nodeOperators = useNodeOperatorsList()
-    const keysInfo = useNodeOperatorKeysInfo()
+    const keysInfo = useNodeOperatorKeysInfo(NodeOperatorsRegistry)
 
     const [operatorId, currentNodeOperator] = useMemo(() => {
       if (!walletAddress) return [undefined, null]
