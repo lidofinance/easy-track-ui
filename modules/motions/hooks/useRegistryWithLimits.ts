@@ -4,9 +4,8 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   ContractLegoLDORegistry,
   ContractLegoDAIRegistry,
-  ContractRccDAIRegistry,
-  ContractPmlDAIRegistry,
-  ContractAtcDAIRegistry,
+  ContractPmlStablesRegistry,
+  ContractAtcStablesRegistry,
   ContractGasFunderETHRegistry,
   ContractAllowedRecipientRegistry,
   ContractAllowedRecipientReferralDaiRegistry,
@@ -14,6 +13,7 @@ import {
   ContractStethRewardProgramRegistry,
   ContractStethGasSupplyRegistry,
   ContractRewardsShareProgramRegistry,
+  ContractRccStablesRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -28,9 +28,9 @@ type AllowedRecipient = {
 export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
   [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
-  [MotionType.RccDAITopUp]: ContractRccDAIRegistry,
-  [MotionType.PmlDAITopUp]: ContractPmlDAIRegistry,
-  [MotionType.AtcDAITopUp]: ContractAtcDAIRegistry,
+  [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
   [MotionType.AllowedRecipientRemove]: ContractAllowedRecipientRegistry,

@@ -16,18 +16,6 @@ const TOKEN = {
     label: 'DAI',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
   },
-  [MotionType.RccDAITopUp]: {
-    label: 'DAI',
-    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
-  },
-  [MotionType.PmlDAITopUp]: {
-    label: 'DAI',
-    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
-  },
-  [MotionType.AtcDAITopUp]: {
-    label: 'DAI',
-    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.DAI[chainId],
-  },
   [MotionType.GasFunderETHTopUp]: {
     label: 'ETH',
     value: () => '0x0000000000000000000000000000000000000000',

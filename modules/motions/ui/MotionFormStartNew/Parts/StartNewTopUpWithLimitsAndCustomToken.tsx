@@ -1,14 +1,10 @@
 import { utils } from 'ethers'
 
-import { Fragment, useCallback, useEffect } from 'react'
+import { Fragment, useEffect, useMemo } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import {
-  useRecipientActual,
-  usePeriodLimitsData,
-  useTokenByTopUpType,
-} from 'modules/motions/hooks'
+import { useRecipientActual, usePeriodLimitsData } from 'modules/motions/hooks'
 import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
 import {
   MotionLimitProgress,
@@ -29,9 +25,9 @@ import {
 } from '../CreateMotionFormStyle'
 
 import {
-  ContractEvmLegoLDOTopUp,
-  ContractEvmLegoDAITopUp,
-  ContractEvmGasFunderETHTopUp,
+  ContractEvmRccStablesTopUp,
+  ContractEvmPmlStablesTopUp,
+  ContractEvmAtcStablesTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -41,19 +37,23 @@ import {
   checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
 import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
+import { useAllowedTokens } from 'modules/motions/hooks/useAllowedTokensRegistry'
+import { Text } from 'modules/shared/ui/Common/Text'
+import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
+import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
 
 export const TOPUP_WITH_LIMITS_MAP = {
-  [MotionType.LegoLDOTopUp]: {
-    evmContract: ContractEvmLegoLDOTopUp,
-    motionType: MotionType.LegoLDOTopUp,
+  [MotionType.RccStablesTopUp]: {
+    evmContract: ContractEvmRccStablesTopUp,
+    motionType: MotionType.RccStablesTopUp,
   },
-  [MotionType.LegoDAITopUp]: {
-    evmContract: ContractEvmLegoDAITopUp,
-    motionType: MotionType.LegoDAITopUp,
+  [MotionType.PmlStablesTopUp]: {
+    evmContract: ContractEvmPmlStablesTopUp,
+    motionType: MotionType.PmlStablesTopUp,
   },
-  [MotionType.GasFunderETHTopUp]: {
-    evmContract: ContractEvmGasFunderETHTopUp,
-    motionType: MotionType.GasFunderETHTopUp,
+  [MotionType.AtcStablesTopUp]: {
+    evmContract: ContractEvmAtcStablesTopUp,
+    motionType: MotionType.AtcStablesTopUp,
   },
 }
 
@@ -71,10 +71,13 @@ export const formParts = ({
     motionType: TOPUP_WITH_LIMITS_MAP[registryType].motionType,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
       const encodedCallData = new utils.AbiCoder().encode(
-        ['address[]', 'uint256[]'],
+        ['address', 'address[]', 'uint256[]'],
         [
+          utils.getAddress(formData.tokenAddress),
           formData.programs.map(p => utils.getAddress(p.address)),
-          formData.programs.map(p => utils.parseEther(p.amount)),
+          formData.programs.map(p =>
+            utils.parseUnits(p.amount, formData.tokenDecimals),
+          ),
         ],
       )
       const gasLimit = await estimateGasFallback(
@@ -88,6 +91,8 @@ export const formParts = ({
       return tx
     },
     getDefaultFormData: () => ({
+      tokenAddress: '',
+      tokenDecimals: DEFAULT_DECIMALS,
       programs: [{ address: '', amount: '' }] as Program[],
     }),
     Component: function StartNewMotionMotionFormLego({
@@ -100,26 +105,38 @@ export const formParts = ({
       ].evmContract.useSwrWeb3('trustedCaller', [])
       const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
-      const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
-        usePeriodLimitsData({ registryType })
+      const {
+        allowedTokens,
+        tokensDecimalsMap,
+        initialLoading: isTokensDataLoading,
+      } = useAllowedTokens()
+      const {
+        data: periodLimitsData,
+        initialLoading: isPeriodLimitsDataLoading,
+      } = usePeriodLimitsData({ registryType })
 
-      const legoDAIRecipients = useRecipientActual({ registryType })
-      const token = useTokenByTopUpType({ registryType })
+      const {
+        data: actualRecipients,
+        initialLoading: isRecipientsDataLoading,
+      } = useRecipientActual({ registryType })
 
       const fieldsArr = useFieldArray({ name: fieldNames.programs })
 
-      const handleAddProgram = useCallback(
-        () => fieldsArr.append({ address: '', amount: '' }),
-        [fieldsArr],
-      )
-
-      const handleRemoveProgram = useCallback(
-        (i: number) => fieldsArr.remove(i),
-        [fieldsArr],
-      )
+      const handleAddProgram = () =>
+        fieldsArr.append({ address: '', amount: '' })
 
       const { watch, setValue } = useFormContext()
       const selectedPrograms: Program[] = watch(fieldNames.programs)
+      const selectedTokenAddress = watch(fieldNames.tokenAddress)
+
+      const selectedTokenLabel = useMemo(() => {
+        if (!selectedTokenAddress || !allowedTokens?.length) {
+          return ''
+        }
+        return allowedTokens.find(
+          ({ address }) => address === selectedTokenAddress,
+        )?.label
+      }, [allowedTokens, selectedTokenAddress])
 
       const newAmount = selectedPrograms.reduce(
         (acc, program) => acc + Number(program.amount),
@@ -127,35 +144,36 @@ export const formParts = ({
       )
 
       const getFilteredOptions = (fieldIdx: number) => {
-        if (!legoDAIRecipients.data) return []
+        if (!actualRecipients) return []
         const thatAddress = selectedPrograms[fieldIdx]?.address
         const selectedAddresses = selectedPrograms.map(({ address }) => address)
-        return legoDAIRecipients.data.filter(
+        return actualRecipients.filter(
           ({ address }) =>
             !selectedAddresses.includes(address) || address === thatAddress,
         )
       }
 
       useEffect(() => {
-        const recipientsCount = legoDAIRecipients.data?.length || 0
+        const recipientsCount = actualRecipients?.length || 0
         const isMoreThanOne = recipientsCount > 1
 
         if (isMoreThanOne) return
 
-        const recipientAddress = legoDAIRecipients.data?.[0].address || ''
+        const recipientAddress = actualRecipients?.[0].address || ''
         setValue(fieldNames.programs, [
           { address: recipientAddress, amount: '' },
         ])
-      }, [fieldNames.programs, setValue, legoDAIRecipients.data])
+      }, [fieldNames.programs, setValue, actualRecipients])
 
       const { data: limits } = useTransitionLimits()
       const transitionLimit =
-        token.address && limits?.[utils.getAddress(token.address)]
+        selectedTokenAddress && limits?.[utils.getAddress(selectedTokenAddress)]
 
       if (
         trustedCaller.initialLoading ||
-        legoDAIRecipients.initialLoading ||
-        periodLimitsLoading
+        isRecipientsDataLoading ||
+        isPeriodLimitsDataLoading ||
+        isTokensDataLoading
       ) {
         return <PageLoader />
       }
@@ -168,27 +186,57 @@ export const formParts = ({
 
       return (
         <>
-          {periodLimitsData?.periodData && (
+          <Fieldset>
+            <SelectControl
+              label="Top up token"
+              name={fieldNames.tokenAddress}
+              rules={{ required: 'Field is required' }}
+              onChange={(value: string) => {
+                const tokenDecimals = tokensDecimalsMap?.[value]
+                if (tokenDecimals) {
+                  setValue(fieldNames.tokenDecimals, tokenDecimals)
+                }
+              }}
+            >
+              {allowedTokens?.map((token, j) => (
+                <Option key={j} value={token.address} children={token.label} />
+              ))}
+            </SelectControl>
+          </Fieldset>
+          {selectedTokenAddress && (
+            <MotionInfoBox>
+              <Text as="span" size={12} weight={500}>
+                {selectedTokenLabel || 'Token'} address:{' '}
+              </Text>
+              <AddressInlineWithPop
+                address={selectedTokenAddress}
+                trim={false}
+              />
+            </MotionInfoBox>
+          )}
+          {periodLimitsData?.periodData && selectedTokenAddress && (
             <MotionLimitProgressWrapper>
               <MotionLimitProgress
                 spentAmount={periodLimitsData.periodData.alreadySpentAmount}
                 totalLimit={periodLimitsData.limits.limit}
                 startDate={periodLimitsData.periodData.periodStartTimestamp}
                 endDate={periodLimitsData.periodData.periodEndTimestamp}
-                token={token.label}
+                token={selectedTokenLabel}
                 newAmount={newAmount}
               />
             </MotionLimitProgressWrapper>
           )}
 
-          {fieldsArr.fields.map((item, i) => (
+          {fieldsArr.fields.map((item, fieldIdx) => (
             <Fragment key={item.id}>
               <FieldsWrapper>
                 <FieldsHeader>
-                  <FieldsHeaderDesc>Recipient #{i + 1}</FieldsHeaderDesc>
+                  <FieldsHeaderDesc>Recipient #{fieldIdx + 1}</FieldsHeaderDesc>
                   {fieldsArr.fields.length > 1 && (
-                    <RemoveItemButton onClick={() => handleRemoveProgram(i)}>
-                      Remove recipient {i + 1}
+                    <RemoveItemButton
+                      onClick={() => fieldsArr.remove(fieldIdx)}
+                    >
+                      Remove recipient {fieldIdx + 1}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -201,10 +249,10 @@ export const formParts = ({
                 <Fieldset>
                   <SelectControl
                     label="Top up recipient address"
-                    name={`${fieldNames.programs}.${i}.address`}
+                    name={`${fieldNames.programs}.${fieldIdx}.address`}
                     rules={{ required: 'Field is required' }}
                   >
-                    {getFilteredOptions(i).map((program, j) => (
+                    {getFilteredOptions(fieldIdx).map((program, j) => (
                       <Option
                         key={j}
                         value={program.address}
@@ -216,9 +264,9 @@ export const formParts = ({
 
                 <Fieldset>
                   <InputNumberControl
-                    label={`${token.label} Amount`}
-                    name={`${fieldNames.programs}.${i}.amount`}
-                    autoFocus
+                    label={`${selectedTokenLabel} Amount`}
+                    name={`${fieldNames.programs}.${fieldIdx}.amount`}
+                    disabled={!selectedTokenAddress}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
@@ -230,7 +278,10 @@ export const formParts = ({
                           transitionLimit &&
                           Number(value) > transitionLimit
                         ) {
-                          return tokenLimitError(token.label, transitionLimit)
+                          return tokenLimitError(
+                            selectedTokenLabel,
+                            transitionLimit,
+                          )
                         }
 
                         const isLargeThenPeriodLimit =
@@ -240,7 +291,7 @@ export const formParts = ({
                               periodLimitsData?.periodData
                                 .spendableBalanceInPeriod,
                             ),
-                            currentValue: { value, index: i },
+                            currentValue: { value, index: fieldIdx },
                           })
 
                         if (
@@ -259,8 +310,8 @@ export const formParts = ({
             </Fragment>
           ))}
 
-          {legoDAIRecipients.data &&
-            fieldsArr.fields.length < legoDAIRecipients.data.length && (
+          {actualRecipients &&
+            fieldsArr.fields.length < actualRecipients.length && (
               <Fieldset>
                 <ButtonIcon
                   type="button"

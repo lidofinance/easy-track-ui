@@ -22,6 +22,7 @@ import {
 } from './DescAllowedRecipient'
 
 import { DescTopUpWithLimits } from './DescTopUpWithLimits'
+import { DescTopUpWithLimitsAndCustomToken } from './DescTopUpWithLimitsAndCustomToken'
 
 import {
   TopUpWithLimitsAbi,
@@ -117,14 +118,24 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.LegoDAITopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits {...props} registryType={MotionType.LegoDAITopUp} />
   ),
-  [MotionType.RccDAITopUp]: (props: DescWithLimitsProps) => (
-    <DescTopUpWithLimits {...props} registryType={MotionType.RccDAITopUp} />
+  // TODO: resolve types
+  [MotionType.RccStablesTopUp]: (props: any) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.RccStablesTopUp}
+    />
   ),
-  [MotionType.PmlDAITopUp]: (props: DescWithLimitsProps) => (
-    <DescTopUpWithLimits {...props} registryType={MotionType.PmlDAITopUp} />
+  [MotionType.PmlStablesTopUp]: (props: any) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.PmlStablesTopUp}
+    />
   ),
-  [MotionType.AtcDAITopUp]: (props: DescWithLimitsProps) => (
-    <DescTopUpWithLimits {...props} registryType={MotionType.AtcDAITopUp} />
+  [MotionType.AtcStablesTopUp]: (props: any) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.AtcStablesTopUp}
+    />
   ),
   [MotionType.GasFunderETHTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits

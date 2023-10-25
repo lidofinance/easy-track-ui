@@ -7,10 +7,10 @@ import {
   ContractAllowedRecipientReferralDaiRegistry,
   ContractAllowedRecipientTrpLdoRegistry,
   ContractLegoLDORegistry,
-  ContractRccDAIRegistry,
-  ContractAtcDAIRegistry,
+  ContractRccStablesRegistry,
+  ContractAtcStablesRegistry,
   ContractGasFunderETHRegistry,
-  ContractPmlDAIRegistry,
+  ContractPmlStablesRegistry,
   ContractStethRewardProgramRegistry,
 } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -103,9 +103,9 @@ const registryByMotionType: {
 } = {
   [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
   [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
-  [MotionType.RccDAITopUp]: ContractRccDAIRegistry,
-  [MotionType.PmlDAITopUp]: ContractPmlDAIRegistry,
-  [MotionType.AtcDAITopUp]: ContractAtcDAIRegistry,
+  [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
   [MotionType.AllowedRecipientTopUpReferralDai]:

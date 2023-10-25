@@ -32,9 +32,9 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractEvmAllowedRecipientTopUpTrpLdo,
   [MotionType.LegoLDOTopUp]: CONTRACTS.ContractEvmLegoLDOTopUp,
   [MotionType.LegoDAITopUp]: CONTRACTS.ContractEvmLegoDAITopUp,
-  [MotionType.RccDAITopUp]: CONTRACTS.ContractEvmRccDAITopUp,
-  [MotionType.PmlDAITopUp]: CONTRACTS.ContractEvmPmlDAITopUp,
-  [MotionType.AtcDAITopUp]: CONTRACTS.ContractEvmAtcDAITopUp,
+  [MotionType.RccStablesTopUp]: CONTRACTS.ContractEvmRccStablesTopUp,
+  [MotionType.PmlStablesTopUp]: CONTRACTS.ContractEvmPmlStablesTopUp,
+  [MotionType.AtcStablesTopUp]: CONTRACTS.ContractEvmAtcStablesTopUp,
   [MotionType.GasFunderETHTopUp]: CONTRACTS.ContractEvmGasFunderETHTopUp,
   [MotionType.StethRewardProgramAdd]: CONTRACTS.ContractStethRewardProgramAdd,
   [MotionType.StethRewardProgramRemove]:

@@ -4,12 +4,13 @@ import { Wrap } from './AddressInlineWithPopStyle'
 
 type Props = {
   address: string
+  trim?: boolean
 }
 
-export function AddressInlineWithPop({ address }: Props) {
+export function AddressInlineWithPop({ address, trim = true }: Props) {
   return (
     <AddressPop address={address}>
-      <Wrap children={trimAddress(address, 4)} />
+      <Wrap children={trim ? trimAddress(address, 4) : address} />
     </AddressPop>
   )
 }
