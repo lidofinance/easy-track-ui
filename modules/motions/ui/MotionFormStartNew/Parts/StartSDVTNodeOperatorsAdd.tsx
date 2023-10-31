@@ -29,6 +29,7 @@ import {
 import { STETH } from 'modules/blockChain/contractAddresses'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
+import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
 
 type NodeOperator = {
   name: string
@@ -181,6 +182,14 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: value => {
+                        const nameErr = validateNodeOperatorName(
+                          value,
+                          maxNodeOperatorNameLength,
+                        )
+                        if (nameErr) {
+                          return nameErr
+                        }
+
                         const idInNameMap =
                           nodeOperatorsDetailsMaps['name'][value]
 
@@ -197,10 +206,6 @@ export const formParts = () =>
 
                         if (nameInSelectedNodeOperatorsIndex !== -1) {
                           return 'Name is already in use by another update'
-                        }
-
-                        if (maxNodeOperatorNameLength?.lt(value.length)) {
-                          return `Name length must be less or equal than ${maxNodeOperatorNameLength} characters`
                         }
 
                         return true

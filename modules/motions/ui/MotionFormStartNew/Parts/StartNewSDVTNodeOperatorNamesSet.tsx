@@ -23,6 +23,7 @@ import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOpera
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { useSDVTOperatorNameLimit } from 'modules/motions/hooks'
+import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
 
 type NodeOperator = {
   id: string
@@ -165,10 +166,18 @@ export const formParts = createMotionFormPart({
               <Fieldset>
                 <InputControl
                   name={`${fieldNames.nodeOperators}.${fieldIndex}.name`}
-                  label="Name"
+                  label="New name"
                   rules={{
                     required: 'Field is required',
                     validate: (value: string) => {
+                      const nameErr = validateNodeOperatorName(
+                        value,
+                        maxNodeOperatorNameLength,
+                      )
+                      if (nameErr) {
+                        return nameErr
+                      }
+
                       const idInNameMap = nodeOperatorNamesMap[value]
 
                       if (typeof idInNameMap === 'number') {
@@ -185,10 +194,6 @@ export const formParts = createMotionFormPart({
 
                       if (nameInSelectedNodeOperatorsIndex !== -1) {
                         return 'Name is already in use by another update'
-                      }
-
-                      if (maxNodeOperatorNameLength?.lt(value.length)) {
-                        return `Name length must be less or equal than ${maxNodeOperatorNameLength} characters`
                       }
 
                       return true
