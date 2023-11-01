@@ -24,6 +24,7 @@ import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { STETH } from 'modules/blockChain/contractAddresses'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 
 type NodeOperator = {
   id: string
@@ -148,6 +149,17 @@ export const formParts = createMotionFormPart({
                     options={getFilteredOptions(fieldIndex)}
                   />
                 </Fieldset>
+
+                {!isNaN(parseInt(selectedNodeOperators[fieldIndex]?.id)) ? (
+                  <MotionInfoBox>
+                    Current reward address:{' '}
+                    {
+                      nodeOperatorsList[
+                        Number(selectedNodeOperators[fieldIndex].id)
+                      ].rewardAddress
+                    }
+                  </MotionInfoBox>
+                ) : null}
 
                 <Fieldset>
                   <InputControl
