@@ -87,7 +87,7 @@ export const formParts = createMotionFormPart({
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch } = useFormContext()
+    const { watch, setValue } = useFormContext()
     const { isValid } = useFormState()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
@@ -164,9 +164,10 @@ export const formParts = createMotionFormPart({
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
                       if (nodeOperator.managerAddress) {
-                        fieldsArr.update(fieldIndex, {
-                          oldManagerAddress: nodeOperator.managerAddress,
-                        })
+                        setValue(
+                          `${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`,
+                          nodeOperator.managerAddress,
+                        )
                       }
                     }}
                   >
@@ -260,6 +261,8 @@ export const formParts = createMotionFormPart({
                         if (canAddressManageKeys) {
                           return 'Address already has a signing keys manager role'
                         }
+
+                        return true
                       },
                     }}
                   />
