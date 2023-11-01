@@ -1,4 +1,4 @@
-import { constants, utils } from 'ethers'
+import { utils } from 'ethers'
 
 import { Fragment, useMemo } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
@@ -24,6 +24,7 @@ import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/checkAddressManagerRole'
 import { noSigningKeysRoleError } from 'modules/motions/constants'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
 
 type NodeOperator = {
   id: string
@@ -192,18 +193,14 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
-                        }
-
-                        const valueAddress = utils.getAddress(value)
-                        if (valueAddress === constants.AddressZero) {
-                          return 'Address must not be zero address'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const canAddressManageKeys =
                           await checkIsAddressManagerOfNodeOperator(
-                            valueAddress,
+                            value,
                             selectedNodeOperators[fieldIndex].id,
                             chainId,
                           )
@@ -223,8 +220,9 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const valueAddress = utils.getAddress(value)
@@ -244,16 +242,12 @@ export const formParts = createMotionFormPart({
                             ({ newManagerAddress }, index) =>
                               newManagerAddress &&
                               utils.getAddress(newManagerAddress) ===
-                                utils.getAddress(valueAddress) &&
+                                valueAddress &&
                               fieldIndex !== index,
                           )
 
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
                           return 'Address is already in use by another update'
-                        }
-
-                        if (valueAddress === constants.AddressZero) {
-                          return 'Address must not be zero address'
                         }
 
                         const canAddressManageKeys =

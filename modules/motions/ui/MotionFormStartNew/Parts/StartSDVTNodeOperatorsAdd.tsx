@@ -1,4 +1,4 @@
-import { utils, constants } from 'ethers'
+import { utils } from 'ethers'
 
 import { Fragment, useEffect, useMemo } from 'react'
 import { useFieldArray, useFormState, useFormContext } from 'react-hook-form'
@@ -30,6 +30,7 @@ import { STETH } from 'modules/blockChain/contractAddresses'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
 
 type NodeOperator = {
   name: string
@@ -221,14 +222,12 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
-                        }
-                        const valueAddress = utils.getAddress(value)
-                        if (valueAddress === constants.AddressZero) {
-                          return 'Address must not be zero address'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
+                        const valueAddress = utils.getAddress(value)
                         const stETHAddress = STETH[chainId]
 
                         if (
@@ -252,7 +251,7 @@ export const formParts = () =>
                             ({ rewardAddress }, index) =>
                               rewardAddress &&
                               utils.getAddress(rewardAddress) ===
-                                utils.getAddress(valueAddress) &&
+                                valueAddress &&
                               fieldIndex !== index,
                           )
 
@@ -273,8 +272,9 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const valueAddress = utils.getAddress(value)
@@ -292,7 +292,7 @@ export const formParts = () =>
                             ({ managerAddress }, index) =>
                               managerAddress &&
                               utils.getAddress(managerAddress) ===
-                                utils.getAddress(valueAddress) &&
+                                valueAddress &&
                               fieldIndex !== index,
                           )
 

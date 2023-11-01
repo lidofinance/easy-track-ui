@@ -1,4 +1,4 @@
-import { constants, utils } from 'ethers'
+import { utils } from 'ethers'
 
 import { Fragment, useMemo } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
@@ -23,6 +23,7 @@ import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOpera
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { STETH } from 'modules/blockChain/contractAddresses'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
 
 type NodeOperator = {
   id: string
@@ -164,8 +165,9 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const valueAddress = utils.getAddress(value)
@@ -186,7 +188,7 @@ export const formParts = createMotionFormPart({
                             ({ newRewardAddress }, index) =>
                               newRewardAddress &&
                               utils.getAddress(newRewardAddress) ===
-                                utils.getAddress(valueAddress) &&
+                                valueAddress &&
                               fieldIndex !== index,
                           )
 
@@ -195,10 +197,6 @@ export const formParts = createMotionFormPart({
                         */
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
                           return 'Address is already in use by another update'
-                        }
-
-                        if (valueAddress === constants.AddressZero) {
-                          return 'Address must not be zero address'
                         }
 
                         const stETHAddress = STETH[chainId]

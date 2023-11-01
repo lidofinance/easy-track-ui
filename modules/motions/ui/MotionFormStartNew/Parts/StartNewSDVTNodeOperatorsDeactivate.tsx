@@ -24,6 +24,7 @@ import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/checkAddressManagerRole'
 import { noSigningKeysRoleError } from 'modules/motions/constants'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
 
 type NodeOperator = {
   id: string
@@ -173,8 +174,9 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const canAddressManageKeys =
