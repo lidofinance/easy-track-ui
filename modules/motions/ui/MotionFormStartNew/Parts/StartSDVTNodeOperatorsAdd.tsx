@@ -15,6 +15,7 @@ import {
   FieldsWrapper,
   FieldsHeader,
   FieldsHeaderDesc,
+  ErrorBox,
 } from '../CreateMotionFormStyle'
 
 import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
@@ -156,6 +157,14 @@ export const formParts = () =>
         )
       }
 
+      if (!NOCounts) {
+        return <ErrorBox>Cannot load node operators count data</ErrorBox>
+      }
+
+      if (NOCounts.current >= NOCounts.max) {
+        return <MessageBox>Node operators limit reached</MessageBox>
+      }
+
       return (
         <>
           {fieldsArr.fields.map((item, fieldIndex) => (
@@ -164,14 +173,14 @@ export const formParts = () =>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
                     <FieldsHeaderDesc>
-                      NodeOperator #{fieldIndex + 1}
+                      NodeOperator #{NOCounts.current + fieldIndex}
                     </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton
                       onClick={() => handleRemoveNodeOperator(fieldIndex)}
                     >
-                      Remove node operator {fieldIndex + 1}
+                      Remove node operator {NOCounts.current + fieldIndex}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -318,7 +327,6 @@ export const formParts = () =>
             </Fragment>
           ))}
           {isValid &&
-            NOCounts &&
             NOCounts.max > fieldsArr.fields.length + NOCounts.current && (
               <Fieldset>
                 <ButtonIcon
