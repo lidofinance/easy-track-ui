@@ -2,7 +2,7 @@ import { BigNumber, utils } from 'ethers'
 
 import { ChangeEvent, Fragment } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
-import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -20,10 +20,10 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
+import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
 
 type NodeOperator = {
   id: string
@@ -143,10 +143,9 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <SelectControl
-                    label="Node operator"
+                  <NodeOperatorSelectControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
-                    rules={{ required: 'Field is required' }}
+                    options={getFilteredOptions(fieldIndex)}
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
@@ -157,15 +156,7 @@ export const formParts = createMotionFormPart({
                           nodeOperator.targetValidatorsCount?.toString() ?? '',
                       })
                     }}
-                  >
-                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
-                      <Option
-                        key={nodeOperator.id}
-                        value={nodeOperator.id}
-                        children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
-                      />
-                    ))}
-                  </SelectControl>
+                  />
                 </Fieldset>
 
                 <Fieldset>
