@@ -22,7 +22,7 @@ import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
-import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
+import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
 
 type NodeOperator = {
   id: string
