@@ -38,6 +38,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
   [MotionType.SDVTNodeOperatorNamesSet]: 'Set node operators names',
   [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
+  [MotionType.SandboxNodeOperatorIncreaseLimit]:
+    'Increase node operator staking limit (sandbox)',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 

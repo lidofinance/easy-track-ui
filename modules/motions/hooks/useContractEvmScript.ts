@@ -64,6 +64,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTNodeOperatorNamesSet,
   [MotionType.SDVTNodeOperatorManagerChange]:
     CONTRACTS.ContractSDVTNodeOperatorManagerChange,
+  [MotionType.SandboxNodeOperatorIncreaseLimit]:
+    CONTRACTS.ContractEvmSandboxNodeOperatorIncreaseLimit,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

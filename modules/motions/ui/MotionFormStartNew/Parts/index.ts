@@ -1,6 +1,5 @@
 import { MotionTypeForms } from 'modules/motions/types'
 
-import * as formNodeOperators from './StartNewNodeOperators'
 import * as formAllowedRecipientAdd from './StartNewAllowedRecipientAdd'
 import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
@@ -13,9 +12,13 @@ import * as StartNewSDVTTargetValidatorLimitsUpdate from './StartNewSDVTTargetVa
 import * as StartNewSDVTNodeOperatorRewardAddressesSet from './StartNewSDVTNodeOperatorRewardAddressesSet'
 import * as StartNewSDVTNodeOperatorNamesSet from './StartNewSDVTNodeOperatorNamesSet'
 import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
+import * as StartNewNodeOperatorLimitIncrease from './StartNewNodeOperatorLimitIncrease'
 
 export const formParts = {
-  [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
+  [MotionTypeForms.NodeOperatorIncreaseLimit]:
+    StartNewNodeOperatorLimitIncrease.formParts({
+      motionType: MotionTypeForms.NodeOperatorIncreaseLimit,
+    }),
   [MotionTypeForms.AllowedRecipientTopUpTrpLdo]:
     formAllowedRecipientTopUp.formParts({
       registryType: MotionTypeForms.AllowedRecipientTopUpTrpLdo,
@@ -81,6 +84,10 @@ export const formParts = {
     StartNewSDVTNodeOperatorNamesSet.formParts,
   [MotionTypeForms.SDVTNodeOperatorManagerChange]:
     StartNewSDVTNodeOperatorManagersChange.formParts,
+  [MotionTypeForms.SandboxNodeOperatorIncreaseLimit]:
+    StartNewNodeOperatorLimitIncrease.formParts({
+      motionType: MotionTypeForms.SandboxNodeOperatorIncreaseLimit,
+    }),
 } as const
 
 export type FormData = {

@@ -1,16 +1,23 @@
 import { CHAINS } from '@lido-sdk/constants'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { ContractNodeOperatorsRegistry } from 'modules/blockChain/contracts'
 import type { UnpackedPromise } from '@lido-sdk/react/dist/esm/hooks/types'
+import {
+  NodeOperatorsRegistryType,
+  NODE_OPERATORS_REGISTRY_MAP,
+} from '../constants'
 
-export function useNodeOperatorsList() {
+export function useNodeOperatorsList(registryType?: NodeOperatorsRegistryType) {
   const { chainId, account } = useWeb3()
-  const registry = ContractNodeOperatorsRegistry.useRpc()
+
+  const registryKey = registryType ?? 'curated'
 
   const nodeOperatorsList = useSWR(
-    `${registry.address}-${chainId}-${account}-operators-list`,
+    `${chainId}-${account}-${registryKey}-operators-list`,
     async () => {
+      const registry = NODE_OPERATORS_REGISTRY_MAP[registryKey].connectRpc({
+        chainId,
+      })
       const isRegistrySupported = chainId !== CHAINS.Rinkeby
       if (!isRegistrySupported) {
         return {
