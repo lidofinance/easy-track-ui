@@ -20,13 +20,14 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
+import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
-import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
+import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
-import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 
 type NodeOperator = {
-  id: string
+  id: number | undefined
+  isTargetLimitActive: boolean
   targetLimit: string
 }
 
@@ -44,14 +45,11 @@ export const formParts = createMotionFormPart({
         'tuple(uint256 nodeOperatorId, bool isTargetLimitActive, uint256 targetLimit)[]',
       ],
       [
-        sortedNodeOperators.map(nodeOperator => {
-          const targetLimit = Number(nodeOperator.targetLimit)
-          return {
-            nodeOperatorId: Number(nodeOperator.id),
-            isTargetLimitActive: targetLimit === 0 ? false : true,
-            targetLimit,
-          }
-        }),
+        sortedNodeOperators.map(nodeOperator => ({
+          nodeOperatorId: Number(nodeOperator.id),
+          isTargetLimitActive: nodeOperator.isTargetLimitActive,
+          targetLimit: Number(nodeOperator.targetLimit),
+        })),
       ],
     )
     const gasLimit = await estimateGasFallback(
@@ -67,7 +65,8 @@ export const formParts = createMotionFormPart({
   getDefaultFormData: () => ({
     nodeOperators: [
       {
-        id: '',
+        id: undefined,
+        isTargetLimitActive: false,
         targetLimit: '',
       },
     ] as NodeOperator[],
@@ -85,7 +84,7 @@ export const formParts = createMotionFormPart({
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch } = useFormContext()
+    const { watch, setValue } = useFormContext()
     const { isValid } = useFormState()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
@@ -96,8 +95,8 @@ export const formParts = createMotionFormPart({
         return []
       }
 
-      const selectedIds = selectedNodeOperators.map(({ id }) => parseInt(id))
-      const thisId = parseInt(selectedNodeOperators[fieldIdx]?.id)
+      const selectedIds = selectedNodeOperators.map(({ id }) => id)
+      const thisId = selectedNodeOperators[fieldIdx]?.id
       return nodeOperatorsList.filter(
         ({ id }) => !selectedIds.includes(id) || id === thisId,
       )
@@ -105,7 +104,8 @@ export const formParts = createMotionFormPart({
 
     const handleAddUpdate = () =>
       fieldsArr.append({
-        id: '',
+        id: undefined,
+        isTargetLimitActive: false,
         targetLimit: '',
       } as NodeOperator)
 
@@ -124,6 +124,11 @@ export const formParts = createMotionFormPart({
     return (
       <>
         {fieldsArr.fields.map((item, fieldIndex) => {
+          const currentNodeOperator =
+            typeof selectedNodeOperators[fieldIndex].id === 'number'
+              ? nodeOperatorsList[selectedNodeOperators[fieldIndex].id!]
+              : null
+
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
@@ -146,22 +151,41 @@ export const formParts = createMotionFormPart({
                   <NodeOperatorSelectControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     options={getFilteredOptions(fieldIndex)}
+                    onChange={(value: string) => {
+                      const nodeOperator = nodeOperatorsList[Number(value)]
+
+                      setValue(
+                        `${fieldNames.nodeOperators}.${fieldIndex}.isTargetLimitActive`,
+                        Boolean(nodeOperator.isTargetLimitActive),
+                      )
+                    }}
                   />
                 </Fieldset>
 
-                {!isNaN(parseInt(selectedNodeOperators[fieldIndex]?.id)) ? (
-                  <MotionInfoBox>
-                    Current limit:{' '}
-                    {nodeOperatorsList[
-                      Number(selectedNodeOperators[fieldIndex].id)
-                    ].targetValidatorsCount?.toString() ?? '0'}
-                  </MotionInfoBox>
-                ) : null}
+                <Fieldset>
+                  <CheckboxControl
+                    label="Target validator limit active"
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.isTargetLimitActive`}
+                  />
+                </Fieldset>
 
                 <Fieldset>
                   <InputNumberControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.targetLimit`}
-                    label="Target validator limit"
+                    label={
+                      currentNodeOperator ? (
+                        <>
+                          New limit (current limit is{' '}
+                          {currentNodeOperator.targetValidatorsCount?.toString()}
+                          )
+                        </>
+                      ) : (
+                        `New limit`
+                      )
+                    }
+                    disabled={
+                      !selectedNodeOperators[fieldIndex]?.isTargetLimitActive
+                    }
                     rules={{
                       required: 'Field is required',
                       validate: value => {
