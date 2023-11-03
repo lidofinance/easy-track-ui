@@ -1,5 +1,5 @@
 import { FC, createContext, useMemo, useCallback } from 'react'
-import { formatEther } from 'ethers/lib/utils'
+import { formatEther, formatUnits } from 'ethers/lib/utils'
 import invariant from 'tiny-invariant'
 
 import { useSWR } from 'modules/network/hooks/useSwr'
@@ -23,6 +23,30 @@ import { useTransactionSender } from 'modules/blockChain/hooks/useTransactionSen
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
+import { useMotionTokenData } from '../hooks/useMotionTokenData'
+import { BigNumber } from 'ethers'
+import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
+
+const getTopUpAmount = (callData: any, tokenDecimals = DEFAULT_DECIMALS) => {
+  if (!callData) {
+    return 0
+  }
+
+  if (callData[1]?.[0]?._isBigNumber) {
+    return Number(formatEther(callData[1][0])) || 0
+  }
+
+  if (Array.isArray(callData.amounts)) {
+    console.log('callData.amounts', callData.amounts)
+    const amountsSum = (callData.amounts as BigNumber[]).reduce((acc, amount) =>
+      acc.add(amount),
+    )
+
+    return Number(formatUnits(amountsSum, tokenDecimals))
+  }
+
+  return 0
+}
 
 export type MotionDetailedValue = {
   isArchived: boolean
@@ -87,13 +111,19 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
     },
   )
 
+  const { tokenData } = useMotionTokenData(
+    callData?.token ?? topUpToken.address,
+  )
+
   const isArchived =
     motion.status !== MotionStatus.ACTIVE &&
     motion.status !== MotionStatus.PENDING
-  const motionTopUpAmount: number =
-    (callData?.[1]?.[0]?._isBigNumber && Number(formatEther(callData[1][0]))) ||
-    0 // TODO: refactor
-  const motionTopUpToken = topUpToken.label || ''
+
+  const motionTopUpAmount = getTopUpAmount(
+    callData,
+    tokenData?.decimals ?? DEFAULT_DECIMALS,
+  )
+  const motionTopUpToken = tokenData?.label ?? ''
   const pending =
     isCallDataLoading || isEventLoading || isPeriodLimitsDataLoading
 
