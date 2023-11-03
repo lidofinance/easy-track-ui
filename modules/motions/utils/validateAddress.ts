@@ -1,6 +1,6 @@
 import { constants, utils } from 'ethers'
 
-export function validateAddress(value: string) {
+export function validateAddress(value: string): string | null {
   if (!utils.isAddress(value)) {
     return 'Address is not valid'
   }
@@ -8,4 +8,6 @@ export function validateAddress(value: string) {
   if (value.toLowerCase() === constants.AddressZero) {
     return 'Address must not be zero address'
   }
+
+  return null
 }
