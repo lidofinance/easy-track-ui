@@ -52,19 +52,19 @@ export const formParts = ({
       const nodeOperators = useNodeOperatorsList(registryType)
       const keysInfo = useNodeOperatorKeysInfo(registryType)
 
-      const [operatorId, currentNodeOperator] = useMemo(() => {
-        if (!walletAddress) return [undefined, null]
-        const idx = nodeOperators.data?.list.findIndex(
+      const currentNodeOperator = useMemo(() => {
+        if (!walletAddress || !nodeOperators.data) {
+          return null
+        }
+        return nodeOperators.data.find(
           o =>
             utils.getAddress(o.rewardAddress) ===
             utils.getAddress(walletAddress),
         )
-        const operator = idx !== undefined && nodeOperators.data?.list[idx]
-        return [idx, operator]
-      }, [walletAddress, nodeOperators])
+      }, [nodeOperators.data, walletAddress])
 
       const isNodeOperatorConnected =
-        !nodeOperators.data?.isRegistrySupported || Boolean(currentNodeOperator)
+        currentNodeOperator && walletAddress && nodeOperators.data
 
       const connectedKeysInfo = useMemo(() => {
         if (!isNodeOperatorConnected || !keysInfo.data || !walletAddress)
@@ -77,8 +77,10 @@ export const formParts = ({
       }, [isNodeOperatorConnected, keysInfo.data, walletAddress])
 
       useEffect(() => {
-        setValue(fieldNames.nodeOperatorId, operatorId)
-      }, [operatorId, fieldNames.nodeOperatorId, setValue])
+        if (currentNodeOperator) {
+          setValue(fieldNames.nodeOperatorId, currentNodeOperator.id)
+        }
+      }, [fieldNames.nodeOperatorId, setValue, currentNodeOperator])
 
       if (nodeOperators.initialLoading || keysInfo.initialLoading) {
         return <PageLoader />
@@ -108,13 +110,9 @@ export const formParts = ({
             <InputControl
               name={fieldNames.nodeOperatorId}
               label={
-                currentNodeOperator ? (
-                  <>
-                    Node operator <b>{currentNodeOperator.name}</b> with id
-                  </>
-                ) : (
-                  `Node operator id is loading`
-                )
+                <>
+                  Node operator <b>{currentNodeOperator.name}</b> with id
+                </>
               }
               rules={{ required: 'Field is required' }}
               readOnly
@@ -125,14 +123,10 @@ export const formParts = ({
             <InputNumberControl
               name={fieldNames.newLimit}
               label={
-                currentNodeOperator ? (
-                  <>
-                    New limit (current limit is{' '}
-                    {currentNodeOperator.stakingLimit.toString()})
-                  </>
-                ) : (
-                  `New limit`
-                )
+                <>
+                  New limit (current limit is{' '}
+                  {currentNodeOperator.stakingLimit.toString()})
+                </>
               }
               rules={{
                 required: 'Field is required',
@@ -140,9 +134,7 @@ export const formParts = ({
                   if (value === '') return true
                   const parsedValue = Number(value)
                   if (Number.isNaN(parsedValue)) return 'Wrong number format'
-                  const limit = currentNodeOperator
-                    ? currentNodeOperator.stakingLimit.toNumber()
-                    : 0
+                  const limit = currentNodeOperator.stakingLimit.toNumber()
                   if (parsedValue <= limit) {
                     return 'New limit value should be greater than current'
                   }
