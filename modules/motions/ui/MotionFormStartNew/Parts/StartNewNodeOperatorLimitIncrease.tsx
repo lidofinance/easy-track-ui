@@ -15,6 +15,7 @@ import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 import { IncreaseLimitMotionType } from 'modules/motions/constants'
 import { getNodeOperatorRegistryType } from 'modules/motions/utils/getNodeOperatorRegistryType'
+import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 
 export const formParts = ({
   motionType,
@@ -63,8 +64,7 @@ export const formParts = ({
         )
       }, [nodeOperators.data, walletAddress])
 
-      const isNodeOperatorConnected =
-        currentNodeOperator && walletAddress && nodeOperators.data
+      const isNodeOperatorConnected = !!currentNodeOperator
 
       const connectedKeysInfo = useMemo(() => {
         if (!isNodeOperatorConnected || !keysInfo.data || !walletAddress)
@@ -131,14 +131,17 @@ export const formParts = ({
               rules={{
                 required: 'Field is required',
                 validate: value => {
-                  if (value === '') return true
-                  const parsedValue = Number(value)
-                  if (Number.isNaN(parsedValue)) return 'Wrong number format'
+                  const uintError = validateUintValue(value)
+                  if (uintError) {
+                    return uintError
+                  }
+                  const valueNum = Number(value)
+
                   const limit = currentNodeOperator.stakingLimit.toNumber()
-                  if (parsedValue <= limit) {
+                  if (valueNum <= limit) {
                     return 'New limit value should be greater than current'
                   }
-                  if (parsedValue > connectedKeysInfo.info.totalSigningKeys) {
+                  if (valueNum > connectedKeysInfo.info.totalSigningKeys) {
                     return 'New limit value should be less than or equal to total signing keys'
                   }
                   return true
