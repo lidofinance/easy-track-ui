@@ -188,7 +188,7 @@ export const formParts = createMotionFormPart({
                       }
 
                       if (maxNodeOperatorNameLength?.lt(value.length)) {
-                        return `Name length must be less or equal than ${maxNodeOperatorNameLength} characters`
+                        return `Name length must be less than or equal to ${maxNodeOperatorNameLength} characters`
                       }
 
                       return true

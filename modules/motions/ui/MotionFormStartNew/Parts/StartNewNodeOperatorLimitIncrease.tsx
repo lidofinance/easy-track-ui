@@ -139,7 +139,7 @@ export const formParts = ({
                     return 'New limit value should be greater than current'
                   }
                   if (parsedValue > connectedKeysInfo.info.totalSigningKeys) {
-                    return 'New limit value should be less than total signing keys'
+                    return 'New limit value should be less than or equal to total signing keys'
                   }
                   return true
                 },
