@@ -270,9 +270,9 @@ export const formParts = ({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        const check1 = validateToken(value)
-                        if (typeof check1 === 'string') {
-                          return check1
+                        const tokenError = validateToken(value)
+                        if (tokenError) {
+                          return tokenError
                         }
                         if (
                           transitionLimit &&
