@@ -53,6 +53,10 @@ type DescAllowedRecipientAddProps = NestProps<
   AddAllowedRecipientAbi['decodeEVMScriptCallData']
 >
 
+type GenericDescProps = {
+  callData: any
+}
+
 const MOTION_DESCRIPTIONS = {
   [MotionType.NodeOperatorIncreaseLimit]: DescNodeOperatorIncreaseLimit,
   [MotionType.LEGOTopUp]: DescLEGOTopUp,
@@ -62,7 +66,7 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.ReferralPartnerAdd]: DescReferralPartnerAdd,
   [MotionType.ReferralPartnerTopUp]: DescReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: DescReferralPartnerRemove,
-  [MotionType.AllowedRecipientAdd]: (props: DescAllowedRecipientAddProps) => (
+  [MotionType.AllowedRecipientAdd]: (props: GenericDescProps) => (
     <DescAllowedRecipientAdd
       {...props}
       registryType={MotionType.AllowedRecipientAdd}
@@ -118,24 +122,14 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.LegoDAITopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits {...props} registryType={MotionType.LegoDAITopUp} />
   ),
-  // TODO: resolve types
-  [MotionType.RccStablesTopUp]: (props: any) => (
-    <DescTopUpWithLimitsAndCustomToken
-      {...props}
-      registryType={MotionType.RccStablesTopUp}
-    />
+  [MotionType.RccDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.RccDAITopUp} />
   ),
-  [MotionType.PmlStablesTopUp]: (props: any) => (
-    <DescTopUpWithLimitsAndCustomToken
-      {...props}
-      registryType={MotionType.PmlStablesTopUp}
-    />
+  [MotionType.PmlDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.PmlDAITopUp} />
   ),
-  [MotionType.AtcStablesTopUp]: (props: any) => (
-    <DescTopUpWithLimitsAndCustomToken
-      {...props}
-      registryType={MotionType.AtcStablesTopUp}
-    />
+  [MotionType.AtcDAITopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.AtcDAITopUp} />
   ),
   [MotionType.GasFunderETHTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits
@@ -218,6 +212,24 @@ const MOTION_DESCRIPTIONS = {
     DescSDVTTargetValidatorLimitsUpdate,
   [MotionType.SDVTNodeOperatorManagerChange]:
     DescSDVTNodeOperatorManagersChange,
+  [MotionType.RccStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.RccStablesTopUp}
+    />
+  ),
+  [MotionType.PmlStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.PmlStablesTopUp}
+    />
+  ),
+  [MotionType.AtcStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.AtcStablesTopUp}
+    />
+  ),
 } as const
 
 type Props = {
@@ -253,7 +265,8 @@ export function MotionDescription({ motion }: Props) {
     return <>Loading...</>
   }
 
-  const Desc = MOTION_DESCRIPTIONS[motionType]
+  const Desc: React.FunctionComponent<GenericDescProps> =
+    MOTION_DESCRIPTIONS[motionType]
 
   return (
     <DescWrap>

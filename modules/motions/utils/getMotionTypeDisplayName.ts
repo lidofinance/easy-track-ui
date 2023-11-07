@@ -57,6 +57,9 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.AllowedRecipientAddReferralDai]: 'Add DAI referral partner',
   [MotionType.AllowedRecipientRemoveReferralDai]: 'Remove DAI referral partner',
   [MotionType.AllowedRecipientTopUpReferralDai]: 'Top up DAI referral partner',
+  [MotionType.RccDAITopUp]: 'Top up RCC DAI',
+  [MotionType.PmlDAITopUp]: 'Top up PML DAI',
+  [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
 } as const
 
 export function getMotionTypeDisplayName(

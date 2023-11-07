@@ -37,7 +37,6 @@ const getTopUpAmount = (callData: any, tokenDecimals = DEFAULT_DECIMALS) => {
   }
 
   if (Array.isArray(callData.amounts)) {
-    console.log('callData.amounts', callData.amounts)
     const amountsSum = (callData.amounts as BigNumber[]).reduce((acc, amount) =>
       acc.add(amount),
     )

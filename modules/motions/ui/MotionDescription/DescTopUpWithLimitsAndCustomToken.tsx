@@ -10,12 +10,14 @@ import { TopUpWithLimitsStablesAbi } from 'generated'
 import { NestProps } from './types'
 import { useMotionTokenData } from 'modules/motions/hooks/useMotionTokenData'
 
-export function DescTopUpWithLimitsAndCustomToken({
+type Props = NestProps<TopUpWithLimitsStablesAbi['decodeEVMScriptCallData']> & {
+  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
+}
+
+export const DescTopUpWithLimitsAndCustomToken = ({
   callData,
   registryType,
-}: NestProps<TopUpWithLimitsStablesAbi['decodeEVMScriptCallData']> & {
-  registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
-}) {
+}: Props) => {
   const { data: allowedRecipientMap, initialLoading: isRecipientDataLoading } =
     useRecipientMapAll({ registryType })
 

@@ -32,9 +32,9 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractEvmAllowedRecipientTopUpTrpLdo,
   [MotionType.LegoLDOTopUp]: CONTRACTS.ContractEvmLegoLDOTopUp,
   [MotionType.LegoDAITopUp]: CONTRACTS.ContractEvmLegoDAITopUp,
-  [MotionType.RccStablesTopUp]: CONTRACTS.ContractEvmRccStablesTopUp,
-  [MotionType.PmlStablesTopUp]: CONTRACTS.ContractEvmPmlStablesTopUp,
-  [MotionType.AtcStablesTopUp]: CONTRACTS.ContractEvmAtcStablesTopUp,
+  [MotionType.RccDAITopUp]: CONTRACTS.ContractEvmRccDAITopUp,
+  [MotionType.PmlDAITopUp]: CONTRACTS.ContractEvmPmlDAITopUp,
+  [MotionType.AtcDAITopUp]: CONTRACTS.ContractEvmAtcDAITopUp,
   [MotionType.GasFunderETHTopUp]: CONTRACTS.ContractEvmGasFunderETHTopUp,
   [MotionType.StethRewardProgramAdd]: CONTRACTS.ContractStethRewardProgramAdd,
   [MotionType.StethRewardProgramRemove]:
@@ -64,6 +64,9 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTNodeOperatorNamesSet,
   [MotionType.SDVTNodeOperatorManagerChange]:
     CONTRACTS.ContractSDVTNodeOperatorManagerChange,
+  [MotionType.RccStablesTopUp]: CONTRACTS.ContractEvmRccStablesTopUp,
+  [MotionType.PmlStablesTopUp]: CONTRACTS.ContractEvmPmlStablesTopUp,
+  [MotionType.AtcStablesTopUp]: CONTRACTS.ContractEvmAtcStablesTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

@@ -28,9 +28,9 @@ type AllowedRecipient = {
 export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
   [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
-  [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
-  [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
-  [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
+  [MotionType.RccDAITopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlDAITopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcDAITopUp]: ContractAtcStablesRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
   [MotionType.AllowedRecipientRemove]: ContractAllowedRecipientRegistry,
@@ -52,6 +52,9 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.RewardsShareProgramAdd]: ContractRewardsShareProgramRegistry,
   [MotionType.RewardsShareProgramRemove]: ContractRewardsShareProgramRegistry,
   [MotionType.RewardsShareProgramTopUp]: ContractRewardsShareProgramRegistry,
+  [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
 } as const
 
 type HookArgs = {

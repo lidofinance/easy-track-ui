@@ -54,6 +54,9 @@ export const MotionTypeDisplayOnly = {
   AllowedRecipientAddReferralDai: 'AllowedRecipientAddReferralDai',
   AllowedRecipientRemoveReferralDai: 'AllowedRecipientRemoveReferralDai',
   AllowedRecipientTopUpReferralDai: 'AllowedRecipientTopUpReferralDai',
+  RccDAITopUp: 'RccDAITopUp',
+  PmlDAITopUp: 'PmlDAITopUp',
+  AtcDAITopUp: 'AtcDAITopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
