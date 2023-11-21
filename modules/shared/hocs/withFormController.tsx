@@ -8,6 +8,7 @@ type Rules = ControllerProps['rules']
 type WrapperProps = {
   name: string
   rules?: Rules
+  onChange?: (e: any) => void
 }
 
 type InjectedProps = {
@@ -24,7 +25,7 @@ export function withFormController<Props extends InjectedProps>(
   type WrappedProps = Subtract<Props, InjectedProps> & WrapperProps
 
   function FormController(props: WrappedProps) {
-    const { name, rules, ...restProps } = props
+    const { name, rules, onChange, ...restProps } = props
     const { control } = useFormContext()
 
     return (
@@ -38,8 +39,12 @@ export function withFormController<Props extends InjectedProps>(
             ref={args.field.ref}
             name={args.field.name}
             value={args.field.value}
+            checked={args.field.value}
             onBlur={args.field.onBlur}
-            onChange={args.field.onChange}
+            onChange={(e: any) => {
+              onChange?.(e)
+              args.field.onChange(e)
+            }}
             error={args.fieldState.error?.message}
           />
         )}

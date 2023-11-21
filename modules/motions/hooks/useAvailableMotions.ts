@@ -47,6 +47,7 @@ export const useAvailableMotions = () => {
   const contracts = useMemo(() => {
     return Object.values(EVM_CONTRACTS).filter(
       contract =>
+        contract.address[chainId] &&
         contract.address[chainId] !== nodeOperatorIncreaseLimitAddress,
     )
   }, [chainId, nodeOperatorIncreaseLimitAddress])
@@ -71,7 +72,11 @@ export const useAvailableMotions = () => {
         const contractType =
           EvmTypesByAdress[parseEvmSupportedChainId(chainId)][contractAddress]
 
-        if (!Object.keys(MotionTypeForms).includes(contractType)) return acc
+        if (
+          !contractType ||
+          !Object.keys(MotionTypeForms).includes(contractType)
+        )
+          return acc
 
         acc[contractType as MotionTypeForms] = cur.value === walletAddress
 
@@ -81,7 +86,6 @@ export const useAvailableMotions = () => {
         [MotionTypeForms.NodeOperatorIncreaseLimit]: isNodeOperatorConnected,
       } as Record<MotionTypeForms, boolean>,
     )
-
     setAvailableMotions(trustedCallerConnectedMap)
   }, [chainId, contracts, isNodeOperatorConnected, walletAddress])
 

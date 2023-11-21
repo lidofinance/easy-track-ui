@@ -57,7 +57,7 @@ export function useRewardProgramsAll() {
  * @deprecated
  */
 export function useRewardProgramsActual() {
-  const chainId = useWeb3()
+  const { chainId } = useWeb3()
   const programsAll = useRewardProgramsAll()
   const rewardProgramRegistry = ContractRewardProgramRegistry.useRpc()
 
