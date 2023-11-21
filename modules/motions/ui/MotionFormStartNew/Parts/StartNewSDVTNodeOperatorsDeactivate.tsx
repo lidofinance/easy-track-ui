@@ -2,7 +2,7 @@ import { utils } from 'ethers'
 
 import { Fragment } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
-import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -20,10 +20,11 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/checkAddressManagerRole'
 import { noSigningKeysRoleError } from 'modules/motions/constants'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
+import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
 
 type NodeOperator = {
   id: string
@@ -81,7 +82,7 @@ export const formParts = createMotionFormPart({
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch } = useFormContext()
+    const { watch, setValue } = useFormContext()
     const { isValid } = useFormState()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
@@ -136,28 +137,20 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <SelectControl
-                    label="Node operator"
+                  <NodeOperatorSelectControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
-                    rules={{ required: 'Field is required' }}
+                    options={getFilteredOptions(fieldIndex)}
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
                       if (nodeOperator.managerAddress) {
-                        fieldsArr.update(fieldIndex, {
-                          managerAddress: nodeOperator.managerAddress,
-                        })
+                        setValue(
+                          `${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`,
+                          nodeOperator.managerAddress,
+                        )
                       }
                     }}
-                  >
-                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
-                      <Option
-                        key={nodeOperator.id}
-                        value={nodeOperator.id}
-                        children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
-                      />
-                    ))}
-                  </SelectControl>
+                  />
                 </Fieldset>
 
                 <Fieldset>
@@ -173,8 +166,9 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const canAddressManageKeys =

@@ -1,4 +1,4 @@
-import { utils, constants } from 'ethers'
+import { utils } from 'ethers'
 
 import { Fragment, useEffect, useMemo } from 'react'
 import { useFieldArray, useFormState, useFormContext } from 'react-hook-form'
@@ -15,6 +15,7 @@ import {
   FieldsWrapper,
   FieldsHeader,
   FieldsHeaderDesc,
+  ErrorBox,
 } from '../CreateMotionFormStyle'
 
 import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
@@ -29,6 +30,8 @@ import {
 import { STETH } from 'modules/blockChain/contractAddresses'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
+import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
 
 type NodeOperator = {
   name: string
@@ -154,6 +157,14 @@ export const formParts = () =>
         )
       }
 
+      if (!NOCounts) {
+        return <ErrorBox>Cannot load node operators count data</ErrorBox>
+      }
+
+      if (NOCounts.current >= NOCounts.max) {
+        return <MessageBox>Node operators limit reached</MessageBox>
+      }
+
       return (
         <>
           {fieldsArr.fields.map((item, fieldIndex) => (
@@ -162,14 +173,14 @@ export const formParts = () =>
                 <FieldsHeader>
                   {fieldsArr.fields.length > 1 && (
                     <FieldsHeaderDesc>
-                      NodeOperator #{fieldIndex + 1}
+                      NodeOperator #{NOCounts.current + fieldIndex}
                     </FieldsHeaderDesc>
                   )}
                   {fieldsArr.fields.length > 1 && (
                     <RemoveItemButton
                       onClick={() => handleRemoveNodeOperator(fieldIndex)}
                     >
-                      Remove node operator {fieldIndex + 1}
+                      Remove node operator {NOCounts.current + fieldIndex}
                     </RemoveItemButton>
                   )}
                 </FieldsHeader>
@@ -181,6 +192,14 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: value => {
+                        const nameErr = validateNodeOperatorName(
+                          value,
+                          maxNodeOperatorNameLength,
+                        )
+                        if (nameErr) {
+                          return nameErr
+                        }
+
                         const idInNameMap =
                           nodeOperatorsDetailsMaps['name'][value]
 
@@ -199,10 +218,6 @@ export const formParts = () =>
                           return 'Name is already in use by another update'
                         }
 
-                        if (maxNodeOperatorNameLength?.lt(value.length)) {
-                          return `Name length must be less than or equal to ${maxNodeOperatorNameLength} characters`
-                        }
-
                         return true
                       },
                     }}
@@ -216,14 +231,12 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
-                        }
-                        const valueAddress = utils.getAddress(value)
-                        if (valueAddress === constants.AddressZero) {
-                          return 'Address must not be zero address'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
+                        const valueAddress = utils.getAddress(value)
                         const stETHAddress = STETH[chainId]
 
                         if (
@@ -247,7 +260,7 @@ export const formParts = () =>
                             ({ rewardAddress }, index) =>
                               rewardAddress &&
                               utils.getAddress(rewardAddress) ===
-                                utils.getAddress(valueAddress) &&
+                                valueAddress &&
                               fieldIndex !== index,
                           )
 
@@ -268,8 +281,9 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const valueAddress = utils.getAddress(value)
@@ -287,7 +301,7 @@ export const formParts = () =>
                             ({ managerAddress }, index) =>
                               managerAddress &&
                               utils.getAddress(managerAddress) ===
-                                utils.getAddress(valueAddress) &&
+                                valueAddress &&
                               fieldIndex !== index,
                           )
 
@@ -313,7 +327,6 @@ export const formParts = () =>
             </Fragment>
           ))}
           {isValid &&
-            NOCounts &&
             NOCounts.max > fieldsArr.fields.length + NOCounts.current && (
               <Fieldset>
                 <ButtonIcon

@@ -1,8 +1,8 @@
-import { constants, utils } from 'ethers'
+import { utils } from 'ethers'
 
 import { Fragment, useMemo } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
-import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -20,9 +20,11 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { STETH } from 'modules/blockChain/contractAddresses'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
+import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 
 type NodeOperator = {
   id: string
@@ -142,20 +144,22 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <SelectControl
-                    label="Node operator"
+                  <NodeOperatorSelectControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
-                    rules={{ required: 'Field is required' }}
-                  >
-                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
-                      <Option
-                        key={nodeOperator.id}
-                        value={nodeOperator.id}
-                        children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
-                      />
-                    ))}
-                  </SelectControl>
+                    options={getFilteredOptions(fieldIndex)}
+                  />
                 </Fieldset>
+
+                {!isNaN(parseInt(selectedNodeOperators[fieldIndex]?.id)) ? (
+                  <MotionInfoBox>
+                    Current reward address:{' '}
+                    {
+                      nodeOperatorsList[
+                        Number(selectedNodeOperators[fieldIndex].id)
+                      ].rewardAddress
+                    }
+                  </MotionInfoBox>
+                ) : null}
 
                 <Fieldset>
                   <InputControl
@@ -164,8 +168,9 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        if (!utils.isAddress(value)) {
-                          return 'Address is not valid'
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
                         }
 
                         const valueAddress = utils.getAddress(value)
@@ -186,7 +191,7 @@ export const formParts = createMotionFormPart({
                             ({ newRewardAddress }, index) =>
                               newRewardAddress &&
                               utils.getAddress(newRewardAddress) ===
-                                utils.getAddress(valueAddress) &&
+                                valueAddress &&
                               fieldIndex !== index,
                           )
 
@@ -195,10 +200,6 @@ export const formParts = createMotionFormPart({
                         */
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
                           return 'Address is already in use by another update'
-                        }
-
-                        if (valueAddress === constants.AddressZero) {
-                          return 'Address must not be zero address'
                         }
 
                         const stETHAddress = STETH[chainId]
