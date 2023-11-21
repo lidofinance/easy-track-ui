@@ -1,8 +1,8 @@
 import { BigNumber, utils } from 'ethers'
 
-import { ChangeEvent, Fragment } from 'react'
+import { Fragment } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
-import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -20,13 +20,13 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { SelectControl } from 'modules/shared/ui/Controls/Select'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
+import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
+import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 
 type NodeOperator = {
-  id: string
+  id: number | undefined
   isTargetLimitActive: boolean
   targetLimit: string
 }
@@ -65,7 +65,7 @@ export const formParts = createMotionFormPart({
   getDefaultFormData: () => ({
     nodeOperators: [
       {
-        id: '',
+        id: undefined,
         isTargetLimitActive: false,
         targetLimit: '',
       },
@@ -95,8 +95,8 @@ export const formParts = createMotionFormPart({
         return []
       }
 
-      const selectedIds = selectedNodeOperators.map(({ id }) => parseInt(id))
-      const thisId = parseInt(selectedNodeOperators[fieldIdx]?.id)
+      const selectedIds = selectedNodeOperators.map(({ id }) => id)
+      const thisId = selectedNodeOperators[fieldIdx]?.id
       return nodeOperatorsList.filter(
         ({ id }) => !selectedIds.includes(id) || id === thisId,
       )
@@ -104,7 +104,7 @@ export const formParts = createMotionFormPart({
 
     const handleAddUpdate = () =>
       fieldsArr.append({
-        id: '',
+        id: undefined,
         isTargetLimitActive: false,
         targetLimit: '',
       } as NodeOperator)
@@ -124,6 +124,11 @@ export const formParts = createMotionFormPart({
     return (
       <>
         {fieldsArr.fields.map((item, fieldIndex) => {
+          const currentNodeOperator =
+            typeof selectedNodeOperators[fieldIndex].id === 'number'
+              ? nodeOperatorsList[selectedNodeOperators[fieldIndex].id!]
+              : null
+
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
@@ -143,50 +148,41 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <SelectControl
-                    label="Node operator"
+                  <NodeOperatorSelectControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
-                    rules={{ required: 'Field is required' }}
+                    options={getFilteredOptions(fieldIndex)}
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      fieldsArr.update(fieldIndex, {
-                        isTargetLimitActive:
-                          nodeOperator.isTargetLimitActive ?? false,
-                        targetLimit:
-                          nodeOperator.targetValidatorsCount?.toString() ?? '',
-                      })
+                      setValue(
+                        `${fieldNames.nodeOperators}.${fieldIndex}.isTargetLimitActive`,
+                        Boolean(nodeOperator.isTargetLimitActive),
+                      )
                     }}
-                  >
-                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
-                      <Option
-                        key={nodeOperator.id}
-                        value={nodeOperator.id}
-                        children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
-                      />
-                    ))}
-                  </SelectControl>
+                  />
                 </Fieldset>
 
                 <Fieldset>
                   <CheckboxControl
                     label="Target validator limit active"
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.isTargetLimitActive`}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                      if (event.target.checked === false) {
-                        setValue(
-                          `${fieldNames.nodeOperators}.${fieldIndex}.targetLimit`,
-                          '0',
-                        )
-                      }
-                    }}
                   />
                 </Fieldset>
 
                 <Fieldset>
-                  <InputControl
+                  <InputNumberControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.targetLimit`}
-                    label="Target validator limit"
+                    label={
+                      currentNodeOperator ? (
+                        <>
+                          New limit (current limit is{' '}
+                          {currentNodeOperator.targetValidatorsCount?.toString()}
+                          )
+                        </>
+                      ) : (
+                        `New limit`
+                      )
+                    }
                     disabled={
                       !selectedNodeOperators[fieldIndex]?.isTargetLimitActive
                     }

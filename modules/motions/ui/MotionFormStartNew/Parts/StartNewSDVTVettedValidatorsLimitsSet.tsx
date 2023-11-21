@@ -2,7 +2,7 @@ import { utils } from 'ethers'
 
 import { Fragment } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
-import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -20,9 +20,9 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
+import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
 
 type NodeOperator = {
   id: string
@@ -137,19 +137,10 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <SelectControl
-                    label="Node operator"
+                  <NodeOperatorSelectControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
-                    rules={{ required: 'Field is required' }}
-                  >
-                    {getFilteredOptions(fieldIndex).map(nodeOperator => (
-                      <Option
-                        key={nodeOperator.id}
-                        value={nodeOperator.id}
-                        children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
-                      />
-                    ))}
-                  </SelectControl>
+                    options={getFilteredOptions(fieldIndex)}
+                  />
                 </Fieldset>
 
                 <Fieldset>

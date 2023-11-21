@@ -2,7 +2,7 @@ import { utils } from 'ethers'
 
 import { Fragment, useMemo } from 'react'
 import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
-import { Plus, ButtonIcon, Option } from '@lidofinance/lido-ui'
+import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
@@ -20,9 +20,10 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { useSDVTOperatorNameLimit } from 'modules/motions/hooks'
+import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
+import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
 
 type NodeOperator = {
   id: string
@@ -147,28 +148,27 @@ export const formParts = createMotionFormPart({
               </FieldsHeader>
 
               <Fieldset>
-                <SelectControl
-                  label="Node operator"
+                <NodeOperatorSelectControl
                   name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
-                  rules={{ required: 'Field is required' }}
-                >
-                  {getFilteredOptions(fieldIndex).map(nodeOperator => (
-                    <Option
-                      key={nodeOperator.id}
-                      value={nodeOperator.id}
-                      children={`${nodeOperator.name} (id: ${nodeOperator.id})`}
-                    />
-                  ))}
-                </SelectControl>
+                  options={getFilteredOptions(fieldIndex)}
+                />
               </Fieldset>
 
               <Fieldset>
                 <InputControl
                   name={`${fieldNames.nodeOperators}.${fieldIndex}.name`}
-                  label="Name"
+                  label="New name"
                   rules={{
                     required: 'Field is required',
                     validate: (value: string) => {
+                      const nameErr = validateNodeOperatorName(
+                        value,
+                        maxNodeOperatorNameLength,
+                      )
+                      if (nameErr) {
+                        return nameErr
+                      }
+
                       const idInNameMap = nodeOperatorNamesMap[value]
 
                       if (typeof idInNameMap === 'number') {
@@ -185,10 +185,6 @@ export const formParts = createMotionFormPart({
 
                       if (nameInSelectedNodeOperatorsIndex !== -1) {
                         return 'Name is already in use by another update'
-                      }
-
-                      if (maxNodeOperatorNameLength?.lt(value.length)) {
-                        return `Name length must be less or equal than ${maxNodeOperatorNameLength} characters`
                       }
 
                       return true
