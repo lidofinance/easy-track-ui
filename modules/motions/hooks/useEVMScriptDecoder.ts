@@ -35,9 +35,9 @@ export function useEVMScriptDecoder() {
           abis.AllowedRecipientsRegistryAbi__factory.abi,
         [KEYS.LegoLDORegistry]: abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.LegoDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.RccDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.PmlDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.AtcDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.RccStablesRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.PmlStablesRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.AtcStablesRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.gasFunderETHRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.StethRewardProgramRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,

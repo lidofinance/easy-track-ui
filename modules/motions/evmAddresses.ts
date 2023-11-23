@@ -88,6 +88,9 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',
     [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
     [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
+    [MotionType.RccStablesTopUp]: '0xd50eE42B31Bc500409B7caD99A2D16FB1Bfecdc6',
+    [MotionType.PmlStablesTopUp]: '0x5F379512158A46ab7a91f8b799A97691eC498b9a',
+    [MotionType.AtcStablesTopUp]: '0xB87300405050e7f1dBC35c6C9ce9ea4417D3Ad81',
     [MotionType.StethRewardProgramAdd]:
       '0x785A8B1CDC03Bb191670Ed4696e9ED5B11Af910A',
     [MotionType.StethRewardProgramRemove]:
@@ -159,9 +162,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientTopUpTrpLdo]: '',
     [MotionType.LegoLDOTopUp]: '',
     [MotionType.LegoDAITopUp]: '',
-    [MotionType.RccDAITopUp]: '',
-    [MotionType.PmlDAITopUp]: '',
-    [MotionType.AtcDAITopUp]: '',
     [MotionType.StethRewardProgramAdd]: '',
     [MotionType.StethRewardProgramRemove]: '',
     [MotionType.StethRewardProgramTopUp]: '',

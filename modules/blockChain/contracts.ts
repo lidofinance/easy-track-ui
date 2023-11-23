@@ -124,31 +124,25 @@ export const ContractEvmLegoDAITopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.LegoDAITopUp],
 })
 
-export const ContractRccDAIRegistry = createContractHelpers({
-  factory: TypeChain.RegistryWithLimitsAbi__factory,
-  address: CONTRACT_ADDRESSES.RccDAIRegistry,
-})
-
+/**
+ * @deprecated
+ */
 export const ContractEvmRccDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.RccDAITopUp],
 })
 
-export const ContractPmlDAIRegistry = createContractHelpers({
-  factory: TypeChain.RegistryWithLimitsAbi__factory,
-  address: CONTRACT_ADDRESSES.PmlDAIRegistry,
-})
-
+/**
+ * @deprecated
+ */
 export const ContractEvmPmlDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.PmlDAITopUp],
 })
 
-export const ContractAtcDAIRegistry = createContractHelpers({
-  factory: TypeChain.RegistryWithLimitsAbi__factory,
-  address: CONTRACT_ADDRESSES.AtcDAIRegistry,
-})
-
+/**
+ * @deprecated
+ */
 export const ContractEvmAtcDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.AtcDAITopUp],
@@ -328,4 +322,39 @@ export const ContractSDVTNodeOperatorManagerChange = createContractHelpers({
 export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
   factory: TypeChain.UpdateTargetValidatorLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
+})
+
+export const ContractAllowedTokensRegistry = createContractHelpers({
+  factory: TypeChain.AllowedTokensRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.AllowedTokensRegistry,
+})
+
+export const ContractRccStablesRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.RccStablesRegistry,
+})
+
+export const ContractEvmRccStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.RccStablesTopUp],
+})
+
+export const ContractPmlStablesRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.PmlStablesRegistry,
+})
+
+export const ContractEvmPmlStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.PmlStablesTopUp],
+})
+
+export const ContractAtcStablesRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.AtcStablesRegistry,
+})
+
+export const ContractEvmAtcStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.AtcStablesTopUp],
 })

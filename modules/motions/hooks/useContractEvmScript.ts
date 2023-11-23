@@ -64,6 +64,9 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTNodeOperatorNamesSet,
   [MotionType.SDVTNodeOperatorManagerChange]:
     CONTRACTS.ContractSDVTNodeOperatorManagerChange,
+  [MotionType.RccStablesTopUp]: CONTRACTS.ContractEvmRccStablesTopUp,
+  [MotionType.PmlStablesTopUp]: CONTRACTS.ContractEvmPmlStablesTopUp,
+  [MotionType.AtcStablesTopUp]: CONTRACTS.ContractEvmAtcStablesTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
