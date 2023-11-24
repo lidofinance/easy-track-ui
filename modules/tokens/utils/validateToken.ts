@@ -6,7 +6,7 @@ export const validateToken = (value: string) => {
   }
   try {
     utils.parseEther(value)
-    return true
+    return null
   } catch (_) {
     return 'Unable to parse'
   }

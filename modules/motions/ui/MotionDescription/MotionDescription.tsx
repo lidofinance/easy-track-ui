@@ -22,6 +22,7 @@ import {
 } from './DescAllowedRecipient'
 
 import { DescTopUpWithLimits } from './DescTopUpWithLimits'
+import { DescTopUpWithLimitsAndCustomToken } from './DescTopUpWithLimitsAndCustomToken'
 
 import {
   TopUpWithLimitsAbi,
@@ -52,6 +53,10 @@ type DescAllowedRecipientAddProps = NestProps<
   AddAllowedRecipientAbi['decodeEVMScriptCallData']
 >
 
+type GenericDescProps = {
+  callData: any
+}
+
 const MOTION_DESCRIPTIONS = {
   [MotionType.NodeOperatorIncreaseLimit]: DescNodeOperatorIncreaseLimit,
   [MotionType.LEGOTopUp]: DescLEGOTopUp,
@@ -61,7 +66,7 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.ReferralPartnerAdd]: DescReferralPartnerAdd,
   [MotionType.ReferralPartnerTopUp]: DescReferralPartnerTopUp,
   [MotionType.ReferralPartnerRemove]: DescReferralPartnerRemove,
-  [MotionType.AllowedRecipientAdd]: (props: DescAllowedRecipientAddProps) => (
+  [MotionType.AllowedRecipientAdd]: (props: GenericDescProps) => (
     <DescAllowedRecipientAdd
       {...props}
       registryType={MotionType.AllowedRecipientAdd}
@@ -207,6 +212,24 @@ const MOTION_DESCRIPTIONS = {
     DescSDVTTargetValidatorLimitsUpdate,
   [MotionType.SDVTNodeOperatorManagerChange]:
     DescSDVTNodeOperatorManagersChange,
+  [MotionType.RccStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.RccStablesTopUp}
+    />
+  ),
+  [MotionType.PmlStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.PmlStablesTopUp}
+    />
+  ),
+  [MotionType.AtcStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.AtcStablesTopUp}
+    />
+  ),
 } as const
 
 type Props = {
@@ -242,7 +265,8 @@ export function MotionDescription({ motion }: Props) {
     return <>Loading...</>
   }
 
-  const Desc = MOTION_DESCRIPTIONS[motionType]
+  const Desc: React.FunctionComponent<GenericDescProps> =
+    MOTION_DESCRIPTIONS[motionType]
 
   return (
     <DescWrap>
