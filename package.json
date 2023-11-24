@@ -28,11 +28,11 @@
   },
   "dependencies": {
     "@lido-sdk/constants": "^3.2.1",
-    "@lido-sdk/contracts": "^2.0.4",
-    "@lido-sdk/fetch": "^2.1.5",
+    "@lido-sdk/contracts": "^3.0.4",
+    "@lido-sdk/fetch": "^2.1.12",
     "@lido-sdk/helpers": "^1.5.1",
     "@lido-sdk/providers": "^1.4.14",
-    "@lido-sdk/react": "^1.18.9",
+    "@lido-sdk/react": "^2.0.3",
     "@lidofinance/evm-script-decoder": "0.2.2",
     "@lidofinance/lido-ui": "3.2.0",
     "@lidofinance/next-cache-files-middleware": "^0.33.0",
@@ -62,7 +62,7 @@
     "styled-components": "5.3.3",
     "swr": "1.2.2",
     "typechain": "7.0.1",
-    "wagmi": "0.12.17"
+    "wagmi": "0.12.19"
   },
   "devDependencies": {
     "@commitlint/cli": "17.3.0",
