@@ -189,6 +189,9 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SDVTNodeOperatorManagerChange]:
       '0xb8C4728bc0826bA5864D02FA53148de7A44C2f7E',
 
+    [MotionType.SandboxNodeOperatorIncreaseLimit]:
+      '0xbD37e55748c6f4Ece637AeD3e278e7575346B587',
+
     // next motion factories are @deprecated
     // we are keeping them here to display history data
     [MotionType.LEGOTopUp]: '',

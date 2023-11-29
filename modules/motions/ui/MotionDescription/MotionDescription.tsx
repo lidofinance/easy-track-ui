@@ -4,7 +4,6 @@ import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEve
 import { useContractEvmScript } from 'modules/motions/hooks/useContractEvmScript'
 
 import { DescLEGOTopUp } from './DescLEGO'
-import { DescNodeOperatorIncreaseLimit } from './DescNodeOperator'
 import {
   DescReferralPartnerAdd,
   DescReferralPartnerTopUp,
@@ -28,6 +27,7 @@ import {
   TopUpWithLimitsAbi,
   RemoveAllowedRecipientAbi,
   AddAllowedRecipientAbi,
+  EvmIncreaseNodeOperatorStakingLimitAbi,
 } from 'generated'
 import { Motion, MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
@@ -42,6 +42,7 @@ import { DescSDVTNodeOperatorRewardAddressesSet } from './DescSDVTNodeOperatorRe
 import { DescSDVTNodeOperatorNamesSet } from './DescSDVTNodeOperatorNamesSet'
 import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
 import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
+import { DescNodeOperatorIncreaseLimit } from './DescNodeOperatorLimitIncrease'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -53,12 +54,23 @@ type DescAllowedRecipientAddProps = NestProps<
   AddAllowedRecipientAbi['decodeEVMScriptCallData']
 >
 
+type DescNodeOperatorIncreaseLimitProps = NestProps<
+  EvmIncreaseNodeOperatorStakingLimitAbi['decodeEVMScriptCallData']
+>
+
 type GenericDescProps = {
   callData: any
 }
 
 const MOTION_DESCRIPTIONS = {
-  [MotionType.NodeOperatorIncreaseLimit]: DescNodeOperatorIncreaseLimit,
+  [MotionType.NodeOperatorIncreaseLimit]: (
+    props: DescNodeOperatorIncreaseLimitProps,
+  ) => (
+    <DescNodeOperatorIncreaseLimit
+      {...props}
+      motionType={MotionType.NodeOperatorIncreaseLimit}
+    />
+  ),
   [MotionType.LEGOTopUp]: DescLEGOTopUp,
   [MotionType.RewardProgramAdd]: DescRewardProgramAdd,
   [MotionType.RewardProgramTopUp]: DescRewardProgramTopUp,
@@ -212,6 +224,14 @@ const MOTION_DESCRIPTIONS = {
     DescSDVTTargetValidatorLimitsUpdate,
   [MotionType.SDVTNodeOperatorManagerChange]:
     DescSDVTNodeOperatorManagersChange,
+  [MotionType.SandboxNodeOperatorIncreaseLimit]: (
+    props: DescNodeOperatorIncreaseLimitProps,
+  ) => (
+    <DescNodeOperatorIncreaseLimit
+      {...props}
+      motionType={MotionType.SandboxNodeOperatorIncreaseLimit}
+    />
+  ),
   [MotionType.RccStablesTopUp]: (props: GenericDescProps) => (
     <DescTopUpWithLimitsAndCustomToken
       {...props}

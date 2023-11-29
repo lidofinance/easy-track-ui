@@ -124,6 +124,10 @@ export const SDVTRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0x11a93807078f8BB880c1BD0ee4C387537de4b4b6',
 }
 
+export const SandboxNodeOperatorsRegistry: ChainAddressMap = {
+  [CHAINS.Holesky]: '0xD6C2ce3BB8bea2832496Ac8b5144819719f343AC',
+}
+
 export const AllowedTokensRegistry: ChainAddressMap = {
   [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
 }

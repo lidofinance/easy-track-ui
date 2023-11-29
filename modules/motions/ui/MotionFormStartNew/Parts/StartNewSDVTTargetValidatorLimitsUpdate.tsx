@@ -195,7 +195,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         if (UINT_64_MAX.lt(value)) {
-                          return `Value must be less or equal than ${UINT_64_MAX}`
+                          return `Value must be less than or equal to ${UINT_64_MAX}`
                         }
 
                         return true

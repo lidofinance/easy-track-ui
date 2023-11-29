@@ -168,7 +168,7 @@ export const formParts = createMotionFormPart({
                         const { totalAddedValidators } = nodeOperator
 
                         if (totalAddedValidators.lt(value)) {
-                          return `Value must be less or equal than ${totalAddedValidators}`
+                          return `Value must be less than or equal to ${totalAddedValidators}`
                         }
 
                         return true
