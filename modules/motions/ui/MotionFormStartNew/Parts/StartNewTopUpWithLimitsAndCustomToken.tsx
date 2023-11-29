@@ -125,9 +125,9 @@ export const formParts = ({
       const handleAddProgram = () =>
         fieldsArr.append({ address: '', amount: '' })
 
-      const { watch, setValue } = useFormContext()
+      const { watch, setValue, trigger } = useFormContext()
       const selectedPrograms: Program[] = watch(fieldNames.programs)
-      const selectedTokenAddress = watch(fieldNames.tokenAddress)
+      const selectedTokenAddress: string = watch(fieldNames.tokenAddress)
 
       const selectedTokenLabel = useMemo(() => {
         if (!selectedTokenAddress || !allowedTokens?.length) {
@@ -154,6 +154,16 @@ export const formParts = ({
       }
 
       useEffect(() => {
+        if (selectedTokenAddress) {
+          selectedPrograms.forEach((program, idx) => {
+            if (program.amount) {
+              trigger(`${fieldNames.programs}.${idx}.amount`)
+            }
+          })
+        }
+      }, [fieldNames.programs, selectedPrograms, selectedTokenAddress, trigger])
+
+      useEffect(() => {
         const recipientsCount = actualRecipients?.length || 0
         const isMoreThanOne = recipientsCount > 1
 
@@ -165,14 +175,18 @@ export const formParts = ({
         ])
       }, [fieldNames.programs, setValue, actualRecipients])
 
-      const { data: limits } = useTransitionLimits()
+      const { data: limits, initialLoading: isTransitionLimitsDataLoading } =
+        useTransitionLimits()
       const transitionLimit =
-        selectedTokenAddress && limits?.[utils.getAddress(selectedTokenAddress)]
+        selectedTokenAddress && limits
+          ? limits[utils.getAddress(selectedTokenAddress)]
+          : null
 
       if (
         trustedCaller.initialLoading ||
         isRecipientsDataLoading ||
         isPeriodLimitsDataLoading ||
+        isTransitionLimitsDataLoading ||
         isTokensDataLoading
       ) {
         return <PageLoader />
@@ -194,6 +208,7 @@ export const formParts = ({
               onChange={(value: string) => {
                 const tokenDecimals = tokensDecimalsMap?.[value]
                 if (tokenDecimals) {
+                  console.log('tokenDecimals', tokenDecimals)
                   setValue(fieldNames.tokenDecimals, tokenDecimals)
                 }
               }}
@@ -274,10 +289,12 @@ export const formParts = ({
                         if (tokenError) {
                           return tokenError
                         }
-                        if (
-                          transitionLimit &&
-                          Number(value) > transitionLimit
-                        ) {
+
+                        if (typeof transitionLimit !== 'number') {
+                          return `Transition limit for ${selectedTokenLabel} is not defined`
+                        }
+
+                        if (Number(value) > transitionLimit) {
                           return tokenLimitError(
                             selectedTokenLabel,
                             transitionLimit,
