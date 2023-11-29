@@ -14,14 +14,15 @@ export function DescNodeOperatorIncreaseLimit({
   motionType: IncreaseLimitMotionType
 }) {
   const nodeOperatorId = Number(callData._nodeOperatorId)
-  const { data: nodeOperators } = useNodeOperatorsList(
-    getNodeOperatorRegistryType(motionType),
-  )
+  const registryType = getNodeOperatorRegistryType(motionType)
+  const { data: nodeOperators } = useNodeOperatorsList(registryType)
   const nodeOperatorName = nodeOperators?.[nodeOperatorId].name ?? ''
+
   return (
     <div>
-      Node operator <b>{nodeOperatorName}</b> (id: {nodeOperatorId}) wants to
-      increase staking limit to {Number(callData._stakingLimit)}
+      {registryType === 'sandbox' ? '[Sandbox] ' : ''}Node operator{' '}
+      <b>{nodeOperatorName}</b> (id: {nodeOperatorId}) wants to increase staking
+      limit to {Number(callData._stakingLimit)}
     </div>
   )
 }
