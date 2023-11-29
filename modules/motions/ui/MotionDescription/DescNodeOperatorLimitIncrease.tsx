@@ -20,9 +20,8 @@ export function DescNodeOperatorIncreaseLimit({
 
   return (
     <div>
-      {registryType === 'sandbox' ? '[Sandbox] ' : ''}Node operator{' '}
-      <b>{nodeOperatorName}</b> (id: {nodeOperatorId}) wants to increase staking
-      limit to {Number(callData._stakingLimit)}
+      Node operator <b>{nodeOperatorName}</b> (id: {nodeOperatorId}) wants to
+      increase staking limit to {Number(callData._stakingLimit)}
     </div>
   )
 }
