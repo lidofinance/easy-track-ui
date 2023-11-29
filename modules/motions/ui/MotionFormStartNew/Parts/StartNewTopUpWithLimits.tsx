@@ -31,9 +31,6 @@ import {
 import {
   ContractEvmLegoLDOTopUp,
   ContractEvmLegoDAITopUp,
-  ContractEvmRccDAITopUp,
-  ContractEvmPmlDAITopUp,
-  ContractEvmAtcDAITopUp,
   ContractEvmGasFunderETHTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
@@ -53,18 +50,6 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.LegoDAITopUp]: {
     evmContract: ContractEvmLegoDAITopUp,
     motionType: MotionType.LegoDAITopUp,
-  },
-  [MotionType.RccDAITopUp]: {
-    evmContract: ContractEvmRccDAITopUp,
-    motionType: MotionType.RccDAITopUp,
-  },
-  [MotionType.PmlDAITopUp]: {
-    evmContract: ContractEvmPmlDAITopUp,
-    motionType: MotionType.PmlDAITopUp,
-  },
-  [MotionType.AtcDAITopUp]: {
-    evmContract: ContractEvmAtcDAITopUp,
-    motionType: MotionType.AtcDAITopUp,
   },
   [MotionType.GasFunderETHTopUp]: {
     evmContract: ContractEvmGasFunderETHTopUp,
@@ -237,9 +222,9 @@ export const formParts = ({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        const check1 = validateToken(value)
-                        if (typeof check1 === 'string') {
-                          return check1
+                        const tokenError = validateToken(value)
+                        if (tokenError) {
+                          return tokenError
                         }
                         if (
                           transitionLimit &&

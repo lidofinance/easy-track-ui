@@ -71,17 +71,17 @@ export const LegoDAIRegistry: ChainAddressMap = {
   [CHAINS.Goerli]: '0x5884f5849414D4317d175fEc144e2F87f699B082',
 }
 
-export const RccDAIRegistry: ChainAddressMap = {
+export const RccStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDc1A0C7849150f466F07d48b38eAA6cE99079f80',
   [CHAINS.Goerli]: '0x1440E8aDbE3a42a9EDB4b30059df8F6c35205a15',
 }
 
-export const PmlDAIRegistry: ChainAddressMap = {
+export const PmlStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDFfCD3BF14796a62a804c1B16F877Cf7120379dB',
   [CHAINS.Goerli]: '0xAadfBd1ADE92d85c967f4aE096141F0F802F46Db',
 }
 
-export const AtcDAIRegistry: ChainAddressMap = {
+export const AtcStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xe07305F43B11F230EaA951002F6a55a16419B707',
   [CHAINS.Goerli]: '0xedD3B813275e1A88c2283FAfa5bf5396938ef59e',
 }
@@ -126,4 +126,8 @@ export const SDVTRegistry: ChainAddressMap = {
 
 export const SandboxNodeOperatorsRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0xD6C2ce3BB8bea2832496Ac8b5144819719f343AC',
+}
+
+export const AllowedTokensRegistry: ChainAddressMap = {
+  [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
 }

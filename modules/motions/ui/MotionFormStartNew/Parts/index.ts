@@ -4,6 +4,7 @@ import * as formAllowedRecipientAdd from './StartNewAllowedRecipientAdd'
 import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
 import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
+import * as StartNewTopUpWithLimitsAndCustomToken from './StartNewTopUpWithLimitsAndCustomToken'
 import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
 import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
 import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
@@ -29,15 +30,18 @@ export const formParts = {
   [MotionTypeForms.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.LegoDAITopUp,
   }),
-  [MotionTypeForms.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.RccDAITopUp,
-  }),
-  [MotionTypeForms.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.PmlDAITopUp,
-  }),
-  [MotionTypeForms.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.AtcDAITopUp,
-  }),
+  [MotionTypeForms.RccStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.RccStablesTopUp,
+    }),
+  [MotionTypeForms.PmlStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.PmlStablesTopUp,
+    }),
+  [MotionTypeForms.AtcStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.AtcStablesTopUp,
+    }),
   [MotionTypeForms.StethRewardProgramAdd]: formAllowedRecipientAdd.formParts({
     registryType: MotionTypeForms.StethRewardProgramAdd,
   }),
