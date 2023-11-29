@@ -7,6 +7,7 @@ export function getMotionProgress(motion: Motion, totalSupply: BigNumber) {
   const totalSupplyNumber = Number(formatEther(totalSupply))
   const objectionsAmount = Number(formatEther(motion.objectionsAmount))
   const thresholdAmount = (totalSupplyNumber * thresholdPct) / 100
+  // if thresholdAmount is 0, use 1 to avoid division by 0
   const objectionsPct = (objectionsAmount / (thresholdAmount || 1)) * 100
 
   const onlyZeros = Math.ceil(1 - Math.log10(objectionsPct))
