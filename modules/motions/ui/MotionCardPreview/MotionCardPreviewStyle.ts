@@ -18,6 +18,7 @@ export const CardTitle = styled(Text).attrs({
 export const CardDescription = styled(Text).attrs({
   size: 12,
   weight: 500,
+  truncateLines: 5,
 })`
   opacity: 0.6;
   margin-bottom: 16px;
