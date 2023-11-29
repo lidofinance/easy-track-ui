@@ -24,13 +24,10 @@ export const MotionTypeDisplayNames: Record<
     'Remove Rewards Share Program participant',
   [MotionType.RewardsShareProgramTopUp]:
     'Top up Rewards Share Program participants',
-  [MotionType.SDVTNodeOperatorsAdd]: 'Add Node Operators',
-  [MotionType.SDVTNodeOperatorsActivate]: 'Activate Node Operators',
-  [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate Node Operators',
-  [MotionType.SDVTVettedValidatorsLimitsSet]: 'Set vetted validators limits',
   [MotionType.SDVTNodeOperatorsAdd]: 'Add node operators',
   [MotionType.SDVTNodeOperatorsActivate]: 'Activate node operators',
   [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate node operators',
+  [MotionType.SDVTVettedValidatorsLimitsSet]: 'Set vetted validators limits',
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     'Update target validator limits',
   [MotionType.SDVTNodeOperatorRewardAddressesSet]:

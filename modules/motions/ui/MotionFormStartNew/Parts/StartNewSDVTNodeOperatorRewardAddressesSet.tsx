@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment, useMemo } from 'react'
-import { useFieldArray, useFormContext, useFormState } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
@@ -79,7 +79,6 @@ export const formParts = createMotionFormPart({
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
     const { watch } = useFormContext()
-    const { isValid } = useFormState()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
     )
@@ -219,7 +218,7 @@ export const formParts = createMotionFormPart({
           )
         })}
 
-        {selectedNodeOperators.length < nodeOperatorsList.length && isValid && (
+        {selectedNodeOperators.length < nodeOperatorsList.length && (
           <Fieldset>
             <ButtonIcon
               type="button"
