@@ -208,7 +208,6 @@ export const formParts = ({
               onChange={(value: string) => {
                 const tokenDecimals = tokensDecimalsMap?.[value]
                 if (tokenDecimals) {
-                  console.log('tokenDecimals', tokenDecimals)
                   setValue(fieldNames.tokenDecimals, tokenDecimals)
                 }
               }}

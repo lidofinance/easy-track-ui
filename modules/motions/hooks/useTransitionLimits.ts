@@ -7,8 +7,25 @@ import {
   ContractEVMScriptExecutor,
 } from 'modules/blockChain/contracts'
 
-import { BigNumber, utils } from 'ethers'
+import { utils, constants } from 'ethers'
 import { Big } from 'modules/shared/utils/bigNumber'
+
+// Data structure reference
+// https://github.com/lidofinance/scripts/blob/2a30b9654abc90b20debf837f99cd02f248d6644/scripts/setup_easytrack_limits.py#L67-L100
+const TOKEN_INDEXES = [
+  // LDO
+  1,
+  // ETH
+  4,
+  // DAI
+  7,
+  // STETH
+  10,
+  // USDC
+  13,
+  // USDT
+  16,
+]
 
 export const useTransitionLimits = () => {
   const { chainId } = useWeb3()
@@ -42,21 +59,19 @@ export const useTransitionLimits = () => {
 
       const params = await Promise.all(paramRequests)
 
-      const decodeLimit = (val: BigNumber) =>
-        new Big(Number(val)).div(10 ** 18).toNumber()
+      const limits = TOKEN_INDEXES.reduce((acc, index) => {
+        const rawAddress: string | undefined =
+          // literal definition because params[4][2].toHexString() === '0x00
+          index === 4 ? constants.AddressZero : params[index]?.[2].toHexString()
+        const address = rawAddress ? utils.getAddress(rawAddress) : null
 
-      // Data structure reference
-      // https://github.com/lidofinance/scripts/blob/2a30b9654abc90b20debf837f99cd02f248d6644/scripts/setup_easytrack_limits.py#L67-L100
-      const LDO = utils.getAddress(params[1][2].toHexString())
-      const ETH = '0x0000000000000000000000000000000000000000' // literal definition because params[4][2].toHexString() === '0x00
-      const DAI = utils.getAddress(params[7][2].toHexString())
-      const STETH = utils.getAddress(params[10][2].toHexString())
-      const limits = {
-        [LDO]: decodeLimit(params[2][2]),
-        [ETH]: decodeLimit(params[5][2]),
-        [DAI]: decodeLimit(params[8][2]),
-        [STETH]: decodeLimit(params[11][2]),
-      }
+        if (address) {
+          acc[address] = new Big(Number(params[index + 1][2]))
+            .div(10 ** 18)
+            .toNumber()
+        }
+        return acc
+      }, {} as Record<string, number | undefined>)
 
       return limits
     },
