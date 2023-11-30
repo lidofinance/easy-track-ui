@@ -20,37 +20,52 @@ const isHasTrustedCaller = (
   return false
 }
 
+type NodeOperatorsList = ReturnType<typeof useNodeOperatorsList>['data']
+
+const getIsNodeOperatorConnected = (
+  walletAddress: string | null | undefined,
+  nodeOperatorsList: NodeOperatorsList,
+) => {
+  if (!walletAddress || !nodeOperatorsList) return false
+  const isWalletInList = nodeOperatorsList.some(
+    o => utils.getAddress(o.rewardAddress) === utils.getAddress(walletAddress),
+  )
+
+  return isWalletInList
+}
+
 export const useAvailableMotions = () => {
   const { chainId, walletAddress } = useWeb3()
   const [availableMotions, setAvailableMotions] =
     useState<Record<MotionTypeForms, boolean>>()
 
-  const nodeOperators = useNodeOperatorsList()
-  const currentNodeOperator = useMemo(() => {
-    if (!walletAddress) return [undefined, null]
-    const idx = nodeOperators.data?.list.findIndex(
-      o =>
-        utils.getAddress(o.rewardAddress) === utils.getAddress(walletAddress),
-    )
-    const operator = idx !== undefined && nodeOperators.data?.list[idx]
-    return operator
-  }, [walletAddress, nodeOperators])
-  const isNodeOperatorConnected =
-    (nodeOperators.data && !nodeOperators.data.isRegistrySupported) ||
-    Boolean(currentNodeOperator)
+  const nodeOperators = useNodeOperatorsList('curated')
+
+  const sandboxNodeOperators = useNodeOperatorsList('sandbox')
 
   const nodeOperatorIncreaseLimitAddressMap =
     EvmAddressesByType[MotionTypeForms.NodeOperatorIncreaseLimit]
   const nodeOperatorIncreaseLimitAddress =
     nodeOperatorIncreaseLimitAddressMap[parseEvmSupportedChainId(chainId)]
+  const sandboxNodeOperatorIncreaseLimitAddressMap =
+    EvmAddressesByType[MotionTypeForms.SandboxNodeOperatorIncreaseLimit]
+  const sandboxNodeOperatorIncreaseLimitAddress =
+    sandboxNodeOperatorIncreaseLimitAddressMap[
+      parseEvmSupportedChainId(chainId)
+    ]
 
   const contracts = useMemo(() => {
     return Object.values(EVM_CONTRACTS).filter(
       contract =>
         contract.address[chainId] &&
-        contract.address[chainId] !== nodeOperatorIncreaseLimitAddress,
+        contract.address[chainId] !== nodeOperatorIncreaseLimitAddress &&
+        contract.address[chainId] !== sandboxNodeOperatorIncreaseLimitAddress,
     )
-  }, [chainId, nodeOperatorIncreaseLimitAddress])
+  }, [
+    chainId,
+    nodeOperatorIncreaseLimitAddress,
+    sandboxNodeOperatorIncreaseLimitAddress,
+  ])
 
   const getTrustedConnectionInfo = useCallback(async () => {
     const promiseResult = await Promise.allSettled(
@@ -61,6 +76,15 @@ export const useAvailableMotions = () => {
 
         return connectedContract.trustedCaller()
       }),
+    )
+
+    const isNodeOperatorConnected = getIsNodeOperatorConnected(
+      walletAddress,
+      nodeOperators.data,
+    )
+    const isSandboxNodeOperatorConnected = getIsNodeOperatorConnected(
+      walletAddress,
+      sandboxNodeOperators.data,
     )
 
     const trustedCallerConnectedMap = promiseResult.reduce(
@@ -84,10 +108,18 @@ export const useAvailableMotions = () => {
       },
       {
         [MotionTypeForms.NodeOperatorIncreaseLimit]: isNodeOperatorConnected,
+        [MotionTypeForms.SandboxNodeOperatorIncreaseLimit]:
+          isSandboxNodeOperatorConnected,
       } as Record<MotionTypeForms, boolean>,
     )
     setAvailableMotions(trustedCallerConnectedMap)
-  }, [chainId, contracts, isNodeOperatorConnected, walletAddress])
+  }, [
+    contracts,
+    walletAddress,
+    nodeOperators.data,
+    sandboxNodeOperators.data,
+    chainId,
+  ])
 
   useEffect(() => {
     getTrustedConnectionInfo()

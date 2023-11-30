@@ -324,6 +324,17 @@ export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
   address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
 })
 
+export const ContractSandboxNodeOperatorsRegistry = createContractHelpers({
+  factory: TypeChain.NodeOperatorsAbi__factory,
+  address: CONTRACT_ADDRESSES.SandboxNodeOperatorsRegistry,
+})
+
+export const ContractEvmSandboxNodeOperatorIncreaseLimit =
+  createContractHelpers({
+    factory: TypeChain.EvmIncreaseNodeOperatorStakingLimitAbi__factory,
+    address: EvmAddressesByType[MotionType.SandboxNodeOperatorIncreaseLimit],
+  })
+
 export const ContractAllowedTokensRegistry = createContractHelpers({
   factory: TypeChain.AllowedTokensRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.AllowedTokensRegistry,
