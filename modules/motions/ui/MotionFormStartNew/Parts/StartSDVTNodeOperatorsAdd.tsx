@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment, useEffect, useMemo } from 'react'
-import { useFieldArray, useFormState, useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -102,7 +102,6 @@ export const formParts = () =>
         useSDVTOperatorsCounts()
 
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-      const { isValid } = useFormState()
       const selectedNodeOperators: NodeOperator[] = watch(
         fieldNames.nodeOperators,
       )
@@ -326,21 +325,20 @@ export const formParts = () =>
               </FieldsWrapper>
             </Fragment>
           ))}
-          {isValid &&
-            NOCounts.max > fieldsArr.fields.length + NOCounts.current && (
-              <Fieldset>
-                <ButtonIcon
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleAddNodeOperators}
-                  icon={<Plus />}
-                  color="secondary"
-                >
-                  One more node operator
-                </ButtonIcon>
-              </Fieldset>
-            )}
+          {NOCounts.max > fieldsArr.fields.length + NOCounts.current && (
+            <Fieldset>
+              <ButtonIcon
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleAddNodeOperators}
+                icon={<Plus />}
+                color="secondary"
+              >
+                One more node operator
+              </ButtonIcon>
+            </Fieldset>
+          )}
 
           {submitAction}
         </>
