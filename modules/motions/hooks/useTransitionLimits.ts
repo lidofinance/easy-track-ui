@@ -63,7 +63,9 @@ export const useTransitionLimits = () => {
       const limits = TOKEN_INDEXES.reduce((acc, index) => {
         const rawAddress: string | undefined =
           // literal definition because params[4][2].toHexString() === '0x00
-          index === 4 ? constants.AddressZero : params[index]?.[2].toHexString()
+          index === ETH_INDEX
+            ? constants.AddressZero
+            : params[index]?.[2].toHexString()
         const address = rawAddress ? utils.getAddress(rawAddress) : null
 
         if (address) {
