@@ -41,7 +41,8 @@ import {
   estimateGasFallback,
   checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
-import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
+import { periodLimitError } from 'modules/motions/constants'
+import { validateTransitionLimit } from 'modules/motions/utils/validateTransitionLimit'
 
 type Program = {
   address: string
@@ -152,13 +153,15 @@ export const formParts = ({
         setValue(fieldNames.programs, [{ address: recipientAddress }])
       }, [fieldNames.programs, setValue, allowedRecipients.data])
 
-      const { data: limits } = useTransitionLimits()
+      const { data: limits, initialLoading: isTransitionLimitsDataLoading } =
+        useTransitionLimits()
       const transitionLimit =
         token.address && limits?.[utils.getAddress(token.address)]
 
       if (
         trustedCaller.initialLoading ||
         allowedRecipients.initialLoading ||
+        isTransitionLimitsDataLoading ||
         periodLimitsLoading
       ) {
         return <PageLoader />
@@ -231,11 +234,14 @@ export const formParts = ({
                         if (tokenError) {
                           return tokenError
                         }
-                        if (
-                          transitionLimit &&
-                          Number(value) > transitionLimit
-                        ) {
-                          return tokenLimitError(token.label, transitionLimit)
+
+                        const transitionLimitError = validateTransitionLimit(
+                          value,
+                          transitionLimit,
+                          token.label,
+                        )
+                        if (transitionLimitError) {
+                          return transitionLimitError
                         }
 
                         const isLargeThenPeriodLimit =

@@ -36,11 +36,12 @@ import {
   estimateGasFallback,
   checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
-import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
+import { periodLimitError } from 'modules/motions/constants'
 import { useAllowedTokens } from 'modules/motions/hooks/useAllowedTokensRegistry'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
+import { validateTransitionLimit } from 'modules/motions/utils/validateTransitionLimit'
 
 export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.RccStablesTopUp]: {
@@ -289,15 +290,13 @@ export const formParts = ({
                           return tokenError
                         }
 
-                        if (typeof transitionLimit !== 'number') {
-                          return `Transition limit for ${selectedTokenLabel} is not defined`
-                        }
-
-                        if (Number(value) > transitionLimit) {
-                          return tokenLimitError(
-                            selectedTokenLabel,
-                            transitionLimit,
-                          )
+                        const transitionLimitError = validateTransitionLimit(
+                          value,
+                          transitionLimit,
+                          selectedTokenLabel,
+                        )
+                        if (transitionLimitError) {
+                          return transitionLimitError
                         }
 
                         const isLargeThenPeriodLimit =
