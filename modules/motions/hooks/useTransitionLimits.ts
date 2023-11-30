@@ -12,19 +12,20 @@ import { Big } from 'modules/shared/utils/bigNumber'
 
 // Data structure reference
 // https://github.com/lidofinance/scripts/blob/2a30b9654abc90b20debf837f99cd02f248d6644/scripts/setup_easytrack_limits.py#L67-L100
+const LDO_INDEX = 1
+const ETH_INDEX = 4
+const DAI_INDEX = 7
+const STETH_INDEX = 10
+const USDC_INDEX = 13
+const USDT_INDEX = 16
+
 const TOKEN_INDEXES = [
-  // LDO
-  1,
-  // ETH
-  4,
-  // DAI
-  7,
-  // STETH
-  10,
-  // USDC
-  13,
-  // USDT
-  16,
+  LDO_INDEX,
+  ETH_INDEX,
+  DAI_INDEX,
+  STETH_INDEX,
+  USDC_INDEX,
+  USDT_INDEX,
 ]
 
 export const useTransitionLimits = () => {
