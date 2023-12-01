@@ -7,8 +7,10 @@ import {
   ContractEVMScriptExecutor,
 } from 'modules/blockChain/contracts'
 
-import { utils, constants } from 'ethers'
+import { utils, constants, BigNumber } from 'ethers'
 import { Big } from 'modules/shared/utils/bigNumber'
+import { connectERC20Contract } from '../utils/connectTokenContract'
+import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
 
 // Data structure reference
 // https://github.com/lidofinance/scripts/blob/2a30b9654abc90b20debf837f99cd02f248d6644/scripts/setup_easytrack_limits.py#L67-L100
@@ -28,57 +30,73 @@ const TOKEN_INDEXES = [
   USDT_INDEX,
 ]
 
+const decodeLimit = (val: BigNumber, decimals: number | null) => {
+  if (!decimals) {
+    return null
+  }
+  return new Big(Number(val)).div(10 ** decimals).toNumber()
+}
+
+type LimitsMap = Record<string, number | null | undefined>
+
 export const useTransitionLimits = () => {
   const { chainId } = useWeb3()
 
-  const result = useSWR<Record<string, number | undefined>>(
-    `permission-param-${chainId}`,
-    async () => {
-      const contractFinance = ContractFinance.connectRpc({ chainId })
-      const contractAragonAcl = ContractAragonAcl.connectRpc({ chainId })
-      const evmScriptExecutorAddress =
-        ContractEVMScriptExecutor.address[chainId]!
+  const result = useSWR<LimitsMap>(`permission-param-${chainId}`, async () => {
+    const contractFinance = ContractFinance.connectRpc({ chainId })
+    const contractAragonAcl = ContractAragonAcl.connectRpc({ chainId })
+    const evmScriptExecutorAddress = ContractEVMScriptExecutor.address[chainId]!
 
-      const role = await contractFinance.CREATE_PAYMENTS_ROLE()
+    const role = await contractFinance.CREATE_PAYMENTS_ROLE()
 
-      const paramsLength = await contractAragonAcl.getPermissionParamsLength(
-        evmScriptExecutorAddress,
-        contractFinance.address,
-        role,
-      )
+    const paramsLength = await contractAragonAcl.getPermissionParamsLength(
+      evmScriptExecutorAddress,
+      contractFinance.address,
+      role,
+    )
 
-      const paramRequests = Array.from(Array(Number(paramsLength))).map(
-        (_, i) => {
-          return contractAragonAcl.getPermissionParam(
-            evmScriptExecutorAddress,
-            contractFinance.address,
-            role,
-            i,
-          )
-        },
-      )
+    const paramRequests = Array.from(Array(Number(paramsLength))).map(
+      (_, i) => {
+        return contractAragonAcl.getPermissionParam(
+          evmScriptExecutorAddress,
+          contractFinance.address,
+          role,
+          i,
+        )
+      },
+    )
 
-      const params = await Promise.all(paramRequests)
+    const params = await Promise.all(paramRequests)
 
-      const limits = TOKEN_INDEXES.reduce((acc, index) => {
-        const rawAddress: string | undefined =
-          // literal definition because params[4][2].toHexString() === '0x00
-          index === ETH_INDEX
-            ? constants.AddressZero
-            : params[index]?.[2].toHexString()
-        const address = rawAddress ? utils.getAddress(rawAddress) : null
+    const limits: LimitsMap = {}
 
-        if (address) {
-          acc[address] = new Big(Number(params[index + 1][2]))
-            .div(10 ** 18)
-            .toNumber()
+    for (const index of TOKEN_INDEXES) {
+      const rawAddress: string | undefined =
+        // literal definition because params[4][2].toHexString() === '0x00
+        index === ETH_INDEX
+          ? constants.AddressZero
+          : params[index]?.[2].toHexString()
+      const address = rawAddress ? utils.getAddress(rawAddress) : null
+
+      if (address) {
+        let decimals: number | null = null
+        if (address === constants.AddressZero) {
+          decimals = DEFAULT_DECIMALS
+        } else {
+          const tokenContract = connectERC20Contract(address, chainId)
+          try {
+            decimals = await tokenContract.decimals()
+          } catch (error) {
+            decimals = null
+          }
         }
-        return acc
-      }, {} as Record<string, number | undefined>)
 
-      return limits
-    },
-  )
+        limits[address] = decodeLimit(params[index + 1][2], decimals)
+      }
+    }
+
+    return limits
+  })
 
   return result
 }

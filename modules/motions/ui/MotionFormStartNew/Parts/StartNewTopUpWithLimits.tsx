@@ -40,7 +40,8 @@ import {
   estimateGasFallback,
   checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
-import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
+import { periodLimitError } from 'modules/motions/constants'
+import { validateTransitionLimit } from 'modules/motions/utils/validateTransitionLimit'
 
 export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.LegoLDOTopUp]: {
@@ -148,13 +149,15 @@ export const formParts = ({
         ])
       }, [fieldNames.programs, setValue, legoDAIRecipients.data])
 
-      const { data: limits } = useTransitionLimits()
+      const { data: limits, initialLoading: isTransitionLimitsDataLoading } =
+        useTransitionLimits()
       const transitionLimit =
         token.address && limits?.[utils.getAddress(token.address)]
 
       if (
         trustedCaller.initialLoading ||
         legoDAIRecipients.initialLoading ||
+        isTransitionLimitsDataLoading ||
         periodLimitsLoading
       ) {
         return <PageLoader />
@@ -226,11 +229,14 @@ export const formParts = ({
                         if (tokenError) {
                           return tokenError
                         }
-                        if (
-                          transitionLimit &&
-                          Number(value) > transitionLimit
-                        ) {
-                          return tokenLimitError(token.label, transitionLimit)
+
+                        const transitionLimitError = validateTransitionLimit(
+                          value,
+                          transitionLimit,
+                          token.label,
+                        )
+                        if (transitionLimitError) {
+                          return transitionLimitError
                         }
 
                         const isLargeThenPeriodLimit =
