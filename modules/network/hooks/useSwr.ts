@@ -35,6 +35,9 @@ export const useSWR = <Data = unknown, Error = any>(
     ...config,
   })
   const initialLoading = result.data == null && result.isValidating
+  if (result.isValidating) {
+    console.log('is validating for', key)
+  }
   return {
     ...result,
     initialLoading,
