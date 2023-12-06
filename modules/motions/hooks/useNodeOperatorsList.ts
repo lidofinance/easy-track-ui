@@ -28,6 +28,7 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
         return []
       }
     },
+    { revalidateOnFocus: false, revalidateOnReconnect: false },
   )
 
   return nodeOperatorsList
