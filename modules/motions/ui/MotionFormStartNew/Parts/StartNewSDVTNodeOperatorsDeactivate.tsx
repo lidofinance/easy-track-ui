@@ -31,11 +31,46 @@ type NodeOperator = {
   managerAddress: string
 }
 
+/*
+
+Deactivate Node Operators
+Sort the data before sending
+  The list of DeactivateNodeOperatorInput MUST be sorted in strictly ascending order by the nodeOperatorId key (duplicates are not allowed)
+No unregistered Node Operators
+  Each node operator in the set MUST be registered in the registry
+Only active Node Operators
+  Each node operator in the set MUST be in the activated state
+Only valid manager addresses
+  error
+  Each manager address in the set MUST be granted with a parametrized version of MANAGE_SIGNING_KEYS permission for the corresponding node operator
+No duplicates in concurrent motions
+  error
+  if there are active or pending motions of this type, check that no the same node operators among them.
+Manager addresses is not used in change manager motions
+  error
+  if there are active or pending motions to change the address of the node operator’s manager, check that it doesn't change the manager for node operator to be disabled.
+ */
+
+const spec = {
+  sortDataBeforeSending: (a: NodeOperator, b: NodeOperator) =>
+    Number(a.id) - Number(b.id),
+
+  eachNORegistered: () => true,
+
+  onlyActiveNO: (nodeOperator: { active: boolean }) => nodeOperator.active,
+
+  onlyValidManagerAddresses: async (
+    manager: string,
+    NOId: string,
+    chainId: number,
+  ) => checkIsAddressManagerOfNodeOperator(manager, NOId, chainId),
+}
+
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTNodeOperatorsDeactivate,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const sortedNodeOperators = formData.nodeOperators.sort(
-      (a, b) => Number(a.id) - Number(b.id),
+      spec.sortDataBeforeSending,
     )
 
     const encodedCallData = new utils.AbiCoder().encode(
@@ -72,9 +107,7 @@ export const formParts = createMotionFormPart({
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList()
 
-    const activeNodeOperators = nodeOperatorsList?.filter(
-      nodeOperator => nodeOperator.active,
-    )
+    const activeNodeOperators = nodeOperatorsList?.filter(spec.onlyActiveNO)
 
     const trustedCaller = ContractSDVTNodeOperatorsDeactivate.useSwrWeb3(
       'trustedCaller',
@@ -171,7 +204,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         const canAddressManageKeys =
-                          await checkIsAddressManagerOfNodeOperator(
+                          await spec.onlyValidManagerAddresses(
                             value,
                             selectedNodeOperators[fieldIndex].id,
                             chainId,
