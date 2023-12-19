@@ -1,2 +1,2 @@
-export * from './StonksOrderForm'
+export { StonksOrderForm } from './StonksOrderForm'
 export * from './StonksOrderFormStyle'

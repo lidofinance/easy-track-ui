@@ -1,34 +1,15 @@
 import { Button } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
-import { useState } from 'react'
-import { ResultTx } from 'modules/blockChain/types'
-import { StonksOrderForm, MessageBox } from 'modules/stonks/ui/StonksOrderForm'
-import { MotionFormComplete } from 'modules/motions/ui/MotionFormComplete'
 import { StonksPageContainer } from 'modules/stonks/ui/StonksPageContainer'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
+import { MessageBox, StonksOrderForm } from 'modules/stonks/ui/StonksOrderForm'
 
-export default function StonksPage() {
+export default function StonksPlaceOrderPage() {
   const { isWalletConnected } = useWeb3()
   const openConnectWalletModal = useConnectWalletModal()
-  const [complete, setComplete] = useState<ResultTx | null>(null)
   const { areStonksAvailable, initialLoading } = useAvailableStonks()
-
-  if (complete) {
-    return (
-      <StonksPageContainer
-        title="Stonks order created"
-        subtitle="Check out transaction status"
-      >
-        {/* TODO: replace with stonks-specific component */}
-        <MotionFormComplete
-          resultTx={complete}
-          onReset={() => setComplete(null)}
-        />
-      </StonksPageContainer>
-    )
-  }
 
   if (!isWalletConnected) {
     return (
@@ -65,7 +46,7 @@ export default function StonksPage() {
 
   return (
     <StonksPageContainer>
-      <StonksOrderForm onComplete={setComplete} />
+      <StonksOrderForm />
     </StonksPageContainer>
   )
 }

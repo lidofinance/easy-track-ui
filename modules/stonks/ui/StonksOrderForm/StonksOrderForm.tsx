@@ -1,4 +1,3 @@
-import { ResultTx } from 'modules/blockChain/types'
 import { useForm } from 'react-hook-form'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { Option, SelectControl } from 'modules/shared/ui/Controls/Select'
@@ -11,29 +10,16 @@ import {
   MessageBox,
   RetryHint,
 } from './StonksOrderFormStyle'
-import { Button, ToastError } from '@lidofinance/lido-ui'
-import { useState } from 'react'
+import { Button } from '@lidofinance/lido-ui'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { FormattedDuration } from 'modules/shared/ui/Utils/FormattedDuration'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { estimateGasFallback } from 'modules/motions/utils'
-import { useTransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
-import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
 import { formatValue } from 'modules/stonks/utils/formatValue'
-import { StonksAbi__factory } from 'generated'
+import { StonksOrderProgress } from '../StonksOrderProgress/StonksOrderProgress'
+import { useStonksOrderSubmit } from './useStonksOrderSubmit'
+import { FormData } from './types'
 
-type FormData = {
-  stonksAddress: string
-}
-
-type Props = {
-  onComplete: (tx: ResultTx) => void
-}
-
-export function StonksOrderForm({ onComplete }: Props) {
-  const { library } = useWeb3()
-  const [isSubmitting, setSubmitting] = useState(false)
+export function StonksOrderForm() {
   const { data: stonksList, initialLoading: isStonksDataLoading } =
     useStonksData()
 
@@ -50,41 +36,11 @@ export function StonksOrderForm({ onComplete }: Props) {
     stonks => stonks.address === selectedStonksAddress,
   )
 
-  const populateOrder = async () => {
-    if (!selectedStonksPair) {
-      throw new Error('Pair is not selected')
-    }
-    if (!library) {
-      throw new Error('Library not found')
-    }
+  const { isSubmitting, resultTx, handleTxReset, handleSubmit } =
+    useStonksOrderSubmit()
 
-    const stonksContract = StonksAbi__factory.connect(
-      selectedStonksPair.address,
-      library,
-    )
-    const gasLimit = await estimateGasFallback(
-      stonksContract.estimateGas.placeOrder(),
-    )
-    const tx = await stonksContract.populateTransaction.placeOrder({
-      gasLimit,
-    })
-    return tx
-  }
-
-  const txOrder = useTransactionSender(populateOrder, {
-    onFinish: onComplete,
-  })
-
-  const handleSubmit = async () => {
-    try {
-      setSubmitting(true)
-      await txOrder.send()
-    } catch (error: any) {
-      console.error(error)
-      ToastError(getErrorMessage(error), {})
-    } finally {
-      setSubmitting(false)
-    }
+  if (resultTx) {
+    return <StonksOrderProgress resultTx={resultTx} onRetry={handleTxReset} />
   }
 
   if (isStonksDataLoading) {
@@ -92,7 +48,7 @@ export function StonksOrderForm({ onComplete }: Props) {
   }
 
   if (!stonksList?.length) {
-    return <MessageBox>No active stonks found</MessageBox>
+    return <MessageBox>No pending orders found</MessageBox>
   }
 
   return (
