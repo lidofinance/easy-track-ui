@@ -1,3 +1,4 @@
+import { Text } from 'modules/shared/ui/Common/Text'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -15,4 +16,14 @@ export const MessageBox = styled.div`
   gap: 16px;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: ${({ theme }) => theme.borderRadiusesMap.md + 'px'};
+`
+
+export const ErrorMessageBox = styled(Text).attrs({
+  size: 14,
+  weight: 500,
+})`
+  padding: 20px;
+  color: #fff;
+  background-color: ${({ theme }) => theme.colors.error};
+  border-radius: 8px;
 `
