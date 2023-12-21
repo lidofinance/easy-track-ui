@@ -1,7 +1,7 @@
 import type { TransactionReceipt } from '@ethersproject/providers'
 import { BigNumber } from 'ethers'
 import { StonksOrderAbi__factory } from 'generated'
-import { Order } from '../types'
+import { OrderFromReceipt } from '../types'
 
 type OrderLog = {
   args: {
@@ -26,7 +26,7 @@ type OrderLog = {
 
 export const getOrderByPlaceTxReceipt = (
   receipt: TransactionReceipt,
-): Order => {
+): OrderFromReceipt => {
   const orderInterface = StonksOrderAbi__factory.createInterface()
 
   const parsedLogs = []

@@ -12,7 +12,7 @@ import { Text } from 'modules/shared/ui/Common/Text'
 import { useCallback, useState } from 'react'
 import { providers } from 'ethers'
 import { getOrderByPlaceTxReceipt } from 'modules/stonks/utils/getOrderByPlaceTxReceipt'
-import { Order } from 'modules/stonks/types'
+import { OrderFromReceipt } from 'modules/stonks/types'
 import { getHashFromResultTx } from 'modules/blockChain/utils/getHashFromResultTx'
 import { createOffChainOrder } from 'modules/stonks/utils/createOffChainOrder'
 import { useSWR } from 'modules/network/hooks/useSwr'
@@ -66,9 +66,9 @@ export function StonksOrderProgress({ resultTx, onRetry }: Props) {
       }
 
       // step 3: get order data from tx receipt
-      let order: Order | undefined
+      let orderFromReceipt: OrderFromReceipt | undefined
       try {
-        order = getOrderByPlaceTxReceipt(txReceipt)
+        orderFromReceipt = getOrderByPlaceTxReceipt(txReceipt)
       } catch (error) {
         handleErrorSet(3, error)
         return
@@ -76,6 +76,11 @@ export function StonksOrderProgress({ resultTx, onRetry }: Props) {
 
       // step 4: create an off-chain order using order data
       try {
+        const order = {
+          ...orderFromReceipt.orderData,
+          address: orderFromReceipt.address,
+        }
+
         await createOffChainOrder(order, chainId)
       } catch (error) {
         handleErrorSet(4, error)
@@ -83,7 +88,7 @@ export function StonksOrderProgress({ resultTx, onRetry }: Props) {
       }
 
       // step 5: redirect to order page
-      router.push(urls.stonksOrder(order.address))
+      router.push(urls.stonksOrder(orderFromReceipt.address))
     },
     [chainId, library, router],
   )
@@ -92,10 +97,7 @@ export function StonksOrderProgress({ resultTx, onRetry }: Props) {
     `stonks-order-tx-hash-${chainId}-${
       resultTx.type === 'safe' ? resultTx.tx.safeTxHash : resultTx.tx.hash
     }`,
-    async () => {
-      const hash = await getHashFromResultTx(resultTx, chainId)
-      return hash
-    },
+    async () => getHashFromResultTx(resultTx, chainId),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -109,7 +111,7 @@ export function StonksOrderProgress({ resultTx, onRetry }: Props) {
         }
 
         // Retry after 6 seconds
-        setTimeout(() => revalidate({ retryCount }), 5000)
+        setTimeout(() => revalidate({ retryCount }), 6000)
       },
     },
   )

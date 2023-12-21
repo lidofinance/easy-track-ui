@@ -1,9 +1,37 @@
 import { CHAINS } from '@lido-sdk/constants'
-import { Order } from '../types'
+import { utils } from 'ethers'
 
-export const createOffChainOrder = async (order: Order, chainId: CHAINS) => {
-  const payload = {
-    ...order.orderData,
+type OffChainOrderInput = {
+  address: string
+  sellToken: string
+  buyToken: string
+  receiver: string
+  sellAmount: string
+  buyAmount: string
+  validTo: number
+}
+
+type OffChainOrderPayload = {
+  from: string
+  feeAmount: '0' // as in Order.sol
+  kind: 'sell' // as in Order.sol
+  partiallyFillable: false // as in Order.sol
+  sellTokenBalance: 'erc20' // as in Order.sol
+  buyTokenBalance: 'erc20' // as in Order.sol
+  appData: string // keccak256("LIDO_DOES_STONKS")
+  signingScheme: 'eip1271'
+  signature: '0x'
+} & OffChainOrderInput
+
+export const createOffChainOrder = async (
+  order: OffChainOrderInput,
+  chainId: CHAINS,
+) => {
+  const payload: OffChainOrderPayload = {
+    ...order,
+    appData: utils.keccak256(utils.toUtf8Bytes('LIDO_DOES_STONKS')),
+    feeAmount: '0',
+    partiallyFillable: false,
     from: order.address,
     kind: 'sell',
     signingScheme: 'eip1271',
