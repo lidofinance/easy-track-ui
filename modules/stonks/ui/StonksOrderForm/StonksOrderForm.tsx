@@ -19,7 +19,11 @@ import { StonksOrderProgress } from '../StonksOrderProgress/StonksOrderProgress'
 import { useStonksOrderSubmit } from './useStonksOrderSubmit'
 import { FormData } from './types'
 
-export function StonksOrderForm() {
+type Props = {
+  addressParam: string | null
+}
+
+export function StonksOrderForm({ addressParam }: Props) {
   const { data: stonksList, initialLoading: isStonksDataLoading } =
     useStonksData()
 
@@ -28,7 +32,7 @@ export function StonksOrderForm() {
     reValidateMode: 'onChange',
     criteriaMode: 'all',
     defaultValues: {
-      stonksAddress: '',
+      stonksAddress: addressParam ?? '',
     },
   })
   const selectedStonksAddress = formMethods.watch('stonksAddress')

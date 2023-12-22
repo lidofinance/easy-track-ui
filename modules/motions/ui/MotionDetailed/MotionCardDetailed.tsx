@@ -34,10 +34,13 @@ import {
   StartDateCell,
   StartDateValue,
   StartDateTime,
+  StonksButton,
 } from './MotionCardDetailedStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
+import { stonksPlaceOrder } from 'modules/network/utils/urls'
+import Link from 'next/link'
 
 type Props = {
   motion: Motion
@@ -46,8 +49,14 @@ type Props = {
 
 export function MotionCardDetailed({ motion, onInvalidate }: Props) {
   const { chainId, walletAddress } = useWeb3()
-  const { progress, isArchived, pending, timeData, motionDisplaydName } =
-    useMotionDetailed()
+  const {
+    progress,
+    isArchived,
+    pending,
+    timeData,
+    motionDisplaydName,
+    stonksRecipientAddress,
+  } = useMotionDetailed()
   const { isPassed, diff } = timeData
 
   useEffect(() => {
@@ -110,6 +119,18 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
 
       <Description>
         <MotionDescription motion={motion} />
+        {stonksRecipientAddress && (
+          <Link
+            passHref
+            href={{
+              pathname: stonksPlaceOrder,
+              query: `address=${stonksRecipientAddress}`,
+            }}
+          >
+            <StonksButton size="xs">Create Stonks Order</StonksButton>
+          </Link>
+        )}
+
         <br />
         <br />
         <div>Snapshot: {motion.snapshotBlock}</div>

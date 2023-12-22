@@ -5,11 +5,29 @@ import { StonksPageContainer } from 'modules/stonks/ui/StonksPageContainer'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MessageBox, StonksOrderForm } from 'modules/stonks/ui/StonksOrderForm'
+import { useRouter } from 'next/router'
+import { utils } from 'ethers'
+import { useMemo } from 'react'
 
 export default function StonksPlaceOrderPage() {
   const { isWalletConnected } = useWeb3()
   const openConnectWalletModal = useConnectWalletModal()
-  const { areStonksAvailable, initialLoading } = useAvailableStonks()
+  const router = useRouter()
+  const { areStonksAvailable, availableStonks, initialLoading } =
+    useAvailableStonks()
+
+  const addressParam = useMemo(() => {
+    const queryAddress = String(router.query.address)
+    if (!utils.isAddress(queryAddress) || !availableStonks?.length) {
+      return null
+    }
+
+    return (
+      availableStonks.find(
+        stonks => stonks.address === utils.getAddress(queryAddress),
+      )?.address ?? null
+    )
+  }, [availableStonks, router.query.address])
 
   if (!isWalletConnected) {
     return (
@@ -46,7 +64,7 @@ export default function StonksPlaceOrderPage() {
 
   return (
     <StonksPageContainer>
-      <StonksOrderForm />
+      <StonksOrderForm addressParam={addressParam} />
     </StonksPageContainer>
   )
 }

@@ -2,8 +2,12 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { STONKS_CONTRACTS } from '../constants'
 import { utils } from 'ethers'
+import { StonksAbi } from 'generated'
 
-type StonksResult = typeof STONKS_CONTRACTS[number]
+type StonksResult = {
+  address: string
+  contract: StonksAbi
+}
 
 export function useAvailableStonks() {
   const { chainId, walletAddress } = useWeb3()
@@ -24,7 +28,11 @@ export function useAvailableStonks() {
           ) {
             return null
           }
-          return stonks
+
+          return {
+            contract: stonksContract,
+            address: utils.getAddress(stonksContract.address),
+          }
         }),
       ).then(stonks => stonks.filter(Boolean)) as Promise<StonksResult[]>
     },

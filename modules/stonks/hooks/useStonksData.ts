@@ -3,7 +3,6 @@ import { useSWR } from 'modules/network/hooks/useSwr'
 import { connectERC20Contract } from 'modules/motions/utils/connectTokenContract'
 import { formatUnits } from 'ethers/lib/utils'
 import { BigNumber } from 'ethers'
-import { STONKS_CONTRACTS } from '../constants'
 import { useAvailableStonks } from './useAvailableStonks'
 
 type StonksData = {
@@ -35,16 +34,15 @@ export function useStonksData() {
       }
 
       return Promise.all(
-        STONKS_CONTRACTS.map(async stonks => {
-          const stonksContract = stonks.connectRpc({ chainId })
-          const stonksParams = await stonksContract.getOrderParameters()
+        availableStonks.map(async stonks => {
+          const stonksParams = await stonks.contract.getOrderParameters()
           const tokenFromContract = connectERC20Contract(
             stonksParams.tokenFrom,
             chainId,
           )
 
           const currentBalance = await tokenFromContract.balanceOf(
-            stonksContract.address,
+            stonks.address,
           )
 
           if (currentBalance.isZero()) {
@@ -63,10 +61,10 @@ export function useStonksData() {
 
           const expectedOutput = currentBalance.isZero()
             ? BigNumber.from(0)
-            : await stonksContract.estimateOutputFromCurrentBalance()
+            : await stonks.contract.estimateOutputFromCurrentBalance()
 
           return {
-            address: stonksContract.address,
+            address: stonks.address,
             tokenFrom: {
               label: tokenFromLabel,
               address: stonksParams.tokenFrom,
