@@ -3028,7 +3028,7 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz#8be36a1f66f3265389e90b5f9c9962146758f728"
   integrity sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==
 
-"@safe-global/api-kit@^2.0.0":
+"@safe-global/api-kit@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@safe-global/api-kit/-/api-kit-2.0.0.tgz#5d7aaf0a36f5843ba1d788343f0036bf015aa92f"
   integrity sha512-Tz6pLEmhhv/ROsYSjVzoR8qw4YK72yNPJCFcK97kSvNJQpM2+HpRVYNjB53rY0IkvP0kVFvF6Ogp/BJri8g1Pw==
