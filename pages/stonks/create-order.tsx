@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { utils } from 'ethers'
 import { useMemo } from 'react'
 
-export default function StonksPlaceOrderPage() {
+export default function StonksCreateOrderPage() {
   const { isWalletConnected } = useWeb3()
   const openConnectWalletModal = useConnectWalletModal()
   const router = useRouter()

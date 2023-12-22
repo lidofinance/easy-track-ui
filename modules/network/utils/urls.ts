@@ -4,6 +4,6 @@ export const archive = '/archive'
 export const startMotion = '/start-motion'
 export const about = '/about'
 
-export const stonksPlaceOrder = '/stonks/place-order'
+export const stonksCreateOrder = '/stonks/create-order'
 export const stonksOrder = (orderAddress: string) =>
   `/stonks/orders/${orderAddress}`

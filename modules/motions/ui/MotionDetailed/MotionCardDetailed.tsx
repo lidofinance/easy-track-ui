@@ -39,7 +39,7 @@ import {
 
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
-import { stonksPlaceOrder } from 'modules/network/utils/urls'
+import { stonksCreateOrder } from 'modules/network/utils/urls'
 import Link from 'next/link'
 
 type Props = {
@@ -123,7 +123,7 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
           <Link
             passHref
             href={{
-              pathname: stonksPlaceOrder,
+              pathname: stonksCreateOrder,
               query: `address=${stonksRecipientAddress}`,
             }}
           >

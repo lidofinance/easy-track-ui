@@ -40,13 +40,16 @@ export const createOffChainOrder = async (
     signature: '0x',
   }
 
-  const response = await fetch(`/api/stonks/create-order?chainId=${chainId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await fetch(
+    `/api/stonks/create-off-chain-order?chainId=${chainId}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     },
-    body: JSON.stringify(payload),
-  })
+  )
   const data = await response.json()
   if (response.ok) {
     return data as string

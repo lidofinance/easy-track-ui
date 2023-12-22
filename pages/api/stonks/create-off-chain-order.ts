@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { fetchCowApi } from 'modules/stonks/utils/fetchCowApi'
 
-export default async function createOrder(
+export default async function createOffChainOrder(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {

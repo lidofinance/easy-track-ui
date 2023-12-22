@@ -11,7 +11,7 @@ export function StonksPageContainer(props: Props) {
   const { children, title, subtitle } = props
   return (
     <Container as="main" size="tight">
-      <Title title={title ?? 'Place Stonks Order'} subtitle={subtitle} />
+      <Title title={title ?? 'Create Stonks Order'} subtitle={subtitle} />
       {children}
     </Container>
   )

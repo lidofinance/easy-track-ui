@@ -133,7 +133,7 @@ export function StonksOrderForm({ addressParam }: Props) {
           <Button
             type="submit"
             fullwidth
-            children="Place Order"
+            children="Create Order"
             loading={isSubmitting}
           />
           {isSubmitting && (
