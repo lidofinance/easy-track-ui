@@ -159,18 +159,28 @@ export const EvmAddressesByChain: EvmAddresses = {
   [CHAINS.Holesky]: {
     [MotionType.NodeOperatorIncreaseLimit]:
       '0x18Ff3bD97739bf910cDCDb8d138976c6afDB4449',
-    [MotionType.AllowedRecipientTopUpTrpLdo]: '',
-    [MotionType.LegoLDOTopUp]: '',
-    [MotionType.LegoDAITopUp]: '',
-    [MotionType.StethRewardProgramAdd]: '',
-    [MotionType.StethRewardProgramRemove]: '',
-    [MotionType.StethRewardProgramTopUp]: '',
-    [MotionType.StethGasSupplyAdd]: '',
-    [MotionType.StethGasSupplyRemove]: '',
-    [MotionType.StethGasSupplyTopUp]: '',
-    [MotionType.RewardsShareProgramAdd]: '',
-    [MotionType.RewardsShareProgramRemove]: '',
-    [MotionType.RewardsShareProgramTopUp]: '',
+    [MotionType.AllowedRecipientTopUpTrpLdo]:
+      '0xD618F0CF48F057B5256e102dC18d8011e08c19D3',
+    [MotionType.LegoLDOTopUp]: '0xCfaFcD35ACcc4383e2CCDf7DD3F58114914F1955',
+    [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
+    [MotionType.StethRewardProgramAdd]:
+      '0xf0968B9bE18282dD23bbbC79a1c9C8996CE6984D',
+    [MotionType.StethRewardProgramRemove]:
+      '0xF0F34b82241cD49BB3952149BD30A08Eb9D8B54E',
+    [MotionType.StethRewardProgramTopUp]:
+      '0xBB06DD9a3C7eE8cE093860094e769a1E3D6F97F6',
+    [MotionType.StethGasSupplyAdd]:
+      '0x13dB9E1ddE54d2641f571EA288D9e79C0E8bce2e',
+    [MotionType.StethGasSupplyRemove]:
+      '0x64CE36D2DC7e7786BF56D2DF8A5F3c788977Fb19',
+    [MotionType.StethGasSupplyTopUp]:
+      '0xf97E048A952d170d5D5E817C8D9c8253f4D50F96',
+    [MotionType.RewardsShareProgramAdd]:
+      '0x49D3211203e8E18B4e60F74C1126934da2520987',
+    [MotionType.RewardsShareProgramRemove]:
+      '0x112c48c4659A9a1d42a3e45EBc8e37B6150F2B0C',
+    [MotionType.RewardsShareProgramTopUp]:
+      '0x089bc04630c056D76fF4Ec172e752A7d5B855e16',
 
     [MotionType.SDVTNodeOperatorsAdd]:
       '0xeF5233A5bbF243149E35B353A73FFa8931FDA02b',
