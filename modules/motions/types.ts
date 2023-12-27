@@ -33,6 +33,10 @@ export const MotionTypeForms = {
   SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
 
   SandboxNodeOperatorIncreaseLimit: 'SandboxNodeOperatorIncreaseLimit',
+
+  SandboxStablesTopUp: 'SandboxStablesTopUp',
+  SandboxStablesAdd: 'SandboxStablesAdd',
+  SandboxStablesRemove: 'SandboxStablesRemove',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

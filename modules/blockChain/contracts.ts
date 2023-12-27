@@ -369,3 +369,30 @@ export const ContractEvmAtcStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.AtcStablesTopUp],
 })
+
+export const ContractSandboxStablesAllowedRecipientRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.SandboxStablesAllowedRecipientRegistry,
+  })
+
+export const ContractSandboxStablesAllowedTokensRegistry =
+  createContractHelpers({
+    factory: TypeChain.AllowedTokensRegistryAbi__factory,
+    address: CONTRACT_ADDRESSES.SandboxStablesAllowedTokensRegistry,
+  })
+
+export const ContractEvmSandboxStablesAdd = createContractHelpers({
+  factory: TypeChain.AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStablesAdd],
+})
+
+export const ContractEvmSandboxStablesRemove = createContractHelpers({
+  factory: TypeChain.RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStablesRemove],
+})
+
+export const ContractEvmSandboxStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStablesTopUp],
+})

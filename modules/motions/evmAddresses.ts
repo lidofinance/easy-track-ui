@@ -201,6 +201,12 @@ export const EvmAddressesByChain: EvmAddresses = {
 
     [MotionType.SandboxNodeOperatorIncreaseLimit]:
       '0xbD37e55748c6f4Ece637AeD3e278e7575346B587',
+    [MotionType.SandboxStablesAdd]:
+      '0xB238fB1e7c8da5da022140dA956Fc3052808fC56',
+    [MotionType.SandboxStablesRemove]:
+      '0x51c730af05777c4D3CcC8c8B80558F4D155bb7BF',
+    [MotionType.SandboxStablesTopUp]:
+      '0x71bcEf1f4E4945005e1D22d68F02085D5167ab43',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data

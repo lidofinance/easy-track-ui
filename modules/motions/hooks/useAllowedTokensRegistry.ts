@@ -1,45 +1,32 @@
-import { ContractAllowedTokensRegistry } from 'modules/blockChain/contracts'
+import {
+  ContractAllowedTokensRegistry,
+  ContractSandboxStablesAllowedTokensRegistry,
+} from 'modules/blockChain/contracts'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { AllowedTokensRegistryAbi } from 'generated'
-import { DAI } from 'modules/blockChain/contractAddresses'
 import { connectERC20Contract } from '../utils/connectTokenContract'
+import { MotionType } from '../types'
 
-export function useAllowedTokens() {
+const TOKENS_REGISTRY_BY_MOTION_TYPE = {
+  [MotionType.AtcStablesTopUp]: ContractAllowedTokensRegistry,
+  [MotionType.PmlStablesTopUp]: ContractAllowedTokensRegistry,
+  [MotionType.RccStablesTopUp]: ContractAllowedTokensRegistry,
+  [MotionType.SandboxStablesTopUp]: ContractSandboxStablesAllowedTokensRegistry,
+}
+
+type RegistryType = keyof typeof TOKENS_REGISTRY_BY_MOTION_TYPE
+
+export function useAllowedTokens(registryType: RegistryType) {
   const { chainId, library } = useWeb3()
+  const registry = TOKENS_REGISTRY_BY_MOTION_TYPE[registryType].useRpc()
 
   const { data, initialLoading } = useSWR(
-    `allowed-tokens-${chainId}`,
+    `allowed-tokens-${registryType}-${chainId}`,
     async () => {
       if (!library) {
         return
       }
 
-      let registry: AllowedTokensRegistryAbi | undefined
-      try {
-        registry = ContractAllowedTokensRegistry.connectRpc({ chainId })
-      } catch (error) {
-        // Fallback for motions without registry support
-
-        const address = DAI[chainId]
-        if (!address) {
-          return
-        }
-
-        const daiContract = connectERC20Contract(address, chainId)
-        const decimals = await daiContract.decimals()
-
-        return {
-          allowedTokens: [
-            {
-              address,
-              label: 'DAI',
-              decimals,
-            },
-          ],
-          decimalsMap: { [address]: decimals },
-        }
-      }
       const tokensAddresses = await registry.getAllowedTokens()
 
       const allowedTokens = await Promise.all(

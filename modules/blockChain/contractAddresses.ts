@@ -38,6 +38,7 @@ export const STETH: ChainAddressMap = {
 export const DAI: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
   [CHAINS.Goerli]: '0x11fE4B6AE13d2a6055C8D9cF65c55bac32B5d844',
+  [CHAINS.Holesky]: '0x2eb8e9198e647f80ccf62a5e291bcd4a5a3ca68c',
 }
 
 export const Finance: ChainAddressMap = {
@@ -136,4 +137,12 @@ export const SandboxNodeOperatorsRegistry: ChainAddressMap = {
 
 export const AllowedTokensRegistry: ChainAddressMap = {
   [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
+}
+
+export const SandboxStablesAllowedTokensRegistry: ChainAddressMap = {
+  [CHAINS.Holesky]: '0x091c0ec8b4d54a9fcb36269b5d5e5af43309e666',
+}
+
+export const SandboxStablesAllowedRecipientRegistry: ChainAddressMap = {
+  [CHAINS.Holesky]: '0xF8a63a36B954D72de197097377aa00C238c653Cf',
 }

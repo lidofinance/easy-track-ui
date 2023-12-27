@@ -28,6 +28,7 @@ import {
   ContractEvmRccStablesTopUp,
   ContractEvmPmlStablesTopUp,
   ContractEvmAtcStablesTopUp,
+  ContractEvmSandboxStablesTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -55,6 +56,10 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.AtcStablesTopUp]: {
     evmContract: ContractEvmAtcStablesTopUp,
     motionType: MotionType.AtcStablesTopUp,
+  },
+  [MotionType.SandboxStablesTopUp]: {
+    evmContract: ContractEvmSandboxStablesTopUp,
+    motionType: MotionType.SandboxStablesTopUp,
   },
 }
 
@@ -110,7 +115,7 @@ export const formParts = ({
         allowedTokens,
         tokensDecimalsMap,
         initialLoading: isTokensDataLoading,
-      } = useAllowedTokens()
+      } = useAllowedTokens(registryType)
       const {
         data: periodLimitsData,
         initialLoading: isPeriodLimitsDataLoading,
