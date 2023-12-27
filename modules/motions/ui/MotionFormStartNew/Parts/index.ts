@@ -92,6 +92,15 @@ export const formParts = {
     StartNewNodeOperatorLimitIncrease.formParts({
       motionType: MotionTypeForms.SandboxNodeOperatorIncreaseLimit,
     }),
+  [MotionTypeForms.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.RccDAITopUp,
+  }),
+  [MotionTypeForms.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.AtcDAITopUp,
+  }),
+  [MotionTypeForms.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.PmlDAITopUp,
+  }),
 } as const
 
 export type FormData = {
