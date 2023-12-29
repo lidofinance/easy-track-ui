@@ -32,6 +32,7 @@ const subgraphGoerli = process.env.SUBGRAPH_GOERLI
 const subgraphHolesky = process.env.SUBGRAPH_HOLESKY
 
 const walletconnectProjectId = process.env.WALLETCONNECT_PROJECT_ID
+const operatorsWidgetBackendUrl = process.env.OPERATORS_WIDGET_BACKEND_URL
 
 export default {
   basePath,
@@ -126,6 +127,7 @@ export default {
     subgraphMainnet,
     subgraphGoerli,
     subgraphHolesky,
+    operatorsWidgetBackendUrl,
   },
   publicRuntimeConfig: {
     defaultChain,
