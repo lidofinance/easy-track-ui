@@ -35,6 +35,7 @@ type NodeOperator = {
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTNodeOperatorManagerChange,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
+    // Check MF0701: Sort the data before sending
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
     )
@@ -72,6 +73,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
+    // Check MF0702: Only registered Node Operators
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
@@ -196,6 +198,7 @@ export const formParts = createMotionFormPart({
                             chainId,
                           )
 
+                        // Check MF0705: Correct old manager addresses
                         if (!canAddressManageKeys) {
                           return noSigningKeysRoleError
                         }
@@ -211,6 +214,7 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
+                        // Check MF0704: No zero addresses
                         const addressErr = validateAddress(value)
                         if (addressErr) {
                           return addressErr
@@ -218,11 +222,7 @@ export const formParts = createMotionFormPart({
 
                         const valueAddress = utils.getAddress(value)
 
-                        /*
-                        Although the specification does not yet state this,
-                        the new manager address should not match
-                        any of the manager addresses of other operator nodes.
-                        */
+                        // Check MF0703: No duplicated addresses
                         const idInAddressMap = managerAddressesMap[valueAddress]
                         if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
@@ -248,6 +248,7 @@ export const formParts = createMotionFormPart({
                             chainId,
                           )
 
+                        // Check MF0706: Correct new manager addresses
                         if (canAddressManageKeys) {
                           return 'Address already has a signing keys manager role'
                         }

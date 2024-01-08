@@ -39,14 +39,6 @@ type NodeOperator = {
   managerAddress: string
 }
 
-// DONE: The current number of node operators in the registry MUST be equal to the _nodeOperatorsCount
-// DONE: (exec also) The total number of node operators in the registry, after adding the new ones, MUST NOT exceed nodeOperatorsRegistry.MAX_NODE_OPERATORS_COUNT()
-// DONE: Manager addresses MUST NOT have duplicates
-// DONE: Manager addresses MUST NOT be used as managers for previously added node operators
-// DONE: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
-// DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
-// DONE: The names of newly added node operators MUST NOT be an empty string
-// DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
 export const formParts = () =>
   createMotionFormPart({
     motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
@@ -160,6 +152,7 @@ export const formParts = () =>
         return <ErrorBox>Cannot load node operators count data</ErrorBox>
       }
 
+      // Check MF0101: Total number of node operators
       if (NOCounts.current >= NOCounts.max) {
         return <MessageBox>Node operators limit reached</MessageBox>
       }
@@ -191,6 +184,8 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: value => {
+                        // Check MF0106: No empty names
+                        // Check MF0107: Name length limit
                         const nameErr = validateNodeOperatorName(
                           value,
                           maxNodeOperatorNameLength,
@@ -230,6 +225,7 @@ export const formParts = () =>
                     rules={{
                       required: 'Field is required',
                       validate: value => {
+                        // Check MF0105: No zero reward addresses
                         const addressErr = validateAddress(value)
                         if (addressErr) {
                           return addressErr
@@ -238,6 +234,7 @@ export const formParts = () =>
                         const valueAddress = utils.getAddress(value)
                         const stETHAddress = STETH[chainId]
 
+                        // Check MF0104: No stETH as reward address
                         if (
                           stETHAddress &&
                           valueAddress === utils.getAddress(stETHAddress)
@@ -250,6 +247,7 @@ export const formParts = () =>
                             valueAddress
                           ]
 
+                        // Check MF0109: No reward address duplicates
                         if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
@@ -263,6 +261,7 @@ export const formParts = () =>
                               fieldIndex !== index,
                           )
 
+                        // Check MF0109: No reward address duplicates
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
                           return 'Address is already in use by another update'
                         }
@@ -291,6 +290,7 @@ export const formParts = () =>
                             valueAddress
                           ]
 
+                        // Check MF0103: Already used manager addresses
                         if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
@@ -304,6 +304,7 @@ export const formParts = () =>
                               fieldIndex !== index,
                           )
 
+                        // Check MF0102: Duplicated manager addresses
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
                           return 'Address is already in use by another update'
                         }
@@ -325,6 +326,7 @@ export const formParts = () =>
               </FieldsWrapper>
             </Fragment>
           ))}
+          {/* Check MF0101: Total number of node operators */}
           {NOCounts.max > fieldsArr.fields.length + NOCounts.current && (
             <Fieldset>
               <ButtonIcon
