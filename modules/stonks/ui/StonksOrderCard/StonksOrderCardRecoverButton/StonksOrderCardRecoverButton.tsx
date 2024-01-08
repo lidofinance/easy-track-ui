@@ -43,7 +43,7 @@ export function StonksOrderCardRecoverButton({
       <Button
         onClick={txRecover.isEmpty ? txRecover.send : undefined}
         loading={txRecover.isPending}
-        disabled={!isWalletConnected || txRecover.status !== 'empty'}
+        disabled={!isWalletConnected || !txRecover.isEmpty}
         fullwidth
         variant={variant}
       >

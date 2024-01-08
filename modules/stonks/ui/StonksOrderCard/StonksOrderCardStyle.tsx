@@ -109,3 +109,10 @@ export const ButtonsRow = styled.div`
 export const ButtonWrap = styled.div`
   margin-top: 20px;
 `
+
+export const MessageBox = styled.div`
+  padding: 20px 15px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: ${({ theme }) => theme.borderRadiusesMap.md + 'px'};
+`

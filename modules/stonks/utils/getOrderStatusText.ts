@@ -10,7 +10,10 @@ export function getOrderStatusText(status: OrderStatus) {
       return 'Cancelled'
     case 'expired':
       return 'Expired'
-    default:
+    case 'presignaturePending':
+    case 'not-created':
       return 'Pending'
+    default:
+      return 'Unknown'
   }
 }

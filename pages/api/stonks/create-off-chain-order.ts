@@ -20,6 +20,6 @@ export default async function createOffChainOrder(
         ? error.message
         : 'Error occured while creating order'
     console.error(errorMessage, error)
-    res.status(500).send({ error: errorMessage })
+    res.status(500).json({ error: errorMessage })
   }
 }

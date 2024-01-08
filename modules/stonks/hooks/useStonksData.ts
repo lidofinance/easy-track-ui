@@ -2,7 +2,6 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { connectERC20Contract } from 'modules/motions/utils/connectTokenContract'
 import { formatUnits } from 'ethers/lib/utils'
-import { BigNumber } from 'ethers'
 import { useAvailableStonks } from './useAvailableStonks'
 
 type StonksData = {
@@ -59,9 +58,8 @@ export function useStonksData() {
           const tokenToLabel = await tokenToContract.symbol()
           const tokenToDecimals = await tokenToContract.decimals()
 
-          const expectedOutput = currentBalance.isZero()
-            ? BigNumber.from(0)
-            : await stonks.contract.estimateOutputFromCurrentBalance()
+          const expectedOutput =
+            await stonks.contract.estimateOutputFromCurrentBalance()
 
           return {
             address: stonks.address,

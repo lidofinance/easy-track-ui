@@ -21,6 +21,6 @@ export default async function getOrder(
       error instanceof Error ? error.message : FALLBACK_ERROR,
       error,
     )
-    res.status(500).send({ error: FALLBACK_ERROR })
+    res.status(500).json({ error: FALLBACK_ERROR })
   }
 }

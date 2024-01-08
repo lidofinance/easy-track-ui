@@ -3,6 +3,7 @@ import {
   ContentContainer,
   ErrorMessageBox,
   StonksOrderCard,
+  MessageBox,
 } from 'modules/stonks/ui/StonksOrderCard'
 import { useRouter } from 'next/dist/client/router'
 import { useOrderData } from 'modules/stonks/hooks/useOrderData'
@@ -27,8 +28,20 @@ export default function StonksOrderDetailsPage() {
     )
   }
 
-  if (initialLoading || !order) {
-    return <PageLoader />
+  if (initialLoading) {
+    return (
+      <ContentContainer>
+        <PageLoader />
+      </ContentContainer>
+    )
+  }
+
+  if (!order) {
+    return (
+      <ContentContainer>
+        <MessageBox>Order not found</MessageBox>
+      </ContentContainer>
+    )
   }
 
   return (
