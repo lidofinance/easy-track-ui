@@ -32,12 +32,6 @@ export type KeysInfoNew = {
   }
 }
 
-const requestMainnetOperators = async (chainId: number) => {
-  const data = await fetch(
-    `https://operators.lido.fi/api/operators?chainId=${chainId}`,
-  )
-  return data.json()
-}
 const requestTestnetOperators = async (chainId: number) => {
   const data = await fetch(
     `https://operators.testnet.fi/api/operators?chainId=${chainId}`,
@@ -45,12 +39,14 @@ const requestTestnetOperators = async (chainId: number) => {
   return data.json()
 }
 
-const requestHoleskyOperators = async (
+const requestOperators = async (
+  api:
+    | 'https://operators-holesky.testnet.fi/api'
+    | 'https://operators.lido.fi/api',
   chainId: number,
   moduleAddress: string,
   walletAddress: string,
 ) => {
-  const api = 'https://operators-holesky.testnet.fi/api'
   const modulesResp = await fetch(`${api}/modules?chainId=${chainId}`)
   const modules: Module[] = await modulesResp.json()
 
@@ -109,9 +105,15 @@ export default createNextConnect().get(async (req, res) => {
 
     let result
     if (chainId === CHAINS.Mainnet) {
-      result = await requestMainnetOperators(chainId)
+      result = await requestOperators(
+        'https://operators.lido.fi/api',
+        chainId,
+        moduleAddress,
+        walletAddress,
+      )
     } else if (chainId === CHAINS.Holesky) {
-      result = await requestHoleskyOperators(
+      result = await requestOperators(
+        'https://operators-holesky.testnet.fi/api',
         chainId,
         moduleAddress,
         walletAddress,
