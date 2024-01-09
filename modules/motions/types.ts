@@ -34,6 +34,9 @@ export const MotionTypeForms = {
 
   SandboxNodeOperatorIncreaseLimit: 'SandboxNodeOperatorIncreaseLimit',
 
+  SandboxStablesTopUp: 'SandboxStablesTopUp',
+  SandboxStablesAdd: 'SandboxStablesAdd',
+  SandboxStablesRemove: 'SandboxStablesRemove',
   RccDAITopUp: 'RccDAITopUp',
   PmlDAITopUp: 'PmlDAITopUp',
   AtcDAITopUp: 'AtcDAITopUp',

@@ -59,6 +59,9 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.RccDAITopUp]: 'Top up RCC DAI',
   [MotionType.PmlDAITopUp]: 'Top up PML DAI',
   [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
+  [MotionType.SandboxStablesTopUp]: 'Top up sandbox stables',
+  [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
+  [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
 } as const
 
 export function getMotionTypeDisplayName(
