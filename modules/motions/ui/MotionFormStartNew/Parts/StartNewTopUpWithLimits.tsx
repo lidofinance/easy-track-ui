@@ -32,6 +32,9 @@ import {
   ContractEvmLegoLDOTopUp,
   ContractEvmLegoDAITopUp,
   ContractEvmGasFunderETHTopUp,
+  ContractEvmRccDAITopUp,
+  ContractEvmPmlDAITopUp,
+  ContractEvmAtcDAITopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -55,6 +58,18 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.GasFunderETHTopUp]: {
     evmContract: ContractEvmGasFunderETHTopUp,
     motionType: MotionType.GasFunderETHTopUp,
+  },
+  [MotionType.RccDAITopUp]: {
+    evmContract: ContractEvmRccDAITopUp,
+    motionType: MotionType.RccDAITopUp,
+  },
+  [MotionType.PmlDAITopUp]: {
+    evmContract: ContractEvmPmlDAITopUp,
+    motionType: MotionType.PmlDAITopUp,
+  },
+  [MotionType.AtcDAITopUp]: {
+    evmContract: ContractEvmAtcDAITopUp,
+    motionType: MotionType.AtcDAITopUp,
   },
 }
 
