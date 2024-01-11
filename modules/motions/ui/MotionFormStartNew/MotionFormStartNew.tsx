@@ -29,7 +29,8 @@ export function MotionFormStartNew({ onComplete }: Props) {
   const [isSubmitting, setSubmitting] = useState(false)
   const sendTransaction = useSendTransactionGnosisWorkaround()
 
-  const { availableMotions, notHaveAvailableMotions } = useAvailableMotions()
+  const { availableMotions, isLoading, notHaveAvailableMotions } =
+    useAvailableMotions()
 
   const formMethods = useForm<FormData>({
     mode: 'onChange',
@@ -106,8 +107,8 @@ export function MotionFormStartNew({ onComplete }: Props) {
     </>
   )
 
-  if (!availableMotions) return <PageLoader />
-  if (notHaveAvailableMotions) {
+  if (isLoading) return <PageLoader />
+  if (notHaveAvailableMotions || !availableMotions) {
     return (
       <MessageBox>
         Only Trusted Callers & Node Operator have access to Easy Track motion
