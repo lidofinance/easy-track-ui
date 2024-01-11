@@ -4,13 +4,15 @@ import type { EasyTrackAbi } from 'generated'
 
 // Only motions currently supported to start
 export const MotionTypeForms = {
+  // old node operator
   NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
+  // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
   LegoDAITopUp: 'LegoDAITopUp',
-  RccDAITopUp: 'RccDAITopUp',
-  PmlDAITopUp: 'PmlDAITopUp',
-  AtcDAITopUp: 'AtcDAITopUp',
+  RccStablesTopUp: 'RccStablesTopUp',
+  PmlStablesTopUp: 'PmlStablesTopUp',
+  AtcStablesTopUp: 'AtcStablesTopUp',
   StethRewardProgramAdd: 'StethRewardProgramAdd',
   StethRewardProgramRemove: 'StethRewardProgramRemove',
   StethRewardProgramTopUp: 'StethRewardProgramTopUp',
@@ -20,6 +22,24 @@ export const MotionTypeForms = {
   RewardsShareProgramAdd: 'RewardsShareProgramAdd',
   RewardsShareProgramRemove: 'RewardsShareProgramRemove',
   RewardsShareProgramTopUp: 'RewardsShareProgramTopUp',
+  // ET DVT
+  SDVTNodeOperatorsAdd: 'SDVTNodeOperatorsAdd',
+  SDVTNodeOperatorsActivate: 'SDVTNodeOperatorsActivate',
+  SDVTNodeOperatorsDeactivate: 'SDVTNodeOperatorsDeactivate',
+  SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
+  SDVTTargetValidatorLimitsUpdate: 'SDVTTargetValidatorLimitsUpdate',
+  SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
+  SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
+  SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
+
+  SandboxNodeOperatorIncreaseLimit: 'SandboxNodeOperatorIncreaseLimit',
+
+  SandboxStablesTopUp: 'SandboxStablesTopUp',
+  SandboxStablesAdd: 'SandboxStablesAdd',
+  SandboxStablesRemove: 'SandboxStablesRemove',
+  RccDAITopUp: 'RccDAITopUp',
+  PmlDAITopUp: 'PmlDAITopUp',
+  AtcDAITopUp: 'AtcDAITopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -135,20 +155,5 @@ export type KeysInfoOperator = {
 }
 
 export type KeysInfo = {
-  operators: undefined | KeysInfoOperator[]
-  keys: {
-    signatureVerified: number
-    duplicatesVerified: number
-    total: number
-    unusedButNotNew: number
-    unused: number
-    used: number
-    unconfirmed: number
-  }
-  health: {
-    nextUpdateTime: number
-    lastUpdateTime: number
-    serverTime: number
-    status: string
-  }
+  operators?: KeysInfoOperator[]
 }

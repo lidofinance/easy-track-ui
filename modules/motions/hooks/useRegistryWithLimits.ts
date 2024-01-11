@@ -4,9 +4,8 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   ContractLegoLDORegistry,
   ContractLegoDAIRegistry,
-  ContractRccDAIRegistry,
-  ContractPmlDAIRegistry,
-  ContractAtcDAIRegistry,
+  ContractPmlStablesRegistry,
+  ContractAtcStablesRegistry,
   ContractGasFunderETHRegistry,
   ContractAllowedRecipientRegistry,
   ContractAllowedRecipientReferralDaiRegistry,
@@ -14,6 +13,8 @@ import {
   ContractStethRewardProgramRegistry,
   ContractStethGasSupplyRegistry,
   ContractRewardsShareProgramRegistry,
+  ContractRccStablesRegistry,
+  ContractSandboxStablesAllowedRecipientRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -28,9 +29,9 @@ type AllowedRecipient = {
 export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
   [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
-  [MotionType.RccDAITopUp]: ContractRccDAIRegistry,
-  [MotionType.PmlDAITopUp]: ContractPmlDAIRegistry,
-  [MotionType.AtcDAITopUp]: ContractAtcDAIRegistry,
+  [MotionType.RccDAITopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlDAITopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcDAITopUp]: ContractAtcStablesRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
   [MotionType.AllowedRecipientRemove]: ContractAllowedRecipientRegistry,
@@ -52,6 +53,15 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.RewardsShareProgramAdd]: ContractRewardsShareProgramRegistry,
   [MotionType.RewardsShareProgramRemove]: ContractRewardsShareProgramRegistry,
   [MotionType.RewardsShareProgramTopUp]: ContractRewardsShareProgramRegistry,
+  [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
+  [MotionType.SandboxStablesAdd]:
+    ContractSandboxStablesAllowedRecipientRegistry,
+  [MotionType.SandboxStablesRemove]:
+    ContractSandboxStablesAllowedRecipientRegistry,
+  [MotionType.SandboxStablesTopUp]:
+    ContractSandboxStablesAllowedRecipientRegistry,
 } as const
 
 type HookArgs = {
@@ -94,7 +104,7 @@ export function useRecipientAll({ registryType }: HookArgs) {
 }
 
 export function useRecipientActual({ registryType }: HookArgs) {
-  const chainId = useWeb3()
+  const { chainId } = useWeb3()
   const recipientsAll = useRecipientAll({ registryType })
   const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
 

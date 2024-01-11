@@ -31,10 +31,10 @@ import {
 import {
   ContractEvmLegoLDOTopUp,
   ContractEvmLegoDAITopUp,
+  ContractEvmGasFunderETHTopUp,
   ContractEvmRccDAITopUp,
   ContractEvmPmlDAITopUp,
   ContractEvmAtcDAITopUp,
-  ContractEvmGasFunderETHTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -43,7 +43,8 @@ import {
   estimateGasFallback,
   checkInputsGreaterThanLimit,
 } from 'modules/motions/utils'
-import { tokenLimitError, periodLimitError } from 'modules/motions/constants'
+import { periodLimitError } from 'modules/motions/constants'
+import { validateTransitionLimit } from 'modules/motions/utils/validateTransitionLimit'
 
 export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.LegoLDOTopUp]: {
@@ -53,6 +54,10 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.LegoDAITopUp]: {
     evmContract: ContractEvmLegoDAITopUp,
     motionType: MotionType.LegoDAITopUp,
+  },
+  [MotionType.GasFunderETHTopUp]: {
+    evmContract: ContractEvmGasFunderETHTopUp,
+    motionType: MotionType.GasFunderETHTopUp,
   },
   [MotionType.RccDAITopUp]: {
     evmContract: ContractEvmRccDAITopUp,
@@ -65,10 +70,6 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.AtcDAITopUp]: {
     evmContract: ContractEvmAtcDAITopUp,
     motionType: MotionType.AtcDAITopUp,
-  },
-  [MotionType.GasFunderETHTopUp]: {
-    evmContract: ContractEvmGasFunderETHTopUp,
-    motionType: MotionType.GasFunderETHTopUp,
   },
 }
 
@@ -163,13 +164,15 @@ export const formParts = ({
         ])
       }, [fieldNames.programs, setValue, legoDAIRecipients.data])
 
-      const { data: limits } = useTransitionLimits()
+      const { data: limits, initialLoading: isTransitionLimitsDataLoading } =
+        useTransitionLimits()
       const transitionLimit =
         token.address && limits?.[utils.getAddress(token.address)]
 
       if (
         trustedCaller.initialLoading ||
         legoDAIRecipients.initialLoading ||
+        isTransitionLimitsDataLoading ||
         periodLimitsLoading
       ) {
         return <PageLoader />
@@ -237,15 +240,18 @@ export const formParts = ({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        const check1 = validateToken(value)
-                        if (typeof check1 === 'string') {
-                          return check1
+                        const tokenError = validateToken(value)
+                        if (tokenError) {
+                          return tokenError
                         }
-                        if (
-                          transitionLimit &&
-                          Number(value) > transitionLimit
-                        ) {
-                          return tokenLimitError(token.label, transitionLimit)
+
+                        const transitionLimitError = validateTransitionLimit(
+                          value,
+                          transitionLimit,
+                          token.label,
+                        )
+                        if (transitionLimitError) {
+                          return transitionLimitError
                         }
 
                         const isLargeThenPeriodLimit =

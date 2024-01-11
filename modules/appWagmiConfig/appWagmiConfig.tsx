@@ -1,11 +1,37 @@
 import { FC } from 'react'
-import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import * as wagmiChains from 'wagmi/chains'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { getConnectors } from 'reef-knot/core-react'
 import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
 import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
+
+export const holesky = {
+  id: CHAINS.Holesky,
+  name: 'Holesky',
+  network: 'holesky',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'holeskyETH',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: { http: [getBackendRpcUrl(CHAINS.Holesky)] },
+    default: { http: [getBackendRpcUrl(CHAINS.Holesky)] },
+  },
+  blockExplorers: {
+    etherscan: { name: 'holesky', url: 'https://holesky.etherscan.io/' },
+    default: { name: 'holesky', url: 'https://holesky.etherscan.io/' },
+  },
+  testnet: true,
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 77,
+    },
+  },
+} as const
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -19,7 +45,11 @@ if (publicRuntimeConfig.supportedChains != null) {
   supportedChainIds = [parseInt(publicRuntimeConfig.defaultChain)]
 }
 
-const wagmiChainsArray = Object.values(wagmiChains)
+const wagmiChainsArray = Object.values({
+  ...wagmiChains,
+  [CHAINS.Holesky]: holesky,
+})
+
 const supportedChains = wagmiChainsArray.filter(
   chain =>
     // Temporary wagmi fix, need to hardcode it to not affect non-wagmi wallets

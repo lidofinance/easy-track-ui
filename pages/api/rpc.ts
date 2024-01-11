@@ -7,12 +7,13 @@ import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 import clone from 'just-clone'
 
 const { serverRuntimeConfig } = getConfig()
-const { rpcUrls_1, rpcUrls_5 } = serverRuntimeConfig
+const { rpcUrls_1, rpcUrls_5, rpcUrls_17000 } = serverRuntimeConfig
 
 export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
   const RPC_URLS: Record<number, string[]> = {
     [CHAINS.Mainnet]: rpcUrls_1,
     [CHAINS.Goerli]: rpcUrls_5,
+    [CHAINS.Holesky]: rpcUrls_17000,
   }
 
   const requestInfo = {
@@ -33,6 +34,7 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
 
     const requested = await fetchWithFallback(urls, chainId, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       // Next by default parses our body for us, we don't want that here
       body: JSON.stringify(req.body),
     })

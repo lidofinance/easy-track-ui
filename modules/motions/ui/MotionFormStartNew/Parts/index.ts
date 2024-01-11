@@ -1,13 +1,25 @@
 import { MotionTypeForms } from 'modules/motions/types'
 
-import * as formNodeOperators from './StartNewNodeOperators'
 import * as formAllowedRecipientAdd from './StartNewAllowedRecipientAdd'
 import * as formAllowedRecipientRemove from './StartNewAllowedRecipientRemove'
 import * as formAllowedRecipientTopUp from './StartNewAllowedRecipientTopUp'
 import * as StartNewTopUpWithLimits from './StartNewTopUpWithLimits'
+import * as StartNewTopUpWithLimitsAndCustomToken from './StartNewTopUpWithLimitsAndCustomToken'
+import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
+import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
+import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
+import * as StartNewSDVTVettedValidatorsLimitsSet from './StartNewSDVTVettedValidatorsLimitsSet'
+import * as StartNewSDVTTargetValidatorLimitsUpdate from './StartNewSDVTTargetValidatorLimitsUpdate'
+import * as StartNewSDVTNodeOperatorRewardAddressesSet from './StartNewSDVTNodeOperatorRewardAddressesSet'
+import * as StartNewSDVTNodeOperatorNamesSet from './StartNewSDVTNodeOperatorNamesSet'
+import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
+import * as StartNewNodeOperatorLimitIncrease from './StartNewNodeOperatorLimitIncrease'
 
 export const formParts = {
-  [MotionTypeForms.NodeOperatorIncreaseLimit]: formNodeOperators.formParts,
+  [MotionTypeForms.NodeOperatorIncreaseLimit]:
+    StartNewNodeOperatorLimitIncrease.formParts({
+      motionType: MotionTypeForms.NodeOperatorIncreaseLimit,
+    }),
   [MotionTypeForms.AllowedRecipientTopUpTrpLdo]:
     formAllowedRecipientTopUp.formParts({
       registryType: MotionTypeForms.AllowedRecipientTopUpTrpLdo,
@@ -18,15 +30,18 @@ export const formParts = {
   [MotionTypeForms.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.LegoDAITopUp,
   }),
-  [MotionTypeForms.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.RccDAITopUp,
-  }),
-  [MotionTypeForms.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.PmlDAITopUp,
-  }),
-  [MotionTypeForms.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.AtcDAITopUp,
-  }),
+  [MotionTypeForms.RccStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.RccStablesTopUp,
+    }),
+  [MotionTypeForms.PmlStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.PmlStablesTopUp,
+    }),
+  [MotionTypeForms.AtcStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.AtcStablesTopUp,
+    }),
   [MotionTypeForms.StethRewardProgramAdd]: formAllowedRecipientAdd.formParts({
     registryType: MotionTypeForms.StethRewardProgramAdd,
   }),
@@ -58,6 +73,44 @@ export const formParts = {
     formAllowedRecipientTopUp.formParts({
       registryType: MotionTypeForms.RewardsShareProgramTopUp,
     }),
+  [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts(),
+  [MotionTypeForms.SDVTNodeOperatorsActivate]:
+    StartNewSDVTNodeOperatorsActivate.formParts,
+  [MotionTypeForms.SDVTNodeOperatorsDeactivate]:
+    StartNewSDVTNodeOperatorsDeactivate.formParts,
+  [MotionTypeForms.SDVTVettedValidatorsLimitsSet]:
+    StartNewSDVTVettedValidatorsLimitsSet.formParts,
+  [MotionTypeForms.SDVTTargetValidatorLimitsUpdate]:
+    StartNewSDVTTargetValidatorLimitsUpdate.formParts,
+  [MotionTypeForms.SDVTNodeOperatorRewardAddressesSet]:
+    StartNewSDVTNodeOperatorRewardAddressesSet.formParts,
+  [MotionTypeForms.SDVTNodeOperatorNamesSet]:
+    StartNewSDVTNodeOperatorNamesSet.formParts,
+  [MotionTypeForms.SDVTNodeOperatorManagerChange]:
+    StartNewSDVTNodeOperatorManagersChange.formParts,
+  [MotionTypeForms.SandboxNodeOperatorIncreaseLimit]:
+    StartNewNodeOperatorLimitIncrease.formParts({
+      motionType: MotionTypeForms.SandboxNodeOperatorIncreaseLimit,
+    }),
+  [MotionTypeForms.SandboxStablesAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.SandboxStablesAdd,
+  }),
+  [MotionTypeForms.SandboxStablesRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionTypeForms.SandboxStablesRemove,
+  }),
+  [MotionTypeForms.SandboxStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.SandboxStablesTopUp,
+    }),
+  [MotionTypeForms.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.RccDAITopUp,
+  }),
+  [MotionTypeForms.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.AtcDAITopUp,
+  }),
+  [MotionTypeForms.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.PmlDAITopUp,
+  }),
 } as const
 
 export type FormData = {

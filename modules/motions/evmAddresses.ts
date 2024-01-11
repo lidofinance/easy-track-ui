@@ -1,13 +1,22 @@
 import { flow, map, toPairs, fromPairs, mapValues } from 'lodash/fp'
 import { CHAINS } from '@lido-sdk/constants'
 import { MotionType } from './types'
-import type { Invert } from 'modules/shared/utils/utilTypes'
+import { Invert } from 'modules/shared/utils/utilTypes'
 
-//
-// Addresses should be lower cased
-//
+const EvmSupportedChains = [
+  CHAINS.Mainnet,
+  CHAINS.Goerli,
+  CHAINS.Holesky,
+] as const
 
-export const EvmAddressesByChain = {
+export type EvmSupportedChain = typeof EvmSupportedChains[number]
+
+type EvmAddresses = Record<
+  EvmSupportedChain,
+  Partial<Record<MotionType, string>>
+>
+
+export const EvmAddressesByChain: EvmAddresses = {
   // Mainnet
   [CHAINS.Mainnet]: {
     [MotionType.NodeOperatorIncreaseLimit]:
@@ -79,6 +88,9 @@ export const EvmAddressesByChain = {
     [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',
     [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
     [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
+    [MotionType.RccStablesTopUp]: '0xd50eE42B31Bc500409B7caD99A2D16FB1Bfecdc6',
+    [MotionType.PmlStablesTopUp]: '0x5F379512158A46ab7a91f8b799A97691eC498b9a',
+    [MotionType.AtcStablesTopUp]: '0xB87300405050e7f1dBC35c6C9ce9ea4417D3Ad81',
     [MotionType.StethRewardProgramAdd]:
       '0x785A8B1CDC03Bb191670Ed4696e9ED5B11Af910A',
     [MotionType.StethRewardProgramRemove]:
@@ -97,6 +109,22 @@ export const EvmAddressesByChain = {
       '0x932aab3D6057ed2Beef95471414831C4535600E9',
     [MotionType.RewardsShareProgramTopUp]:
       '0x5Bb391170899A7b8455A442cca65078ff3E1639C',
+    [MotionType.SDVTNodeOperatorsAdd]:
+      '0x69ab4BeD4D136F1e22c6072277BA5E52A246672B',
+    [MotionType.SDVTNodeOperatorsActivate]:
+      '0x4C0e79308f2E672b9dB9f2E6fD183Ec6025eFc37',
+    [MotionType.SDVTNodeOperatorsDeactivate]:
+      '0x2b956B578D0f44E0BD484d1A63c8A164BBEf6B58',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
+    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+      '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+      '0x85350e579C71a78810305f860380a3315b3e6Ed9',
+    [MotionType.SDVTNodeOperatorNamesSet]:
+      '0xc8b9F2bfFFF2f2B8F9C32A7b39a5AAa0644Fe632',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0x2Ed0FB58ba7637f972100Db7427614C9E30Ed684',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -126,6 +154,77 @@ export const EvmAddressesByChain = {
     [MotionType.AllowedRecipientTopUpReferralDai]:
       '0x9534A77029D57E249c467E5A1E0854cc26Cd75A0',
   },
+
+  // Holesky
+  [CHAINS.Holesky]: {
+    [MotionType.NodeOperatorIncreaseLimit]:
+      '0x18Ff3bD97739bf910cDCDb8d138976c6afDB4449',
+    [MotionType.AllowedRecipientTopUpTrpLdo]:
+      '0xD618F0CF48F057B5256e102dC18d8011e08c19D3',
+    [MotionType.LegoLDOTopUp]: '0xCfaFcD35ACcc4383e2CCDf7DD3F58114914F1955',
+    [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
+    [MotionType.StethRewardProgramAdd]:
+      '0xf0968B9bE18282dD23bbbC79a1c9C8996CE6984D',
+    [MotionType.StethRewardProgramRemove]:
+      '0xF0F34b82241cD49BB3952149BD30A08Eb9D8B54E',
+    [MotionType.StethRewardProgramTopUp]:
+      '0xBB06DD9a3C7eE8cE093860094e769a1E3D6F97F6',
+    [MotionType.StethGasSupplyAdd]:
+      '0x13dB9E1ddE54d2641f571EA288D9e79C0E8bce2e',
+    [MotionType.StethGasSupplyRemove]:
+      '0x64CE36D2DC7e7786BF56D2DF8A5F3c788977Fb19',
+    [MotionType.StethGasSupplyTopUp]:
+      '0xf97E048A952d170d5D5E817C8D9c8253f4D50F96',
+    [MotionType.RewardsShareProgramAdd]:
+      '0x49D3211203e8E18B4e60F74C1126934da2520987',
+    [MotionType.RewardsShareProgramRemove]:
+      '0x112c48c4659A9a1d42a3e45EBc8e37B6150F2B0C',
+    [MotionType.RewardsShareProgramTopUp]:
+      '0x089bc04630c056D76fF4Ec172e752A7d5B855e16',
+
+    [MotionType.SDVTNodeOperatorsAdd]:
+      '0xeF5233A5bbF243149E35B353A73FFa8931FDA02b',
+    [MotionType.SDVTNodeOperatorsActivate]:
+      '0x5b4A9048176D5bA182ceec8e673D8aA6927A40D6',
+    [MotionType.SDVTNodeOperatorsDeactivate]:
+      '0x88d247cdf4ff4A4AAA8B3DD9dd22D1b89219FB3B',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0x30Cb36DBb0596aD9Cf5159BD2c4B1456c18e47E8',
+    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+      '0xC91a676A69Eb49be9ECa1954fE6fc861AE07A9A2',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+      '0x6Bfc576018C7f3D2a9180974E5c8e6CFa021f617',
+    [MotionType.SDVTNodeOperatorNamesSet]:
+      '0x4792BaC0a262200fA7d3b68e7622bFc1c2c3a72d',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0xb8C4728bc0826bA5864D02FA53148de7A44C2f7E',
+
+    [MotionType.SandboxNodeOperatorIncreaseLimit]:
+      '0xbD37e55748c6f4Ece637AeD3e278e7575346B587',
+    [MotionType.SandboxStablesAdd]:
+      '0xB238fB1e7c8da5da022140dA956Fc3052808fC56',
+    [MotionType.SandboxStablesRemove]:
+      '0x51c730af05777c4D3CcC8c8B80558F4D155bb7BF',
+    [MotionType.SandboxStablesTopUp]:
+      '0x71bcEf1f4E4945005e1D22d68F02085D5167ab43',
+
+    // next motion factories are @deprecated
+    // we are keeping them here to display history data
+    [MotionType.LEGOTopUp]: '',
+    [MotionType.GasFunderETHTopUp]: '0x',
+    [MotionType.RewardProgramAdd]: '',
+    [MotionType.RewardProgramRemove]: '',
+    [MotionType.RewardProgramTopUp]: '',
+    [MotionType.ReferralPartnerAdd]: '',
+    [MotionType.ReferralPartnerRemove]: '',
+    [MotionType.ReferralPartnerTopUp]: '',
+    [MotionType.AllowedRecipientAdd]: '',
+    [MotionType.AllowedRecipientRemove]: '',
+    [MotionType.AllowedRecipientTopUp]: '',
+    [MotionType.AllowedRecipientAddReferralDai]: '',
+    [MotionType.AllowedRecipientRemoveReferralDai]: '',
+    [MotionType.AllowedRecipientTopUpReferralDai]: '',
+  },
 }
 
 export const parseEvmSupportedChainId = (
@@ -139,16 +238,6 @@ export const parseEvmSupportedChainId = (
 
   return numChainId
 }
-
-export const EvmSupportedChains = Object.keys(EvmAddressesByChain)
-  .map(v => Number(v))
-  .filter(v => Number.isFinite(v)) as EvmSupportedChain[]
-
-export type EvmSupportedChain = keyof EvmAddresses
-
-// intentionally
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export type EvmAddresses = typeof EvmAddressesByChain
 
 export const EvmUnrecognized = 'EvmUnrecognized'
 // intentionally
@@ -169,13 +258,17 @@ export const EvmTypesByAdress = mapValues(
 export const EvmAddressesByType = Object.values(MotionType).reduce(
   (res, motionType) => ({
     ...res,
-    [motionType]: EvmSupportedChains.reduce(
-      (resIn, chainId) => ({
+    [motionType]: EvmSupportedChains.reduce((resIn, chainId) => {
+      const address = EvmAddressesByChain[chainId][motionType]
+      if (!address) {
+        return resIn
+      }
+
+      return {
         ...resIn,
-        [chainId]: EvmAddressesByChain[chainId][motionType],
-      }),
-      {} as { [C in EvmSupportedChain]: EvmAddresses[C][typeof motionType] },
-    ),
+        [chainId]: address,
+      }
+    }, {} as { [C in EvmSupportedChain]: EvmAddresses[C][typeof motionType] }),
   }),
   {} as {
     [M in MotionType]: { [C in EvmSupportedChain]: EvmAddresses[C][M] }

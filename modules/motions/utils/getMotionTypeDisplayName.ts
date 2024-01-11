@@ -10,9 +10,9 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
-  [MotionType.RccDAITopUp]: 'Top up RCC DAI',
-  [MotionType.PmlDAITopUp]: 'Top up PML DAI',
-  [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
+  [MotionType.RccStablesTopUp]: 'Top up RCC',
+  [MotionType.PmlStablesTopUp]: 'Top up PML',
+  [MotionType.AtcStablesTopUp]: 'Top up ATC',
   [MotionType.StethRewardProgramAdd]: 'Add stETH reward program',
   [MotionType.StethRewardProgramRemove]: 'Remove stETH reward program',
   [MotionType.StethRewardProgramTopUp]: 'Top up stETH reward programs',
@@ -24,6 +24,20 @@ export const MotionTypeDisplayNames: Record<
     'Remove Rewards Share Program participant',
   [MotionType.RewardsShareProgramTopUp]:
     'Top up Rewards Share Program participants',
+  [MotionType.SDVTNodeOperatorsAdd]: 'Add node operators',
+  [MotionType.SDVTNodeOperatorsActivate]: 'Activate node operators',
+  [MotionType.SDVTNodeOperatorsDeactivate]: 'Deactivate node operators',
+  [MotionType.SDVTVettedValidatorsLimitsSet]: 'Set vetted validators limits',
+  [MotionType.SDVTTargetValidatorLimitsUpdate]:
+    'Update target validator limits',
+  [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+    'Set node operators reward addresses',
+  [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
+  [MotionType.SDVTNodeOperatorNamesSet]: 'Set node operators names',
+  [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
+  [MotionType.SandboxNodeOperatorIncreaseLimit]:
+    '[NOR SandBox] Increase node operator staking limit',
+
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
   // next motion types are retired
@@ -42,6 +56,12 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.AllowedRecipientAddReferralDai]: 'Add DAI referral partner',
   [MotionType.AllowedRecipientRemoveReferralDai]: 'Remove DAI referral partner',
   [MotionType.AllowedRecipientTopUpReferralDai]: 'Top up DAI referral partner',
+  [MotionType.RccDAITopUp]: 'Top up RCC DAI',
+  [MotionType.PmlDAITopUp]: 'Top up PML DAI',
+  [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
+  [MotionType.SandboxStablesTopUp]: 'Top up sandbox stables',
+  [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
+  [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
 } as const
 
 export function getMotionTypeDisplayName(

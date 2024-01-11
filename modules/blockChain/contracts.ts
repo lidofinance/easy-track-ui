@@ -124,31 +124,25 @@ export const ContractEvmLegoDAITopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.LegoDAITopUp],
 })
 
-export const ContractRccDAIRegistry = createContractHelpers({
-  factory: TypeChain.RegistryWithLimitsAbi__factory,
-  address: CONTRACT_ADDRESSES.RccDAIRegistry,
-})
-
+/**
+ * @deprecated
+ */
 export const ContractEvmRccDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.RccDAITopUp],
 })
 
-export const ContractPmlDAIRegistry = createContractHelpers({
-  factory: TypeChain.RegistryWithLimitsAbi__factory,
-  address: CONTRACT_ADDRESSES.PmlDAIRegistry,
-})
-
+/**
+ * @deprecated
+ */
 export const ContractEvmPmlDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.PmlDAITopUp],
 })
 
-export const ContractAtcDAIRegistry = createContractHelpers({
-  factory: TypeChain.RegistryWithLimitsAbi__factory,
-  address: CONTRACT_ADDRESSES.AtcDAIRegistry,
-})
-
+/**
+ * @deprecated
+ */
 export const ContractEvmAtcDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.AtcDAITopUp],
@@ -281,4 +275,124 @@ export const ContractRewardsShareProgramRemove = createContractHelpers({
 export const ContractRewardsShareProgramTopUp = createContractHelpers({
   factory: TypeChain.TopUpAllowedRecipientsAbi__factory,
   address: EvmAddressesByType[MotionType.RewardsShareProgramTopUp],
+})
+
+export const ContractSDVTRegistry = createContractHelpers({
+  factory: TypeChain.SDVTRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.SDVTRegistry,
+})
+
+export const ContractSDVTNodeOperatorsAdd = createContractHelpers({
+  factory: TypeChain.AddNodeOperatorsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsAdd],
+})
+
+export const ContractSDVTNodeOperatorsActivate = createContractHelpers({
+  factory: TypeChain.ActivateNodeOperatorsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsActivate],
+})
+
+export const ContractSDVTNodeOperatorsDeactivate = createContractHelpers({
+  factory: TypeChain.DeactivateNodeOperatorsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorsDeactivate],
+})
+
+export const ContractSDVTVettedValidatorsLimitsSet = createContractHelpers({
+  factory: TypeChain.SetVettedValidatorsLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTVettedValidatorsLimitsSet],
+})
+
+export const ContractSDVTNodeOperatorNamesSet = createContractHelpers({
+  factory: TypeChain.SetNodeOperatorNamesAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorNamesSet],
+})
+
+export const ContractSDVTNodeOperatorRewardAddressesSet = createContractHelpers(
+  {
+    factory: TypeChain.SetNodeOperatorRewardAddressesAbi__factory,
+    address: EvmAddressesByType[MotionType.SDVTNodeOperatorRewardAddressesSet],
+  },
+)
+
+export const ContractSDVTNodeOperatorManagerChange = createContractHelpers({
+  factory: TypeChain.ChangeNodeOperatorManagersAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTNodeOperatorManagerChange],
+})
+
+export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
+  factory: TypeChain.UpdateTargetValidatorLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
+})
+
+export const ContractSandboxNodeOperatorsRegistry = createContractHelpers({
+  factory: TypeChain.NodeOperatorsAbi__factory,
+  address: CONTRACT_ADDRESSES.SandboxNodeOperatorsRegistry,
+})
+
+export const ContractEvmSandboxNodeOperatorIncreaseLimit =
+  createContractHelpers({
+    factory: TypeChain.EvmIncreaseNodeOperatorStakingLimitAbi__factory,
+    address: EvmAddressesByType[MotionType.SandboxNodeOperatorIncreaseLimit],
+  })
+
+export const ContractAllowedTokensRegistry = createContractHelpers({
+  factory: TypeChain.AllowedTokensRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.AllowedTokensRegistry,
+})
+
+export const ContractRccStablesRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.RccStablesRegistry,
+})
+
+export const ContractEvmRccStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.RccStablesTopUp],
+})
+
+export const ContractPmlStablesRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.PmlStablesRegistry,
+})
+
+export const ContractEvmPmlStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.PmlStablesTopUp],
+})
+
+export const ContractAtcStablesRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.AtcStablesRegistry,
+})
+
+export const ContractEvmAtcStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.AtcStablesTopUp],
+})
+
+export const ContractSandboxStablesAllowedRecipientRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.SandboxStablesAllowedRecipientRegistry,
+  })
+
+export const ContractSandboxStablesAllowedTokensRegistry =
+  createContractHelpers({
+    factory: TypeChain.AllowedTokensRegistryAbi__factory,
+    address: CONTRACT_ADDRESSES.SandboxStablesAllowedTokensRegistry,
+  })
+
+export const ContractEvmSandboxStablesAdd = createContractHelpers({
+  factory: TypeChain.AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStablesAdd],
+})
+
+export const ContractEvmSandboxStablesRemove = createContractHelpers({
+  factory: TypeChain.RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStablesRemove],
+})
+
+export const ContractEvmSandboxStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStablesTopUp],
 })
