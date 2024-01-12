@@ -45,19 +45,14 @@ export const useAvailableMotions = () => {
     initialLoading: isSandboxNodeOperatorsDataLoading,
   } = useNodeOperatorsList('sandbox')
 
-  const { data: availableMotions, initialLoading } = useSWR<AvailableMotions>(
+  const {
+    data: availableMotions,
+    initialLoading: isAvailableMotionsDataLoading,
+  } = useSWR<AvailableMotions>(
     walletAddress && nodeOperators && sandboxNodeOperators
       ? `available-motions-${chainId}-${walletAddress}`
       : null,
     async () => {
-      if (
-        !walletAddress ||
-        nodeOperators === undefined ||
-        sandboxNodeOperators === undefined
-      ) {
-        return {} as AvailableMotions
-      }
-
       const parsedChainId = parseEvmSupportedChainId(chainId)
       const nodeOperatorIncreaseLimitAddress =
         EVM_CONTRACTS[MotionTypeForms.NodeOperatorIncreaseLimit].address[
@@ -140,8 +135,8 @@ export const useAvailableMotions = () => {
 
   return {
     availableMotions,
-    isLoading:
-      initialLoading ||
+    initialLoading:
+      isAvailableMotionsDataLoading ||
       isNodeOperatorsDataLoading ||
       isSandboxNodeOperatorsDataLoading,
     notHaveAvailableMotions,

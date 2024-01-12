@@ -29,7 +29,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
   const [isSubmitting, setSubmitting] = useState(false)
   const sendTransaction = useSendTransactionGnosisWorkaround()
 
-  const { availableMotions, isLoading, notHaveAvailableMotions } =
+  const { availableMotions, initialLoading, notHaveAvailableMotions } =
     useAvailableMotions()
 
   const formMethods = useForm<FormData>({
@@ -107,7 +107,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
     </>
   )
 
-  if (isLoading) return <PageLoader />
+  if (initialLoading) return <PageLoader />
   if (notHaveAvailableMotions || !availableMotions) {
     return (
       <MessageBox>
