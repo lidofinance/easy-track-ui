@@ -70,6 +70,10 @@ export const useTransitionLimits = () => {
 
     const limits: LimitsMap = {}
 
+    if (!params.length) {
+      return limits
+    }
+
     for (const index of TOKEN_INDEXES) {
       const rawAddress: string | undefined =
         // literal definition because params[4][2].toHexString() === '0x00

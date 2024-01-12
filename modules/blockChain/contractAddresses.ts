@@ -44,7 +44,7 @@ export const DAI: ChainAddressMap = {
 export const Finance: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xB9E5CBB9CA5b0d659238807E84D0176930753d86',
   [CHAINS.Goerli]: '0x75c7b1D23f1cad7Fb4D60281d7069E46440BC179',
-  [CHAINS.Holesky]: ' 0xf0F281E5d7FBc54EAFcE0dA225CDbde04173AB16',
+  [CHAINS.Holesky]: '0xf0F281E5d7FBc54EAFcE0dA225CDbde04173AB16',
 }
 
 export const AllowedRecipientRegistry: ChainAddressMap = {
