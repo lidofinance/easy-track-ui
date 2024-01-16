@@ -75,6 +75,9 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xd8f9B72Cd97388f23814ECF429cd18815F6352c1',
     [MotionType.AllowedRecipientTopUpReferralDai]:
       '0x009ffa22ce4388d2F5De128Ca8E6fD229A312450',
+    [MotionType.RccStethTopUp]: '0xcD42Eb8a5db5a80Dc8f643745528DD77cf4C7D35',
+    [MotionType.PmlStethTopUp]: '0xc5527396DDC353BD05bBA578aDAa1f5b6c721136',
+    [MotionType.AtcStethTopUp]: '0x87b02dF27cd6ec128532Add7C8BC19f62E6f1fB9',
   },
 
   // Goerli
@@ -207,6 +210,9 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x51c730af05777c4D3CcC8c8B80558F4D155bb7BF',
     [MotionType.SandboxStablesTopUp]:
       '0x71bcEf1f4E4945005e1D22d68F02085D5167ab43',
+    [MotionType.RccStethTopUp]: '0xe3bCa174A8b031C61a58aa56a0f622D4FFCA47d7',
+    [MotionType.PmlStethTopUp]: '0x8612A51e4914FfFb25D96d1A310D4C6342c2091E',
+    [MotionType.AtcStethTopUp]: '0x1395970895282333dC914172944f52F15Df63620',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data

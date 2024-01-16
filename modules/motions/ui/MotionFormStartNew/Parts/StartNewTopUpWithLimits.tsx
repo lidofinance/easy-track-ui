@@ -35,6 +35,9 @@ import {
   ContractEvmRccDAITopUp,
   ContractEvmPmlDAITopUp,
   ContractEvmAtcDAITopUp,
+  ContractRccStethTopUp,
+  ContractPmlStethTopUp,
+  ContractAtcStethTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -70,6 +73,18 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.AtcDAITopUp]: {
     evmContract: ContractEvmAtcDAITopUp,
     motionType: MotionType.AtcDAITopUp,
+  },
+  [MotionType.RccStethTopUp]: {
+    evmContract: ContractRccStethTopUp,
+    motionType: MotionType.RccStethTopUp,
+  },
+  [MotionType.PmlStethTopUp]: {
+    evmContract: ContractPmlStethTopUp,
+    motionType: MotionType.PmlStethTopUp,
+  },
+  [MotionType.AtcStethTopUp]: {
+    evmContract: ContractAtcStethTopUp,
+    motionType: MotionType.AtcStethTopUp,
   },
 }
 

@@ -396,3 +396,33 @@ export const ContractEvmSandboxStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.SandboxStablesTopUp],
 })
+
+export const ContractRccStethAllowedRecipientsRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.RccStethAllowedRecipientsRegistry,
+})
+
+export const ContractPmlStethAllowedRecipientsRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.PmlStethAllowedRecipientsRegistry,
+})
+
+export const ContractAtcStethAllowedRecipientsRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.AtcStethAllowedRecipientsRegistry,
+})
+
+export const ContractRccStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.RccStethTopUp],
+})
+
+export const ContractPmlStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.PmlStethTopUp],
+})
+
+export const ContractAtcStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.AtcStethTopUp],
+})

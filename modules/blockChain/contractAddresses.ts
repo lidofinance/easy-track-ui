@@ -146,3 +146,18 @@ export const SandboxStablesAllowedTokensRegistry: ChainAddressMap = {
 export const SandboxStablesAllowedRecipientRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0xF8a63a36B954D72de197097377aa00C238c653Cf',
 }
+
+export const RccStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xAAC4FcE2c5d55D1152512fe5FAA94DB267EE4863',
+  [CHAINS.Holesky]: '0x916B909300c4aB5ADC4247cebd840C9278683e78',
+}
+
+export const PmlStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x7b9B8d00f807663d46Fb07F87d61B79884BC335B',
+  [CHAINS.Holesky]: '0xC2Ec8a9285D111de54725FAD1AC6a3B7E3BC6225',
+}
+
+export const AtcStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xd3950eB3d7A9B0aBf8515922c0d35D13e85a2c91',
+  [CHAINS.Holesky]: '0x955bA61676dAd6091Ff3F9BC498219D6DbD49107',
+}

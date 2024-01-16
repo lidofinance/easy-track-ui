@@ -111,6 +111,15 @@ export const formParts = {
   [MotionTypeForms.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.PmlDAITopUp,
   }),
+  [MotionTypeForms.RccStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.RccStethTopUp,
+  }),
+  [MotionTypeForms.PmlStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.PmlStethTopUp,
+  }),
+  [MotionTypeForms.AtcStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.AtcStethTopUp,
+  }),
 } as const
 
 export type FormData = {

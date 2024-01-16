@@ -15,6 +15,9 @@ import {
   ContractRewardsShareProgramRegistry,
   ContractRccStablesRegistry,
   ContractSandboxStablesAllowedRecipientRegistry,
+  ContractRccStethAllowedRecipientsRegistry,
+  ContractPmlStethAllowedRecipientsRegistry,
+  ContractAtcStethAllowedRecipientsRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -62,6 +65,9 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
     ContractSandboxStablesAllowedRecipientRegistry,
   [MotionType.SandboxStablesTopUp]:
     ContractSandboxStablesAllowedRecipientRegistry,
+  [MotionType.RccStethTopUp]: ContractRccStethAllowedRecipientsRegistry,
+  [MotionType.PmlStethTopUp]: ContractPmlStethAllowedRecipientsRegistry,
+  [MotionType.AtcStethTopUp]: ContractAtcStethAllowedRecipientsRegistry,
 } as const
 
 type HookArgs = {

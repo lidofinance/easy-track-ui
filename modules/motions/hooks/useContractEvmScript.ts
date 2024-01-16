@@ -72,6 +72,9 @@ export const EVM_CONTRACTS = {
   [MotionType.SandboxStablesAdd]: CONTRACTS.ContractEvmSandboxStablesAdd,
   [MotionType.SandboxStablesTopUp]: CONTRACTS.ContractEvmSandboxStablesTopUp,
   [MotionType.SandboxStablesRemove]: CONTRACTS.ContractEvmSandboxStablesRemove,
+  [MotionType.RccStethTopUp]: CONTRACTS.ContractRccStethTopUp,
+  [MotionType.PmlStethTopUp]: CONTRACTS.ContractPmlStethTopUp,
+  [MotionType.AtcStethTopUp]: CONTRACTS.ContractAtcStethTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
