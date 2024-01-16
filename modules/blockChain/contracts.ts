@@ -382,12 +382,6 @@ export const ContractSandboxStablesAllowedRecipientRegistry =
     address: CONTRACT_ADDRESSES.SandboxStablesAllowedRecipientRegistry,
   })
 
-export const ContractSandboxStablesAllowedTokensRegistry =
-  createContractHelpers({
-    factory: TypeChain.AllowedTokensRegistryAbi__factory,
-    address: CONTRACT_ADDRESSES.SandboxStablesAllowedTokensRegistry,
-  })
-
 export const ContractEvmSandboxStablesAdd = createContractHelpers({
   factory: TypeChain.AddAllowedRecipientAbi__factory,
   address: EvmAddressesByType[MotionType.SandboxStablesAdd],

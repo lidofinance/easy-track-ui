@@ -115,7 +115,7 @@ export const formParts = ({
         allowedTokens,
         tokensDecimalsMap,
         initialLoading: isTokensDataLoading,
-      } = useAllowedTokens(registryType)
+      } = useAllowedTokens()
       const {
         data: periodLimitsData,
         initialLoading: isPeriodLimitsDataLoading,
