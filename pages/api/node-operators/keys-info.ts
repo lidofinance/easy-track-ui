@@ -1,3 +1,4 @@
+import getConfig from 'next/config'
 import { createNextConnect } from 'modules/shared/utils/createNextConnect'
 import { parseChainId } from 'modules/blockChain/chains'
 import { fetch } from '@lido-sdk/fetch'
@@ -32,7 +33,10 @@ export type KeysInfoNew = {
   }
 }
 
-const requestTestnetOperators = async (chainId: number) => {
+const { serverRuntimeConfig } = getConfig()
+const { operatorsWidgetBackendUrl } = serverRuntimeConfig
+
+const requestGoerliOperators = async (chainId: number) => {
   const data = await fetch(
     `https://operators.testnet.fi/api/operators?chainId=${chainId}`,
   )
@@ -40,14 +44,21 @@ const requestTestnetOperators = async (chainId: number) => {
 }
 
 const requestOperators = async (
-  api:
-    | 'https://operators-holesky.testnet.fi/api'
-    | 'https://operators.lido.fi/api',
   chainId: number,
   moduleAddress: string,
   walletAddress: string,
 ) => {
-  const modulesResp = await fetch(`${api}/modules?chainId=${chainId}`)
+  const status = await fetch(`${operatorsWidgetBackendUrl}/v1/status`).then(
+    (resp: any) => resp.json(),
+  )
+
+  if (status.chainId !== chainId) {
+    throw new Error(
+      `The server chain does not match the application chain ${status.chainId} !== ${chainId}`,
+    )
+  }
+
+  const modulesResp = await fetch(`${operatorsWidgetBackendUrl}/v1/modules`)
   const modules: Module[] = await modulesResp.json()
 
   const module = modules.find(
@@ -60,7 +71,7 @@ const requestOperators = async (
     return result
   }
   const moduleStatisticsResp = await fetch(
-    `${api}/moduleStatistics?moduleId=${module.id}&chainId=${chainId}`,
+    `${operatorsWidgetBackendUrl}/v1/module-statistics/${module.id}`,
   )
   const moduleStatistics: KeysInfoNew = await moduleStatisticsResp.json()
 
@@ -73,7 +84,7 @@ const requestOperators = async (
   }
 
   const operatorStatisticsResp = await fetch(
-    `${api}/operatorStatistics?moduleId=${module.id}&operatorId=${operator.id}&chainId=${chainId}`,
+    `${operatorsWidgetBackendUrl}/v1/operator/${module.id}/${operator.id}`,
   )
   const operatorStatistics: KeysInfoOperatorNew =
     await operatorStatisticsResp.json()
@@ -104,22 +115,10 @@ export default createNextConnect().get(async (req, res) => {
     const moduleAddress = String(req.query.moduleAddress)
 
     let result
-    if (chainId === CHAINS.Mainnet) {
-      result = await requestOperators(
-        'https://operators.lido.fi/api',
-        chainId,
-        moduleAddress,
-        walletAddress,
-      )
-    } else if (chainId === CHAINS.Holesky) {
-      result = await requestOperators(
-        'https://operators-holesky.testnet.fi/api',
-        chainId,
-        moduleAddress,
-        walletAddress,
-      )
+    if (chainId === CHAINS.Goerli) {
+      result = await requestGoerliOperators(chainId)
     } else {
-      result = await requestTestnetOperators(chainId)
+      result = await requestOperators(chainId, moduleAddress, walletAddress)
     }
 
     res.json(result)
