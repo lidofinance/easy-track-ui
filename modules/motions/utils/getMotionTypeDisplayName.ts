@@ -39,6 +39,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.RccStethTopUp]: 'Top up RCC stETH',
   [MotionType.PmlStethTopUp]: 'Top up PML stETH',
   [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
+  [MotionType.LegoStablesTopUp]: 'Top up LEGO stablecoins',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 

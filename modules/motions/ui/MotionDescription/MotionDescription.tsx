@@ -279,6 +279,12 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.AtcStethTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits {...props} registryType={MotionType.AtcStethTopUp} />
   ),
+  [MotionType.LegoStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.LegoStablesTopUp}
+    />
+  ),
 } as const
 
 type Props = {

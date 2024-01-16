@@ -108,6 +108,10 @@ export const formParts = {
   [MotionTypeForms.AtcStethTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.AtcStethTopUp,
   }),
+  [MotionTypeForms.LegoStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.LegoStablesTopUp,
+    }),
 } as const
 
 export type FormData = {

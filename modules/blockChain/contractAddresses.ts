@@ -69,7 +69,7 @@ export const LegoLDORegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0x77CF728329920E4191a6Edd9b009cD055D3cD29A',
 }
 
-export const LegoDAIRegistry: ChainAddressMap = {
+export const LegoStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xb0FE4D300334461523D9d61AaD90D0494e1Abb43',
   [CHAINS.Goerli]: '0x5884f5849414D4317d175fEc144e2F87f699B082',
   [CHAINS.Holesky]: '0x10Ff9c02C65775379D9E20BFF9AC92Cbaf15Ab8F',

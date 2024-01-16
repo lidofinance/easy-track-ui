@@ -48,6 +48,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RccStablesTopUp]: '0x75bDecbb6453a901EBBB945215416561547dfDD4',
     [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
     [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
+    [MotionType.LegoStablesTopUp]: '0x6AB39a8Be67D9305799c3F8FdFc95Caf3150d17c',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -215,7 +216,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RccStethTopUp]: '0xe3bCa174A8b031C61a58aa56a0f622D4FFCA47d7',
     [MotionType.PmlStethTopUp]: '0x8612A51e4914FfFb25D96d1A310D4C6342c2091E',
     [MotionType.AtcStethTopUp]: '0x1395970895282333dC914172944f52F15Df63620',
-    [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
+    [MotionType.LegoStablesTopUp]: '0x7Bb5C5965a63aFb6a05D19bB03e3f170E2d7d684',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -233,6 +234,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientAddReferralDai]: '',
     [MotionType.AllowedRecipientRemoveReferralDai]: '',
     [MotionType.AllowedRecipientTopUpReferralDai]: '',
+    [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
   },
 }
 
