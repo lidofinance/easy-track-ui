@@ -136,6 +136,7 @@ export const SandboxNodeOperatorsRegistry: ChainAddressMap = {
 }
 
 export const AllowedTokensRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x4AC40c34f8992bb1e5E856A448792158022551ca',
   [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
 }
 

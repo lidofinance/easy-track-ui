@@ -102,15 +102,6 @@ export const formParts = {
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.SandboxStablesTopUp,
     }),
-  [MotionTypeForms.RccDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.RccDAITopUp,
-  }),
-  [MotionTypeForms.AtcDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.AtcDAITopUp,
-  }),
-  [MotionTypeForms.PmlDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.PmlDAITopUp,
-  }),
   [MotionTypeForms.RccStethTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.RccStethTopUp,
   }),

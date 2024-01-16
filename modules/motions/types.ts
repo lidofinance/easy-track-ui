@@ -37,9 +37,6 @@ export const MotionTypeForms = {
   SandboxStablesTopUp: 'SandboxStablesTopUp',
   SandboxStablesAdd: 'SandboxStablesAdd',
   SandboxStablesRemove: 'SandboxStablesRemove',
-  RccDAITopUp: 'RccDAITopUp',
-  PmlDAITopUp: 'PmlDAITopUp',
-  AtcDAITopUp: 'AtcDAITopUp',
   RccStethTopUp: 'RccStethTopUp',
   PmlStethTopUp: 'PmlStethTopUp',
   AtcStethTopUp: 'AtcStethTopUp',
@@ -66,6 +63,9 @@ export const MotionTypeDisplayOnly = {
   AllowedRecipientAddReferralDai: 'AllowedRecipientAddReferralDai',
   AllowedRecipientRemoveReferralDai: 'AllowedRecipientRemoveReferralDai',
   AllowedRecipientTopUpReferralDai: 'AllowedRecipientTopUpReferralDai',
+  RccDAITopUp: 'RccDAITopUp',
+  PmlDAITopUp: 'PmlDAITopUp',
+  AtcDAITopUp: 'AtcDAITopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
