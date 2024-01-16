@@ -106,6 +106,9 @@ const registryByMotionType: {
   [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
   [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
   [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
+  [MotionType.RccDAITopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlDAITopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcDAITopUp]: ContractAtcStablesRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
   [MotionType.AllowedRecipientTopUpReferralDai]:

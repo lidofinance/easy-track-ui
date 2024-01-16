@@ -27,9 +27,6 @@ export const formParts = {
   [MotionTypeForms.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.LegoLDOTopUp,
   }),
-  [MotionTypeForms.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.LegoDAITopUp,
-  }),
   [MotionTypeForms.RccStablesTopUp]:
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.RccStablesTopUp,

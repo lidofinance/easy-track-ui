@@ -9,7 +9,6 @@ export const MotionTypeDisplayNames: Record<
     'Increase node operator staking limit',
   [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
-  [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.RccStablesTopUp]: 'Top up RCC stablecoins',
   [MotionType.PmlStablesTopUp]: 'Top up PML stablecoins',
   [MotionType.AtcStablesTopUp]: 'Top up ATC stablecoins',
@@ -65,6 +64,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SandboxStablesTopUp]: 'Top up sandbox stables',
   [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
   [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
+  [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
 } as const
 
 export function getMotionTypeDisplayName(

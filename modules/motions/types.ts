@@ -9,7 +9,6 @@ export const MotionTypeForms = {
   // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
-  LegoDAITopUp: 'LegoDAITopUp',
   RccStablesTopUp: 'RccStablesTopUp',
   PmlStablesTopUp: 'PmlStablesTopUp',
   AtcStablesTopUp: 'AtcStablesTopUp',
@@ -66,6 +65,7 @@ export const MotionTypeDisplayOnly = {
   RccDAITopUp: 'RccDAITopUp',
   PmlDAITopUp: 'PmlDAITopUp',
   AtcDAITopUp: 'AtcDAITopUp',
+  LegoDAITopUp: 'LegoDAITopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

@@ -30,7 +30,6 @@ import {
 
 import {
   ContractEvmLegoLDOTopUp,
-  ContractEvmLegoDAITopUp,
   ContractEvmGasFunderETHTopUp,
   ContractRccStethTopUp,
   ContractPmlStethTopUp,
@@ -50,10 +49,6 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.LegoLDOTopUp]: {
     evmContract: ContractEvmLegoLDOTopUp,
     motionType: MotionType.LegoLDOTopUp,
-  },
-  [MotionType.LegoDAITopUp]: {
-    evmContract: ContractEvmLegoDAITopUp,
-    motionType: MotionType.LegoDAITopUp,
   },
   [MotionType.GasFunderETHTopUp]: {
     evmContract: ContractEvmGasFunderETHTopUp,

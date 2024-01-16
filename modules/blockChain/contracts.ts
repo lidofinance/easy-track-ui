@@ -114,11 +114,17 @@ export const ContractEvmLegoLDOTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.LegoLDOTopUp],
 })
 
+/**
+ * @deprecated
+ */
 export const ContractLegoDAIRegistry = createContractHelpers({
   factory: TypeChain.RegistryWithLimitsAbi__factory,
   address: CONTRACT_ADDRESSES.LegoDAIRegistry,
 })
 
+/**
+ * @deprecated
+ */
 export const ContractEvmLegoDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.LegoDAITopUp],
