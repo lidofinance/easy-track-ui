@@ -115,7 +115,7 @@ export const AragonACL: ChainAddressMap = {
 }
 
 export const EVMScriptExecutor: ChainAddressMap = {
-  [CHAINS.Mainnet]: '0xF0211b7660680B49De1A7E9f25C65660F0a13Fea',
+  [CHAINS.Mainnet]: '0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977',
   [CHAINS.Goerli]: '0x3c9AcA237b838c59612d79198685e7f20C7fE783',
   [CHAINS.Holesky]: '0x2819B65021E13CEEB9AC33E77DB32c7e64e7520D',
 }
