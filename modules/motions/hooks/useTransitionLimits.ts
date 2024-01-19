@@ -13,21 +13,21 @@ import { connectERC20Contract } from '../utils/connectTokenContract'
 import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
 
 // Data structure reference
-// https://github.com/lidofinance/scripts/blob/2a30b9654abc90b20debf837f99cd02f248d6644/scripts/setup_easytrack_limits.py#L67-L100
-const LDO_INDEX = 1
-const ETH_INDEX = 4
-const DAI_INDEX = 7
-const STETH_INDEX = 10
-const USDC_INDEX = 13
-const USDT_INDEX = 16
+// https://github.com/lidofinance/scripts/blob/bda3568d1291bdc7ba422fb20150313f2d1778c3/scripts/vote_2024_01_16.py#L106
+const STETH_INDEX = 1
+const DAI_INDEX = 4
+const LDO_INDEX = 7
+const USDC_INDEX = 10
+const USDT_INDEX = 13
+const ETH_INDEX = 16
 
 const TOKEN_INDEXES = [
-  LDO_INDEX,
-  ETH_INDEX,
-  DAI_INDEX,
   STETH_INDEX,
+  DAI_INDEX,
+  LDO_INDEX,
   USDC_INDEX,
   USDT_INDEX,
+  ETH_INDEX,
 ]
 
 const decodeLimit = (val: BigNumber, decimals: number | null) => {
