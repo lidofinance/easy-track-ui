@@ -78,16 +78,19 @@ export const LegoStablesRegistry: ChainAddressMap = {
 export const RccStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDc1A0C7849150f466F07d48b38eAA6cE99079f80',
   [CHAINS.Goerli]: '0x1440E8aDbE3a42a9EDB4b30059df8F6c35205a15',
+  [CHAINS.Holesky]: '0x17Ab17290bcDbea381500525A58e16e29093523c',
 }
 
 export const PmlStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDFfCD3BF14796a62a804c1B16F877Cf7120379dB',
   [CHAINS.Goerli]: '0xAadfBd1ADE92d85c967f4aE096141F0F802F46Db',
+  [CHAINS.Holesky]: '0x580B23a97F827F2b6E51B3DEc270Ef522Ccf520c',
 }
 
 export const AtcStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xe07305F43B11F230EaA951002F6a55a16419B707',
   [CHAINS.Goerli]: '0xedD3B813275e1A88c2283FAfa5bf5396938ef59e',
+  [CHAINS.Holesky]: '0x37675423796D39C19351c5C322C3692b23a3d9bd',
 }
 
 export const gasFunderETHRegistry: ChainAddressMap = {

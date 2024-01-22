@@ -217,6 +217,9 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.PmlStethTopUp]: '0x8612A51e4914FfFb25D96d1A310D4C6342c2091E',
     [MotionType.AtcStethTopUp]: '0x1395970895282333dC914172944f52F15Df63620',
     [MotionType.LegoStablesTopUp]: '0x7Bb5C5965a63aFb6a05D19bB03e3f170E2d7d684',
+    [MotionType.RccStablesTopUp]: '0xD497E7e039FeFBc64dBB7b75368afb06D07Bc73F',
+    [MotionType.PmlStablesTopUp]: '0x5BAE56ECfB616eAbbDB048AC930FA1Db82f18900',
+    [MotionType.AtcStablesTopUp]: '0xfa54cf78474cD4A7f4408Dd0efA36e44b6269813',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
