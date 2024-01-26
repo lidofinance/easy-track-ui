@@ -270,6 +270,21 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.SandboxStablesTopUp}
     />
   ),
+  [MotionType.RccStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.RccStethTopUp} />
+  ),
+  [MotionType.PmlStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.PmlStethTopUp} />
+  ),
+  [MotionType.AtcStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.AtcStethTopUp} />
+  ),
+  [MotionType.LegoStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.LegoStablesTopUp}
+    />
+  ),
 } as const
 
 type Props = {

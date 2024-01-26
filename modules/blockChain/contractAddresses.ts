@@ -69,7 +69,7 @@ export const LegoLDORegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0x77CF728329920E4191a6Edd9b009cD055D3cD29A',
 }
 
-export const LegoDAIRegistry: ChainAddressMap = {
+export const LegoStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xb0FE4D300334461523D9d61AaD90D0494e1Abb43',
   [CHAINS.Goerli]: '0x5884f5849414D4317d175fEc144e2F87f699B082',
   [CHAINS.Holesky]: '0x10Ff9c02C65775379D9E20BFF9AC92Cbaf15Ab8F',
@@ -78,16 +78,19 @@ export const LegoDAIRegistry: ChainAddressMap = {
 export const RccStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDc1A0C7849150f466F07d48b38eAA6cE99079f80',
   [CHAINS.Goerli]: '0x1440E8aDbE3a42a9EDB4b30059df8F6c35205a15',
+  [CHAINS.Holesky]: '0x17Ab17290bcDbea381500525A58e16e29093523c',
 }
 
 export const PmlStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xDFfCD3BF14796a62a804c1B16F877Cf7120379dB',
   [CHAINS.Goerli]: '0xAadfBd1ADE92d85c967f4aE096141F0F802F46Db',
+  [CHAINS.Holesky]: '0x580B23a97F827F2b6E51B3DEc270Ef522Ccf520c',
 }
 
 export const AtcStablesRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xe07305F43B11F230EaA951002F6a55a16419B707',
   [CHAINS.Goerli]: '0xedD3B813275e1A88c2283FAfa5bf5396938ef59e',
+  [CHAINS.Holesky]: '0x37675423796D39C19351c5C322C3692b23a3d9bd',
 }
 
 export const gasFunderETHRegistry: ChainAddressMap = {
@@ -136,13 +139,26 @@ export const SandboxNodeOperatorsRegistry: ChainAddressMap = {
 }
 
 export const AllowedTokensRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x4AC40c34f8992bb1e5E856A448792158022551ca',
   [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
-}
-
-export const SandboxStablesAllowedTokensRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0x091c0ec8b4d54a9fcb36269b5d5e5af43309e666',
 }
 
 export const SandboxStablesAllowedRecipientRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0xF8a63a36B954D72de197097377aa00C238c653Cf',
+}
+
+export const RccStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xAAC4FcE2c5d55D1152512fe5FAA94DB267EE4863',
+  [CHAINS.Holesky]: '0x916B909300c4aB5ADC4247cebd840C9278683e78',
+}
+
+export const PmlStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x7b9B8d00f807663d46Fb07F87d61B79884BC335B',
+  [CHAINS.Holesky]: '0xC2Ec8a9285D111de54725FAD1AC6a3B7E3BC6225',
+}
+
+export const AtcStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xd3950eB3d7A9B0aBf8515922c0d35D13e85a2c91',
+  [CHAINS.Holesky]: '0x955bA61676dAd6091Ff3F9BC498219D6DbD49107',
 }

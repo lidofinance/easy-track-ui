@@ -1,32 +1,18 @@
-import {
-  ContractAllowedTokensRegistry,
-  ContractSandboxStablesAllowedTokensRegistry,
-} from 'modules/blockChain/contracts'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { connectERC20Contract } from '../utils/connectTokenContract'
-import { MotionType } from '../types'
+import { ContractAllowedTokensRegistry } from 'modules/blockChain/contracts'
 
-const TOKENS_REGISTRY_BY_MOTION_TYPE = {
-  [MotionType.AtcStablesTopUp]: ContractAllowedTokensRegistry,
-  [MotionType.PmlStablesTopUp]: ContractAllowedTokensRegistry,
-  [MotionType.RccStablesTopUp]: ContractAllowedTokensRegistry,
-  [MotionType.SandboxStablesTopUp]: ContractSandboxStablesAllowedTokensRegistry,
-}
-
-type RegistryType = keyof typeof TOKENS_REGISTRY_BY_MOTION_TYPE
-
-export function useAllowedTokens(registryType: RegistryType) {
+export function useAllowedTokens() {
   const { chainId, library } = useWeb3()
-  const registry = TOKENS_REGISTRY_BY_MOTION_TYPE[registryType].useRpc()
 
   const { data, initialLoading } = useSWR(
-    `allowed-tokens-${registryType}-${chainId}`,
+    `allowed-tokens-${chainId}`,
     async () => {
       if (!library) {
         return
       }
-
+      const registry = ContractAllowedTokensRegistry.connectRpc({ chainId })
       const tokensAddresses = await registry.getAllowedTokens()
 
       const allowedTokens = await Promise.all(

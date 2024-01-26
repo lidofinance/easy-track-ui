@@ -24,10 +24,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientTopUpTrpLdo]:
       '0xBd2b6dC189EefD51B273F5cb2d99BA1ce565fb8C',
     [MotionType.LegoLDOTopUp]: '0x00caAeF11EC545B192f16313F53912E453c91458',
-    [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
-    [MotionType.RccDAITopUp]: '0x84f74733ede9bFD53c1B3Ea96338867C94EC313e',
-    [MotionType.PmlDAITopUp]: '0x4E6D3A5023A38cE2C4c5456d3760357fD93A22cD',
-    [MotionType.AtcDAITopUp]: '0x67Fb97ABB9035E2e93A7e3761a0d0571c5d7CD07',
     [MotionType.StethRewardProgramAdd]:
       '0x935cb3366Faf2cFC415B2099d1F974Fd27202b77',
     [MotionType.StethRewardProgramRemove]:
@@ -46,6 +42,13 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xd30Dc38EdEfc21875257e8A3123503075226E14B',
     [MotionType.RewardsShareProgramTopUp]:
       '0xbD08f9D6BF1D25Cc7407E4855dF1d46C2043B3Ea',
+    [MotionType.RccStethTopUp]: '0xcD42Eb8a5db5a80Dc8f643745528DD77cf4C7D35',
+    [MotionType.PmlStethTopUp]: '0xc5527396DDC353BD05bBA578aDAa1f5b6c721136',
+    [MotionType.AtcStethTopUp]: '0x87b02dF27cd6ec128532Add7C8BC19f62E6f1fB9',
+    [MotionType.RccStablesTopUp]: '0x75bDecbb6453a901EBBB945215416561547dfDD4',
+    [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
+    [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
+    [MotionType.LegoStablesTopUp]: '0x6AB39a8Be67D9305799c3F8FdFc95Caf3150d17c',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -75,6 +78,10 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xd8f9B72Cd97388f23814ECF429cd18815F6352c1',
     [MotionType.AllowedRecipientTopUpReferralDai]:
       '0x009ffa22ce4388d2F5De128Ca8E6fD229A312450',
+    [MotionType.RccDAITopUp]: '0x84f74733ede9bFD53c1B3Ea96338867C94EC313e',
+    [MotionType.PmlDAITopUp]: '0x4E6D3A5023A38cE2C4c5456d3760357fD93A22cD',
+    [MotionType.AtcDAITopUp]: '0x67Fb97ABB9035E2e93A7e3761a0d0571c5d7CD07',
+    [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
   },
 
   // Goerli
@@ -84,10 +91,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientTopUpTrpLdo]:
       '0x43f33C52156d1Fb2eA24d82aBfD342E69835E79f',
     [MotionType.LegoLDOTopUp]: '0xc39Dd5B66968e364D99e0c9E7089049351AB89CA',
-    [MotionType.LegoDAITopUp]: '0xbf44eC2b23cA105F8a62e0587900a09A473288c6',
-    [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',
-    [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
-    [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
     [MotionType.RccStablesTopUp]: '0xd50eE42B31Bc500409B7caD99A2D16FB1Bfecdc6',
     [MotionType.PmlStablesTopUp]: '0x5F379512158A46ab7a91f8b799A97691eC498b9a',
     [MotionType.AtcStablesTopUp]: '0xB87300405050e7f1dBC35c6C9ce9ea4417D3Ad81',
@@ -153,6 +156,10 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x5FEC0bcd7519C4fE41eca5Fe1dD94345fA100A67',
     [MotionType.AllowedRecipientTopUpReferralDai]:
       '0x9534A77029D57E249c467E5A1E0854cc26Cd75A0',
+    [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',
+    [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
+    [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
+    [MotionType.LegoDAITopUp]: '0xbf44eC2b23cA105F8a62e0587900a09A473288c6',
   },
 
   // Holesky
@@ -162,7 +169,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientTopUpTrpLdo]:
       '0xD618F0CF48F057B5256e102dC18d8011e08c19D3',
     [MotionType.LegoLDOTopUp]: '0xCfaFcD35ACcc4383e2CCDf7DD3F58114914F1955',
-    [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
     [MotionType.StethRewardProgramAdd]:
       '0xf0968B9bE18282dD23bbbC79a1c9C8996CE6984D',
     [MotionType.StethRewardProgramRemove]:
@@ -207,6 +213,13 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x51c730af05777c4D3CcC8c8B80558F4D155bb7BF',
     [MotionType.SandboxStablesTopUp]:
       '0x71bcEf1f4E4945005e1D22d68F02085D5167ab43',
+    [MotionType.RccStethTopUp]: '0xe3bCa174A8b031C61a58aa56a0f622D4FFCA47d7',
+    [MotionType.PmlStethTopUp]: '0x8612A51e4914FfFb25D96d1A310D4C6342c2091E',
+    [MotionType.AtcStethTopUp]: '0x1395970895282333dC914172944f52F15Df63620',
+    [MotionType.LegoStablesTopUp]: '0x7Bb5C5965a63aFb6a05D19bB03e3f170E2d7d684',
+    [MotionType.RccStablesTopUp]: '0xD497E7e039FeFBc64dBB7b75368afb06D07Bc73F',
+    [MotionType.PmlStablesTopUp]: '0x5BAE56ECfB616eAbbDB048AC930FA1Db82f18900',
+    [MotionType.AtcStablesTopUp]: '0xfa54cf78474cD4A7f4408Dd0efA36e44b6269813',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -224,6 +237,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientAddReferralDai]: '',
     [MotionType.AllowedRecipientRemoveReferralDai]: '',
     [MotionType.AllowedRecipientTopUpReferralDai]: '',
+    [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
   },
 }
 
