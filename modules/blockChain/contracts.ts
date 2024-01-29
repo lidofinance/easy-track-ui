@@ -114,11 +114,14 @@ export const ContractEvmLegoLDOTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.LegoLDOTopUp],
 })
 
-export const ContractLegoDAIRegistry = createContractHelpers({
+export const ContractLegoStablesRegistry = createContractHelpers({
   factory: TypeChain.RegistryWithLimitsAbi__factory,
-  address: CONTRACT_ADDRESSES.LegoDAIRegistry,
+  address: CONTRACT_ADDRESSES.LegoStablesRegistry,
 })
 
+/**
+ * @deprecated
+ */
 export const ContractEvmLegoDAITopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.LegoDAITopUp],
@@ -376,12 +379,6 @@ export const ContractSandboxStablesAllowedRecipientRegistry =
     address: CONTRACT_ADDRESSES.SandboxStablesAllowedRecipientRegistry,
   })
 
-export const ContractSandboxStablesAllowedTokensRegistry =
-  createContractHelpers({
-    factory: TypeChain.AllowedTokensRegistryAbi__factory,
-    address: CONTRACT_ADDRESSES.SandboxStablesAllowedTokensRegistry,
-  })
-
 export const ContractEvmSandboxStablesAdd = createContractHelpers({
   factory: TypeChain.AddAllowedRecipientAbi__factory,
   address: EvmAddressesByType[MotionType.SandboxStablesAdd],
@@ -395,4 +392,39 @@ export const ContractEvmSandboxStablesRemove = createContractHelpers({
 export const ContractEvmSandboxStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.SandboxStablesTopUp],
+})
+
+export const ContractRccStethAllowedRecipientsRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.RccStethAllowedRecipientsRegistry,
+})
+
+export const ContractPmlStethAllowedRecipientsRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.PmlStethAllowedRecipientsRegistry,
+})
+
+export const ContractAtcStethAllowedRecipientsRegistry = createContractHelpers({
+  factory: TypeChain.RegistryWithLimitsAbi__factory,
+  address: CONTRACT_ADDRESSES.AtcStethAllowedRecipientsRegistry,
+})
+
+export const ContractRccStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.RccStethTopUp],
+})
+
+export const ContractPmlStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.PmlStethTopUp],
+})
+
+export const ContractAtcStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.AtcStethTopUp],
+})
+
+export const ContractLegoStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.LegoStablesTopUp],
 })
