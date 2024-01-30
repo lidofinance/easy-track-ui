@@ -120,6 +120,7 @@ export type Motion = {
   enacted_at?: number
   canceled_at?: number
   rejected_at?: number
+  isOnChain: boolean
 }
 
 export type RawMotionOnchain = PromiseValue<

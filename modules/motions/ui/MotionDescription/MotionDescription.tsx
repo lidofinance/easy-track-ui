@@ -59,6 +59,7 @@ type DescNodeOperatorIncreaseLimitProps = NestProps<
 >
 
 type GenericDescProps = {
+  isOnChain?: boolean
   callData: any
 }
 
@@ -325,7 +326,7 @@ export function MotionDescription({ motion }: Props) {
 
   return (
     <DescWrap>
-      <Desc callData={callData} />
+      <Desc callData={callData} isOnChain={motion.isOnChain} />
     </DescWrap>
   )
 }
