@@ -157,3 +157,10 @@ export type KeysInfoOperator = {
 export type KeysInfo = {
   operators?: KeysInfoOperator[]
 }
+
+export type ActiveMotion = {
+  id: BigNumber
+  evmScriptFactory: string
+}
+
+export type ActiveMotionsMap = Record<MotionType, ActiveMotion[] | undefined>

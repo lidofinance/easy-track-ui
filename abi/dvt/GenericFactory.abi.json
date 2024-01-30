@@ -1,0 +1,29 @@
+[
+  {
+    "inputs": [
+      { "internalType": "bytes", "name": "_evmScriptCallData", "type": "bytes" }
+    ],
+    "name": "decodeEVMScriptCallData",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "nodeOperatorId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "managerAddress",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct ActivateNodeOperators.ActivateNodeOperatorInput[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]
