@@ -9,7 +9,6 @@ export const MotionTypeForms = {
   // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
-  LegoDAITopUp: 'LegoDAITopUp',
   RccStablesTopUp: 'RccStablesTopUp',
   PmlStablesTopUp: 'PmlStablesTopUp',
   AtcStablesTopUp: 'AtcStablesTopUp',
@@ -37,9 +36,10 @@ export const MotionTypeForms = {
   SandboxStablesTopUp: 'SandboxStablesTopUp',
   SandboxStablesAdd: 'SandboxStablesAdd',
   SandboxStablesRemove: 'SandboxStablesRemove',
-  RccDAITopUp: 'RccDAITopUp',
-  PmlDAITopUp: 'PmlDAITopUp',
-  AtcDAITopUp: 'AtcDAITopUp',
+  RccStethTopUp: 'RccStethTopUp',
+  PmlStethTopUp: 'PmlStethTopUp',
+  AtcStethTopUp: 'AtcStethTopUp',
+  LegoStablesTopUp: 'LegoStablesTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -63,6 +63,10 @@ export const MotionTypeDisplayOnly = {
   AllowedRecipientAddReferralDai: 'AllowedRecipientAddReferralDai',
   AllowedRecipientRemoveReferralDai: 'AllowedRecipientRemoveReferralDai',
   AllowedRecipientTopUpReferralDai: 'AllowedRecipientTopUpReferralDai',
+  RccDAITopUp: 'RccDAITopUp',
+  PmlDAITopUp: 'PmlDAITopUp',
+  AtcDAITopUp: 'AtcDAITopUp',
+  LegoDAITopUp: 'LegoDAITopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
