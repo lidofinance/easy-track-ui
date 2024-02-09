@@ -32,6 +32,7 @@ type NodeOperator = {
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTVettedValidatorsLimitsSet,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
+    // Check MF0801: Sort the data before sending
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
     )
@@ -65,6 +66,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress } = useWeb3()
+    // Check MF0802: Only registered node operators
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
@@ -166,6 +168,7 @@ export const formParts = createMotionFormPart({
 
                         const { totalAddedValidators } = nodeOperator
 
+                        // Check MF0803: Correct vetted validators limit value
                         if (totalAddedValidators.lt(value)) {
                           return `Value must be less than or equal to ${totalAddedValidators}`
                         }

@@ -33,6 +33,7 @@ type NodeOperator = {
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTNodeOperatorsActivate,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
+    // Check MF0301: Sort the data before sending
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
     )
@@ -66,11 +67,14 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
+
+    // Check MF0302: Only registered Node Operators
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList()
 
+    // Check MF0303: Only deactivated Node Operators
     const deactivatedNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => !nodeOperator.active,
     )
@@ -168,6 +172,7 @@ export const formParts = createMotionFormPart({
                             chainId,
                           )
 
+                        // Check MF0304: Only unused manager addresses
                         if (canAddressManageKeys) {
                           return 'Address already has a signing keys manager role'
                         }

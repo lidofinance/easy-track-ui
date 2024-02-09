@@ -33,6 +33,7 @@ type NodeOperator = {
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTNodeOperatorNamesSet,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
+    // Check MF0401: Sort the data before sending
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
     )
@@ -66,6 +67,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress } = useWeb3()
+    // Check MF0402: Only registered Node Operators
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
@@ -160,6 +162,8 @@ export const formParts = createMotionFormPart({
                   rules={{
                     required: 'Field is required',
                     validate: (value: string) => {
+                      // Check MF0404: No empty names
+                      // Check MF0405: Names length
                       const nameErr = validateNodeOperatorName(
                         value,
                         maxNodeOperatorNameLength,
@@ -170,6 +174,7 @@ export const formParts = createMotionFormPart({
 
                       const idInNameMap = nodeOperatorNamesMap[value]
 
+                      // Check MF0403: Not the same names
                       if (typeof idInNameMap === 'number') {
                         return 'Name must not be in use by another node operator'
                       }
@@ -182,6 +187,7 @@ export const formParts = createMotionFormPart({
                             fieldIndex !== index,
                         )
 
+                      // Check MF0403: Not the same names
                       if (nameInSelectedNodeOperatorsIndex !== -1) {
                         return 'Name is already in use by another update'
                       }
