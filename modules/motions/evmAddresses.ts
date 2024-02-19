@@ -49,6 +49,22 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
     [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
     [MotionType.LegoStablesTopUp]: '0x6AB39a8Be67D9305799c3F8FdFc95Caf3150d17c',
+    [MotionType.SDVTNodeOperatorsAdd]:
+      '0xcAa3AF7460E83E665EEFeC73a7a542E5005C9639',
+    [MotionType.SDVTNodeOperatorsActivate]:
+      '0xCBb418F6f9BFd3525CE6aADe8F74ECFEfe2DB5C8',
+    [MotionType.SDVTNodeOperatorsDeactivate]:
+      '0x8B82C1546D47330335a48406cc3a50Da732672E7',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0xD75778b855886Fc5e1eA7D6bFADA9EB68b35C19D',
+    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+      '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+      '0x589e298964b9181D9938B84bB034C3BB9024E2C0',
+    [MotionType.SDVTNodeOperatorNamesSet]:
+      '0x7d509BFF310d9460b1F613e4e40d342201a83Ae4',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0xE31A0599A6772BCf9b2bFc9e25cf941e793c9a7D',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
