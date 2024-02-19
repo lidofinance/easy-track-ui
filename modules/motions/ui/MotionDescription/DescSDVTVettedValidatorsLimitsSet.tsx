@@ -5,6 +5,7 @@ import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOpera
 // SetVettedValidatorsLimits
 export function DescSDVTVettedValidatorsLimitsSet({
   callData,
+  isOnChain,
 }: NestProps<SetVettedValidatorsLimitsAbi['decodeEVMScriptCallData']>) {
   const { data: nodeOperatorsList } = useSDVTNodeOperatorsList({
     withSummary: true,
@@ -18,7 +19,10 @@ export function DescSDVTVettedValidatorsLimitsSet({
           <div key={nodeOperatorId}>
             Set Node Operator <b>{nodeOperator ? nodeOperator.name : ''}</b>{' '}
             (id: {nodeOperatorId}) vetted validators limit{' '}
-            {`from ${nodeOperator?.totalVettedValidators} to ${item.stakingLimit}`}
+            {nodeOperator && isOnChain
+              ? `from ${nodeOperator.totalVettedValidators} `
+              : ''}
+            {`to ${item.stakingLimit}`}
           </div>
         )
       })}
