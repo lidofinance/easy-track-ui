@@ -75,6 +75,16 @@ export const useAvailableMotions = () => {
             return null
           }
 
+          const contractType =
+            EvmTypesByAdress[parseEvmSupportedChainId(chainId)][contractAddress]
+
+          if (
+            !contractType ||
+            !Object.keys(MotionTypeForms).includes(contractType)
+          ) {
+            return null
+          }
+
           const connectedContract = contract.connectRpc({ chainId })
 
           if (!isHasTrustedCaller(connectedContract)) {
@@ -83,7 +93,10 @@ export const useAvailableMotions = () => {
 
           const trustedCaller = await connectedContract.trustedCaller()
 
-          return { contractAddress, trustedCaller }
+          return {
+            contractType: contractType as MotionTypeForms,
+            trustedCaller,
+          }
         }),
       )
 
@@ -102,19 +115,9 @@ export const useAvailableMotions = () => {
             return acc
           }
 
-          const { contractAddress, trustedCaller } = cur.value
+          const { contractType, trustedCaller } = cur.value
 
-          const contractType =
-            EvmTypesByAdress[parseEvmSupportedChainId(chainId)][contractAddress]
-
-          if (
-            !contractType ||
-            !Object.keys(MotionTypeForms).includes(contractType)
-          ) {
-            return acc
-          }
-
-          acc[contractType as MotionTypeForms] = trustedCaller === walletAddress
+          acc[contractType] = trustedCaller === walletAddress
 
           return acc
         },
