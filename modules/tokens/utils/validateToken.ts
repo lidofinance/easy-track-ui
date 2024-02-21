@@ -1,13 +1,14 @@
 import { utils } from 'ethers'
+import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
 
-export const validateToken = (value: string) => {
+export const validateToken = (value: string, decimals = DEFAULT_DECIMALS) => {
   if (Number(value) <= 0) {
-    return 'Must be positive'
+    return 'Value must be positive'
   }
   try {
-    utils.parseEther(value)
+    utils.parseUnits(value, decimals)
     return null
   } catch (_) {
-    return 'Unable to parse'
+    return 'Unable to parse value'
   }
 }

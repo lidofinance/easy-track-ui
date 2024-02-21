@@ -6,6 +6,7 @@ import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWith
 // SetNodeOperatorRewardAddresses
 export function DescSDVTNodeOperatorRewardAddressesSet({
   callData,
+  isOnChain,
 }: NestProps<SetNodeOperatorRewardAddressesAbi['decodeEVMScriptCallData']>) {
   const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
   return (
@@ -18,7 +19,7 @@ export function DescSDVTNodeOperatorRewardAddressesSet({
             Change reward address of Node Operator{' '}
             <b>{nodeOperator ? nodeOperator.name : ''}</b> (id: {nodeOperatorId}
             )
-            {nodeOperator?.rewardAddress ? (
+            {nodeOperator?.rewardAddress && isOnChain ? (
               <>
                 {' '}
                 from{' '}

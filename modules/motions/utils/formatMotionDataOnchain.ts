@@ -26,6 +26,7 @@ export function formatMotionDataOnchain(rawMotion: RawMotionOnchain): Motion {
     objectionsThreshold: Number(rawMotion.objectionsThreshold),
     objectionsAmount: rawMotion.objectionsAmount,
     evmScriptHash: rawMotion.evmScriptHash,
+    isOnChain: true,
   }
 
   return {
