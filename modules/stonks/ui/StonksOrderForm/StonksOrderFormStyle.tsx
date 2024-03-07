@@ -72,3 +72,9 @@ export const InfoValue = styled(Text).attrs({
   size: 14,
   weight: 500,
 })``
+
+export const StonksGrid = styled.div`
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+`

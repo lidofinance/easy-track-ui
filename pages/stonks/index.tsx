@@ -5,7 +5,11 @@ import { StonksPageContainer } from 'modules/stonks/ui/StonksPageContainer'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 import { useStonksData } from 'modules/stonks/hooks/useStonksData'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
-import { MessageBox, StonksOrderForm } from 'modules/stonks/ui/StonksOrderForm'
+import {
+  MessageBox,
+  StonksOrderForm,
+  StonksGrid,
+} from 'modules/stonks/ui/StonksOrderForm'
 import { Title } from 'modules/shared/ui/Common/Title'
 import { formatValue } from 'modules/stonks/utils/formatValue'
 import { useRouter } from 'next/dist/client/router'
@@ -54,21 +58,21 @@ export default function StonksCreateOrderPage() {
 
   return (
     <StonksPageContainer>
-      <Title title={'Available stonks'} />
-      {stonksList.map(stonks => (
-        <Button
-          key={stonks.address}
-          color="secondary"
-          fullwidth
-          size="sm"
-          onClick={() => router.push(urls.stonksInstance(stonks.address))}
-        >
-          {stonks.tokenFrom.label} {'->'}
-          {stonks.tokenTo.label} ({formatValue(stonks.currentBalance)}{' '}
-          {stonks.tokenFrom.label})
-        </Button>
-      ))}
-
+      <Title title="Available stonks pairs" />
+      <StonksGrid>
+        {stonksList.map(stonks => (
+          <Button
+            key={stonks.address}
+            color="secondary"
+            size="sm"
+            onClick={() => router.push(urls.stonksInstance(stonks.address))}
+          >
+            {stonks.tokenFrom.label} {'->'}
+            {stonks.tokenTo.label} ({formatValue(stonks.currentBalance)}{' '}
+            {stonks.tokenFrom.label})
+          </Button>
+        ))}
+      </StonksGrid>
       <StonksOrderForm />
     </StonksPageContainer>
   )
