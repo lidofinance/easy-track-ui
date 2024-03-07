@@ -1,5 +1,5 @@
 import { CHAINS } from '@lido-sdk/constants'
-import type { ChainAddressMap } from './types'
+import type { ChainAddressMap, ChainAddressListMap } from './types'
 
 export const NodeOperatorsRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5',
@@ -132,6 +132,7 @@ export const AllowedTokensRegistry: ChainAddressMap = {
   [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
 }
 
-export const Stonks: ChainAddressMap = {
-  [CHAINS.Goerli]: '0x471B6a7747AE33ae1db862471564365805B414a7',
+export const Stonks: ChainAddressListMap = {
+  [CHAINS.Goerli]: ['0x471B6a7747AE33ae1db862471564365805B414a7'],
+  [CHAINS.Holesky]: ['0x5e365D27baFC7217Acb1328b11A07f66308AbbD9'],
 }

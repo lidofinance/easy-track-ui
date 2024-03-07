@@ -89,7 +89,7 @@ export function Header() {
             />
             {areStonksAvailable && (
               <NavItem
-                link={urls.stonksCreateOrder}
+                link={urls.stonks}
                 icon={<StonksSVG />}
                 children="Stonks"
               />
@@ -142,7 +142,7 @@ export function Header() {
               />
               {areStonksAvailable && (
                 <NavItem
-                  link={urls.stonksCreateOrder}
+                  link={urls.stonks}
                   icon={<StonksSVG />}
                   children="Stonks"
                   onClick={handleCloseMobileMenu}

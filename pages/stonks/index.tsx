@@ -3,31 +3,21 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { StonksPageContainer } from 'modules/stonks/ui/StonksPageContainer'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
+import { useStonksData } from 'modules/stonks/hooks/useStonksData'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MessageBox, StonksOrderForm } from 'modules/stonks/ui/StonksOrderForm'
-import { useRouter } from 'next/router'
-import { utils } from 'ethers'
-import { useMemo } from 'react'
+import { Title } from 'modules/shared/ui/Common/Title'
+import { formatValue } from 'modules/stonks/utils/formatValue'
+import { useRouter } from 'next/dist/client/router'
+import * as urls from 'modules/network/utils/urls'
 
 export default function StonksCreateOrderPage() {
   const { isWalletConnected } = useWeb3()
-  const openConnectWalletModal = useConnectWalletModal()
   const router = useRouter()
-  const { areStonksAvailable, availableStonks, initialLoading } =
-    useAvailableStonks()
-
-  const addressParam = useMemo(() => {
-    const queryAddress = String(router.query.address)
-    if (!utils.isAddress(queryAddress) || !availableStonks?.length) {
-      return null
-    }
-
-    return (
-      availableStonks.find(
-        stonks => stonks.address === utils.getAddress(queryAddress),
-      )?.address ?? null
-    )
-  }, [availableStonks, router.query.address])
+  const openConnectWalletModal = useConnectWalletModal()
+  useAvailableStonks()
+  const { data: stonksList, initialLoading: isStonksDataLoading } =
+    useStonksData()
 
   if (!isWalletConnected) {
     return (
@@ -44,7 +34,7 @@ export default function StonksCreateOrderPage() {
     )
   }
 
-  if (initialLoading) {
+  if (isStonksDataLoading) {
     return (
       <StonksPageContainer>
         <PageLoader />
@@ -52,7 +42,7 @@ export default function StonksCreateOrderPage() {
     )
   }
 
-  if (!areStonksAvailable) {
+  if (!stonksList) {
     return (
       <StonksPageContainer>
         <MessageBox>
@@ -64,7 +54,22 @@ export default function StonksCreateOrderPage() {
 
   return (
     <StonksPageContainer>
-      <StonksOrderForm addressParam={addressParam} />
+      <Title title={'Available stonks'} />
+      {stonksList.map(stonks => (
+        <Button
+          key={stonks.address}
+          color="secondary"
+          fullwidth
+          size="sm"
+          onClick={() => router.push(urls.stonksInstance(stonks.address))}
+        >
+          {stonks.tokenFrom.label} {'->'}
+          {stonks.tokenTo.label} ({formatValue(stonks.currentBalance)}{' '}
+          {stonks.tokenFrom.label})
+        </Button>
+      ))}
+
+      <StonksOrderForm />
     </StonksPageContainer>
   )
 }

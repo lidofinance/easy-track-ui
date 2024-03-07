@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 import { Form } from 'modules/shared/ui/Controls/Form'
-import { Option, SelectControl } from 'modules/shared/ui/Controls/Select'
+import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useStonksData } from 'modules/stonks/hooks/useStonksData'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import {
@@ -9,6 +10,7 @@ import {
   InfoValue,
   MessageBox,
   RetryHint,
+  InputRow,
 } from './StonksOrderFormStyle'
 import { Button } from '@lidofinance/lido-ui'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
@@ -18,12 +20,11 @@ import { formatValue } from 'modules/stonks/utils/formatValue'
 import { StonksOrderProgress } from '../StonksOrderProgress/StonksOrderProgress'
 import { useStonksOrderSubmit } from './useStonksOrderSubmit'
 import { FormData } from './types'
+import { useRouter } from 'next/router'
 
-type Props = {
-  addressParam: string | null
-}
-
-export function StonksOrderForm({ addressParam }: Props) {
+export function StonksOrderForm() {
+  const router = useRouter()
+  const addressParam = String(router.query.stonksAddress)
   const { data: stonksList, initialLoading: isStonksDataLoading } =
     useStonksData()
 
@@ -32,13 +33,28 @@ export function StonksOrderForm({ addressParam }: Props) {
     reValidateMode: 'onChange',
     criteriaMode: 'all',
     defaultValues: {
-      stonksAddress: addressParam ?? '',
+      stonksAddress: addressParam,
+      minAcceptableAmount: 0,
+      tokenToDecimals: 0,
     },
   })
-  const selectedStonksAddress = formMethods.watch('stonksAddress')
+
   const selectedStonksPair = stonksList?.find(
-    stonks => stonks.address === selectedStonksAddress,
+    stonks => stonks.address === addressParam,
   )
+
+  useEffect(() => {
+    if (selectedStonksPair) {
+      formMethods.setValue(
+        'minAcceptableAmount',
+        selectedStonksPair.expectedOutput,
+      )
+      formMethods.setValue(
+        'tokenToDecimals',
+        selectedStonksPair.tokenToDecimals,
+      )
+    }
+  }, [addressParam, selectedStonksPair, formMethods])
 
   const { isSubmitting, resultTx, handleTxReset, handleSubmit } =
     useStonksOrderSubmit()
@@ -58,15 +74,6 @@ export function StonksOrderForm({ addressParam }: Props) {
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
       <FormFields>
-        <SelectControl name="stonksAddress" label="Stonks Pair">
-          {stonksList.map(stonks => (
-            <Option
-              key={stonks.address}
-              value={stonks.address}
-              children={`${stonks.tokenFrom.label} → ${stonks.tokenTo.label}`}
-            />
-          ))}
-        </SelectControl>
         {selectedStonksPair && (
           <>
             <MotionInfoBox>
@@ -79,11 +86,15 @@ export function StonksOrderForm({ addressParam }: Props) {
               </InfoRow>
               <InfoRow>
                 Expected trade output:
-                <InfoValue>
-                  {formatValue(selectedStonksPair.expectedOutput)}{' '}
-                  {selectedStonksPair.tokenTo.label}
-                </InfoValue>
+                <InfoValue>{selectedStonksPair.tokenTo.label}</InfoValue>
               </InfoRow>
+              <InputRow>
+                <InputNumberControl
+                  label="Minimum acceptable amount"
+                  name="minAcceptableAmount"
+                  rules={{ required: 'Field is required ' }}
+                />
+              </InputRow>
             </MotionInfoBox>
 
             <MotionInfoBox>

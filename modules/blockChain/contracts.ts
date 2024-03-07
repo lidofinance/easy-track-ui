@@ -369,8 +369,3 @@ export const ContractEvmAtcStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.AtcStablesTopUp],
 })
-
-export const ContractStonks = createContractHelpers({
-  factory: TypeChain.StonksAbi__factory,
-  address: CONTRACT_ADDRESSES.Stonks,
-})

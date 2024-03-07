@@ -61,6 +61,13 @@ export const InfoRow = styled(Text).attrs({
   }
 `
 
+export const InputRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+`
+
 export const InfoValue = styled(Text).attrs({
   size: 14,
   weight: 500,

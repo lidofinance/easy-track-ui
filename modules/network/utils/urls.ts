@@ -4,6 +4,8 @@ export const archive = '/archive'
 export const startMotion = '/start-motion'
 export const about = '/about'
 
-export const stonksCreateOrder = '/stonks/create-order'
+export const stonks = '/stonks'
+export const stonksInstance = (stonksAddress: string) =>
+  `/stonks/${stonksAddress}`
 export const stonksOrder = (orderAddress: string) =>
   `/stonks/orders/${orderAddress}`

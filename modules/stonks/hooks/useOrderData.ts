@@ -34,7 +34,7 @@ export function useOrderData(orderAddress: string) {
       let status: OrderStatus = isExpired ? 'expired' : 'not-created'
 
       const stonks = await orderContract.stonks()
-      const receiver = await orderContract.agent()
+      const receiver = await orderContract.AGENT()
 
       const sellTokenContract = connectERC20Contract(sellToken, chainId)
       const sellTokenDecimals = await sellTokenContract.decimals()
