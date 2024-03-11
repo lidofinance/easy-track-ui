@@ -5,6 +5,7 @@ import { createContractHelpers } from 'modules/blockChain/utils/createContractHe
 import * as TypeChain from 'generated'
 import { utils } from 'ethers'
 import { StonksAbi } from 'generated'
+import { useRouter } from 'next/router'
 
 type StonksResult = {
   address: string
@@ -12,6 +13,8 @@ type StonksResult = {
 }
 
 export function useAvailableStonks() {
+  const router = useRouter()
+  const stonksAddress = String(router.query.stonksAddress)
   const { chainId, walletAddress } = useWeb3()
   const { data, initialLoading } = useSWR(
     walletAddress ? `available-stonks-${chainId}-${walletAddress}` : null,
@@ -20,12 +23,20 @@ export function useAvailableStonks() {
         return
       }
 
-      const contracts = Stonks[chainId]?.map(address => {
-        return createContractHelpers({
-          address: { [chainId]: address },
-          factory: TypeChain.StonksAbi__factory,
-        })
-      })
+      const contracts =
+        stonksAddress && stonksAddress != 'undefined'
+          ? [
+              createContractHelpers({
+                address: { [chainId]: stonksAddress },
+                factory: TypeChain.StonksAbi__factory,
+              }),
+            ]
+          : Stonks[chainId]?.map(address => {
+              return createContractHelpers({
+                address: { [chainId]: address },
+                factory: TypeChain.StonksAbi__factory,
+              })
+            })
 
       if (!contracts) {
         return
