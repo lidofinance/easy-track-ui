@@ -4,6 +4,7 @@ import { useSWR } from 'modules/network/hooks/useSwr'
 import { connectERC20Contract } from 'modules/motions/utils/connectTokenContract'
 import { formatUnits } from 'ethers/lib/utils'
 import { useAvailableStonks } from './useAvailableStonks'
+import { useRouter } from 'next/router'
 
 type StonksData = {
   address: string
@@ -27,10 +28,12 @@ const minimalBalance = 10
 
 export function useStonksData() {
   const { chainId } = useWeb3()
+  const router = useRouter()
+  const stonksAddress = String(router.query.stonksAddress)
   const { availableStonks } = useAvailableStonks()
 
   return useSWR(
-    availableStonks?.length ? `stonks-data-${chainId}` : null,
+    availableStonks?.length ? `stonks-data-${chainId}-${stonksAddress}` : null,
     async () => {
       if (!availableStonks?.length) {
         return

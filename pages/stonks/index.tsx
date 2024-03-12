@@ -26,6 +26,7 @@ export default function StonksCreateOrderPage() {
   if (!isWalletConnected) {
     return (
       <StonksPageContainer>
+        <Title title="Do stonks" />
         <MessageBox>Connect your wallet first</MessageBox>
         <br />
         <Button
@@ -41,6 +42,7 @@ export default function StonksCreateOrderPage() {
   if (isStonksDataLoading) {
     return (
       <StonksPageContainer>
+        <Title title="Do stonks" />
         <PageLoader />
       </StonksPageContainer>
     )
@@ -49,16 +51,15 @@ export default function StonksCreateOrderPage() {
   if (!stonksList) {
     return (
       <StonksPageContainer>
-        <MessageBox>
-          Only Stonks Managers have access to Stonks Orders
-        </MessageBox>
+        <Title title="Do stonks" />
+        <MessageBox>Only Stonks Managers have access to Stonks</MessageBox>
       </StonksPageContainer>
     )
   }
 
   return (
     <StonksPageContainer>
-      <Title title="Available stonks pairs" />
+      <Title title="Available stonks" />
       <StonksGrid>
         {stonksList.map(stonks => (
           <Button

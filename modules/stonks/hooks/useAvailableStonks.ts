@@ -17,7 +17,9 @@ export function useAvailableStonks() {
   const stonksAddress = String(router.query.stonksAddress)
   const { chainId, walletAddress } = useWeb3()
   const { data, initialLoading } = useSWR(
-    walletAddress ? `available-stonks-${chainId}-${walletAddress}` : null,
+    walletAddress
+      ? `available-stonks-${chainId}-${walletAddress}-${stonksAddress}`
+      : null,
     async () => {
       if (!walletAddress) {
         return
