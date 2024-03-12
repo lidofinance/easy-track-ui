@@ -3,7 +3,7 @@ import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   ContractLegoLDORegistry,
-  ContractLegoDAIRegistry,
+  ContractLegoStablesRegistry,
   ContractPmlStablesRegistry,
   ContractAtcStablesRegistry,
   ContractGasFunderETHRegistry,
@@ -14,6 +14,10 @@ import {
   ContractStethGasSupplyRegistry,
   ContractRewardsShareProgramRegistry,
   ContractRccStablesRegistry,
+  ContractSandboxStablesAllowedRecipientRegistry,
+  ContractRccStethAllowedRecipientsRegistry,
+  ContractPmlStethAllowedRecipientsRegistry,
+  ContractAtcStethAllowedRecipientsRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -27,7 +31,7 @@ type AllowedRecipient = {
 
 export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
-  [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
+  [MotionType.LegoDAITopUp]: ContractLegoStablesRegistry,
   [MotionType.RccDAITopUp]: ContractRccStablesRegistry,
   [MotionType.PmlDAITopUp]: ContractPmlStablesRegistry,
   [MotionType.AtcDAITopUp]: ContractAtcStablesRegistry,
@@ -55,6 +59,16 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
   [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
   [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
+  [MotionType.SandboxStablesAdd]:
+    ContractSandboxStablesAllowedRecipientRegistry,
+  [MotionType.SandboxStablesRemove]:
+    ContractSandboxStablesAllowedRecipientRegistry,
+  [MotionType.SandboxStablesTopUp]:
+    ContractSandboxStablesAllowedRecipientRegistry,
+  [MotionType.RccStethTopUp]: ContractRccStethAllowedRecipientsRegistry,
+  [MotionType.PmlStethTopUp]: ContractPmlStethAllowedRecipientsRegistry,
+  [MotionType.AtcStethTopUp]: ContractAtcStethAllowedRecipientsRegistry,
+  [MotionType.LegoStablesTopUp]: ContractLegoStablesRegistry,
 } as const
 
 type HookArgs = {

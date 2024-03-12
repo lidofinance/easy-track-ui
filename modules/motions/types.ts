@@ -9,7 +9,6 @@ export const MotionTypeForms = {
   // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
-  LegoDAITopUp: 'LegoDAITopUp',
   RccStablesTopUp: 'RccStablesTopUp',
   PmlStablesTopUp: 'PmlStablesTopUp',
   AtcStablesTopUp: 'AtcStablesTopUp',
@@ -33,6 +32,14 @@ export const MotionTypeForms = {
   SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
 
   SandboxNodeOperatorIncreaseLimit: 'SandboxNodeOperatorIncreaseLimit',
+
+  SandboxStablesTopUp: 'SandboxStablesTopUp',
+  SandboxStablesAdd: 'SandboxStablesAdd',
+  SandboxStablesRemove: 'SandboxStablesRemove',
+  RccStethTopUp: 'RccStethTopUp',
+  PmlStethTopUp: 'PmlStethTopUp',
+  AtcStethTopUp: 'AtcStethTopUp',
+  LegoStablesTopUp: 'LegoStablesTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -59,6 +66,7 @@ export const MotionTypeDisplayOnly = {
   RccDAITopUp: 'RccDAITopUp',
   PmlDAITopUp: 'PmlDAITopUp',
   AtcDAITopUp: 'AtcDAITopUp',
+  LegoDAITopUp: 'LegoDAITopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -112,6 +120,7 @@ export type Motion = {
   enacted_at?: number
   canceled_at?: number
   rejected_at?: number
+  isOnChain: boolean
 }
 
 export type RawMotionOnchain = PromiseValue<

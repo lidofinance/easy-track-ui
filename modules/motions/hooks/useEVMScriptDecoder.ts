@@ -34,7 +34,7 @@ export function useEVMScriptDecoder() {
         [KEYS.AllowedRecipientTrpLdoRegistry]:
           abis.AllowedRecipientsRegistryAbi__factory.abi,
         [KEYS.LegoLDORegistry]: abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.LegoDAIRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.LegoStablesRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.RccStablesRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.PmlStablesRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.AtcStablesRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
@@ -46,6 +46,13 @@ export function useEVMScriptDecoder() {
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.AragonACL]: abis.AragonACLAbi__factory.abi,
         [KEYS.SDVTRegistry]: abis.SDVTRegistryAbi__factory.abi,
+        [KEYS.SandboxNodeOperatorsRegistry]: abis.NodeOperatorsAbi__factory.abi,
+        [KEYS.RccStethAllowedRecipientsRegistry]:
+          abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.PmlStethAllowedRecipientsRegistry]:
+          abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.AtcStethAllowedRecipientsRegistry]:
+          abis.RegistryWithLimitsAbi__factory.abi,
       }),
     )
   }, `evm-script-decoder-${chainId}`)

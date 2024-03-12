@@ -16,7 +16,7 @@ export function DescNodeOperatorIncreaseLimit({
   const nodeOperatorId = Number(callData._nodeOperatorId)
   const registryType = getNodeOperatorRegistryType(motionType)
   const { data: nodeOperators } = useNodeOperatorsList(registryType)
-  const nodeOperatorName = nodeOperators?.[nodeOperatorId].name ?? ''
+  const nodeOperatorName = nodeOperators?.[nodeOperatorId]?.name ?? ''
 
   return (
     <div>

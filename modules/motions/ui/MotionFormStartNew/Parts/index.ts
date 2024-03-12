@@ -27,9 +27,6 @@ export const formParts = {
   [MotionTypeForms.LegoLDOTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.LegoLDOTopUp,
   }),
-  [MotionTypeForms.LegoDAITopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.LegoDAITopUp,
-  }),
   [MotionTypeForms.RccStablesTopUp]:
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.RccStablesTopUp,
@@ -91,6 +88,29 @@ export const formParts = {
   [MotionTypeForms.SandboxNodeOperatorIncreaseLimit]:
     StartNewNodeOperatorLimitIncrease.formParts({
       motionType: MotionTypeForms.SandboxNodeOperatorIncreaseLimit,
+    }),
+  [MotionTypeForms.SandboxStablesAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.SandboxStablesAdd,
+  }),
+  [MotionTypeForms.SandboxStablesRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionTypeForms.SandboxStablesRemove,
+  }),
+  [MotionTypeForms.SandboxStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.SandboxStablesTopUp,
+    }),
+  [MotionTypeForms.RccStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.RccStethTopUp,
+  }),
+  [MotionTypeForms.PmlStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.PmlStethTopUp,
+  }),
+  [MotionTypeForms.AtcStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.AtcStethTopUp,
+  }),
+  [MotionTypeForms.LegoStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.LegoStablesTopUp,
     }),
 } as const
 

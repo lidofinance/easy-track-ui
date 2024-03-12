@@ -28,6 +28,8 @@ import {
   ContractEvmRccStablesTopUp,
   ContractEvmPmlStablesTopUp,
   ContractEvmAtcStablesTopUp,
+  ContractEvmSandboxStablesTopUp,
+  ContractLegoStablesTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -55,6 +57,14 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.AtcStablesTopUp]: {
     evmContract: ContractEvmAtcStablesTopUp,
     motionType: MotionType.AtcStablesTopUp,
+  },
+  [MotionType.SandboxStablesTopUp]: {
+    evmContract: ContractEvmSandboxStablesTopUp,
+    motionType: MotionType.SandboxStablesTopUp,
+  },
+  [MotionType.LegoStablesTopUp]: {
+    evmContract: ContractLegoStablesTopUp,
+    motionType: MotionType.LegoStablesTopUp,
   },
 }
 
@@ -129,6 +139,7 @@ export const formParts = ({
       const { watch, setValue, trigger } = useFormContext()
       const selectedPrograms: Program[] = watch(fieldNames.programs)
       const selectedTokenAddress: string = watch(fieldNames.tokenAddress)
+      const selectedTokenDecimals: number = watch(fieldNames.tokenDecimals)
 
       const selectedTokenLabel = useMemo(() => {
         if (!selectedTokenAddress || !allowedTokens?.length) {
@@ -285,7 +296,10 @@ export const formParts = ({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
-                        const tokenError = validateToken(value)
+                        const tokenError = validateToken(
+                          value,
+                          selectedTokenDecimals,
+                        )
                         if (tokenError) {
                           return tokenError
                         }

@@ -16,9 +16,11 @@ export const getQuerySubgraphMotions = (
     ${arg.first !== undefined ? `first: ${arg.first}` : ''}
     orderBy: startDate
     orderDirection: desc
-    where: { status_in: ["CANCELED", "REJECTED", "ENACTED"]${
-      arg.id ? `, id: ${arg.id}` : ''
-    } }
+    where: ${
+      arg.id
+        ? `{ id: ${arg.id} }`
+        : `{ status_in: ["CANCELED", "REJECTED", "ENACTED"] }`
+    }
   ) {
     id
     evmScriptFactory

@@ -1,7 +1,7 @@
 import { LimitCheckerAbi, EasyTrackAbi } from 'generated'
 import { createContractHelpers } from 'modules/blockChain/utils/createContractHelpers'
 import {
-  ContractLegoDAIRegistry,
+  ContractLegoStablesRegistry,
   ContractEasyTrack,
   ContractAllowedRecipientRegistry,
   ContractAllowedRecipientReferralDaiRegistry,
@@ -102,10 +102,13 @@ const registryByMotionType: {
   [key in MotionType]?: ReturnType<typeof createContractHelpers>
 } = {
   [MotionType.LegoLDOTopUp]: ContractLegoLDORegistry,
-  [MotionType.LegoDAITopUp]: ContractLegoDAIRegistry,
+  [MotionType.LegoDAITopUp]: ContractLegoStablesRegistry,
   [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
   [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
   [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
+  [MotionType.RccDAITopUp]: ContractRccStablesRegistry,
+  [MotionType.PmlDAITopUp]: ContractPmlStablesRegistry,
+  [MotionType.AtcDAITopUp]: ContractAtcStablesRegistry,
   [MotionType.GasFunderETHTopUp]: ContractGasFunderETHRegistry,
   [MotionType.AllowedRecipientTopUp]: ContractAllowedRecipientRegistry,
   [MotionType.AllowedRecipientTopUpReferralDai]:
@@ -113,6 +116,7 @@ const registryByMotionType: {
   [MotionType.AllowedRecipientTopUpTrpLdo]:
     ContractAllowedRecipientTrpLdoRegistry,
   [MotionType.StethRewardProgramTopUp]: ContractStethRewardProgramRegistry,
+  [MotionType.LegoStablesTopUp]: ContractLegoStablesRegistry,
 }
 
 export const usePeriodLimitsInfoByMotionType = (props: {

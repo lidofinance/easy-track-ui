@@ -59,6 +59,7 @@ type DescNodeOperatorIncreaseLimitProps = NestProps<
 >
 
 type GenericDescProps = {
+  isOnChain?: boolean
   callData: any
 }
 
@@ -250,6 +251,41 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.AtcStablesTopUp}
     />
   ),
+  [MotionType.SandboxStablesAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.SandboxStablesAdd}
+    />
+  ),
+  [MotionType.SandboxStablesRemove]: (
+    props: DescAllowedRecipientRemoveProps,
+  ) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.SandboxStablesRemove}
+    />
+  ),
+  [MotionType.SandboxStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.SandboxStablesTopUp}
+    />
+  ),
+  [MotionType.RccStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.RccStethTopUp} />
+  ),
+  [MotionType.PmlStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.PmlStethTopUp} />
+  ),
+  [MotionType.AtcStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits {...props} registryType={MotionType.AtcStethTopUp} />
+  ),
+  [MotionType.LegoStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.LegoStablesTopUp}
+    />
+  ),
 } as const
 
 type Props = {
@@ -290,7 +326,7 @@ export function MotionDescription({ motion }: Props) {
 
   return (
     <DescWrap>
-      <Desc callData={callData} />
+      <Desc callData={callData} isOnChain={motion.isOnChain} />
     </DescWrap>
   )
 }

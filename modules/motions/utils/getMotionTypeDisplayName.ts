@@ -9,10 +9,9 @@ export const MotionTypeDisplayNames: Record<
     'Increase node operator staking limit',
   [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
-  [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
-  [MotionType.RccStablesTopUp]: 'Top up RCC',
-  [MotionType.PmlStablesTopUp]: 'Top up PML',
-  [MotionType.AtcStablesTopUp]: 'Top up ATC',
+  [MotionType.RccStablesTopUp]: 'Top up RCC stablecoins',
+  [MotionType.PmlStablesTopUp]: 'Top up PML stablecoins',
+  [MotionType.AtcStablesTopUp]: 'Top up ATC stablecoins',
   [MotionType.StethRewardProgramAdd]: 'Add stETH reward program',
   [MotionType.StethRewardProgramRemove]: 'Remove stETH reward program',
   [MotionType.StethRewardProgramTopUp]: 'Top up stETH reward programs',
@@ -37,6 +36,10 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
   [MotionType.SandboxNodeOperatorIncreaseLimit]:
     '[NOR SandBox] Increase node operator staking limit',
+  [MotionType.RccStethTopUp]: 'Top up RCC stETH',
+  [MotionType.PmlStethTopUp]: 'Top up PML stETH',
+  [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
+  [MotionType.LegoStablesTopUp]: 'Top up LEGO stablecoins',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
@@ -59,6 +62,10 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.RccDAITopUp]: 'Top up RCC DAI',
   [MotionType.PmlDAITopUp]: 'Top up PML DAI',
   [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
+  [MotionType.SandboxStablesTopUp]: 'Top up sandbox stables',
+  [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
+  [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
+  [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
 } as const
 
 export function getMotionTypeDisplayName(

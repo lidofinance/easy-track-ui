@@ -17,5 +17,6 @@ export function formatMotionDataSubgraph(rawMotion: RawMotionSubgraph): Motion {
     rejected_at: rawMotion.rejected_at
       ? Number(rawMotion.rejected_at)
       : undefined,
+    isOnChain: false,
   }
 }
