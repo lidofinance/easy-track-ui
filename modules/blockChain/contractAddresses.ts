@@ -1,5 +1,5 @@
 import { CHAINS } from '@lido-sdk/constants'
-import type { ChainAddressMap } from './types'
+import type { ChainAddressMap, ChainAddressListMap } from './types'
 
 export const NodeOperatorsRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5',
@@ -162,4 +162,19 @@ export const PmlStethAllowedRecipientsRegistry: ChainAddressMap = {
 export const AtcStethAllowedRecipientsRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xd3950eB3d7A9B0aBf8515922c0d35D13e85a2c91',
   [CHAINS.Holesky]: '0x955bA61676dAd6091Ff3F9BC498219D6DbD49107',
+}
+
+export const Stonks: ChainAddressListMap = {
+  [CHAINS.Goerli]: [],
+  [CHAINS.Holesky]: [
+    '0x7949418C1C8a45b453114568fD3a5526100Eb0D9',
+    '0x1939e7466c21703620F672D994ad1Df03d418B66',
+    '0x28b91E39A7E67C473d7886BD1284231e99bE7939',
+    '0x1305492Fd4677349Ca335EaD9127D2BDEAD7fd6f',
+    '0xeFd6014CbE75D782Cd672e8A1a7bA6FCAB0572EC',
+    '0x43E190221729c223B453d75ADC8548679EcC222a',
+    '0x8f86792A0C1F1AecF87C5e4E2f01fCAF3E9360a0',
+    '0xDCBC0AE0141aEdEec14e418a173A6b3fA3724AE4',
+    '0x507D0971ffd5de64Ba1fb30Ee6Bb93376035DD00',
+  ],
 }

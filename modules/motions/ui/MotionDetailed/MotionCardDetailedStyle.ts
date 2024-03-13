@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { Text } from 'modules/shared/ui/Common/Text'
-import type { Theme } from '@lidofinance/lido-ui'
+import { Button, Theme } from '@lidofinance/lido-ui'
 import { BREAKPOINT_MOBILE } from 'modules/globalStyles'
 
 export const Card = styled.div`
@@ -130,4 +130,8 @@ export const StartDateValue = styled.div`
 
 export const StartDateTime = styled.span`
   color: rgba(39, 56, 82, 0.4);
+`
+
+export const StonksButton = styled(Button)`
+  margin: 10px 0;
 `
