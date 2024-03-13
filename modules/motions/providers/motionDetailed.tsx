@@ -24,8 +24,9 @@ import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { useMotionTokenData } from '../hooks/useMotionTokenData'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
+import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 
 const getTopUpAmount = (callData: any, tokenDecimals = DEFAULT_DECIMALS) => {
   if (!callData) {
@@ -66,6 +67,7 @@ export type MotionDetailedValue = {
   motionDisplaydName: string
   txObject: ReturnType<typeof useTransactionSender>
   txEnact: ReturnType<typeof useTransactionSender>
+  stonksRecipientAddress: string | undefined
 }
 
 export const MotionDetailedContext = createContext({} as MotionDetailedValue)
@@ -109,6 +111,32 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       return contract.decodeEVMScriptCallData(callDataRaw) as any
     },
   )
+
+  const { availableStonks } = useAvailableStonks()
+
+  const stonksRecipientAddress = useMemo(() => {
+    if (!callData || !availableStonks?.length) {
+      return
+    }
+
+    const stonksSet = new Set(availableStonks.map(stonks => stonks.address))
+
+    if (Array.isArray(callData['recipients'])) {
+      return callData['recipients'].find((recipient: string) =>
+        stonksSet.has(utils.getAddress(recipient)),
+      ) as string | undefined
+    }
+
+    if (
+      typeof callData['recipient'] === 'string' &&
+      utils.isAddress(callData['recipient'])
+    ) {
+      const recipientAddress = utils.getAddress(callData['recipient'])
+      if (stonksSet.has(recipientAddress)) {
+        return recipientAddress
+      }
+    }
+  }, [availableStonks, callData])
 
   const { tokenData } = useMotionTokenData(
     callData?.token ?? topUpToken.address,
@@ -185,6 +213,7 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       motionDisplaydName,
       txObject,
       txEnact,
+      stonksRecipientAddress,
     }),
     [
       isArchived,
@@ -199,6 +228,7 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       motionDisplaydName,
       txObject,
       txEnact,
+      stonksRecipientAddress,
     ],
   )
 

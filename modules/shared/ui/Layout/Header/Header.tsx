@@ -31,6 +31,8 @@ import { getChainColor } from '@lido-sdk/constants'
 import LidoLogoSvg from 'assets/logo.com.svg.react'
 import * as urls from 'modules/network/utils/urls'
 import { NoSSRWrapper } from 'modules/shared/ui/Utils/NoSSRWrapper'
+import StonksSVG from './icons/stonks.svg.react'
+import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 
 function NavItem({
   link,
@@ -60,6 +62,8 @@ export function Header() {
   const handleCloseMobileMenu = useCallback(() => setBurgerOpened(false), [])
   useScrollLock(isBurgerOpened)
 
+  const { areStonksAvailable } = useAvailableStonks()
+
   return (
     <>
       <Wrap>
@@ -83,6 +87,13 @@ export function Header() {
               icon={<StartSVG />}
               children="Start motion"
             />
+            {areStonksAvailable && (
+              <NavItem
+                link={urls.stonks}
+                icon={<StonksSVG />}
+                children="Stonks"
+              />
+            )}
             {/* <NavItem link={urls.about} icon={<InfoSVG />} children="About" /> */}
           </NavItems>
         </Nav>
@@ -129,6 +140,14 @@ export function Header() {
                 children="Start motion"
                 onClick={handleCloseMobileMenu}
               />
+              {areStonksAvailable && (
+                <NavItem
+                  link={urls.stonks}
+                  icon={<StonksSVG />}
+                  children="Stonks"
+                  onClick={handleCloseMobileMenu}
+                />
+              )}
             </MobileNavItems>
 
             <MobileMenu>
