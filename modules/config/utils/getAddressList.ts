@@ -16,7 +16,7 @@ export function getAddressList(chainId: CHAINS): {
 
     if (Array.isArray(addressOrArr)) {
       return addressOrArr.map((address, index) => ({
-        contractName: `${contractName}-${index}`,
+        contractName: `${contractName}_${index}`,
         address,
       }))
     }
