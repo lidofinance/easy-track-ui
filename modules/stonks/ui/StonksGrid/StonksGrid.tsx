@@ -30,10 +30,10 @@ export function StonksGrid({ stonksData }: Props) {
             </Text>
             <Button
               size="xs"
-              disabled={isZero}
+              variant={isZero ? 'outlined' : 'filled'}
               onClick={() => router.push(stonksInstance(stonks.address))}
             >
-              Create Order
+              {isZero ? 'Inspect' : 'Create Order'}
             </Button>
           </Card>
         )

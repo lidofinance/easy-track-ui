@@ -70,10 +70,12 @@ export function StonksOrderForm() {
     return <MessageBox>Stonks pair not found</MessageBox>
   }
 
+  const isBalanceZero = selectedStonksPair.currentBalanceBn.isZero()
+
   return (
     <Form formMethods={formMethods} onSubmit={handleSubmit}>
       <Title
-        title={`New Stonks order ${selectedStonksPair.tokenFrom.label} -> ${selectedStonksPair.tokenTo.label}`}
+        title={`Stonks pair ${selectedStonksPair.tokenFrom.label} -> ${selectedStonksPair.tokenTo.label}`}
       />
       <FormFields>
         <MotionInfoBox>
@@ -93,6 +95,7 @@ export function StonksOrderForm() {
               label="Minimum acceptable amount"
               name="minAcceptableAmount"
               rules={{ required: 'Field is required' }}
+              disabled={isBalanceZero}
             />
           </InputRow>
         </MotionInfoBox>
@@ -140,6 +143,7 @@ export function StonksOrderForm() {
       <Button
         type="submit"
         fullwidth
+        disabled={isBalanceZero}
         children="Create Order"
         loading={isSubmitting}
       />
