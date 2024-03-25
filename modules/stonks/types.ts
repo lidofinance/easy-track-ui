@@ -67,3 +67,21 @@ export type OrderDetailed = {
   sellAmountFulfillment?: string
   buyAmountFulfillment?: string
 }
+
+export type StonksData = {
+  address: string
+  tokenFrom: {
+    label: string
+    address: string
+  }
+  tokenTo: {
+    label: string
+    address: string
+  }
+  marginInBasisPoints: number
+  orderDurationInSeconds: number
+  priceToleranceInBasisPoints: number
+  currentBalance: string
+  expectedOutput: number
+  tokenToDecimals: number
+}

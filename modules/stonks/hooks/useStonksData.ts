@@ -6,40 +6,23 @@ import { formatUnits } from 'ethers/lib/utils'
 import { useAvailableStonks } from './useAvailableStonks'
 import { useRouter } from 'next/router'
 
-type StonksData = {
-  address: string
-  tokenFrom: {
-    label: string
-    address: string
-  }
-  tokenTo: {
-    label: string
-    address: string
-  }
-  marginInBasisPoints: number
-  orderDurationInSeconds: number
-  priceToleranceInBasisPoints: number
-  currentBalance: string
-  expectedOutput: number
-  tokenToDecimals: number
-}
-
 const minimalBalance = 10
 
 export function useStonksData() {
   const { chainId } = useWeb3()
   const router = useRouter()
   const stonksAddress = String(router.query.stonksAddress)
-  const { availableStonks } = useAvailableStonks()
+  const { availableStonks, initialLoading: isAvailableStonksDataLoading } =
+    useAvailableStonks()
 
-  return useSWR(
+  const { data: stonksData, initialLoading: isStonksDataLoading } = useSWR(
     availableStonks?.length ? `stonks-data-${chainId}-${stonksAddress}` : null,
     async () => {
       if (!availableStonks?.length) {
         return
       }
 
-      return Promise.all(
+      const processedStonks = await Promise.all(
         availableStonks.map(async stonks => {
           const [tokenFrom, tokenTo, orderDurationInSeconds] =
             await stonks.contract.getOrderParameters()
@@ -84,15 +67,24 @@ export function useStonksData() {
             priceToleranceInBasisPoints: priceToleranceInBasisPoints.toNumber(),
             currentBalance: isEnoughBalance
               ? formatUnits(currentBalance, tokenFromDecimals)
-              : 0,
+              : '0',
             expectedOutput: Number(
               formatUnits(expectedOutput, tokenToDecimals),
             ),
             tokenToDecimals: tokenToDecimals,
           }
         }),
-      ).then(stonks => stonks.filter(Boolean)) as Promise<StonksData[]>
+      )
+
+      return processedStonks.sort(
+        (a, b) => parseFloat(b.currentBalance) - parseFloat(a.currentBalance),
+      )
     },
     { revalidateOnFocus: false, revalidateOnReconnect: false },
   )
+
+  return {
+    stonksData,
+    isStonksDataLoading: isAvailableStonksDataLoading || isStonksDataLoading,
+  }
 }
