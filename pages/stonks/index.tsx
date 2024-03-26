@@ -2,26 +2,17 @@ import { Button } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { StonksPageContainer } from 'modules/stonks/ui/StonksPageContainer'
-import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 import { useStonksData } from 'modules/stonks/hooks/useStonksData'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
-import {
-  MessageBox,
-  StonksOrderForm,
-  StonksGrid,
-} from 'modules/stonks/ui/StonksOrderForm'
+import { MessageBox, Subtitle } from 'modules/stonks/ui/StonksOrderForm'
 import { Title } from 'modules/shared/ui/Common/Title'
-import { formatValue } from 'modules/stonks/utils/formatValue'
-import { useRouter } from 'next/dist/client/router'
-import * as urls from 'modules/network/utils/urls'
+import { StonksOrderResolverForm } from 'modules/stonks/ui/StonksOrderResolverForm'
+import { StonksGrid } from 'modules/stonks/ui/StonksGrid'
 
 export default function StonksCreateOrderPage() {
   const { isWalletConnected } = useWeb3()
-  const router = useRouter()
   const openConnectWalletModal = useConnectWalletModal()
-  useAvailableStonks()
-  const { data: stonksList, initialLoading: isStonksDataLoading } =
-    useStonksData()
+  const { stonksData, isStonksDataLoading } = useStonksData()
 
   if (!isWalletConnected) {
     return (
@@ -48,7 +39,7 @@ export default function StonksCreateOrderPage() {
     )
   }
 
-  if (!stonksList) {
+  if (!stonksData) {
     return (
       <StonksPageContainer>
         <Title title="Do stonks" />
@@ -59,22 +50,19 @@ export default function StonksCreateOrderPage() {
 
   return (
     <StonksPageContainer>
-      <Title title="Available stonks" />
-      <StonksGrid>
-        {stonksList.map(stonks => (
-          <Button
-            key={stonks.address}
-            color="secondary"
-            size="sm"
-            onClick={() => router.push(urls.stonksInstance(stonks.address))}
-          >
-            {stonks.tokenFrom.label} {'->'}
-            {stonks.tokenTo.label} ({formatValue(stonks.currentBalance)}{' '}
-            {stonks.tokenFrom.label})
-          </Button>
-        ))}
-      </StonksGrid>
-      <StonksOrderForm />
+      <Title title="Do stonks" />
+      <Subtitle size={20} weight={800} isCentered>
+        Manage existing order
+      </Subtitle>
+      <StonksOrderResolverForm />
+      {stonksData.length ? (
+        <>
+          <Subtitle size={20} weight={800} isCentered>
+            Create on-chain order
+          </Subtitle>
+          <StonksGrid stonksData={stonksData} />
+        </>
+      ) : null}
     </StonksPageContainer>
   )
 }

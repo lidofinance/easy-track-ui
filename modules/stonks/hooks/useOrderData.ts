@@ -50,7 +50,7 @@ export function useOrderData(orderAddress: string) {
       )
       const buyAmount = formatValue(formatUnits(buyAmountBn, buyTokenDecimals))
 
-      const hasBalance = sellTokenBalance.gt(0)
+      const hasBalance = sellTokenBalance.gt(10) // Covers steth wei issue
 
       const isRecoverable = isExpired && hasBalance
 

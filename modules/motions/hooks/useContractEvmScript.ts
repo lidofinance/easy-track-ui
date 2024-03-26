@@ -76,6 +76,8 @@ export const EVM_CONTRACTS = {
   [MotionType.PmlStethTopUp]: CONTRACTS.ContractPmlStethTopUp,
   [MotionType.AtcStethTopUp]: CONTRACTS.ContractAtcStethTopUp,
   [MotionType.LegoStablesTopUp]: CONTRACTS.ContractLegoStablesTopUp,
+  [MotionType.StonksStethTopUp]: CONTRACTS.ContractStonksStethTopUp,
+  [MotionType.StonksStablesTopUp]: CONTRACTS.ContractStonksStablesTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

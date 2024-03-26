@@ -66,6 +66,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
   [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
+  [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
+  [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
 } as const
 
 export function getMotionTypeDisplayName(

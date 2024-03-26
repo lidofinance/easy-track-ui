@@ -40,6 +40,8 @@ export const MotionTypeForms = {
   PmlStethTopUp: 'PmlStethTopUp',
   AtcStethTopUp: 'AtcStethTopUp',
   LegoStablesTopUp: 'LegoStablesTopUp',
+  StonksStethTopUp: 'StonksStethTopUp',
+  StonksStablesTopUp: 'StonksStablesTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

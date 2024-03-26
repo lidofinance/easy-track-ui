@@ -18,7 +18,7 @@ type OffChainOrderPayload = {
   partiallyFillable: false // as in Order.sol
   sellTokenBalance: 'erc20' // as in Order.sol
   buyTokenBalance: 'erc20' // as in Order.sol
-  appData: string // keccak256("LIDO_DOES_STONKS")
+  appData: string // keccak256("{}")
   signingScheme: 'eip1271'
   signature: '0x'
 } & OffChainOrderInput
@@ -29,7 +29,7 @@ export const createOffChainOrder = async (
 ) => {
   const payload: OffChainOrderPayload = {
     ...order,
-    appData: utils.keccak256(utils.toUtf8Bytes('LIDO_DOES_STONKS')),
+    appData: utils.keccak256(utils.toUtf8Bytes('{}')),
     feeAmount: '0',
     partiallyFillable: false,
     from: order.address,

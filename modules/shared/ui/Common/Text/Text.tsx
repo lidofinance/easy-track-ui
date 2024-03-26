@@ -7,7 +7,7 @@ export type TextColor = keyof Theme['colors'] | 'inherit'
 
 type Props = {
   size: TextSize
-  weight: TextWeight
+  weight?: TextWeight
   color?: TextColor
   truncateLines?: number
   isCentered?: boolean
@@ -15,7 +15,7 @@ type Props = {
 
 export const Text = styled.div<Props>`
   font-size: ${({ size }) => size}px;
-  font-weight: ${({ weight }) => weight};
+  font-weight: ${({ weight }) => weight ?? 500};
   color: ${({ color = 'text' }) =>
     color === 'inherit' ? color : `var(--lido-color-${color})`};
 

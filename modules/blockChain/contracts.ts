@@ -428,3 +428,25 @@ export const ContractLegoStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.LegoStablesTopUp],
 })
+
+export const ContractStonksStethAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.StonksStethAllowedRecipientsRegistry,
+  })
+
+export const ContractStonksStablesAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.StonksStablesAllowedRecipientsRegistry,
+  })
+
+export const ContractStonksStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.StonksStethTopUp],
+})
+
+export const ContractStonksStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.StonksStablesTopUp],
+})

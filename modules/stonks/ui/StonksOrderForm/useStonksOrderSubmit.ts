@@ -39,8 +39,6 @@ export function useStonksOrderSubmit() {
     return tx
   }
 
-  const handleTxReset = () => setResultTx(null)
-
   const handleSubmit = async (values: FormData) => {
     try {
       setSubmitting(true)
@@ -61,5 +59,5 @@ export function useStonksOrderSubmit() {
     }
   }
 
-  return { isSubmitting, resultTx, handleSubmit, handleTxReset }
+  return { isSubmitting, resultTx, handleSubmit }
 }

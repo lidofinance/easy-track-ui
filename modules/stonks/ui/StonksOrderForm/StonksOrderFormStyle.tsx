@@ -73,8 +73,9 @@ export const InfoValue = styled(Text).attrs({
   weight: 500,
 })``
 
-export const StonksGrid = styled.div`
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+export const Subtitle = styled(Text).attrs({
+  size: 20,
+  weight: 800,
+})`
+  margin-bottom: 20px;
 `
