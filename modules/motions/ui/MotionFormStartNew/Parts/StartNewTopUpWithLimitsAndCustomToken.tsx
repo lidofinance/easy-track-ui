@@ -30,6 +30,7 @@ import {
   ContractEvmAtcStablesTopUp,
   ContractEvmSandboxStablesTopUp,
   ContractLegoStablesTopUp,
+  ContractStonksStablesTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -65,6 +66,10 @@ export const TOPUP_WITH_LIMITS_MAP = {
   [MotionType.LegoStablesTopUp]: {
     evmContract: ContractLegoStablesTopUp,
     motionType: MotionType.LegoStablesTopUp,
+  },
+  [MotionType.StonksStablesTopUp]: {
+    evmContract: ContractStonksStablesTopUp,
+    motionType: MotionType.StonksStablesTopUp,
   },
 }
 

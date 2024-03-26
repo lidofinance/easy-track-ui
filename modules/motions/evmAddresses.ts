@@ -65,6 +65,9 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x7d509BFF310d9460b1F613e4e40d342201a83Ae4',
     [MotionType.SDVTNodeOperatorManagerChange]:
       '0xE31A0599A6772BCf9b2bFc9e25cf941e793c9a7D',
+    [MotionType.StonksStethTopUp]: '0x6e04aED774B7c89BB43721AcDD7D03C872a51B69',
+    [MotionType.StonksStablesTopUp]:
+      '0x0d2aefA542aFa8d9D1Ec35376068B88042FEF5f6',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -236,6 +239,9 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RccStablesTopUp]: '0xD497E7e039FeFBc64dBB7b75368afb06D07Bc73F',
     [MotionType.PmlStablesTopUp]: '0x5BAE56ECfB616eAbbDB048AC930FA1Db82f18900',
     [MotionType.AtcStablesTopUp]: '0xfa54cf78474cD4A7f4408Dd0efA36e44b6269813',
+    [MotionType.StonksStethTopUp]: '0x1240775f1857fB8317bD9ba63f4A8A6A78D9af06',
+    [MotionType.StonksStablesTopUp]:
+      '0x65A9913467A9793Bb23726d72C99A470bb9294Ad',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data

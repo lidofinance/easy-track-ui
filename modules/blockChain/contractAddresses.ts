@@ -189,3 +189,13 @@ export const Stonks: ChainAddressListMap = {
     '0x507D0971ffd5de64Ba1fb30Ee6Bb93376035DD00',
   ],
 }
+
+export const StonksStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x1a7cFA9EFB4D5BfFDE87B0FaEb1fC65d653868C0',
+  [CHAINS.Holesky]: '0x4283839a5a92A3A6ed39E48cAD5e4c180b97800B',
+}
+
+export const StonksStablesAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x3f0534CCcFb952470775C516DC2eff8396B8A368',
+  [CHAINS.Holesky]: '0xDd553C1F88EDCFc2033141Cb908eFf9189988A90',
+}
