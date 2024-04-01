@@ -10,6 +10,7 @@ import { getOrderByPlaceTxReceipt } from 'modules/stonks/utils/getOrderByPlaceTx
 import { Fieldset } from './StonksOrderResolverFormStyle'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
 
 type FormData = {
   txHashOrAddress: string
@@ -71,8 +72,23 @@ export function StonksOrderResolverForm() {
           fullwidth
           name="txHashOrAddress"
           placeholder="Order creation tx hash or order address"
+          rules={{
+            required: 'Field is required',
+            validate: value => {
+              const addressErr = validateAddress(value)
+              const isValidTxHash = /^0x[a-fA-F0-9]{64}$/.test(value)
+              if (addressErr && !isValidTxHash) {
+                return 'Invalid tx hash or address'
+              }
+            },
+          }}
         />
-        <Button fullwidth type="submit" loading={isSubmitting}>
+        <Button
+          fullwidth
+          type="submit"
+          loading={isSubmitting}
+          disabled={!formMethods.formState.isValid}
+        >
           Go to order
         </Button>
       </Fieldset>

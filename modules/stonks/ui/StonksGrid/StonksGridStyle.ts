@@ -1,3 +1,4 @@
+import { BREAKPOINT_MOBILE } from 'modules/globalStyles'
 import { Text } from 'modules/shared/ui/Common/Text'
 import styled from 'styled-components'
 
@@ -5,6 +6,10 @@ export const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 24px;
+
+  @media (max-width: ${BREAKPOINT_MOBILE}) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const Card = styled.div`

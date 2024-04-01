@@ -27,9 +27,8 @@ export function StonksOrderProgressSafe({ safeTxHash }: Props) {
       </MessageBox>
       <MessageBox>
         <Text size={14} weight={500}>
-          Once the transaction is signed and transaction has is obtained, you
-          can proceed with the order. Click the button below to open up the
-          order form.
+          Once the transaction has been signed and executed, return to the
+          Stonks page and enter the tx hash to continue order creation.
         </Text>
         <Button size="sm" onClick={() => router.push(stonks)}>
           Back to Stonks
