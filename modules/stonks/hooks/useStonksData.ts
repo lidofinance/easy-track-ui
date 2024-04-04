@@ -65,7 +65,6 @@ export function useStonksData() {
             marginInBasisPoints: marginInBasisPoints.toNumber(),
             orderDurationInSeconds: orderDurationInSeconds.toNumber(),
             priceToleranceInBasisPoints: priceToleranceInBasisPoints.toNumber(),
-            currentBalanceBn: currentBalance,
             currentBalance: isEnoughBalance
               ? formatUnits(currentBalance, tokenFromDecimals)
               : '0',
@@ -73,6 +72,7 @@ export function useStonksData() {
               formatUnits(expectedOutput, tokenToDecimals),
             ),
             tokenToDecimals: tokenToDecimals,
+            isBalanceZero: !isEnoughBalance,
           }
         }),
       )

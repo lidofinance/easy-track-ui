@@ -72,6 +72,8 @@ export function StonksOrderResolverForm() {
           fullwidth
           name="txHashOrAddress"
           placeholder="Order creation tx hash or order address"
+          autoComplete="off"
+          id="search-address"
           rules={{
             required: 'Field is required',
             validate: value => {
