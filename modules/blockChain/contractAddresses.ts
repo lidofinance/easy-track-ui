@@ -165,6 +165,17 @@ export const AtcStethAllowedRecipientsRegistry: ChainAddressMap = {
 }
 
 export const Stonks: ChainAddressListMap = {
+  [CHAINS.Mainnet]: [
+    '0x3e2D251275A92a8169A3B17A2C49016e2de492a7',
+    '0xf4F6A03E3dbf0aA22083be80fDD340943d275Ea5',
+    '0x7C2a1E25cA6D778eCaEBC8549371062487846aAF',
+    '0x79f5E20996abE9f6a48AF6f9b13f1E55AED6f06D',
+    '0x8Ba6D367D15Ebc52f3eBBdb4a8710948C0918d42',
+    '0x281e6BB6F26A94250aCEb24396a8E4190726C97e',
+    '0x64B6aF9A108dCdF470E48e4c0147127F26221A7C',
+    '0x278f7B6CBB3Cc37374e6a40bDFEBfff08f65A5C7',
+    '0x2B5a3944A654439379B206DE999639508bA2e850',
+  ],
   [CHAINS.Goerli]: [],
   [CHAINS.Holesky]: [
     '0x7949418C1C8a45b453114568fD3a5526100Eb0D9',
@@ -177,4 +188,14 @@ export const Stonks: ChainAddressListMap = {
     '0xDCBC0AE0141aEdEec14e418a173A6b3fA3724AE4',
     '0x507D0971ffd5de64Ba1fb30Ee6Bb93376035DD00',
   ],
+}
+
+export const StonksStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x1a7cFA9EFB4D5BfFDE87B0FaEb1fC65d653868C0',
+  [CHAINS.Holesky]: '0x4283839a5a92A3A6ed39E48cAD5e4c180b97800B',
+}
+
+export const StonksStablesAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x3f0534CCcFb952470775C516DC2eff8396B8A368',
+  [CHAINS.Holesky]: '0xDd553C1F88EDCFc2033141Cb908eFf9189988A90',
 }

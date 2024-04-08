@@ -49,7 +49,7 @@ export default function StonksOrderDetailsPage() {
       <StonksOrderCard
         order={order}
         isDataValidating={isValidating}
-        onInvalidate={mutate}
+        onInvalidate={() => mutate(undefined, { revalidate: true })}
       />
     </ContentContainer>
   )
