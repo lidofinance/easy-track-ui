@@ -16,11 +16,10 @@ export default async function getOrder(
     })
 
     res.status(200).json(orderData)
-  } catch (error) {
-    console.error(
-      error instanceof Error ? error.message : FALLBACK_ERROR,
-      error,
-    )
-    res.status(500).json({ error: FALLBACK_ERROR })
+  } catch (error: any) {
+    const code =
+      error?.message && error.message.startsWith('NO_CHAIN_') ? 404 : 500
+    const message = error?.message || FALLBACK_ERROR
+    res.status(code).json({ error: message })
   }
 }

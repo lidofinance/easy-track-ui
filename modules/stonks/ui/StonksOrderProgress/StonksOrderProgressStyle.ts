@@ -27,3 +27,16 @@ export const ErrorMessageBox = styled(Text).attrs({
   background-color: ${({ theme }) => theme.colors.error};
   border-radius: 8px;
 `
+
+export const Hash = styled(Text).attrs({
+  size: 10,
+  weight: 500,
+})`
+  padding: 10px 15px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  width: fit-content;
+  word-break: break-all;
+  background-color: rgba(0, 163, 255, 0.1);
+`

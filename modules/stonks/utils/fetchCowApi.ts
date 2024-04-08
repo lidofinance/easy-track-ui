@@ -24,7 +24,7 @@ export const fetchCowApi = async <T extends unknown>({
   const cowApiEndpoint = COWSWAP_API_ENDPOINTS[parsedChainId]
 
   if (!cowApiEndpoint) {
-    throw new Error(`CoW API has no endpoint for chain ${parsedChainId}`)
+    throw new Error(`NO_CHAIN_${parsedChainId}`)
   }
 
   const requested = await fetch(`${cowApiEndpoint}${url}`, {
@@ -41,5 +41,5 @@ export const fetchCowApi = async <T extends unknown>({
     return data as T
   }
 
-  throw new Error(data?.description || 'Something went wrong')
+  throw new Error(data?.description || 'UNKNOWN_ERROR')
 }

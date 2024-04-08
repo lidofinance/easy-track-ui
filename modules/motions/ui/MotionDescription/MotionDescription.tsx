@@ -286,6 +286,18 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.LegoStablesTopUp}
     />
   ),
+  [MotionType.StonksStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.StonksStablesTopUp}
+    />
+  ),
+  [MotionType.StonksStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.StonksStethTopUp}
+    />
+  ),
 } as const
 
 type Props = {
