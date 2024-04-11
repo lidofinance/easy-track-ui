@@ -3,6 +3,7 @@ import { StonksOrderAbi__factory } from 'generated'
 import { useTransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { estimateGasFallback } from 'modules/motions/utils'
+import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
 import { ButtonWrap } from '../StonksOrderCardStyle'
 
 type Props = {
@@ -17,6 +18,7 @@ export function StonksOrderCardRecoverButton({
   onFinish,
 }: Props) {
   const { library, isWalletConnected } = useWeb3()
+  const openConnectWalletModal = useConnectWalletModal()
 
   const populateRecover = async () => {
     if (!library) {
@@ -40,15 +42,24 @@ export function StonksOrderCardRecoverButton({
 
   return (
     <ButtonWrap>
-      <Button
-        onClick={txRecover.isEmpty ? txRecover.send : undefined}
-        loading={txRecover.isPending}
-        disabled={!isWalletConnected || !txRecover.isEmpty}
-        fullwidth
-        variant={variant}
-      >
-        Recover funds
-      </Button>
+      {isWalletConnected ? (
+        <Button
+          onClick={txRecover.isEmpty ? txRecover.send : undefined}
+          loading={txRecover.isPending}
+          disabled={!txRecover.isEmpty}
+          fullwidth
+          variant={variant}
+        >
+          Recover funds
+        </Button>
+      ) : (
+        <Button
+          type="submit"
+          fullwidth
+          children="Connect wallet to recover funds"
+          onClick={openConnectWalletModal}
+        />
+      )}
     </ButtonWrap>
   )
 }
