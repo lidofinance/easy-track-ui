@@ -32,11 +32,9 @@ export const fetchCowApi = async <T extends unknown>({
     headers: {
       'Content-Type': 'application/json',
     },
-    next: {
-      revalidate: 0,
-    },
+    cache: 'no-store',
     body,
-  } as any)
+  })
 
   const data = await requested.json()
 
