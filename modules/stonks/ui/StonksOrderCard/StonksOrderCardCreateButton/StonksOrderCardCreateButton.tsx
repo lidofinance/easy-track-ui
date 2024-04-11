@@ -35,12 +35,12 @@ export function StonksOrderCardCreateButton({
       }
 
       await createOffChainOrder(orderInput, chainId)
-      onSuccess?.()
     } catch (error: any) {
       console.error(error)
       ToastError(error?.message ?? 'Something went wrong', {})
     } finally {
       setIsSubmitting(false)
+      onSuccess?.()
     }
   }
 

@@ -11,13 +11,16 @@ import { Fieldset } from './StonksOrderResolverFormStyle'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
+import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
+import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
+import { useMemo } from 'react'
 
 type FormData = {
   txHashOrAddress: string
 }
 
 export function StonksOrderResolverForm() {
-  const { chainId, library } = useWeb3()
+  const { chainId } = useWeb3()
   const router = useRouter()
 
   const formMethods = useForm<FormData>({
@@ -31,8 +34,12 @@ export function StonksOrderResolverForm() {
 
   const { isSubmitting } = formMethods.formState
 
+  const library = useMemo(
+    () => getStaticRpcBatchProvider(chainId, getBackendRpcUrl(chainId)),
+    [chainId],
+  )
+
   const handleSubmit = async (values: FormData) => {
-    if (!library) return
     try {
       const isAddress = utils.isAddress(values.txHashOrAddress)
       if (isAddress) {
@@ -91,7 +98,7 @@ export function StonksOrderResolverForm() {
           loading={isSubmitting}
           disabled={!formMethods.formState.isValid}
         >
-          Go to order
+          Find order
         </Button>
       </Fieldset>
     </Form>
