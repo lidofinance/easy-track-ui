@@ -5,7 +5,7 @@ import { connectContractRpc } from 'modules/motions/utils/connectContractRpc'
 import { connectERC20Contract } from 'modules/motions/utils/connectTokenContract'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import moment from 'moment'
-import { OrderDetailed, OrderStatus } from '../types'
+import { OrderDetailed, OrderStatus, OrderTransaction } from '../types'
 import { fetchOffChainOrder } from '../utils/fetchOffChainOrder'
 import { formatValue } from '../utils/formatValue'
 
@@ -66,6 +66,7 @@ export function useOrderData(orderAddress: string) {
       let executedBuyAmount = '0'
       let sellAmountFulfillment = '0'
       let buyAmountFulfillment = '0'
+      let transactions: OrderTransaction[] = []
 
       if (offChainOrder) {
         executedSellAmount = formatValue(
@@ -88,6 +89,7 @@ export function useOrderData(orderAddress: string) {
 
         status = offChainOrder.status
         isCreatable = false
+        transactions = offChainOrder.transactions
       }
 
       return {
@@ -113,6 +115,7 @@ export function useOrderData(orderAddress: string) {
         creationDate: offChainOrder?.creationDate,
         sellAmountWei,
         buyAmountWei,
+        transactions,
       }
     },
     {
