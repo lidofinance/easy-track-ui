@@ -107,7 +107,7 @@ export function StonksOrderCard({
         </div>
       </Row>
 
-      {order.transactions ? (
+      {order.transactions?.length ? (
         <>
           {order.transactions.length > 1 ? (
             <>

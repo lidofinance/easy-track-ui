@@ -41,8 +41,7 @@ export function StonksOrderResolverForm() {
 
   const handleSubmit = async (values: FormData) => {
     try {
-      const isAddress = utils.isAddress(values.txHashOrAddress)
-      if (isAddress) {
+      if (utils.isAddress(values.txHashOrAddress)) {
         const orderContract = connectContractRpc(
           StonksOrderAbi__factory,
           values.txHashOrAddress,
