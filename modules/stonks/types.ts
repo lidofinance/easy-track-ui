@@ -26,6 +26,10 @@ type OffChainOrderStatus =
 
 export type OrderStatus = 'not-created' | OffChainOrderStatus
 
+export type OrderTransaction = {
+  txHash: string
+}
+
 export type OffChainOrder = {
   creationDate: string
   owner: string
@@ -39,6 +43,7 @@ export type OffChainOrder = {
   executedBuyAmount: string
   receiver: string
   status: OffChainOrderStatus
+  transactions: OrderTransaction[]
 }
 
 export type OrderDetailed = {
@@ -66,6 +71,7 @@ export type OrderDetailed = {
   executedBuyAmount?: string
   sellAmountFulfillment?: string
   buyAmountFulfillment?: string
+  transactions?: OrderTransaction[]
 }
 
 export type StonksData = {
