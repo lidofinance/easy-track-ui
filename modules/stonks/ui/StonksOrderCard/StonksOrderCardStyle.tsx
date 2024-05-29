@@ -1,6 +1,7 @@
 import { Container, Theme } from '@lidofinance/lido-ui'
 import { BREAKPOINT_MOBILE } from 'modules/globalStyles'
 import { Text } from 'modules/shared/ui/Common/Text'
+import { OrderStatus } from 'modules/stonks/types'
 import styled, { css } from 'styled-components'
 
 export const ContentContainer = styled(Container).attrs({
@@ -34,14 +35,18 @@ export const Card = styled.div`
   }
 `
 
-export const OrderTitle = styled(Text).attrs({
-  size: 16,
-  weight: 800,
-})`
+export const OrderTitle = styled.div`
   margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+`
+
+export const OrderUid = styled(Text).attrs({
+  size: 14,
+  weight: 800,
+})`
+  color: rgba(39, 56, 82, 0.6);
 `
 
 export const StatusLabel = styled(Text).attrs({
@@ -53,9 +58,9 @@ export const StatusLabel = styled(Text).attrs({
 `
 
 type StatusValueProps = {
-  isActive: boolean
-  isCancelled: boolean
+  value: OrderStatus
 }
+
 export const StatusValue = styled(Text).attrs({
   size: 14,
   weight: 800,
@@ -63,17 +68,24 @@ export const StatusValue = styled(Text).attrs({
   text-transform: uppercase;
   letter-spacing: 0.4px;
 
-  ${({ isActive, theme }: StatusValueProps & { theme: Theme }) =>
-    isActive &&
-    css`
-      color: ${theme.colors.primary};
-    `}
-
-  ${({ isCancelled }: StatusValueProps) =>
-    isCancelled &&
-    css`
-      color: #de186b;
-    `}
+  ${({ value, theme }: StatusValueProps & { theme: Theme }) => {
+    switch (value) {
+      case 'fulfilled':
+        return css`
+          color: #53ba95;
+        `
+      case 'cancelled':
+      case 'expired':
+        return css`
+          color: #de186b;
+        `
+      // rgb(0, 163, 255) - link
+      default:
+        return css`
+          color: ${theme.colors.primary};
+        `
+    }
+  }}
 `
 
 export const Row = styled(Text).attrs({
@@ -83,6 +95,7 @@ export const Row = styled(Text).attrs({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 32px;
 
   & > div {
     display: flex;
@@ -115,4 +128,10 @@ export const MessageBox = styled.div`
   font-size: 14px;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: ${({ theme }) => theme.borderRadiusesMap.md + 'px'};
+`
+
+export const Link = styled.a`
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: none;
+  font-weight: 600;
 `

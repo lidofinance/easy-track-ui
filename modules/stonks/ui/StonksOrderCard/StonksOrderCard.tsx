@@ -1,9 +1,12 @@
-import { ButtonIcon, trimAddress, Copy } from '@lidofinance/lido-ui'
-import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
+import { getEtherscanLink } from '@lido-sdk/helpers'
+import { trimAddress } from '@lidofinance/lido-ui'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 import { AddressWithPop } from 'modules/shared/ui/Common/AddressWithPop'
+import { Text } from 'modules/shared/ui/Common/Text'
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
 import { OrderDetailed } from 'modules/stonks/types'
+import { getOffChainOrderUrl } from 'modules/stonks/utils/getOffChainOrderUrl'
 import { getOrderStatusText } from 'modules/stonks/utils/getOrderStatusText'
 import moment from 'moment'
 import { StonksOrderCardCreateButton } from './StonksOrderCardCreateButton'
@@ -15,6 +18,8 @@ import {
   StatusLabel,
   StatusValue,
   ButtonsRow,
+  OrderUid,
+  Link,
 } from './StonksOrderCardStyle'
 
 type Props = {
@@ -28,44 +33,42 @@ export function StonksOrderCard({
   isDataValidating,
   onInvalidate,
 }: Props) {
-  const handleCopyUid = useCopyToClipboard(order.uid ?? '')
+  const { chainId } = useWeb3()
 
+  const orderLink = getOffChainOrderUrl(order.uid, chainId)
   return (
     <Card>
       <OrderTitle>
         <div>
-          Stonks Order <AddressInlineWithPop address={order.address} />
+          <OrderUid>
+            Stonks order <AddressInlineWithPop address={order.address} />
+          </OrderUid>
+          <Text size={14} weight={800}>
+            {order.sellTokenLabel} → {order.buyTokenLabel}
+          </Text>
         </div>
 
         <div>
           <StatusLabel>Status</StatusLabel>
-          <StatusValue
-            isActive={order.status === 'open'}
-            isCancelled={
-              order.status === 'cancelled' || order.status === 'expired'
-            }
-          >
+          <StatusValue value={order.status}>
             {getOrderStatusText(order.status)}
           </StatusValue>
         </div>
       </OrderTitle>
       {order.uid ? (
         <Row>
-          <div>Off-Chain UID</div>
-          <div>
-            {trimAddress(order.uid, 6)}
-            <ButtonIcon
-              onClick={handleCopyUid}
-              icon={<Copy />}
-              size="xs"
-              variant="translucent"
-              children="Copy"
-            />
-          </div>
+          <div>Off-Chain Order</div>
+          {orderLink ? (
+            <Link href={orderLink} target="_blank" rel="noreferrer">
+              {trimAddress(order.uid, 6)}
+            </Link>
+          ) : (
+            <div>{trimAddress(order.uid, 6)}</div>
+          )}
         </Row>
       ) : null}
       <Row>
-        <div>Stonks</div>
+        <div>Stonks Contract</div>
         <AddressWithPop address={order.stonks} />
       </Row>
       <Row>
@@ -103,12 +106,51 @@ export function StonksOrderCard({
           {order.buyAmountFulfillment}%)
         </div>
       </Row>
-      <Row>
-        <div>Recoverable amount</div>
-        <div>
-          {order.recoverableAmount} {order.sellTokenLabel}
-        </div>
-      </Row>
+
+      {order.transactions?.length ? (
+        <>
+          {order.transactions.length > 1 ? (
+            <>
+              <Row>
+                <div>Swap transactions:</div>
+              </Row>
+              {order.transactions.map(tx => (
+                <Link
+                  key={tx.txHash}
+                  href={getEtherscanLink(chainId, tx.txHash, 'tx')}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {trimAddress(tx.txHash, 12)}
+                </Link>
+              ))}
+            </>
+          ) : (
+            <Row>
+              <div>Swap transaction hash</div>{' '}
+              <Link
+                href={getEtherscanLink(
+                  chainId,
+                  order.transactions[0].txHash,
+                  'tx',
+                )}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {trimAddress(order.transactions[0].txHash, 6)}
+              </Link>
+            </Row>
+          )}
+        </>
+      ) : null}
+      {order.isRecoverable && (
+        <Row>
+          <div>Recoverable amount</div>
+          <div>
+            {order.recoverableAmount} {order.sellTokenLabel}
+          </div>
+        </Row>
+      )}
       {order.isCreatable || order.isRecoverable ? (
         <ButtonsRow>
           {order.isCreatable && (
