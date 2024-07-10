@@ -70,7 +70,7 @@ export const formParts = {
     formAllowedRecipientTopUp.formParts({
       registryType: MotionTypeForms.RewardsShareProgramTopUp,
     }),
-  [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts(),
+  [MotionTypeForms.SDVTNodeOperatorsAdd]: StartSDVTNodeOperatorsAdd.formParts,
   [MotionTypeForms.SDVTNodeOperatorsActivate]:
     StartNewSDVTNodeOperatorsActivate.formParts,
   [MotionTypeForms.SDVTNodeOperatorsDeactivate]:
