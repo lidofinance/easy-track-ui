@@ -38,6 +38,7 @@ import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactiva
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
 import { DescSDVTVettedValidatorsLimitsSet } from './DescSDVTVettedValidatorsLimitsSet'
 import { DescSDVTTargetValidatorLimitsUpdate } from './DescSDVTTargetValidatorLimitsUpdate'
+import { DescSDVTTargetValidatorLimitsUpdateV2 } from './DescSDVTTargetValidatorLimitsUpdateV2'
 import { DescSDVTNodeOperatorRewardAddressesSet } from './DescSDVTNodeOperatorRewardAddressesSet'
 import { DescSDVTNodeOperatorNamesSet } from './DescSDVTNodeOperatorNamesSet'
 import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
@@ -223,6 +224,8 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.SDVTNodeOperatorNamesSet]: DescSDVTNodeOperatorNamesSet,
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     DescSDVTTargetValidatorLimitsUpdate,
+  [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
+    DescSDVTTargetValidatorLimitsUpdateV2,
   [MotionType.SDVTNodeOperatorManagerChange]:
     DescSDVTNodeOperatorManagersChange,
   [MotionType.SandboxNodeOperatorIncreaseLimit]: (
