@@ -20,8 +20,12 @@ describe('calcPeriodData', () => {
     const periodData = {
       alreadySpentAmount: '500',
       spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment().unix() - EIGTH_HOURS_SECONDS,
-      periodEndTimestamp: moment().unix() + EIGTH_HOURS_SECONDS * 2,
+      periodStartTimestamp: moment().startOf('month').unix(),
+      periodEndTimestamp: moment()
+        .startOf('month')
+        .add(limits.periodDurationMonths, 'M')
+        .startOf('month')
+        .unix(),
     }
     const isPending = false
 
@@ -49,8 +53,12 @@ describe('calcPeriodData', () => {
     const periodData = {
       alreadySpentAmount: '500',
       spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment().unix() - EIGTH_HOURS_SECONDS * 10,
-      periodEndTimestamp: moment().unix() - EIGTH_HOURS_SECONDS * 2,
+      periodStartTimestamp: moment()
+        .startOf('month')
+        .subtract(limits.periodDurationMonths, 'M')
+        .startOf('month')
+        .unix(),
+      periodEndTimestamp: moment().startOf('month').unix(),
     }
     const isPending = false
 
@@ -266,13 +274,17 @@ describe('calcPeriodData', () => {
     const motionDuration = BigNumber.from(MONTH_HOURS_SECONDS) // seconds
     const limits = {
       limit: '1000',
-      periodDurationMonths: 2, // month
+      periodDurationMonths: 3, // month
     }
     const periodData = {
       alreadySpentAmount: '500',
       spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment().subtract(6, 'month').unix(),
-      periodEndTimestamp: moment().subtract(4, 'month').unix(),
+      periodStartTimestamp: moment()
+        .subtract(3 * limits.periodDurationMonths, 'M')
+        .unix(),
+      periodEndTimestamp: moment()
+        .subtract(2 * limits.periodDurationMonths, 'M')
+        .unix(),
     }
     const isPending = false
 
@@ -285,7 +297,7 @@ describe('calcPeriodData', () => {
 
     const newStartTime = moment
       .unix(periodData.periodStartTimestamp)
-      .add(6, 'M')
+      .add(3 * limits.periodDurationMonths, 'M')
       .startOf('month')
     const newEndTime = moment(newStartTime)
       .add(limits.periodDurationMonths, 'M')
@@ -302,6 +314,65 @@ describe('calcPeriodData', () => {
     expect(result).toEqual({
       limits,
       periodData: expectPeriodData,
+      motionDuration: motionDuration.toNumber() / 60 / 60, // hours
+      isEndInNextPeriod: false,
+    })
+  })
+
+  it('Motion start in next N period and end in current, in the middle of period', () => {
+    const motionDuration = BigNumber.from(259200)
+    const limits = {
+      limit: '3000000.0',
+      periodDurationMonths: 3,
+    }
+    // second month of period 2024-08-21
+    const currentDateMock = moment.unix(1724258258)
+
+    jest
+      .spyOn(Date, 'now')
+      .mockImplementation(() =>
+        new Date(currentDateMock.toISOString()).getTime(),
+      )
+
+    const periodStartTimestamp = moment()
+      .subtract(1 + 2 * limits.periodDurationMonths, 'month')
+      .startOf('month')
+      .unix()
+    const periodEndTimestamp = moment()
+      .subtract(1 + limits.periodDurationMonths, 'month')
+      .startOf('month')
+      .unix()
+
+    const periodData = {
+      alreadySpentAmount: '700000.0',
+      spendableBalanceInPeriod: '2300000.0',
+      periodStartTimestamp: periodStartTimestamp,
+      periodEndTimestamp: periodEndTimestamp,
+    }
+
+    const result = calcPeriodData({
+      motionDuration,
+      limits,
+      periodData,
+    })
+
+    const periodStartTimestampNew = moment()
+      .subtract(1, 'month')
+      .startOf('month')
+      .unix()
+    const periodEndTimestampNew = moment()
+      .add(2, 'month')
+      .startOf('month')
+      .unix()
+
+    expect(result).toEqual({
+      limits,
+      periodData: {
+        alreadySpentAmount: '0',
+        spendableBalanceInPeriod: limits.limit,
+        periodStartTimestamp: periodStartTimestampNew,
+        periodEndTimestamp: periodEndTimestampNew,
+      },
       motionDuration: motionDuration.toNumber() / 60 / 60, // hours
       isEndInNextPeriod: false,
     })

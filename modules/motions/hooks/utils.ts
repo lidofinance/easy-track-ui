@@ -36,16 +36,35 @@ export const calcPeriodData = ({
 }) => {
   let currentPeriodData = { ...periodData }
 
-  const dateOfEndMotionPeriod = moment.unix(periodData.periodEndTimestamp)
+  const dateOfEndMotionPeriod = moment.unix(
+    currentPeriodData.periodEndTimestamp,
+  )
+  const dateOfStartMotionPeriod = moment.unix(
+    currentPeriodData.periodStartTimestamp,
+  )
   const isStartInNextPeriod = moment().isAfter(dateOfEndMotionPeriod)
+  if (isStartInNextPeriod) {
+    // will be more than 2
+    const diffMonthCount = moment()
+      .startOf('month')
+      .diff(dateOfStartMotionPeriod.startOf('month'), 'months')
+    // for period 3 => 3,4,5 = 1, 6,7,8 = 2, ...
+    let periodRatio = Math.floor(diffMonthCount / limits.periodDurationMonths)
+
+    const newPeriodStartTime = dateOfStartMotionPeriod.add(
+      limits.periodDurationMonths * periodRatio,
+      'M',
+    )
+
+    currentPeriodData = getNewPeriod({
+      periodLimit: limits.limit,
+      periodDurationMonths: limits.periodDurationMonths,
+      newPeriodStartTime,
+    })
+  }
 
   const dateOfEndMotion = moment().add(motionDuration.toNumber(), 'seconds')
-  const periodEnd = isStartInNextPeriod
-    ? moment()
-        .startOf('month')
-        .add(limits.periodDurationMonths, 'M')
-        .startOf('month')
-    : moment.unix(periodData.periodEndTimestamp)
+  const periodEnd = moment.unix(currentPeriodData.periodEndTimestamp)
 
   const isEndInNextPeriod = dateOfEndMotion.isAfter(periodEnd)
 
@@ -54,31 +73,9 @@ export const calcPeriodData = ({
       periodLimit: limits.limit,
       periodDurationMonths: limits.periodDurationMonths,
       newPeriodStartTime: moment
-        .unix(periodData.periodStartTimestamp)
+        .unix(currentPeriodData.periodStartTimestamp)
         .add(limits.periodDurationMonths, 'M')
         .startOf('month'),
-    })
-  }
-
-  if (isStartInNextPeriod) {
-    const diffMonthCount = moment()
-      .startOf('month')
-      .diff(dateOfEndMotionPeriod.startOf('month'), 'months')
-    let periodRatio = Math.ceil(diffMonthCount / limits.periodDurationMonths)
-    if (isEndInNextPeriod) periodRatio += 1
-
-    const newPeriodStartTime =
-      diffMonthCount >= limits.periodDurationMonths
-        ? dateOfEndMotionPeriod.add(
-            limits.periodDurationMonths * periodRatio,
-            'M',
-          )
-        : dateOfEndMotionPeriod
-
-    currentPeriodData = getNewPeriod({
-      periodLimit: limits.limit,
-      periodDurationMonths: limits.periodDurationMonths,
-      newPeriodStartTime,
     })
   }
 
