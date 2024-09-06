@@ -450,3 +450,13 @@ export const ContractStonksStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.StonksStablesTopUp],
 })
+
+export const ContractCSMSettleElStealingPenalty = createContractHelpers({
+  factory: TypeChain.CSMSettleElStealingPenaltyAbi__factory,
+  address: EvmAddressesByType[MotionType.CSMSettleElStealingPenalty],
+})
+
+export const ContractCSMRegistry = createContractHelpers({
+  factory: TypeChain.CSMRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.CSMRegistry,
+})

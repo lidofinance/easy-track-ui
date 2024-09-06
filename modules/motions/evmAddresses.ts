@@ -242,6 +242,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.StonksStethTopUp]: '0x1240775f1857fB8317bD9ba63f4A8A6A78D9af06',
     [MotionType.StonksStablesTopUp]:
       '0x65A9913467A9793Bb23726d72C99A470bb9294Ad',
+    [MotionType.CSMSettleElStealingPenalty]:
+      '0x07696ea8a5b53c3e35d9cce10cc62c6c79c4691d',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
