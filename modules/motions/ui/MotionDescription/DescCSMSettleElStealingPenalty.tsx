@@ -1,4 +1,5 @@
 import { CSMSettleElStealingPenaltyAbi } from 'generated'
+import { pluralize } from 'modules/shared/utils/pluralize'
 import { NestProps } from './types'
 
 // CSMSettleElStealingPenalty
@@ -7,8 +8,8 @@ export function DescCSMSettleElStealingPenalty({
 }: NestProps<CSMSettleElStealingPenaltyAbi['decodeEVMScriptCallData']>) {
   return (
     <>
-      Settle (confirm) EL Rewards Stealing penalty for the following CSM
-      operators:
+      Settle (confirm) EL Rewards Stealing penalty for the following CSM{' '}
+      {pluralize(callData.length, 'operator')}:
       {callData.map(item => {
         const nodeOperatorId = item.toNumber()
 
