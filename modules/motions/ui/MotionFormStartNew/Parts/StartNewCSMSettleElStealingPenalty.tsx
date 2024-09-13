@@ -114,7 +114,7 @@ export const formParts = createMotionFormPart({
 
                 <Fieldset>
                   <InputNumberControl
-                    name={`${fieldNames.nodeOperators}.${fieldIndex}.nodeOperatorId`}
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     label="Node operator ID"
                     rules={{
                       required: 'Field is required',
@@ -127,6 +127,15 @@ export const formParts = createMotionFormPart({
 
                         if (valueNum >= nodeOperatorsCount) {
                           return 'Invalid node operator ID'
+                        }
+
+                        const isAlreadyInInput = selectedNodeOperators.some(
+                          ({ id }, index) =>
+                            id === value && index !== fieldIndex,
+                        )
+
+                        if (isAlreadyInInput) {
+                          return 'This ID is already in the list'
                         }
 
                         return true

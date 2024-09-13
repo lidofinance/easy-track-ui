@@ -10,10 +10,10 @@ export function DescCSMSettleElStealingPenalty({
     <>
       Settle (confirm) EL Rewards Stealing penalty for the following CSM{' '}
       {pluralize(callData.length, 'operator')}:
-      {callData.map(item => {
+      {callData.map((item, index) => {
         const nodeOperatorId = item.toNumber()
 
-        return <div key={nodeOperatorId}>NO #{nodeOperatorId}</div>
+        return <div key={index}>NO #{nodeOperatorId}</div>
       })}
     </>
   )
