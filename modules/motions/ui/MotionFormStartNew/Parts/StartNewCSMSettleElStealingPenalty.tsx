@@ -31,7 +31,7 @@ export const formParts = createMotionFormPart({
   motionType: MotionType.CSMSettleElStealingPenalty,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const sortedNodeOperators = formData.nodeOperators
-      .map(id => Number(id))
+      .map(({ id }) => Number(id))
       .sort((a, b) => a - b)
 
     const encodedCallData = new utils.AbiCoder().encode(
