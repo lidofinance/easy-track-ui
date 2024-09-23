@@ -14,6 +14,7 @@ import * as StartNewSDVTNodeOperatorRewardAddressesSet from './StartNewSDVTNodeO
 import * as StartNewSDVTNodeOperatorNamesSet from './StartNewSDVTNodeOperatorNamesSet'
 import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
 import * as StartNewNodeOperatorLimitIncrease from './StartNewNodeOperatorLimitIncrease'
+import * as StartNewCSMSettleElStealingPenalty from './StartNewCSMSettleElStealingPenalty'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -119,6 +120,8 @@ export const formParts = {
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.StonksStablesTopUp,
     }),
+  [MotionTypeForms.CSMSettleElStealingPenalty]:
+    StartNewCSMSettleElStealingPenalty.formParts,
 } as const
 
 export type FormData = {

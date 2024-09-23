@@ -40,6 +40,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.PmlStethTopUp]: 'Top up PML stETH',
   [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
   [MotionType.LegoStablesTopUp]: 'Top up LEGO stablecoins',
+  [MotionType.CSMSettleElStealingPenalty]:
+    'Settle EL Rewards Stealing penalty for CSM operators',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
