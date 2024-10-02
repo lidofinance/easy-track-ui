@@ -103,7 +103,7 @@ export const Row = styled(Text).attrs({
     gap: 4px;
 
     &:last-child {
-      font-weight: 600;
+      font-weight: 800;
     }
   }
 `
@@ -133,5 +133,5 @@ export const MessageBox = styled.div`
 export const Link = styled.a`
   color: ${({ theme }) => theme.colors.primary};
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 800;
 `

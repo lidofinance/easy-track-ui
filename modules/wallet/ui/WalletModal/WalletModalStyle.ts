@@ -39,5 +39,5 @@ export const Address = styled.div`
   margin-left: ${({ theme }) => theme.spaceMap.sm}px;
   font-size: ${({ theme }) => theme.fontSizesMap.lg}px;
   line-height: 1.2em;
-  font-weight: 600;
+  font-weight: 800;
 `
