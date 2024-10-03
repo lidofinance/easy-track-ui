@@ -122,6 +122,10 @@ export const formParts = {
     }),
   [MotionTypeForms.CSMSettleElStealingPenalty]:
     StartNewCSMSettleElStealingPenalty.formParts,
+  [MotionTypeForms.AllianceOpsStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.AllianceOpsStablesTopUp,
+    }),
 } as const
 
 export type FormData = {

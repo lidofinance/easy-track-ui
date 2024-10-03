@@ -300,6 +300,12 @@ const MOTION_DESCRIPTIONS = {
     />
   ),
   [MotionType.CSMSettleElStealingPenalty]: DescCSMSettleElStealingPenalty,
+  [MotionType.AllianceOpsStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.AllianceOpsStablesTopUp}
+    />
+  ),
 } as const
 
 type Props = {

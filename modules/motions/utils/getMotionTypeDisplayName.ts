@@ -70,6 +70,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
   [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
+  [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
 } as const
 
 export function getMotionTypeDisplayName(

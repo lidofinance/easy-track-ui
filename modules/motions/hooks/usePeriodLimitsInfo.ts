@@ -12,6 +12,7 @@ import {
   ContractGasFunderETHRegistry,
   ContractPmlStablesRegistry,
   ContractStethRewardProgramRegistry,
+  ContractAllianceOpsStablesAllowedRecipientsRegistry,
 } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
@@ -117,6 +118,8 @@ const registryByMotionType: {
     ContractAllowedRecipientTrpLdoRegistry,
   [MotionType.StethRewardProgramTopUp]: ContractStethRewardProgramRegistry,
   [MotionType.LegoStablesTopUp]: ContractLegoStablesRegistry,
+  [MotionType.AllianceOpsStablesTopUp]:
+    ContractAllianceOpsStablesAllowedRecipientsRegistry,
 }
 
 export const usePeriodLimitsInfoByMotionType = (props: {

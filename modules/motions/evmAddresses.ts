@@ -101,6 +101,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.PmlDAITopUp]: '0x4E6D3A5023A38cE2C4c5456d3760357fD93A22cD',
     [MotionType.AtcDAITopUp]: '0x67Fb97ABB9035E2e93A7e3761a0d0571c5d7CD07',
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
+    [MotionType.AllianceOpsStablesTopUp]:
+      '0xe5656eEe7eeD02bdE009d77C88247BC8271e26Eb',
   },
 
   // Goerli
@@ -244,6 +246,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x65A9913467A9793Bb23726d72C99A470bb9294Ad',
     [MotionType.CSMSettleElStealingPenalty]:
       '0x07696EA8A5b53C3E35d9cce10cc62c6c79C4691D',
+    [MotionType.AllianceOpsStablesTopUp]:
+      '0x343FA5F0C79277E2d27e440F40420D619F962A23',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
