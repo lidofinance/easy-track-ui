@@ -42,6 +42,7 @@ export const MotionTypeForms = {
   LegoStablesTopUp: 'LegoStablesTopUp',
   StonksStethTopUp: 'StonksStethTopUp',
   StonksStablesTopUp: 'StonksStablesTopUp',
+  AllianceOpsStablesTopUp: 'AllianceOpsStablesTopUp',
 
   CSMSettleElStealingPenalty: 'CSMSettleElStealingPenalty',
 } as const

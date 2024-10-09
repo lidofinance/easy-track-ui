@@ -80,6 +80,8 @@ export const EVM_CONTRACTS = {
   [MotionType.StonksStablesTopUp]: CONTRACTS.ContractStonksStablesTopUp,
   [MotionType.CSMSettleElStealingPenalty]:
     CONTRACTS.ContractCSMSettleElStealingPenalty,
+  [MotionType.AllianceOpsStablesTopUp]:
+    CONTRACTS.ContractEvmAllianceOpsStablesTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

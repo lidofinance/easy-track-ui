@@ -203,3 +203,8 @@ export const StonksStablesAllowedRecipientsRegistry: ChainAddressMap = {
 export const CSMRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0x4562c3e63c2e586cd1651b958c22f88135acad4f',
 }
+
+export const AllianceOpsAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x3b525f4c059f246ca4aa995d21087204f30c9e2f',
+  [CHAINS.Holesky]: '0xe1ba8dee84a4df8e99e495419365d979cdb19991',
+}
