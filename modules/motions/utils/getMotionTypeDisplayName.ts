@@ -29,6 +29,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTVettedValidatorsLimitsSet]: 'Set vetted validators limits',
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     'Update target validator limits',
+  [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
+    'Update target validator limits',
   [MotionType.SDVTNodeOperatorRewardAddressesSet]:
     'Set node operators reward addresses',
   [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
