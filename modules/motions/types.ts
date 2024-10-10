@@ -27,6 +27,7 @@ export const MotionTypeForms = {
   SDVTNodeOperatorsDeactivate: 'SDVTNodeOperatorsDeactivate',
   SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
   SDVTTargetValidatorLimitsUpdate: 'SDVTTargetValidatorLimitsUpdate',
+  SDVTTargetValidatorLimitsUpdateV2: 'SDVTTargetValidatorLimitsUpdateV2',
   SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
   SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
   SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
@@ -42,6 +43,9 @@ export const MotionTypeForms = {
   LegoStablesTopUp: 'LegoStablesTopUp',
   StonksStethTopUp: 'StonksStethTopUp',
   StonksStablesTopUp: 'StonksStablesTopUp',
+  AllianceOpsStablesTopUp: 'AllianceOpsStablesTopUp',
+
+  CSMSettleElStealingPenalty: 'CSMSettleElStealingPenalty',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

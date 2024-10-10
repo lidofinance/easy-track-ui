@@ -280,8 +280,13 @@ export const ContractRewardsShareProgramTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.RewardsShareProgramTopUp],
 })
 
+// TODO: merge these two once UpdateTargetValidatorLimits v2 is deployed on the Mainnet
 export const ContractSDVTRegistry = createContractHelpers({
   factory: TypeChain.SDVTRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.SDVTRegistry,
+})
+export const ContractSDVTRegistryV2 = createContractHelpers({
+  factory: TypeChain.SDVTRegistryV2Abi__factory,
   address: CONTRACT_ADDRESSES.SDVTRegistry,
 })
 
@@ -322,9 +327,14 @@ export const ContractSDVTNodeOperatorManagerChange = createContractHelpers({
   address: EvmAddressesByType[MotionType.SDVTNodeOperatorManagerChange],
 })
 
+// TODO: merge these two once v2 is deployed on the Mainnet
 export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
   factory: TypeChain.UpdateTargetValidatorLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdate],
+})
+export const ContractSDVTTargetValidatorLimitsUpdateV2 = createContractHelpers({
+  factory: TypeChain.UpdateTargetValidatorLimitsV2Abi__factory,
+  address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdateV2],
 })
 
 export const ContractSandboxNodeOperatorsRegistry = createContractHelpers({
@@ -449,4 +459,25 @@ export const ContractStonksStethTopUp = createContractHelpers({
 export const ContractStonksStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.StonksStablesTopUp],
+})
+
+export const ContractCSMSettleElStealingPenalty = createContractHelpers({
+  factory: TypeChain.CSMSettleElStealingPenaltyAbi__factory,
+  address: EvmAddressesByType[MotionType.CSMSettleElStealingPenalty],
+})
+
+export const ContractCSMRegistry = createContractHelpers({
+  factory: TypeChain.CSMRegistryAbi__factory,
+  address: CONTRACT_ADDRESSES.CSMRegistry,
+})
+
+export const ContractAllianceOpsStablesAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.AllianceOpsAllowedRecipientsRegistry,
+  })
+
+export const ContractEvmAllianceOpsStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.AllianceOpsStablesTopUp],
 })

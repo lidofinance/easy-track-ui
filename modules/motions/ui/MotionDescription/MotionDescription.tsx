@@ -38,11 +38,13 @@ import { DescSDVTNodeOperatorsDeactivate } from './DescSDVTNodeOperatorsDeactiva
 import { DescSDVTNodeOperatorsActivate } from './DescSDVTNodeOperatorsActivate'
 import { DescSDVTVettedValidatorsLimitsSet } from './DescSDVTVettedValidatorsLimitsSet'
 import { DescSDVTTargetValidatorLimitsUpdate } from './DescSDVTTargetValidatorLimitsUpdate'
+import { DescSDVTTargetValidatorLimitsUpdateV2 } from './DescSDVTTargetValidatorLimitsUpdateV2'
 import { DescSDVTNodeOperatorRewardAddressesSet } from './DescSDVTNodeOperatorRewardAddressesSet'
 import { DescSDVTNodeOperatorNamesSet } from './DescSDVTNodeOperatorNamesSet'
 import { DescSDVTNodeOperatorsAdd } from './DescSDVTNodeOperatorsAdd'
 import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManagersChange'
 import { DescNodeOperatorIncreaseLimit } from './DescNodeOperatorLimitIncrease'
+import { DescCSMSettleElStealingPenalty } from './DescCSMSettleElStealingPenalty'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -223,6 +225,8 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.SDVTNodeOperatorNamesSet]: DescSDVTNodeOperatorNamesSet,
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     DescSDVTTargetValidatorLimitsUpdate,
+  [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
+    DescSDVTTargetValidatorLimitsUpdateV2,
   [MotionType.SDVTNodeOperatorManagerChange]:
     DescSDVTNodeOperatorManagersChange,
   [MotionType.SandboxNodeOperatorIncreaseLimit]: (
@@ -296,6 +300,13 @@ const MOTION_DESCRIPTIONS = {
     <DescTopUpWithLimits
       {...props}
       registryType={MotionType.StonksStethTopUp}
+    />
+  ),
+  [MotionType.CSMSettleElStealingPenalty]: DescCSMSettleElStealingPenalty,
+  [MotionType.AllianceOpsStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.AllianceOpsStablesTopUp}
     />
   ),
 } as const

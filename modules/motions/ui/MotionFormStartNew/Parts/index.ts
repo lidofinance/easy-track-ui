@@ -10,10 +10,12 @@ import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsA
 import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
 import * as StartNewSDVTVettedValidatorsLimitsSet from './StartNewSDVTVettedValidatorsLimitsSet'
 import * as StartNewSDVTTargetValidatorLimitsUpdate from './StartNewSDVTTargetValidatorLimitsUpdate'
+import * as StartNewSDVTTargetValidatorLimitsUpdateV2 from './StartNewSDVTTargetValidatorLimitsUpdateV2'
 import * as StartNewSDVTNodeOperatorRewardAddressesSet from './StartNewSDVTNodeOperatorRewardAddressesSet'
 import * as StartNewSDVTNodeOperatorNamesSet from './StartNewSDVTNodeOperatorNamesSet'
 import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
 import * as StartNewNodeOperatorLimitIncrease from './StartNewNodeOperatorLimitIncrease'
+import * as StartNewCSMSettleElStealingPenalty from './StartNewCSMSettleElStealingPenalty'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -79,6 +81,8 @@ export const formParts = {
     StartNewSDVTVettedValidatorsLimitsSet.formParts,
   [MotionTypeForms.SDVTTargetValidatorLimitsUpdate]:
     StartNewSDVTTargetValidatorLimitsUpdate.formParts,
+  [MotionTypeForms.SDVTTargetValidatorLimitsUpdateV2]:
+    StartNewSDVTTargetValidatorLimitsUpdateV2.formParts,
   [MotionTypeForms.SDVTNodeOperatorRewardAddressesSet]:
     StartNewSDVTNodeOperatorRewardAddressesSet.formParts,
   [MotionTypeForms.SDVTNodeOperatorNamesSet]:
@@ -118,6 +122,12 @@ export const formParts = {
   [MotionTypeForms.StonksStablesTopUp]:
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.StonksStablesTopUp,
+    }),
+  [MotionTypeForms.CSMSettleElStealingPenalty]:
+    StartNewCSMSettleElStealingPenalty.formParts,
+  [MotionTypeForms.AllianceOpsStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.AllianceOpsStablesTopUp,
     }),
 } as const
 

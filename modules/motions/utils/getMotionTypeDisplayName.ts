@@ -29,6 +29,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTVettedValidatorsLimitsSet]: 'Set vetted validators limits',
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     'Update target validator limits',
+  [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
+    'Update target validator limits',
   [MotionType.SDVTNodeOperatorRewardAddressesSet]:
     'Set node operators reward addresses',
   [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
@@ -40,6 +42,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.PmlStethTopUp]: 'Top up PML stETH',
   [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
   [MotionType.LegoStablesTopUp]: 'Top up LEGO stablecoins',
+  [MotionType.CSMSettleElStealingPenalty]:
+    'Settle EL Rewards Stealing penalty for CSM operators',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
@@ -68,6 +72,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
   [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
+  [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
 } as const
 
 export function getMotionTypeDisplayName(

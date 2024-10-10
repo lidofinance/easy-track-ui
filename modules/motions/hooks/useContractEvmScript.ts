@@ -58,6 +58,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTVettedValidatorsLimitsSet,
   [MotionType.SDVTTargetValidatorLimitsUpdate]:
     CONTRACTS.ContractSDVTTargetValidatorLimitsUpdate,
+  [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
+    CONTRACTS.ContractSDVTTargetValidatorLimitsUpdateV2,
   [MotionType.SDVTNodeOperatorRewardAddressesSet]:
     CONTRACTS.ContractSDVTNodeOperatorRewardAddressesSet,
   [MotionType.SDVTNodeOperatorNamesSet]:
@@ -78,6 +80,10 @@ export const EVM_CONTRACTS = {
   [MotionType.LegoStablesTopUp]: CONTRACTS.ContractLegoStablesTopUp,
   [MotionType.StonksStethTopUp]: CONTRACTS.ContractStonksStethTopUp,
   [MotionType.StonksStablesTopUp]: CONTRACTS.ContractStonksStablesTopUp,
+  [MotionType.CSMSettleElStealingPenalty]:
+    CONTRACTS.ContractCSMSettleElStealingPenalty,
+  [MotionType.AllianceOpsStablesTopUp]:
+    CONTRACTS.ContractEvmAllianceOpsStablesTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
