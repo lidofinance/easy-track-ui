@@ -3,11 +3,7 @@ import { CHAINS } from '@lido-sdk/constants'
 import { MotionType } from './types'
 import { Invert } from 'modules/shared/utils/utilTypes'
 
-const EvmSupportedChains = [
-  CHAINS.Mainnet,
-  CHAINS.Goerli,
-  CHAINS.Holesky,
-] as const
+const EvmSupportedChains = [CHAINS.Mainnet, CHAINS.Holesky] as const
 
 export type EvmSupportedChain = typeof EvmSupportedChains[number]
 
@@ -103,84 +99,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.AllianceOpsStablesTopUp]:
       '0xe5656eEe7eeD02bdE009d77C88247BC8271e26Eb',
-  },
-
-  // Goerli
-  [CHAINS.Goerli]: {
-    [MotionType.NodeOperatorIncreaseLimit]:
-      '0xE033673D83a8a60500BcE02aBd9007ffAB587714',
-    [MotionType.AllowedRecipientTopUpTrpLdo]:
-      '0x43f33C52156d1Fb2eA24d82aBfD342E69835E79f',
-    [MotionType.LegoLDOTopUp]: '0xc39Dd5B66968e364D99e0c9E7089049351AB89CA',
-    [MotionType.RccStablesTopUp]: '0xd50eE42B31Bc500409B7caD99A2D16FB1Bfecdc6',
-    [MotionType.PmlStablesTopUp]: '0x5F379512158A46ab7a91f8b799A97691eC498b9a',
-    [MotionType.AtcStablesTopUp]: '0xB87300405050e7f1dBC35c6C9ce9ea4417D3Ad81',
-    [MotionType.StethRewardProgramAdd]:
-      '0x785A8B1CDC03Bb191670Ed4696e9ED5B11Af910A',
-    [MotionType.StethRewardProgramRemove]:
-      '0xEFEa524D1739800fF6F7d2532ED4C8508220239a',
-    [MotionType.StethRewardProgramTopUp]:
-      '0xF2f7FC1E8879c10D4579Bc82D5FEa923A5a228dE',
-    [MotionType.StethGasSupplyAdd]:
-      '0xa2286d37Af8F8e84428151bF72922c5Fe5c1EeED',
-    [MotionType.StethGasSupplyRemove]:
-      '0x48D01979eD9e6CE70a6496B111F5728f9a547C96',
-    [MotionType.StethGasSupplyTopUp]:
-      '0x960CcA0BE6419e9684796Ce3ABE980E8a2d0cd80',
-    [MotionType.RewardsShareProgramAdd]:
-      '0x51916FC3D24CbE19c5e981ae8650668A1F5cF19B',
-    [MotionType.RewardsShareProgramRemove]:
-      '0x932aab3D6057ed2Beef95471414831C4535600E9',
-    [MotionType.RewardsShareProgramTopUp]:
-      '0x5Bb391170899A7b8455A442cca65078ff3E1639C',
-    [MotionType.SDVTNodeOperatorsAdd]:
-      '0x69ab4BeD4D136F1e22c6072277BA5E52A246672B',
-    [MotionType.SDVTNodeOperatorsActivate]:
-      '0x4C0e79308f2E672b9dB9f2E6fD183Ec6025eFc37',
-    [MotionType.SDVTNodeOperatorsDeactivate]:
-      '0x2b956B578D0f44E0BD484d1A63c8A164BBEf6B58',
-    [MotionType.SDVTVettedValidatorsLimitsSet]:
-      '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
-    [MotionType.SDVTTargetValidatorLimitsUpdate]:
-      '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
-    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
-      '0x85350e579C71a78810305f860380a3315b3e6Ed9',
-    [MotionType.SDVTNodeOperatorNamesSet]:
-      '0xc8b9F2bfFFF2f2B8F9C32A7b39a5AAa0644Fe632',
-    [MotionType.SDVTNodeOperatorManagerChange]:
-      '0x2Ed0FB58ba7637f972100Db7427614C9E30Ed684',
-
-    // next motion factories are @deprecated
-    // we are keeping them here to display history data
-    [MotionType.LEGOTopUp]: '0xb2bcf211F103d7F13789394DD475c2274e044C4C',
-    [MotionType.GasFunderETHTopUp]: '0x',
-    [MotionType.RewardProgramAdd]: '0x5560d40b00EA3a64E9431f97B3c79b04e0cdF6F2',
-    [MotionType.RewardProgramRemove]:
-      '0x31B68d81125E52fE1aDfe4076F8945D1014753b5',
-    [MotionType.RewardProgramTopUp]:
-      '0x8180949ac41EF18e844ff8dafE604a195d86Aea9',
-    [MotionType.ReferralPartnerAdd]:
-      '0xe54ca3e867C52a34d262E94606C7A9371AB820c9',
-    [MotionType.ReferralPartnerRemove]:
-      '0x2A0c343087c6cFB721fFa20608A6eD0473C71275',
-    [MotionType.ReferralPartnerTopUp]:
-      '0xB1E898faC74c377bEF16712Ba1CD4738606c19Ee',
-    [MotionType.AllowedRecipientAdd]:
-      '0x3Ef70849FdBEe7b1F0A43179A3f788A8949b8abe',
-    [MotionType.AllowedRecipientRemove]:
-      '0x6c2e12D9C1d6e3dE146A7519eCbcb79c96Fe3146',
-    [MotionType.AllowedRecipientTopUp]:
-      '0xD928dC9E4DaBeE939d3237A4f41983Ff5B6308dB',
-    [MotionType.AllowedRecipientAddReferralDai]:
-      '0x734458219BE229F6631F083ea574EBACa2f9bEaf',
-    [MotionType.AllowedRecipientRemoveReferralDai]:
-      '0x5FEC0bcd7519C4fE41eca5Fe1dD94345fA100A67',
-    [MotionType.AllowedRecipientTopUpReferralDai]:
-      '0x9534A77029D57E249c467E5A1E0854cc26Cd75A0',
-    [MotionType.RccDAITopUp]: '0xd0411e7c4A24E7d4509D5F13AEd19aeb8e5644AB',
-    [MotionType.PmlDAITopUp]: '0xc749aD24572263887Bc888d3Cb854FCD50eCCB61',
-    [MotionType.AtcDAITopUp]: '0xF4b8b5760EE4b5c5Cb154edd0f0841465d821006',
-    [MotionType.LegoDAITopUp]: '0xbf44eC2b23cA105F8a62e0587900a09A473288c6',
   },
 
   // Holesky
