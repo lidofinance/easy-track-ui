@@ -3,8 +3,9 @@ import {
   ContractEvmSandboxNodeOperatorIncreaseLimit,
   ContractNodeOperatorsRegistry,
   ContractSandboxNodeOperatorsRegistry,
+  ContractSDVTRegistry,
 } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
+import { MotionType, StakingModule } from 'modules/motions/types'
 
 export const MOTION_ATTENTION_PERIOD = 1 / 24
 
@@ -17,12 +18,12 @@ export const noSigningKeysRoleError =
 export const INCREASE_LIMIT_MOTION_MAP = {
   [MotionType.NodeOperatorIncreaseLimit]: {
     evmContract: ContractEvmNodeOperatorIncreaseLimit,
-    registryType: 'curated',
+    stakingModule: StakingModule.Curated,
     motionType: MotionType.NodeOperatorIncreaseLimit,
   },
   [MotionType.SandboxNodeOperatorIncreaseLimit]: {
     evmContract: ContractEvmSandboxNodeOperatorIncreaseLimit,
-    registryType: 'sandbox',
+    stakingModule: StakingModule.Sandbox,
     motionType: MotionType.SandboxNodeOperatorIncreaseLimit,
   },
 } as const
@@ -30,8 +31,7 @@ export const INCREASE_LIMIT_MOTION_MAP = {
 export type IncreaseLimitMotionType = keyof typeof INCREASE_LIMIT_MOTION_MAP
 
 export const NODE_OPERATORS_REGISTRY_MAP = {
-  curated: ContractNodeOperatorsRegistry,
-  sandbox: ContractSandboxNodeOperatorsRegistry,
+  [StakingModule.Curated]: ContractNodeOperatorsRegistry,
+  [StakingModule.SimpleDVT]: ContractSDVTRegistry,
+  [StakingModule.Sandbox]: ContractSandboxNodeOperatorsRegistry,
 } as const
-
-export type NodeOperatorsRegistryType = keyof typeof NODE_OPERATORS_REGISTRY_MAP

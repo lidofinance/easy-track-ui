@@ -1,13 +1,16 @@
 import { ActivateNodeOperatorsAbi } from 'generated'
 import { NestProps } from './types'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
+import { StakingModule } from 'modules/motions/types'
 
 // ActivateNodeOperators
 export function DescSDVTNodeOperatorsActivate({
   callData,
 }: NestProps<ActivateNodeOperatorsAbi['decodeEVMScriptCallData']>) {
-  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
+  const { data: nodeOperatorsList } = useNodeOperatorsList({
+    module: StakingModule.SimpleDVT,
+  })
   return (
     <>
       {callData.map((item, index) => {

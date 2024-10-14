@@ -16,14 +16,14 @@ import {
 } from '../CreateMotionFormStyle'
 
 import { ContractSDVTTargetValidatorLimitsUpdate } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
+import { MotionType, StakingModule } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
 
 type NodeOperator = {
   id: number | undefined
@@ -76,7 +76,10 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList({ withSummary: true })
+    } = useNodeOperatorsList({
+      module: StakingModule.SimpleDVT,
+      withSummary: true,
+    })
 
     const trustedCaller = ContractSDVTTargetValidatorLimitsUpdate.useSwrWeb3(
       'trustedCaller',
