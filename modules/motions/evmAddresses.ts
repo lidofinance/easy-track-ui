@@ -103,6 +103,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.AllianceOpsStablesTopUp]:
       '0xe5656eEe7eeD02bdE009d77C88247BC8271e26Eb',
+    [MotionType.CSMSettleElStealingPenalty]:
+      '0xF6B6E7997338C48Ea3a8BCfa4BB64a315fDa76f4',
   },
 
   // Goerli
