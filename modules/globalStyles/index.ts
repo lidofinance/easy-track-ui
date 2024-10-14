@@ -30,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   b {
-    font-weight: 600;
+    font-weight: 800;
   }
 
   html.html-scroll-lock {

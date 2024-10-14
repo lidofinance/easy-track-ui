@@ -7,13 +7,7 @@ import { useErrorMessage } from 'modules/blockChain/hooks/useErrorMessage'
 import { useSupportedChains } from 'reef-knot/web3-react'
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
-import {
-  toast,
-  ThemeProvider,
-  themeLight,
-  ToastContainer,
-  ToastError,
-} from '@lidofinance/lido-ui'
+import { toast, ToastContainer, ToastError } from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
@@ -22,6 +16,7 @@ import { withCsp } from 'modules/shared/utils/csp'
 import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 import { AppProviderWeb3 } from 'modules/appProviderWeb3'
 import { AppWagmiConfig } from 'modules/appWagmiConfig'
+import { UiProvider } from 'modules/shared/ui/UiProvider'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
@@ -105,7 +100,7 @@ const AppRootMemo = memo(AppRoot)
 
 function App({ envConfig, ...appProps }: CustomAppProps) {
   return (
-    <ThemeProvider theme={themeLight}>
+    <UiProvider>
       <GlobalStyle />
       <ConfigProvider envConfig={envConfig}>
         <AppWagmiConfig>
@@ -116,7 +111,7 @@ function App({ envConfig, ...appProps }: CustomAppProps) {
           </AppProviderWeb3>
         </AppWagmiConfig>
       </ConfigProvider>
-    </ThemeProvider>
+    </UiProvider>
   )
 }
 
