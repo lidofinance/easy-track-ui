@@ -9,7 +9,7 @@ import {
 
 import { useNodeOperatorsList } from './useNodeOperatorsList'
 import { EVM_CONTRACTS } from './useContractEvmScript'
-import { MotionTypeForms } from 'modules/motions/types'
+import { MotionTypeForms, StakingModule } from 'modules/motions/types'
 import { useSWR } from 'modules/network/hooks/useSwr'
 
 const isHasTrustedCaller = (
@@ -38,12 +38,12 @@ export const useAvailableMotions = () => {
   const { chainId, walletAddress } = useWeb3()
 
   const { data: nodeOperators, initialLoading: isNodeOperatorsDataLoading } =
-    useNodeOperatorsList('curated')
+    useNodeOperatorsList({ module: StakingModule.Curated })
 
   const {
     data: sandboxNodeOperators,
     initialLoading: isSandboxNodeOperatorsDataLoading,
-  } = useNodeOperatorsList('sandbox')
+  } = useNodeOperatorsList({ module: StakingModule.Sandbox })
 
   const {
     data: availableMotions,

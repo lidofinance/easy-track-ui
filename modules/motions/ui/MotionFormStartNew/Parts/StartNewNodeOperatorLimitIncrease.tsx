@@ -14,7 +14,7 @@ import { Fieldset, MessageBox } from '../CreateMotionFormStyle'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
 import { IncreaseLimitMotionType } from 'modules/motions/constants'
-import { getNodeOperatorRegistryType } from 'modules/motions/utils/getNodeOperatorRegistryType'
+import { getStakingModuleByMotionType } from 'modules/motions/utils'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 
 export const formParts = ({
@@ -49,9 +49,9 @@ export const formParts = ({
     }) {
       const { setValue } = useFormContext()
       const { walletAddress } = useWeb3()
-      const registryType = getNodeOperatorRegistryType(motionType)
-      const nodeOperators = useNodeOperatorsList(registryType)
-      const keysInfo = useNodeOperatorKeysInfo(registryType)
+      const module = getStakingModuleByMotionType(motionType)
+      const nodeOperators = useNodeOperatorsList({ module })
+      const keysInfo = useNodeOperatorKeysInfo(module)
 
       const currentNodeOperator = useMemo(() => {
         if (!walletAddress || !nodeOperators.data) {
@@ -125,7 +125,7 @@ export const formParts = ({
               label={
                 <>
                   New limit (current limit is{' '}
-                  {currentNodeOperator.stakingLimit.toString()})
+                  {connectedKeysInfo.info.stakingLimit.toString()})
                 </>
               }
               rules={{
@@ -137,8 +137,7 @@ export const formParts = ({
                   }
                   const valueNum = Number(value)
 
-                  const limit = currentNodeOperator.stakingLimit.toNumber()
-                  if (valueNum <= limit) {
+                  if (valueNum <= connectedKeysInfo.info.stakingLimit) {
                     return 'New limit value should be greater than current'
                   }
                   if (valueNum > connectedKeysInfo.info.totalSigningKeys) {

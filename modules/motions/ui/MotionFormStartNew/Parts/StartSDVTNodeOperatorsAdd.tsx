@@ -20,16 +20,16 @@ import {
 
 import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
 
-import { MotionTypeForms } from 'modules/motions/types'
+import { MotionTypeForms, StakingModule } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import {
-  useSDVTOperatorNameLimit,
-  useSDVTOperatorsCounts,
+  useNodeOperatorsList,
+  useNodeOperatorNameLimit,
+  useNodeOperatorsCount,
 } from 'modules/motions/hooks'
 import { STETH } from 'modules/blockChain/contractAddresses'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 
@@ -39,14 +39,6 @@ type NodeOperator = {
   managerAddress: string
 }
 
-// DONE: The current number of node operators in the registry MUST be equal to the _nodeOperatorsCount
-// DONE: (exec also) The total number of node operators in the registry, after adding the new ones, MUST NOT exceed nodeOperatorsRegistry.MAX_NODE_OPERATORS_COUNT()
-// DONE: Manager addresses MUST NOT have duplicates
-// DONE: Manager addresses MUST NOT be used as managers for previously added node operators
-// DONE: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
-// DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
-// DONE: The names of newly added node operators MUST NOT be an empty string
-// DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
 export const formParts = () =>
   createMotionFormPart({
     motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
@@ -93,13 +85,13 @@ export const formParts = () =>
       const {
         data: nodeOperatorsList,
         initialLoading: isNodeOperatorsListLoading,
-      } = useSDVTNodeOperatorsList()
+      } = useNodeOperatorsList({ module: StakingModule.SimpleDVT })
       const {
         data: maxNodeOperatorNameLength,
         initialLoading: NONameLengthLoading,
-      } = useSDVTOperatorNameLimit()
+      } = useNodeOperatorNameLimit(StakingModule.SimpleDVT)
       const { data: NOCounts, initialLoading: maxOperatorsLoading } =
-        useSDVTOperatorsCounts()
+        useNodeOperatorsCount(StakingModule.SimpleDVT)
 
       const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
       const selectedNodeOperators: NodeOperator[] = watch(

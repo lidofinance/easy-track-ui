@@ -2,7 +2,7 @@ import { useNodeOperatorsList } from 'modules/motions/hooks/useNodeOperatorsList
 import { EvmIncreaseNodeOperatorStakingLimitAbi } from 'generated'
 import { NestProps } from './types'
 import { IncreaseLimitMotionType } from 'modules/motions/constants'
-import { getNodeOperatorRegistryType } from 'modules/motions/utils/getNodeOperatorRegistryType'
+import { getStakingModuleByMotionType } from 'modules/motions/utils'
 
 // IncreaseNodeOperatorLimit
 export function DescNodeOperatorIncreaseLimit({
@@ -14,8 +14,8 @@ export function DescNodeOperatorIncreaseLimit({
   motionType: IncreaseLimitMotionType
 }) {
   const nodeOperatorId = Number(callData._nodeOperatorId)
-  const registryType = getNodeOperatorRegistryType(motionType)
-  const { data: nodeOperators } = useNodeOperatorsList(registryType)
+  const module = getStakingModuleByMotionType(motionType)
+  const { data: nodeOperators } = useNodeOperatorsList({ module })
   const nodeOperatorName = nodeOperators?.[nodeOperatorId]?.name ?? ''
 
   return (
