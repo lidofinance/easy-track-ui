@@ -17,7 +17,7 @@ export type ContractTypeAllowedRecipientRegistry =
 export type ContractTypeRegistryWithLimits = TypeChain.RegistryWithLimitsAbi
 
 export const ContractNodeOperatorsRegistry = createContractHelpers({
-  factory: TypeChain.NodeOperatorsAbi__factory,
+  factory: TypeChain.NodeOperatorsRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.NodeOperatorsRegistry,
 })
 
@@ -281,7 +281,7 @@ export const ContractRewardsShareProgramTopUp = createContractHelpers({
 })
 
 export const ContractSDVTRegistry = createContractHelpers({
-  factory: TypeChain.SDVTRegistryAbi__factory,
+  factory: TypeChain.NodeOperatorsRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.SDVTRegistry,
 })
 
@@ -328,7 +328,7 @@ export const ContractSDVTTargetValidatorLimitsUpdate = createContractHelpers({
 })
 
 export const ContractSandboxNodeOperatorsRegistry = createContractHelpers({
-  factory: TypeChain.NodeOperatorsAbi__factory,
+  factory: TypeChain.NodeOperatorsRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.SandboxNodeOperatorsRegistry,
 })
 
