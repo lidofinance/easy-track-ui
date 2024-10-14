@@ -20,8 +20,12 @@ describe('calcPeriodData', () => {
     const periodData = {
       alreadySpentAmount: '500',
       spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment().unix() - EIGTH_HOURS_SECONDS,
-      periodEndTimestamp: moment().unix() + EIGTH_HOURS_SECONDS * 2,
+      periodStartTimestamp: moment().startOf('month').unix(),
+      periodEndTimestamp: moment()
+        .startOf('month')
+        .add(limits.periodDurationMonths, 'M')
+        .startOf('month')
+        .unix(),
     }
     const isPending = false
 
@@ -49,8 +53,12 @@ describe('calcPeriodData', () => {
     const periodData = {
       alreadySpentAmount: '500',
       spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment().unix() - EIGTH_HOURS_SECONDS * 10,
-      periodEndTimestamp: moment().unix() - EIGTH_HOURS_SECONDS * 2,
+      periodStartTimestamp: moment()
+        .startOf('month')
+        .subtract(limits.periodDurationMonths, 'M')
+        .startOf('month')
+        .unix(),
+      periodEndTimestamp: moment().startOf('month').unix(),
     }
     const isPending = false
 
@@ -88,9 +96,13 @@ describe('calcPeriodData', () => {
       periodDurationMonths: 2,
     }
 
-    const startOfMonth = moment().startOf('month')
-    const endOfMonth = moment().endOf('month')
-    const currentDateMock = moment(endOfMonth).subtract(5, 'hours')
+    const startOfPeriod = moment('2024-01-11').startOf('month')
+    const endOfPeriod = moment('2024-03-11').startOf('month')
+
+    const currentDateMock = moment(endOfPeriod).subtract(5, 'hours')
+
+    const newStartTime = moment('2024-03-11').startOf('month')
+    const newEndTime = moment('2024-05-11').startOf('month')
 
     jest
       .spyOn(Date, 'now')
@@ -101,8 +113,8 @@ describe('calcPeriodData', () => {
     const periodData = {
       alreadySpentAmount: '500',
       spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment(startOfMonth).subtract(1, 'month').unix(),
-      periodEndTimestamp: moment(endOfMonth).unix(),
+      periodStartTimestamp: startOfPeriod.unix(),
+      periodEndTimestamp: endOfPeriod.unix(),
     }
     const isPending = false
 
@@ -112,14 +124,6 @@ describe('calcPeriodData', () => {
       periodData,
       isPending,
     })
-
-    const newStartTime = moment
-      .unix(periodData.periodStartTimestamp)
-      .add(limits.periodDurationMonths, 'M')
-      .startOf('month')
-    const newEndTime = moment(newStartTime)
-      .add(limits.periodDurationMonths, 'M')
-      .startOf('month')
 
     const expectPeriodData = {
       ...periodData,
@@ -262,48 +266,57 @@ describe('calcPeriodData', () => {
     })
   })
 
-  it('Motion start in next N period and end in current', () => {
-    const motionDuration = BigNumber.from(MONTH_HOURS_SECONDS) // seconds
-    const limits = {
-      limit: '1000',
-      periodDurationMonths: 2, // month
-    }
-    const periodData = {
-      alreadySpentAmount: '500',
-      spendableBalanceInPeriod: '500',
-      periodStartTimestamp: moment().subtract(6, 'month').unix(),
-      periodEndTimestamp: moment().subtract(4, 'month').unix(),
-    }
-    const isPending = false
+  it.each([7, 8, 9])(
+    'Motion start in next N period and end in current (month № %p)',
+    _7to9 => {
+      const motionDuration = BigNumber.from(EIGTH_HOURS_SECONDS) // seconds
+      const limits = {
+        limit: '1000',
+        periodDurationMonths: 3, // month
+      }
 
-    const result = calcPeriodData({
-      motionDuration,
-      limits,
-      periodData,
-      isPending,
-    })
+      const startOfPeriod = moment('2024-01-11').startOf('month')
+      const endOfPeriod = moment('2024-04-11').startOf('month')
 
-    const newStartTime = moment
-      .unix(periodData.periodStartTimestamp)
-      .add(6, 'M')
-      .startOf('month')
-    const newEndTime = moment(newStartTime)
-      .add(limits.periodDurationMonths, 'M')
-      .startOf('month')
+      const currentDateMock = moment(`2024-0${_7to9}-11`)
 
-    const expectPeriodData = {
-      ...periodData,
-      periodStartTimestamp: newStartTime.unix(),
-      periodEndTimestamp: newEndTime.unix(),
-      alreadySpentAmount: '0',
-      spendableBalanceInPeriod: limits.limit,
-    }
+      const newStartTime = moment('2024-07-11').startOf('month')
+      const newEndTime = moment('2024-10-11').startOf('month')
 
-    expect(result).toEqual({
-      limits,
-      periodData: expectPeriodData,
-      motionDuration: motionDuration.toNumber() / 60 / 60, // hours
-      isEndInNextPeriod: false,
-    })
-  })
+      jest
+        .spyOn(Date, 'now')
+        .mockImplementation(() =>
+          new Date(currentDateMock.toISOString()).getTime(),
+        )
+
+      const periodData = {
+        alreadySpentAmount: '500',
+        spendableBalanceInPeriod: '500',
+        periodStartTimestamp: startOfPeriod.unix(),
+        periodEndTimestamp: endOfPeriod.unix(),
+      }
+      const isPending = false
+
+      const result = calcPeriodData({
+        motionDuration,
+        limits,
+        periodData,
+        isPending,
+      })
+
+      const expectPeriodData = {
+        periodStartTimestamp: newStartTime.unix(),
+        periodEndTimestamp: newEndTime.unix(),
+        alreadySpentAmount: '0',
+        spendableBalanceInPeriod: limits.limit,
+      }
+
+      expect(result).toEqual({
+        limits,
+        periodData: expectPeriodData,
+        motionDuration: motionDuration.toNumber() / 60 / 60, // hours
+        isEndInNextPeriod: false,
+      })
+    },
+  )
 })
