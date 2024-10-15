@@ -125,7 +125,7 @@ export const formParts = ({
               label={
                 <>
                   New limit (current limit is{' '}
-                  {connectedKeysInfo.info.stakingLimit.toString()})
+                  {currentNodeOperator.totalVettedValidators.toString()})
                 </>
               }
               rules={{
@@ -137,7 +137,9 @@ export const formParts = ({
                   }
                   const valueNum = Number(value)
 
-                  if (valueNum <= connectedKeysInfo.info.stakingLimit) {
+                  const limit =
+                    currentNodeOperator.totalVettedValidators.toNumber()
+                  if (valueNum <= limit) {
                     return 'New limit value should be greater than current'
                   }
                   if (valueNum > connectedKeysInfo.info.totalSigningKeys) {
