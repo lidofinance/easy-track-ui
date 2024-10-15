@@ -34,6 +34,7 @@ type NodeOperator = {
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTNodeOperatorRewardAddressesSet,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
+    // Check MF0501: Sort the data before sending
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
     )
@@ -67,6 +68,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
+    // Check MF0502: Only registered Node Operators
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
@@ -167,6 +169,7 @@ export const formParts = createMotionFormPart({
                     rules={{
                       required: 'Field is required',
                       validate: value => {
+                        // Check MF0504: No zero addresses
                         const addressErr = validateAddress(value)
                         if (addressErr) {
                           return addressErr
@@ -176,11 +179,7 @@ export const formParts = createMotionFormPart({
 
                         const idInAddressMap = rewardAddressesMap[valueAddress]
 
-                        /*
-                        Although the specification does not yet state this,
-                        according to the code, the new reward address should not match
-                        any of the reward addresses of other operator nodes.
-                        */
+                        // Check MF0503: No same reward addresses
                         if (typeof idInAddressMap === 'number') {
                           return 'Address must not be in use by another node operator'
                         }
@@ -194,15 +193,14 @@ export const formParts = createMotionFormPart({
                               fieldIndex !== index,
                           )
 
-                        /*
-                        Same as above, each reward address must be unique within the update.
-                        */
+                        // Check MF0503: No same reward addresses
                         if (addressInSelectedNodeOperatorsIndex !== -1) {
                           return 'Address is already in use by another update'
                         }
 
                         const stETHAddress = STETH[chainId]
 
+                        // Check MF0505: No stETH address
                         if (
                           stETHAddress &&
                           valueAddress === utils.getAddress(stETHAddress)
