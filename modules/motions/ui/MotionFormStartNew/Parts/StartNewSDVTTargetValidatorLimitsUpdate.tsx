@@ -20,18 +20,24 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
-import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
+import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 
 type NodeOperator = {
   id: number | undefined
-  isTargetLimitActive: boolean
+  targetLimitMode: string
   targetLimit: string
 }
 
 const UINT_64_MAX = BigNumber.from('0xFFFFFFFFFFFFFFFF')
+
+const TARGET_LIMIT_MODES: Partial<Record<string, string>> = {
+  '0': 'Disabled',
+  '1': 'Soft limit',
+  '2': 'Boosted exits',
+}
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTTargetValidatorLimitsUpdate,
@@ -42,12 +48,12 @@ export const formParts = createMotionFormPart({
 
     const encodedCallData = new utils.AbiCoder().encode(
       [
-        'tuple(uint256 nodeOperatorId, bool isTargetLimitActive, uint256 targetLimit)[]',
+        'tuple(uint256 nodeOperatorId, uint256 targetLimitMode, uint256 targetLimit)[]',
       ],
       [
         sortedNodeOperators.map(nodeOperator => ({
           nodeOperatorId: Number(nodeOperator.id),
-          isTargetLimitActive: nodeOperator.isTargetLimitActive,
+          targetLimitMode: Number(nodeOperator.targetLimitMode),
           targetLimit: Number(nodeOperator.targetLimit),
         })),
       ],
@@ -66,7 +72,7 @@ export const formParts = createMotionFormPart({
     nodeOperators: [
       {
         id: undefined,
-        isTargetLimitActive: false,
+        targetLimitMode: '',
         targetLimit: '',
       },
     ] as NodeOperator[],
@@ -84,7 +90,8 @@ export const formParts = createMotionFormPart({
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch, setValue } = useFormContext()
+    const { watch, setError } = useFormContext()
+
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
     )
@@ -104,7 +111,7 @@ export const formParts = createMotionFormPart({
     const handleAddUpdate = () =>
       fieldsArr.append({
         id: undefined,
-        isTargetLimitActive: false,
+        targetLimitMode: '',
         targetLimit: '',
       } as NodeOperator)
 
@@ -127,6 +134,15 @@ export const formParts = createMotionFormPart({
             typeof selectedNodeOperators[fieldIndex].id === 'number'
               ? nodeOperatorsList[selectedNodeOperators[fieldIndex].id!]
               : null
+
+          const currentTargetLimitMode =
+            currentNodeOperator?.targetLimitMode?.toString()
+
+          const targetLimitModeLabel = currentTargetLimitMode
+            ? TARGET_LIMIT_MODES[currentTargetLimitMode]
+            : null
+          const currentTargetLimit =
+            currentNodeOperator?.targetValidatorsCount?.toString()
 
           return (
             <Fragment key={item.id}>
@@ -153,38 +169,66 @@ export const formParts = createMotionFormPart({
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      setValue(
-                        `${fieldNames.nodeOperators}.${fieldIndex}.isTargetLimitActive`,
-                        Boolean(nodeOperator.isTargetLimitActive),
-                      )
+                      fieldsArr.update(fieldIndex, {
+                        targetLimitMode:
+                          nodeOperator.targetLimitMode?.toString() ?? '',
+                        targetLimit:
+                          nodeOperator.targetValidatorsCount?.toString() ?? '',
+                      })
                     }}
                   />
                 </Fieldset>
 
                 <Fieldset>
-                  <CheckboxControl
-                    label="Target validator limit active"
-                    name={`${fieldNames.nodeOperators}.${fieldIndex}.isTargetLimitActive`}
-                  />
+                  <SelectControl
+                    name={`${fieldNames.nodeOperators}.${fieldIndex}.targetLimitMode`}
+                    label={`Target limit mode ${
+                      targetLimitModeLabel
+                        ? ` (current mode is ${targetLimitModeLabel})`
+                        : ''
+                    }`}
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        const currentMode = Number(currentTargetLimitMode)
+                        const modeToUpdate = Number(value)
+
+                        const currentLimit = Number(currentTargetLimit)
+                        const limitToUpdate = Number(
+                          selectedNodeOperators[fieldIndex].targetLimit,
+                        )
+
+                        if (
+                          modeToUpdate !== currentMode &&
+                          currentLimit === limitToUpdate
+                        ) {
+                          setError(
+                            `${fieldNames.nodeOperators}.${fieldIndex}.targetLimit`,
+                            { message: undefined },
+                          )
+                          return true
+                        }
+
+                        return true
+                      },
+                    }}
+                  >
+                    {Object.entries(TARGET_LIMIT_MODES).map(([key, value]) => (
+                      <Option key={key} value={key}>
+                        {value!}
+                      </Option>
+                    ))}
+                  </SelectControl>
                 </Fieldset>
 
                 <Fieldset>
                   <InputNumberControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.targetLimit`}
-                    label={
-                      currentNodeOperator ? (
-                        <>
-                          New limit (current limit is{' '}
-                          {currentNodeOperator.targetValidatorsCount?.toString()}
-                          )
-                        </>
-                      ) : (
-                        `New limit`
-                      )
-                    }
-                    disabled={
-                      !selectedNodeOperators[fieldIndex]?.isTargetLimitActive
-                    }
+                    label={`New limit ${
+                      currentTargetLimit
+                        ? ` (current limit is ${currentTargetLimit})`
+                        : ''
+                    }`}
                     rules={{
                       required: 'Field is required',
                       validate: value => {
@@ -195,6 +239,21 @@ export const formParts = createMotionFormPart({
 
                         if (UINT_64_MAX.lt(value)) {
                           return `Value must be less than or equal to ${UINT_64_MAX}`
+                        }
+
+                        const currentMode = Number(currentTargetLimitMode)
+                        const modeToUpdate = Number(
+                          selectedNodeOperators[fieldIndex].targetLimitMode,
+                        )
+
+                        const currentLimit = Number(currentTargetLimit)
+                        const limitToUpdate = Number(value)
+
+                        if (
+                          currentMode === modeToUpdate &&
+                          currentLimit === limitToUpdate
+                        ) {
+                          return 'Both mode and limit are the same as current'
                         }
 
                         return true

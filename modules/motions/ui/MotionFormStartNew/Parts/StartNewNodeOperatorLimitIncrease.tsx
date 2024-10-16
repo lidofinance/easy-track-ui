@@ -125,7 +125,7 @@ export const formParts = ({
               label={
                 <>
                   New limit (current limit is{' '}
-                  {currentNodeOperator.stakingLimit.toString()})
+                  {currentNodeOperator.totalVettedValidators.toString()})
                 </>
               }
               rules={{
@@ -137,7 +137,8 @@ export const formParts = ({
                   }
                   const valueNum = Number(value)
 
-                  const limit = currentNodeOperator.stakingLimit.toNumber()
+                  const limit =
+                    currentNodeOperator.totalVettedValidators.toNumber()
                   if (valueNum <= limit) {
                     return 'New limit value should be greater than current'
                   }

@@ -1,10 +1,7 @@
 import { BigNumber, utils } from 'ethers'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import {
-  ContractSDVTRegistry,
-  ContractSDVTRegistryV2,
-} from 'modules/blockChain/contracts'
+import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
 import { getManagerAddressesMap } from '../utils/getManagerAddressesMap'
 
 type NodeOperatorSummary = {
@@ -15,27 +12,20 @@ type NodeOperatorSummary = {
   totalExitedValidators: BigNumber
   totalDepositedValidators: BigNumber
   depositableValidatorsCount: BigNumber
-  // TODO: fix type once v2 is merged with v1
-  isTargetLimitActive?: any
-  targetLimitMode?: any
+  targetLimitMode: BigNumber
 }
 
 type Args = {
   withSummary?: boolean
-  v2?: boolean
 }
 
 export function useSDVTNodeOperatorsList(args?: Args) {
-  const { chainId, account } = useWeb3()
+  const { chainId } = useWeb3()
 
   return useSWR(
-    `${chainId}-${account}-${args?.v2 ? 'v2' : 'v1'}-operators-list${
-      args?.withSummary ? '-with-summary' : ''
-    }`,
+    `${chainId}-sdvt-operators-list${args?.withSummary ? '-with-summary' : ''}`,
     async () => {
-      const registry = (
-        args?.v2 ? ContractSDVTRegistryV2 : ContractSDVTRegistry
-      ).connectRpc({ chainId })
+      const registry = ContractSDVTRegistry.connectRpc({ chainId })
       const count = (await registry.getNodeOperatorsCount()).toNumber()
       const MANAGE_SIGNING_KEYS_ROLE = await registry.MANAGE_SIGNING_KEYS()
 

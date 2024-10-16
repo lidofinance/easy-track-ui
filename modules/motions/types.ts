@@ -27,7 +27,6 @@ export const MotionTypeForms = {
   SDVTNodeOperatorsDeactivate: 'SDVTNodeOperatorsDeactivate',
   SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
   SDVTTargetValidatorLimitsUpdate: 'SDVTTargetValidatorLimitsUpdate',
-  SDVTTargetValidatorLimitsUpdateV2: 'SDVTTargetValidatorLimitsUpdateV2',
   SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
   SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
   SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
