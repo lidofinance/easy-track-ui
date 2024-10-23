@@ -25,7 +25,13 @@ export function useEVMScriptDecoder() {
           .ReferralPartnersRegistryAbi__factory.abi as any,
         [KEYS.RewardProgramRegistry]:
           abis.RewardProgramRegistryAbi__factory.abi,
-        [KEYS.NodeOperatorsRegistry]: abis.NodeOperatorsAbi__factory.abi,
+        [KEYS.AragonACL]: abis.AragonACLAbi__factory.abi,
+        [KEYS.NodeOperatorsRegistry]:
+          abis.NodeOperatorsRegistryAbi__factory.abi,
+        [KEYS.SDVTRegistry]: abis.NodeOperatorsRegistryAbi__factory.abi,
+        [KEYS.CSMRegistry]: abis.CSMRegistryAbi__factory.abi,
+        [KEYS.SandboxNodeOperatorsRegistry]:
+          abis.NodeOperatorsRegistryAbi__factory.abi,
         [KEYS.Finance]: abis.FinanceAbi__factory.abi,
         [KEYS.AllowedRecipientRegistry]:
           abis.AllowedRecipientsRegistryAbi__factory.abi,
@@ -44,9 +50,7 @@ export function useEVMScriptDecoder() {
         [KEYS.StethGasSupplyRegistry]: abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.RewardsShareProgramRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.AragonACL]: abis.AragonACLAbi__factory.abi,
-        [KEYS.SDVTRegistry]: abis.SDVTRegistryAbi__factory.abi,
-        [KEYS.SandboxNodeOperatorsRegistry]: abis.NodeOperatorsAbi__factory.abi,
+
         [KEYS.RccStethAllowedRecipientsRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.PmlStethAllowedRecipientsRegistry]:
@@ -57,7 +61,6 @@ export function useEVMScriptDecoder() {
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.StonksStablesAllowedRecipientsRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.CSMRegistry]: abis.CSMRegistryAbi__factory.abi,
         [KEYS.AllianceOpsAllowedRecipientsRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
       }),
