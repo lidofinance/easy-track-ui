@@ -42,6 +42,7 @@ const TARGET_LIMIT_MODES: Partial<Record<string, string>> = {
 export const formParts = createMotionFormPart({
   motionType: MotionType.SDVTTargetValidatorLimitsUpdate,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
+    // Check MF0601: Sort the data before sending
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
     )
@@ -79,6 +80,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress } = useWeb3()
+    // Check MF0602: Only registered node operators
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
@@ -237,6 +239,7 @@ export const formParts = createMotionFormPart({
                           return uintError
                         }
 
+                        // Check MF0603: Max value check
                         if (UINT_64_MAX.lt(value)) {
                           return `Value must be less than or equal to ${UINT_64_MAX}`
                         }
