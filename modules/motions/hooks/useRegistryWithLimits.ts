@@ -104,13 +104,7 @@ export function useRecipientAll({ registryType }: HookArgs) {
 
   return useSWR(
     `single-allowed-recipients-all-${chainId}-${registry.address || ''}`,
-    async () => {
-      const events = await getEventsRecipientAdded(chainId, registry)
-      return events.map(event => ({
-        title: event._title,
-        address: event._recipient,
-      }))
-    },
+    async () => getEventsRecipientAdded(chainId, registry),
     {
       shouldRetryOnError: true,
       errorRetryInterval: 5000,
