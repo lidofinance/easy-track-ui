@@ -4,7 +4,6 @@ import { OffChainOrder, OrderTransaction } from '../types'
 
 const COWSWAP_API_ENDPOINTS: Partial<Record<CHAINS, string | undefined>> = {
   [CHAINS.Mainnet]: 'https://api.cow.fi/mainnet/api/v1',
-  [CHAINS.Goerli]: 'https://api.cow.fi/goerli/api/v1',
 }
 
 const fetchOrderTransactions = async (orderUid: string, chainId: CHAINS) => {

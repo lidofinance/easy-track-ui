@@ -3,7 +3,6 @@ import { parseChainId } from 'modules/blockChain/chains'
 
 const COWSWAP_API_ENDPOINTS: Partial<Record<CHAINS, string | undefined>> = {
   [CHAINS.Mainnet]: 'https://api.cow.fi/mainnet/api/v1',
-  [CHAINS.Goerli]: 'https://api.cow.fi/goerli/api/v1',
 }
 
 type Args = {
