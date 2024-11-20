@@ -167,3 +167,13 @@ export type KeysInfoOperator = {
 export type KeysInfo = {
   operators?: KeysInfoOperator[]
 }
+
+export const StakingModule = {
+  Curated: 'curated',
+  Sandbox: 'sandbox',
+  SimpleDVT: 'sdvt',
+} as const
+
+// intentionally
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type StakingModule = typeof StakingModule[keyof typeof StakingModule]

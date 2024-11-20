@@ -16,14 +16,14 @@ import {
 } from '../CreateMotionFormStyle'
 
 import { ContractSDVTNodeOperatorsActivate } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
+import { MotionType, StakingModule } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
 
 type NodeOperator = {
   id: string
@@ -69,7 +69,7 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList()
+    } = useNodeOperatorsList({ module: StakingModule.SimpleDVT })
 
     const deactivatedNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => !nodeOperator.active,

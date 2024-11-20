@@ -16,13 +16,13 @@ import {
 } from '../CreateMotionFormStyle'
 
 import { ContractSDVTVettedValidatorsLimitsSet } from 'modules/blockChain/contracts'
-import { MotionType } from 'modules/motions/types'
+import { MotionType, StakingModule } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
 
 type NodeOperator = {
   id: string
@@ -68,7 +68,10 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList({ withSummary: true })
+    } = useNodeOperatorsList({
+      module: StakingModule.SimpleDVT,
+      withSummary: true,
+    })
 
     const nodeOperatorsWithValidators = nodeOperatorsList?.filter(
       nodeOperator => nodeOperator.totalAddedValidators.gt(0),

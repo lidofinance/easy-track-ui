@@ -1,14 +1,17 @@
 import { SetNodeOperatorRewardAddressesAbi } from 'generated'
 import { NestProps } from './types'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
+import { StakingModule } from 'modules/motions/types'
 
 // SetNodeOperatorRewardAddresses
 export function DescSDVTNodeOperatorRewardAddressesSet({
   callData,
   isOnChain,
 }: NestProps<SetNodeOperatorRewardAddressesAbi['decodeEVMScriptCallData']>) {
-  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
+  const { data: nodeOperatorsList } = useNodeOperatorsList({
+    module: StakingModule.SimpleDVT,
+  })
   return (
     <>
       {callData.map((item, index) => {

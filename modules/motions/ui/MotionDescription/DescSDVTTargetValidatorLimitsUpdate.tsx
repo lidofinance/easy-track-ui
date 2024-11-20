@@ -1,13 +1,15 @@
 import { UpdateTargetValidatorLimitsAbi } from 'generated'
 import { NestProps } from './types'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
+import { StakingModule } from 'modules/motions/types'
 
 // UpdateTargetValidatorLimits
 export function DescSDVTTargetValidatorLimitsUpdate({
   callData,
   isOnChain,
 }: NestProps<UpdateTargetValidatorLimitsAbi['decodeEVMScriptCallData']>) {
-  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList({
+  const { data: nodeOperatorsList } = useNodeOperatorsList({
+    module: StakingModule.SimpleDVT,
     withSummary: true,
   })
   return (
