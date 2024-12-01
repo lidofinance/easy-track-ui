@@ -82,6 +82,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractCSMSettleElStealingPenalty,
   [MotionType.AllianceOpsStablesTopUp]:
     CONTRACTS.ContractEvmAllianceOpsStablesTopUp,
+  [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
+    CONTRACTS.ContractSDVTTargetValidatorLimitsUpdateV1,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

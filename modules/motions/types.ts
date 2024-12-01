@@ -72,6 +72,7 @@ export const MotionTypeDisplayOnly = {
   PmlDAITopUp: 'PmlDAITopUp',
   AtcDAITopUp: 'AtcDAITopUp',
   LegoDAITopUp: 'LegoDAITopUp',
+  SDVTTargetValidatorLimitsUpdateV1: 'SDVTTargetValidatorLimitsUpdateV1',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

@@ -471,3 +471,11 @@ export const ContractEvmAllianceOpsStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.AllianceOpsStablesTopUp],
 })
+
+/**
+ * @deprecated
+ */
+export const ContractSDVTTargetValidatorLimitsUpdateV1 = createContractHelpers({
+  factory: TypeChain.UpdateTargetValidatorLimitsV1Abi__factory,
+  address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdateV1],
+})

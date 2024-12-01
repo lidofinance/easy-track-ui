@@ -3,7 +3,7 @@ import { NestProps } from './types'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 
 // UpdateTargetValidatorLimitsV1
-export function DescSDVTTargetValidatorLimitsUpdate({
+export function DescSDVTTargetValidatorLimitsUpdateV1({
   callData,
   isOnChain,
 }: NestProps<UpdateTargetValidatorLimitsV1Abi['decodeEVMScriptCallData']>) {

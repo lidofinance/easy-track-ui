@@ -68,6 +68,10 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.StonksStethTopUp]: '0x6e04aED774B7c89BB43721AcDD7D03C872a51B69',
     [MotionType.StonksStablesTopUp]:
       '0x0d2aefA542aFa8d9D1Ec35376068B88042FEF5f6',
+    [MotionType.AllianceOpsStablesTopUp]:
+      '0xe5656eEe7eeD02bdE009d77C88247BC8271e26Eb',
+    [MotionType.CSMSettleElStealingPenalty]:
+      '0xF6B6E7997338C48Ea3a8BCfa4BB64a315fDa76f4',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -101,10 +105,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.PmlDAITopUp]: '0x4E6D3A5023A38cE2C4c5456d3760357fD93A22cD',
     [MotionType.AtcDAITopUp]: '0x67Fb97ABB9035E2e93A7e3761a0d0571c5d7CD07',
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
-    [MotionType.AllianceOpsStablesTopUp]:
-      '0xe5656eEe7eeD02bdE009d77C88247BC8271e26Eb',
-    [MotionType.CSMSettleElStealingPenalty]:
-      '0xF6B6E7997338C48Ea3a8BCfa4BB64a315fDa76f4',
+    [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
+      '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
   },
 
   // Goerli
@@ -266,6 +268,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientRemoveReferralDai]: '',
     [MotionType.AllowedRecipientTopUpReferralDai]: '',
     [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
+    [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
+      '0xC91a676A69Eb49be9ECa1954fE6fc861AE07A9A2',
   },
 }
 

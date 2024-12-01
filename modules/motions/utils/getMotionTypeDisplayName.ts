@@ -71,6 +71,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
   [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
   [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
+  [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
+    'Update target validator limits [deprecated]',
 } as const
 
 export function getMotionTypeDisplayName(
