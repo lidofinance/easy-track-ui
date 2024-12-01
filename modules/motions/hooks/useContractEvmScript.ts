@@ -56,8 +56,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTNodeOperatorsDeactivate,
   [MotionType.SDVTVettedValidatorsLimitsSet]:
     CONTRACTS.ContractSDVTVettedValidatorsLimitsSet,
-  [MotionType.SDVTTargetValidatorLimitsUpdate]:
-    CONTRACTS.ContractSDVTTargetValidatorLimitsUpdate,
+  [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
+    CONTRACTS.ContractSDVTTargetValidatorLimitsUpdateV2,
   [MotionType.SDVTNodeOperatorRewardAddressesSet]:
     CONTRACTS.ContractSDVTNodeOperatorRewardAddressesSet,
   [MotionType.SDVTNodeOperatorNamesSet]:

@@ -57,7 +57,7 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x8B82C1546D47330335a48406cc3a50Da732672E7',
     [MotionType.SDVTVettedValidatorsLimitsSet]:
       '0xD75778b855886Fc5e1eA7D6bFADA9EB68b35C19D',
-    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+    [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
       '0x161a4552a625844c822954c5acbac928ee0f399b',
     [MotionType.SDVTNodeOperatorRewardAddressesSet]:
       '0x589e298964b9181D9938B84bB034C3BB9024E2C0',
@@ -143,8 +143,6 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x2b956B578D0f44E0BD484d1A63c8A164BBEf6B58',
     [MotionType.SDVTVettedValidatorsLimitsSet]:
       '0x7f5395AC6Ff3967CEd48e6a99029747B48239b31',
-    [MotionType.SDVTTargetValidatorLimitsUpdate]:
-      '0x3F65d94E804bfEF570A13FC6923855865098EEB6',
     [MotionType.SDVTNodeOperatorRewardAddressesSet]:
       '0x85350e579C71a78810305f860380a3315b3e6Ed9',
     [MotionType.SDVTNodeOperatorNamesSet]:
@@ -219,7 +217,7 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x88d247cdf4ff4A4AAA8B3DD9dd22D1b89219FB3B',
     [MotionType.SDVTVettedValidatorsLimitsSet]:
       '0x30Cb36DBb0596aD9Cf5159BD2c4B1456c18e47E8',
-    [MotionType.SDVTTargetValidatorLimitsUpdate]:
+    [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
       '0x431a156BEba95803a95452441C1959c4479710e1',
     [MotionType.SDVTNodeOperatorRewardAddressesSet]:
       '0x6Bfc576018C7f3D2a9180974E5c8e6CFa021f617',
