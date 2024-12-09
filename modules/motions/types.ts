@@ -26,7 +26,7 @@ export const MotionTypeForms = {
   SDVTNodeOperatorsActivate: 'SDVTNodeOperatorsActivate',
   SDVTNodeOperatorsDeactivate: 'SDVTNodeOperatorsDeactivate',
   SDVTVettedValidatorsLimitsSet: 'SDVTVettedValidatorsLimitsSet',
-  SDVTTargetValidatorLimitsUpdate: 'SDVTTargetValidatorLimitsUpdate',
+  SDVTTargetValidatorLimitsUpdateV2: 'SDVTTargetValidatorLimitsUpdateV2',
   SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
   SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
   SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
@@ -72,6 +72,7 @@ export const MotionTypeDisplayOnly = {
   PmlDAITopUp: 'PmlDAITopUp',
   AtcDAITopUp: 'AtcDAITopUp',
   LegoDAITopUp: 'LegoDAITopUp',
+  SDVTTargetValidatorLimitsUpdateV1: 'SDVTTargetValidatorLimitsUpdateV1',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

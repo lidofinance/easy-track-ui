@@ -15,7 +15,7 @@ import {
   FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
-import { ContractSDVTTargetValidatorLimitsUpdate } from 'modules/blockChain/contracts'
+import { ContractSDVTTargetValidatorLimitsUpdateV2 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
@@ -40,7 +40,7 @@ const TARGET_LIMIT_MODES: Partial<Record<string, string>> = {
 }
 
 export const formParts = createMotionFormPart({
-  motionType: MotionType.SDVTTargetValidatorLimitsUpdate,
+  motionType: MotionType.SDVTTargetValidatorLimitsUpdateV2,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
     const sortedNodeOperators = formData.nodeOperators.sort(
       (a, b) => Number(a.id) - Number(b.id),
@@ -84,7 +84,7 @@ export const formParts = createMotionFormPart({
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList({ withSummary: true })
 
-    const trustedCaller = ContractSDVTTargetValidatorLimitsUpdate.useSwrWeb3(
+    const trustedCaller = ContractSDVTTargetValidatorLimitsUpdateV2.useSwrWeb3(
       'trustedCaller',
       [],
     )

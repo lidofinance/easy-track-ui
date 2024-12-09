@@ -1,12 +1,12 @@
-import { UpdateTargetValidatorLimitsAbi } from 'generated'
+import { UpdateTargetValidatorLimitsV1Abi } from 'generated'
 import { NestProps } from './types'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 
-// UpdateTargetValidatorLimits
-export function DescSDVTTargetValidatorLimitsUpdate({
+// UpdateTargetValidatorLimitsV1
+export function DescSDVTTargetValidatorLimitsUpdateV1({
   callData,
   isOnChain,
-}: NestProps<UpdateTargetValidatorLimitsAbi['decodeEVMScriptCallData']>) {
+}: NestProps<UpdateTargetValidatorLimitsV1Abi['decodeEVMScriptCallData']>) {
   const { data: nodeOperatorsList } = useSDVTNodeOperatorsList({
     withSummary: true,
   })
@@ -15,15 +15,10 @@ export function DescSDVTTargetValidatorLimitsUpdate({
       {callData.map((item, index) => {
         const nodeOperatorId = item.nodeOperatorId.toNumber()
         const nodeOperator = nodeOperatorsList?.[nodeOperatorId]
-        const targetLimitMode = item.targetLimitMode.toNumber()
-
-        let targetLimitModeDesc = 'disabled'
-        if (targetLimitMode == 1) targetLimitModeDesc = 'soft'
-        if (targetLimitMode == 2) targetLimitModeDesc = 'boosted exits'
 
         const nodeOperatorName = nodeOperator ? nodeOperator.name : ''
 
-        if (targetLimitMode == 0) {
+        if (!item.isTargetLimitActive) {
           return (
             <div key={nodeOperatorId}>
               Disable target validator limit for Node Operator{' '}
@@ -40,7 +35,7 @@ export function DescSDVTTargetValidatorLimitsUpdate({
             {nodeOperator && isOnChain
               ? `from ${nodeOperator.targetValidatorsCount} `
               : ''}
-            {`to ${item.targetLimit} in ${targetLimitModeDesc} mode`}
+            {`to ${item.targetLimit}`}
             {index === callData.length - 1 ? '.' : '; '}
           </div>
         )
