@@ -9,7 +9,7 @@ import * as StartSDVTNodeOperatorsAdd from './StartSDVTNodeOperatorsAdd'
 import * as StartNewSDVTNodeOperatorsActivate from './StartNewSDVTNodeOperatorsActivate'
 import * as StartNewSDVTNodeOperatorsDeactivate from './StartNewSDVTNodeOperatorsDeactivate'
 import * as StartNewSDVTVettedValidatorsLimitsSet from './StartNewSDVTVettedValidatorsLimitsSet'
-import * as StartNewSDVTTargetValidatorLimitsUpdate from './StartNewSDVTTargetValidatorLimitsUpdate'
+import * as StartNewSDVTTargetValidatorLimitsUpdateV2 from './StartNewSDVTTargetValidatorLimitsUpdateV2'
 import * as StartNewSDVTNodeOperatorRewardAddressesSet from './StartNewSDVTNodeOperatorRewardAddressesSet'
 import * as StartNewSDVTNodeOperatorNamesSet from './StartNewSDVTNodeOperatorNamesSet'
 import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
@@ -78,8 +78,8 @@ export const formParts = {
     StartNewSDVTNodeOperatorsDeactivate.formParts,
   [MotionTypeForms.SDVTVettedValidatorsLimitsSet]:
     StartNewSDVTVettedValidatorsLimitsSet.formParts,
-  [MotionTypeForms.SDVTTargetValidatorLimitsUpdate]:
-    StartNewSDVTTargetValidatorLimitsUpdate.formParts,
+  [MotionTypeForms.SDVTTargetValidatorLimitsUpdateV2]:
+    StartNewSDVTTargetValidatorLimitsUpdateV2.formParts,
   [MotionTypeForms.SDVTNodeOperatorRewardAddressesSet]:
     StartNewSDVTNodeOperatorRewardAddressesSet.formParts,
   [MotionTypeForms.SDVTNodeOperatorNamesSet]:
