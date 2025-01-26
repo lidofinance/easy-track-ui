@@ -58,7 +58,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SDVTVettedValidatorsLimitsSet]:
       '0xD75778b855886Fc5e1eA7D6bFADA9EB68b35C19D',
     [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
-      '0x161a4552a625844c822954c5acbac928ee0f399b',
+      '0x161a4552A625844c822954C5AcBac928ee0f399B',
     [MotionType.SDVTNodeOperatorRewardAddressesSet]:
       '0x589e298964b9181D9938B84bB034C3BB9024E2C0',
     [MotionType.SDVTNodeOperatorNamesSet]:
