@@ -5,7 +5,7 @@ import {
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 
-import { formatUnits } from 'ethers/lib/utils'
+import { formatUnits, isAddress } from 'ethers/lib/utils'
 import { TopUpWithLimitsStablesAbi } from 'generated'
 import { NestProps } from './types'
 import { useMotionTokenData } from 'modules/motions/hooks/useMotionTokenData'
@@ -36,9 +36,13 @@ export const DescTopUpWithLimitsAndCustomToken = ({
           formatUnits(callData.amounts[i], tokenData?.decimals),
         ).toLocaleString('en-EN')
 
+        const shouldShowName =
+          !isAddress(recipientName) ||
+          recipientName.toLowerCase() !== address.toLowerCase()
+
         return (
           <div key={i}>
-            <b>{recipientName} </b>
+            {shouldShowName ? <b>{recipientName} </b> : null}
             <AddressInlineWithPop address={address} /> with {formattedAmount}{' '}
             {tokenData ? <b>{tokenData.label}</b> : null}
           </div>
