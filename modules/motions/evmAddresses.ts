@@ -290,7 +290,7 @@ export const EvmUnrecognized = 'EvmUnrecognized'
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type EvmUnrecognized = typeof EvmUnrecognized
 
-export const EvmTypesByAdress = mapValues(
+export const EvmTypesByAddress = mapValues(
   flow(
     toPairs,
     map(([type, address]) => [address, type]),
