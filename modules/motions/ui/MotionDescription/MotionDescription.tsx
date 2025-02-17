@@ -330,7 +330,7 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.LabsOpsStethTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits
       {...props}
-      registryType={MotionType.StonksStethTopUp}
+      registryType={MotionType.LabsOpsStethTopUp}
     />
   ),
 } as const
