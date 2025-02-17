@@ -270,6 +270,14 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0xC91a676A69Eb49be9ECa1954fE6fc861AE07A9A2',
+    [MotionType.EcosystemOpsStablesTopUp]:
+      '0x167caEDde0F3230eB18763270B11c970409F389e',
+    [MotionType.EcosystemOpsStethTopUp]:
+      '0x4F2dA002a7bD5F7C63B62d4C9e4b762c689Dd8Ac',
+    [MotionType.LabsOpsStablesTopUp]:
+      '0xf7304738E9d4F572b909FaEd32504F558E234cdB',
+    [MotionType.LabsOpsStethTopUp]:
+      '0xef0Df040B76252cC7fa31a5fc2f36e85c1C8c4f9',
   },
 }
 
