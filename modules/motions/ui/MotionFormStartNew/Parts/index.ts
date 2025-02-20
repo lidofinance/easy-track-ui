@@ -126,6 +126,20 @@ export const formParts = {
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.AllianceOpsStablesTopUp,
     }),
+  [MotionTypeForms.EcosystemOpsStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.EcosystemOpsStablesTopUp,
+    }),
+  [MotionTypeForms.EcosystemOpsStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.EcosystemOpsStethTopUp,
+  }),
+  [MotionTypeForms.LabsOpsStablesTopUp]:
+    StartNewTopUpWithLimitsAndCustomToken.formParts({
+      registryType: MotionTypeForms.LabsOpsStablesTopUp,
+    }),
+  [MotionTypeForms.LabsOpsStethTopUp]: StartNewTopUpWithLimits.formParts({
+    registryType: MotionTypeForms.LabsOpsStethTopUp,
+  }),
 } as const
 
 export type FormData = {

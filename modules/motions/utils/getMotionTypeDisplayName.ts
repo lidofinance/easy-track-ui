@@ -73,6 +73,10 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
   [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
     'Update target validator limits [deprecated]',
+  [MotionType.EcosystemOpsStablesTopUp]: 'Top up Ecosystem Ops stablecoins',
+  [MotionType.EcosystemOpsStethTopUp]: 'Top up Ecosystem Ops stETH',
+  [MotionType.LabsOpsStablesTopUp]: 'Top up Labs Ops stablecoins',
+  [MotionType.LabsOpsStethTopUp]: 'Top up Labs Ops stETH',
 } as const
 
 export function getMotionTypeDisplayName(

@@ -84,6 +84,11 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractEvmAllianceOpsStablesTopUp,
   [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
     CONTRACTS.ContractSDVTTargetValidatorLimitsUpdateV1,
+  [MotionType.EcosystemOpsStablesTopUp]:
+    CONTRACTS.ContractEcosystemOpsStablesTopUp,
+  [MotionType.EcosystemOpsStethTopUp]: CONTRACTS.ContractEcosystemOpsStethTopUp,
+  [MotionType.LabsOpsStablesTopUp]: CONTRACTS.ContractLabsOpsStablesTopUp,
+  [MotionType.LabsOpsStethTopUp]: CONTRACTS.ContractLabsOpsStethTopUp,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

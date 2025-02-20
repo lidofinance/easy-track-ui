@@ -35,6 +35,8 @@ import {
   ContractPmlStethTopUp,
   ContractAtcStethTopUp,
   ContractStonksStethTopUp,
+  ContractEcosystemOpsStethTopUp,
+  ContractLabsOpsStethTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -46,7 +48,7 @@ import {
 import { periodLimitError } from 'modules/motions/constants'
 import { validateTransitionLimit } from 'modules/motions/utils/validateTransitionLimit'
 
-export const TOPUP_WITH_LIMITS_MAP = {
+export const TOP_UP_WITH_LIMITS_MAP = {
   [MotionType.LegoLDOTopUp]: {
     evmContract: ContractEvmLegoLDOTopUp,
     motionType: MotionType.LegoLDOTopUp,
@@ -71,6 +73,14 @@ export const TOPUP_WITH_LIMITS_MAP = {
     evmContract: ContractStonksStethTopUp,
     motionType: MotionType.StonksStethTopUp,
   },
+  [MotionType.EcosystemOpsStethTopUp]: {
+    evmContract: ContractEcosystemOpsStethTopUp,
+    motionType: MotionType.EcosystemOpsStethTopUp,
+  },
+  [MotionType.LabsOpsStethTopUp]: {
+    evmContract: ContractLabsOpsStethTopUp,
+    motionType: MotionType.LabsOpsStethTopUp,
+  },
 }
 
 type Program = {
@@ -81,10 +91,10 @@ type Program = {
 export const formParts = ({
   registryType,
 }: {
-  registryType: keyof typeof TOPUP_WITH_LIMITS_MAP
+  registryType: keyof typeof TOP_UP_WITH_LIMITS_MAP
 }) =>
   createMotionFormPart({
-    motionType: TOPUP_WITH_LIMITS_MAP[registryType].motionType,
+    motionType: TOP_UP_WITH_LIMITS_MAP[registryType].motionType,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
       const encodedCallData = new utils.AbiCoder().encode(
         ['address[]', 'uint256[]'],
@@ -111,7 +121,7 @@ export const formParts = ({
       submitAction,
     }) {
       const { walletAddress } = useWeb3()
-      const trustedCaller = TOPUP_WITH_LIMITS_MAP[
+      const trustedCaller = TOP_UP_WITH_LIMITS_MAP[
         registryType
       ].evmContract.useSwrWeb3('trustedCaller', [])
       const isTrustedCallerConnected = trustedCaller.data === walletAddress

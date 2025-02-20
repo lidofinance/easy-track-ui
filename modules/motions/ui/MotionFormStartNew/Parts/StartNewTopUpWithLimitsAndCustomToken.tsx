@@ -32,6 +32,8 @@ import {
   ContractLegoStablesTopUp,
   ContractStonksStablesTopUp,
   ContractEvmAllianceOpsStablesTopUp,
+  ContractEcosystemOpsStablesTopUp,
+  ContractLabsOpsStablesTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -47,7 +49,7 @@ import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWith
 import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
 import { validateTransitionLimit } from 'modules/motions/utils/validateTransitionLimit'
 
-export const TOPUP_WITH_LIMITS_MAP = {
+export const TOP_UP_WITH_LIMITS_MAP = {
   [MotionType.RccStablesTopUp]: {
     evmContract: ContractEvmRccStablesTopUp,
     motionType: MotionType.RccStablesTopUp,
@@ -76,6 +78,14 @@ export const TOPUP_WITH_LIMITS_MAP = {
     evmContract: ContractEvmAllianceOpsStablesTopUp,
     motionType: MotionType.AllianceOpsStablesTopUp,
   },
+  [MotionType.EcosystemOpsStablesTopUp]: {
+    evmContract: ContractEcosystemOpsStablesTopUp,
+    motionType: MotionType.EcosystemOpsStablesTopUp,
+  },
+  [MotionType.LabsOpsStablesTopUp]: {
+    evmContract: ContractLabsOpsStablesTopUp,
+    motionType: MotionType.LabsOpsStablesTopUp,
+  },
 }
 
 type Program = {
@@ -86,10 +96,10 @@ type Program = {
 export const formParts = ({
   registryType,
 }: {
-  registryType: keyof typeof TOPUP_WITH_LIMITS_MAP
+  registryType: keyof typeof TOP_UP_WITH_LIMITS_MAP
 }) =>
   createMotionFormPart({
-    motionType: TOPUP_WITH_LIMITS_MAP[registryType].motionType,
+    motionType: TOP_UP_WITH_LIMITS_MAP[registryType].motionType,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
       const encodedCallData = new utils.AbiCoder().encode(
         ['address', 'address[]', 'uint256[]'],
@@ -121,7 +131,7 @@ export const formParts = ({
       submitAction,
     }) {
       const { walletAddress } = useWeb3()
-      const trustedCaller = TOPUP_WITH_LIMITS_MAP[
+      const trustedCaller = TOP_UP_WITH_LIMITS_MAP[
         registryType
       ].evmContract.useSwrWeb3('trustedCaller', [])
       const isTrustedCallerConnected = trustedCaller.data === walletAddress
