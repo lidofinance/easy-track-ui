@@ -1,57 +1,97 @@
+import { wrapRequest as wrapNextRequest } from '@lidofinance/next-api-wrapper'
+import { trackedFetchRpcFactory } from '@lidofinance/api-rpc'
+import { rpcFactory } from '@lidofinance/next-pages'
+
+// import { config, secretConfig } from 'config'
+// import { API_ROUTES } from 'consts/api'
+// import { CHAINS } from 'consts/chains'
+// import { METRICS_PREFIX } from 'consts/metrics'
+import {
+  rateLimit,
+  responseTimeMetric,
+  defaultErrorHandler,
+  requestAddressMetric,
+  httpMethodGuard,
+  HttpMethod,
+} from 'utilsApi'
+// import Metrics from 'utilsApi/metrics'
+import {
+  METRIC_CONTRACT_ADDRESSES,
+  METRIC_CONTRACT_EVENT_ADDRESSES,
+} from 'utilsApi/contractAddressesMetricsMap'
+import { Metrics, METRICS_PREFIX } from 'utilsApi/metrics'
 import getConfig from 'next/config'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { parseChainId } from 'modules/blockChain/chains'
 import { CHAINS } from '@lido-sdk/constants'
 
-import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
-import clone from 'just-clone'
+const PROVIDER_MAX_BATCH = 20
 
-const { serverRuntimeConfig } = getConfig()
-const { rpcUrls_1, rpcUrls_5, rpcUrls_17000 } = serverRuntimeConfig
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig()
+const { defaultChain } = publicRuntimeConfig
+const { rpcUrls_1, rpcUrls_17000 } = serverRuntimeConfig
 
-export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
-  const RPC_URLS: Record<number, string[]> = {
+const allowedCallAddresses: Record<string, string[]> = Object.entries(
+  METRIC_CONTRACT_ADDRESSES,
+).reduce((acc, [chainId, addresses]) => {
+  acc[chainId] = Object.keys(addresses)
+  return acc
+}, {} as Record<string, string[]>)
+
+const allowedLogsAddresses: Record<string, string[]> = Object.entries(
+  METRIC_CONTRACT_EVENT_ADDRESSES,
+).reduce((acc, [chainId, addresses]) => {
+  acc[chainId] = Object.keys(addresses)
+  return acc
+}, {} as Record<string, string[]>)
+
+const allowedRPCMethods = [
+  'test',
+  'eth_call',
+  'eth_gasPrice',
+  'eth_getCode',
+  'eth_estimateGas',
+  'eth_getBlockByNumber',
+  'eth_feeHistory',
+  'eth_maxPriorityFeePerGas',
+  'eth_getBalance',
+  'eth_blockNumber',
+  'eth_getTransactionByHash',
+  'eth_getTransactionReceipt',
+  'eth_getTransactionCount',
+  'eth_sendRawTransaction',
+  'eth_getLogs',
+  'eth_chainId',
+  'net_version',
+]
+
+const rpc = rpcFactory({
+  fetchRPC: trackedFetchRpcFactory({
+    registry: Metrics.registry,
+    prefix: METRICS_PREFIX,
+  }),
+  metrics: {
+    prefix: METRICS_PREFIX,
+    registry: Metrics.registry,
+  },
+  defaultChain: `${defaultChain}`,
+  providers: {
     [CHAINS.Mainnet]: rpcUrls_1,
-    [CHAINS.Goerli]: rpcUrls_5,
     [CHAINS.Holesky]: rpcUrls_17000,
-  }
+  },
+  validation: {
+    allowedRPCMethods,
+    allowedCallAddresses,
+    allowedLogsAddresses,
+    maxBatchCount: PROVIDER_MAX_BATCH,
+    blockEmptyAddressGetLogs: true,
+    maxGetLogsRange: 20_000, // only 20k blocks size historical queries
+    maxResponseSize: 1_000_000, // 1mb max response
+  },
+})
 
-  const requestInfo = {
-    type: 'API request',
-    path: 'rpc',
-    body: clone(req.body),
-    query: clone(req.query),
-    method: req.method,
-    stage: 'INCOMING',
-  }
-
-  console.info('Incoming request to api/rpc', requestInfo)
-
-  try {
-    const chainId = parseChainId(String(req.query.chainId))
-
-    const urls = RPC_URLS[chainId]
-
-    const requested = await fetchWithFallback(urls, chainId, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // Next by default parses our body for us, we don't want that here
-      body: JSON.stringify(req.body),
-    })
-
-    const responded = await requested.json()
-
-    res.status(requested.status).json(responded)
-
-    console.info('Request to api/rpc successfully fullfilled', {
-      ...requestInfo,
-      stage: 'FULFILLED',
-    })
-  } catch (error) {
-    console.error(
-      error instanceof Error ? error.message : 'Something went wrong',
-      error,
-    )
-    res.status(500).send({ error: 'Something went wrong!' })
-  }
-}
+export default wrapNextRequest([
+  httpMethodGuard([HttpMethod.POST]),
+  rateLimit,
+  responseTimeMetric(Metrics.request.apiTimings, API_ROUTES.RPC),
+  requestAddressMetric(Metrics.request.ethCallToAddress),
+  defaultErrorHandler,
+])(rpc)

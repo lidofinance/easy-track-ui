@@ -3,7 +3,7 @@ import { CHAINS } from '@lido-sdk/constants'
 import type {
   ContractTypeAllowedRecipientRegistry,
   ContractTypeRegistryWithLimits,
-} from 'modules/blockChain/contracts'
+} from 'modules/blockChain/types'
 
 const FROM_BLOCK = {
   [CHAINS.Mainnet]: 13676800,
