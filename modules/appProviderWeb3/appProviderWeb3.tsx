@@ -7,7 +7,6 @@ const { publicRuntimeConfig } = getConfig()
 
 export function AppProviderWeb3({ children }: { children: React.ReactNode }) {
   const { supportedChainIds, defaultChain } = useConfig()
-
   return (
     <ProviderWeb3
       defaultChainId={defaultChain}

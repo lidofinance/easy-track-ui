@@ -33,6 +33,9 @@ const subgraphHolesky = process.env.SUBGRAPH_HOLESKY
 
 const walletconnectProjectId = process.env.WALLETCONNECT_PROJECT_ID
 
+const rateLimit = process.env.RATE_LIMIT
+const rateLimitTimeFrame = process.env.RATE_LIMIT_TIME_FRAME
+
 export default {
   basePath,
   webpack5: true,
@@ -126,6 +129,8 @@ export default {
     subgraphMainnet,
     subgraphGoerli,
     subgraphHolesky,
+    rateLimit,
+    rateLimitTimeFrame
   },
   publicRuntimeConfig: {
     defaultChain,

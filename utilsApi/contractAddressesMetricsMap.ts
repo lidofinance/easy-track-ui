@@ -1,9 +1,10 @@
-import { Abi } from 'viem'
-import type { Address } from 'viem'
 import { invert, isNull, memoize, omitBy } from 'lodash'
 import * as contracts from 'modules/blockChain/contracts'
 import { CHAINS } from '@lido-sdk/constants'
 import getConfig from 'next/config'
+import { allowedEventContracts } from '../modules/blockChain/constants'
+import { Address } from 'wagmi'
+import { Abi } from 'abitype'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -28,8 +29,8 @@ export const getMetricContractAbi = memoize(
 
 const supportedChainsWithMainnet: CHAINS[] =
   publicRuntimeConfig.supportedChains.includes(CHAINS.Mainnet)
-    ? publicRuntimeConfig.supportedChains
-    : [...publicRuntimeConfig.supportedChains, CHAINS.Mainnet]
+    ? publicRuntimeConfig.supportedChains.split(',')
+    : [...publicRuntimeConfig.supportedChains.split(','), CHAINS.Mainnet]
 
 export const METRIC_CONTRACT_ADDRESSES = supportedChainsWithMainnet.reduce(
   (mapped, chainId) => {
@@ -54,19 +55,17 @@ export const METRIC_CONTRACT_ADDRESSES = supportedChainsWithMainnet.reduce(
 
 export const METRIC_CONTRACT_EVENT_ADDRESSES =
   supportedChainsWithMainnet.reduce((mapped, chainId) => {
-    // TODO: narrow the list of contracts to those that have events fetchers
-    const map = Object.keys(contracts).reduce(
-      (contractMap, contractName: CONTRACT_NAMES) => {
-        const address = contracts[contractName].address[chainId] ?? null
-        return {
-          ...contractMap,
-          [contractName]: address,
-        }
-      },
-      {} as Record<CONTRACT_NAMES, Address>,
-    )
+    const map = allowedEventContracts.reduce((contractMap, contract) => {
+      const contractName = contract.constructor.name
+      const address = contract.address[chainId] ?? null
+      return {
+        ...contractMap,
+        [contractName]: address,
+      }
+    }, {} as Record<string, string | null>)
+
     return {
       ...mapped,
       [chainId]: invert(omitBy(map, isNull)),
     }
-  }, {} as Record<CHAINS, Record<Address, CONTRACT_NAMES | undefined>>)
+  }, {} as Record<CHAINS, Record<string, string>>)

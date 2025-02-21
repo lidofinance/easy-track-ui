@@ -1,11 +1,4 @@
 export const openKeys = [
-  'SELF_ORIGIN',
-  'ROOT_ORIGIN',
-  'DOCS_ORIGIN',
-  'HELP_ORIGIN',
-  'RESEARCH_ORIGIN',
-  'BLOG_ORIGIN',
-
   'SUPPORTED_CHAINS',
   'DEFAULT_CHAIN',
 
@@ -13,29 +6,20 @@ export const openKeys = [
   'CSP_REPORT_ONLY',
   'CSP_REPORT_URI',
 
-  'ENABLE_QA_HELPERS',
-
-  'REWARDS_BACKEND',
-
   'RATE_LIMIT',
   'RATE_LIMIT_TIME_FRAME',
 
-  'ETH_API_BASE_PATH',
-  'WQ_API_BASE_PATH',
-  'MATOMO_URL',
   'WALLETCONNECT_PROJECT_ID',
-  'REWARDS_BACKEND_BASE_PATH',
+
+  'SUBGRAPH_MAINNET',
+  'SUBGRAPH_GOERLI',
+  'SUBGRAPH_HOLESKY',
 ]
 
 export const secretKeys = [
   'EL_RPC_URLS_1',
   'EL_RPC_URLS_5',
   'EL_RPC_URLS_17000',
-  'EL_RPC_URLS_11155111',
-  'EL_RPC_URLS_10',
-  'EL_RPC_URLS_11155420',
-  'EL_RPC_URLS_1868',
-  'EL_RPC_URLS_1946',
 ]
 
 export const logOpenEnvironmentVariables = () => {

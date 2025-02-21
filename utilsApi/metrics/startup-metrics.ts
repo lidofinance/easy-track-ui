@@ -8,21 +8,14 @@ import { getRPCChecks } from 'scripts/startup-checks/rpc.mjs'
 import { METRICS_PREFIX } from './constants'
 
 import { StartupChecksRPCMetrics } from './startup-checks'
+import getConfig from 'next/config'
 
 const collectStartupChecksRPCMetrics = async (
   registry: Registry,
 ): Promise<void> => {
   const rpcMetrics = new StartupChecksRPCMetrics(registry)
-
   try {
-    // Await the promise if it's still in progress
     const rpcChecksResults = await getRPCChecks()
-
-    if (!rpcChecksResults && !secretConfig.developmentMode) {
-      throw new Error(
-        '[collectStartupChecksRPCMetrics] getRPCChecks resolved as "null"!',
-      )
-    }
 
     rpcChecksResults.forEach(
       (_check: { domain: string; chainId: number; success: boolean }) => {
@@ -60,15 +53,16 @@ export const collectStartupMetrics = async (
   registry: Registry,
 ): Promise<void> => {
   // conflicts with HMR
-  if (config.developmentMode) return
   collectEnvInfoMetrics(registry)
 
+  const { publicRuntimeConfig } = getConfig()
+  const { defaultChain, supportedChains } = publicRuntimeConfig
   collectBuildInfoMetrics({
     prefix: METRICS_PREFIX,
     registry: registry,
-    defaultChain: `${config.defaultChain}`,
-    supportedChains: config.supportedChains.map((chain: number) => `${chain}`),
-    version: buildInfoJson.version,
+    defaultChain: defaultChain,
+    supportedChains: supportedChains.split().map((chain: number) => `${chain}`),
+    version: buildInfoJson.commit,
     commit: buildInfoJson.commit,
     branch: buildInfoJson.branch,
   })

@@ -1,9 +1,6 @@
-import { createClient, http } from 'viem'
-import { getChainId } from 'viem/actions'
-
+import { providers } from 'ethers'
 export const BROKEN_URL = 'BROKEN_URL'
 export const RPC_TIMEOUT_MS = 10_000
-export const MAX_RETRY_COUNT = 3
 
 // Safely initialize a global variable
 const globalStartupRPCChecks = globalThis.__startupRPCChecks || {
@@ -26,20 +23,18 @@ const checkRPC = async (url, chainId) => {
   }
 
   try {
-    const client = createClient({
-      transport: http(url, {
-        retryCount: MAX_RETRY_COUNT,
-        timeout: RPC_TIMEOUT_MS,
-      }),
+    const provider = new providers.JsonRpcProvider({
+      url,
+      timeout: RPC_TIMEOUT_MS,
     })
 
-    const chainIdClient = await getChainId(client)
+    const chainIdFromRPC = await provider.getNetwork().then(network => network.chainId)
 
-    if (chainIdClient === chainId) {
+    if (chainIdFromRPC === chainId) {
       console.info(`[checkRPC] [chainId=${chainId}] RPC ${domain} is working`)
       return { domain, chainId, success: true }
     } else {
-      throw new Error(`Expected chainId ${chainId}, but got ${chainIdClient}`)
+      throw new Error(`Expected chainId ${chainId}, but got ${chainIdFromRPC}`)
     }
   } catch (err) {
     console.error(

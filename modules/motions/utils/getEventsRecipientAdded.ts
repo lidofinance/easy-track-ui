@@ -20,12 +20,10 @@ export async function getEventsRecipientAdded(
     filter,
     get(FROM_BLOCK, chainId, undefined),
   )
-  const parsedEvents = events
+  return events
     .sort((a, b) => b.blockNumber - a.blockNumber)
     .map(event => ({
       title: event.args._title,
       address: event.args._recipient,
     }))
-
-  return parsedEvents
 }

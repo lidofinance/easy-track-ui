@@ -1,6 +1,4 @@
 import type { Histogram, Counter } from 'prom-client'
-import { type Abi, getAddress, toFunctionSelector } from 'viem'
-
 import { getStatusLabel } from '@lidofinance/api-metrics'
 import { rateLimitWrapper } from '@lidofinance/next-ip-rate-limit'
 import {
@@ -16,6 +14,16 @@ import {
   getMetricContractAbi,
 } from './contractAddressesMetricsMap'
 import { CHAINS } from '@lido-sdk/constants'
+import { secretConfig } from '../config'
+import { CACHE_DEFAULT_HEADERS } from '../config/groups/cache'
+import { Abi } from 'abitype'
+import { getAddress, keccak256 } from 'ethers/lib/utils'
+
+// TODO: test it
+function toFunctionSelector(functionSignature: string): string {
+  const hash = keccak256(functionSignature)
+  return hash.slice(0, 10)
+}
 
 export enum HttpMethod {
   GET = 'GET',
@@ -215,11 +223,8 @@ export const requestAddressMetric =
   }
 
 export const rateLimit = rateLimitWrapper({
-  // TODO
-  // rateLimit: secretConfig.rateLimit,
-  // rateLimitTimeFrame: secretConfig.rateLimitTimeFrame,
-  rateLimit: 10,
-  rateLimitTimeFrame: 10,
+  rateLimit: secretConfig.rateLimit,
+  rateLimitTimeFrame: secretConfig.rateLimitTimeFrame,
 })
 
 export const nextDefaultErrorHandler =
@@ -296,9 +301,7 @@ export const defaultErrorHandler = nextDefaultErrorHandler()
 
 export const errorAndCacheDefaultWrappers = [
   cacheControl({
-    // TODO
-    headers: '',
-    // headers: config.CACHE_DEFAULT_HEADERS,
+    headers: CACHE_DEFAULT_HEADERS,
   }),
   defaultErrorHandler,
 ]
