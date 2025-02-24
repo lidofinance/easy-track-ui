@@ -1,4 +1,13 @@
 import buildDynamics from './scripts/build-dynamics.mjs';
+import { startupCheckRPCs } from './scripts/startup-checks/rpc.mjs';
+
+
+if (
+  process.env.RUN_STARTUP_CHECKS === 'true' &&
+  typeof window === 'undefined'
+) {
+  void startupCheckRPCs();
+}
 
 buildDynamics();
 

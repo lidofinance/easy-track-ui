@@ -19,10 +19,21 @@ import { CACHE_DEFAULT_HEADERS } from '../config/groups/cache'
 import { Abi } from 'abitype'
 import { getAddress, keccak256 } from 'ethers/lib/utils'
 
-// TODO: test it
-function toFunctionSelector(functionSignature: string): string {
-  const hash = keccak256(functionSignature)
-  return hash.slice(0, 10)
+// Replacement for the toFunctionSelector from Viem, since we can't use it with the current setup
+const toFunctionSelector = (functionSignature: string): string => {
+  if (typeof functionSignature !== 'string') {
+    throw new Error('Function signature must be a string')
+  }
+
+  if (!functionSignature.includes('(') || !functionSignature.includes(')')) {
+    throw new Error(
+      `Invalid function signature: "${functionSignature}". Expected format: "functionName(paramType1,paramType2)"`,
+    )
+  }
+
+  const hash = keccak256(Buffer.from(functionSignature)) // Encode as Buffer
+  const selector = hash.slice(0, 10) // Extract first 4 bytes (10 characters including "0x")
+  return selector
 }
 
 export enum HttpMethod {
@@ -43,11 +54,17 @@ export const getFunctionNameFromAbi = (
 ): string | null => {
   for (const item of abi) {
     if (item.type === 'function') {
-      const selector = toFunctionSelector(
-        `${item.name}(${item.inputs.map((i: any) => i.type).join(',')})`,
-      )
-      if (selector === methodEncoded) {
-        return item.name
+      try {
+        const signature = `${item.name}(${item.inputs
+          .map((i: any) => i.type)
+          .join(',')})`
+
+        const selector = toFunctionSelector(signature)
+        if (selector === methodEncoded) {
+          return item.name
+        }
+      } catch (error) {
+        console.warn(`Failed to process ABI item: ${item.name}`, error)
       }
     }
   }
