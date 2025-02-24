@@ -1,6 +1,6 @@
 import { wrapRequest as wrapNextRequest } from '@lidofinance/next-api-wrapper'
 import { trackedFetchRpcFactory } from '@lidofinance/api-rpc'
-import { rpcFactory } from '@lidofinance/next-pages'
+import { rpcFactory } from 'utilsApi/rpcFactory'
 
 import { secretConfig } from 'config'
 import { API_ROUTES } from 'constants/api'
