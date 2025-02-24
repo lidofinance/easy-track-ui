@@ -1,3 +1,7 @@
+import buildDynamics from './scripts/build-dynamics.mjs';
+
+buildDynamics();
+
 const basePath = process.env.BASE_PATH || ''
 const infuraApiKey = process.env.INFURA_API_KEY
 const alchemyApiKey = process.env.ALCHEMY_API_KEY
@@ -21,7 +25,7 @@ const rpcUrls_17000 = (process.env.EL_RPC_URLS_17000 &&
 ].filter(Boolean);
 
 const defaultChain = process.env.DEFAULT_CHAIN || '1'
-const supportedChains = process.env.SUPPORTED_CHAINS || '1,5'
+const supportedChains = process.env.SUPPORTED_CHAINS || '1,5,17000'
 
 const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS
 const cspReportOnly = process.env.CSP_REPORT_ONLY

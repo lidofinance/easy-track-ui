@@ -1,7 +1,7 @@
-import getConfigNext from 'next/config'
 import { type Modify, toBoolean } from './helpers'
+import getConfig from 'next/config'
 
-const { serverRuntimeConfig } = getConfigNext()
+const { serverRuntimeConfig } = getConfig()
 
 export type SecretConfigType = Modify<
   typeof serverRuntimeConfig,
@@ -30,11 +30,6 @@ export type SecretConfigType = Modify<
 export const getSecretConfig = (): SecretConfigType => {
   return {
     ...serverRuntimeConfig,
-
-    // Keep fallback as in 'env-dynamics.mjs'
-    defaultChain: Number(serverRuntimeConfig.defaultChain) || 1,
-
-    supportedChains: Number(serverRuntimeConfig.supportedChains) || ['1', '5'],
 
     // Hack: in the current implementation we can treat an empty array as a "tuple" (conditionally)
     rpcUrls_1: (serverRuntimeConfig.rpcUrls_1 ?? []) as [string, ...string[]],

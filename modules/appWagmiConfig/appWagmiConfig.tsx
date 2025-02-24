@@ -5,7 +5,6 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { getConnectors } from 'reef-knot/core-react'
 import { CHAINS } from '@lido-sdk/constants'
 import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
-import { secretConfig } from '../../config'
 import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
@@ -37,7 +36,8 @@ export const holesky = {
 } as const
 
 let supportedChainIds: number[] = []
-supportedChainIds = secretConfig.supportedChains
+supportedChainIds = publicRuntimeConfig.supportedChains
+  .split(',')
   .map((chainId: string) => parseInt(chainId))
   .filter((chainId: number) => !Number.isNaN(chainId))
 
@@ -73,7 +73,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 const connectors = getConnectors({
   chains,
-  defaultChain: secretConfig.defaultChain,
+  defaultChain: publicRuntimeConfig.defaultChain,
   rpc: backendRPC,
   walletconnectProjectId: publicRuntimeConfig.walletconnectProjectId,
 })
