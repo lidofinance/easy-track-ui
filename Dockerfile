@@ -7,8 +7,9 @@ RUN apk add --no-cache git=~2
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --non-interactive && yarn cache clean
 COPY . .
-RUN yarn typechain && yarn build
 
+RUN rm -rf /app/public/runtime && mkdir /app/public/runtime && chown node /app/public/runtime
+RUN yarn typechain && yarn build
 # final image
 FROM node:16-alpine as base
 
