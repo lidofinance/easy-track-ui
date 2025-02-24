@@ -1,5 +1,5 @@
 # build env
-FROM node:16-alpine as build
+FROM node:20-alpine as build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN yarn typechain && yarn build
 RUN rm -rf /app/public/runtime && mkdir /app/public/runtime && chown node /app/public/runtime
 
 # final image
-FROM node:16-alpine as base
+FROM node:20-alpine as base
 
 ARG BASE_PATH=""
 ENV BASE_PATH=$BASE_PATH
