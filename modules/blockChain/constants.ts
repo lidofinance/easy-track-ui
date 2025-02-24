@@ -10,6 +10,7 @@ import {
   ContractEcosystemOpsStablesAllowedRecipientsRegistry,
   ContractEcosystemOpsStethAllowedRecipientsRegistry,
   ContractGasFunderETHRegistry,
+  ContractGovernanceToken,
   ContractLabsOpsStablesAllowedRecipientsRegistry,
   ContractLabsOpsStethAllowedRecipientsRegistry,
   ContractLegoLDORegistry,
@@ -56,4 +57,5 @@ export const allowedEventContracts = [
   ContractEasyTrack,
   ContractAragonAcl,
   ContractReferralPartnersRegistry,
+  ContractGovernanceToken,
 ]
