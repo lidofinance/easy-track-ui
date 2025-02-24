@@ -2,7 +2,6 @@ import { invert, isNull, memoize, omitBy } from 'lodash'
 import * as contracts from 'modules/blockChain/contracts'
 import { CHAINS } from '@lido-sdk/constants'
 import getConfig from 'next/config'
-import { allowedEventContracts } from '../modules/blockChain/constants'
 import { Address } from 'wagmi'
 import { Abi } from 'abitype'
 
@@ -55,14 +54,16 @@ export const METRIC_CONTRACT_ADDRESSES = supportedChainsWithMainnet.reduce(
 
 export const METRIC_CONTRACT_EVENT_ADDRESSES =
   supportedChainsWithMainnet.reduce((mapped, chainId) => {
-    const map = allowedEventContracts.reduce((contractMap, contract) => {
-      const contractName = contract.constructor.name
-      const address = contract.address[chainId] ?? null
-      return {
-        ...contractMap,
-        [contractName]: address,
-      }
-    }, {} as Record<string, string | null>)
+    const map = Object.keys(contracts).reduce(
+      (contractMap, contractName: CONTRACT_NAMES) => {
+        const address = contracts[contractName].address[chainId] ?? null
+        return {
+          ...contractMap,
+          [contractName]: address,
+        }
+      },
+      {} as Record<CONTRACT_NAMES, Address>,
+    )
 
     return {
       ...mapped,
