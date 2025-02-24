@@ -41,7 +41,7 @@ export const getSecretConfig = (): SecretConfigType => {
 
     cspReportOnly: toBoolean(serverRuntimeConfig.cspReportOnly),
 
-    rateLimit: Number(serverRuntimeConfig.rateLimit) || 50,
+    rateLimit: Number(serverRuntimeConfig.rateLimit) || 60,
     rateLimitTimeFrame: Number(serverRuntimeConfig.rateLimitTimeFrame) || 60, // 1 minute;
   }
 }
