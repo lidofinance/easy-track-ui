@@ -12,47 +12,47 @@ import {
   httpMethodGuard,
   HttpMethod,
 } from 'utilsApi'
-import {
-  METRIC_CONTRACT_ADDRESSES,
-  METRIC_CONTRACT_EVENT_ADDRESSES,
-} from 'utilsApi/contractAddressesMetricsMap'
+// import {
+//   METRIC_CONTRACT_ADDRESSES,
+//   METRIC_CONTRACT_EVENT_ADDRESSES,
+// } from 'utilsApi/contractAddressesMetricsMap'
 import { Metrics, METRICS_PREFIX } from 'utilsApi/metrics'
 import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
-import { Stonks } from '../../modules/blockChain/contractAddresses'
-import { Address } from 'wagmi'
+// import { Stonks } from '../../modules/blockChain/contractAddresses'
+// import { Address } from 'wagmi'
 
 const PROVIDER_MAX_BATCH = 20
 
 const { publicRuntimeConfig } = getConfig()
 const { defaultChain } = publicRuntimeConfig
 
-const allowedCallAddresses: Record<string, string[]> = Object.entries(
-  METRIC_CONTRACT_ADDRESSES,
-).reduce((acc, [chainId, addresses]) => {
-  acc[chainId] = [
-    ...Object.keys(addresses),
-    // @ts-ignore
-    ...(Stonks[chainId].map((address: Address) =>
-      address.toLowerCase(),
-    ) as string[]),
-  ]
-  return acc
-}, {} as Record<string, string[]>)
-
-const allowedLogsAddresses: Record<string, string[]> = Object.entries(
-  METRIC_CONTRACT_EVENT_ADDRESSES,
-).reduce((acc, [chainId, addresses]) => {
-  acc[chainId] = [
-    ...Object.keys(addresses),
-    // TODO: discuss
-    // @ts-ignore
-    ...(Stonks[chainId].map((address: Address) =>
-      address.toLowerCase(),
-    ) as string[]),
-  ]
-  return acc
-}, {} as Record<string, string[]>)
+// const allowedCallAddresses: Record<string, string[]> = Object.entries(
+//   METRIC_CONTRACT_ADDRESSES,
+// ).reduce((acc, [chainId, addresses]) => {
+//   acc[chainId] = [
+//     ...Object.keys(addresses),
+//     // @ts-ignore
+//     ...(Stonks[chainId].map((address: Address) =>
+//       address.toLowerCase(),
+//     ) as string[]),
+//   ]
+//   return acc
+// }, {} as Record<string, string[]>)
+//
+// const allowedLogsAddresses: Record<string, string[]> = Object.entries(
+//   METRIC_CONTRACT_EVENT_ADDRESSES,
+// ).reduce((acc, [chainId, addresses]) => {
+//   acc[chainId] = [
+//     ...Object.keys(addresses),
+//     // TODO: discuss
+//     // @ts-ignore
+//     ...(Stonks[chainId].map((address: Address) =>
+//       address.toLowerCase(),
+//     ) as string[]),
+//   ]
+//   return acc
+// }, {} as Record<string, string[]>)
 
 const allowedRPCMethods = [
   'test',
@@ -91,12 +91,12 @@ const rpc = rpcFactory({
   },
   validation: {
     allowedRPCMethods,
-    allowedCallAddresses,
-    allowedLogsAddresses,
+    // allowedCallAddresses,
+    // allowedLogsAddresses,
     maxBatchCount: PROVIDER_MAX_BATCH,
     blockEmptyAddressGetLogs: true,
-    maxGetLogsRange: 20_000, // only 20k blocks size historical queries
-    maxResponseSize: 1_000_000, // 1mb max response
+    // maxGetLogsRange: 20_000, // only 20k blocks size historical queries
+    // maxResponseSize: 1_000_000, // 1mb max response
   },
 })
 

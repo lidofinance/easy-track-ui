@@ -15,7 +15,7 @@ import {
   baseRequestValidationFactory,
   ethCallValidationFactory,
   ethGetLogsValidationFactory,
-  rpcMethodsValidationFactory,
+  // rpcMethodsValidationFactory,
   shouldValidateRpcMethod,
   streamMaxSizeValidationFactory,
 } from './validation'
@@ -33,7 +33,7 @@ export const rpcFactory = ({
     allowedCallAddresses,
     allowedLogsAddresses,
     maxResponseSize = 1_000_000,
-    maxBatchCount = 20,
+    // maxBatchCount = 20,
     currentBlockTTLms = 60_000,
     maxGetLogsRange = 20_000,
     blockEmptyAddressGetLogs = true,
@@ -52,10 +52,10 @@ export const rpcFactory = ({
   const validateBaseRequest = baseRequestValidationFactory(
     defaultChain,
     providers,
-    maxBatchCount,
+    // maxBatchCount,
   )
 
-  const validateRpcMethod = rpcMethodsValidationFactory(allowedRPCMethods)
+  // const validateRpcMethod = rpcMethodsValidationFactory(allowedRPCMethods)
 
   const validateEthCall =
     allowedCallAddresses &&
@@ -99,15 +99,15 @@ export const rpcFactory = ({
       // We throw HTTP error for ANY invalid RPC request out of batch
       // because we assume that frontend must not send invalid requests at all
       for (const request of requests) {
-        validateRpcMethod(request, validationContext)
+        // validateRpcMethod(request, validationContext)
 
         const method = request.method
 
         if (method === 'eth_call' && validateEthCall) {
-          validateEthCall(request, validationContext)
+          // validateEthCall(request, validationContext)
         }
         if (method === 'eth_getLogs' && validateEthGetLogs) {
-          await validateEthGetLogs(request, validationContext)
+          // await validateEthGetLogs(request, validationContext)
         }
       }
 
