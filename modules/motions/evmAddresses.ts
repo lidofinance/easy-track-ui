@@ -107,6 +107,10 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
+    [MotionType.EcosystemOpsStablesTopUp]:
+      '0xf2476f967C826722F5505eDfc4b2561A34033477',
+    [MotionType.LabsOpsStablesTopUp]:
+      '0xE1f6BaBb445F809B97e3505Ea91749461050F780',
   },
 
   // Goerli
