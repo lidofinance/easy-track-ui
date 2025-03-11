@@ -11,9 +11,9 @@ import { Fieldset } from './StonksOrderResolverFormStyle'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
-import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
 import { useMemo } from 'react'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
 type FormData = {
   txHashOrAddress: string
@@ -21,6 +21,7 @@ type FormData = {
 
 export function StonksOrderResolverForm() {
   const { chainId } = useWeb3()
+  const { getRpcUrl } = useConfig()
   const router = useRouter()
 
   const formMethods = useForm<FormData>({
@@ -35,8 +36,8 @@ export function StonksOrderResolverForm() {
   const { isSubmitting } = formMethods.formState
 
   const library = useMemo(
-    () => getStaticRpcBatchProvider(chainId, getBackendRpcUrl(chainId)),
-    [chainId],
+    () => getStaticRpcBatchProvider(chainId, getRpcUrl(chainId)),
+    [chainId, getRpcUrl],
   )
 
   const handleSubmit = async (values: FormData) => {
@@ -46,6 +47,7 @@ export function StonksOrderResolverForm() {
           StonksOrderAbi__factory,
           values.txHashOrAddress,
           chainId,
+          getRpcUrl(chainId),
         )
 
         try {

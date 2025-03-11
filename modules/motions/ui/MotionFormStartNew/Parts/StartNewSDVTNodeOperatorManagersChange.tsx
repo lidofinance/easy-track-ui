@@ -15,7 +15,10 @@ import {
   FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
-import { ContractSDVTNodeOperatorManagerChange } from 'modules/blockChain/contracts'
+import {
+  ContractSDVTNodeOperatorManagerChange,
+  ContractSDVTRegistry,
+} from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
@@ -71,11 +74,12 @@ export const formParts = createMotionFormPart({
     ] as NodeOperator[],
   }),
   Component: ({ fieldNames, submitAction }) => {
-    const { walletAddress, chainId } = useWeb3()
+    const { walletAddress } = useWeb3()
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList()
+    const sdvtRegistry = ContractSDVTRegistry.useRpc()
 
     const activeNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => nodeOperator.active,
@@ -193,7 +197,7 @@ export const formParts = createMotionFormPart({
                           await checkIsAddressManagerOfNodeOperator(
                             value,
                             selectedNodeOperators[fieldIndex].id,
-                            chainId,
+                            sdvtRegistry,
                           )
 
                         if (!canAddressManageKeys) {
@@ -245,7 +249,7 @@ export const formParts = createMotionFormPart({
                           await checkIsAddressManagerOfNodeOperator(
                             valueAddress,
                             selectedNodeOperators[fieldIndex].id,
-                            chainId,
+                            sdvtRegistry,
                           )
 
                         if (canAddressManageKeys) {

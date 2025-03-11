@@ -15,7 +15,11 @@ import {
   FieldsHeaderDesc,
 } from '../CreateMotionFormStyle'
 
-import { ContractSDVTNodeOperatorsActivate } from 'modules/blockChain/contracts'
+import {
+  ContractAragonAcl,
+  ContractSDVTNodeOperatorsActivate,
+  ContractSDVTRegistry,
+} from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
@@ -65,11 +69,13 @@ export const formParts = createMotionFormPart({
     ] as NodeOperator[],
   }),
   Component: ({ fieldNames, submitAction }) => {
-    const { walletAddress, chainId } = useWeb3()
+    const { walletAddress } = useWeb3()
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList()
+    const sdvtRegistry = ContractSDVTRegistry.useRpc()
+    const aragonAcl = ContractAragonAcl.useRpc()
 
     const deactivatedNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => !nodeOperator.active,
@@ -165,7 +171,8 @@ export const formParts = createMotionFormPart({
                         const canAddressManageKeys =
                           await checkAddressForManageSigningKeysRole(
                             utils.getAddress(value),
-                            chainId,
+                            sdvtRegistry,
+                            aragonAcl,
                           )
 
                         if (canAddressManageKeys) {

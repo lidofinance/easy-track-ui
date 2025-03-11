@@ -25,14 +25,14 @@ export default function MotionDetailsPage() {
   const router = useRouter()
   const { chainId } = useWeb3()
   const motionId = Number(router.query.motionId)
+  const easyTrack = ContractEasyTrack.useRpc()
   const {
     initialLoading,
     data: motion,
     mutate,
   } = useSWR<Motion | null>(`motion-${chainId}-${motionId}`, async () => {
     try {
-      const easyTracksContract = ContractEasyTrack.connectRpc({ chainId })
-      const tryActive = await easyTracksContract.getMotion(motionId)
+      const tryActive = await easyTrack.getMotion(motionId)
       return formatMotionDataOnchain(tryActive)
     } catch {
       const tryArchive = await fetchMotionsSubgraphItem(chainId, motionId)

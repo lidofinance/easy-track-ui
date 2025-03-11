@@ -18,7 +18,11 @@ import {
   ErrorBox,
 } from '../CreateMotionFormStyle'
 
-import { ContractSDVTNodeOperatorsAdd } from 'modules/blockChain/contracts'
+import {
+  ContractAragonAcl,
+  ContractSDVTNodeOperatorsAdd,
+  ContractSDVTRegistry,
+} from 'modules/blockChain/contracts'
 
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -88,6 +92,8 @@ export const formParts = () =>
         'trustedCaller',
         [],
       )
+      const sdvtRegistry = ContractSDVTRegistry.useRpc()
+      const aragonAcl = ContractAragonAcl.useRpc()
       const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
       const {
@@ -311,7 +317,8 @@ export const formParts = () =>
                         const isAlreadyManager =
                           await checkAddressForManageSigningKeysRole(
                             value,
-                            chainId,
+                            sdvtRegistry,
+                            aragonAcl,
                           )
 
                         if (isAlreadyManager) {

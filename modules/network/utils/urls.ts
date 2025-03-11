@@ -9,3 +9,5 @@ export const stonksInstance = (stonksAddress: string) =>
   `/stonks/${stonksAddress}`
 export const stonksOrder = (orderAddress: string) =>
   `/stonks/orders/${orderAddress}`
+
+export const settings = '/settings'

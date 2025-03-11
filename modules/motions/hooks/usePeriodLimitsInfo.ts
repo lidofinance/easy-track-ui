@@ -26,6 +26,7 @@ import { MotionType } from 'modules/motions/types'
 import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 
 import { calcPeriodData } from './utils'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
 type ContractLimitsMethods = {
   getLimitParameters: LimitCheckerAbi['getLimitParameters']
@@ -130,13 +131,17 @@ export const usePeriodLimitsInfoByMotionType = (props: {
   const { chainId } = useWeb3()
   const swrKey = `${motionType}-period-limits-data`
   const easyTrack = ContractEasyTrack.useRpc()
+  const { getRpcUrl } = useConfig()
 
   return useSWR(
     `${swrKey}-${chainId}-${motionType}`,
     async () => {
       if (motionType === EvmUnrecognized) return null
 
-      const registry = registryByMotionType[motionType]?.connectRpc({ chainId })
+      const registry = registryByMotionType[motionType]?.connectRpc({
+        chainId,
+        rpcUrl: getRpcUrl(chainId),
+      })
 
       if (!isContractWithLimits(registry)) return null
 

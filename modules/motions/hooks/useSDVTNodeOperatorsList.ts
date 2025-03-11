@@ -1,7 +1,10 @@
 import { BigNumber, utils } from 'ethers'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
+import {
+  ContractAragonAcl,
+  ContractSDVTRegistry,
+} from 'modules/blockChain/contracts'
 import { getManagerAddressesMap } from '../utils/getManagerAddressesMap'
 
 type NodeOperatorSummary = {
@@ -21,18 +24,19 @@ type Args = {
 
 export function useSDVTNodeOperatorsList(args?: Args) {
   const { chainId } = useWeb3()
+  const registry = ContractSDVTRegistry.useRpc()
+  const aragonAcl = ContractAragonAcl.useRpc()
 
   return useSWR(
     `${chainId}-sdvt-operators-list${args?.withSummary ? '-with-summary' : ''}`,
     async () => {
-      const registry = ContractSDVTRegistry.connectRpc({ chainId })
       const count = (await registry.getNodeOperatorsCount()).toNumber()
       const MANAGE_SIGNING_KEYS_ROLE = await registry.MANAGE_SIGNING_KEYS()
 
       const managerAddressesMap = await getManagerAddressesMap(
         registry.address,
         MANAGE_SIGNING_KEYS_ROLE,
-        chainId,
+        aragonAcl,
       )
 
       const nodeOperators = await Promise.all(

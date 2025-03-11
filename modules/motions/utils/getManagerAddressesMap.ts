@@ -1,6 +1,5 @@
 import { utils } from 'ethers'
-import { CHAINS } from '@lido-sdk/constants'
-import { ContractAragonAcl } from 'modules/blockChain/contracts'
+import { AragonACLAbi } from 'generated'
 
 // Event ABI for ACL's SetPermissionParams event
 const ACL_EVENT_ABI = [
@@ -17,17 +16,15 @@ const ACL_INTERFACE = new utils.Interface(ACL_EVENT_ABI)
 export const getManagerAddressesMap = async (
   registryAddress: string,
   signingKeysRole: string,
-  chainId: CHAINS,
+  aragonAcl: AragonACLAbi,
 ) => {
-  const aclContract = ContractAragonAcl.connectRpc({ chainId })
-
-  const eventFilter = aclContract.filters.SetPermissionParams(
+  const eventFilter = aragonAcl.filters.SetPermissionParams(
     null,
     registryAddress,
     signingKeysRole,
   )
 
-  const rawEvents = await aclContract.queryFilter(eventFilter)
+  const rawEvents = await aragonAcl.queryFilter(eventFilter)
   return rawEvents.reduce((result, event) => {
     const parsedEvent = ACL_INTERFACE.parseLog(event)
 

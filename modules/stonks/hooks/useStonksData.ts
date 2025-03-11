@@ -1,15 +1,16 @@
 import { BigNumber } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { connectERC20Contract } from 'modules/motions/utils/connectTokenContract'
 import { formatUnits } from 'ethers/lib/utils'
 import { useAvailableStonks } from './useAvailableStonks'
 import { useRouter } from 'next/router'
+import { useConnectErc20Contract } from 'modules/motions/hooks/useConnectErc20Contract'
 
 const minimalBalance = 10
 
 export function useStonksData() {
   const { chainId } = useWeb3()
+  const connectErc20Contract = useConnectErc20Contract()
   const router = useRouter()
   const stonksAddress = String(router.query.stonksAddress)
   const { availableStonks, initialLoading: isAvailableStonksDataLoading } =
@@ -30,7 +31,7 @@ export function useStonksData() {
             await stonks.contract.MARGIN_IN_BASIS_POINTS()
           const priceToleranceInBasisPoints =
             await stonks.contract.PRICE_TOLERANCE_IN_BASIS_POINTS()
-          const tokenFromContract = connectERC20Contract(tokenFrom, chainId)
+          const tokenFromContract = connectErc20Contract(tokenFrom)
 
           const currentBalance = await tokenFromContract.balanceOf(
             stonks.address,
@@ -38,7 +39,7 @@ export function useStonksData() {
 
           const tokenFromDecimals = await tokenFromContract.decimals()
           const tokenFromLabel = await tokenFromContract.symbol()
-          const tokenToContract = connectERC20Contract(tokenTo, chainId)
+          const tokenToContract = connectErc20Contract(tokenTo)
 
           const tokenToLabel = await tokenToContract.symbol()
           const tokenToDecimals = await tokenToContract.decimals()

@@ -17,6 +17,7 @@ import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 import { AppProviderWeb3 } from 'modules/appProviderWeb3'
 import { AppWagmiConfig } from 'modules/appWagmiConfig'
 import { UiProvider } from 'modules/shared/ui/UiProvider'
+import { parseEnvConfig } from 'modules/config'
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
@@ -120,5 +121,8 @@ export default process.env.NODE_ENV === 'development' ? App : withCsp(App)
 App.getInitialProps = async (appContext: AppContext) => {
   const appProps = await NextApp.getInitialProps(appContext)
   const { publicRuntimeConfig } = getConfig()
-  return { ...appProps, envConfig: publicRuntimeConfig }
+  return {
+    ...appProps,
+    envConfig: parseEnvConfig(publicRuntimeConfig),
+  }
 }
