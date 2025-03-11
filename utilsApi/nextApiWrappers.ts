@@ -31,7 +31,7 @@ const toFunctionSelector = (functionSignature: string): string => {
     )
   }
 
-  const hash = keccak256(Buffer.from(functionSignature)) // Encode as Buffer
+  const hash = keccak256(Buffer.from(functionSignature))
   const selector = hash.slice(0, 10) // Extract first 4 bytes (10 characters including "0x")
   return selector
 }

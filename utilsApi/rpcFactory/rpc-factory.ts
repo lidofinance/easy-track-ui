@@ -33,7 +33,6 @@ export const rpcFactory = ({
     allowedCallAddresses,
     allowedLogsAddresses,
     maxResponseSize = 1_000_000,
-    // maxBatchCount = 20,
     currentBlockTTLms = 60_000,
     maxGetLogsRange = 20_000,
     blockEmptyAddressGetLogs = true,
@@ -52,7 +51,6 @@ export const rpcFactory = ({
   const validateBaseRequest = baseRequestValidationFactory(
     defaultChain,
     providers,
-    // maxBatchCount,
   )
 
   // const validateRpcMethod = rpcMethodsValidationFactory(allowedRPCMethods)
