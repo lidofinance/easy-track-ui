@@ -27,33 +27,6 @@ const PROVIDER_MAX_BATCH = 20
 const { publicRuntimeConfig } = getConfig()
 const { defaultChain } = publicRuntimeConfig
 
-// const allowedCallAddresses: Record<string, string[]> = Object.entries(
-//   METRIC_CONTRACT_ADDRESSES,
-// ).reduce((acc, [chainId, addresses]) => {
-//   acc[chainId] = [
-//     ...Object.keys(addresses),
-//     // @ts-ignore
-//     ...(Stonks[chainId].map((address: Address) =>
-//       address.toLowerCase(),
-//     ) as string[]),
-//   ]
-//   return acc
-// }, {} as Record<string, string[]>)
-//
-// const allowedLogsAddresses: Record<string, string[]> = Object.entries(
-//   METRIC_CONTRACT_EVENT_ADDRESSES,
-// ).reduce((acc, [chainId, addresses]) => {
-//   acc[chainId] = [
-//     ...Object.keys(addresses),
-//     // TODO: discuss
-//     // @ts-ignore
-//     ...(Stonks[chainId].map((address: Address) =>
-//       address.toLowerCase(),
-//     ) as string[]),
-//   ]
-//   return acc
-// }, {} as Record<string, string[]>)
-
 const allowedRPCMethods = [
   'test',
   'eth_call',
@@ -91,12 +64,10 @@ const rpc = rpcFactory({
   },
   validation: {
     allowedRPCMethods,
-    // allowedCallAddresses,
-    // allowedLogsAddresses,
     maxBatchCount: PROVIDER_MAX_BATCH,
     blockEmptyAddressGetLogs: true,
-    // maxGetLogsRange: 20_000, // only 20k blocks size historical queries
-    // maxResponseSize: 1_000_000, // 1mb max response
+    maxGetLogsRange: 20_000, // only 20k blocks size historical queries
+    maxResponseSize: 1_000_000, // 1mb max response
   },
 })
 
