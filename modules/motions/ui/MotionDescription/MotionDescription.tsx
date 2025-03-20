@@ -309,6 +309,30 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.AllianceOpsStablesTopUp}
     />
   ),
+  [MotionType.EcosystemOpsStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.EcosystemOpsStablesTopUp}
+    />
+  ),
+  [MotionType.LabsOpsStablesTopUp]: (props: GenericDescProps) => (
+    <DescTopUpWithLimitsAndCustomToken
+      {...props}
+      registryType={MotionType.LabsOpsStablesTopUp}
+    />
+  ),
+  [MotionType.EcosystemOpsStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.EcosystemOpsStethTopUp}
+    />
+  ),
+  [MotionType.LabsOpsStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.LabsOpsStethTopUp}
+    />
+  ),
 } as const
 
 type Props = {
