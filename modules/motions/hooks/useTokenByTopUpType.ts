@@ -74,6 +74,14 @@ const TOKEN = {
     label: 'stETH',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
   },
+  [MotionType.EcosystemOpsStethTopUp]: {
+    label: 'stETH',
+    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
+  },
+  [MotionType.LabsOpsStethTopUp]: {
+    label: 'stETH',
+    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
+  },
 }
 
 const isTopUpType = (type: unknown): type is keyof typeof TOKEN => {

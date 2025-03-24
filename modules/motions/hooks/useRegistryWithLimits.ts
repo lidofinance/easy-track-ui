@@ -21,6 +21,10 @@ import {
   ContractStonksStethAllowedRecipientsRegistry,
   ContractStonksStablesAllowedRecipientsRegistry,
   ContractAllianceOpsStablesAllowedRecipientsRegistry,
+  ContractEcosystemOpsStablesAllowedRecipientsRegistry,
+  ContractEcosystemOpsStethAllowedRecipientsRegistry,
+  ContractLabsOpsStablesAllowedRecipientsRegistry,
+  ContractLabsOpsStethAllowedRecipientsRegistry,
 } from 'modules/blockChain/contracts'
 import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
@@ -77,6 +81,13 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
     ContractStonksStablesAllowedRecipientsRegistry,
   [MotionType.AllianceOpsStablesTopUp]:
     ContractAllianceOpsStablesAllowedRecipientsRegistry,
+  [MotionType.EcosystemOpsStablesTopUp]:
+    ContractEcosystemOpsStablesAllowedRecipientsRegistry,
+  [MotionType.EcosystemOpsStethTopUp]:
+    ContractEcosystemOpsStethAllowedRecipientsRegistry,
+  [MotionType.LabsOpsStablesTopUp]:
+    ContractLabsOpsStablesAllowedRecipientsRegistry,
+  [MotionType.LabsOpsStethTopUp]: ContractLabsOpsStethAllowedRecipientsRegistry,
 } as const
 
 type HookArgs = {
@@ -104,13 +115,7 @@ export function useRecipientAll({ registryType }: HookArgs) {
 
   return useSWR(
     `single-allowed-recipients-all-${chainId}-${registry.address || ''}`,
-    async () => {
-      const events = await getEventsRecipientAdded(chainId, registry)
-      return events.map(event => ({
-        title: event._title,
-        address: event._recipient,
-      }))
-    },
+    async () => getEventsRecipientAdded(chainId, registry),
     {
       shouldRetryOnError: true,
       errorRetryInterval: 5000,

@@ -479,3 +479,47 @@ export const ContractSDVTTargetValidatorLimitsUpdateV1 = createContractHelpers({
   factory: TypeChain.UpdateTargetValidatorLimitsV1Abi__factory,
   address: EvmAddressesByType[MotionType.SDVTTargetValidatorLimitsUpdateV1],
 })
+
+export const ContractEcosystemOpsStablesAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.EcosystemOpsStablesAllowedRecipientsRegistry,
+  })
+
+export const ContractEcosystemOpsStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.EcosystemOpsStablesTopUp],
+})
+
+export const ContractLabsOpsStablesAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.LabsOpsStablesAllowedRecipientsRegistry,
+  })
+
+export const ContractLabsOpsStablesTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
+  address: EvmAddressesByType[MotionType.LabsOpsStablesTopUp],
+})
+
+export const ContractEcosystemOpsStethAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.EcosystemOpsStethAllowedRecipientsRegistry,
+  })
+
+export const ContractEcosystemOpsStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.EcosystemOpsStethTopUp],
+})
+
+export const ContractLabsOpsStethAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.LabsOpsStethAllowedRecipientsRegistry,
+  })
+
+export const ContractLabsOpsStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpWithLimitsAbi__factory,
+  address: EvmAddressesByType[MotionType.LabsOpsStethTopUp],
+})

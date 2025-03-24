@@ -107,6 +107,10 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
+    [MotionType.EcosystemOpsStablesTopUp]:
+      '0xf2476f967C826722F5505eDfc4b2561A34033477',
+    [MotionType.LabsOpsStablesTopUp]:
+      '0xE1f6BaBb445F809B97e3505Ea91749461050F780',
   },
 
   // Goerli
@@ -270,6 +274,14 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0xC91a676A69Eb49be9ECa1954fE6fc861AE07A9A2',
+    [MotionType.EcosystemOpsStablesTopUp]:
+      '0x167caEDde0F3230eB18763270B11c970409F389e',
+    [MotionType.EcosystemOpsStethTopUp]:
+      '0x4F2dA002a7bD5F7C63B62d4C9e4b762c689Dd8Ac',
+    [MotionType.LabsOpsStablesTopUp]:
+      '0xf7304738E9d4F572b909FaEd32504F558E234cdB',
+    [MotionType.LabsOpsStethTopUp]:
+      '0xef0Df040B76252cC7fa31a5fc2f36e85c1C8c4f9',
   },
 }
 
@@ -290,7 +302,7 @@ export const EvmUnrecognized = 'EvmUnrecognized'
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type EvmUnrecognized = typeof EvmUnrecognized
 
-export const EvmTypesByAdress = mapValues(
+export const EvmTypesByAddress = mapValues(
   flow(
     toPairs,
     map(([type, address]) => [address, type]),

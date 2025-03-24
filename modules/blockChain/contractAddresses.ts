@@ -209,3 +209,21 @@ export const AllianceOpsAllowedRecipientsRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x3b525f4c059f246ca4aa995d21087204f30c9e2f',
   [CHAINS.Holesky]: '0xe1ba8dee84a4df8e99e495419365d979cdb19991',
 }
+
+export const EcosystemOpsStablesAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xDAdC4C36cD8F468A398C25d0D8aaf6A928B47Ab4',
+  [CHAINS.Holesky]: '0x0214CEBDEc06dc2729382860603d01113F068388',
+}
+
+export const EcosystemOpsStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Holesky]: '0x193d0bA65cf3a2726e12c5568c068D1B3ea51740',
+}
+
+export const LabsOpsStablesAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x68267f3D310E9f0FF53a37c141c90B738E1133c2',
+  [CHAINS.Holesky]: '0x303F5b60e3cf6Ea11d8509A1546401e311A13B92',
+}
+
+export const LabsOpsStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Holesky]: '0x02CD05c1cBa16113680648a8B3496A5aE312a935',
+}

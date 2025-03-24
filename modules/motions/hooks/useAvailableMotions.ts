@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
-  EvmTypesByAdress,
+  EvmTypesByAddress,
   parseEvmSupportedChainId,
 } from 'modules/motions/evmAddresses'
 
@@ -105,7 +105,9 @@ export const useAvailableMotions = () => {
           const { contractAddress, trustedCaller } = cur.value
 
           const contractType =
-            EvmTypesByAdress[parseEvmSupportedChainId(chainId)][contractAddress]
+            EvmTypesByAddress[parseEvmSupportedChainId(chainId)][
+              contractAddress
+            ]
 
           if (
             !contractType ||
