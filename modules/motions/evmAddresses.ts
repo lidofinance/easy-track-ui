@@ -7,6 +7,7 @@ const EvmSupportedChains = [
   CHAINS.Mainnet,
   CHAINS.Goerli,
   CHAINS.Holesky,
+  CHAINS.Hoodi,
 ] as const
 
 export type EvmSupportedChain = typeof EvmSupportedChains[number]
@@ -282,6 +283,14 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xf7304738E9d4F572b909FaEd32504F558E234cdB',
     [MotionType.LabsOpsStethTopUp]:
       '0xef0Df040B76252cC7fa31a5fc2f36e85c1C8c4f9',
+  },
+
+  // Hoodi
+  [CHAINS.Hoodi]: {
+    [MotionType.NodeOperatorIncreaseLimit]:
+      '0x0f121e4069e17a2Dc5bAbF39d769313a1e20f323',
+    [MotionType.CSMSettleElStealingPenalty]:
+      '0x5c0af5b9f96921d3F61503e1006CF0ab9867279E',
   },
 }
 

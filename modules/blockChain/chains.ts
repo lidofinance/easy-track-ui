@@ -8,6 +8,7 @@ export const ChainNames = {
   [CHAINS.Kovan]: 'Kovan',
   [CHAINS.Kintsugi]: 'Kintsugi',
   [CHAINS.Holesky]: 'Holesky',
+  [CHAINS.Hoodi]: 'Hoodi',
 } as const
 
 export const parseChainId = (chainId: number | string) => {
