@@ -10,4 +10,5 @@ export const backendRPC = {
   [CHAINS.Mainnet]: getBackendRpcUrl(CHAINS.Mainnet),
   [CHAINS.Goerli]: getBackendRpcUrl(CHAINS.Goerli),
   [CHAINS.Holesky]: getBackendRpcUrl(CHAINS.Holesky),
+  [CHAINS.Hoodi]: getBackendRpcUrl(CHAINS.Hoodi),
 }
