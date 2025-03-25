@@ -1,6 +1,6 @@
 import { get } from 'lodash'
 import { CHAINS } from '@lido-sdk/constants'
-import type { ContractTypeReferralPartnersRegistry } from 'modules/blockChain/contracts'
+import type { ContractTypeReferralPartnersRegistry } from 'modules/blockChain/types'
 
 type RewardProgramAddedEvent = [string, string] & {
   _rewardProgram: string

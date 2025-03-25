@@ -11,6 +11,7 @@ import { useNodeOperatorsList } from './useNodeOperatorsList'
 import { EVM_CONTRACTS } from './useContractEvmScript'
 import { MotionTypeForms } from 'modules/motions/types'
 import { useSWR } from 'modules/network/hooks/useSwr'
+import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 
 const isHasTrustedCaller = (
   contract: unknown,
@@ -63,28 +64,26 @@ export const useAvailableMotions = () => {
           parsedChainId
         ]
 
-      const promiseResult = await Promise.allSettled(
-        Object.values(EVM_CONTRACTS).map(async contract => {
+      const relevantContracts = Object.values(EVM_CONTRACTS).filter(
+        contract => {
           const contractAddress = contract.address[chainId]
+          return (
+            contractAddress &&
+            contractAddress !== nodeOperatorIncreaseLimitAddress &&
+            contractAddress !== sandboxNodeOperatorIncreaseLimitAddress
+          )
+        },
+      )
 
-          if (
-            !contractAddress ||
-            contractAddress === nodeOperatorIncreaseLimitAddress ||
-            contractAddress === sandboxNodeOperatorIncreaseLimitAddress
-          ) {
-            return null
-          }
-
+      const promiseResult = await processInBatches(
+        relevantContracts,
+        10,
+        async contract => {
           const connectedContract = contract.connectRpc({ chainId })
-
-          if (!isHasTrustedCaller(connectedContract)) {
-            return null
-          }
-
+          if (!isHasTrustedCaller(connectedContract)) return null
           const trustedCaller = await connectedContract.trustedCaller()
-
-          return { contractAddress, trustedCaller }
-        }),
+          return { contractAddress: contract.address[chainId], trustedCaller }
+        },
       )
 
       const isNodeOperatorConnected = getIsNodeOperatorConnected(

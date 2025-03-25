@@ -18,7 +18,7 @@ export function useMotionTimeCountdown(motion: Motion) {
       diff: diff,
       diffFormatted: moment
         .duration(Math.abs(diff), 'seconds')
-        // \xa0 is non-breaking space
+        // @ts-ignore
         .format('h\xa0[h] m\xa0[min]', {
           trim: 'all',
           minValue: 1,

@@ -1,5 +1,5 @@
 import type { BigNumber } from 'ethers'
-import type { ContractTypeEasyTrack } from 'modules/blockChain/contracts'
+import type { ContractTypeEasyTrack } from 'modules/blockChain/types'
 
 type MotionCreatedEvent = [BigNumber, string, string, string, string] & {
   _motionId: BigNumber

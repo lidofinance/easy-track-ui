@@ -1,6 +1,9 @@
 import { get } from 'lodash'
 import { CHAINS } from '@lido-sdk/constants'
-import type { ContractTypeRewardProgramRegistry } from 'modules/blockChain/contracts'
+import * as TypeChain from 'generated'
+
+export type ContractTypeRewardProgramRegistry =
+  TypeChain.RewardProgramRegistryAbi
 
 type RewardProgramAddedEvent = [string, string] & {
   _rewardProgram: string

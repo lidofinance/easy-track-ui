@@ -1,6 +1,6 @@
 import type { PopulatedTransaction } from 'ethers'
 import type { MotionType } from 'modules/motions/types'
-import type { ContractTypeEasyTrack } from 'modules/blockChain/contracts'
+import type { ContractTypeEasyTrack } from 'modules/blockChain/types'
 
 type Args<FormData> = {
   motionType: MotionType
