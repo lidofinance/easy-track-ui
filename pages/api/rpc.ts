@@ -32,8 +32,6 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
 
     const urls = RPC_URLS[chainId]
 
-    console.log('urls', urls)
-
     const requested = await fetchWithFallback(urls, chainId, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
