@@ -7,6 +7,7 @@ export const Wrap = styled.div`
   height: 44px;
   align-items: center;
   justify-content: center;
+  margin-right: 8px;
 `
 
 export const Disconnect = styled.button`

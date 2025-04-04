@@ -1,28 +1,9 @@
 const basePath = process.env.BASE_PATH || ''
-const infuraApiKey = process.env.INFURA_API_KEY
-const alchemyApiKey = process.env.ALCHEMY_API_KEY
 
 const rpcUrls_1 =
-  (process.env.EL_RPC_URLS_1 && process.env.EL_RPC_URLS_1.split(',')) ||
-  [
-    alchemyApiKey && `https://eth-mainnet.alchemyapi.io/v2/${alchemyApiKey}`,
-    infuraApiKey && `https://mainnet.infura.io/v3/${infuraApiKey}`,
-  ].filter(Boolean)
-
-const rpcUrls_5 =
-  (process.env.EL_RPC_URLS_5 && process.env.EL_RPC_URLS_5.split(',')) ||
-  [
-    alchemyApiKey && `https://eth-goerli.alchemyapi.io/v2/${alchemyApiKey}`,
-    infuraApiKey && `https://goerli.infura.io/v3/${infuraApiKey}`,
-  ].filter(Boolean)
-
+  process.env.EL_RPC_URLS_1 && process.env.EL_RPC_URLS_1.split(',')
 const rpcUrls_17000 =
-  (process.env.EL_RPC_URLS_17000 && process.env.EL_RPC_URLS_17000.split(',')) ||
-  [
-    alchemyApiKey && `https://eth-holesky.alchemyapi.io/v2/${alchemyApiKey}`,
-    infuraApiKey && `https://holesky.infura.io/v3/${infuraApiKey}`,
-  ].filter(Boolean)
-
+  process.env.EL_RPC_URLS_17000 && process.env.EL_RPC_URLS_17000.split(',')
 const rpcUrls_560048 =
   process.env.EL_RPC_URLS_560048 && process.env.EL_RPC_URLS_560048.split(',')
 
@@ -125,7 +106,6 @@ export default {
   serverRuntimeConfig: {
     basePath,
     rpcUrls_1,
-    rpcUrls_5,
     rpcUrls_17000,
     rpcUrls_560048,
     cspTrustedHosts,
