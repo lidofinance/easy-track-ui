@@ -7,6 +7,7 @@ const {
   subgraphMainnet,
   subgraphGoerli,
   subgraphHolesky,
+  subgraphHoodi,
 } = serverRuntimeConfig
 
 const SECRETS = {
@@ -17,6 +18,7 @@ const SECRETS = {
   SUBGRAPH_MAINNET: subgraphMainnet ? new RegExp(subgraphMainnet, 'ig') : null,
   SUBGRAPH_GOERLI: subgraphGoerli ? new RegExp(subgraphGoerli, 'ig') : null,
   SUBGRAPH_HOLESKY: subgraphHolesky ? new RegExp(subgraphHolesky, 'ig') : null,
+  SUBGRAPH_HOODI: subgraphHoodi ? new RegExp(subgraphHoodi, 'ig') : null,
 }
 
 const secretEntries = Object.entries(SECRETS)

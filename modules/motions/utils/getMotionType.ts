@@ -3,7 +3,7 @@ import { CHAINS } from '@lido-sdk/constants'
 import { MotionType } from '../types'
 import {
   EvmAddressesByChain,
-  EvmTypesByAdress,
+  EvmTypesByAddress,
   EvmUnrecognized,
   parseEvmSupportedChainId,
 } from '../evmAddresses'
@@ -11,7 +11,9 @@ import {
 export const parseScriptFactory = (chainId: CHAINS, scriptFactory: string) => {
   const address = utils.getAddress(scriptFactory)
   if (
-    !EvmTypesByAdress[parseEvmSupportedChainId(chainId)].hasOwnProperty(address)
+    !EvmTypesByAddress[parseEvmSupportedChainId(chainId)].hasOwnProperty(
+      address,
+    )
   ) {
     throw new Error(`Script factory ${address} not recognized`)
   }
@@ -24,7 +26,7 @@ export const getMotionTypeByScriptFactory = (
 ): MotionType | EvmUnrecognized => {
   try {
     return (
-      EvmTypesByAdress[parseEvmSupportedChainId(chainId)][
+      EvmTypesByAddress[parseEvmSupportedChainId(chainId)][
         parseScriptFactory(chainId, scriptFactory)
       ] ?? EvmUnrecognized
     )

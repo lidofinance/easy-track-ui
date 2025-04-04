@@ -11,9 +11,13 @@ export const getGnosisSafeLink = (
   address: string,
   txHash: string,
 ) => {
-  if (chainId === CHAINS.Holesky) {
-    return `https://holesky-safe.protofire.io/transactions?safe=holesky:${address}`
+  switch (chainId) {
+    case CHAINS.Holesky:
+      return `https://holesky-safe.protofire.io/transactions?safe=holesky:${address}`
+    case CHAINS.Hoodi:
+      return `https://app.safe.protofire.io/transactions?safe=hoodi:${address}`
+    default:
+      const chain = get(PREFIXES, chainId, '?')
+      return `https://app.safe.global/transactions/tx?safe=${chain}:${address}&id=multisig_${address}_${txHash}`
   }
-  const chain = get(PREFIXES, chainId, '?')
-  return `https://app.safe.global/transactions/tx?safe=${chain}:${address}&id=multisig_${address}_${txHash}`
 }

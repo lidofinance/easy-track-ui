@@ -1,17 +1,9 @@
 import { get } from 'lodash'
 import { CHAINS } from '@lido-sdk/constants'
 import type {
-  ContractTypeRegistryWithLimits,
   ContractTypeAllowedRecipientRegistry,
+  ContractTypeRegistryWithLimits,
 } from 'modules/blockChain/contracts'
-
-type RecipientAddedEvent = [string, string] & {
-  _recipient: string
-  _title: string
-  _evmScriptFactory: string
-  _evmScriptCallData: string
-  _evmScript: string
-}
 
 const FROM_BLOCK = {
   [CHAINS.Mainnet]: 13676800,
@@ -28,5 +20,12 @@ export async function getEventsRecipientAdded(
     filter,
     get(FROM_BLOCK, chainId, undefined),
   )
-  return events.map(e => e.decode!(e.data, e.topics)) as RecipientAddedEvent[]
+  const parsedEvents = events
+    .sort((a, b) => b.blockNumber - a.blockNumber)
+    .map(event => ({
+      title: event.args._title,
+      address: event.args._recipient,
+    }))
+
+  return parsedEvents
 }
