@@ -43,8 +43,8 @@ export const hoodi = {
     symbol: 'ETH',
   },
   rpcUrls: {
-    public: { http: [getRpcUrlDefault(CHAINS.Holesky)] },
-    default: { http: [getRpcUrlDefault(CHAINS.Holesky)] },
+    public: { http: [getRpcUrlDefault(CHAINS.Hoodi)] },
+    default: { http: [getRpcUrlDefault(CHAINS.Hoodi)] },
   },
   blockExplorers: {
     etherscan: { name: 'hoodi', url: 'https://hoodi.etherscan.io/' },
