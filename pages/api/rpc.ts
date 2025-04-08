@@ -5,9 +5,82 @@ import { CHAINS } from '@lido-sdk/constants'
 
 import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 import clone from 'just-clone'
+import type {
+  JsonRpcRequest,
+  JsonRpcResponse,
+  JsonRpcResult,
+} from '@walletconnect/jsonrpc-types'
 
 const { serverRuntimeConfig } = getConfig()
 const { rpcUrls_1, rpcUrls_17000, rpcUrls_560048 } = serverRuntimeConfig
+
+const parseAndFilterResults = (
+  netResponse: Response,
+  text: string,
+): JsonRpcResult[] => {
+  const { status } = netResponse
+  const trace = netResponse.headers.get('x-drpc-trace-id') || ''
+  const results: JsonRpcResult[] = []
+  try {
+    const responses = JSON.parse(text) as JsonRpcResponse[]
+
+    responses.forEach(response => {
+      if ('error' in response) {
+        const { id, error } = response
+        console.error(
+          `Request failed id ${id} error ${error.message} trace ${trace}`,
+        )
+        return
+      }
+      results.push(response)
+    })
+    return results
+  } catch (err) {
+    // usually could happen when response status 400+
+    console.error(`Request failed status ${status} body ${text} trace ${trace}`)
+    return []
+  }
+}
+
+const fetchWithSmartFallback = async (
+  urlsAll: string[],
+  chainId: CHAINS,
+  body: JsonRpcRequest | JsonRpcRequest[],
+): Promise<[Response, JsonRpcResponse | JsonRpcResponse[]]> => {
+  const requests: JsonRpcRequest[] = Array.isArray(body) ? body : [body]
+
+  const results: JsonRpcResponse[] = []
+  const requestIds = new Set<number>(requests.map(request => request.id))
+  for (const index of Object.keys(urlsAll)) {
+    const urls = urlsAll.slice(Number(index))
+
+    const filtered = requests.filter(request => requestIds.has(request.id))
+
+    const netResponse = await fetchWithFallback(urls, chainId, {
+      method: 'POST',
+      // Next by default parses our body for us, we don't want that here
+      body: JSON.stringify(filtered),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+
+    const text = await netResponse.text()
+    const responses = parseAndFilterResults(netResponse, text)
+
+    responses.forEach(response => {
+      results.push(response)
+      requestIds.delete(response.id)
+    })
+
+    if (requestIds.size > 0) {
+      continue
+    }
+
+    return [netResponse, Array.isArray(body) ? results : results[0]]
+  }
+  throw new Error(`Can't resolve some requests`)
+}
 
 export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
   const RPC_URLS: Record<number, string[]> = {
@@ -29,25 +102,32 @@ export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const chainId = parseChainId(String(req.query.chainId))
-
     const urls = RPC_URLS[chainId]
 
-    const requested = await fetchWithFallback(urls, chainId, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // Next by default parses our body for us, we don't want that here
-      body: JSON.stringify(req.body),
-    })
+    const { body } = req
+    const [response, results] = await fetchWithSmartFallback(
+      urls,
+      chainId,
+      body,
+    )
+    const { headers, status } = response
 
-    const responded = await requested.json()
-
-    res.status(requested.status).json(responded)
+    res
+      .setHeader('x-drpc-owner-tier', headers.get('x-drpc-owner-tier') ?? '')
+      .setHeader('x-drpc-trace-id', headers.get('x-drpc-trace-id') ?? '')
+      .setHeader('x-drpc-date', headers.get('date') ?? '')
+      .status(status)
+      .json(results)
 
     console.info('Request to api/rpc successfully fullfilled', {
       ...requestInfo,
       stage: 'FULFILLED',
     })
   } catch (error) {
+    if (error instanceof Error && Array.isArray(error.cause)) {
+      const [response, text] = error.cause
+      parseAndFilterResults(response, text)
+    }
     console.error(
       error instanceof Error ? error.message : 'Something went wrong',
       error,
