@@ -34,7 +34,6 @@ export const contentSecurityPolicy = {
       'https://*.alchemy.com',
       'https://*.drpc.org',
       'https://*.cow.fi',
-      'https://0xrpc.io',
       ...trustedHosts,
     ],
     prefetchSrc: ["'self'", ...trustedHosts],
