@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
-import * as wagmiChains from 'wagmi/chains'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { getConnectors } from 'reef-knot/core-react'
 import { CHAINS } from '@lido-sdk/constants'
-import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
+import { getRpcUrlDefault } from 'modules/config'
 import getConfig from 'next/config'
+import * as wagmiChains from 'wagmi/chains'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -19,8 +19,8 @@ export const holesky = {
     symbol: 'ETH',
   },
   rpcUrls: {
-    public: { http: [getBackendRpcUrl(CHAINS.Holesky)] },
-    default: { http: [getBackendRpcUrl(CHAINS.Holesky)] },
+    public: { http: [getRpcUrlDefault(CHAINS.Holesky)] },
+    default: { http: [getRpcUrlDefault(CHAINS.Holesky)] },
   },
   blockExplorers: {
     etherscan: { name: 'holesky', url: 'https://holesky.etherscan.io/' },
@@ -35,6 +35,32 @@ export const holesky = {
   },
 } as const
 
+export const hoodi = {
+  id: CHAINS.Hoodi,
+  name: 'Hoodi',
+  network: 'hoodi',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'hoodiETH',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: { http: [getRpcUrlDefault(CHAINS.Hoodi)] },
+    default: { http: [getRpcUrlDefault(CHAINS.Hoodi)] },
+  },
+  blockExplorers: {
+    etherscan: { name: 'hoodi', url: 'https://hoodi.etherscan.io/' },
+    default: { name: 'hoodi', url: 'https://hoodi.etherscan.io/' },
+  },
+  testnet: true,
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 2589,
+    },
+  },
+} as const
+
 let supportedChainIds: number[] = []
 supportedChainIds = publicRuntimeConfig.supportedChains
   .split(',')
@@ -44,6 +70,7 @@ supportedChainIds = publicRuntimeConfig.supportedChains
 const wagmiChainsArray = Object.values({
   ...wagmiChains,
   [CHAINS.Holesky]: holesky,
+  [CHAINS.Hoodi]: hoodi,
 })
 
 const supportedChains = wagmiChainsArray.filter(
@@ -53,10 +80,10 @@ const supportedChains = wagmiChainsArray.filter(
 )
 
 const backendRPC = supportedChainIds.reduce<Record<number, string>>(
-  (res, curr) => ({ ...res, [curr]: getBackendRpcUrl(curr) }),
+  (res, curr) => ({ ...res, [curr]: getRpcUrlDefault(curr) }),
   {
     // Required by reef-knot
-    [CHAINS.Mainnet]: getBackendRpcUrl(CHAINS.Mainnet),
+    [CHAINS.Mainnet]: getRpcUrlDefault(CHAINS.Mainnet),
   },
 )
 

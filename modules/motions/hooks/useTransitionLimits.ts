@@ -9,8 +9,8 @@ import {
 
 import { utils, constants, BigNumber } from 'ethers'
 import { Big } from 'modules/shared/utils/bigNumber'
-import { connectERC20Contract } from '../utils/connectTokenContract'
 import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
+import { useConnectErc20Contract } from './useConnectErc20Contract'
 
 // Data structure reference
 // https://github.com/lidofinance/scripts/blob/bda3568d1291bdc7ba422fb20150313f2d1778c3/scripts/vote_2024_01_16.py#L106
@@ -41,25 +41,26 @@ type LimitsMap = Record<string, number | null | undefined>
 
 export const useTransitionLimits = () => {
   const { chainId } = useWeb3()
+  const connectErc20Contract = useConnectErc20Contract()
+  const finance = ContractFinance.useRpc()
+  const aragonAcl = ContractAragonAcl.useRpc()
 
   const result = useSWR<LimitsMap>(`permission-param-${chainId}`, async () => {
-    const contractFinance = ContractFinance.connectRpc({ chainId })
-    const contractAragonAcl = ContractAragonAcl.connectRpc({ chainId })
     const evmScriptExecutorAddress = ContractEVMScriptExecutor.address[chainId]!
 
-    const role = await contractFinance.CREATE_PAYMENTS_ROLE()
+    const role = await finance.CREATE_PAYMENTS_ROLE()
 
-    const paramsLength = await contractAragonAcl.getPermissionParamsLength(
+    const paramsLength = await aragonAcl.getPermissionParamsLength(
       evmScriptExecutorAddress,
-      contractFinance.address,
+      finance.address,
       role,
     )
 
     const paramRequests = Array.from(Array(Number(paramsLength))).map(
       (_, i) => {
-        return contractAragonAcl.getPermissionParam(
+        return aragonAcl.getPermissionParam(
           evmScriptExecutorAddress,
-          contractFinance.address,
+          finance.address,
           role,
           i,
         )
@@ -87,7 +88,7 @@ export const useTransitionLimits = () => {
         if (address === constants.AddressZero) {
           decimals = DEFAULT_DECIMALS
         } else {
-          const tokenContract = connectERC20Contract(address, chainId)
+          const tokenContract = connectErc20Contract(address)
           try {
             decimals = await tokenContract.decimals()
           } catch (error) {

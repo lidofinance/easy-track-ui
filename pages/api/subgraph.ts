@@ -9,6 +9,7 @@ export const SUBGRAPH_URL: Partial<Record<CHAINS, string>> = {
   [CHAINS.Mainnet]: serverRuntimeConfig.subgraphMainnet,
   [CHAINS.Goerli]: serverRuntimeConfig.subgraphGoerli,
   [CHAINS.Holesky]: serverRuntimeConfig.subgraphHolesky,
+  [CHAINS.Hoodi]: serverRuntimeConfig.subgraphHoodi,
 } as const
 
 export default async function subgraph(

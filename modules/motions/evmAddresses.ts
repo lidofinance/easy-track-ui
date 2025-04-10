@@ -7,6 +7,7 @@ const EvmSupportedChains = [
   CHAINS.Mainnet,
   CHAINS.Goerli,
   CHAINS.Holesky,
+  CHAINS.Hoodi,
 ] as const
 
 export type EvmSupportedChain = typeof EvmSupportedChains[number]
@@ -107,6 +108,10 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
+    [MotionType.EcosystemOpsStablesTopUp]:
+      '0xf2476f967C826722F5505eDfc4b2561A34033477',
+    [MotionType.LabsOpsStablesTopUp]:
+      '0xE1f6BaBb445F809B97e3505Ea91749461050F780',
   },
 
   // Goerli
@@ -278,6 +283,14 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xf7304738E9d4F572b909FaEd32504F558E234cdB',
     [MotionType.LabsOpsStethTopUp]:
       '0xef0Df040B76252cC7fa31a5fc2f36e85c1C8c4f9',
+  },
+
+  // Hoodi
+  [CHAINS.Hoodi]: {
+    [MotionType.NodeOperatorIncreaseLimit]:
+      '0x0f121e4069e17a2Dc5bAbF39d769313a1e20f323',
+    [MotionType.CSMSettleElStealingPenalty]:
+      '0x5c0af5b9f96921d3F61503e1006CF0ab9867279E',
   },
 }
 

@@ -4,11 +4,13 @@ import {
   NODE_OPERATORS_REGISTRY_MAP,
   NodeOperatorsRegistryType,
 } from '../constants'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 
 export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
   const { chainId, account } = useWeb3()
+  const { getRpcUrl } = useConfig()
 
   return useSWR(
     `${chainId}-${account}-${registryType}-operators-list`,
@@ -16,6 +18,7 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
       try {
         const registry = NODE_OPERATORS_REGISTRY_MAP[registryType].connectRpc({
           chainId,
+          rpcUrl: getRpcUrl(chainId),
         })
 
         const count = (await registry.getNodeOperatorsCount()).toNumber()

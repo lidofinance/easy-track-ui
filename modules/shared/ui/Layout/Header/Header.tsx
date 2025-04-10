@@ -32,7 +32,9 @@ import LidoLogoSvg from 'assets/logo.com.svg.react'
 import * as urls from 'modules/network/utils/urls'
 import { NoSSRWrapper } from 'modules/shared/ui/Utils/NoSSRWrapper'
 import StonksSVG from './icons/stonks.svg.react'
+import SettingsSVG from './icons/settings.svg.react'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
+import { ButtonIcon } from '@lidofinance/lido-ui'
 
 function NavItem({
   link,
@@ -107,6 +109,14 @@ export function Header() {
           </Network>
           <NoSSRWrapper>
             <HeaderWallet />
+            <Link passHref href={urls.settings}>
+              <ButtonIcon
+                icon={<SettingsSVG />}
+                size="sm"
+                variant="outlined"
+                color="primary"
+              />
+            </Link>
           </NoSSRWrapper>
         </ActionsDesktop>
 

@@ -12,6 +12,7 @@ import { EVM_CONTRACTS } from './useContractEvmScript'
 import { MotionTypeForms } from 'modules/motions/types'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
 const isHasTrustedCaller = (
   contract: unknown,
@@ -37,6 +38,7 @@ const getIsNodeOperatorConnected = (
 
 export const useAvailableMotions = () => {
   const { chainId, walletAddress } = useWeb3()
+  const { getRpcUrl } = useConfig()
 
   const { data: nodeOperators, initialLoading: isNodeOperatorsDataLoading } =
     useNodeOperatorsList('curated')
@@ -55,6 +57,7 @@ export const useAvailableMotions = () => {
       : null,
     async () => {
       const parsedChainId = parseEvmSupportedChainId(chainId)
+      const rpcUrl = getRpcUrl(parsedChainId)
       const nodeOperatorIncreaseLimitAddress =
         EVM_CONTRACTS[MotionTypeForms.NodeOperatorIncreaseLimit].address[
           parsedChainId
@@ -79,8 +82,10 @@ export const useAvailableMotions = () => {
         relevantContracts,
         10,
         async contract => {
-          const connectedContract = contract.connectRpc({ chainId })
+          const connectedContract = contract.connectRpc({ chainId, rpcUrl })
+
           if (!isHasTrustedCaller(connectedContract)) return null
+
           const trustedCaller = await connectedContract.trustedCaller()
           return { contractAddress: contract.address[chainId], trustedCaller }
         },
