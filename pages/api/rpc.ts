@@ -6,6 +6,7 @@ import { CHAINS } from '@lido-sdk/constants'
 import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
 import clone from 'just-clone'
 import type {
+  JsonRpcError,
   JsonRpcRequest,
   JsonRpcResponse,
   JsonRpcResult,
@@ -17,10 +18,11 @@ const { rpcUrls_1, rpcUrls_17000, rpcUrls_560048 } = serverRuntimeConfig
 const parseAndFilterResults = (
   netResponse: Response,
   text: string,
-): JsonRpcResult[] => {
+): { results: JsonRpcResult[]; errors: JsonRpcError[] } => {
   const { status } = netResponse
   const trace = netResponse.headers.get('x-drpc-trace-id') || ''
   const results: JsonRpcResult[] = []
+  const errors: JsonRpcError[] = []
   try {
     const responses = JSON.parse(text) as JsonRpcResponse[]
 
@@ -30,15 +32,16 @@ const parseAndFilterResults = (
         console.error(
           `Request failed id ${id} error ${error.message} trace ${trace}`,
         )
+        errors.push(response)
         return
       }
       results.push(response)
     })
-    return results
+    return { results, errors }
   } catch (err) {
     // usually could happen when response status 400+
     console.error(`Request failed status ${status} body ${text} trace ${trace}`)
-    return []
+    return { results: [], errors: [] }
   }
 }
 
@@ -47,16 +50,19 @@ const fetchWithSmartFallback = async (
   chainId: CHAINS,
   body: JsonRpcRequest | JsonRpcRequest[],
 ): Promise<[Response, JsonRpcResponse | JsonRpcResponse[]]> => {
-  const requests: JsonRpcRequest[] = Array.isArray(body) ? body : [body]
+  const isBatch = Array.isArray(body)
+  const requests: JsonRpcRequest[] = isBatch ? body : [body]
 
   const results: JsonRpcResponse[] = []
+  let errors: JsonRpcError[] = []
   const requestIds = new Set<number>(requests.map(request => request.id))
+  let netResponse: Response | null = null
+
   for (const index of Object.keys(urlsAll)) {
     const urls = urlsAll.slice(Number(index))
-
     const filtered = requests.filter(request => requestIds.has(request.id))
 
-    const netResponse = await fetchWithFallback(urls, chainId, {
+    netResponse = await fetchWithFallback(urls, chainId, {
       method: 'POST',
       // Next by default parses our body for us, we don't want that here
       body: JSON.stringify(filtered),
@@ -66,18 +72,23 @@ const fetchWithSmartFallback = async (
     })
 
     const text = await netResponse.text()
-    const responses = parseAndFilterResults(netResponse, text)
+    const parsed = parseAndFilterResults(netResponse, text)
 
-    responses.forEach(response => {
+    parsed.results.forEach(response => {
       results.push(response)
       requestIds.delete(response.id)
     })
 
     if (requestIds.size > 0) {
+      errors = parsed.errors
       continue
     }
 
-    return [netResponse, Array.isArray(body) ? results : results[0]]
+    return [netResponse, isBatch ? results : results[0]]
+  }
+
+  if (netResponse) {
+    return [netResponse, isBatch ? [...results, ...errors] : errors[0]]
   }
   throw new Error(`Can't resolve some requests`)
 }
