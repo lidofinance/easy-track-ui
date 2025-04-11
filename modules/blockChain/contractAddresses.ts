@@ -141,6 +141,7 @@ export const SDVTRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433',
   [CHAINS.Goerli]: '0x6370FA71b9Fd83aFC4196ee189a0d348C90E93b0',
   [CHAINS.Holesky]: '0x11a93807078f8BB880c1BD0ee4C387537de4b4b6',
+  [CHAINS.Hoodi]: '0x0B5236BECA68004DB89434462DfC3BB074d2c830',
 }
 
 export const SandboxNodeOperatorsRegistry: ChainAddressMap = {
