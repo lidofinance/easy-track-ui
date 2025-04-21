@@ -1,8 +1,9 @@
 import { formatUnits } from 'ethers/lib/utils'
 import { StonksOrderAbi__factory } from 'generated'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { useConfig } from 'modules/config/hooks/useConfig'
+import { useConnectErc20Contract } from 'modules/motions/hooks/useConnectErc20Contract'
 import { connectContractRpc } from 'modules/motions/utils/connectContractRpc'
-import { connectERC20Contract } from 'modules/motions/utils/connectTokenContract'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import moment from 'moment'
 import { OrderDetailed, OrderStatus, OrderTransaction } from '../types'
@@ -11,6 +12,9 @@ import { formatValue } from '../utils/formatValue'
 
 export function useOrderData(orderAddress: string) {
   const { chainId } = useWeb3()
+  const { getRpcUrl } = useConfig()
+  const connectErc20Contract = useConnectErc20Contract()
+
   return useSWR<OrderDetailed | undefined>(
     orderAddress ? `order-data-${orderAddress}-${chainId}` : null,
     async () => {
@@ -21,6 +25,7 @@ export function useOrderData(orderAddress: string) {
         StonksOrderAbi__factory,
         orderAddress,
         chainId,
+        getRpcUrl(chainId),
       )
 
       const [, sellToken, buyToken, sellAmountBn, buyAmountBn, validTo] =
@@ -36,12 +41,12 @@ export function useOrderData(orderAddress: string) {
       const stonks = await orderContract.stonks()
       const receiver = await orderContract.AGENT()
 
-      const sellTokenContract = connectERC20Contract(sellToken, chainId)
+      const sellTokenContract = connectErc20Contract(sellToken)
       const sellTokenDecimals = await sellTokenContract.decimals()
       const sellTokenLabel = await sellTokenContract.symbol()
       const sellTokenBalance = await sellTokenContract.balanceOf(orderAddress)
 
-      const buyTokenContract = connectERC20Contract(buyToken, chainId)
+      const buyTokenContract = connectErc20Contract(buyToken)
       const buyTokenDecimals = await buyTokenContract.decimals()
       const buyTokenLabel = await buyTokenContract.symbol()
 

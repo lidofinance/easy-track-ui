@@ -8,13 +8,13 @@ import { useContractSwr } from '../hooks/useContractSwr'
 import type { Signer, providers } from 'ethers'
 import type { JsonRpcSigner } from '@ethersproject/providers'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
-import { getBackendRpcUrl } from 'modules/blockChain/utils/getBackendRpcUrl'
 import { getChainName } from 'modules/blockChain/chains'
 import { FilterMethods } from 'modules/shared/utils/utilTypes'
 import {
   AsyncMethodParameters,
   AsyncMethodReturns,
 } from 'modules/types/filter-async-methods'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
 type Library = JsonRpcSigner | Signer | providers.Provider
 
@@ -39,6 +39,7 @@ type CallArgs = {
 
 type CallRpcArgs = {
   chainId: CHAINS
+  rpcUrl: string
 }
 
 export function createContractHelpers<F extends Factory>({
@@ -58,19 +59,19 @@ export function createContractHelpers<F extends Factory>({
     return factory.connect(address[chainId] as string, library) as Instance
   }
 
-  function connectRpc({ chainId }: CallRpcArgs) {
-    const library = getStaticRpcBatchProvider(
-      chainId,
-      getBackendRpcUrl(chainId),
-    )
+  function connectRpc({ chainId, rpcUrl }: CallRpcArgs) {
+    const library = getStaticRpcBatchProvider(chainId, rpcUrl)
     return connect({ chainId, library })
   }
 
   function useInstanceRpc() {
     const { chainId } = useWeb3()
+    const { getRpcUrl } = useConfig()
+    const rpcUrl = getRpcUrl(chainId)
+
     return useGlobalMemo(
-      () => connectRpc({ chainId }),
-      `contract-rpc-${chainId}-${address[chainId]}`,
+      () => connectRpc({ chainId, rpcUrl }),
+      `contract-rpc-${chainId}-${rpcUrl}-${address[chainId]}`,
     )
   }
 

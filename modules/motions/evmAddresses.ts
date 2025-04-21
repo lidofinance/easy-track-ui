@@ -7,6 +7,7 @@ const EvmSupportedChains = [
   CHAINS.Mainnet,
   CHAINS.Goerli,
   CHAINS.Holesky,
+  CHAINS.Hoodi,
 ] as const
 
 export type EvmSupportedChain = typeof EvmSupportedChains[number]
@@ -72,6 +73,10 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xe5656eEe7eeD02bdE009d77C88247BC8271e26Eb',
     [MotionType.CSMSettleElStealingPenalty]:
       '0xF6B6E7997338C48Ea3a8BCfa4BB64a315fDa76f4',
+    [MotionType.EcosystemOpsStablesTopUp]:
+      '0xf2476f967C826722F5505eDfc4b2561A34033477',
+    [MotionType.LabsOpsStablesTopUp]:
+      '0xE1f6BaBb445F809B97e3505Ea91749461050F780',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -107,10 +112,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
-    [MotionType.EcosystemOpsStablesTopUp]:
-      '0xf2476f967C826722F5505eDfc4b2561A34033477',
-    [MotionType.LabsOpsStablesTopUp]:
-      '0xE1f6BaBb445F809B97e3505Ea91749461050F780',
   },
 
   // Goerli
@@ -159,7 +160,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     // next motion factories are @deprecated
     // we are keeping them here to display history data
     [MotionType.LEGOTopUp]: '0xb2bcf211F103d7F13789394DD475c2274e044C4C',
-    [MotionType.GasFunderETHTopUp]: '0x',
+    [MotionType.GasFunderETHTopUp]: '',
     [MotionType.RewardProgramAdd]: '0x5560d40b00EA3a64E9431f97B3c79b04e0cdF6F2',
     [MotionType.RewardProgramRemove]:
       '0x31B68d81125E52fE1aDfe4076F8945D1014753b5',
@@ -254,11 +255,19 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x07696EA8A5b53C3E35d9cce10cc62c6c79C4691D',
     [MotionType.AllianceOpsStablesTopUp]:
       '0x343FA5F0C79277E2d27e440F40420D619F962A23',
+    [MotionType.EcosystemOpsStablesTopUp]:
+      '0x167caEDde0F3230eB18763270B11c970409F389e',
+    [MotionType.EcosystemOpsStethTopUp]:
+      '0x4F2dA002a7bD5F7C63B62d4C9e4b762c689Dd8Ac',
+    [MotionType.LabsOpsStablesTopUp]:
+      '0xf7304738E9d4F572b909FaEd32504F558E234cdB',
+    [MotionType.LabsOpsStethTopUp]:
+      '0xef0Df040B76252cC7fa31a5fc2f36e85c1C8c4f9',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
     [MotionType.LEGOTopUp]: '',
-    [MotionType.GasFunderETHTopUp]: '0x',
+    [MotionType.GasFunderETHTopUp]: '',
     [MotionType.RewardProgramAdd]: '',
     [MotionType.RewardProgramRemove]: '',
     [MotionType.RewardProgramTopUp]: '',
@@ -274,14 +283,79 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0xBCcfe42cc3EF530db9888dC8F82B1B4A4DfB9DB4',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0xC91a676A69Eb49be9ECa1954fE6fc861AE07A9A2',
-    [MotionType.EcosystemOpsStablesTopUp]:
-      '0x167caEDde0F3230eB18763270B11c970409F389e',
-    [MotionType.EcosystemOpsStethTopUp]:
-      '0x4F2dA002a7bD5F7C63B62d4C9e4b762c689Dd8Ac',
-    [MotionType.LabsOpsStablesTopUp]:
-      '0xf7304738E9d4F572b909FaEd32504F558E234cdB',
-    [MotionType.LabsOpsStethTopUp]:
-      '0xef0Df040B76252cC7fa31a5fc2f36e85c1C8c4f9',
+  },
+
+  // Hoodi
+  [CHAINS.Hoodi]: {
+    [MotionType.NodeOperatorIncreaseLimit]:
+      '0x0f121e4069e17a2Dc5bAbF39d769313a1e20f323',
+    [MotionType.CSMSettleElStealingPenalty]:
+      '0x5c0af5b9f96921d3F61503e1006CF0ab9867279E',
+
+    [MotionType.AllowedRecipientTopUpTrpLdo]: '',
+    [MotionType.LegoLDOTopUp]: '',
+    [MotionType.StethRewardProgramAdd]: '',
+    [MotionType.StethRewardProgramRemove]: '',
+    [MotionType.StethRewardProgramTopUp]: '',
+    [MotionType.StethGasSupplyAdd]: '',
+    [MotionType.StethGasSupplyRemove]: '',
+    [MotionType.StethGasSupplyTopUp]: '',
+    [MotionType.RewardsShareProgramAdd]: '',
+    [MotionType.RewardsShareProgramRemove]: '',
+    [MotionType.RewardsShareProgramTopUp]: '',
+
+    [MotionType.RccStethTopUp]: '',
+    [MotionType.PmlStethTopUp]: '',
+    [MotionType.AtcStethTopUp]: '',
+    [MotionType.RccStablesTopUp]: '',
+    [MotionType.PmlStablesTopUp]: '',
+    [MotionType.AtcStablesTopUp]: '',
+    [MotionType.LegoStablesTopUp]: '',
+
+    // SDVT factories
+    [MotionType.SDVTNodeOperatorsAdd]:
+      '0x42f2532ab3d41dfD6030db1EC2fF3DBC8DCdf89a',
+    [MotionType.SDVTNodeOperatorsActivate]:
+      '0xfA3B3EE204E1f0f165379326768667300992530e',
+    [MotionType.SDVTNodeOperatorsDeactivate]:
+      '0x3114bEbC222Faec27DF8AB7f9bD8dF2063d7fc77',
+    [MotionType.SDVTVettedValidatorsLimitsSet]:
+      '0x956c5dC6cfc8603b2293bF8399B718cbf61a9dda',
+    [MotionType.SDVTNodeOperatorNamesSet]:
+      '0x2F98760650922cf65f1b596635bC5835b6E561d4',
+    [MotionType.SDVTNodeOperatorRewardAddressesSet]:
+      '0x3d267e4f8d9dCcc83c2DE66729e6A5B2B0856e31',
+    [MotionType.SDVTTargetValidatorLimitsUpdateV2]:
+      '0xc3975Bc4091B585c57357990155B071111d7f4f8',
+    [MotionType.SDVTNodeOperatorManagerChange]:
+      '0x8a437cd5685e270cDDb347eeEfEbD22109Fa42a9',
+
+    [MotionType.StonksStethTopUp]: '',
+    [MotionType.StonksStablesTopUp]: '',
+    [MotionType.AllianceOpsStablesTopUp]: '',
+    [MotionType.EcosystemOpsStablesTopUp]: '',
+    [MotionType.EcosystemOpsStethTopUp]: '',
+    [MotionType.LabsOpsStablesTopUp]: '',
+    [MotionType.LabsOpsStethTopUp]: '',
+
+    // next motion factories are @deprecated
+    // we are keeping them here to display history data
+    [MotionType.LEGOTopUp]: '',
+    [MotionType.GasFunderETHTopUp]: '',
+    [MotionType.RewardProgramAdd]: '',
+    [MotionType.RewardProgramRemove]: '',
+    [MotionType.RewardProgramTopUp]: '',
+    [MotionType.ReferralPartnerAdd]: '',
+    [MotionType.ReferralPartnerRemove]: '',
+    [MotionType.ReferralPartnerTopUp]: '',
+    [MotionType.AllowedRecipientAdd]: '',
+    [MotionType.AllowedRecipientRemove]: '',
+    [MotionType.AllowedRecipientTopUp]: '',
+    [MotionType.AllowedRecipientAddReferralDai]: '',
+    [MotionType.AllowedRecipientRemoveReferralDai]: '',
+    [MotionType.AllowedRecipientTopUpReferralDai]: '',
+    [MotionType.LegoDAITopUp]: '',
+    [MotionType.SDVTTargetValidatorLimitsUpdateV1]: '',
   },
 }
 
