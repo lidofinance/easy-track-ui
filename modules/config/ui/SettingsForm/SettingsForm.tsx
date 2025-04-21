@@ -77,6 +77,7 @@ export function SettingsForm() {
         // All fine
         return true
       } catch (err) {
+        console.error(err)
         return 'Given url is not working'
       }
     },
