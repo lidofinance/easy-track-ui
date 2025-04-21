@@ -21,6 +21,7 @@ export const config = {
     '/manifest.json',
     '/favicon:size*',
     '/',
+    '/settings',
     '/start-motion',
     '/archive',
     '/motions/:motionId*',
