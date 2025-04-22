@@ -15,7 +15,7 @@ const collectStartupChecksRPCMetrics = async (
 ): Promise<void> => {
   const rpcMetrics = new StartupChecksRPCMetrics(registry)
   try {
-    const rpcChecksResults = await getRPCChecks()
+    const rpcChecksResults = (await getRPCChecks()) || []
 
     rpcChecksResults.forEach(
       (_check: { domain: string; chainId: number; success: boolean }) => {

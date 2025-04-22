@@ -1,15 +1,14 @@
-import buildDynamics from './scripts/build-dynamics.mjs';
-import { startupCheckRPCs } from './scripts/startup-checks/rpc.mjs';
-
+import buildDynamics from './scripts/build-dynamics.mjs'
+import { startupCheckRPCs } from './scripts/startup-checks/rpc.mjs'
 
 if (
   process.env.RUN_STARTUP_CHECKS === 'true' &&
   typeof window === 'undefined'
 ) {
-  void startupCheckRPCs();
+  void startupCheckRPCs()
 }
 
-buildDynamics();
+buildDynamics()
 
 const basePath = process.env.BASE_PATH || ''
 
@@ -154,7 +153,7 @@ export default {
     subgraphHolesky,
     subgraphHoodi,
     rateLimit,
-    rateLimitTimeFrame
+    rateLimitTimeFrame,
   },
   publicRuntimeConfig: {
     defaultChain,

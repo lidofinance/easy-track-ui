@@ -11,6 +11,7 @@ export type SecretConfigType = Modify<
     rpcUrls_1: [string, ...string[]]
     rpcUrls_5: [string, ...string[]]
     rpcUrls_17000: [string, ...string[]]
+    rpcUrls_560048: [string, ...string[]]
     // Dynamic keys like rpcUrls_<number>
     // eslint-disable-next-line @typescript-eslint/member-ordering
     [key: `rpcUrls_${number}`]: string[]
@@ -38,7 +39,10 @@ export const getSecretConfig = (): SecretConfigType => {
       string,
       ...string[]
     ],
-
+    rpcUrls_560048: (serverRuntimeConfig.rpcUrls_560048 ?? []) as [
+      string,
+      ...string[]
+    ],
     cspReportOnly: toBoolean(serverRuntimeConfig.cspReportOnly),
 
     rateLimit: Number(serverRuntimeConfig.rateLimit) || 60,
