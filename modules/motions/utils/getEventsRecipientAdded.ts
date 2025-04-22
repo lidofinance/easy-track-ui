@@ -4,6 +4,7 @@ import type {
   ContractTypeAllowedRecipientRegistry,
   ContractTypeRegistryWithLimits,
 } from 'modules/blockChain/types'
+import { batchLogsQueryFiltering } from './batchLogsQueryFiltering'
 
 const FROM_BLOCK = {
   [CHAINS.Mainnet]: 13676800,
@@ -16,7 +17,8 @@ export async function getEventsRecipientAdded(
     | ContractTypeAllowedRecipientRegistry,
 ) {
   const filter = motionContract.filters.RecipientAdded()
-  const events = await motionContract.queryFilter(
+  const events = await batchLogsQueryFiltering(
+    motionContract,
     filter,
     get(FROM_BLOCK, chainId, undefined),
   )

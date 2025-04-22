@@ -1,6 +1,8 @@
 import type { BigNumber } from 'ethers'
 import type { ContractTypeEasyTrack } from 'modules/blockChain/types'
 
+import { batchLogsQueryFiltering } from './batchLogsQueryFiltering'
+
 type MotionCreatedEvent = [BigNumber, string, string, string, string] & {
   _motionId: BigNumber
   _creator: string
@@ -14,7 +16,7 @@ export async function getEventMotionCanceled(
   motionId: string | number,
 ) {
   const filter = motionContract.filters.MotionCanceled(motionId)
-  const event = (await motionContract.queryFilter(filter))[0]
+  const event = (await batchLogsQueryFiltering(motionContract, filter))[0]
   if (!event.decode) {
     throw new Error('Motion canceled event parsing error')
   }

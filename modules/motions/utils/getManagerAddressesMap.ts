@@ -1,5 +1,6 @@
 import { utils } from 'ethers'
 import { AragonACLAbi } from 'generated'
+import { batchLogsQueryFiltering } from './batchLogsQueryFiltering'
 
 // Event ABI for ACL's SetPermissionParams event
 const ACL_EVENT_ABI = [
@@ -24,7 +25,7 @@ export const getManagerAddressesMap = async (
     signingKeysRole,
   )
 
-  const rawEvents = await aragonAcl.queryFilter(eventFilter)
+  const rawEvents = await batchLogsQueryFiltering(aragonAcl, eventFilter)
   return rawEvents.reduce((result, event) => {
     const parsedEvent = ACL_INTERFACE.parseLog(event)
 

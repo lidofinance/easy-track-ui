@@ -1,8 +1,12 @@
 import { wrapRequest as wrapNextRequest } from '@lidofinance/next-api-wrapper'
-import { trackedFetchRpcFactory } from '@lidofinance/api-rpc'
+import { TrackedFetchRPC, trackedFetchRpcFactory } from '@lidofinance/api-rpc'
 import { rpcFactory } from '@lidofinance/next-pages'
-
-import { secretConfig } from 'config'
+import {
+  secretConfig,
+  MAX_ETH_GET_LOGS_RANGE,
+  MAX_RESPONSE_SIZE,
+  MAX_PROVIDER_BATCH,
+} from 'config'
 import { API_ROUTES } from 'constants/api'
 import {
   rateLimit,
@@ -21,8 +25,6 @@ import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
 import { Stonks } from '../../modules/blockChain/contractAddresses'
 import { Address } from 'wagmi'
-
-const PROVIDER_MAX_BATCH = 20
 
 const { publicRuntimeConfig } = getConfig()
 const { defaultChain } = publicRuntimeConfig
@@ -76,9 +78,9 @@ const allowedRPCMethods = [
 
 const rpc = rpcFactory({
   fetchRPC: trackedFetchRpcFactory({
-    registry: Metrics.registry,
     prefix: METRICS_PREFIX,
-  }),
+    registry: Metrics.registry,
+  }) as TrackedFetchRPC,
   metrics: {
     prefix: METRICS_PREFIX,
     registry: Metrics.registry,
@@ -94,10 +96,10 @@ const rpc = rpcFactory({
     allowedRPCMethods,
     allowedCallAddresses,
     allowedLogsAddresses,
-    maxBatchCount: PROVIDER_MAX_BATCH,
+    maxBatchCount: MAX_PROVIDER_BATCH,
     blockEmptyAddressGetLogs: true,
-    maxGetLogsRange: 20_000, // only 20k blocks size historical queries
-    maxResponseSize: 1_000_000, // 1mb max response
+    maxGetLogsRange: MAX_ETH_GET_LOGS_RANGE, // only 20k blocks size historical queries
+    maxResponseSize: MAX_RESPONSE_SIZE, // 1mb max response
   },
 })
 

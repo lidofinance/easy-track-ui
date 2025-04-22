@@ -1,6 +1,7 @@
 import { get } from 'lodash'
 import { CHAINS } from '@lido-sdk/constants'
 import type { ContractTypeReferralPartnersRegistry } from 'modules/blockChain/types'
+import { batchLogsQueryFiltering } from './batchLogsQueryFiltering'
 
 type RewardProgramAddedEvent = [string, string] & {
   _rewardProgram: string
@@ -19,7 +20,8 @@ export async function getEventsReferralPartnerAdded(
   motionContract: ContractTypeReferralPartnersRegistry,
 ) {
   const filter = motionContract.filters.RewardProgramAdded()
-  const events = await motionContract.queryFilter(
+  const events = await batchLogsQueryFiltering(
+    motionContract,
     filter,
     get(FROM_BLOCK, chainId, undefined),
   )
