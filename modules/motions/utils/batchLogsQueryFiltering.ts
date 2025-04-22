@@ -6,8 +6,8 @@ const ONE_BIGINT = BigInt(1)
 export const batchLogsQueryFiltering = async (
   contract: any,
   filter: any,
-  fromBlock: string | undefined = undefined,
-  toBlock: string | undefined = undefined,
+  fromBlock: number | undefined = undefined,
+  toBlock: number | undefined = undefined,
   currentBlockTTL: number = 60_000,
 ): Promise<any[]> => {
   const currentBlock = new Cache<string, bigint>()
