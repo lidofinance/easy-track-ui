@@ -27,7 +27,7 @@ export default async function subgraph(
   }
 
   if (!parsedBody.query) {
-    const status = 'Error: query is empry'
+    const status = 'Error: query is empty'
     console.error(status, requestInfo)
     res.status(400).json({ status })
     return
@@ -61,7 +61,7 @@ export default async function subgraph(
 
     const responded = await requested.json()
     res.status(requested.status).json(responded)
-    console.info('Request to api/subgraph successfully fullfilled', {
+    console.info('Request to api/subgraph successfully fulfilled', {
       ...requestInfo,
       stage: 'FULFILLED',
     })

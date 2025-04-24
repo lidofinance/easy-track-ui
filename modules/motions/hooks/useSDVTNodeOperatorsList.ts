@@ -5,7 +5,7 @@ import {
   ContractAragonAcl,
   ContractSDVTRegistry,
 } from 'modules/blockChain/contracts'
-import { getManagerAddressesMap } from '../utils/getManagerAddressesMap'
+import { getSDVTManagersAddressesMap } from '../utils/getManagerAddressesMap'
 
 type NodeOperatorSummary = {
   targetValidatorsCount: BigNumber
@@ -31,12 +31,10 @@ export function useSDVTNodeOperatorsList(args?: Args) {
     `${chainId}-sdvt-operators-list${args?.withSummary ? '-with-summary' : ''}`,
     async () => {
       const count = (await registry.getNodeOperatorsCount()).toNumber()
-      const MANAGE_SIGNING_KEYS_ROLE = await registry.MANAGE_SIGNING_KEYS()
 
-      const managerAddressesMap = await getManagerAddressesMap(
-        registry.address,
-        MANAGE_SIGNING_KEYS_ROLE,
+      const managerAddressesMap = await getSDVTManagersAddressesMap(
         aragonAcl,
+        chainId,
       )
 
       const nodeOperators = await Promise.all(

@@ -10,7 +10,10 @@ import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MotionCardDetailed } from 'modules/motions/ui/MotionDetailed'
 
 import type { Motion } from 'modules/motions/types'
-import { fetchMotionsSubgraphItem } from 'modules/motions/network/motionsSubgraphFetchers'
+import {
+  fetchMotionsScriptsSubgraph,
+  fetchMotionsSubgraphItem,
+} from 'modules/motions/network/motionsSubgraphFetchers'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { formatMotionDataOnchain } from 'modules/motions/utils/formatMotionDataOnchain'
 
@@ -32,11 +35,18 @@ export default function MotionDetailsPage() {
     mutate,
   } = useSWR<Motion | null>(`motion-${chainId}-${motionId}`, async () => {
     try {
-      const tryActive = await easyTrack.getMotion(motionId)
-      return formatMotionDataOnchain(tryActive)
+      const onChainMotionData = await easyTrack.getMotion(motionId)
+      const motionScripts = await fetchMotionsScriptsSubgraph(chainId, [
+        motionId,
+      ])
+
+      return formatMotionDataOnchain(onChainMotionData, motionScripts[motionId])
     } catch {
-      const tryArchive = await fetchMotionsSubgraphItem(chainId, motionId)
-      return tryArchive
+      const subgraphMotionData = await fetchMotionsSubgraphItem(
+        chainId,
+        motionId,
+      )
+      return subgraphMotionData
     }
   })
 
