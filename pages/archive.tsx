@@ -69,11 +69,15 @@ export default function ArchivePage() {
           />
         </LoadMoreWrap>
       )}
-      {!initialLoading && error?.message === 'indexing_error' && (
+      {!initialLoading && error && (
         <WarningBox>
           Failed to fetch data from the Subgraph.
-          <br />
-          Maintainers are notified and working on a fix.
+          {error.message === 'indexing_error' && (
+            <>
+              <br />
+              Maintainers are notified and working on a fix.
+            </>
+          )}
         </WarningBox>
       )}
     </Container>
