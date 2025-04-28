@@ -3,7 +3,6 @@ import {
   useRewardProgramsAll,
   useRewardProgramsMapAll,
 } from 'modules/motions/hooks/useRewardPrograms'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 
@@ -14,6 +13,7 @@ import {
   EvmTopUpRewardProgramsAbi,
 } from 'generated'
 import { NestProps } from './types'
+import { useGovernanceTokenData } from 'modules/tokens/hooks/useGovernanceTokenData'
 
 // RewardProgramAdd
 /**
@@ -37,7 +37,7 @@ export function DescRewardProgramAdd({
 export function DescRewardProgramTopUp({
   callData,
 }: NestProps<EvmTopUpRewardProgramsAbi['decodeEVMScriptCallData']>) {
-  const governanceSymbol = useGovernanceSymbol()
+  const { data: governanceTokenData } = useGovernanceTokenData()
   const { data: rewardProgramsMap } = useRewardProgramsMapAll()
 
   const programs = useMemo(() => {
@@ -52,7 +52,7 @@ export function DescRewardProgramTopUp({
         <div key={i}>
           <b>{programs?.[i]}</b> <AddressInlineWithPop address={address} /> with{' '}
           {Number(formatEther(callData[1][i])).toLocaleString('en-EN')}{' '}
-          {governanceSymbol.data}
+          {governanceTokenData?.symbol}
         </div>
       ))}
     </div>

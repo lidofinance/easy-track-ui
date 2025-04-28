@@ -1,17 +1,17 @@
 import { useMemo } from 'react'
-import { useGovernanceTotalSupply } from 'modules/tokens/hooks/useGovernanceTotalSupply'
 import { getMotionProgress } from 'modules/motions/utils/getMotionProgress'
 import type { Motion } from '../types'
+import { useGovernanceTokenData } from 'modules/tokens/hooks/useGovernanceTokenData'
 
 export function useMotionProgress(motion: Motion) {
-  const { data: totalSupply, initialLoading: isLoadingSupply } =
-    useGovernanceTotalSupply()
+  const { data: tokenData, initialLoading: isLoadingSupply } =
+    useGovernanceTokenData()
 
   const formatted = useMemo(() => {
-    return !isLoadingSupply && totalSupply
-      ? getMotionProgress(motion, totalSupply)
+    return !isLoadingSupply && tokenData?.totalSupply
+      ? getMotionProgress(motion, tokenData.totalSupply)
       : null
-  }, [isLoadingSupply, motion, totalSupply])
+  }, [isLoadingSupply, motion, tokenData?.totalSupply])
 
   return formatted
 }

@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import {
   useReferralPartnersAll,
   useReferralPartnersMapAll,
@@ -14,6 +13,7 @@ import {
   EvmTopUpReferralPartnersAbi,
 } from 'generated'
 import { NestProps } from './types'
+import { useGovernanceTokenData } from 'modules/tokens/hooks/useGovernanceTokenData'
 
 // ReferralPartnerAdd
 export function DescReferralPartnerAdd({
@@ -31,7 +31,7 @@ export function DescReferralPartnerAdd({
 export function DescReferralPartnerTopUp({
   callData,
 }: NestProps<EvmTopUpReferralPartnersAbi['decodeEVMScriptCallData']>) {
-  const governanceSymbol = useGovernanceSymbol()
+  const { data: governanceTokenData } = useGovernanceTokenData()
   const { data: referralPartnersMap } = useReferralPartnersMapAll()
 
   const programs = useMemo(() => {
@@ -45,7 +45,7 @@ export function DescReferralPartnerTopUp({
       {callData[0].map((address, i) => (
         <div key={i}>
           <b>{programs?.[i]}</b> <AddressInlineWithPop address={address} /> with{' '}
-          {formatEther(callData[1][i])} {governanceSymbol.data}
+          {formatEther(callData[1][i])} {governanceTokenData?.symbol}
         </div>
       ))}
     </div>

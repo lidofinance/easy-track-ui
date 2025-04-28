@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import * as CONTRACT_ADDRESSES from 'modules/blockChain/contractAddresses'
+import { useGovernanceTokenData } from 'modules/tokens/hooks/useGovernanceTokenData'
 
 export function useLegoTokenOptions() {
   const { chainId } = useWeb3()
-  const { data: governanceSymbol } = useGovernanceSymbol()
+  const { data } = useGovernanceTokenData()
   return useMemo(
     () => [
       {
@@ -13,7 +13,7 @@ export function useLegoTokenOptions() {
         value: '0x0000000000000000000000000000000000000000',
       },
       {
-        label: governanceSymbol || '',
+        label: data?.symbol || '',
         value: CONTRACT_ADDRESSES.GovernanceToken[chainId]!,
       },
       {
@@ -25,6 +25,6 @@ export function useLegoTokenOptions() {
         value: CONTRACT_ADDRESSES.DAI[chainId]!,
       },
     ],
-    [governanceSymbol, chainId],
+    [data?.symbol, chainId],
   )
 }

@@ -5,7 +5,6 @@ import {
   ContractGovernanceToken,
 } from 'modules/blockChain/contracts'
 import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import { TransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
 import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
 
@@ -19,6 +18,7 @@ import {
 } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
+import { useGovernanceTokenData } from 'modules/tokens/hooks/useGovernanceTokenData'
 
 function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
   return (
@@ -39,7 +39,7 @@ type Props = {
 
 function ActionsBody({ motion }: Props) {
   const { walletAddress } = useWeb3()
-  const { data: governanceSymbol } = useGovernanceSymbol()
+  const { data: governanceTokenData } = useGovernanceTokenData()
   const { isOverPeriodLimit, txEnact, txObject } = useMotionDetailed()
 
   const balanceAt = ContractGovernanceToken.useSwrWeb3('balanceOfAt', [
@@ -83,19 +83,19 @@ function ActionsBody({ motion }: Props) {
         {showHintObjected && (
           <>
             You have objected this motion with <b>{balanceAtFormatted}</b>{' '}
-            {governanceSymbol}
+            {governanceTokenData?.symbol}
           </>
         )}
         {showHintCanObject && (
           <>
             You can object this motion with <b>{balanceAtFormatted}</b>{' '}
-            {governanceSymbol}
+            {governanceTokenData?.symbol}
           </>
         )}
         {showHintCanNotObject && (
           <>
-            You didn’t have {governanceSymbol} when the motion started to object
-            it
+            You didn’t have {governanceTokenData?.symbol} when the motion
+            started to object it
           </>
         )}
       </Hint>

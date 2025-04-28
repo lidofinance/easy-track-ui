@@ -2,7 +2,6 @@ import { useCallback, useMemo } from 'react'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useConnectorInfo, useDisconnect } from 'reef-knot/web3-react'
 import { useGovernanceBalance } from 'modules/tokens/hooks/useGovernanceBalance'
-import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { CopyOpenActions } from 'modules/shared/ui/Common/CopyOpenActions'
@@ -17,6 +16,7 @@ import {
 } from './WalletModalStyle'
 import { formatToken } from 'modules/tokens/utils/formatToken'
 import { useDisconnect as useDisconnectWagmi } from 'wagmi'
+import { useGovernanceTokenData } from 'modules/tokens/hooks/useGovernanceTokenData'
 
 function WalletModalContent() {
   const { walletAddress } = useWeb3()
@@ -25,7 +25,7 @@ function WalletModalContent() {
     [walletAddress],
   )
   const governanceBalance = useGovernanceBalance()
-  const { data: governanceSymbol } = useGovernanceSymbol()
+  const { data: governanceTokenData } = useGovernanceTokenData()
 
   return (
     <>
@@ -33,13 +33,16 @@ function WalletModalContent() {
         <Text
           size={12}
           weight={500}
-          children={`${governanceSymbol} Balance:`}
+          children={`${governanceTokenData?.symbol} Balance:`}
         />
         <Text size={12} weight={500}>
           &nbsp;
           {governanceBalance.initialLoading || !governanceBalance.data
             ? 'Loading...'
-            : formatToken(governanceBalance.data, governanceSymbol || '')}
+            : formatToken(
+                governanceBalance.data,
+                governanceTokenData?.symbol || '',
+              )}
         </Text>
       </Row>
 
