@@ -1,4 +1,4 @@
-import { flow, map, orderBy } from 'lodash/fp'
+import orderBy from 'lodash/orderBy'
 
 import { Container } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
@@ -9,10 +9,10 @@ import { MotionCardPreview } from 'modules/motions/ui/MotionCardPreview'
 
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { formatMotionDataOnchain } from 'modules/motions/utils/formatMotionDataOnchain'
-import { Motion, RawMotionOnchain } from 'modules/motions/types'
+import { Motion } from 'modules/motions/types'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { fetchMotionsScriptsSubgraph } from 'modules/motions/network/motionsSubgraphFetchers'
+import { getMotionCreatedEvent } from 'modules/motions/utils'
 
 export default function HomePage() {
   const { chainId } = useWeb3()
@@ -22,18 +22,26 @@ export default function HomePage() {
     `active-motions-${chainId}`,
     async () => {
       const motions = await easyTrack.getMotions()
-      const motionsScripts = await fetchMotionsScriptsSubgraph(
-        chainId,
-        motions.map(m => m.id.toNumber()),
-      )
+      let parsedMotionsWithScripts: Motion[] = []
+      for (const motion of motions) {
+        try {
+          const event = await getMotionCreatedEvent(
+            easyTrack,
+            motion.id.toNumber(),
+            motion.snapshotBlock.toNumber(),
+          )
 
-      return flow(
-        map((motion: RawMotionOnchain) => {
-          const motionScript = motionsScripts[motion.id.toNumber()]
-          return formatMotionDataOnchain(motion, motionScript)
-        }),
-        orderBy('id', 'desc'),
-      )(motions) as Motion[]
+          parsedMotionsWithScripts.push(
+            formatMotionDataOnchain(motion, event._evmScriptCallData),
+          )
+        } catch (error) {
+          parsedMotionsWithScripts.push(
+            formatMotionDataOnchain(motion, undefined),
+          )
+        }
+      }
+
+      return orderBy(parsedMotionsWithScripts, ['id'], ['desc'])
     },
     {
       revalidateIfStale: false,
