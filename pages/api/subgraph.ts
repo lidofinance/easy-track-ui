@@ -86,6 +86,17 @@ export default async function subgraph(
       body: req.body,
     })
 
+    if (!upstream.ok) {
+      const errorMessage = await upstream.text()
+      console.error('Error: subgraph request failed', {
+        ...requestInfo,
+        stage: 'ERROR',
+        error: errorMessage,
+      })
+      res.status(upstream.status).send(errorMessage)
+      return
+    }
+
     // Forward the status code
     res.status(upstream.status)
 
