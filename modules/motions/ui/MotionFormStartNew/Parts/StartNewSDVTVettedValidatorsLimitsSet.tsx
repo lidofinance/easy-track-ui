@@ -68,7 +68,7 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList({ withSummary: true })
+    } = useSDVTNodeOperatorsList()
 
     const nodeOperatorsWithValidators = nodeOperatorsList?.filter(
       nodeOperator => nodeOperator.totalAddedValidators.gt(0),

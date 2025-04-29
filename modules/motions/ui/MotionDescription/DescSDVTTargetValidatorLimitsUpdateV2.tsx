@@ -1,15 +1,15 @@
 import { UpdateTargetValidatorLimitsV2Abi } from 'generated'
 import { NestProps } from './types'
 import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
+import { useSDVTNodeOperatorsSummaryMap } from 'modules/motions/hooks/useSDVTNodeOperatorsSummary'
 
 // UpdateTargetValidatorLimitsV2
 export function DescSDVTTargetValidatorLimitsUpdateV2({
   callData,
   isOnChain,
 }: NestProps<UpdateTargetValidatorLimitsV2Abi['decodeEVMScriptCallData']>) {
-  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList({
-    withSummary: true,
-  })
+  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
+  const { data: operatorsSummaryMap } = useSDVTNodeOperatorsSummaryMap()
   return (
     <>
       {callData.map((item, index) => {
@@ -38,7 +38,9 @@ export function DescSDVTTargetValidatorLimitsUpdateV2({
             Set target validator limit for Node Operator{' '}
             <b>{nodeOperatorName}</b> (id: {nodeOperatorId}){' '}
             {nodeOperator && isOnChain
-              ? `from ${nodeOperator.targetValidatorsCount} `
+              ? `from ${
+                  operatorsSummaryMap?.[nodeOperator.id].targetValidatorsCount
+                } `
               : ''}
             {`to ${item.targetLimit} in ${targetLimitModeDesc} mode`}
             {index === callData.length - 1 ? '.' : '; '}

@@ -7,9 +7,7 @@ export function DescSDVTVettedValidatorsLimitsSet({
   callData,
   isOnChain,
 }: NestProps<SetVettedValidatorsLimitsAbi['decodeEVMScriptCallData']>) {
-  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList({
-    withSummary: true,
-  })
+  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
   return (
     <>
       {callData.map(item => {
