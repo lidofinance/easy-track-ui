@@ -1,3 +1,0 @@
-export const MAX_ETH_GET_LOGS_RANGE = 4999
-export const MAX_RESPONSE_SIZE = 1_000_000
-export const MAX_PROVIDER_BATCH = 20
