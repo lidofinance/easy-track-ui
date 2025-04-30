@@ -5,7 +5,7 @@ import {
   NodeOperatorsRegistryType,
 } from '../constants'
 import { useConfig } from 'modules/config/hooks/useConfig'
-
+import { MAX_PROVIDER_BATCH } from 'modules/blockChain/constants'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 
 export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
@@ -30,10 +30,9 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
           return { ...nodeOperator, id: i }
         }
 
-        const batchSize = 10
         const results = await processInBatches(
           indexes,
-          batchSize,
+          MAX_PROVIDER_BATCH,
           fetchNodeOperator,
         )
 
