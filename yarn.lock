@@ -2606,6 +2606,16 @@
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 
+"@lidofinance/api-metrics@^0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/api-metrics/-/api-metrics-0.51.0.tgz#879675eb41711c0da41bd87519a79847e74b4ece"
+  integrity sha512-yeKUeUNQYXTLn2M2nT3+S9TbPQBQFbay0ANUQMIgvIsOVHXsAeNc0ga8+x5osst8rPAxyOnlT/dOBuAupV8aBQ==
+
+"@lidofinance/api-rpc@^0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/api-rpc/-/api-rpc-0.51.0.tgz#51ac71e4921ab654d691ce4facd5f46d114c6157"
+  integrity sha512-HFYaWj5jaSpcextd8gDKXCxfx0Q3H0fBtSv+u5F5IrYbAiRr5oaJk06jsM/3tdNTg13nhrfddf0G1y2mkY9OKQ==
+
 "@lidofinance/evm-script-decoder@0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@lidofinance/evm-script-decoder/-/evm-script-decoder-0.2.2.tgz#202cbfc4f4229405d9e2a70e88347b20e726d3a2"
@@ -2630,10 +2640,36 @@
     ua-parser-js "^1.0.2"
     use-callback-ref "1.2.5"
 
+"@lidofinance/next-api-wrapper@^0.51.0", "@lidofinance/next-api-wrapper@~0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/next-api-wrapper/-/next-api-wrapper-0.51.0.tgz#cb720e38e4184433220cb3362f13086935e15eef"
+  integrity sha512-FMNcWDBFtv7asGnQ7bhnhOw67VmwCk1OwIUDnRHlTwoYlmZB0e+zpWBd9+WEeFSVLJkfUaHoSJ2R4xyWJvMakw==
+
 "@lidofinance/next-cache-files-middleware@^0.33.0":
   version "0.33.0"
   resolved "https://registry.yarnpkg.com/@lidofinance/next-cache-files-middleware/-/next-cache-files-middleware-0.33.0.tgz#a648b884632ff29ce32ca49c46d9ca9491790fa1"
   integrity sha512-XxTnYewxE4+cenhtfZBGWtyVVbQAZI9Hbys0/0n9uMJtNpi5R2I8DctzltN0sbAbku/2KfCRwJzRUp41ClZ+dw==
+
+"@lidofinance/next-ip-rate-limit@^0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/next-ip-rate-limit/-/next-ip-rate-limit-0.51.0.tgz#ef91a4970b7acd08e41e248e296f1b2973c5507d"
+  integrity sha512-XwabtpSfYSTgyzwGG4F9BSutK9Pg+n4wCHLypT/OvdGiWLHgph9KNkjjjX+Rdpe+BLEj4Lg9ABk6Z1OrILu6gg==
+  dependencies:
+    "@lidofinance/next-api-wrapper" "~0.51.0"
+
+"@lidofinance/next-pages@^0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/next-pages/-/next-pages-0.51.0.tgz#e646ea95a989f0e2d2afe845e21a8fef761cd37e"
+  integrity sha512-GR+rE+aAQqfqoKCkapAwQBEYp+cOeM0QielI2XL4hLtzN6J1uHXQYUBhB7TkAsIVQWZBBnlfObsDwxHH0Mm/DA==
+  dependencies:
+    memory-cache "^0.2.0"
+
+"@lidofinance/rpc@^0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@lidofinance/rpc/-/rpc-0.51.0.tgz#821cd74fd2b10c25eab4766ac536419a9b5ad79d"
+  integrity sha512-pfgEjCcTJY6wLjt6v3x3M4JVa0OFbXIbZ56masTXK64VAzyhFTcaxT4PXkHKt0iUpd//R5YdNdz5kgovVBZS+w==
+  dependencies:
+    isomorphic-fetch "^3.0.0"
 
 "@lidofinance/satanizer@^0.35.0":
   version "0.35.0"
@@ -7268,6 +7304,15 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==
 
+fs-extra@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
+  integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@^11.0.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-11.1.0.tgz#5784b102104433bb0e090f48bfc4a30742c357ed"
@@ -8079,6 +8124,14 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
+
+isomorphic-fetch@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-3.0.0.tgz#0267b005049046d2421207215d45d6a262b8b8b4"
+  integrity sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==
+  dependencies:
+    node-fetch "^2.6.1"
+    whatwg-fetch "^3.4.1"
 
 isomorphic-ws@^4.0.1:
   version "4.0.1"
@@ -9018,7 +9071,7 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-memory-cache@0.2.0:
+memory-cache@0.2.0, memory-cache@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/memory-cache/-/memory-cache-0.2.0.tgz#7890b01d52c00c8ebc9d533e1f8eb17e3034871a"
   integrity sha512-OcjA+jzjOYzKmKS6IQVALHLVz+rNTMPoJvCztFaZxwG14wtAW7VRZjwTQu06vKCYOxh4jVnik7ya0SXTB0W+xA==
@@ -12158,6 +12211,11 @@ websocket@^1.0.32:
     typedarray-to-buffer "^3.1.5"
     utf-8-validate "^5.0.2"
     yaeti "^0.0.6"
+
+whatwg-fetch@^3.4.1:
+  version "3.6.20"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.20.tgz#580ce6d791facec91d37c72890995a0b48d31c70"
+  integrity sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==
 
 whatwg-url@^5.0.0:
   version "5.0.0"

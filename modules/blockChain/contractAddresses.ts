@@ -198,6 +198,7 @@ export const Stonks: ChainAddressListMap = {
     '0xDCBC0AE0141aEdEec14e418a173A6b3fA3724AE4',
     '0x507D0971ffd5de64Ba1fb30Ee6Bb93376035DD00',
   ],
+  [CHAINS.Hoodi]: [],
 }
 
 export const StonksStethAllowedRecipientsRegistry: ChainAddressMap = {
