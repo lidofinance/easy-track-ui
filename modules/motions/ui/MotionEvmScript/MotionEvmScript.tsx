@@ -27,7 +27,6 @@ export function MotionEvmScript({ motion }: Props) {
   const { data: scriptData, initialLoading: isScriptLoading } = useSWR(
     `script-${motion.id}`,
     async () => {
-      // TODO: get evmScript from subgraph
       const motionCreatedEvent = await getMotionCreatedEvent(
         easyTrack,
         motion.id,

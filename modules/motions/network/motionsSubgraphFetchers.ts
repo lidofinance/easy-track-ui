@@ -39,13 +39,6 @@ export const getQuerySubgraphMotions = (
   }
 }`
 
-const getMotionsScriptsQuery = (motionIds: (string | number)[]) => `{
-  motions(where: { id_in: [${motionIds.join(', ')}] }) {
-    id
-    evmScriptCalldata
-  }
-}`
-
 export async function fetchMotionsSubgraphList(chainId: CHAINS, query: string) {
   const res = await fetcherGraphql<Response>(chainId, query)
   if (res.errors) throw Error(res.errors[0].message)
@@ -62,24 +55,4 @@ export async function fetchMotionsSubgraphItem(
   )
   const motion = res.data.motions[0] as RawMotionSubgraph | undefined
   return motion ? formatMotionDataSubgraph(motion) : null
-}
-
-type MotionsScriptsResponse = {
-  data: { motions: { id: string; evmScriptCalldata: string }[] }
-  errors?: { message: string }[]
-}
-
-export async function fetchMotionsScriptsSubgraph(
-  chainId: CHAINS,
-  motionIds: (string | number)[],
-) {
-  const res = await fetcherGraphql<MotionsScriptsResponse>(
-    chainId,
-    getMotionsScriptsQuery(motionIds),
-  )
-
-  return res.data.motions.reduce((acc, motion) => {
-    acc[motion.id] = motion.evmScriptCalldata
-    return acc
-  }, {} as Record<string, string>)
 }

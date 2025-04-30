@@ -50,9 +50,7 @@ export const getSDVTOperatorManager = async ({
     SIGNING_KEYS_ROLE,
   )
   let fromBlock =
-    currentBlock - GET_LOG_BLOCK_LIMIT <= 0
-      ? 0
-      : currentBlock - GET_LOG_BLOCK_LIMIT
+    currentBlock <= GET_LOG_BLOCK_LIMIT ? 0 : currentBlock - GET_LOG_BLOCK_LIMIT
   let toBlock = currentBlock
 
   let managerAddress: string | undefined
@@ -72,7 +70,7 @@ export const getSDVTOperatorManager = async ({
     }
 
     fromBlock =
-      fromBlock - GET_LOG_BLOCK_LIMIT <= 0 ? 0 : fromBlock - GET_LOG_BLOCK_LIMIT
+      fromBlock <= GET_LOG_BLOCK_LIMIT ? 0 : fromBlock - GET_LOG_BLOCK_LIMIT
     toBlock = toBlock - GET_LOG_BLOCK_LIMIT
   }
 

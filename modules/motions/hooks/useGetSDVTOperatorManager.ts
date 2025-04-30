@@ -44,10 +44,10 @@ export const useGetSDVTOperatorManager = () => {
         if (!address) {
           throw new Error(`Manager address not found for ID: ${nodeOperatorId}`)
         }
-        setIsLoading(false)
         return address
       } catch (error) {
         console.error('Error fetching manager address:', error)
+      } finally {
         setIsLoading(false)
       }
     },
