@@ -1,7 +1,6 @@
 export * from './useContractEvmScript'
 export * from './useEVMScriptDecoder'
 export * from './useLegoTokenOptions'
-export * from './useMotionCreatedEvent'
 export * from './useMotionProgress'
 export * from './useMotionTimeCountdown'
 export * from './useNodeOperatorKeysInfo'

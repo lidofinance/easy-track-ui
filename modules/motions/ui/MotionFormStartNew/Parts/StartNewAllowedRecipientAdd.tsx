@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 import { useMemo } from 'react'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useRecipientActual } from 'modules/motions/hooks/useRegistryWithLimits'
+import { useAllowedRecipients } from 'modules/motions/hooks/useRegistryWithLimits'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
@@ -67,7 +67,7 @@ export const formParts = ({
       submitAction,
     }) {
       const { walletAddress } = useWeb3()
-      const allowedRecipients = useRecipientActual({ registryType })
+      const allowedRecipients = useAllowedRecipients({ registryType })
       const trustedCaller = ALLOWED_RECIPIENT_ADD_MAP[
         registryType
       ].evmContract.useSwrWeb3('trustedCaller', [])

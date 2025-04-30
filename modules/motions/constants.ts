@@ -35,3 +35,6 @@ export const NODE_OPERATORS_REGISTRY_MAP = {
 } as const
 
 export type NodeOperatorsRegistryType = keyof typeof NODE_OPERATORS_REGISTRY_MAP
+
+export const SIGNING_KEYS_ROLE =
+  '0x75abc64490e17b40ea1e66691c3eb493647b24430b358bd87ec3e5127f1621ee' // keccak256("MANAGE_SIGNING_KEYS")

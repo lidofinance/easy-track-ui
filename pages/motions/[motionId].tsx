@@ -13,6 +13,7 @@ import type { Motion } from 'modules/motions/types'
 import { fetchMotionsSubgraphItem } from 'modules/motions/network/motionsSubgraphFetchers'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
 import { formatMotionDataOnchain } from 'modules/motions/utils/formatMotionDataOnchain'
+import { getMotionCreatedEvent } from 'modules/motions/utils'
 
 const ContentContainer = styled(Container).attrs({
   as: 'main',
@@ -32,11 +33,24 @@ export default function MotionDetailsPage() {
     mutate,
   } = useSWR<Motion | null>(`motion-${chainId}-${motionId}`, async () => {
     try {
-      const tryActive = await easyTrack.getMotion(motionId)
-      return formatMotionDataOnchain(tryActive)
+      const onChainMotionData = await easyTrack.getMotion(motionId)
+      let evmScriptCallData: string | undefined = undefined
+      try {
+        const event = await getMotionCreatedEvent(
+          easyTrack,
+          onChainMotionData.id.toNumber(),
+          onChainMotionData.snapshotBlock.toNumber(),
+        )
+        evmScriptCallData = event._evmScriptCallData
+      } catch (error) {}
+
+      return formatMotionDataOnchain(onChainMotionData, evmScriptCallData)
     } catch {
-      const tryArchive = await fetchMotionsSubgraphItem(chainId, motionId)
-      return tryArchive
+      const subgraphMotionData = await fetchMotionsSubgraphItem(
+        chainId,
+        motionId,
+      )
+      return subgraphMotionData
     }
   })
 
