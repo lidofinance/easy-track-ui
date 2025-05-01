@@ -6,8 +6,9 @@ import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { useContractSwr } from '../hooks/useContractSwr'
 
 import type { Signer, providers } from 'ethers'
-import type { JsonRpcSigner } from '@ethersproject/providers'
+import { JsonRpcSigner } from '@ethersproject/providers'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
+
 import { getChainName } from 'modules/blockChain/chains'
 import { FilterMethods } from 'modules/shared/utils/utilTypes'
 import {
@@ -40,6 +41,7 @@ type CallArgs = {
 type CallRpcArgs = {
   chainId: CHAINS
   rpcUrl: string
+  cacheSeed?: number
 }
 
 export function createContractHelpers<F extends Factory>({
@@ -59,8 +61,8 @@ export function createContractHelpers<F extends Factory>({
     return factory.connect(address[chainId] as string, library) as Instance
   }
 
-  function connectRpc({ chainId, rpcUrl }: CallRpcArgs) {
-    const library = getStaticRpcBatchProvider(chainId, rpcUrl)
+  function connectRpc({ chainId, rpcUrl, cacheSeed }: CallRpcArgs) {
+    const library = getStaticRpcBatchProvider(chainId, rpcUrl, cacheSeed ?? 0)
     return connect({ chainId, library })
   }
 

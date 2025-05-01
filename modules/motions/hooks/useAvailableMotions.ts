@@ -79,10 +79,9 @@ export const useAvailableMotions = () => {
         },
       )
 
-      // buffer the batch size by 1 to avoid hitting the application api/rpc limit
       const promiseResult = await processInBatches(
         relevantContracts,
-        MAX_PROVIDER_BATCH - 1,
+        MAX_PROVIDER_BATCH,
         async contract => {
           const connectedContract = contract.connectRpc({ chainId, rpcUrl })
 
