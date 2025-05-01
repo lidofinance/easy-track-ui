@@ -6,9 +6,8 @@ import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { useContractSwr } from '../hooks/useContractSwr'
 
 import type { Signer, providers } from 'ethers'
-import { JsonRpcSigner } from '@ethersproject/providers'
+import type { JsonRpcSigner } from '@ethersproject/providers'
 import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
-
 import { getChainName } from 'modules/blockChain/chains'
 import { FilterMethods } from 'modules/shared/utils/utilTypes'
 import {
