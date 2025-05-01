@@ -140,9 +140,11 @@ export const formParts = createMotionFormPart({
       <>
         {fieldsArr.fields.map((item, fieldIndex) => {
           const currentNodeOperator =
+            selectedNodeOperators[fieldIndex].id &&
             nodeOperatorsList[selectedNodeOperators[fieldIndex].id!]
 
           const currentTargetLimitMode =
+            currentNodeOperator &&
             operatorsSummaryMap[
               currentNodeOperator.id
             ].targetLimitMode.toString()
@@ -150,7 +152,9 @@ export const formParts = createMotionFormPart({
           const targetLimitModeLabel = currentTargetLimitMode
             ? TARGET_LIMIT_MODES[currentTargetLimitMode]
             : null
+
           const currentTargetLimit =
+            currentNodeOperator &&
             operatorsSummaryMap[
               currentNodeOperator.id
             ].targetValidatorsCount.toString()
