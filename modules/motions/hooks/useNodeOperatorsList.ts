@@ -16,9 +16,15 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
     `${chainId}-${account}-${registryType}-operators-list`,
     async () => {
       try {
-        const registry = NODE_OPERATORS_REGISTRY_MAP[registryType].connectRpc({
+        const registry = await NODE_OPERATORS_REGISTRY_MAP[
+          registryType
+        ].connectRpc({
           chainId,
           rpcUrl: getRpcUrl(chainId),
+          // separate cache for sandbox and curated registries to avoid batching issues
+          // when using one cached batching provider for both we can get batches from both registries in one request
+          // which triggers api/rpc batch limit even though both registries separately are under the limit
+          cacheSeed: registryType === 'sandbox' ? 1 : 0,
         })
 
         const count = (await registry.getNodeOperatorsCount()).toNumber()
