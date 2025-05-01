@@ -30,9 +30,10 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
           return { ...nodeOperator, id: i }
         }
 
+        // buffer the batch size by 1 to avoid hitting the application api/rpc limit
         const results = await processInBatches(
           indexes,
-          MAX_PROVIDER_BATCH,
+          MAX_PROVIDER_BATCH - 1,
           fetchNodeOperator,
         )
 
