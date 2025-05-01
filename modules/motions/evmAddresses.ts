@@ -330,6 +330,13 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SDVTNodeOperatorManagerChange]:
       '0x8a437cd5685e270cDDb347eeEfEbD22109Fa42a9',
 
+    [MotionType.SandboxStablesAdd]:
+      '0x056561d0F1314CB3932180b3f0B3C03174F2642B',
+    [MotionType.SandboxStablesRemove]:
+      '0xc84251D2959E976AfE95201E1e2B88dB56Bc0a69',
+    [MotionType.SandboxStablesTopUp]:
+      '0x4A7B898981182c42ecC9444Cd40Cf42CEB6b71Ab',
+
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',
     [MotionType.AllianceOpsStablesTopUp]: '',
