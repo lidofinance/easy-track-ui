@@ -241,3 +241,15 @@ export const LabsOpsStablesAllowedRecipientsRegistry: ChainAddressMap = {
 export const LabsOpsStethAllowedRecipientsRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0x02CD05c1cBa16113680648a8B3496A5aE312a935',
 }
+
+export const USDC: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  [CHAINS.Holesky]: '0x9715b2786f1053294fc8952df923b95cab9aac42',
+  [CHAINS.Hoodi]: '0x97bb030B93faF4684eAC76bA0bf3be5ec7140F36',
+}
+
+export const USDT: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+  [CHAINS.Holesky]: '0x86f6c353a0965eb069cd7f4f91c1afef8c725551',
+  [CHAINS.Hoodi]: '0x64f1904d1b419c6889BDf3238e31A138E258eA68',
+}
