@@ -1,6 +1,5 @@
 import { utils } from 'ethers'
 import { AragonACLAbi, NodeOperatorsRegistryAbi } from 'generated'
-import { SIGNING_KEYS_ROLE } from '../constants'
 
 export async function checkIsAddressManagerOfNodeOperator(
   address: string,
@@ -8,11 +7,10 @@ export async function checkIsAddressManagerOfNodeOperator(
   sdvtRegistry: NodeOperatorsRegistryAbi,
 ) {
   try {
-    return sdvtRegistry.canPerform(
-      utils.getAddress(address),
-      SIGNING_KEYS_ROLE,
-      [parseInt(nodeOperatorId)],
-    )
+    const role = await sdvtRegistry.MANAGE_SIGNING_KEYS()
+    return sdvtRegistry.canPerform(utils.getAddress(address), role, [
+      parseInt(nodeOperatorId),
+    ])
   } catch (error) {
     return false
   }
@@ -23,10 +21,11 @@ export const checkAddressForManageSigningKeysRole = async (
   sdvtRegistry: NodeOperatorsRegistryAbi,
   aragonAcl: AragonACLAbi,
 ) => {
+  const MANAGE_SIGNING_KEYS_ROLE = await sdvtRegistry.MANAGE_SIGNING_KEYS()
   const result = await aragonAcl.getPermissionParamsLength(
     utils.getAddress(address),
     sdvtRegistry.address,
-    SIGNING_KEYS_ROLE,
+    MANAGE_SIGNING_KEYS_ROLE,
   )
   return !result.isZero()
 }

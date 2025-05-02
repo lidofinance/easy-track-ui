@@ -1,13 +1,11 @@
 import { FC } from 'react'
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
+import * as wagmiChains from 'wagmi/chains'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { getConnectors } from 'reef-knot/core-react'
+import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
 import { getRpcUrlDefault } from 'modules/config'
-import getConfig from 'next/config'
-import * as wagmiChains from 'wagmi/chains'
-
-const { publicRuntimeConfig } = getConfig()
 
 export const holesky = {
   id: CHAINS.Holesky,
@@ -61,11 +59,17 @@ export const hoodi = {
   },
 } as const
 
+const { publicRuntimeConfig } = getConfig()
+
 let supportedChainIds: number[] = []
-supportedChainIds = publicRuntimeConfig.supportedChains
-  .split(',')
-  .map((chainId: string) => parseInt(chainId))
-  .filter((chainId: number) => !Number.isNaN(chainId))
+if (publicRuntimeConfig.supportedChains != null) {
+  supportedChainIds = publicRuntimeConfig.supportedChains
+    .split(',')
+    .map((chainId: string) => parseInt(chainId))
+    .filter((chainId: number) => !Number.isNaN(chainId))
+} else if (publicRuntimeConfig.defaultChain != null) {
+  supportedChainIds = [parseInt(publicRuntimeConfig.defaultChain)]
+}
 
 const wagmiChainsArray = Object.values({
   ...wagmiChains,
@@ -77,6 +81,9 @@ const supportedChains = wagmiChainsArray.filter(
   chain =>
     // Temporary wagmi fix, need to hardcode it to not affect non-wagmi wallets
     supportedChainIds.includes(chain.id) || chain.id === 80001,
+)
+const defaultChain = wagmiChainsArray.find(
+  chain => chain.id === parseInt(publicRuntimeConfig.defaultChain),
 )
 
 const backendRPC = supportedChainIds.reduce<Record<number, string>>(
@@ -100,7 +107,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 const connectors = getConnectors({
   chains,
-  defaultChain: publicRuntimeConfig.defaultChain,
+  defaultChain,
   rpc: backendRPC,
   walletconnectProjectId: publicRuntimeConfig.walletconnectProjectId,
 })

@@ -40,7 +40,6 @@ type CallArgs = {
 type CallRpcArgs = {
   chainId: CHAINS
   rpcUrl: string
-  cacheSeed?: number
 }
 
 export function createContractHelpers<F extends Factory>({
@@ -60,8 +59,8 @@ export function createContractHelpers<F extends Factory>({
     return factory.connect(address[chainId] as string, library) as Instance
   }
 
-  function connectRpc({ chainId, rpcUrl, cacheSeed }: CallRpcArgs) {
-    const library = getStaticRpcBatchProvider(chainId, rpcUrl, cacheSeed ?? 0)
+  function connectRpc({ chainId, rpcUrl }: CallRpcArgs) {
+    const library = getStaticRpcBatchProvider(chainId, rpcUrl)
     return connect({ chainId, library })
   }
 

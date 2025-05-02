@@ -4,8 +4,6 @@ import { CHAINS } from '@lido-sdk/constants'
 const PREFIXES = {
   [CHAINS.Mainnet]: 'eth',
   [CHAINS.Goerli]: 'gor',
-  [CHAINS.Holesky]: 'eth',
-  [CHAINS.Hoodi]: 'eth',
 } as const
 
 export const getGnosisSafeLink = (

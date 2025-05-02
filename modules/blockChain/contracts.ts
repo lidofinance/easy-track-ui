@@ -4,6 +4,18 @@ import { MotionType } from 'modules/motions/types'
 import { EvmAddressesByType } from 'modules/motions/evmAddresses'
 import * as CONTRACT_ADDRESSES from './contractAddresses'
 
+export type ContractTypeEasyTrack = TypeChain.EasyTrackAbi
+/**
+ * @deprecated
+ */
+export type ContractTypeRewardProgramRegistry =
+  TypeChain.RewardProgramRegistryAbi
+export type ContractTypeReferralPartnersRegistry =
+  TypeChain.ReferralPartnersRegistryAbi
+export type ContractTypeAllowedRecipientRegistry =
+  TypeChain.AllowedRecipientsRegistryAbi
+export type ContractTypeRegistryWithLimits = TypeChain.RegistryWithLimitsAbi
+
 export const ContractNodeOperatorsRegistry = createContractHelpers({
   factory: TypeChain.NodeOperatorsRegistryAbi__factory,
   address: CONTRACT_ADDRESSES.NodeOperatorsRegistry,

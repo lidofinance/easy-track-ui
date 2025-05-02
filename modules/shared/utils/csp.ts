@@ -36,6 +36,7 @@ export const contentSecurityPolicy = {
       'https://*.cow.fi',
       ...trustedHosts,
     ],
+    prefetchSrc: ["'self'", ...trustedHosts],
     formAction: ["'self'", ...trustedHosts],
     frameAncestors: ['*'],
     manifestSrc: ["'self'", ...trustedHosts],

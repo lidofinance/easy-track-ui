@@ -1,5 +1,6 @@
 import { utils } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { useRecipientActual } from 'modules/motions/hooks'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
@@ -14,7 +15,6 @@ import {
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils/estimateGasFallback'
-import { useAllowedRecipients } from 'modules/motions/hooks'
 
 export const ALLOWED_RECIPIENT_REMOVE_MAP = {
   [MotionTypeForms.StethRewardProgramRemove]: {
@@ -64,7 +64,7 @@ export const formParts = ({
       fieldNames,
       submitAction,
     }) {
-      const allowedRecipients = useAllowedRecipients({ registryType })
+      const allowedRecipients = useRecipientActual({ registryType })
       const { walletAddress } = useWeb3()
       const trustedCaller = ALLOWED_RECIPIENT_REMOVE_MAP[
         registryType

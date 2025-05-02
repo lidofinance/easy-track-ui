@@ -1,5 +1,6 @@
 import type { BigNumber } from 'ethers'
-import { EasyTrack } from 'generated/EasyTrackAbi'
+import type { PromiseValue } from 'type-fest'
+import type { EasyTrackAbi } from 'generated'
 
 // Only motions currently supported to start
 export const MotionTypeForms = {
@@ -124,17 +125,17 @@ export type Motion = {
   objectionsThreshold: number
   objectionsAmount: BigNumber
   evmScriptHash: string
-  // Below are subgraph-only fields
   evmScriptCalldata?: string
   status: MotionStatus
   enacted_at?: number
   canceled_at?: number
   rejected_at?: number
-
   isOnChain: boolean
 }
 
-export type RawMotionOnchain = EasyTrack.MotionStructOutput
+export type RawMotionOnchain = PromiseValue<
+  ReturnType<EasyTrackAbi['getMotions']>
+>[0]
 
 export type RawMotionSubgraph = {
   id: string

@@ -4,10 +4,7 @@ import { Fragment, useEffect, useMemo } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import {
-  usePeriodLimitsData,
-  useAllowedRecipients,
-} from 'modules/motions/hooks'
+import { useRecipientActual, usePeriodLimitsData } from 'modules/motions/hooks'
 import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
 import {
   MotionLimitProgress,
@@ -152,7 +149,7 @@ export const formParts = ({
       const {
         data: actualRecipients,
         initialLoading: isRecipientsDataLoading,
-      } = useAllowedRecipients({ registryType })
+      } = useRecipientActual({ registryType })
 
       const fieldsArr = useFieldArray({ name: fieldNames.programs })
 

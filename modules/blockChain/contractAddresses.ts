@@ -153,12 +153,10 @@ export const AllowedTokensRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x4AC40c34f8992bb1e5E856A448792158022551ca',
   [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
   [CHAINS.Holesky]: '0x091c0ec8b4d54a9fcb36269b5d5e5af43309e666',
-  [CHAINS.Hoodi]: '0x40Db7E8047C487bD8359289272c717eA3C34D1D3',
 }
 
 export const SandboxStablesAllowedRecipientRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0xF8a63a36B954D72de197097377aa00C238c653Cf',
-  [CHAINS.Hoodi]: '0xd57FF1ce54F572F4E8DaF0cB7038F1Bd6049cAa8',
 }
 
 export const RccStethAllowedRecipientsRegistry: ChainAddressMap = {
@@ -200,7 +198,6 @@ export const Stonks: ChainAddressListMap = {
     '0xDCBC0AE0141aEdEec14e418a173A6b3fA3724AE4',
     '0x507D0971ffd5de64Ba1fb30Ee6Bb93376035DD00',
   ],
-  [CHAINS.Hoodi]: [],
 }
 
 export const StonksStethAllowedRecipientsRegistry: ChainAddressMap = {
@@ -240,16 +237,4 @@ export const LabsOpsStablesAllowedRecipientsRegistry: ChainAddressMap = {
 
 export const LabsOpsStethAllowedRecipientsRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0x02CD05c1cBa16113680648a8B3496A5aE312a935',
-}
-
-export const USDC: ChainAddressMap = {
-  [CHAINS.Mainnet]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-  [CHAINS.Holesky]: '0x9715b2786f1053294fc8952df923b95cab9aac42',
-  [CHAINS.Hoodi]: '0x97bb030B93faF4684eAC76bA0bf3be5ec7140F36',
-}
-
-export const USDT: ChainAddressMap = {
-  [CHAINS.Mainnet]: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-  [CHAINS.Holesky]: '0x86f6c353a0965eb069cd7f4f91c1afef8c725551',
-  [CHAINS.Hoodi]: '0x64f1904d1b419c6889BDf3238e31A138E258eA68',
 }

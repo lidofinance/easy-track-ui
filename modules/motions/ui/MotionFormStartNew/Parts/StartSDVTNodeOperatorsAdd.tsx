@@ -43,6 +43,14 @@ type NodeOperator = {
   managerAddress: string
 }
 
+// DONE: The current number of node operators in the registry MUST be equal to the _nodeOperatorsCount
+// DONE: (exec also) The total number of node operators in the registry, after adding the new ones, MUST NOT exceed nodeOperatorsRegistry.MAX_NODE_OPERATORS_COUNT()
+// DONE: Manager addresses MUST NOT have duplicates
+// DONE: Manager addresses MUST NOT be used as managers for previously added node operators
+// DONE: Reward addresses of newly added node operators MUST NOT contain the address of the stETH token
+// DONE: Reward addresses of newly added node operators MUST NOT contain zero addresses
+// DONE: The names of newly added node operators MUST NOT be an empty string
+// DONE: The name lengths of each newly added node operator MUST NOT exceed the nodeOperatorsRegistry.MAX_NODE_OPERATOR_NAME_LENGTH()
 export const formParts = () =>
   createMotionFormPart({
     motionType: MotionTypeForms.SDVTNodeOperatorsAdd,
@@ -112,14 +120,18 @@ export const formParts = () =>
 
       const nodeOperatorsDetailsMaps = useMemo(() => {
         const result: Record<
-          'name' | 'rewardAddress',
+          'name' | 'rewardAddress' | 'managerAddress',
           Record<string, number | undefined>
-        > = { name: {}, rewardAddress: {} }
+        > = { name: {}, rewardAddress: {}, managerAddress: {} }
         if (!nodeOperatorsList) return result
 
         for (const nodeOperator of nodeOperatorsList) {
           result['name'][nodeOperator.name] = nodeOperator.id
           result['rewardAddress'][nodeOperator.rewardAddress] = nodeOperator.id
+          if (nodeOperator.managerAddress) {
+            result['managerAddress'][nodeOperator.managerAddress] =
+              nodeOperator.id
+          }
         }
 
         return result
@@ -280,6 +292,14 @@ export const formParts = () =>
                         }
 
                         const valueAddress = utils.getAddress(value)
+                        const idInAddressMap =
+                          nodeOperatorsDetailsMaps['managerAddress'][
+                            valueAddress
+                          ]
+
+                        if (typeof idInAddressMap === 'number') {
+                          return 'Address must not be in use by another node operator'
+                        }
 
                         const addressInSelectedNodeOperatorsIndex =
                           selectedNodeOperators.findIndex(

@@ -1,5 +1,6 @@
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
 import { useContractEvmScript } from 'modules/motions/hooks/useContractEvmScript'
 
 import { DescLEGOTopUp } from './DescLEGO'
@@ -345,10 +346,12 @@ export function MotionDescription({ motion }: Props) {
     motion.evmScriptFactory,
   )
   const contract = useContractEvmScript(motionType)
-  const callDataRaw = motion.evmScriptCalldata
+  const { initialLoading: isLoadingEvent, data: createdEvent } =
+    useMotionCreatedEvent(motion.id)
+  const callDataRaw = createdEvent?._evmScriptCallData
 
-  const { data: callData, initialLoading } = useSWR(
-    `call-data-${chainId}-${motion.id}`,
+  const { data: callData } = useSWR(
+    isLoadingEvent ? null : `call-data-${chainId}-${motion.id}`,
     () => {
       if (motionType === EvmUnrecognized || !contract || !callDataRaw) {
         return null
@@ -361,7 +364,7 @@ export function MotionDescription({ motion }: Props) {
     return <>Unrecognized motion type</>
   }
 
-  if (!callData || initialLoading) {
+  if (isLoadingEvent || !callData) {
     return <>Loading...</>
   }
 

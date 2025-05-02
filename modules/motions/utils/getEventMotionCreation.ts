@@ -1,6 +1,5 @@
 import type { BigNumber } from 'ethers'
-import { EasyTrackAbi } from 'generated'
-import { GET_LOG_BLOCK_LIMIT } from 'modules/blockChain/constants'
+import type { ContractTypeEasyTrack } from 'modules/blockChain/contracts'
 
 type MotionCreatedEvent = [BigNumber, string, string, string, string] & {
   _motionId: BigNumber
@@ -10,17 +9,12 @@ type MotionCreatedEvent = [BigNumber, string, string, string, string] & {
   _evmScript: string
 }
 
-export async function getMotionCreatedEvent(
-  easyTrack: EasyTrackAbi,
+export async function getEventMotionCreated(
+  motionContract: ContractTypeEasyTrack,
   motionId: string | number,
-  motionSnapshotBlock: number,
 ) {
-  const filter = easyTrack.filters.MotionCreated(motionId)
-  const events = await easyTrack.queryFilter(
-    filter,
-    motionSnapshotBlock,
-    motionSnapshotBlock + GET_LOG_BLOCK_LIMIT,
-  )
+  const filter = motionContract.filters.MotionCreated(motionId)
+  const events = await motionContract.queryFilter(filter)
   const event = events[0]
   if (!events[0] || !event.decode) {
     throw new Error('Motion creation event parsing error')

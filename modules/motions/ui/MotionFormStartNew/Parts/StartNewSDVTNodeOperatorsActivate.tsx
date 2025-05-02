@@ -28,7 +28,6 @@ import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
-import { useGetSDVTOperatorManager } from 'modules/motions/hooks/useGetSDVTOperatorManager'
 
 type NodeOperator = {
   id: string
@@ -77,9 +76,6 @@ export const formParts = createMotionFormPart({
     } = useSDVTNodeOperatorsList()
     const sdvtRegistry = ContractSDVTRegistry.useRpc()
     const aragonAcl = ContractAragonAcl.useRpc()
-
-    const { getManagerAddress, isManagerAddressLoading } =
-      useGetSDVTOperatorManager()
 
     const deactivatedNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => !nodeOperator.active,
@@ -151,12 +147,12 @@ export const formParts = createMotionFormPart({
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      getManagerAddress(nodeOperator.id).then(address => {
+                      if (nodeOperator.managerAddress) {
                         setValue(
                           `${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`,
-                          address,
+                          nodeOperator.managerAddress,
                         )
-                      })
+                      }
                     }}
                   />
                 </Fieldset>
@@ -164,12 +160,7 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`}
-                    label={
-                      isManagerAddressLoading
-                        ? 'Loading manager address...'
-                        : 'Manager address'
-                    }
-                    disabled={isManagerAddressLoading}
+                    label="Manager address"
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
