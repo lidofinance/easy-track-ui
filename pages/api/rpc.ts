@@ -1,148 +1,125 @@
+import { wrapRequest as wrapNextRequest } from '@lidofinance/next-api-wrapper'
+import { TrackedFetchRPC, trackedFetchRpcFactory } from '@lidofinance/api-rpc'
+import { rpcFactory } from '@lidofinance/next-pages'
+import { secretConfig } from 'config'
+import { API_ROUTES } from 'constants/api'
+import {
+  rateLimit,
+  responseTimeMetric,
+  defaultErrorHandler,
+  requestAddressMetric,
+  httpMethodGuard,
+  HttpMethod,
+} from 'utilsApi'
+import {
+  METRIC_CONTRACT_ADDRESSES,
+  METRIC_CONTRACT_EVENT_ADDRESSES,
+} from 'utilsApi/contractAddressesMetricsMap'
+import { Metrics, METRICS_PREFIX } from 'utilsApi/metrics'
 import getConfig from 'next/config'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { parseChainId } from 'modules/blockChain/chains'
 import { CHAINS } from '@lido-sdk/constants'
+import {
+  Stonks,
+  DAI,
+  USDC,
+  USDT,
+} from '../../modules/blockChain/contractAddresses'
+import {
+  MAX_BLOCK_LIMIT,
+  MAX_PROVIDER_BATCH,
+  MAX_RESPONSE_SIZE,
+} from '../../modules/blockChain/constants'
+import { Address } from 'wagmi'
 
-import { fetchWithFallback } from 'modules/network/utils/fetchWithFallback'
-import clone from 'just-clone'
-import type {
-  JsonRpcError,
-  JsonRpcRequest,
-  JsonRpcResponse,
-  JsonRpcResult,
-} from '@walletconnect/jsonrpc-types'
+const { publicRuntimeConfig } = getConfig()
+const { defaultChain } = publicRuntimeConfig
 
-const { serverRuntimeConfig } = getConfig()
-const { rpcUrls_1, rpcUrls_17000, rpcUrls_560048 } = serverRuntimeConfig
+const allowedCallAddresses: Record<string, string[]> = Object.entries(
+  METRIC_CONTRACT_ADDRESSES,
+).reduce((acc, [chainId, addresses]) => {
+  const stables = [DAI, USDC, USDT].map(
+    (stable: Partial<Record<CHAINS, string>>) =>
+      // @ts-ignore
+      stable[chainId]?.toLowerCase(),
+  )
 
-const parseAndFilterResults = (
-  netResponse: Response,
-  text: string,
-): { results: JsonRpcResult[]; errors: JsonRpcError[] } => {
-  const { status } = netResponse
-  const trace = netResponse.headers.get('x-drpc-trace-id') || ''
-  const results: JsonRpcResult[] = []
-  const errors: JsonRpcError[] = []
-  try {
-    const responses = JSON.parse(text) as JsonRpcResponse[]
+  acc[chainId] = [
+    ...Object.keys(addresses),
+    // @ts-ignore
+    ...(Stonks[chainId].map((address: Address) =>
+      address.toLowerCase(),
+    ) as string[]),
+    ...stables,
+  ].filter(tokenAddress => tokenAddress !== undefined)
 
-    responses.forEach(response => {
-      if ('error' in response) {
-        const { id, error } = response
-        console.error(
-          `Request failed id ${id} error ${error.message} trace ${trace}`,
-        )
-        errors.push(response)
-        return
-      }
-      results.push(response)
-    })
-    return { results, errors }
-  } catch (err) {
-    // usually could happen when response status 400+
-    console.error(`Request failed status ${status} body ${text} trace ${trace}`)
-    return { results: [], errors: [] }
-  }
-}
+  return acc
+}, {} as Record<string, string[]>)
 
-const fetchWithSmartFallback = async (
-  urlsAll: string[],
-  chainId: CHAINS,
-  body: JsonRpcRequest | JsonRpcRequest[],
-): Promise<[Response, JsonRpcResponse | JsonRpcResponse[]]> => {
-  const isBatch = Array.isArray(body)
-  const requests: JsonRpcRequest[] = isBatch ? body : [body]
+const allowedLogsAddresses: Record<string, string[]> = Object.entries(
+  METRIC_CONTRACT_EVENT_ADDRESSES,
+).reduce((acc, [chainId, addresses]) => {
+  acc[chainId] = [
+    ...Object.keys(addresses),
+    // TODO: discuss
+    // @ts-ignore
+    ...(Stonks[chainId].map((address: Address) =>
+      address.toLowerCase(),
+    ) as string[]),
+  ]
+  return acc
+}, {} as Record<string, string[]>)
 
-  const results: JsonRpcResponse[] = []
-  let errors: JsonRpcError[] = []
-  const requestIds = new Set<number>(requests.map(request => request.id))
-  let netResponse: Response | null = null
+const allowedRPCMethods = [
+  'test',
+  'eth_call',
+  'eth_gasPrice',
+  'eth_getCode',
+  'eth_estimateGas',
+  'eth_getBlockByNumber',
+  'eth_feeHistory',
+  'eth_maxPriorityFeePerGas',
+  'eth_getBalance',
+  'eth_blockNumber',
+  'eth_getTransactionByHash',
+  'eth_getTransactionReceipt',
+  'eth_getTransactionCount',
+  'eth_sendRawTransaction',
+  'eth_getLogs',
+  'eth_chainId',
+  'net_version',
+]
 
-  for (const index of Object.keys(urlsAll)) {
-    const urls = urlsAll.slice(Number(index))
-    const filtered = requests.filter(request => requestIds.has(request.id))
+const rpc = rpcFactory({
+  fetchRPC: trackedFetchRpcFactory({
+    prefix: METRICS_PREFIX,
+    registry: Metrics.registry,
+  }) as TrackedFetchRPC,
+  metrics: {
+    prefix: METRICS_PREFIX,
+    registry: Metrics.registry,
+  },
+  defaultChain: `${defaultChain}`,
+  providers: {
+    [CHAINS.Mainnet]: secretConfig.rpcUrls_1,
+    [CHAINS.Goerli]: secretConfig.rpcUrls_5,
+    [CHAINS.Holesky]: secretConfig.rpcUrls_17000,
+    [CHAINS.Hoodi]: secretConfig.rpcUrls_560048,
+  },
+  validation: {
+    allowedRPCMethods,
+    allowedCallAddresses,
+    allowedLogsAddresses,
+    maxBatchCount: MAX_PROVIDER_BATCH,
+    blockEmptyAddressGetLogs: true,
+    maxGetLogsRange: MAX_BLOCK_LIMIT, // limits the size of historical queries
+    maxResponseSize: MAX_RESPONSE_SIZE, // limits max response size
+  },
+})
 
-    netResponse = await fetchWithFallback(urls, chainId, {
-      method: 'POST',
-      // Next by default parses our body for us, we don't want that here
-      body: JSON.stringify(filtered),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-
-    const text = await netResponse.text()
-    const parsed = parseAndFilterResults(netResponse, text)
-
-    parsed.results.forEach(response => {
-      results.push(response)
-      requestIds.delete(response.id)
-    })
-
-    if (requestIds.size > 0) {
-      errors = parsed.errors
-      continue
-    }
-
-    return [netResponse, isBatch ? results : results[0]]
-  }
-
-  if (netResponse) {
-    return [netResponse, isBatch ? [...results, ...errors] : errors[0]]
-  }
-  throw new Error(`Can't resolve some requests`)
-}
-
-export default async function rpc(req: NextApiRequest, res: NextApiResponse) {
-  const RPC_URLS: Record<number, string[]> = {
-    [CHAINS.Mainnet]: rpcUrls_1,
-    [CHAINS.Holesky]: rpcUrls_17000,
-    [CHAINS.Hoodi]: rpcUrls_560048,
-  }
-
-  const requestInfo = {
-    type: 'API request',
-    path: 'rpc',
-    body: clone(req.body),
-    query: clone(req.query),
-    method: req.method,
-    stage: 'INCOMING',
-  }
-
-  console.info('Incoming request to api/rpc', requestInfo)
-
-  try {
-    const chainId = parseChainId(String(req.query.chainId))
-    const urls = RPC_URLS[chainId]
-
-    const { body } = req
-    const [response, results] = await fetchWithSmartFallback(
-      urls,
-      chainId,
-      body,
-    )
-    const { headers, status } = response
-
-    res
-      .setHeader('x-drpc-owner-tier', headers.get('x-drpc-owner-tier') ?? '')
-      .setHeader('x-drpc-trace-id', headers.get('x-drpc-trace-id') ?? '')
-      .setHeader('x-drpc-date', headers.get('date') ?? '')
-      .status(status)
-      .json(results)
-
-    console.info('Request to api/rpc successfully fullfilled', {
-      ...requestInfo,
-      stage: 'FULFILLED',
-    })
-  } catch (error) {
-    if (error instanceof Error && Array.isArray(error.cause)) {
-      const [response, text] = error.cause
-      parseAndFilterResults(response, text)
-    }
-    console.error(
-      error instanceof Error ? error.message : 'Something went wrong',
-      error,
-    )
-    res.status(500).send({ error: 'Something went wrong!' })
-  }
-}
+export default wrapNextRequest([
+  httpMethodGuard([HttpMethod.POST]),
+  rateLimit,
+  responseTimeMetric(Metrics.request.apiTimings, API_ROUTES.RPC),
+  requestAddressMetric(Metrics.request.ethCallToAddress),
+  defaultErrorHandler,
+])(rpc)

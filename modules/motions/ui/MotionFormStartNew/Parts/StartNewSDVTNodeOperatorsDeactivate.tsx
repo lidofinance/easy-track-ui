@@ -28,6 +28,7 @@ import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/check
 import { noSigningKeysRoleError } from 'modules/motions/constants'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
+import { useGetSDVTOperatorManager } from 'modules/motions/hooks/useGetSDVTOperatorManager'
 
 type NodeOperator = {
   id: string
@@ -74,6 +75,8 @@ export const formParts = createMotionFormPart({
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList()
+    const { getManagerAddress, isManagerAddressLoading } =
+      useGetSDVTOperatorManager()
     const sdvtRegistry = ContractSDVTRegistry.useRpc()
 
     const activeNodeOperators = nodeOperatorsList?.filter(
@@ -145,13 +148,12 @@ export const formParts = createMotionFormPart({
                     options={getFilteredOptions(fieldIndex)}
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
-
-                      if (nodeOperator.managerAddress) {
+                      getManagerAddress(nodeOperator.id).then(address => {
                         setValue(
                           `${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`,
-                          nodeOperator.managerAddress,
+                          address,
                         )
-                      }
+                      })
                     }}
                   />
                 </Fieldset>
@@ -159,12 +161,14 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`}
-                    label="Manager address"
+                    label={
+                      isManagerAddressLoading
+                        ? 'Loading manager address...'
+                        : 'Manager address'
+                    }
                     disabled={Boolean(
                       !selectedNodeOperators[fieldIndex].id ||
-                        !!nodeOperatorsList[
-                          Number(selectedNodeOperators[fieldIndex].id)
-                        ].managerAddress,
+                        isManagerAddressLoading,
                     )}
                     rules={{
                       required: 'Field is required',

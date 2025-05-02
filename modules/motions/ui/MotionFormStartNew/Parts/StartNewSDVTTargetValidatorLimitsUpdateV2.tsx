@@ -24,6 +24,7 @@ import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
+import { useSDVTNodeOperatorsSummaryMap } from 'modules/motions/hooks/useSDVTNodeOperatorsSummary'
 
 type NodeOperator = {
   id: number | undefined
@@ -82,7 +83,11 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList({ withSummary: true })
+    } = useSDVTNodeOperatorsList()
+    const {
+      data: operatorsSummaryMap,
+      initialLoading: isNodeOperatorsSummaryLoading,
+    } = useSDVTNodeOperatorsSummaryMap()
 
     const trustedCaller = ContractSDVTTargetValidatorLimitsUpdateV2.useSwrWeb3(
       'trustedCaller',
@@ -115,7 +120,11 @@ export const formParts = createMotionFormPart({
         targetLimit: '',
       } as NodeOperator)
 
-    if (trustedCaller.initialLoading || isNodeOperatorsDataLoading) {
+    if (
+      trustedCaller.initialLoading ||
+      isNodeOperatorsDataLoading ||
+      isNodeOperatorsSummaryLoading
+    ) {
       return <PageLoader />
     }
 
@@ -123,7 +132,7 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
-    if (!nodeOperatorsList?.length) {
+    if (!nodeOperatorsList?.length || !operatorsSummaryMap) {
       return <MessageBox>Node operator list is empty</MessageBox>
     }
 
@@ -131,18 +140,24 @@ export const formParts = createMotionFormPart({
       <>
         {fieldsArr.fields.map((item, fieldIndex) => {
           const currentNodeOperator =
-            typeof selectedNodeOperators[fieldIndex].id === 'number'
-              ? nodeOperatorsList[selectedNodeOperators[fieldIndex].id!]
-              : null
+            selectedNodeOperators[fieldIndex].id &&
+            nodeOperatorsList[selectedNodeOperators[fieldIndex].id!]
 
           const currentTargetLimitMode =
-            currentNodeOperator?.targetLimitMode?.toString()
+            currentNodeOperator &&
+            operatorsSummaryMap[
+              currentNodeOperator.id
+            ].targetLimitMode.toString()
 
           const targetLimitModeLabel = currentTargetLimitMode
             ? TARGET_LIMIT_MODES[currentTargetLimitMode]
             : null
+
           const currentTargetLimit =
-            currentNodeOperator?.targetValidatorsCount?.toString()
+            currentNodeOperator &&
+            operatorsSummaryMap[
+              currentNodeOperator.id
+            ].targetValidatorsCount.toString()
 
           return (
             <Fragment key={item.id}>
@@ -168,12 +183,14 @@ export const formParts = createMotionFormPart({
                     options={getFilteredOptions(fieldIndex)}
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
+                      const nodeOperatorSummary =
+                        operatorsSummaryMap[nodeOperator.id]
 
                       fieldsArr.update(fieldIndex, {
                         targetLimitMode:
-                          nodeOperator.targetLimitMode?.toString() ?? '',
+                          nodeOperatorSummary.targetLimitMode.toString(),
                         targetLimit:
-                          nodeOperator.targetValidatorsCount?.toString() ?? '',
+                          nodeOperatorSummary.targetValidatorsCount.toString(),
                       })
                     }}
                   />
