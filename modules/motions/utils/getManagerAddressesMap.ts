@@ -7,7 +7,6 @@ import {
 } from 'modules/blockChain/constants'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 
-// ACL event interface
 const ACL_EVENT_ABI = [
   'event SetPermissionParams(address indexed entity, address indexed app, bytes32 indexed role, bytes32 paramsHash)',
 ]
@@ -43,15 +42,14 @@ export const getSDVTOperatorManager = async ({
     [rawPermissionParam],
   )
 
+  const fromBlockBase = FROM_BLOCK[chainId] ?? 0
+
   const eventFilter = aragonAcl.filters.SetPermissionParams(
     null,
     registryAddress,
     SIGNING_KEYS_ROLE,
   )
 
-  const fromBlockBase = FROM_BLOCK[chainId] ?? 0
-
-  // Create an array of block range windows, stepping backward
   const blockRanges: { from: number; to: number }[] = []
 
   for (let to = currentBlock; to >= fromBlockBase; to -= GET_LOG_BLOCK_LIMIT) {
@@ -59,32 +57,34 @@ export const getSDVTOperatorManager = async ({
     blockRanges.push({ from, to })
   }
 
-  let foundManager: string | undefined
-
-  await processInBatches(
+  const results = await processInBatches(
     blockRanges,
-    MAX_PROVIDER_BATCH, // process one block range at a time
-    async ({ from, to }) => {
-      if (foundManager) return // skip if already found
-
+    MAX_PROVIDER_BATCH,
+    async ({ from, to }): Promise<string | null> => {
       const events = await aragonAcl.queryFilter(eventFilter, from, to)
 
       for (const event of events) {
         const parsed = ACL_INTERFACE.parseLog(event)
 
         if (parsed.args.paramsHash === permissionParam) {
-          foundManager = parsed.args.entity
-          break
+          return parsed.args.entity
         }
       }
+
+      return null
     },
   )
 
-  if (!foundManager) {
+  const found = results.find(
+    (res): res is PromiseFulfilledResult<string> =>
+      res.status === 'fulfilled' && res.value !== null,
+  )
+
+  if (!found) {
     throw new Error(
       `Manager address not found for node operator ${nodeOperatorId}`,
     )
   }
 
-  return foundManager
+  return found.value
 }
