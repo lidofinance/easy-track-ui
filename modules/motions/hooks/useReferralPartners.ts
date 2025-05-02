@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractReferralPartnersRegistry } from 'modules/blockChain/contracts'
+import { getEventsReferralPartnerAdded } from '../utils/getEventsReferralPartnerAdded'
 
 type ReferralPartner = {
   title: string
@@ -26,15 +27,18 @@ function useReferralPartnersMap(
 
 export function useReferralPartnersAll() {
   const { chainId } = useWeb3()
-  const referralPartnersRegistry = ContractReferralPartnersRegistry.useRpc()
+  const referalPartnersRegistry = ContractReferralPartnersRegistry.useRpc()
 
   return useSWR(
-    `referral-partners-all-${chainId}-${referralPartnersRegistry.address}`,
+    `referral-partners-all-${chainId}-${referalPartnersRegistry.address}`,
     async () => {
-      const programs = await referralPartnersRegistry.getRewardPrograms()
-      return programs.map(address => ({
-        title: address,
-        address,
+      const events = await getEventsReferralPartnerAdded(
+        chainId,
+        referalPartnersRegistry,
+      )
+      return events.map(event => ({
+        title: event._title,
+        address: event._rewardProgram,
       }))
     },
     {

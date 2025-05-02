@@ -1,4 +1,4 @@
-import React, {
+import {
   memo,
   useMemo,
   useCallback,
@@ -36,7 +36,7 @@ function ModalProviderRaw({ children }: Props) {
 
   const closeModal = useCallback(() => {
     // setTimeout helps to get rid of this error:
-    // "Can't perform a React state update on an unmounted component"
+    // "Can't perform a react state update on an unmounted component"
     // after WalletConnect connection
     setTimeout(() => {
       stateRef.current = null

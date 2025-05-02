@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 import {
   useRecipientMapAll,
+  useRecipientAll,
   REGISTRY_WITH_LIMITS_BY_MOTION_TYPE,
   useTokenByTopUpType,
-  useAllowedRecipients,
 } from 'modules/motions/hooks'
 
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
@@ -71,7 +71,7 @@ export function DescAllowedRecipientRemove({
 }: NestProps<RemoveAllowedRecipientAbi['decodeEVMScriptCallData']> & {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }) {
-  const { data: allowedRecipients } = useAllowedRecipients({
+  const { data: allowedRecipients } = useRecipientAll({
     registryType,
   })
 

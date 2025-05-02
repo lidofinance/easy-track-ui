@@ -1,15 +1,3 @@
-import buildDynamics from './scripts/build-dynamics.mjs'
-import { startupCheckRPCs } from './scripts/startup-checks/rpc.mjs'
-
-if (
-  process.env.RUN_STARTUP_CHECKS === 'true' &&
-  typeof window === 'undefined'
-) {
-  void startupCheckRPCs()
-}
-
-buildDynamics()
-
 const basePath = process.env.BASE_PATH || ''
 
 const rpcUrls_1 =
@@ -20,7 +8,7 @@ const rpcUrls_560048 =
   process.env.EL_RPC_URLS_560048 && process.env.EL_RPC_URLS_560048.split(',')
 
 const defaultChain = process.env.DEFAULT_CHAIN || '1'
-const supportedChains = process.env.SUPPORTED_CHAINS || '1,5,17000'
+const supportedChains = process.env.SUPPORTED_CHAINS || '1,5'
 
 const cspTrustedHosts = process.env.CSP_TRUSTED_HOSTS
 const cspReportOnly = process.env.CSP_REPORT_ONLY
@@ -32,9 +20,6 @@ const subgraphHolesky = process.env.SUBGRAPH_HOLESKY
 const subgraphHoodi = process.env.SUBGRAPH_HOODI
 
 const walletconnectProjectId = process.env.WALLETCONNECT_PROJECT_ID
-
-const rateLimit = process.env.RATE_LIMIT
-const rateLimitTimeFrame = process.env.RATE_LIMIT_TIME_FRAME
 
 export default {
   basePath,
@@ -152,8 +137,6 @@ export default {
     subgraphGoerli,
     subgraphHolesky,
     subgraphHoodi,
-    rateLimit,
-    rateLimitTimeFrame,
   },
   publicRuntimeConfig: {
     defaultChain,

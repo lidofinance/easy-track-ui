@@ -12,6 +12,7 @@ import {
 import {
   useMotionProgress,
   usePeriodLimitsInfoByMotionType,
+  useMotionCreatedEvent,
   useContractEvmScript,
   UsePeriodLimitsInfoResultData,
   useMotionTimeCountdown,
@@ -97,10 +98,12 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       motionType,
       isPending,
     })
-  const callDataRaw = motion.evmScriptCalldata
+  const { data: createdEvent, initialLoading: isEventLoading } =
+    useMotionCreatedEvent(motion.id)
+  const callDataRaw = createdEvent?._evmScriptCallData
 
   const { data: callData, initialLoading: isCallDataLoading } = useSWR(
-    `call-data-${chainId}-${motion.id}`,
+    isEventLoading ? null : `call-data-${chainId}-${motion.id}`,
     () => {
       if (motionType === EvmUnrecognized || !contract || !callDataRaw) {
         return null
@@ -148,7 +151,8 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
     tokenData?.decimals ?? DEFAULT_DECIMALS,
   )
   const motionTopUpToken = tokenData?.label ?? ''
-  const pending = isCallDataLoading || isPeriodLimitsDataLoading
+  const pending =
+    isCallDataLoading || isEventLoading || isPeriodLimitsDataLoading
 
   const newSpentAmount =
     Number(periodLimitsData?.periodData.alreadySpentAmount) + motionTopUpAmount

@@ -1,13 +1,12 @@
 import { useMemo, useState } from 'react'
 import { useSWR } from 'modules/network/hooks/useSwr'
+import { useMotionCreatedEvent } from 'modules/motions/hooks/useMotionCreatedEvent'
 import { useEVMScriptDecoder } from 'modules/motions/hooks/useEVMScriptDecoder'
 
 import { Button } from '@lidofinance/lido-ui'
 import { ScriptBox, Actions } from './MotionEvmScriptStyle'
 
 import type { Motion } from 'modules/motions/types'
-import { getMotionCreatedEvent } from 'modules/motions/utils'
-import { ContractEasyTrack } from 'modules/blockChain/contracts'
 
 type Props = {
   motion: Motion
@@ -20,35 +19,28 @@ export function MotionEvmScript({ motion }: Props) {
   const [currentDisplayType, setDisplayType] = useState<DisplayType>(
     DisplayTypes[0],
   )
-  const easyTrack = ContractEasyTrack.useRpc()
+
+  const { initialLoading: isLoadingEvent, data: motionEvent } =
+    useMotionCreatedEvent(motion.id)
 
   const decoder = useEVMScriptDecoder()
+  const script = motionEvent?._evmScript
 
-  const { data: scriptData, initialLoading: isScriptLoading } = useSWR(
-    `script-${motion.id}`,
-    async () => {
-      const motionCreatedEvent = await getMotionCreatedEvent(
-        easyTrack,
-        motion.id,
-        motion.snapshotBlock,
-      )
-
-      const decoded = await decoder.decodeEVMScript(
-        motionCreatedEvent._evmScript,
-      )
-
-      return {
-        raw: motionCreatedEvent._evmScript,
-        decoded,
-      }
+  const { data: decoded, initialLoading: isLoadingDecoded } = useSWR(
+    `script-${script}`,
+    () => {
+      if (!script) return null
+      return decoder.decodeEVMScript(script)
     },
   )
 
+  const isLoading = isLoadingEvent || isLoadingDecoded
+
   const formattedScript = useMemo(() => {
-    if (!scriptData) return ''
+    if (!script || !decoded) return ''
     switch (currentDisplayType) {
       case 'Parsed':
-        return scriptData.decoded.calls
+        return decoded.calls
           .map(callInfo => {
             const { address, abi, decodedCallData } = callInfo
 
@@ -83,17 +75,17 @@ export function MotionEvmScript({ motion }: Props) {
           .join('\n')
 
       case 'JSON':
-        return JSON.stringify(scriptData.decoded, null, 2)
+        return JSON.stringify(decoded, null, 2)
 
       case 'Raw':
-        return scriptData.raw
+        return script
 
       default:
         return ''
     }
-  }, [currentDisplayType, scriptData])
+  }, [currentDisplayType, decoded, script])
 
-  if (isScriptLoading) {
+  if (isLoading) {
     return <>Loading...</>
   }
 

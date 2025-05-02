@@ -1,20 +1,12 @@
-import { wrapRequest as wrapNextRequest } from '@lidofinance/next-api-wrapper'
-import { metricsFactory } from '@lidofinance/next-pages'
+import { registry } from 'modules/shared/metrics'
 
-import { API_ROUTES } from 'constants/api'
-import {
-  responseTimeMetric,
-  errorAndCacheDefaultWrappers,
-  rateLimit,
-} from 'utilsApi'
-import { Metrics } from 'utilsApi/metrics'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const metrics = metricsFactory({
-  registry: Metrics.registry,
-})
+type Metrics = (req: NextApiRequest, res: NextApiResponse) => Promise<void>
 
-export default wrapNextRequest([
-  rateLimit,
-  responseTimeMetric(Metrics.request.apiTimings, API_ROUTES.METRICS),
-  ...errorAndCacheDefaultWrappers,
-])(metrics)
+const metrics: Metrics = async (req, res) => {
+  const collectedMetrics = await registry.metrics()
+  res.send(collectedMetrics)
+}
+
+export default metrics
