@@ -18,7 +18,12 @@ import {
 import { Metrics, METRICS_PREFIX } from 'utilsApi/metrics'
 import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
-import { Stonks } from '../../modules/blockChain/contractAddresses'
+import {
+  Stonks,
+  DAI,
+  USDC,
+  USDT,
+} from '../../modules/blockChain/contractAddresses'
 import {
   GET_LOG_BLOCK_LIMIT,
   MAX_PROVIDER_BATCH,
@@ -32,13 +37,21 @@ const { defaultChain } = publicRuntimeConfig
 const allowedCallAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_ADDRESSES,
 ).reduce((acc, [chainId, addresses]) => {
+  const stables = [DAI, USDC, USDT].map(
+    (stable: Partial<Record<CHAINS, string>>) =>
+      // @ts-ignore
+      stable[chainId]?.toLowerCase(),
+  )
+
   acc[chainId] = [
     ...Object.keys(addresses),
     // @ts-ignore
     ...(Stonks[chainId].map((address: Address) =>
       address.toLowerCase(),
     ) as string[]),
-  ]
+    ...stables,
+  ].filter(tokenAddress => tokenAddress !== undefined)
+
   return acc
 }, {} as Record<string, string[]>)
 
