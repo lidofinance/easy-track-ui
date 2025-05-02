@@ -153,10 +153,12 @@ export const AllowedTokensRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x4AC40c34f8992bb1e5E856A448792158022551ca',
   [CHAINS.Goerli]: '0xeda5a9F02a580B4A879aEA65E2a7B7fEc0956b0E',
   [CHAINS.Holesky]: '0x091c0ec8b4d54a9fcb36269b5d5e5af43309e666',
+  [CHAINS.Hoodi]: '0x40Db7E8047C487bD8359289272c717eA3C34D1D3',
 }
 
 export const SandboxStablesAllowedRecipientRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0xF8a63a36B954D72de197097377aa00C238c653Cf',
+  [CHAINS.Hoodi]: '0xd57FF1ce54F572F4E8DaF0cB7038F1Bd6049cAa8',
 }
 
 export const RccStethAllowedRecipientsRegistry: ChainAddressMap = {
