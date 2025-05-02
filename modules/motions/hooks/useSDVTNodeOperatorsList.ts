@@ -1,23 +1,42 @@
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
 import { useLidoSWRImmutable } from '@lido-sdk/react'
+import { MAX_PROVIDER_BATCH } from 'modules/blockChain/constants'
+import { processInBatches } from 'modules/blockChain/utils/processInBatches'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
 export function useSDVTNodeOperatorsList() {
   const { chainId } = useWeb3()
-  const registry = ContractSDVTRegistry.useRpc()
+  const { getRpcUrl } = useConfig()
+
+  const registry = ContractSDVTRegistry.connectRpc({
+    chainId,
+    rpcUrl: getRpcUrl(chainId),
+  })
 
   return useLidoSWRImmutable(`sdvt-operators-list-${chainId}`, async () => {
     const count = (await registry.getNodeOperatorsCount()).toNumber()
+    const indexes = Array.from({ length: count }, (_, i) => i)
 
-    const nodeOperators = await Promise.all(
-      Array.from(Array(count)).map(async (_, i) => {
-        const nodeOperator = await registry.getNodeOperator(i, true)
-        return {
-          ...nodeOperator,
-          id: i,
-        }
-      }),
+    const fetchNodeOperator = async (i: number) => {
+      const nodeOperator = await registry.getNodeOperator(i, true)
+      return { ...nodeOperator, id: i }
+    }
+
+    const results = await processInBatches(
+      indexes,
+      MAX_PROVIDER_BATCH,
+      fetchNodeOperator,
     )
-    return nodeOperators
+
+    return results
+      .map(result => {
+        if (result.status === 'fulfilled') {
+          return result.value
+        }
+        console.error('Failed to fetch node operator:', result.reason)
+        return null
+      })
+      .filter(Boolean)
   })
 }

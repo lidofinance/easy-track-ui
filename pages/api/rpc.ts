@@ -25,7 +25,7 @@ import {
   USDT,
 } from '../../modules/blockChain/contractAddresses'
 import {
-  GET_LOG_BLOCK_LIMIT,
+  MAX_BLOCK_LIMIT,
   MAX_PROVIDER_BATCH,
   MAX_RESPONSE_SIZE,
 } from '../../modules/blockChain/constants'
@@ -111,7 +111,7 @@ const rpc = rpcFactory({
     allowedLogsAddresses,
     maxBatchCount: MAX_PROVIDER_BATCH,
     blockEmptyAddressGetLogs: true,
-    maxGetLogsRange: GET_LOG_BLOCK_LIMIT, // limits the size of historical queries
+    maxGetLogsRange: MAX_BLOCK_LIMIT, // limits the size of historical queries
     maxResponseSize: MAX_RESPONSE_SIZE, // limits max response size
   },
 })
