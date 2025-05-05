@@ -83,7 +83,11 @@ export const useAvailableMotions = () => {
         relevantContracts,
         MAX_PROVIDER_BATCH,
         async contract => {
-          const connectedContract = contract.connectRpc({ chainId, rpcUrl })
+          const connectedContract = contract.connectRpc({
+            chainId,
+            rpcUrl,
+            cacheSeed: `available-motions-${chainId}`,
+          })
 
           if (!isHasTrustedCaller(connectedContract)) return null
 
