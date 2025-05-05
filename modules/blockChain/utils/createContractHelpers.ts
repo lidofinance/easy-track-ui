@@ -15,6 +15,7 @@ import {
   AsyncMethodReturns,
 } from 'modules/types/filter-async-methods'
 import { useConfig } from 'modules/config/hooks/useConfig'
+import { getBatchProviderCacheSeed } from 'modules/blockChain/utils/getBatchProviderCacheSeed'
 
 type Library = JsonRpcSigner | Signer | providers.Provider
 
@@ -40,6 +41,7 @@ type CallArgs = {
 type CallRpcArgs = {
   chainId: CHAINS
   rpcUrl: string
+  cacheSeed?: string
 }
 
 export function createContractHelpers<F extends Factory>({
@@ -59,8 +61,12 @@ export function createContractHelpers<F extends Factory>({
     return factory.connect(address[chainId] as string, library) as Instance
   }
 
-  function connectRpc({ chainId, rpcUrl }: CallRpcArgs) {
-    const library = getStaticRpcBatchProvider(chainId, rpcUrl)
+  function connectRpc({ chainId, rpcUrl, cacheSeed }: CallRpcArgs) {
+    const library = getStaticRpcBatchProvider(
+      chainId,
+      rpcUrl,
+      getBatchProviderCacheSeed(cacheSeed),
+    )
     return connect({ chainId, library })
   }
 

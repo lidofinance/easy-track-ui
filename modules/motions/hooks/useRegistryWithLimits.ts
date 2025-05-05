@@ -26,7 +26,6 @@ import {
   ContractLabsOpsStablesAllowedRecipientsRegistry,
   ContractLabsOpsStethAllowedRecipientsRegistry,
 } from 'modules/blockChain/contracts'
-import { getEventsRecipientAdded } from 'modules/motions/utils'
 import { MotionType } from 'modules/motions/types'
 
 import { usePeriodLimitsInfo } from './usePeriodLimitsInfo'
@@ -109,43 +108,22 @@ function useRecipientMap(programs: SWRResponse<AllowedRecipient[] | null>) {
   }
 }
 
-export function useRecipientAll({ registryType }: HookArgs) {
+export function useAllowedRecipients({ registryType }: HookArgs) {
   const { chainId } = useWeb3()
+
   const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
-
   return useSWR(
-    `single-allowed-recipients-all-${chainId}-${registry.address || ''}`,
-    async () => getEventsRecipientAdded(chainId, registry),
-    {
-      shouldRetryOnError: true,
-      errorRetryInterval: 5000,
-    },
-  )
-}
-
-export function useRecipientActual({ registryType }: HookArgs) {
-  const { chainId } = useWeb3()
-  const recipientsAll = useRecipientAll({ registryType })
-  const registry = REGISTRY_WITH_LIMITS_BY_MOTION_TYPE[registryType].useRpc()
-
-  return useSWR(
-    `single-allowed-recipients-actual-${chainId}-${registry.address}-${
-      recipientsAll.data ? 'named' : 'not_named'
-    }`,
+    `allowed-recipients-${chainId}-${registry.address}`,
     async () => {
       const addresses = await registry.getAllowedRecipients()
-      if (recipientsAll.data) {
-        return recipientsAll.data.filter(
-          p => addresses.findIndex(addr => addr === p.address) !== -1,
-        )
-      }
+
       return addresses.map(address => ({ title: address, address }))
     },
   )
 }
 
 export function useRecipientMapAll({ registryType }: HookArgs) {
-  const partners = useRecipientAll({ registryType })
+  const partners = useAllowedRecipients({ registryType })
   return useRecipientMap(partners)
 }
 

@@ -1,8 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import clone from 'just-clone'
 import getConfig from 'next/config'
+import { Readable } from 'stream'
 import { CHAINS } from '@lido-sdk/constants'
 import { parseChainId } from 'modules/blockChain/chains'
+
+// Limit request body size to 100kb
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '100kb',
+    },
+  },
+}
 
 const { serverRuntimeConfig } = getConfig()
 export const SUBGRAPH_URL: Partial<Record<CHAINS, string>> = {
@@ -11,6 +21,29 @@ export const SUBGRAPH_URL: Partial<Record<CHAINS, string>> = {
   [CHAINS.Holesky]: serverRuntimeConfig.subgraphHolesky,
   [CHAINS.Hoodi]: serverRuntimeConfig.subgraphHoodi,
 } as const
+
+/**
+ * Convert a WHATWG ReadableStream<Uint8Array> into a Node.js Readable
+ */
+function webStreamToNodeStream(
+  webStream: ReadableStream<Uint8Array>,
+): Readable {
+  const reader = webStream.getReader()
+  return new Readable({
+    async read() {
+      try {
+        const { done, value } = await reader.read()
+        if (done) {
+          this.push(null)
+        } else {
+          this.push(Buffer.from(value))
+        }
+      } catch (err) {
+        this.destroy(err as Error)
+      }
+    },
+  })
+}
 
 export default async function subgraph(
   req: NextApiRequest,
@@ -27,7 +60,7 @@ export default async function subgraph(
   }
 
   if (!parsedBody.query) {
-    const status = 'Error: query is empry'
+    const status = 'Error: query is empty'
     console.error(status, requestInfo)
     res.status(400).json({ status })
     return
@@ -44,7 +77,7 @@ export default async function subgraph(
   }
 
   try {
-    const requested = await fetch(url, {
+    const upstream = await fetch(url, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -53,15 +86,42 @@ export default async function subgraph(
       body: req.body,
     })
 
-    if (!requested.ok) {
-      const errorMessage = await requested.text()
-      res.status(requested.status).send(errorMessage)
+    if (!upstream.ok) {
+      const errorMessage = await upstream.text()
+      console.error('Error: subgraph request failed', {
+        ...requestInfo,
+        stage: 'ERROR',
+        error: errorMessage,
+      })
+      res.status(upstream.status).send(errorMessage)
       return
     }
 
-    const responded = await requested.json()
-    res.status(requested.status).json(responded)
-    console.info('Request to api/subgraph successfully fullfilled', {
+    // Forward the status code
+    res.status(upstream.status)
+
+    // Copy headers except content-encoding and content-length
+    upstream.headers.forEach((value, key) => {
+      const name = key.toLowerCase()
+      if (name === 'content-encoding' || name === 'content-length') return
+      res.setHeader(key, value)
+    })
+
+    // Stream the response body
+    if (upstream.body) {
+      if (typeof (upstream.body as any).getReader === 'function') {
+        webStreamToNodeStream(upstream.body as ReadableStream<Uint8Array>).pipe(
+          res,
+        )
+      } else {
+        // Node.js Readable
+        ;(upstream.body as unknown as Readable).pipe(res)
+      }
+    } else {
+      res.end()
+    }
+
+    console.info('Request to api/subgraph successfully fulfilled', {
       ...requestInfo,
       stage: 'FULFILLED',
     })
@@ -73,6 +133,6 @@ export default async function subgraph(
         ...requestInfo,
       },
     )
-    res.status(500).send({ error: 'Something went wrong!' })
+    res.status(500).json({ error: 'Something went wrong!' })
   }
 }

@@ -15,7 +15,10 @@ import { getMotionStatus } from './getMotionStatus'
   }
 */
 
-export function formatMotionDataOnchain(rawMotion: RawMotionOnchain): Motion {
+export function formatMotionDataOnchain(
+  rawMotion: RawMotionOnchain,
+  evmScriptCalldata: string | undefined,
+): Motion {
   const formatted = {
     id: Number(rawMotion.id),
     evmScriptFactory: rawMotion.evmScriptFactory,
@@ -31,6 +34,7 @@ export function formatMotionDataOnchain(rawMotion: RawMotionOnchain): Motion {
 
   return {
     ...formatted,
+    evmScriptCalldata,
     status: getMotionStatus(formatted as Motion),
   }
 }

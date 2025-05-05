@@ -1,74 +1,43 @@
-import { BigNumber, utils } from 'ethers'
-import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import {
-  ContractAragonAcl,
-  ContractSDVTRegistry,
-} from 'modules/blockChain/contracts'
-import { getManagerAddressesMap } from '../utils/getManagerAddressesMap'
+import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
+import { useLidoSWRImmutable } from '@lido-sdk/react'
+import { MAX_PROVIDER_BATCH } from 'modules/blockChain/constants'
+import { processInBatches } from 'modules/blockChain/utils/processInBatches'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
-type NodeOperatorSummary = {
-  targetValidatorsCount: BigNumber
-  stuckValidatorsCount: BigNumber
-  refundedValidatorsCount: BigNumber
-  stuckPenaltyEndTimestamp: BigNumber
-  totalExitedValidators: BigNumber
-  totalDepositedValidators: BigNumber
-  depositableValidatorsCount: BigNumber
-  targetLimitMode: BigNumber
-}
-
-type Args = {
-  withSummary?: boolean
-}
-
-export function useSDVTNodeOperatorsList(args?: Args) {
+export function useSDVTNodeOperatorsList() {
   const { chainId } = useWeb3()
-  const registry = ContractSDVTRegistry.useRpc()
-  const aragonAcl = ContractAragonAcl.useRpc()
+  const { getRpcUrl } = useConfig()
 
-  return useSWR(
-    `${chainId}-sdvt-operators-list${args?.withSummary ? '-with-summary' : ''}`,
-    async () => {
-      const count = (await registry.getNodeOperatorsCount()).toNumber()
-      const MANAGE_SIGNING_KEYS_ROLE = await registry.MANAGE_SIGNING_KEYS()
+  const registry = ContractSDVTRegistry.connectRpc({
+    chainId,
+    rpcUrl: getRpcUrl(chainId),
+    cacheSeed: `sdvt-operators-list-${chainId}`,
+  })
 
-      const managerAddressesMap = await getManagerAddressesMap(
-        registry.address,
-        MANAGE_SIGNING_KEYS_ROLE,
-        aragonAcl,
-      )
+  return useLidoSWRImmutable(`sdvt-operators-list-${chainId}`, async () => {
+    const count = (await registry.getNodeOperatorsCount()).toNumber()
+    const indexes = Array.from({ length: count }, (_, i) => i)
 
-      const nodeOperators = await Promise.all(
-        Array.from(Array(count)).map(async (_, i) => {
-          const nodeOperatorInfo = await registry.getNodeOperator(i, true)
-          let nodeOperatorSummary: NodeOperatorSummary | undefined
+    const fetchNodeOperator = async (i: number) => {
+      const nodeOperator = await registry.getNodeOperator(i, true)
+      return { ...nodeOperator, id: i }
+    }
 
-          if (args?.withSummary) {
-            nodeOperatorSummary = await registry.getNodeOperatorSummary(i)
-          }
+    const results = await processInBatches(
+      indexes,
+      MAX_PROVIDER_BATCH,
+      fetchNodeOperator,
+    )
 
-          const rawPermissionParam = BigNumber.from(1).shl(240).add(i)
-          const permissionParam = utils.solidityKeccak256(
-            ['uint256'],
-            [rawPermissionParam],
-          )
-
-          const managerAddress = managerAddressesMap[permissionParam]
-
-          return {
-            ...nodeOperatorInfo,
-            id: i,
-            managerAddress,
-            ...nodeOperatorSummary,
-          }
-        }),
-      )
-      return nodeOperators
-    },
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+    return results
+      .map(result => {
+        if (result.status === 'fulfilled') {
+          return result.value
+        }
+        console.error('Failed to fetch node operator:', result.reason)
+        return null
+      })
+      .filter(Boolean)
+  })
 }

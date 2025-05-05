@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractRewardProgramRegistry } from 'modules/blockChain/contracts'
-import { getEventsRewardProgramAdded } from '../utils/getEventsRewardProgramAdded'
 
 type RewardProgram = {
   title: string
@@ -37,13 +36,10 @@ export function useRewardProgramsAll() {
   return useSWR(
     `reward-programs-all-${chainId}-${rewardProgramRegistry.address}`,
     async () => {
-      const events = await getEventsRewardProgramAdded(
-        chainId,
-        rewardProgramRegistry,
-      )
-      return events.map(event => ({
-        title: event._title,
-        address: event._rewardProgram,
+      const programs = await rewardProgramRegistry.getRewardPrograms()
+      return programs.map(address => ({
+        title: address,
+        address,
       }))
     },
     {

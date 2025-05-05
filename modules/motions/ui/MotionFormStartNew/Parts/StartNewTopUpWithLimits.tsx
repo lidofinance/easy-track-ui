@@ -5,9 +5,9 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
-  useRecipientActual,
   usePeriodLimitsData,
   useTokenByTopUpType,
+  useAllowedRecipients,
 } from 'modules/motions/hooks'
 import { useTransitionLimits } from 'modules/motions/hooks/useTransitionLimits'
 import {
@@ -129,7 +129,7 @@ export const formParts = ({
       const { data: periodLimitsData, initialLoading: periodLimitsLoading } =
         usePeriodLimitsData({ registryType })
 
-      const legoDAIRecipients = useRecipientActual({ registryType })
+      const legoDAIRecipients = useAllowedRecipients({ registryType })
       const token = useTokenByTopUpType({ registryType })
 
       const fieldsArr = useFieldArray({ name: fieldNames.programs })
