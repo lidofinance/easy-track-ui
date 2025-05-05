@@ -141,6 +141,7 @@ export const usePeriodLimitsInfoByMotionType = (props: {
       const registry = registryByMotionType[motionType]?.connectRpc({
         chainId,
         rpcUrl: getRpcUrl(chainId),
+        cacheSeed: `period-limits-${chainId}-${motionType}`,
       })
 
       if (!isContractWithLimits(registry)) return null

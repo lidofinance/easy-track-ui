@@ -3,6 +3,8 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
 import { useSDVTNodeOperatorsList } from './useSDVTNodeOperatorsList'
 import { useLidoSWRImmutable } from '@lido-sdk/react'
+import { MAX_PROVIDER_BATCH } from 'modules/blockChain/constants'
+import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 
 type NodeOperatorSummary = {
   targetValidatorsCount: BigNumber
@@ -23,15 +25,28 @@ export function useSDVTNodeOperatorsSummaryMap() {
   return useLidoSWRImmutable(
     nodeOperatorsList ? `sdvt-operators-summary-${chainId}` : null,
     async () => {
-      if (!Array.isArray(nodeOperatorsList)) {
-        return
+      if (!Array.isArray(nodeOperatorsList) || nodeOperatorsList.length === 0) {
+        return {}
       }
+
+      const results = await processInBatches(
+        nodeOperatorsList,
+        MAX_PROVIDER_BATCH,
+        async nodeOperator => {
+          const summary = await registry.getNodeOperatorSummary(nodeOperator.id)
+          return { id: nodeOperator.id, summary }
+        },
+      )
 
       const summaryMap: Record<number, NodeOperatorSummary> = {}
 
-      for (const nodeOperator of nodeOperatorsList) {
-        const summary = await registry.getNodeOperatorSummary(nodeOperator.id)
-        summaryMap[nodeOperator.id] = summary
+      for (const result of results) {
+        if (result.status === 'fulfilled') {
+          const { id, summary } = result.value
+          summaryMap[id] = summary
+        } else {
+          console.error('Failed to fetch node operator summary:', result.reason)
+        }
       }
 
       return summaryMap
