@@ -12,6 +12,7 @@ export function useSDVTNodeOperatorsList() {
   const registry = ContractSDVTRegistry.connectRpc({
     chainId,
     rpcUrl: getRpcUrl(chainId),
+    cacheSeed: `sdvt-operators-list-${chainId}`,
   })
 
   return useLidoSWRImmutable(`sdvt-operators-list-${chainId}`, async () => {

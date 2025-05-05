@@ -160,6 +160,9 @@ export const formParts = createMotionFormPart({
                         setValue(
                           `${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`,
                           address,
+                          {
+                            shouldValidate: true,
+                          },
                         )
                       })
                     }}
@@ -175,7 +178,7 @@ export const formParts = createMotionFormPart({
                         : 'Manager address'
                     }
                     disabled={
-                      !selectedNodeOperators[fieldIndex].id ||
+                      selectedNodeOperators[fieldIndex].id === '' ||
                       isManagerAddressLoading
                     }
                     rules={{

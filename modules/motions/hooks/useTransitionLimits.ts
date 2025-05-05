@@ -9,7 +9,11 @@ import {
 
 import { utils, constants, BigNumber } from 'ethers'
 import { Big } from 'modules/shared/utils/bigNumber'
-import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
+import {
+  DEFAULT_DECIMALS,
+  MAX_PROVIDER_BATCH,
+} from 'modules/blockChain/constants'
+import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useConnectErc20Contract } from './useConnectErc20Contract'
 
 // Data structure reference
@@ -34,6 +38,7 @@ const decodeLimit = (val: BigNumber, decimals: number | null) => {
   if (!decimals) {
     return null
   }
+
   return new Big(Number(val)).div(10 ** decimals).toNumber()
 }
 
@@ -47,37 +52,45 @@ export const useTransitionLimits = () => {
 
   const result = useSWR<LimitsMap>(`permission-param-${chainId}`, async () => {
     const evmScriptExecutorAddress = ContractEVMScriptExecutor.address[chainId]!
-
     const role = await finance.CREATE_PAYMENTS_ROLE()
-
     const paramsLength = await aragonAcl.getPermissionParamsLength(
       evmScriptExecutorAddress,
       finance.address,
       role,
     )
 
-    const paramRequests = Array.from(Array(Number(paramsLength))).map(
-      (_, i) => {
-        return aragonAcl.getPermissionParam(
+    const indexes = Array.from({ length: Number(paramsLength) }, (_, i) => i)
+
+    const batchResults = await processInBatches(
+      indexes,
+      MAX_PROVIDER_BATCH,
+      async i =>
+        aragonAcl.getPermissionParam(
           evmScriptExecutorAddress,
           finance.address,
           role,
           i,
-        )
-      },
+        ),
     )
 
-    const params = await Promise.all(paramRequests)
+    // Build the params map directly from fulfilled results
+    const params: Record<number, any> = {}
+
+    batchResults.forEach((res, i) => {
+      if (res.status === 'fulfilled') {
+        params[indexes[i]] = res.value
+      } else {
+        console.error(
+          `Failed to fetch permission param at index ${indexes[i]}`,
+          res.reason,
+        )
+      }
+    })
 
     const limits: LimitsMap = {}
 
-    if (!params.length) {
-      return limits
-    }
-
     for (const index of TOKEN_INDEXES) {
       const rawAddress: string | undefined =
-        // literal definition because params[4][2].toHexString() === '0x00
         index === ETH_INDEX
           ? constants.AddressZero
           : params[index]?.[2].toHexString()
@@ -91,12 +104,12 @@ export const useTransitionLimits = () => {
           const tokenContract = connectErc20Contract(address)
           try {
             decimals = await tokenContract.decimals()
-          } catch (error) {
+          } catch {
             decimals = null
           }
         }
 
-        limits[address] = decodeLimit(params[index + 1][2], decimals)
+        limits[address] = decodeLimit(params[index + 1]?.[2], decimals)
       }
     }
 

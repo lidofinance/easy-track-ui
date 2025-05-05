@@ -27,7 +27,7 @@ import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { useSDVTNodeOperatorsSummaryMap } from 'modules/motions/hooks/useSDVTNodeOperatorsSummary'
 
 type NodeOperator = {
-  id: number | undefined
+  id: string | undefined
   targetLimitMode: string
   targetLimit: string
 }
@@ -140,8 +140,8 @@ export const formParts = createMotionFormPart({
       <>
         {fieldsArr.fields.map((item, fieldIndex) => {
           const currentNodeOperator =
-            selectedNodeOperators[fieldIndex].id &&
-            nodeOperatorsList[selectedNodeOperators[fieldIndex].id!]
+            selectedNodeOperators[fieldIndex].id !== '' &&
+            nodeOperatorsList[parseInt(selectedNodeOperators[fieldIndex].id!)]
 
           const currentTargetLimitMode =
             currentNodeOperator &&
