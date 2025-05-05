@@ -16,6 +16,8 @@ import {
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useConnectErc20Contract } from './useConnectErc20Contract'
 
+// Data structure reference
+// https://github.com/lidofinance/scripts/blob/bda3568d1291bdc7ba422fb20150313f2d1778c3/scripts/vote_2024_01_16.py#L106
 const STETH_INDEX = 1
 const DAI_INDEX = 4
 const LDO_INDEX = 7
@@ -33,7 +35,10 @@ const TOKEN_INDEXES = [
 ]
 
 const decodeLimit = (val: BigNumber, decimals: number | null) => {
-  if (!decimals) return null
+  if (!decimals) {
+    return null
+  }
+
   return new Big(Number(val)).div(10 ** decimals).toNumber()
 }
 
