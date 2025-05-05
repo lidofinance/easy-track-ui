@@ -155,6 +155,9 @@ export const formParts = createMotionFormPart({
                         setValue(
                           `${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`,
                           address,
+                          {
+                            shouldValidate: true,
+                          },
                         )
                       })
                     }}

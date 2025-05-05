@@ -23,6 +23,7 @@ import {
   DAI,
   USDC,
   USDT,
+  STETH,
 } from '../../modules/blockChain/contractAddresses'
 import {
   MAX_BLOCK_LIMIT,
@@ -37,7 +38,7 @@ const { defaultChain } = publicRuntimeConfig
 const allowedCallAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_ADDRESSES,
 ).reduce((acc, [chainId, addresses]) => {
-  const stables = [DAI, USDC, USDT].map(
+  const tokens = [DAI, USDC, USDT, STETH].map(
     (stable: Partial<Record<CHAINS, string>>) =>
       // @ts-ignore
       stable[chainId]?.toLowerCase(),
@@ -49,7 +50,7 @@ const allowedCallAddresses: Record<string, string[]> = Object.entries(
     ...(Stonks[chainId].map((address: Address) =>
       address.toLowerCase(),
     ) as string[]),
-    ...stables,
+    ...tokens,
   ].filter(tokenAddress => tokenAddress !== undefined)
 
   return acc
