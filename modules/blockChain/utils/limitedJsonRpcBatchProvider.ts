@@ -31,7 +31,7 @@ export class LimitedJsonRpcBatchProvider extends JsonRpcProvider {
     if (!this._pendingBatchAggregator) {
       this._pendingBatchAggregator = setTimeout(() => {
         const pending = this._pendingBatch
-        const chunkSize = 10
+        const chunkSize = MAX_PROVIDER_BATCH
         const batches: typeof pending[] = []
 
         for (let i = 0; i < pending.length; i += chunkSize) {
