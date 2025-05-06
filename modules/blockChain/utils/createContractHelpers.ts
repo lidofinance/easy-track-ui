@@ -14,7 +14,7 @@ import {
   AsyncMethodReturns,
 } from 'modules/types/filter-async-methods'
 import { useConfig } from 'modules/config/hooks/useConfig'
-import { getJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
+import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 
 type Library = JsonRpcSigner | Signer | providers.Provider
 
@@ -61,7 +61,7 @@ export function createContractHelpers<F extends Factory>({
   }
 
   function connectRpc({ chainId, rpcUrl }: CallRpcArgs) {
-    const library = getJsonRpcBatchProvider(chainId, rpcUrl)
+    const library = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
     return connect({ chainId, library })
   }
 

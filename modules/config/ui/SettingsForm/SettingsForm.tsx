@@ -16,7 +16,7 @@ import { ethers } from 'ethers'
 import { getChainName } from 'modules/blockChain/chains'
 import { isUrl } from 'modules/shared/utils/isUrl'
 import { ContractEasyTrack } from 'modules/blockChain/contracts'
-import { getJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
+import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 
 type FormValues = {
   rpcUrl: string
@@ -70,7 +70,7 @@ export function SettingsForm() {
         }
 
         // Doing a random request to check rpc url is fetchable
-        const library = getJsonRpcBatchProvider(chainId, rpcUrl)
+        const library = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
         const easyTrack = ContractEasyTrack.connect({ chainId, library })
         await easyTrack.getMotions()
 

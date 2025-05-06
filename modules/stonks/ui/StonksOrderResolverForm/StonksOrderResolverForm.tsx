@@ -11,7 +11,7 @@ import { Fieldset } from './StonksOrderResolverFormStyle'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
-import { getJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
+import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { useMemo } from 'react'
 import { useConfig } from 'modules/config/hooks/useConfig'
 
@@ -36,7 +36,7 @@ export function StonksOrderResolverForm() {
   const { isSubmitting } = formMethods.formState
 
   const library = useMemo(
-    () => getJsonRpcBatchProvider(chainId, getRpcUrl(chainId)),
+    () => getLimitedJsonRpcBatchProvider(chainId, getRpcUrl(chainId)),
     [chainId, getRpcUrl],
   )
 

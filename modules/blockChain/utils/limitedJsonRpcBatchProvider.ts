@@ -96,7 +96,7 @@ export class LimitedJsonRpcBatchProvider extends JsonRpcProvider {
 
 const providerCache = new Map<string, LimitedJsonRpcBatchProvider>()
 
-export const getJsonRpcBatchProvider = (
+export const getLimitedJsonRpcBatchProvider = (
   chainId: number,
   rpcUrl: string,
   key = 'default',
