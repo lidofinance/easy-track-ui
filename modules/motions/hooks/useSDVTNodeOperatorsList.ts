@@ -1,7 +1,7 @@
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
 import { useLidoSWRImmutable } from '@lido-sdk/react'
-import { MAX_PROVIDER_BATCH } from 'modules/blockChain/constants'
+import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useConfig } from 'modules/config/hooks/useConfig'
 

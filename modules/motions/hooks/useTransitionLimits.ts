@@ -9,10 +9,8 @@ import {
 
 import { utils, constants, BigNumber } from 'ethers'
 import { Big } from 'modules/shared/utils/bigNumber'
-import {
-  DEFAULT_DECIMALS,
-  MAX_PROVIDER_BATCH,
-} from 'modules/blockChain/constants'
+import { DEFAULT_DECIMALS } from 'modules/blockChain/constants'
+import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useConnectErc20Contract } from './useConnectErc20Contract'
 
