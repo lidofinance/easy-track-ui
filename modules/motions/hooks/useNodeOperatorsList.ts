@@ -5,7 +5,7 @@ import {
   NodeOperatorsRegistryType,
 } from '../constants'
 import { useConfig } from 'modules/config/hooks/useConfig'
-import { MAX_PROVIDER_BATCH } from 'modules/blockChain/constants'
+import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 
 export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {

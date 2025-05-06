@@ -1,4 +1,4 @@
-import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
+import { getJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { MotionType } from '../types'
@@ -99,7 +99,7 @@ export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
 
   const contract = useGlobalMemo(() => {
     if (motionType === EvmUnrecognized) return null
-    const library = getStaticRpcBatchProvider(chainId, getRpcUrl(chainId))
+    const library = getJsonRpcBatchProvider(chainId, getRpcUrl(chainId))
     return EVM_CONTRACTS[motionType as MotionType].connect({ chainId, library })
   }, `evm-contract-${chainId}-${motionType}`)
 

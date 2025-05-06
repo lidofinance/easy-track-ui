@@ -1,6 +1,6 @@
 import type { BigNumber } from 'ethers'
 import { EasyTrackAbi } from 'generated'
-import { GET_LOG_BLOCK_LIMIT } from 'modules/blockChain/constants'
+import { GET_LOG_BLOCK_LIMIT } from 'modules/config'
 
 type MotionCreatedEvent = [BigNumber, string, string, string, string] & {
   _motionId: BigNumber
