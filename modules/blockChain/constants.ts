@@ -29,10 +29,6 @@ import {
 } from './contracts'
 
 export const DEFAULT_DECIMALS = 18
-export const GET_LOG_BLOCK_LIMIT = 4999
-export const MAX_BLOCK_LIMIT = Number.MAX_SAFE_INTEGER
-export const MAX_RESPONSE_SIZE = 1_000_000
-export const MAX_PROVIDER_BATCH = 20
 
 export const allowedEventContracts = [
   ContractLegoLDORegistry,

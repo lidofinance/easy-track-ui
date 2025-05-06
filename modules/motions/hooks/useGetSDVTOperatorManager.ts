@@ -1,4 +1,4 @@
-import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
+import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { useLidoSWRImmutable } from '@lido-sdk/react'
 import {
   ContractAragonAcl,
@@ -20,7 +20,10 @@ export const useGetSDVTOperatorManager = () => {
   const { data: currentBlock } = useLidoSWRImmutable(
     `block-number-manager-${chainId}`,
     async () => {
-      const provider = getStaticRpcBatchProvider(chainId, getRpcUrl(chainId))
+      const provider = getLimitedJsonRpcBatchProvider(
+        chainId,
+        getRpcUrl(chainId),
+      )
       return provider.getBlockNumber()
     },
   )

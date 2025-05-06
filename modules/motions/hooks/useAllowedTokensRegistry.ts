@@ -3,7 +3,7 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractAllowedTokensRegistry } from 'modules/blockChain/contracts'
 import { useConnectErc20Contract } from './useConnectErc20Contract'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
-import { MAX_PROVIDER_BATCH } from 'modules/blockChain/constants'
+import { MAX_PROVIDER_BATCH } from 'modules/config'
 
 export function useAllowedTokens() {
   const { chainId, library } = useWeb3()

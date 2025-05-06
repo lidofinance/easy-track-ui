@@ -18,19 +18,12 @@ import {
 import { Metrics, METRICS_PREFIX } from 'utilsApi/metrics'
 import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
-import {
-  Stonks,
-  DAI,
-  USDC,
-  USDT,
-  STETH,
-  GovernanceToken,
-} from '../../modules/blockChain/contractAddresses'
+import * as contractAddresses from '../../modules/blockChain/contractAddresses'
 import {
   MAX_BLOCK_LIMIT,
   MAX_PROVIDER_BATCH,
   MAX_RESPONSE_SIZE,
-} from '../../modules/blockChain/constants'
+} from '../../modules/config'
 import { Address } from 'wagmi'
 
 const { publicRuntimeConfig } = getConfig()
@@ -39,20 +32,22 @@ const { defaultChain } = publicRuntimeConfig
 const allowedCallAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_ADDRESSES,
 ).reduce((acc, [chainId, addresses]) => {
-  const tokens = [DAI, USDC, USDT, STETH, GovernanceToken].map(
-    (stable: Partial<Record<CHAINS, string>>) =>
-      // @ts-ignore
-      stable[chainId]?.toLowerCase(),
-  )
-
+  // @ts-ignore
   acc[chainId] = [
     ...Object.keys(addresses),
-    // @ts-ignore
-    ...(Stonks[chainId].map((address: Address) =>
-      address.toLowerCase(),
-    ) as string[]),
-    ...tokens,
-  ].filter(tokenAddress => tokenAddress !== undefined)
+    ...Object.entries(contractAddresses)
+      .map(([, value]) => {
+        // @ts-ignore
+        const addressEntry = value[chainId]
+        if (addressEntry && typeof addressEntry === 'string') {
+          return addressEntry.toLowerCase()
+        } else if (Array.isArray(addressEntry)) {
+          return addressEntry.map((address: Address) => address.toLowerCase())
+        }
+      })
+      .flat()
+      .filter(address => address !== undefined),
+  ]
 
   return acc
 }, {} as Record<string, string[]>)
@@ -60,14 +55,23 @@ const allowedCallAddresses: Record<string, string[]> = Object.entries(
 const allowedLogsAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_EVENT_ADDRESSES,
 ).reduce((acc, [chainId, addresses]) => {
+  // @ts-ignore
   acc[chainId] = [
     ...Object.keys(addresses),
-    // TODO: discuss
-    // @ts-ignore
-    ...(Stonks[chainId].map((address: Address) =>
-      address.toLowerCase(),
-    ) as string[]),
+    ...Object.entries(contractAddresses)
+      .map(([, value]) => {
+        // @ts-ignore
+        const addressEntry = value[chainId]
+        if (addressEntry && typeof addressEntry === 'string') {
+          return addressEntry.toLowerCase()
+        } else if (Array.isArray(addressEntry)) {
+          return addressEntry.map((address: Address) => address.toLowerCase())
+        }
+      })
+      .flat()
+      .filter(address => address !== undefined),
   ]
+
   return acc
 }, {} as Record<string, string[]>)
 
