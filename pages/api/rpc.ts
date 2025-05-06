@@ -32,6 +32,7 @@ const { defaultChain } = publicRuntimeConfig
 const allowedCallAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_ADDRESSES,
 ).reduce((acc, [chainId, addresses]) => {
+  // @ts-ignore
   acc[chainId] = [
     ...Object.keys(addresses),
     ...Object.entries(contractAddresses)
@@ -44,8 +45,9 @@ const allowedCallAddresses: Record<string, string[]> = Object.entries(
           return addressEntry.map((address: Address) => address.toLowerCase())
         }
       })
-      .flat(),
-  ].filter(address => address !== undefined)
+      .flat()
+      .filter(address => address !== undefined),
+  ]
 
   return acc
 }, {} as Record<string, string[]>)
@@ -53,6 +55,7 @@ const allowedCallAddresses: Record<string, string[]> = Object.entries(
 const allowedLogsAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_EVENT_ADDRESSES,
 ).reduce((acc, [chainId, addresses]) => {
+  // @ts-ignore
   acc[chainId] = [
     ...Object.keys(addresses),
     ...Object.entries(contractAddresses)
@@ -65,8 +68,9 @@ const allowedLogsAddresses: Record<string, string[]> = Object.entries(
           return addressEntry.map((address: Address) => address.toLowerCase())
         }
       })
-      .flat(),
-  ].filter(address => address !== undefined)
+      .flat()
+      .filter(address => address !== undefined),
+  ]
 
   return acc
 }, {} as Record<string, string[]>)
