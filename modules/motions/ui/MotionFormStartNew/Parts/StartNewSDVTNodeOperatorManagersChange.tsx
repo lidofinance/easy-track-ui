@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { Fragment, useMemo } from 'react'
+import { Fragment } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -28,6 +28,7 @@ import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/check
 import { noSigningKeysRoleError } from 'modules/motions/constants'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
+import { useGetSDVTOperatorManager } from 'modules/motions/hooks/useGetSDVTOperatorManager'
 
 type NodeOperator = {
   id: string
@@ -81,6 +82,9 @@ export const formParts = createMotionFormPart({
     } = useSDVTNodeOperatorsList()
     const sdvtRegistry = ContractSDVTRegistry.useRpc()
 
+    const { getManagerAddress, isManagerAddressLoading } =
+      useGetSDVTOperatorManager()
+
     const activeNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => nodeOperator.active,
     )
@@ -94,19 +98,6 @@ export const formParts = createMotionFormPart({
     const { watch, setValue } = useFormContext()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
-    )
-
-    const managerAddressesMap = useMemo(
-      () =>
-        nodeOperatorsList?.reduce((acc, item) => {
-          if (!item.managerAddress) {
-            return acc
-          }
-
-          acc[item.managerAddress] = item.id
-          return acc
-        }, {} as Record<string, number | undefined>) ?? {},
-      [nodeOperatorsList],
     )
 
     const getFilteredOptions = (fieldIdx: number) => {
@@ -165,12 +156,15 @@ export const formParts = createMotionFormPart({
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      if (nodeOperator.managerAddress) {
+                      getManagerAddress(nodeOperator.id).then(address => {
                         setValue(
                           `${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`,
-                          nodeOperator.managerAddress,
+                          address,
+                          {
+                            shouldValidate: true,
+                          },
                         )
-                      }
+                      })
                     }}
                   />
                 </Fieldset>
@@ -178,12 +172,14 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`}
-                    label="Manager address"
+                    label={
+                      isManagerAddressLoading
+                        ? 'Loading manager address...'
+                        : 'Manager address'
+                    }
                     disabled={
-                      !selectedNodeOperators[fieldIndex].id ||
-                      !!nodeOperatorsList[
-                        Number(selectedNodeOperators[fieldIndex].id)
-                      ].managerAddress
+                      selectedNodeOperators[fieldIndex].id === '' ||
+                      isManagerAddressLoading
                     }
                     rules={{
                       required: 'Field is required',
@@ -221,16 +217,6 @@ export const formParts = createMotionFormPart({
                         }
 
                         const valueAddress = utils.getAddress(value)
-
-                        /*
-                        Although the specification does not yet state this,
-                        the new manager address should not match
-                        any of the manager addresses of other operator nodes.
-                        */
-                        const idInAddressMap = managerAddressesMap[valueAddress]
-                        if (typeof idInAddressMap === 'number') {
-                          return 'Address must not be in use by another node operator'
-                        }
 
                         const addressInSelectedNodeOperatorsIndex =
                           selectedNodeOperators.findIndex(

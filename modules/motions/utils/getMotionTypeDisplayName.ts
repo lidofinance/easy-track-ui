@@ -33,7 +33,6 @@ export const MotionTypeDisplayNames: Record<
     'Set node operators reward addresses',
   [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
   [MotionType.SDVTNodeOperatorNamesSet]: 'Set node operators names',
-  [MotionType.SDVTNodeOperatorManagerChange]: 'Change node operators managers',
   [MotionType.SandboxNodeOperatorIncreaseLimit]:
     '[NOR SandBox] Increase node operator staking limit',
   [MotionType.RccStethTopUp]: 'Top up RCC stETH',
