@@ -99,11 +99,14 @@ const providerCache = new Map<string, LimitedJsonRpcBatchProvider>()
 export const getLimitedJsonRpcBatchProvider = (
   chainId: number,
   rpcUrl: string,
-  key = 'default',
 ) => {
-  if (!providerCache.has(key)) {
-    providerCache.set(key, new LimitedJsonRpcBatchProvider(rpcUrl, chainId))
+  const cacheKey = `${chainId}-${rpcUrl}`
+  if (!providerCache.has(cacheKey)) {
+    providerCache.set(
+      cacheKey,
+      new LimitedJsonRpcBatchProvider(rpcUrl, chainId),
+    )
   }
 
-  return providerCache.get(key) as LimitedJsonRpcBatchProvider
+  return providerCache.get(cacheKey) as LimitedJsonRpcBatchProvider
 }

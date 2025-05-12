@@ -11,10 +11,7 @@ import {
   httpMethodGuard,
   HttpMethod,
 } from 'utilsApi'
-import {
-  METRIC_CONTRACT_ADDRESSES,
-  METRIC_CONTRACT_EVENT_ADDRESSES,
-} from 'utilsApi/contractAddressesMetricsMap'
+import { METRIC_CONTRACT_EVENT_ADDRESSES } from 'utilsApi/contractAddressesMetricsMap'
 import { Metrics, METRICS_PREFIX } from 'utilsApi/metrics'
 import getConfig from 'next/config'
 import { CHAINS } from '@lido-sdk/constants'
@@ -28,29 +25,6 @@ import { Address } from 'wagmi'
 
 const { publicRuntimeConfig } = getConfig()
 const { defaultChain } = publicRuntimeConfig
-
-const allowedCallAddresses: Record<string, string[]> = Object.entries(
-  METRIC_CONTRACT_ADDRESSES,
-).reduce((acc, [chainId, addresses]) => {
-  // @ts-ignore
-  acc[chainId] = [
-    ...Object.keys(addresses),
-    ...Object.entries(contractAddresses)
-      .map(([, value]) => {
-        // @ts-ignore
-        const addressEntry = value[chainId]
-        if (addressEntry && typeof addressEntry === 'string') {
-          return addressEntry.toLowerCase()
-        } else if (Array.isArray(addressEntry)) {
-          return addressEntry.map((address: Address) => address.toLowerCase())
-        }
-      })
-      .flat()
-      .filter(address => address !== undefined),
-  ]
-
-  return acc
-}, {} as Record<string, string[]>)
 
 const allowedLogsAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_EVENT_ADDRESSES,
@@ -113,7 +87,8 @@ const rpc = rpcFactory({
   },
   validation: {
     allowedRPCMethods,
-    allowedCallAddresses,
+    // skip eth_call address validation
+    allowedCallAddresses: undefined,
     allowedLogsAddresses,
     maxBatchCount: MAX_PROVIDER_BATCH,
     blockEmptyAddressGetLogs: true,
