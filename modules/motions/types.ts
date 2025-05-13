@@ -48,6 +48,10 @@ export const MotionTypeForms = {
   LabsOpsStethTopUp: 'LabsOpsStethTopUp',
 
   CSMSettleElStealingPenalty: 'CSMSettleElStealingPenalty',
+
+  MEVBoostRelaysAdd: 'MEVBoostRelaysAdd',
+  MEVBoostRelaysEdit: 'MEVBoostRelaysEdit',
+  MEVBoostRelaysRemove: 'MEVBoostRelaysRemove',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -170,4 +174,11 @@ export type KeysInfoOperator = {
 
 export type KeysInfo = {
   operators?: KeysInfoOperator[]
+}
+
+export type MEVBoostRelay = {
+  uri: string
+  name: string
+  description: string
+  isMandatory: boolean
 }
