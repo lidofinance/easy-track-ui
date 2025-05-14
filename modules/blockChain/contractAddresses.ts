@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from './chains'
 import type { ChainAddressMap, ChainAddressListMap } from './types'
 
 export const NodeOperatorsRegistry: ChainAddressMap = {

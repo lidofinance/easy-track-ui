@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 import { ContractGovernanceToken } from 'modules/blockChain/contracts'

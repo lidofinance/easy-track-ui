@@ -7,17 +7,20 @@ import { ABIProviderLocal } from '@lidofinance/evm-script-decoder/lib/ABIProvide
 import * as abis from 'generated'
 import * as ADDR from 'modules/blockChain/contractAddresses'
 
+type ContractName = keyof typeof ADDR
+
 export function useEVMScriptDecoder() {
   const { chainId } = useWeb3()
 
   return useGlobalMemo(() => {
-    const KEYS = Object.keys(ADDR).reduce(
-      (keys, contractName: keyof typeof ADDR) => ({
-        ...keys,
-        [contractName]: ADDR[contractName][chainId]!,
-      }),
-      {} as Record<keyof typeof ADDR, string>,
-    )
+    const KEYS = {} as Record<ContractName, string>
+    Object.keys(ADDR).forEach(contractName => {
+      const castedName = contractName as ContractName
+      const contractAddress = ADDR[castedName][chainId]
+      if (typeof contractAddress === 'string') {
+        KEYS[castedName] = contractAddress
+      }
+    })
 
     return new EVMScriptDecoder(
       new ABIProviderLocal({

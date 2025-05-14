@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSWR, SWRResponse } from 'modules/network/hooks/useSwr'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   ContractLegoLDORegistry,
@@ -93,17 +93,17 @@ type HookArgs = {
   registryType: keyof typeof REGISTRY_WITH_LIMITS_BY_MOTION_TYPE
 }
 
-function useRecipientMap(programs: SWRResponse<AllowedRecipient[] | null>) {
+function useRecipientMap(recipients: AllowedRecipient[] | null | undefined) {
   const result = useMemo(() => {
-    if (!programs.data) return null
-    return programs.data.reduce(
+    if (!recipients) return null
+    return recipients.reduce(
       (res, p) => ({ [p.address]: p.title, ...res }),
       {} as Record<string, string>,
     )
-  }, [programs.data])
+  }, [recipients])
 
   return {
-    ...programs,
+    ...recipients,
     data: result,
   }
 }
@@ -123,8 +123,8 @@ export function useAllowedRecipients({ registryType }: HookArgs) {
 }
 
 export function useRecipientMapAll({ registryType }: HookArgs) {
-  const partners = useAllowedRecipients({ registryType })
-  return useRecipientMap(partners)
+  const recipients = useAllowedRecipients({ registryType })
+  return useRecipientMap(recipients.data)
 }
 
 export function usePeriodLimitsData({ registryType }: HookArgs) {

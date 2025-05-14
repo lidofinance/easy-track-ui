@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import { fetcherStandard } from './fetcherStandard'
 import { SUBGRAPH_ENDPOINT } from 'modules/config'
 

@@ -4,30 +4,37 @@ import getConfig from 'next/config'
 import NextApp, { AppProps, AppContext } from 'next/app'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useErrorMessage } from 'modules/blockChain/hooks/useErrorMessage'
-import { useSupportedChains } from 'reef-knot/web3-react'
 import { PageLayout } from 'modules/shared/ui/Layout/PageLayout'
 import { GlobalStyle } from 'modules/globalStyles'
-import { toast, ToastContainer, ToastError } from '@lidofinance/lido-ui'
+import {
+  CookieThemeProvider,
+  toast,
+  ToastContainer,
+  ToastError,
+} from '@lidofinance/lido-ui'
 import { ConfigProvider } from 'modules/config/providers/configProvider'
 import { ModalProvider } from 'modules/modal/ModalProvider'
 import { NetworkSwitcher } from 'modules/blockChain/ui/NetworkSwitcher'
 import { getAddressList } from 'modules/config/utils/getAddressList'
 import { withCsp } from 'modules/shared/utils/csp'
 import { CustomAppProps } from 'modules/shared/utils/utilTypes'
-import { AppProviderWeb3 } from 'modules/appProviderWeb3'
-import { AppWagmiConfig } from 'modules/appWagmiConfig'
-import { UiProvider } from 'modules/shared/ui/UiProvider'
 import { parseEnvConfig } from 'modules/config'
+import { Web3Provider } from 'modules/web3Provider/web3Provider'
+import { useIsChainSupported } from 'modules/blockChain/hooks/useIsChainSupported'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+// Somehow using `GlobalStyle` directly causes a type error
+const GlobalStyleCasted = GlobalStyle as unknown as React.FC
 
 const basePath = getConfig().publicRuntimeConfig.basePath || ''
 
 function AppRoot({ Component, pageProps }: AppProps) {
   const { chainId } = useWeb3()
-  const { isUnsupported } = useSupportedChains()
+  const isChainSupported = useIsChainSupported()
   const error = useErrorMessage()
 
   useEffect(() => {
-    if (!error || isUnsupported) return
+    if (!error || !isChainSupported) return
 
     ToastError(error, {
       toastId: 'wallet-error',
@@ -35,7 +42,7 @@ function AppRoot({ Component, pageProps }: AppProps) {
     })
 
     return () => toast.dismiss('wallet-error')
-  }, [error, isUnsupported])
+  }, [error, isChainSupported])
 
   return (
     <>
@@ -89,7 +96,7 @@ function AppRoot({ Component, pageProps }: AppProps) {
         ))}
       </Head>
       <PageLayout>
-        {isUnsupported && <NetworkSwitcher />}
+        {!isChainSupported && <NetworkSwitcher />}
         <Component {...pageProps} />
       </PageLayout>
       <ToastContainer />
@@ -99,20 +106,28 @@ function AppRoot({ Component, pageProps }: AppProps) {
 
 const AppRootMemo = memo(AppRoot)
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
 function App({ envConfig, ...appProps }: CustomAppProps) {
   return (
-    <UiProvider>
-      <GlobalStyle />
-      <ConfigProvider envConfig={envConfig}>
-        <AppWagmiConfig>
-          <AppProviderWeb3>
+    <QueryClientProvider client={queryClient}>
+      <CookieThemeProvider>
+        <GlobalStyleCasted />
+        <ConfigProvider envConfig={envConfig}>
+          <Web3Provider>
             <ModalProvider>
               <AppRootMemo {...appProps} />
             </ModalProvider>
-          </AppProviderWeb3>
-        </AppWagmiConfig>
-      </ConfigProvider>
-    </UiProvider>
+          </Web3Provider>
+        </ConfigProvider>
+      </CookieThemeProvider>
+    </QueryClientProvider>
   )
 }
 

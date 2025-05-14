@@ -17,7 +17,7 @@ export const Text = styled.div<Props>`
   font-size: ${({ size }) => size}px;
   font-weight: ${({ weight }) => weight ?? 500};
   color: ${({ color = 'text' }) =>
-    color === 'inherit' ? color : `var(--lido-color-${color})`};
+    color === 'inherit' ? color : `var(--lido-color-${String(color)})`};
 
   ${({ isCentered }) =>
     isCentered &&

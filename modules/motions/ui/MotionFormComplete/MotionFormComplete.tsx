@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useGnosisOpener } from 'modules/blockChain/hooks/useGnosisOpener'
-import { useEtherscanOpen } from '@lido-sdk/react'
 
 import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
@@ -20,6 +19,7 @@ import {
 
 import { ResultTx, SafeTx, TxStatus } from 'modules/blockChain/types'
 import { ContractTransaction } from '@ethersproject/contracts'
+import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 
 type BodySafeProps = {
   tx: SafeTx
@@ -45,12 +45,12 @@ type BodyRegularProps = {
 }
 
 function BodyRegular({ tx }: BodyRegularProps) {
-  const { library } = useWeb3()
-  const openEtherscan = useEtherscanOpen(tx.hash, 'tx')
+  const { rpcProvider } = useWeb3()
   const [status, setStatus] = useState<TxStatus>('pending')
+  const openEtherscan = useEtherscanOpener(tx.hash, 'tx')
 
   useEffect(() => {
-    if (!library) return
+    if (!rpcProvider) return
 
     const checkTransaction = (e: any) => {
       if (!e) {
@@ -62,13 +62,13 @@ function BodyRegular({ tx }: BodyRegularProps) {
       }
     }
 
-    library.getTransactionReceipt(tx.hash).then(checkTransaction)
-    library.on(tx.hash, checkTransaction)
+    rpcProvider.getTransactionReceipt(tx.hash).then(checkTransaction)
+    rpcProvider.on(tx.hash, checkTransaction)
 
     return () => {
-      library.off(tx.hash)
+      rpcProvider.off(tx.hash)
     }
-  }, [library, tx.hash])
+  }, [rpcProvider, tx.hash])
 
   const renderStatusText = () =>
     status === 'failed'

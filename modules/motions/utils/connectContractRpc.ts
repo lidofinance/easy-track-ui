@@ -1,7 +1,15 @@
-import { CHAINS } from '@lido-sdk/constants'
-import { Factory } from '@lido-sdk/contracts'
+import { CHAINS } from 'modules/blockChain/chains'
 import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { BaseContract } from 'ethers'
+import { Provider } from '@ethersproject/providers'
+import { Signer } from '@ethersproject/abstract-signer'
+
+/**
+ *  Local copy of the same type form the "@lido-sdk/contracts"
+ */
+interface Factory<C extends BaseContract> {
+  connect(address: string, signerOrProvider: Signer | Provider): C
+}
 
 export function connectContractRpc<T extends BaseContract>(
   contractFactory: Factory<T>,
@@ -9,7 +17,7 @@ export function connectContractRpc<T extends BaseContract>(
   chainId: CHAINS,
   rpcUrl: string,
 ): T {
-  const library = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
+  const provider = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
 
-  return contractFactory.connect(contractAddress, library)
+  return contractFactory.connect(contractAddress, provider)
 }
