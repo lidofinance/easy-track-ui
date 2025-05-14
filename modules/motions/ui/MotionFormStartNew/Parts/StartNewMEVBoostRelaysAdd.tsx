@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { Fragment, useMemo } from 'react'
+import { Fragment } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 
@@ -24,7 +24,7 @@ import { MEVBoostRelay, MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 
-import { useMEVBoostRelaysList } from 'modules/motions/hooks/useMEVBoostRelaysList'
+import { useMEVBoostRelays } from 'modules/motions/hooks/useMEVBoostRelays'
 import {
   MAX_MEV_BOOST_RELAYS_COUNT,
   MAX_MEV_BOOST_RELAY_STRING_LENGTH,
@@ -74,19 +74,12 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const { data: mevBoostRelaysList, initialLoading: isRelaysListLoading } =
-      useMEVBoostRelaysList()
+    const { relaysMap, relaysCount, isRelaysDataLoading } = useMEVBoostRelays()
 
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
     const fieldsArr = useFieldArray({ name: fieldNames.relays })
     const selectedRelays: MEVBoostRelay[] = watch(fieldNames.relays)
-
-    const relaysUrisMap = useMemo(() => {
-      return new Map(
-        (mevBoostRelaysList ?? []).map(relay => [relay.uri, relay.name]),
-      )
-    }, [mevBoostRelaysList])
 
     const handleAddRelay = () =>
       fieldsArr.append({
@@ -99,7 +92,7 @@ export const formParts = createMotionFormPart({
     const handleRemoveRelay = (fieldIndex: number) =>
       fieldsArr.remove(fieldIndex)
 
-    if (trustedCaller.initialLoading || isRelaysListLoading) {
+    if (trustedCaller.initialLoading || isRelaysDataLoading) {
       return <PageLoader />
     }
 
@@ -107,11 +100,11 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
-    if (!Array.isArray(mevBoostRelaysList)) {
+    if (!relaysMap) {
       return <ErrorBox>Cannot load MEV-Boost relays list</ErrorBox>
     }
 
-    if (mevBoostRelaysList.length >= MAX_MEV_BOOST_RELAYS_COUNT) {
+    if (relaysCount >= MAX_MEV_BOOST_RELAYS_COUNT) {
       return <MessageBox>Relays limit reached</MessageBox>
     }
 
@@ -127,13 +120,13 @@ export const formParts = createMotionFormPart({
             <FieldsWrapper>
               <FieldsHeader>
                 <FieldsHeaderDesc>
-                  Relay #{mevBoostRelaysList.length + fieldIndex}
+                  Relay #{relaysCount + fieldIndex}
                 </FieldsHeaderDesc>
                 {fieldsArr.fields.length > 1 && (
                   <RemoveItemButton
                     onClick={() => handleRemoveRelay(fieldIndex)}
                   >
-                    Remove relay {mevBoostRelaysList.length + fieldIndex}
+                    Remove relay {relaysCount + fieldIndex}
                   </RemoveItemButton>
                 )}
               </FieldsHeader>
@@ -154,7 +147,7 @@ export const formParts = createMotionFormPart({
                         return `Uri must be less than ${MAX_MEV_BOOST_RELAY_STRING_LENGTH} characters`
                       }
 
-                      if (relaysUrisMap.has(value)) {
+                      if (relaysMap.has(value)) {
                         return 'Uri must not be in use by another relay'
                       }
 

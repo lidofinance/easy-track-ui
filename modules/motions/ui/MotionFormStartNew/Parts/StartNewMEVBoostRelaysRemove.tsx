@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { Fragment, useCallback, useMemo } from 'react'
+import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Option, Button, Input, Checkbox } from '@lidofinance/lido-ui'
 
@@ -23,7 +23,7 @@ import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 
-import { useMEVBoostRelaysList } from 'modules/motions/hooks/useMEVBoostRelaysList'
+import { useMEVBoostRelays } from 'modules/motions/hooks/useMEVBoostRelays'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 
 type RelayUri = {
@@ -58,8 +58,8 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const { data: mevBoostRelaysList, initialLoading: isRelaysListLoading } =
-      useMEVBoostRelaysList()
+    const { relaysMap, relaysList, relaysCount, isRelaysDataLoading } =
+      useMEVBoostRelays()
 
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
@@ -68,14 +68,14 @@ export const formParts = createMotionFormPart({
 
     const getFilteredOptions = useCallback(
       (fieldIdx: number) => {
-        if (!mevBoostRelaysList?.length) return []
+        if (!relaysList?.length) return []
 
         const selectedUrisSet = new Set(selectedUris.map(relay => relay.uri))
         selectedUrisSet.delete(selectedUris[fieldIdx].uri)
 
         const options: { label: string; value: string }[] = []
 
-        for (const relay of mevBoostRelaysList) {
+        for (const relay of relaysList) {
           if (!selectedUrisSet.has(relay.uri)) {
             options.push({
               label: relay.name,
@@ -86,14 +86,8 @@ export const formParts = createMotionFormPart({
 
         return options
       },
-      [mevBoostRelaysList, selectedUris],
+      [relaysList, selectedUris],
     )
-
-    const relaysDataMap = useMemo(() => {
-      return new Map(
-        (mevBoostRelaysList ?? []).map(relay => [relay.uri, relay]),
-      )
-    }, [mevBoostRelaysList])
 
     const handleAddRelay = () =>
       fieldsArr.append({
@@ -103,7 +97,7 @@ export const formParts = createMotionFormPart({
     const handleRemoveRelay = (fieldIndex: number) =>
       fieldsArr.remove(fieldIndex)
 
-    if (trustedCaller.initialLoading || isRelaysListLoading) {
+    if (trustedCaller.initialLoading || isRelaysDataLoading) {
       return <PageLoader />
     }
 
@@ -111,16 +105,14 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
-    if (!Array.isArray(mevBoostRelaysList)) {
+    if (!Array.isArray(relaysList) || !relaysMap) {
       return <ErrorBox>Cannot load MEV-Boost relays list</ErrorBox>
     }
 
     return (
       <>
         {fieldsArr.fields.map((item, fieldIndex) => {
-          const selectedRelayInfo = relaysDataMap.get(
-            selectedUris[fieldIndex].uri,
-          )
+          const selectedRelayInfo = relaysMap.get(selectedUris[fieldIndex].uri)
 
           return (
             <Fragment key={item.id}>
@@ -188,7 +180,7 @@ export const formParts = createMotionFormPart({
             </Fragment>
           )
         })}
-        {fieldsArr.fields.length < mevBoostRelaysList.length && (
+        {fieldsArr.fields.length < relaysCount && (
           <Fieldset>
             <Button
               type="button"

@@ -45,6 +45,8 @@ import { DescSDVTNodeOperatorManagersChange } from './DescSDVTNodeOperatorManage
 import { DescNodeOperatorIncreaseLimit } from './DescNodeOperatorLimitIncrease'
 import { DescCSMSettleElStealingPenalty } from './DescCSMSettleElStealingPenalty'
 import { DescMEVBoostRelaysAdd } from './DescMEVBoostRelaysAdd'
+import { DescMEVBoostRelaysEdit } from './DescMEVBoostRelaysEdit'
+import { DescMEVBoostRelaysRemove } from './DescMEVBoostRelaysRemove'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -334,8 +336,8 @@ const MOTION_DESCRIPTIONS = {
     />
   ),
   [MotionType.MEVBoostRelaysAdd]: DescMEVBoostRelaysAdd,
-  [MotionType.MEVBoostRelaysEdit]: DescMEVBoostRelaysAdd,
-  [MotionType.MEVBoostRelaysRemove]: DescMEVBoostRelaysAdd,
+  [MotionType.MEVBoostRelaysEdit]: DescMEVBoostRelaysEdit,
+  [MotionType.MEVBoostRelaysRemove]: DescMEVBoostRelaysRemove,
 } as const
 
 type Props = {

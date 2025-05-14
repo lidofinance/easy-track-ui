@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { Fragment, useCallback, useMemo } from 'react'
+import { Fragment, useCallback } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Option, Button } from '@lidofinance/lido-ui'
 
@@ -23,19 +23,14 @@ import { MEVBoostRelay, MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 
-import { useMEVBoostRelaysList } from 'modules/motions/hooks/useMEVBoostRelaysList'
+import { useMEVBoostRelays } from 'modules/motions/hooks/useMEVBoostRelays'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
-import { validateUrl } from 'modules/motions/utils/validateUrl'
 import {
   MAX_MEV_BOOST_RELAY_STRING_LENGTH,
   MAX_MEV_BOOST_UPDATE_COUNT,
 } from 'modules/motions/constants'
-
-type MEVBoostRelayUpdate = MEVBoostRelay & {
-  newUri: string
-}
 
 export const formParts = createMotionFormPart({
   motionType: MotionTypeForms.MEVBoostRelaysEdit,
@@ -46,7 +41,7 @@ export const formParts = createMotionFormPart({
       ],
       [
         formData.relays.map(relay => ({
-          uri: relay.newUri,
+          uri: relay.uri,
           operator: relay.name,
           is_mandatory: relay.isMandatory,
           description: relay.description,
@@ -70,9 +65,8 @@ export const formParts = createMotionFormPart({
         name: '',
         isMandatory: false,
         description: '',
-        newUri: '',
       },
-    ] as MEVBoostRelayUpdate[],
+    ] as MEVBoostRelay[],
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { watch, setValue } = useFormContext()
@@ -82,24 +76,24 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const { data: mevBoostRelaysList, initialLoading: isRelaysListLoading } =
-      useMEVBoostRelaysList()
+    const { relaysList, relaysCount, relaysMap, isRelaysDataLoading } =
+      useMEVBoostRelays()
 
     const isTrustedCallerConnected = trustedCaller.data === walletAddress
 
     const fieldsArr = useFieldArray({ name: fieldNames.relays })
-    const selectedRelays: MEVBoostRelayUpdate[] = watch(fieldNames.relays)
+    const selectedRelays: MEVBoostRelay[] = watch(fieldNames.relays)
 
     const getFilteredOptions = useCallback(
       (fieldIdx: number) => {
-        if (!mevBoostRelaysList?.length) return []
+        if (!relaysList?.length) return []
 
         const selectedUrisSet = new Set(selectedRelays.map(relay => relay.uri))
         selectedUrisSet.delete(selectedRelays[fieldIdx].uri)
 
         const options: { label: string; value: string }[] = []
 
-        for (const relay of mevBoostRelaysList) {
+        for (const relay of relaysList) {
           if (!selectedUrisSet.has(relay.uri)) {
             options.push({
               label: relay.name,
@@ -110,14 +104,8 @@ export const formParts = createMotionFormPart({
 
         return options
       },
-      [mevBoostRelaysList, selectedRelays],
+      [relaysList, selectedRelays],
     )
-
-    const relaysDataMap = useMemo(() => {
-      return new Map(
-        (mevBoostRelaysList ?? []).map(relay => [relay.uri, relay]),
-      )
-    }, [mevBoostRelaysList])
 
     const handleAddRelay = () =>
       fieldsArr.append({
@@ -125,13 +113,12 @@ export const formParts = createMotionFormPart({
         name: '',
         isMandatory: false,
         description: '',
-        newUri: '',
-      } as MEVBoostRelayUpdate)
+      } as MEVBoostRelay)
 
     const handleRemoveRelay = (fieldIndex: number) =>
       fieldsArr.remove(fieldIndex)
 
-    if (trustedCaller.initialLoading || isRelaysListLoading) {
+    if (trustedCaller.initialLoading || isRelaysDataLoading) {
       return <PageLoader />
     }
 
@@ -139,14 +126,14 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
-    if (!Array.isArray(mevBoostRelaysList)) {
+    if (!Array.isArray(relaysList) || !relaysMap) {
       return <ErrorBox>Cannot load MEV-Boost relays list</ErrorBox>
     }
 
     return (
       <>
         {fieldsArr.fields.map((item, fieldIndex) => {
-          const relayInfo = relaysDataMap.get(selectedRelays[fieldIndex].uri)
+          const relayInfo = relaysMap.get(selectedRelays[fieldIndex].uri)
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
@@ -171,11 +158,11 @@ export const formParts = createMotionFormPart({
                     name={`${fieldNames.relays}.${fieldIndex}.uri`}
                     rules={{ required: 'Field is required' }}
                     onChange={(value: string) => {
-                      const relay = relaysDataMap.get(value)
+                      const relay = relaysMap.get(value)
 
                       if (relay) {
                         setValue(`${fieldNames.relays}.${fieldIndex}`, {
-                          newUri: relay.uri,
+                          uri: relay.uri,
                           name: relay.name,
                           isMandatory: relay.isMandatory,
                           description: relay.description,
@@ -193,106 +180,80 @@ export const formParts = createMotionFormPart({
                   </SelectControl>
                 </Fieldset>
 
-                <Fieldset>
-                  <InputControl
-                    label="Uri"
-                    name={`${fieldNames.relays}.${fieldIndex}.newUri`}
-                    rules={{
-                      required: 'Field is required',
-                      validate: value => {
-                        const valueLower = value.toLowerCase()
+                {!!relayInfo && (
+                  <>
+                    <Fieldset>
+                      <InputControl
+                        label="Uri"
+                        name={`${fieldNames.relays}.${fieldIndex}.uri`}
+                        readOnly
+                        disabled
+                      />
+                    </Fieldset>
 
-                        if (relayInfo?.uri.toLowerCase() === valueLower) {
-                          return true
-                        }
+                    <Fieldset>
+                      <InputControl
+                        label="Name"
+                        name={`${fieldNames.relays}.${fieldIndex}.name`}
+                        rules={{
+                          required: 'Field is required',
+                          validate: value => {
+                            const valueLower = value.toLowerCase()
 
-                        const urlErr = validateUrl(value)
-                        if (urlErr) {
-                          return urlErr
-                        }
+                            if (relayInfo.name.toLowerCase() === valueLower) {
+                              return true
+                            }
 
-                        if (relaysDataMap.has(value)) {
-                          return 'Uri must not be in use by another relay'
-                        }
+                            if (
+                              value.length > MAX_MEV_BOOST_RELAY_STRING_LENGTH
+                            ) {
+                              return `Name must be less than ${MAX_MEV_BOOST_RELAY_STRING_LENGTH} characters`
+                            }
 
-                        const uriInSelectedRelaysIndex =
-                          selectedRelays.findIndex(
-                            ({ newUri }, index) =>
-                              newUri.toLowerCase() === valueLower &&
-                              fieldIndex !== index,
-                          )
+                            const isInUse = relaysList.find(
+                              relay => relay.name.toLowerCase() === valueLower,
+                            )
 
-                        if (uriInSelectedRelaysIndex !== -1) {
-                          return 'Uri is already in use by another update'
-                        }
+                            if (isInUse) {
+                              return 'Name must not be in use by another relay'
+                            }
 
-                        return true
-                      },
-                    }}
-                  />
-                </Fieldset>
+                            const nameInSelectedRelaysIndex =
+                              selectedRelays.findIndex(
+                                ({ name }, index) =>
+                                  name.toLowerCase() === valueLower &&
+                                  fieldIndex !== index,
+                              )
 
-                <Fieldset>
-                  <InputControl
-                    label="New name"
-                    name={`${fieldNames.relays}.${fieldIndex}.name`}
-                    rules={{
-                      required: 'Field is required',
-                      validate: value => {
-                        const valueLower = value.toLowerCase()
+                            if (nameInSelectedRelaysIndex !== -1) {
+                              return 'Name is already in use by another update'
+                            }
 
-                        if (relayInfo?.name.toLowerCase() === valueLower) {
-                          return true
-                        }
-
-                        if (value.length > MAX_MEV_BOOST_RELAY_STRING_LENGTH) {
-                          return `Name must be less than ${MAX_MEV_BOOST_RELAY_STRING_LENGTH} characters`
-                        }
-
-                        const isInUse = mevBoostRelaysList.find(
-                          relay => relay.name.toLowerCase() === valueLower,
-                        )
-
-                        if (isInUse) {
-                          return 'Name must not be in use by another relay'
-                        }
-
-                        const nameInSelectedRelaysIndex =
-                          selectedRelays.findIndex(
-                            ({ name }, index) =>
-                              name.toLowerCase() === valueLower &&
-                              fieldIndex !== index,
-                          )
-
-                        if (nameInSelectedRelaysIndex !== -1) {
-                          return 'Name is already in use by another update'
-                        }
-
-                        return true
-                      },
-                    }}
-                  />
-                </Fieldset>
-
-                <Fieldset>
-                  <InputControl
-                    label="New description"
-                    name={`${fieldNames.relays}.${fieldIndex}.description`}
-                    rules={{ required: 'Field is required' }}
-                  />
-                </Fieldset>
-
-                <Fieldset>
-                  <CheckboxControl
-                    label="New mandatory flag"
-                    name={`${fieldNames.relays}.${fieldIndex}.isMandatory`}
-                  />
-                </Fieldset>
+                            return true
+                          },
+                        }}
+                      />
+                    </Fieldset>
+                    <Fieldset>
+                      <InputControl
+                        label="Description"
+                        name={`${fieldNames.relays}.${fieldIndex}.description`}
+                        rules={{ required: 'Field is required' }}
+                      />
+                    </Fieldset>
+                    <Fieldset>
+                      <CheckboxControl
+                        label="Mandatory"
+                        name={`${fieldNames.relays}.${fieldIndex}.isMandatory`}
+                      />
+                    </Fieldset>
+                  </>
+                )}
               </FieldsWrapper>
             </Fragment>
           )
         })}
-        {fieldsArr.fields.length < mevBoostRelaysList.length &&
+        {fieldsArr.fields.length < relaysCount &&
           selectedRelays.length < MAX_MEV_BOOST_UPDATE_COUNT && (
             <Fieldset>
               <Button
@@ -302,7 +263,7 @@ export const formParts = createMotionFormPart({
                 onClick={handleAddRelay}
                 color="secondary"
               >
-                Remove one more relay
+                Update one more relay
               </Button>
             </Fieldset>
           )}

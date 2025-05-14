@@ -7,17 +7,21 @@ export function DescMEVBoostRelaysAdd({
 }: NestProps<AddMEVBoostRelaysAbi['decodeEVMScriptCallData']>) {
   return (
     <>
-      {callData.map((item, index) => {
+      {callData.map(item => {
         return (
           <div key={item.uri}>
-            Add MEV Boost relay <b>{item.operator}</b> with params:
-            <br />
-            <b>URI:</b> {item.uri}
-            <br />
-            <b>Description:</b> {item.description}
-            <br />
-            <b>Mandatory:</b> {item.is_mandatory ? 'true' : 'false'}
-            {index === callData.length - 1 ? '.' : '; '}
+            — Add relay <b>{item.operator}</b> with params:
+            <ul>
+              <li>
+                <b>URI:</b> {item.uri};
+              </li>
+              <li>
+                <b>Description:</b> {item.description};
+              </li>
+              <li>
+                <b>Mandatory:</b> {item.is_mandatory ? 'true' : 'false'};
+              </li>
+            </ul>
           </div>
         )
       })}
