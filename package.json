@@ -23,9 +23,6 @@
       "prettier --write"
     ]
   },
-  "resolutions": {
-    "@walletconnect/modal": "~2.4.7"
-  },
   "dependencies": {
     "@lidofinance/api-metrics": "^0.51.0",
     "@lidofinance/api-rpc": "^0.51.0",
