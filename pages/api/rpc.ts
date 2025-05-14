@@ -14,14 +14,13 @@ import {
 import { METRIC_CONTRACT_EVENT_ADDRESSES } from 'utilsApi/contractAddressesMetricsMap'
 import { Metrics, METRICS_PREFIX } from 'utilsApi/metrics'
 import getConfig from 'next/config'
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import * as contractAddresses from '../../modules/blockChain/contractAddresses'
 import {
   MAX_BLOCK_LIMIT,
   MAX_PROVIDER_BATCH,
   MAX_RESPONSE_SIZE,
 } from '../../modules/config'
-import { Address } from 'wagmi'
 
 const { publicRuntimeConfig } = getConfig()
 const { defaultChain } = publicRuntimeConfig
@@ -29,21 +28,20 @@ const { defaultChain } = publicRuntimeConfig
 const allowedLogsAddresses: Record<string, string[]> = Object.entries(
   METRIC_CONTRACT_EVENT_ADDRESSES,
 ).reduce((acc, [chainId, addresses]) => {
-  // @ts-ignore
-  acc[chainId] = [
+  const chainIdCasted = chainId as unknown as CHAINS
+  acc[chainIdCasted] = [
     ...Object.keys(addresses),
-    ...Object.entries(contractAddresses)
+    ...(Object.entries(contractAddresses)
       .map(([, value]) => {
-        // @ts-ignore
-        const addressEntry = value[chainId]
+        const addressEntry = value[chainIdCasted]
         if (addressEntry && typeof addressEntry === 'string') {
           return addressEntry.toLowerCase()
         } else if (Array.isArray(addressEntry)) {
-          return addressEntry.map((address: Address) => address.toLowerCase())
+          return addressEntry.map((address: string) => address.toLowerCase())
         }
       })
       .flat()
-      .filter(address => address !== undefined),
+      .filter(address => address !== undefined) as string[]),
   ]
 
   return acc

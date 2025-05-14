@@ -1,5 +1,5 @@
 import { flow, map, toPairs, fromPairs, mapValues } from 'lodash/fp'
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import { MotionType } from './types'
 import { Invert } from 'modules/shared/utils/utilTypes'
 

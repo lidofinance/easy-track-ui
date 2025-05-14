@@ -74,6 +74,7 @@ export const MotionDetailedContext = createContext({} as MotionDetailedValue)
 type MotionDetailedProps = {
   motion: Motion
   onInvalidate?: () => void
+  children: React.ReactNode
 }
 
 export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {

@@ -1,5 +1,5 @@
 import { utils } from 'ethers'
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import { MotionType } from '../types'
 import {
   EvmAddressesByChain,

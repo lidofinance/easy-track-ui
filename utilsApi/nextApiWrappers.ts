@@ -13,7 +13,7 @@ import {
   METRIC_CONTRACT_ADDRESSES,
   getMetricContractAbi,
 } from './contractAddressesMetricsMap'
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import { secretConfig } from '../config'
 import { CACHE_DEFAULT_HEADERS } from '../config/groups/cache'
 import { Abi } from 'abitype'
@@ -184,7 +184,7 @@ const collectRequestAddressMetric = async ({
     ) {
       const { to, data } = call.params[0]
       const address = getAddress(to)
-      const contractName = METRIC_CONTRACT_ADDRESSES[chainId][address]
+      const contractName = METRIC_CONTRACT_ADDRESSES[chainId][address as any]
       const methodEncoded = data?.slice(0, 10) // `0x` and 8 next symbols
 
       let methodDecoded = 'N/A'

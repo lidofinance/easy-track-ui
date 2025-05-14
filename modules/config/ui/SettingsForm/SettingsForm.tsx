@@ -70,8 +70,8 @@ export function SettingsForm() {
         }
 
         // Doing a random request to check rpc url is fetchable
-        const library = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
-        const easyTrack = ContractEasyTrack.connect({ chainId, library })
+        const provider = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
+        const easyTrack = ContractEasyTrack.connect({ chainId, provider })
         await easyTrack.getMotions()
 
         // All fine

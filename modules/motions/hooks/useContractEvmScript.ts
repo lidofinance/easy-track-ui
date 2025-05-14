@@ -99,8 +99,11 @@ export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
 
   const contract = useGlobalMemo(() => {
     if (motionType === EvmUnrecognized) return null
-    const library = getLimitedJsonRpcBatchProvider(chainId, getRpcUrl(chainId))
-    return EVM_CONTRACTS[motionType as MotionType].connect({ chainId, library })
+    const provider = getLimitedJsonRpcBatchProvider(chainId, getRpcUrl(chainId))
+    return EVM_CONTRACTS[motionType as MotionType].connect({
+      chainId,
+      provider,
+    })
   }, `evm-contract-${chainId}-${motionType}`)
 
   type Contract = T extends MotionType
