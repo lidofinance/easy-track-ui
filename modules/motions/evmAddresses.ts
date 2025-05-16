@@ -78,6 +78,13 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LabsOpsStablesTopUp]:
       '0xE1f6BaBb445F809B97e3505Ea91749461050F780',
 
+    [MotionType.MEVBoostRelaysAdd]:
+      '0x00A3D6260f70b1660c8646Ef25D0820EFFd7bE60',
+    [MotionType.MEVBoostRelaysEdit]:
+      '0x6b7863f2c7dEE99D3b744fDAEDbEB1aeCC025535',
+    [MotionType.MEVBoostRelaysRemove]:
+      '0x9721c0f77E3Ea40eD592B9DCf3032DaF269c0306',
+
     // next motion factories are @deprecated
     // we are keeping them here to display history data
     [MotionType.LEGOTopUp]: '0x648C8Be548F43eca4e482C0801Ebccccfb944931',
@@ -336,6 +343,13 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xc84251D2959E976AfE95201E1e2B88dB56Bc0a69',
     [MotionType.SandboxStablesTopUp]:
       '0x4A7B898981182c42ecC9444Cd40Cf42CEB6b71Ab',
+
+    [MotionType.MEVBoostRelaysAdd]:
+      '0xF02DbeaA1Bbc90226CaB995db4C190DbE25983af',
+    [MotionType.MEVBoostRelaysEdit]:
+      '0x27A99a7104190DdA297B222104A6C70A4Ca5A17e',
+    [MotionType.MEVBoostRelaysRemove]:
+      '0x7FCc2901C6C3D62784cB178B14d44445B038f736',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',

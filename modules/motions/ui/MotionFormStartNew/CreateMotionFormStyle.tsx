@@ -114,3 +114,20 @@ export const RetryHint = styled(Text).attrs({
     color: ${({ theme }) => theme.colors.primary};
   }
 `
+
+export const RelayInfoRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+
+  & > div:nth-child(2) {
+    word-break: break-all;
+  }
+`
+
+export const RelayInfoText = styled(Text).attrs({ size: 14 })`
+  word-break: break-all;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+`

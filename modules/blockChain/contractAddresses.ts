@@ -253,3 +253,8 @@ export const USDT: ChainAddressMap = {
   [CHAINS.Holesky]: '0x86f6c353a0965eb069cd7f4f91c1afef8c725551',
   [CHAINS.Hoodi]: '0x64f1904d1b419c6889BDf3238e31A138E258eA68',
 }
+
+export const MEVBoostRelayList: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xF95f069F9AD107938F6ba802a3da87892298610E',
+  [CHAINS.Hoodi]: '0x279d3A456212a1294DaEd0faEE98675a52E8A4Bf',
+}
