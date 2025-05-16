@@ -227,7 +227,18 @@ export const formParts = createMotionFormPart({
                       <InputControl
                         label="Description"
                         name={`${fieldNames.relays}.${fieldIndex}.description`}
-                        rules={{ required: 'Field is required' }}
+                        rules={{
+                          required: 'Field is required',
+                          validate: value => {
+                            if (
+                              value.length > MAX_MEV_BOOST_RELAY_STRING_LENGTH
+                            ) {
+                              return `Description must be less than ${MAX_MEV_BOOST_RELAY_STRING_LENGTH} characters`
+                            }
+
+                            return true
+                          },
+                        }}
                       />
                     </Fieldset>
                     <Fieldset>
