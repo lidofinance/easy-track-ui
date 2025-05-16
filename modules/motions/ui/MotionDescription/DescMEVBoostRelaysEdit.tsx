@@ -6,14 +6,14 @@ import { NestProps } from './types'
 
 type RowProps = {
   change: IMEVBoostRelayAllowedList.RelayStructOutput
-  relayInfo: MEVBoostRelay | undefined
+  relayInfo: (MEVBoostRelay & { uriHost: string }) | undefined
 }
 
 const RelayDescriptionRow = ({ change, relayInfo }: RowProps) => {
   if (relayInfo) {
     return (
       <div>
-        — Edit relay <b>{relayInfo.name}</b> params:
+        — Edit relay <b>{relayInfo.name}</b> ({relayInfo.uriHost}) params:
         <ul>
           {relayInfo.name !== change.operator && (
             <li>

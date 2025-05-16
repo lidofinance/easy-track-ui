@@ -120,13 +120,13 @@ export const formParts = createMotionFormPart({
             <FieldsWrapper>
               <FieldsHeader>
                 <FieldsHeaderDesc>
-                  Relay #{relaysCount + fieldIndex}
+                  Relay #{relaysCount + fieldIndex + 1}
                 </FieldsHeaderDesc>
                 {fieldsArr.fields.length > 1 && (
                   <RemoveItemButton
                     onClick={() => handleRemoveRelay(fieldIndex)}
                   >
-                    Remove relay {relaysCount + fieldIndex}
+                    Remove relay {relaysCount + fieldIndex + 1}
                   </RemoveItemButton>
                 )}
               </FieldsHeader>

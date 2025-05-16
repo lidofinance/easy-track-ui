@@ -17,6 +17,7 @@ export const useMEVBoostRelays = () => {
           name: relay.operator,
           isMandatory: relay.is_mandatory,
           description: relay.description,
+          uriHost: relay.uri.split('@')[1],
         }
       })
 

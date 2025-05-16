@@ -21,7 +21,11 @@ export function DescMEVBoostRelaysRemove({
           const relayInfo = isOnChain ? relaysMap?.get(uri) : undefined
           return (
             <li key={index}>
-              <b>{relayInfo?.name ?? uri}</b>
+              <b>
+                {relayInfo?.name
+                  ? `${relayInfo.name} (${relayInfo.uriHost})`
+                  : uri}
+              </b>
             </li>
           )
         })}

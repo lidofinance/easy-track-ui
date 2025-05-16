@@ -98,7 +98,7 @@ export const formParts = createMotionFormPart({
         for (const relay of relaysList) {
           if (!selectedUrisSet.has(relay.uri)) {
             options.push({
-              label: relay.name,
+              label: `${relay.name} (${relay.uriHost})`,
               value: relay.uri,
             })
           }
@@ -216,25 +216,6 @@ export const formParts = createMotionFormPart({
                               value.length > MAX_MEV_BOOST_RELAY_STRING_LENGTH
                             ) {
                               return `Name must be less than ${MAX_MEV_BOOST_RELAY_STRING_LENGTH} characters`
-                            }
-
-                            const isInUse = relaysList.find(
-                              relay => relay.name.toLowerCase() === valueLower,
-                            )
-
-                            if (isInUse) {
-                              return 'Name must not be in use by another relay'
-                            }
-
-                            const nameInSelectedRelaysIndex =
-                              selectedRelays.findIndex(
-                                ({ name }, index) =>
-                                  name.toLowerCase() === valueLower &&
-                                  fieldIndex !== index,
-                              )
-
-                            if (nameInSelectedRelaysIndex !== -1) {
-                              return 'Name is already in use by another update'
                             }
 
                             return true

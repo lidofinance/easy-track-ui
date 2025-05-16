@@ -78,7 +78,7 @@ export const formParts = createMotionFormPart({
         for (const relay of relaysList) {
           if (!selectedUrisSet.has(relay.uri)) {
             options.push({
-              label: relay.name,
+              label: `${relay.name} (${relay.uriHost})`,
               value: relay.uri,
             })
           }
