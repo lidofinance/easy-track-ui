@@ -31,6 +31,8 @@ import {
   MAX_MEV_BOOST_RELAY_STRING_LENGTH,
   MAX_MEV_BOOST_UPDATE_COUNT,
 } from 'modules/motions/constants'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
+import { Text } from 'modules/shared/ui/Common/Text'
 
 export const formParts = createMotionFormPart({
   motionType: MotionTypeForms.MEVBoostRelaysEdit,
@@ -132,6 +134,12 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
+        <MotionInfoBox>
+          <Text as="span" size={12} weight={500}>
+            Due to the smart contract&quot;s limitations, the maximum number of
+            updates per motion is {MAX_MEV_BOOST_UPDATE_COUNT}.
+          </Text>
+        </MotionInfoBox>
         {fieldsArr.fields.map((item, fieldIndex) => {
           const relayInfo = relaysMap.get(selectedRelays[fieldIndex].uri)
           return (

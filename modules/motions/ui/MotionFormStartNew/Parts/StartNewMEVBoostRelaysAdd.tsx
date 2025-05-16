@@ -33,7 +33,7 @@ import {
 import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { Text } from 'modules/shared/ui/Common/Text'
-import { validateUrl } from 'modules/motions/utils/validateUrl'
+import { validateRelayUrl } from 'modules/motions/utils/validateRelayUrl'
 
 export const formParts = createMotionFormPart({
   motionType: MotionTypeForms.MEVBoostRelaysAdd,
@@ -138,7 +138,7 @@ export const formParts = createMotionFormPart({
                   rules={{
                     required: 'Field is required',
                     validate: value => {
-                      const urlErr = validateUrl(value)
+                      const urlErr = validateRelayUrl(value)
                       if (urlErr) {
                         return urlErr
                       }
