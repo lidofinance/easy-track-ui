@@ -28,7 +28,6 @@ import { useMEVBoostRelays } from 'modules/motions/hooks/useMEVBoostRelays'
 import {
   MAX_MEV_BOOST_RELAYS_COUNT,
   MAX_MEV_BOOST_RELAY_STRING_LENGTH,
-  MAX_MEV_BOOST_UPDATE_COUNT,
 } from 'modules/motions/constants'
 import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
@@ -172,8 +171,12 @@ export const formParts = createMotionFormPart({
                   label="Name"
                   name={`${fieldNames.relays}.${fieldIndex}.name`}
                   rules={{
-                    required: 'Field is required',
+                    required: 'Name is required',
                     validate: value => {
+                      if (!value.trim().length) {
+                        return 'Name must not be empty'
+                      }
+
                       if (value.length > MAX_MEV_BOOST_RELAY_STRING_LENGTH) {
                         return `Name must be less than ${MAX_MEV_BOOST_RELAY_STRING_LENGTH} characters`
                       }
@@ -189,8 +192,12 @@ export const formParts = createMotionFormPart({
                   label="Description"
                   name={`${fieldNames.relays}.${fieldIndex}.description`}
                   rules={{
-                    required: 'Field is required',
+                    required: 'Description is required',
                     validate: value => {
+                      if (!value.trim().length) {
+                        return 'Description must not be empty'
+                      }
+
                       if (value.length > MAX_MEV_BOOST_RELAY_STRING_LENGTH) {
                         return `Description must be less than ${MAX_MEV_BOOST_RELAY_STRING_LENGTH} characters`
                       }
@@ -210,22 +217,20 @@ export const formParts = createMotionFormPart({
             </FieldsWrapper>
           </Fragment>
         ))}
-        {MAX_MEV_BOOST_RELAYS_COUNT >
-          fieldsArr.fields.length + selectedRelays.length &&
-          selectedRelays.length < MAX_MEV_BOOST_UPDATE_COUNT && (
-            <Fieldset>
-              <ButtonIcon
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={handleAddRelay}
-                icon={<Plus />}
-                color="secondary"
-              >
-                One more relay
-              </ButtonIcon>
-            </Fieldset>
-          )}
+        {relaysCount + fieldsArr.fields.length < MAX_MEV_BOOST_RELAYS_COUNT && (
+          <Fieldset>
+            <ButtonIcon
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={handleAddRelay}
+              icon={<Plus />}
+              color="secondary"
+            >
+              One more relay
+            </ButtonIcon>
+          </Fieldset>
+        )}
 
         {submitAction}
       </>

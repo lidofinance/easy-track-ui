@@ -204,9 +204,13 @@ export const formParts = createMotionFormPart({
                         label="Name"
                         name={`${fieldNames.relays}.${fieldIndex}.name`}
                         rules={{
-                          required: 'Field is required',
+                          required: 'Name is required',
                           validate: value => {
                             const valueLower = value.toLowerCase()
+
+                            if (!valueLower.trim().length) {
+                              return 'Name must not be empty'
+                            }
 
                             if (relayInfo.name.toLowerCase() === valueLower) {
                               return true
@@ -228,8 +232,12 @@ export const formParts = createMotionFormPart({
                         label="Description"
                         name={`${fieldNames.relays}.${fieldIndex}.description`}
                         rules={{
-                          required: 'Field is required',
+                          required: 'Description is required',
                           validate: value => {
+                            if (!value.trim().length) {
+                              return 'Description must not be empty'
+                            }
+
                             if (
                               value.length > MAX_MEV_BOOST_RELAY_STRING_LENGTH
                             ) {
@@ -254,7 +262,7 @@ export const formParts = createMotionFormPart({
           )
         })}
         {fieldsArr.fields.length < relaysCount &&
-          selectedRelays.length < MAX_MEV_BOOST_UPDATE_COUNT && (
+          fieldsArr.fields.length < MAX_MEV_BOOST_UPDATE_COUNT && (
             <Fieldset>
               <Button
                 type="button"
