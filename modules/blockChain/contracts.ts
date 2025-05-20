@@ -511,3 +511,23 @@ export const ContractLabsOpsStethTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsAbi__factory,
   address: EvmAddressesByType[MotionType.LabsOpsStethTopUp],
 })
+
+export const ContractMEVBoostRelayList = createContractHelpers({
+  factory: TypeChain.MEVBoostRelayListAbi__factory,
+  address: CONTRACT_ADDRESSES.MEVBoostRelayList,
+})
+
+export const ContractMEVBoostRelaysAdd = createContractHelpers({
+  factory: TypeChain.AddMEVBoostRelaysAbi__factory,
+  address: EvmAddressesByType[MotionType.MEVBoostRelaysAdd],
+})
+
+export const ContractMEVBoostRelaysEdit = createContractHelpers({
+  factory: TypeChain.EditMEVBoostRelaysAbi__factory,
+  address: EvmAddressesByType[MotionType.MEVBoostRelaysEdit],
+})
+
+export const ContractMEVBoostRelaysRemove = createContractHelpers({
+  factory: TypeChain.RemoveMEVBoostRelaysAbi__factory,
+  address: EvmAddressesByType[MotionType.MEVBoostRelaysRemove],
+})
