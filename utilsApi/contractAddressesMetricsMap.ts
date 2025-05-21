@@ -1,27 +1,26 @@
 import { invert, isNull, memoize, omitBy } from 'lodash'
 import * as contracts from 'modules/blockChain/contracts'
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import getConfig from 'next/config'
-import { Address } from 'wagmi'
+import { Address } from 'viem'
 import { Abi } from 'abitype'
 
 const { publicRuntimeConfig } = getConfig()
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-type CONTRACT_NAMES = keyof typeof contracts
+type ContractName = keyof typeof contracts
 
 export const METRIC_CONTRACT_ABIS = Object.keys(contracts).reduce(
-  (mapped, contractName: CONTRACT_NAMES) => {
+  (mapped, contractName) => {
     return {
       ...mapped,
-      [contractName]: contracts[contractName].factory.abi,
+      [contractName]: contracts[contractName as ContractName].factory.abi,
     }
   },
-  {} as Record<CONTRACT_NAMES, Abi>,
+  {} as Record<ContractName, Abi>,
 )
 
 export const getMetricContractAbi = memoize(
-  (contractName: CONTRACT_NAMES): Abi | undefined => {
+  (contractName: ContractName): Abi | undefined => {
     return METRIC_CONTRACT_ABIS[contractName]
   },
 )
@@ -33,37 +32,33 @@ const supportedChainsWithMainnet: CHAINS[] =
 
 export const METRIC_CONTRACT_ADDRESSES = supportedChainsWithMainnet.reduce(
   (mapped, chainId) => {
-    const map = Object.keys(contracts).reduce(
-      (contractMap, contractName: CONTRACT_NAMES) => {
-        const address = contracts[contractName].address[chainId] ?? null
-        return {
-          ...contractMap,
-          [contractName]: address,
-        }
-      },
-      {} as Record<CONTRACT_NAMES, Address>,
-    )
+    const map = Object.keys(contracts).reduce((contractMap, contractName) => {
+      const address =
+        contracts[contractName as ContractName].address[chainId] ?? null
+      return {
+        ...contractMap,
+        [contractName]: address,
+      }
+    }, {} as Record<ContractName, Address>)
 
     return {
       ...mapped,
       [chainId]: invert(omitBy(map, isNull)),
     }
   },
-  {} as Record<CHAINS, Record<Address, CONTRACT_NAMES | undefined>>,
+  {} as Record<CHAINS, Record<Address, ContractName | undefined>>,
 )
 
 export const METRIC_CONTRACT_EVENT_ADDRESSES =
   supportedChainsWithMainnet.reduce((mapped, chainId) => {
-    const map = Object.keys(contracts).reduce(
-      (contractMap, contractName: CONTRACT_NAMES) => {
-        const address = contracts[contractName].address[chainId] ?? null
-        return {
-          ...contractMap,
-          [contractName]: address,
-        }
-      },
-      {} as Record<CONTRACT_NAMES, Address>,
-    )
+    const map = Object.keys(contracts).reduce((contractMap, contractName) => {
+      const address =
+        contracts[contractName as ContractName].address[chainId] ?? null
+      return {
+        ...contractMap,
+        [contractName]: address,
+      }
+    }, {} as Record<ContractName, Address>)
 
     return {
       ...mapped,

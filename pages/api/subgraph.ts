@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import clone from 'just-clone'
 import getConfig from 'next/config'
 import { Readable } from 'stream'
-import { CHAINS } from '@lido-sdk/constants'
-import { parseChainId } from 'modules/blockChain/chains'
+import { CHAINS, parseChainId } from 'modules/blockChain/chains'
 
 // Limit request body size to 100kb
 export const config = {

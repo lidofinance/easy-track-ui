@@ -18,12 +18,11 @@ export const DescTopUpWithLimitsAndCustomToken = ({
   callData,
   registryType,
 }: Props) => {
-  const { data: allowedRecipientMap, initialLoading: isRecipientDataLoading } =
-    useRecipientMapAll({ registryType })
+  const { data: allowedRecipientMap } = useRecipientMapAll({ registryType })
 
   const { tokenData, isTokenDataLoading } = useMotionTokenData(callData.token)
 
-  if (isRecipientDataLoading || !allowedRecipientMap || isTokenDataLoading) {
+  if (!allowedRecipientMap || isTokenDataLoading) {
     return <div>Loading...</div>
   }
 

@@ -1,5 +1,4 @@
 import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
-import { useLidoSWRImmutable } from '@lido-sdk/react'
 import {
   ContractAragonAcl,
   ContractSDVTRegistry,
@@ -8,6 +7,7 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { useCallback, useState } from 'react'
 import { getSDVTOperatorManager } from '../utils/getManagerAddressesMap'
+import { useSWR } from 'modules/network/hooks/useSwr'
 
 export const useGetSDVTOperatorManager = () => {
   const { chainId } = useWeb3()
@@ -17,7 +17,7 @@ export const useGetSDVTOperatorManager = () => {
 
   const [isManagerAddressLoading, setIsLoading] = useState(false)
 
-  const { data: currentBlock } = useLidoSWRImmutable(
+  const { data: currentBlock } = useSWR(
     `block-number-manager-${chainId}`,
     async () => {
       const provider = getLimitedJsonRpcBatchProvider(
@@ -25,6 +25,11 @@ export const useGetSDVTOperatorManager = () => {
         getRpcUrl(chainId),
       )
       return provider.getBlockNumber()
+    },
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
     },
   )
 

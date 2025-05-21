@@ -11,7 +11,7 @@ import { FormData } from './types'
 import { parseUnits } from 'ethers/lib/utils'
 
 export function useStonksOrderSubmit() {
-  const { library } = useWeb3()
+  const { web3Provider } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
   const [resultTx, setResultTx] = useState<ResultTx | null>(null)
 
@@ -21,11 +21,14 @@ export function useStonksOrderSubmit() {
     stonksAddress: string,
     minAcceptableAmount: BigNumber,
   ) => {
-    if (!library) {
-      throw new Error('Library not found')
+    if (!web3Provider) {
+      throw new Error('web3Provider not found')
     }
 
-    const stonksContract = StonksAbi__factory.connect(stonksAddress, library)
+    const stonksContract = StonksAbi__factory.connect(
+      stonksAddress,
+      web3Provider,
+    )
     const gasLimit = await estimateGasFallback(
       stonksContract.estimateGas.placeOrder(minAcceptableAmount),
     )

@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
 import { OffChainOrder, OrderTransaction } from '../types'
 

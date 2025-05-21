@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import * as addressMaps from 'modules/blockChain/contractAddresses'
 
 const contractAddresses = addressMaps as Record<

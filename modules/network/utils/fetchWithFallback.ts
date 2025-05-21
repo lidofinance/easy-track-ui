@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 import { METRICS_PREFIX } from 'modules/shared/metrics/constants'
 import { Histogram } from 'prom-client'
 

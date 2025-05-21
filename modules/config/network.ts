@@ -1,5 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
-import { parseChainId } from 'modules/blockChain/chains'
+import { CHAINS, parseChainId } from 'modules/blockChain/chains'
 
 export const SUBGRAPH_ENDPOINT = '/api/subgraph'
 

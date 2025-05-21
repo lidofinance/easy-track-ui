@@ -1,5 +1,3 @@
-import type { UnpackedPromise } from '@lido-sdk/react/dist/esm/hooks/types'
-
 export declare type AsyncMethodReturns<T, M extends keyof T> = T[M] extends (
   ...args: any
 ) => Promise<any>
