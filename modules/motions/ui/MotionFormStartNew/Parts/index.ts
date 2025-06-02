@@ -15,6 +15,9 @@ import * as StartNewSDVTNodeOperatorNamesSet from './StartNewSDVTNodeOperatorNam
 import * as StartNewSDVTNodeOperatorManagersChange from './StartNewSDVTNodeOperatorManagersChange'
 import * as StartNewNodeOperatorLimitIncrease from './StartNewNodeOperatorLimitIncrease'
 import * as StartNewCSMSettleElStealingPenalty from './StartNewCSMSettleElStealingPenalty'
+import * as StartNewMEVBoostRelaysAdd from './StartNewMEVBoostRelaysAdd'
+import * as StartNewMEVBoostRelaysRemove from './StartNewMEVBoostRelaysRemove'
+import * as StartNewMEVBoostRelaysEdit from './StartNewMEVBoostRelaysEdit'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -140,6 +143,10 @@ export const formParts = {
   [MotionTypeForms.LabsOpsStethTopUp]: StartNewTopUpWithLimits.formParts({
     registryType: MotionTypeForms.LabsOpsStethTopUp,
   }),
+  [MotionTypeForms.MEVBoostRelaysAdd]: StartNewMEVBoostRelaysAdd.formParts,
+  [MotionTypeForms.MEVBoostRelaysRemove]:
+    StartNewMEVBoostRelaysRemove.formParts,
+  [MotionTypeForms.MEVBoostRelaysEdit]: StartNewMEVBoostRelaysEdit.formParts,
 } as const
 
 export type FormData = {
