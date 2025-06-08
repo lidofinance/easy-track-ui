@@ -35,6 +35,8 @@ import StonksSVG from './icons/stonks.svg.react'
 import SettingsSVG from './icons/settings.svg.react'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 import { ButtonIcon } from '@lidofinance/lido-ui'
+import { DualGovernanceStatusButton } from 'modules/dualGovernance/DualGovernanceStatusButton'
+import { isTestnet } from 'modules/blockChain/utils/isTestnet'
 
 function NavItem({
   link,
@@ -108,6 +110,7 @@ export function Header() {
             </Text>
           </Network>
           <NoSSRWrapper>
+            {isTestnet(chainId) && <DualGovernanceStatusButton />}
             <HeaderWallet />
             <Link passHref href={urls.settings}>
               <ButtonIcon
