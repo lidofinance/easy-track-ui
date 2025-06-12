@@ -5,8 +5,6 @@ import { Text } from 'modules/shared/ui/Common/Text'
 import { Block } from 'modules/shared/ui/Common/Block'
 import { Row, Col, ColValue, ErrorMessageWrap } from './KeysInfoBlockStyle'
 
-import type { KeysInfoOperator } from 'modules/motions/types'
-
 type ErrorMessageProps = {
   error: string
 }
@@ -14,20 +12,37 @@ type ErrorMessageProps = {
 function ErrorMessage({ error }: ErrorMessageProps) {
   return (
     <ErrorMessageWrap>
-      {error} is found! Please, refrain from submitting new keys or starting
-      motions to increase the limit and contact @team-tooling & @team-nom in
-      discord immediately
+      {error} found! Please, refrain from submitting new keys or starting
+      motions to increase the limit and contact @team-nom in Discord immediately
     </ErrorMessageWrap>
   )
 }
 
-type Props = {
-  keys: KeysInfoOperator
+const getKeysColor = (keys: string[] | undefined, defaultColor?: string) => {
+  if (!keys) {
+    return 'warning'
+  }
+  if (keys.length > 0) {
+    return 'error'
+  }
+  return defaultColor ?? 'text'
 }
 
-export function KeysInfoBlock({ keys }: Props) {
-  const hasInvalid = keys.invalid.length > 0
-  const hasDuplicates = keys.duplicates.length > 0
+type Props = {
+  invalidKeys: string[] | undefined
+  duplicateKeys: string[] | undefined
+  usedSigningKeys: number
+  totalSigningKeys: number
+}
+
+export function KeysInfoBlock({
+  invalidKeys,
+  duplicateKeys,
+  usedSigningKeys,
+  totalSigningKeys,
+}: Props) {
+  const hasInvalid = !!invalidKeys?.length
+  const hasDuplicates = !!duplicateKeys?.length
 
   const handleClickContact = useCallback(() => {
     window.open(
@@ -43,11 +58,11 @@ export function KeysInfoBlock({ keys }: Props) {
           <Col>
             <ColValue>
               <Text as="span" size={18} weight={800}>
-                {keys.info.usedSigningKeys}
+                {usedSigningKeys}
               </Text>
               <Text as="span" color="textSecondary" size={18} weight={800}>
                 {' '}
-                / {keys.info.totalSigningKeys}
+                / {totalSigningKeys}
               </Text>
             </ColValue>
             <Text color="textSecondary" size={12} weight={500}>
@@ -61,15 +76,15 @@ export function KeysInfoBlock({ keys }: Props) {
                 as="span"
                 size={18}
                 weight={800}
-                color={hasInvalid ? 'error' : 'text'}
+                color={getKeysColor(invalidKeys)}
               >
-                {keys.invalid.length}
+                {invalidKeys?.length ?? 'N/A'}
               </Text>
             </ColValue>
             <Text
               size={12}
               weight={500}
-              color={hasInvalid ? 'error' : 'textSecondary'}
+              color={getKeysColor(invalidKeys, 'textSecondary')}
             >
               Invalid signatures
             </Text>
@@ -81,15 +96,15 @@ export function KeysInfoBlock({ keys }: Props) {
                 as="span"
                 size={18}
                 weight={800}
-                color={hasDuplicates ? 'error' : 'text'}
+                color={getKeysColor(duplicateKeys)}
               >
-                {keys.duplicates.length}
+                {duplicateKeys?.length ?? 'N/A'}
               </Text>
             </ColValue>
             <Text
               size={12}
               weight={500}
-              color={hasDuplicates ? 'error' : 'textSecondary'}
+              color={getKeysColor(duplicateKeys, 'textSecondary')}
             >
               Duplicate keys
             </Text>
