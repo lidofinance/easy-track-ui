@@ -90,21 +90,35 @@ export const formParts = ({
         return <MessageBox>You should be connected as node operator</MessageBox>
       }
 
-      if (!connectedKeysInfo) {
-        return <MessageBox>Error: No keys info found</MessageBox>
-      }
+      const usedSigningKeys =
+        currentNodeOperator.totalVettedValidators.toNumber()
+      const totalSigningKeys =
+        currentNodeOperator.totalAddedValidators.toNumber()
 
-      const isConnectedKeysValid =
-        connectedKeysInfo.invalid.length === 0 &&
-        connectedKeysInfo.duplicates.length === 0
+      const hasInvalidKeys =
+        connectedKeysInfo &&
+        (connectedKeysInfo.invalid.length > 0 ||
+          connectedKeysInfo.duplicates.length > 0)
 
-      if (!isConnectedKeysValid) {
-        return <KeysInfoBlock keys={connectedKeysInfo} />
+      if (hasInvalidKeys) {
+        return (
+          <KeysInfoBlock
+            invalidKeys={connectedKeysInfo.invalid}
+            duplicateKeys={connectedKeysInfo.duplicates}
+            usedSigningKeys={usedSigningKeys}
+            totalSigningKeys={totalSigningKeys}
+          />
+        )
       }
 
       return (
         <>
-          <KeysInfoBlock keys={connectedKeysInfo} />
+          <KeysInfoBlock
+            invalidKeys={connectedKeysInfo?.invalid}
+            duplicateKeys={connectedKeysInfo?.duplicates}
+            usedSigningKeys={usedSigningKeys}
+            totalSigningKeys={totalSigningKeys}
+          />
 
           <Fieldset>
             <InputControl
@@ -122,12 +136,7 @@ export const formParts = ({
           <Fieldset>
             <InputNumberControl
               name={fieldNames.newLimit}
-              label={
-                <>
-                  New limit (current limit is{' '}
-                  {currentNodeOperator.totalVettedValidators.toString()})
-                </>
-              }
+              label={<>New limit (current limit is {usedSigningKeys})</>}
               rules={{
                 required: 'Field is required',
                 validate: value => {
@@ -137,12 +146,11 @@ export const formParts = ({
                   }
                   const valueNum = Number(value)
 
-                  const limit =
-                    currentNodeOperator.totalVettedValidators.toNumber()
-                  if (valueNum <= limit) {
+                  if (valueNum <= usedSigningKeys) {
                     return 'New limit value should be greater than current'
                   }
-                  if (valueNum > connectedKeysInfo.info.totalSigningKeys) {
+
+                  if (valueNum > totalSigningKeys) {
                     return 'New limit value should be less than or equal to total signing keys'
                   }
                   return true
