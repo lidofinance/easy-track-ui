@@ -1,6 +1,6 @@
-import { CHAINS } from '@lido-sdk/constants'
 import SafeApiKit from '@safe-global/api-kit'
 import { ResultTx } from '../types'
+import { CHAINS } from '../chains'
 
 async function getSafeTxDetails(safeTxHash: string, chainId: CHAINS) {
   const api = new SafeApiKit({

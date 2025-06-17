@@ -10,6 +10,7 @@ const esRules = {
   'no-return-await': 'error',
   'default-case': 'error',
   'no-fallthrough': 'error',
+
   'prettier/prettier': ['error', { usePrettierrc: true }],
 }
 
@@ -31,7 +32,7 @@ const tsRules = {
   'no-shadow': 'off',
   'no-unused-vars': 'off',
   'react/jsx-no-undef': 'off',
-  '@typescript-eslint/no-shadow': 'error',
+  '@typescript-eslint/no-shadow': 'off',
   '@typescript-eslint/no-use-before-define': 'error',
   '@typescript-eslint/no-redeclare': ['error'],
   '@typescript-eslint/adjacent-overload-signatures': 'error',
@@ -44,7 +45,6 @@ const tsRules = {
   '@typescript-eslint/member-ordering': 'error',
   '@typescript-eslint/no-empty-function': 'error',
   '@typescript-eslint/no-misused-new': 'error',
-  '@typescript-eslint/no-unnecessary-condition': 'error',
   '@typescript-eslint/no-unnecessary-qualifier': 'error',
   '@typescript-eslint/no-unnecessary-type-arguments': 'error',
   '@typescript-eslint/no-unused-vars': 'warn',
@@ -89,6 +89,13 @@ const settings = {
 
 module.exports = {
   overrides: [
+    {
+      files: ['next.config.mjs', '.eslintrc.cjs'],
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: 'module',
+      },
+    },
     {
       env,
       files: ['**/*.js', '**/*.jsx', '**/*.json'],

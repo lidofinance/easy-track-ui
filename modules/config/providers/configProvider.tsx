@@ -1,9 +1,9 @@
 import { createContext, useState, useCallback } from 'react'
 import { EnvConfigParsed } from '../types'
-import { CHAINS } from '@lido-sdk/constants'
-import { useLocalStorage } from '@lido-sdk/react'
+import { CHAINS } from 'modules/blockChain/chains'
 import { STORAGE_KEY_SAVED_SETTINGS } from '../storage'
 import { getRpcUrlDefault } from '../network'
+import { useLocalStorage } from 'modules/shared/hooks/useLocalStorage'
 
 type SavedConfig = {
   rpcUrls: Partial<Record<CHAINS, string>>
@@ -12,7 +12,7 @@ type SavedConfig = {
 type ConfigContext = EnvConfigParsed & {
   getRpcUrl: (chainId: CHAINS) => string
   savedConfig: SavedConfig
-  setSavedConfig: React.Dispatch<React.SetStateAction<SavedConfig>>
+  setSavedConfig: (config: SavedConfig) => void
 }
 
 export const configContext = createContext({} as ConfigContext)

@@ -1,5 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
-import { parseChainId } from 'modules/blockChain/chains'
+import { CHAINS, parseChainId } from 'modules/blockChain/chains'
 
 const COWSWAP_API_ENDPOINTS: Partial<Record<CHAINS, string | undefined>> = {
   [CHAINS.Mainnet]: 'https://api.cow.fi/mainnet/api/v1',

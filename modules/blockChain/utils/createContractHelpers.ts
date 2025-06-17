@@ -1,11 +1,11 @@
 import { SWRConfiguration } from 'swr'
-import { CHAINS } from '@lido-sdk/constants'
+import { providers } from 'ethers'
+import { CHAINS } from '../chains'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { useContractSwr } from '../hooks/useContractSwr'
 
-import type { Signer, providers } from 'ethers'
 import type { JsonRpcSigner } from '@ethersproject/providers'
 import { getChainName } from 'modules/blockChain/chains'
 import { FilterMethods } from 'modules/shared/utils/utilTypes'
@@ -16,11 +16,11 @@ import {
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 
-type Library = JsonRpcSigner | Signer | providers.Provider
+type Web3Provider = JsonRpcSigner | providers.Provider
 
 interface Factory {
   name: string
-  connect(address: string, library: Library): unknown
+  connect(address: string, provider: Web3Provider): unknown
 }
 
 type Address = {
@@ -34,7 +34,7 @@ type CreatorArgs<F> = {
 
 type CallArgs = {
   chainId: CHAINS
-  library: Library
+  provider: Web3Provider
 }
 
 type CallRpcArgs = {
@@ -49,7 +49,7 @@ export function createContractHelpers<F extends Factory>({
 }: CreatorArgs<F>) {
   type Instance = ReturnType<F['connect']>
 
-  function connect({ chainId, library }: CallArgs) {
+  function connect({ chainId, provider }: CallArgs) {
     if (!address.hasOwnProperty(chainId)) {
       const chainName = getChainName(chainId)
       throw new Error(
@@ -57,12 +57,12 @@ export function createContractHelpers<F extends Factory>({
       )
     }
 
-    return factory.connect(address[chainId] as string, library) as Instance
+    return factory.connect(address[chainId] as string, provider) as Instance
   }
 
   function connectRpc({ chainId, rpcUrl }: CallRpcArgs) {
-    const library = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
-    return connect({ chainId, library })
+    const provider = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
+    return connect({ chainId, provider })
   }
 
   function useInstanceRpc() {
@@ -75,21 +75,22 @@ export function createContractHelpers<F extends Factory>({
   }
 
   function useInstanceWeb3() {
-    const { library, active, account, chainId } = useWeb3()
+    const { web3Provider, isWalletConnected, walletAddress, chainId } =
+      useWeb3()
     return useGlobalMemo(
       () =>
         connect({
           chainId,
           // TODO: find a way to remove ! here
-          library: library?.getSigner()!,
+          provider: web3Provider!,
         }),
       [
         'contract-web3-',
-        active ? 'active' : 'inactive',
-        library ? 'with-signer' : 'no-signer',
+        isWalletConnected ? 'active' : 'inactive',
+        web3Provider ? 'with-signer' : 'no-signer',
         chainId,
         address[chainId],
-        account,
+        walletAddress,
       ].join('-'),
     )
   }

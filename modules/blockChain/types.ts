@@ -1,6 +1,6 @@
 import { ContractTransaction } from '@ethersproject/contracts'
-import type { CHAINS } from '@lido-sdk/constants'
 import * as TypeChain from 'generated'
+import { CHAINS } from './chains'
 
 export type SafeTx = {
   safeTxHash: string

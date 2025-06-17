@@ -35,7 +35,7 @@ export function StonksOrderResolverForm() {
 
   const { isSubmitting } = formMethods.formState
 
-  const library = useMemo(
+  const provider = useMemo(
     () => getLimitedJsonRpcBatchProvider(chainId, getRpcUrl(chainId)),
     [chainId, getRpcUrl],
   )
@@ -58,7 +58,7 @@ export function StonksOrderResolverForm() {
         }
       } else {
         try {
-          const txReceipt = await library.getTransactionReceipt(
+          const txReceipt = await provider.getTransactionReceipt(
             values.txHashOrAddress,
           )
           const orderFromReceipt = getOrderByPlaceTxReceipt(txReceipt)

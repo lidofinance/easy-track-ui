@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useConnectorInfo, useDisconnect } from 'reef-knot/web3-react'
+import { useConnectorInfo, useDisconnect } from 'reef-knot/core-react'
 import { useGovernanceBalance } from 'modules/tokens/hooks/useGovernanceBalance'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import { useConfig } from 'modules/config/hooks/useConfig'
@@ -16,7 +16,6 @@ import {
   Address,
 } from './WalletModalStyle'
 import { formatToken } from 'modules/tokens/utils/formatToken'
-import { useDisconnect as useDisconnectWagmi } from 'wagmi'
 
 function WalletModalContent() {
   const { walletAddress } = useWeb3()
@@ -57,9 +56,8 @@ function WalletModalContent() {
 
 export function WalletModal(props: ModalProps) {
   const { onClose } = props
-  const { providerName } = useConnectorInfo()
+  const { connectorName } = useConnectorInfo()
   const { disconnect } = useDisconnect()
-  const { disconnect: wagmiDisconnect } = useDisconnectWagmi()
   const { chainId } = useWeb3()
   const { supportedChainIds } = useConfig()
   const isChainSupported = useMemo(
@@ -69,15 +67,14 @@ export function WalletModal(props: ModalProps) {
 
   const handleDisconnect = useCallback(() => {
     disconnect?.()
-    wagmiDisconnect()
     onClose?.()
-  }, [disconnect, wagmiDisconnect, onClose])
+  }, [disconnect, onClose])
 
   return (
     <Modal title="Account" {...props}>
       <Content>
         <Connected>
-          <Connector>Connected with {providerName}</Connector>
+          <Connector>Connected with {connectorName}</Connector>
           <Disconnect size="xs" variant="outlined" onClick={handleDisconnect}>
             Disconnect
           </Disconnect>

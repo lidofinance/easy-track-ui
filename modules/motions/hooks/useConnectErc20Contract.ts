@@ -10,12 +10,12 @@ export const useConnectErc20Contract = () => {
 
   return useCallback(
     (address: string) => {
-      const library = getLimitedJsonRpcBatchProvider(
+      const provider = getLimitedJsonRpcBatchProvider(
         chainId,
         getRpcUrl(chainId),
       )
 
-      return Erc20Abi__factory.connect(address, library)
+      return Erc20Abi__factory.connect(address, provider)
     },
     [chainId, getRpcUrl],
   )

@@ -27,7 +27,6 @@ import ArchiveSVG from './icons/archive.svg.react'
 // import InfoSVG from './icons/info.svg.react'
 import StartSVG from './icons/start.svg.react'
 import { getChainName } from 'modules/blockChain/chains'
-import { getChainColor } from '@lido-sdk/constants'
 import LidoLogoSvg from 'assets/logo.com.svg.react'
 import * as urls from 'modules/network/utils/urls'
 import { NoSSRWrapper } from 'modules/shared/ui/Utils/NoSSRWrapper'
@@ -35,6 +34,7 @@ import StonksSVG from './icons/stonks.svg.react'
 import SettingsSVG from './icons/settings.svg.react'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 import { ButtonIcon } from '@lidofinance/lido-ui'
+import { getChainColor } from 'modules/blockChain/utils/getChainColor'
 
 function NavItem({
   link,

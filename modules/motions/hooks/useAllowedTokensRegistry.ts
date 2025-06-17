@@ -6,17 +6,13 @@ import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { MAX_PROVIDER_BATCH } from 'modules/config'
 
 export function useAllowedTokens() {
-  const { chainId, library } = useWeb3()
+  const { chainId } = useWeb3()
   const connectErc20Contract = useConnectErc20Contract()
   const tokenRegistry = ContractAllowedTokensRegistry.useRpc()
 
   const { data, initialLoading } = useSWR(
     `allowed-tokens-${chainId}`,
     async () => {
-      if (!library) {
-        return
-      }
-
       const tokensAddresses = await tokenRegistry.getAllowedTokens()
 
       const results = await processInBatches(
