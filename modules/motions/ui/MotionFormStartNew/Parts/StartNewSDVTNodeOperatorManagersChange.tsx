@@ -28,7 +28,7 @@ import { checkIsAddressManagerOfNodeOperator } from 'modules/motions/utils/check
 import { noSigningKeysRoleError } from 'modules/motions/constants'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
-import { useGetSDVTOperatorManager } from 'modules/motions/hooks/useGetSDVTOperatorManager'
+import { getSDVTOperatorManagerAddress } from 'modules/motions/utils/getSDVTOperatorManagerAddress'
 
 type NodeOperator = {
   id: string
@@ -81,9 +81,6 @@ export const formParts = createMotionFormPart({
       initialLoading: isNodeOperatorsDataLoading,
     } = useSDVTNodeOperatorsList()
     const sdvtRegistry = ContractSDVTRegistry.useRpc()
-
-    const { getManagerAddress, isManagerAddressLoading } =
-      useGetSDVTOperatorManager()
 
     const activeNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => nodeOperator.active,
@@ -156,15 +153,16 @@ export const formParts = createMotionFormPart({
                     onChange={(value: string) => {
                       const nodeOperator = nodeOperatorsList[Number(value)]
 
-                      getManagerAddress(nodeOperator.id).then(address => {
-                        setValue(
-                          `${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`,
-                          address,
-                          {
-                            shouldValidate: true,
-                          },
-                        )
-                      })
+                      const managerAddress = getSDVTOperatorManagerAddress(
+                        nodeOperator.id,
+                      )
+                      setValue(
+                        `${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`,
+                        managerAddress,
+                        {
+                          shouldValidate: true,
+                        },
+                      )
                     }}
                   />
                 </Fieldset>
@@ -172,15 +170,8 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`}
-                    label={
-                      isManagerAddressLoading
-                        ? 'Loading manager address...'
-                        : 'Manager address'
-                    }
-                    disabled={
-                      selectedNodeOperators[fieldIndex].id === '' ||
-                      isManagerAddressLoading
-                    }
+                    label="Manager address"
+                    disabled={selectedNodeOperators[fieldIndex].id === ''}
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
