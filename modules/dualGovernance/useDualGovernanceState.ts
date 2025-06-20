@@ -127,7 +127,7 @@ export const useDualGovernanceState = () => {
       const config =
         await dualGovernanceConfigContract.getDualGovernanceConfig()
 
-      const { firstSealRageQuitSupport } = config
+      const { firstSealRageQuitSupport, secondSealRageQuitSupport } = config
 
       const warningStateThreshold = firstSealRageQuitSupport
         .mul(WARNING_STATE_THRESHOLD_PERCENT)
@@ -167,6 +167,7 @@ export const useDualGovernanceState = () => {
         stateDetails,
         amountUntilVetoSignalling,
         firstSealRageQuitSupport,
+        secondSealRageQuitSupport,
       }
     },
   )

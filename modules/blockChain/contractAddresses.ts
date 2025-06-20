@@ -36,7 +36,7 @@ export const STETH: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
   [CHAINS.Goerli]: '0x1643E812aE58766192Cf7D2Cf9567dF2C37e9B7F',
   [CHAINS.Holesky]: '0x3F1c547b21f65e10480dE3ad8E19fAAC46C95034',
-  [CHAINS.Hoodi]: '0x3508A952176b3c15387C97BE809eaffB1982176a', // Mock! TODO: remove mock
+  [CHAINS.Hoodi]: '0x7853038c89a91752de79094db32fede15b5c6a4b', // Mock! TODO: remove mock
 }
 
 export const DAI: ChainAddressMap = {
