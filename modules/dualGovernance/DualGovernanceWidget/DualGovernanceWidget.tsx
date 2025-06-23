@@ -33,6 +33,8 @@ export const DualGovernanceWidget = ({ dualGovernanceState }: Props) => {
     secondSealRageQuitSupport,
   } = dualGovernanceState
 
+  console.log(totalSupply, 'totalSupply')
+
   const secondSealRageQuitSupportPercent = parsePercent16(
     secondSealRageQuitSupport,
   )
@@ -116,12 +118,10 @@ export const DualGovernanceWidget = ({ dualGovernanceState }: Props) => {
         <Box display="flex" justifyContent="space-between">
           <Label>Veto Support</Label>
           <p>
-            {!totalStEthInEscrow.isZero() && (
-              <Label $color="secondary">
-                {formatBalance(totalStEthInEscrow, 1)} /{' '}
-                {formatBalance(totalSupply, 1)}
-              </Label>
-            )}
+            <Label $color="secondary">
+              {formatBalance(totalStEthInEscrow, 1)} /{' '}
+              {formatBalance(totalSupply, 1)}
+            </Label>
           </p>
         </Box>
       )}
