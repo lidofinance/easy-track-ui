@@ -92,7 +92,7 @@ export const useAvailableMotions = () => {
           if (!isHasTrustedCaller(connectedContract)) return null
 
           const trustedCaller = await connectedContract.trustedCaller()
-          return { contractAddress: contract.address[chainId], trustedCaller }
+          return { contractAddress: connectedContract.address, trustedCaller }
         },
       )
 
