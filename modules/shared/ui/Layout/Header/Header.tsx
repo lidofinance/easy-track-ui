@@ -21,6 +21,7 @@ import {
   MobileNavItems,
   MobileNetworkWrap,
   MobileSpacer,
+  MobileDGWidgetWrap,
 } from './HeaderStyle'
 import ActiveMotionsSVG from './icons/active_motions.svg.react'
 import ArchiveSVG from './icons/archive.svg.react'
@@ -189,6 +190,15 @@ export function Header() {
                     children="Stonks"
                     onClick={handleCloseMobileMenu}
                   />
+                )}
+
+                {isTestnet(chainId) && (
+                  <MobileDGWidgetWrap>
+                    <Text size={14} weight={800} color="secondary">
+                      Dual Governance state
+                    </Text>
+                    <DualGovernanceStatusButton />
+                  </MobileDGWidgetWrap>
                 )}
               </MobileNavItems>
 
