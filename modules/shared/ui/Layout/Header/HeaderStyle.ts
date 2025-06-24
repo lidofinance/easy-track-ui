@@ -188,6 +188,7 @@ export const MobileNavItems = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  width: 100%;
 `
 
 export const MobileNetworkWrap = styled.div`
@@ -204,4 +205,10 @@ export const MobileSpacer = styled.div`
   @media (max-width: ${BREAKPOINT_MOBILE}) {
     display: block;
   }
+`
+export const MobileDGWidgetWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: ${({ theme }) => theme.spaceMap.md}px;
 `
