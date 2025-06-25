@@ -36,7 +36,7 @@ export const STETH: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
   [CHAINS.Goerli]: '0x1643E812aE58766192Cf7D2Cf9567dF2C37e9B7F',
   [CHAINS.Holesky]: '0x3F1c547b21f65e10480dE3ad8E19fAAC46C95034',
-  [CHAINS.Hoodi]: '0x7853038c89a91752de79094db32fede15b5c6a4b', // Mock! TODO: remove mock
+  [CHAINS.Hoodi]: '0x3508A952176b3c15387C97BE809eaffB1982176a',
 }
 
 export const DAI: ChainAddressMap = {
@@ -260,13 +260,13 @@ export const MEVBoostRelayList: ChainAddressMap = {
 }
 
 export const DualGovernance: ChainAddressMap = {
-  [CHAINS.Mainnet]: '0x0000000000000000000000000000000000000000',
+  [CHAINS.Mainnet]: '0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db',
   [CHAINS.Holesky]: '0x490bf377734CA134A8E207525E8576745652212e',
-  [CHAINS.Hoodi]: '0x3Dec3C5Ef9C53234B55705DDC892b106A1C47bCa', // Mock! TODO: remove mock
+  [CHAINS.Hoodi]: '0x4d12b9f6aCAB54FF6a3a776BA3b8724D9B77845F',
 }
 
 export const EmergencyProtectedTimelock: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316',
   [CHAINS.Holesky]: '0xe9c5FfEAd0668AFdBB9aac16163840d649DB76DD',
-  [CHAINS.Hoodi]: '0xbcdD50FEAE9584308c12321b8A0f68Fe81EC04a8', // Mock! TODO: remove mock
+  [CHAINS.Hoodi]: '0x0A5E22782C0Bd4AddF10D771f0bF0406B038282d',
 }
