@@ -258,3 +258,15 @@ export const MEVBoostRelayList: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xF95f069F9AD107938F6ba802a3da87892298610E',
   [CHAINS.Hoodi]: '0x279d3A456212a1294DaEd0faEE98675a52E8A4Bf',
 }
+
+export const DualGovernance: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db',
+  [CHAINS.Holesky]: '0x490bf377734CA134A8E207525E8576745652212e',
+  [CHAINS.Hoodi]: '0x4d12b9f6aCAB54FF6a3a776BA3b8724D9B77845F',
+}
+
+export const EmergencyProtectedTimelock: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316',
+  [CHAINS.Holesky]: '0xe9c5FfEAd0668AFdBB9aac16163840d649DB76DD',
+  [CHAINS.Hoodi]: '0x0A5E22782C0Bd4AddF10D771f0bF0406B038282d',
+}
