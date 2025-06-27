@@ -25,7 +25,6 @@ import {
 } from './HeaderStyle'
 import ActiveMotionsSVG from './icons/active_motions.svg.react'
 import ArchiveSVG from './icons/archive.svg.react'
-// import InfoSVG from './icons/info.svg.react'
 import StartSVG from './icons/start.svg.react'
 import { getChainName } from 'modules/blockChain/chains'
 import { getChainColor } from '@lido-sdk/constants'
@@ -37,7 +36,6 @@ import SettingsSVG from './icons/settings.svg.react'
 import { useAvailableStonks } from 'modules/stonks/hooks/useAvailableStonks'
 import { ButtonIcon, Container } from '@lidofinance/lido-ui'
 import { DualGovernanceStatusButton } from 'modules/dualGovernance/DualGovernanceStatusButton'
-import { isTestnet } from 'modules/blockChain/utils/isTestnet'
 import { useDualGovernanceState } from 'modules/dualGovernance/useDualGovernanceState'
 import { DualGovernanceStatus } from 'modules/dualGovernance/types'
 import { DualGovernanceWarningBanner } from 'modules/dualGovernance/DualGovernanceWarningBanner'
@@ -140,7 +138,7 @@ export function Header() {
               </Text>
             </Network>
             <NoSSRWrapper>
-              {isTestnet(chainId) && <DualGovernanceStatusButton />}
+              <DualGovernanceStatusButton />
               <HeaderWallet />
               <Link passHref href={urls.settings}>
                 <ButtonIcon
@@ -192,14 +190,12 @@ export function Header() {
                   />
                 )}
 
-                {isTestnet(chainId) && (
-                  <MobileDGWidgetWrap>
-                    <Text size={14} weight={800} color="secondary">
-                      Dual Governance state
-                    </Text>
-                    <DualGovernanceStatusButton />
-                  </MobileDGWidgetWrap>
-                )}
+                <MobileDGWidgetWrap>
+                  <Text size={14} weight={800} color="secondary">
+                    Dual Governance state
+                  </Text>
+                  <DualGovernanceStatusButton />
+                </MobileDGWidgetWrap>
               </MobileNavItems>
 
               <MobileMenu>

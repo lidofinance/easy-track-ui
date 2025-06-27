@@ -13,7 +13,7 @@ import {
 } from './DualGovernanceWidgetStyle'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { Box } from '@lidofinance/lido-ui'
-import { formatBalance } from '../../blockChain/utils/formatBalance'
+import { formatBalanceIntl } from '../../blockChain/utils/formatBalanceIntl'
 
 type Props = {
   dualGovernanceState: DualGovernanceState
@@ -117,8 +117,8 @@ export const DualGovernanceWidget = ({ dualGovernanceState }: Props) => {
           <Label>Veto Support</Label>
           <p>
             <Label $color="secondary">
-              {formatBalance(totalStEthInEscrow, 1)} /{' '}
-              {formatBalance(totalSupply, 1)}
+              {formatBalanceIntl(totalStEthInEscrow, 1)} /{' '}
+              {formatBalanceIntl(totalSupply, 1)}
             </Label>
           </p>
         </Box>
