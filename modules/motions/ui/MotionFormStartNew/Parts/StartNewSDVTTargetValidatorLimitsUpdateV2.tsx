@@ -19,12 +19,12 @@ import { ContractSDVTTargetValidatorLimitsUpdateV2 } from 'modules/blockChain/co
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { NodeOperatorSelectControl } from 'modules/motions/ui/NodeOperatorSelectControl'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { SelectControl, Option } from 'modules/shared/ui/Controls/Select'
 import { useSDVTNodeOperatorsSummaryMap } from 'modules/motions/hooks/useSDVTNodeOperatorsSummary'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
 
 type NodeOperator = {
   id: string | undefined
@@ -83,7 +83,7 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList()
+    } = useNodeOperatorsList('sdvt')
     const {
       data: operatorsSummaryMap,
       initialLoading: isNodeOperatorsSummaryLoading,
@@ -106,8 +106,8 @@ export const formParts = createMotionFormPart({
         return []
       }
 
-      const selectedIds = selectedNodeOperators.map(({ id }) => id)
-      const thisId = selectedNodeOperators[fieldIdx]?.id
+      const selectedIds = selectedNodeOperators.map(({ id }) => parseInt(id!))
+      const thisId = parseInt(selectedNodeOperators[fieldIdx]?.id!)
       return nodeOperatorsList.filter(
         ({ id }) => !selectedIds.includes(id) || id === thisId,
       )

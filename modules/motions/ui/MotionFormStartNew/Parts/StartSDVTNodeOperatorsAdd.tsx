@@ -28,12 +28,12 @@ import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import {
+  useNodeOperatorsList,
   useSDVTOperatorNameLimit,
   useSDVTOperatorsCounts,
 } from 'modules/motions/hooks'
 import { STETH } from 'modules/blockChain/contractAddresses'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 
@@ -91,7 +91,7 @@ export const formParts = () =>
       const {
         data: nodeOperatorsList,
         initialLoading: isNodeOperatorsListLoading,
-      } = useSDVTNodeOperatorsList()
+      } = useNodeOperatorsList('sdvt')
       const {
         data: maxNodeOperatorNameLength,
         initialLoading: NONameLengthLoading,

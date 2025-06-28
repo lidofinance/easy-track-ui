@@ -1,7 +1,7 @@
-export const processInBatches = async <T>(
+export const processInBatches = async <T, R>(
   items: T[],
   batchSize: number,
-  fn: (item: T) => Promise<any>,
+  fn: (item: T) => Promise<R>,
 ) => {
   const results = []
   for (let i = 0; i < items.length; i += batchSize) {

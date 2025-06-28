@@ -182,3 +182,15 @@ export type MEVBoostRelay = {
   description: string
   isMandatory: boolean
 }
+
+export type NodeOperator = {
+  id: number
+  active: boolean
+  name: string
+  rewardAddress: string
+  totalVettedValidators: BigNumber
+  totalExitedValidators: BigNumber
+  totalAddedValidators: BigNumber
+  totalDepositedValidators: BigNumber
+  managerAddress?: string // Only for SDVT
+}
