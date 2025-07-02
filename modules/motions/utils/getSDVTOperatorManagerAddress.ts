@@ -8,7 +8,7 @@ import { CHAINS } from '@lido-sdk/constants'
   we are storing them here.
   On each address change, the map should be updated.
 */
-const MANAGER_ADDRESS_MAP: Partial<
+export const MANAGER_ADDRESS_MAP: Partial<
   Record<CHAINS, Record<number, string | undefined>>
 > = {
   [CHAINS.Mainnet]: {
