@@ -3,6 +3,7 @@ import {
   ContractEvmSandboxNodeOperatorIncreaseLimit,
   ContractNodeOperatorsRegistry,
   ContractSandboxNodeOperatorsRegistry,
+  ContractSDVTRegistry,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 
@@ -31,6 +32,7 @@ export type IncreaseLimitMotionType = keyof typeof INCREASE_LIMIT_MOTION_MAP
 
 export const NODE_OPERATORS_REGISTRY_MAP = {
   curated: ContractNodeOperatorsRegistry,
+  sdvt: ContractSDVTRegistry,
   sandbox: ContractSandboxNodeOperatorsRegistry,
 } as const
 

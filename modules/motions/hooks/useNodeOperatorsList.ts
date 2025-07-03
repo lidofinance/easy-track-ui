@@ -7,13 +7,15 @@ import {
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
+import { NodeOperator } from '../types'
+import { getSDVTOperatorManagerAddress } from '../utils/getSDVTOperatorManagerAddress'
 
 export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
-  const { chainId, account } = useWeb3()
+  const { chainId } = useWeb3()
   const { getRpcUrl } = useConfig()
 
   return useSWR(
-    `${chainId}-${account}-${registryType}-operators-list`,
+    `${chainId}-${registryType}-operators-list`,
     async () => {
       try {
         const registry = await NODE_OPERATORS_REGISTRY_MAP[
@@ -33,7 +35,11 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
 
         const fetchNodeOperator = async (i: number) => {
           const nodeOperator = await registry.getNodeOperator(i, true)
-          return { ...nodeOperator, id: i }
+          let managerAddress: string | undefined
+          if (registryType === 'sdvt') {
+            managerAddress = getSDVTOperatorManagerAddress(chainId, i)
+          }
+          return { ...nodeOperator, id: i, managerAddress }
         }
 
         const results = await processInBatches(
@@ -50,11 +56,15 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
             console.error('Failed to fetch node operator:', result.reason)
             return null
           })
-          .filter(Boolean)
+          .filter(Boolean) as NodeOperator[]
       } catch (error) {
         return []
       }
     },
-    { revalidateOnFocus: false, revalidateOnReconnect: false },
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+    },
   )
 }
