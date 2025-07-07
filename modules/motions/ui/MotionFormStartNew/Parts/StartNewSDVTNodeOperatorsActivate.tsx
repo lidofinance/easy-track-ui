@@ -23,12 +23,11 @@ import {
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { checkAddressForManageSigningKeysRole } from 'modules/motions/utils/checkAddressManagerRole'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
-import { useGetSDVTOperatorManager } from 'modules/motions/hooks/useGetSDVTOperatorManager'
+import { useNodeOperatorsList } from 'modules/motions/hooks'
 
 type NodeOperator = {
   id: string
@@ -74,12 +73,9 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList()
+    } = useNodeOperatorsList('sdvt')
     const sdvtRegistry = ContractSDVTRegistry.useRpc()
     const aragonAcl = ContractAragonAcl.useRpc()
-
-    const { getManagerAddress, isManagerAddressLoading } =
-      useGetSDVTOperatorManager()
 
     const deactivatedNodeOperators = nodeOperatorsList?.filter(
       nodeOperator => !nodeOperator.active,
@@ -91,7 +87,7 @@ export const formParts = createMotionFormPart({
     )
 
     const fieldsArr = useFieldArray({ name: fieldNames.nodeOperators })
-    const { watch, setValue } = useFormContext()
+    const { watch, setValue, setError } = useFormContext()
     const selectedNodeOperators: NodeOperator[] = watch(
       fieldNames.nodeOperators,
     )
@@ -149,17 +145,31 @@ export const formParts = createMotionFormPart({
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.id`}
                     options={getFilteredOptions(fieldIndex)}
                     onChange={(value: string) => {
-                      const nodeOperator = nodeOperatorsList[Number(value)]
+                      const managerAddress =
+                        nodeOperatorsList[Number(value)].managerAddress
+                      const key = `${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`
 
-                      getManagerAddress(nodeOperator.id).then(address => {
-                        setValue(
-                          `${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`,
-                          address,
-                          {
-                            shouldValidate: true,
-                          },
-                        )
-                      })
+                      if (managerAddress) {
+                        checkAddressForManageSigningKeysRole(
+                          managerAddress,
+                          sdvtRegistry,
+                          aragonAcl,
+                        ).then(hasRole => {
+                          setValue(key, managerAddress, {
+                            shouldValidate: false,
+                          })
+                          if (hasRole) {
+                            setError(key, {
+                              message: `Address already has a signing keys manager role. You need to input new one manually`,
+                            })
+                          }
+                        })
+                      } else {
+                        setError(key, {
+                          message:
+                            'Manager address not found. You need to input it manually',
+                        })
+                      }
                     }}
                   />
                 </Fieldset>
@@ -167,12 +177,7 @@ export const formParts = createMotionFormPart({
                 <Fieldset>
                   <InputControl
                     name={`${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`}
-                    label={
-                      isManagerAddressLoading
-                        ? 'Loading manager address...'
-                        : 'Manager address'
-                    }
-                    disabled={isManagerAddressLoading}
+                    label="Manager address"
                     rules={{
                       required: 'Field is required',
                       validate: async value => {
