@@ -150,19 +150,9 @@ export const formParts = createMotionFormPart({
                       const key = `${fieldNames.nodeOperators}.${fieldIndex}.managerAddress`
 
                       if (managerAddress) {
-                        checkAddressForManageSigningKeysRole(
-                          managerAddress,
-                          sdvtRegistry,
-                          aragonAcl,
-                        ).then(hasRole => {
-                          setValue(key, managerAddress, {
-                            shouldValidate: false,
-                          })
-                          if (hasRole) {
-                            setError(key, {
-                              message: `Address already has a signing keys manager role. You need to input new one manually`,
-                            })
-                          }
+                        setError(key, { message: undefined })
+                        setValue(key, managerAddress, {
+                          shouldValidate: false,
                         })
                       } else {
                         setError(key, {

@@ -155,19 +155,9 @@ export const formParts = createMotionFormPart({
                       const key = `${fieldNames.nodeOperators}.${fieldIndex}.oldManagerAddress`
 
                       if (managerAddress) {
-                        checkIsAddressManagerOfNodeOperator(
-                          managerAddress,
-                          value,
-                          sdvtRegistry,
-                        ).then(isValid => {
-                          setValue(key, managerAddress, {
-                            shouldValidate: false,
-                          })
-                          if (!isValid) {
-                            setError(key, {
-                              message: `Invalid manager address. You need to input it manually`,
-                            })
-                          }
+                        setError(key, { message: undefined })
+                        setValue(key, managerAddress, {
+                          shouldValidate: false,
                         })
                       } else {
                         setError(key, {
