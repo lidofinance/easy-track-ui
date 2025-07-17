@@ -31,9 +31,6 @@ import {
 import {
   ContractEvmLegoLDOTopUp,
   ContractEvmGasFunderETHTopUp,
-  ContractRccStethTopUp,
-  ContractPmlStethTopUp,
-  ContractAtcStethTopUp,
   ContractStonksStethTopUp,
   ContractEcosystemOpsStethTopUp,
   ContractLabsOpsStethTopUp,
@@ -56,18 +53,6 @@ export const TOP_UP_WITH_LIMITS_MAP = {
   [MotionType.GasFunderETHTopUp]: {
     evmContract: ContractEvmGasFunderETHTopUp,
     motionType: MotionType.GasFunderETHTopUp,
-  },
-  [MotionType.RccStethTopUp]: {
-    evmContract: ContractRccStethTopUp,
-    motionType: MotionType.RccStethTopUp,
-  },
-  [MotionType.PmlStethTopUp]: {
-    evmContract: ContractPmlStethTopUp,
-    motionType: MotionType.PmlStethTopUp,
-  },
-  [MotionType.AtcStethTopUp]: {
-    evmContract: ContractAtcStethTopUp,
-    motionType: MotionType.AtcStethTopUp,
   },
   [MotionType.StonksStethTopUp]: {
     evmContract: ContractStonksStethTopUp,

@@ -43,12 +43,6 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xd30Dc38EdEfc21875257e8A3123503075226E14B',
     [MotionType.RewardsShareProgramTopUp]:
       '0xbD08f9D6BF1D25Cc7407E4855dF1d46C2043B3Ea',
-    [MotionType.RccStethTopUp]: '0xcD42Eb8a5db5a80Dc8f643745528DD77cf4C7D35',
-    [MotionType.PmlStethTopUp]: '0xc5527396DDC353BD05bBA578aDAa1f5b6c721136',
-    [MotionType.AtcStethTopUp]: '0x87b02dF27cd6ec128532Add7C8BC19f62E6f1fB9',
-    [MotionType.RccStablesTopUp]: '0x75bDecbb6453a901EBBB945215416561547dfDD4',
-    [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
-    [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
     [MotionType.LegoStablesTopUp]: '0x6AB39a8Be67D9305799c3F8FdFc95Caf3150d17c',
     [MotionType.SDVTNodeOperatorsAdd]:
       '0xcAa3AF7460E83E665EEFeC73a7a542E5005C9639',
@@ -119,6 +113,12 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
+    [MotionType.RccStethTopUp]: '0xcD42Eb8a5db5a80Dc8f643745528DD77cf4C7D35',
+    [MotionType.PmlStethTopUp]: '0xc5527396DDC353BD05bBA578aDAa1f5b6c721136',
+    [MotionType.AtcStethTopUp]: '0x87b02dF27cd6ec128532Add7C8BC19f62E6f1fB9',
+    [MotionType.RccStablesTopUp]: '0x75bDecbb6453a901EBBB945215416561547dfDD4',
+    [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
+    [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
   },
 
   // Goerli
@@ -311,12 +311,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RewardsShareProgramRemove]: '',
     [MotionType.RewardsShareProgramTopUp]: '',
 
-    [MotionType.RccStethTopUp]: '',
-    [MotionType.PmlStethTopUp]: '',
-    [MotionType.AtcStethTopUp]: '',
-    [MotionType.RccStablesTopUp]: '',
-    [MotionType.PmlStablesTopUp]: '',
-    [MotionType.AtcStablesTopUp]: '',
     [MotionType.LegoStablesTopUp]: '',
 
     // SDVT factories
@@ -377,6 +371,12 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientTopUpReferralDai]: '',
     [MotionType.LegoDAITopUp]: '',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]: '',
+    [MotionType.RccStethTopUp]: '',
+    [MotionType.PmlStethTopUp]: '',
+    [MotionType.AtcStethTopUp]: '',
+    [MotionType.RccStablesTopUp]: '',
+    [MotionType.PmlStablesTopUp]: '',
+    [MotionType.AtcStablesTopUp]: '',
   },
 }
 
