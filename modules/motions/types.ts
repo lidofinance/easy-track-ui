@@ -8,9 +8,6 @@ export const MotionTypeForms = {
   // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
-  RccStablesTopUp: 'RccStablesTopUp',
-  PmlStablesTopUp: 'PmlStablesTopUp',
-  AtcStablesTopUp: 'AtcStablesTopUp',
   StethRewardProgramAdd: 'StethRewardProgramAdd',
   StethRewardProgramRemove: 'StethRewardProgramRemove',
   StethRewardProgramTopUp: 'StethRewardProgramTopUp',
@@ -35,9 +32,6 @@ export const MotionTypeForms = {
   SandboxStablesTopUp: 'SandboxStablesTopUp',
   SandboxStablesAdd: 'SandboxStablesAdd',
   SandboxStablesRemove: 'SandboxStablesRemove',
-  RccStethTopUp: 'RccStethTopUp',
-  PmlStethTopUp: 'PmlStethTopUp',
-  AtcStethTopUp: 'AtcStethTopUp',
   LegoStablesTopUp: 'LegoStablesTopUp',
   StonksStethTopUp: 'StonksStethTopUp',
   StonksStablesTopUp: 'StonksStablesTopUp',
@@ -80,6 +74,12 @@ export const MotionTypeDisplayOnly = {
   AtcDAITopUp: 'AtcDAITopUp',
   LegoDAITopUp: 'LegoDAITopUp',
   SDVTTargetValidatorLimitsUpdateV1: 'SDVTTargetValidatorLimitsUpdateV1',
+  RccStethTopUp: 'RccStethTopUp',
+  PmlStethTopUp: 'PmlStethTopUp',
+  AtcStethTopUp: 'AtcStethTopUp',
+  RccStablesTopUp: 'RccStablesTopUp',
+  PmlStablesTopUp: 'PmlStablesTopUp',
+  AtcStablesTopUp: 'AtcStablesTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
