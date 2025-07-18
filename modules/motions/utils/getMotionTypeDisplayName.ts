@@ -9,9 +9,6 @@ export const MotionTypeDisplayNames: Record<
     'Increase node operator staking limit',
   [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
-  [MotionType.RccStablesTopUp]: 'Top up RCC stablecoins',
-  [MotionType.PmlStablesTopUp]: 'Top up PML stablecoins',
-  [MotionType.AtcStablesTopUp]: 'Top up ATC stablecoins',
   [MotionType.StethRewardProgramAdd]: 'Add stETH reward program',
   [MotionType.StethRewardProgramRemove]: 'Remove stETH reward program',
   [MotionType.StethRewardProgramTopUp]: 'Top up stETH reward programs',
@@ -35,9 +32,6 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTNodeOperatorNamesSet]: 'Set node operators names',
   [MotionType.SandboxNodeOperatorIncreaseLimit]:
     '[NOR SandBox] Increase node operator staking limit',
-  [MotionType.RccStethTopUp]: 'Top up RCC stETH',
-  [MotionType.PmlStethTopUp]: 'Top up PML stETH',
-  [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
   [MotionType.LegoStablesTopUp]: 'Top up LEGO stablecoins',
   [MotionType.CSMSettleElStealingPenalty]:
     'Settle EL Rewards Stealing penalty for CSM operators',
@@ -79,6 +73,12 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.MEVBoostRelaysAdd]: 'Add MEV Boost relays',
   [MotionType.MEVBoostRelaysEdit]: 'Edit MEV Boost relays',
   [MotionType.MEVBoostRelaysRemove]: 'Remove MEV Boost relays',
+  [MotionType.RccStablesTopUp]: 'Top up RCC stablecoins',
+  [MotionType.PmlStablesTopUp]: 'Top up PML stablecoins',
+  [MotionType.AtcStablesTopUp]: 'Top up ATC stablecoins',
+  [MotionType.RccStethTopUp]: 'Top up RCC stETH',
+  [MotionType.PmlStethTopUp]: 'Top up PML stETH',
+  [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
 } as const
 
 export function getMotionTypeDisplayName(
