@@ -298,6 +298,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x0f121e4069e17a2Dc5bAbF39d769313a1e20f323',
     [MotionType.CSMSettleElStealingPenalty]:
       '0x5c0af5b9f96921d3F61503e1006CF0ab9867279E',
+    [MotionType.CSMSetVettedGateTree]:
+      '0xa890fc73e1b771Ee6073e2402E631c312FF92Cd9',
 
     [MotionType.AllowedRecipientTopUpTrpLdo]: '',
     [MotionType.LegoLDOTopUp]: '',
