@@ -30,6 +30,7 @@ export function useEVMScriptDecoder() {
           abis.NodeOperatorsRegistryAbi__factory.abi,
         [KEYS.SDVTRegistry]: abis.NodeOperatorsRegistryAbi__factory.abi,
         [KEYS.CSMRegistry]: abis.CSMRegistryAbi__factory.abi,
+        [KEYS.CSMVettedGate]: abis.CSMVettedGateTreeAbi__factory.abi,
         [KEYS.SandboxNodeOperatorsRegistry]:
           abis.NodeOperatorsRegistryAbi__factory.abi,
         [KEYS.Finance]: abis.FinanceAbi__factory.abi,

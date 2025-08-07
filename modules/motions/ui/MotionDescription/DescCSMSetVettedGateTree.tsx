@@ -8,26 +8,43 @@ export function DescCSMSetVettedGateTree({
   isOnChain,
 }: NestProps<CSMSetVettedGateTreeAbi['decodeEVMScriptCallData']>) {
   const { data: vettedGateInfo } = useCSMVettedGateInfo()
-
   const [newRoot, newCid] = callData
 
   const showCurrentGateInfo = vettedGateInfo && isOnChain
+
   return (
     <>
-      Set CSM Vetted Gate Tree:
-      <br />
-      <ul>
-        <li>
-          <b>Tree root:</b>{' '}
-          {showCurrentGateInfo ? `${vettedGateInfo.treeRoot} &gt; ` : ''}
-          {newRoot};
-        </li>
-        <li>
-          <b>Tree cid:</b>{' '}
-          {showCurrentGateInfo ? `${vettedGateInfo.treeCid} &gt; ` : ''}
-          {newCid}.
-        </li>
-      </ul>
+      <div>
+        <strong>Set CSM Vetted Gate Tree:</strong>
+        <ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+          <li>
+            <strong>Tree Root:</strong>
+            <div style={{ marginLeft: '1rem' }}>
+              {showCurrentGateInfo && (
+                <div>
+                  <span>Current:</span> <code>{vettedGateInfo.treeRoot}</code>
+                </div>
+              )}
+              <div>
+                <span>New:</span> <code>{newRoot}</code>
+              </div>
+            </div>
+          </li>
+          <li style={{ marginTop: '1rem' }}>
+            <strong>Tree CID:</strong>
+            <div style={{ marginLeft: '1rem' }}>
+              {showCurrentGateInfo && (
+                <div>
+                  <span>Current:</span> <code>{vettedGateInfo.treeCid}</code>
+                </div>
+              )}
+              <div>
+                <span>New:</span> <code>{newCid}</code>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </>
   )
 }
