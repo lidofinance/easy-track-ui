@@ -13,6 +13,10 @@ import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { useCSMVettedGateInfo } from 'modules/motions/hooks/useCSMVettedGateInfo'
 
+const CIDV0_RE = /^Qm[1-9A-HJ-NP-Za-km-z]{44}$/ // base58btc, exactly 46 chars
+const CIDV1_B32_RE = /^b[a-z2-7]{46,}$/i // multibase 'b' + base32 (RFC 4648), case-insensitive
+const isValidCID = (cid: string) => CIDV0_RE.test(cid) || CIDV1_B32_RE.test(cid)
+
 // CSMSetVettedGateTree
 export const formParts = createMotionFormPart({
   motionType: MotionType.CSMSetVettedGateTree,
@@ -51,6 +55,9 @@ export const formParts = createMotionFormPart({
       return <PageLoader />
     }
 
+    if (!trustedCaller.data) {
+      return <MessageBox>Trusted caller is not set</MessageBox>
+    }
     if (trustedCaller.data !== walletAddress) {
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
@@ -111,15 +118,24 @@ export const formParts = createMotionFormPart({
             rules={{
               required: 'Field is required',
               validate: value => {
-                if (value.trim() === '') {
+                const trimmed = value.trim()
+                if (trimmed === '') {
                   return 'Tree cid cannot be empty'
                 }
+
+                // basic CID shape check (v0 or v1 base32)
+                if (!isValidCID(trimmed)) {
+                  return 'Tree cid must be a valid IPFS CID (v0 or v1)'
+                }
+
                 if (!vettedTreeData) {
                   return 'Vetted gate tree data is not available'
                 }
 
                 // Check if treeCid hash is the same as current (equivalent to keccak256 comparison)
-                const newTreeCidHash = utils.keccak256(utils.toUtf8Bytes(value))
+                const newTreeCidHash = utils.keccak256(
+                  utils.toUtf8Bytes(trimmed),
+                )
                 const currentTreeCidHash = utils.keccak256(
                   utils.toUtf8Bytes(vettedTreeData.treeCid),
                 )
