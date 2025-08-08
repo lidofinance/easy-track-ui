@@ -219,6 +219,10 @@ export const CSMRegistry: ChainAddressMap = {
   [CHAINS.Hoodi]: '0x79CEf36D84743222f37765204Bec41E92a93E59d',
 }
 
+export const CSMVettedGate: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0x10a254E724fe2b7f305F76f3F116a3969c53845f',
+}
+
 export const AllianceOpsAllowedRecipientsRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x3b525f4c059f246ca4aa995d21087204f30c9e2f',
   [CHAINS.Holesky]: '0xe1ba8dee84a4df8e99e495419365d979cdb19991',

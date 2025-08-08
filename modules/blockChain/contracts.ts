@@ -531,3 +531,8 @@ export const ContractMEVBoostRelaysRemove = createContractHelpers({
   factory: TypeChain.RemoveMEVBoostRelaysAbi__factory,
   address: EvmAddressesByType[MotionType.MEVBoostRelaysRemove],
 })
+
+export const ContractCSMSetVettedGateTree = createContractHelpers({
+  factory: TypeChain.CSMSetVettedGateTreeAbi__factory,
+  address: EvmAddressesByType[MotionType.CSMSetVettedGateTree],
+})
