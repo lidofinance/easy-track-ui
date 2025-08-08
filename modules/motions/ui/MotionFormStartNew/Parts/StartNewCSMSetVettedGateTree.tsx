@@ -12,10 +12,7 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { useCSMVettedGateInfo } from 'modules/motions/hooks/useCSMVettedGateInfo'
-
-const CIDV0_RE = /^Qm[1-9A-HJ-NP-Za-km-z]{44}$/ // base58btc, exactly 46 chars
-const CIDV1_B32_RE = /^b[a-z2-7]{46,}$/i // multibase 'b' + base32 (RFC 4648), case-insensitive
-const isValidCID = (cid: string) => CIDV0_RE.test(cid) || CIDV1_B32_RE.test(cid)
+import { isValidCID } from 'modules/motions/utils'
 
 // CSMSetVettedGateTree
 export const formParts = createMotionFormPart({
@@ -123,7 +120,6 @@ export const formParts = createMotionFormPart({
                   return 'Tree cid cannot be empty'
                 }
 
-                // basic CID shape check (v0 or v1 base32)
                 if (!isValidCID(trimmed)) {
                   return 'Tree cid must be a valid IPFS CID (v0 or v1)'
                 }
