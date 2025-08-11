@@ -42,6 +42,7 @@ export const MotionTypeForms = {
   LabsOpsStethTopUp: 'LabsOpsStethTopUp',
 
   CSMSettleElStealingPenalty: 'CSMSettleElStealingPenalty',
+  CSMSetVettedGateTree: 'CSMSetVettedGateTree',
 
   MEVBoostRelaysAdd: 'MEVBoostRelaysAdd',
   MEVBoostRelaysEdit: 'MEVBoostRelaysEdit',
