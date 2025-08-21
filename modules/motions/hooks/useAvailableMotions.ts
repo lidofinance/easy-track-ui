@@ -67,6 +67,10 @@ export const useAvailableMotions = () => {
         EVM_CONTRACTS[MotionTypeForms.SandboxNodeOperatorIncreaseLimit].address[
           parsedChainId
         ]
+      const curatedSubmitRequestHashesAddress =
+        EVM_CONTRACTS[MotionTypeForms.CuratedExitRequestHashesSubmit].address[
+          parsedChainId
+        ]
 
       const relevantContracts = Object.values(EVM_CONTRACTS).filter(
         contract => {
@@ -74,7 +78,8 @@ export const useAvailableMotions = () => {
           return (
             contractAddress &&
             contractAddress !== nodeOperatorIncreaseLimitAddress &&
-            contractAddress !== sandboxNodeOperatorIncreaseLimitAddress
+            contractAddress !== sandboxNodeOperatorIncreaseLimitAddress &&
+            contractAddress !== curatedSubmitRequestHashesAddress
           )
         },
       )
@@ -133,6 +138,8 @@ export const useAvailableMotions = () => {
           [MotionTypeForms.NodeOperatorIncreaseLimit]: isNodeOperatorConnected,
           [MotionTypeForms.SandboxNodeOperatorIncreaseLimit]:
             isSandboxNodeOperatorConnected,
+          [MotionTypeForms.CuratedExitRequestHashesSubmit]:
+            isNodeOperatorConnected,
         } as AvailableMotions,
       )
     },
