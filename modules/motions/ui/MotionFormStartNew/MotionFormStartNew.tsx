@@ -19,6 +19,7 @@ import {
 import { ResultTx } from 'modules/blockChain/types'
 import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
 import { MotionTypeForms } from 'modules/motions/types'
+import { validateMotionExtraData } from 'modules/motions/utils/onSubmitValidation'
 
 type Props = {
   onComplete: (tx: ResultTx) => void
@@ -65,6 +66,16 @@ export function MotionFormStartNew({ onComplete }: Props) {
           throw new Error(
             `EVM script factory for motion type ${motionType} in chain ${chainId} not found`,
           )
+        }
+
+        const extraValidationError = await validateMotionExtraData(
+          motionType,
+          e[motionType],
+        )
+
+        if (extraValidationError) {
+          ToastError(extraValidationError, {})
+          throw new Error(extraValidationError)
         }
 
         const tx = await formParts[motionType].populateTx({
