@@ -81,7 +81,10 @@ export const formParts = (stakingModuleType: 'curated' | 'sdvt') =>
               })
               const trustedCaller = await factory.trustedCaller()
 
-              return trustedCaller.toLowerCase() === walletAddress.toLowerCase()
+              return (
+                utils.getAddress(trustedCaller) ===
+                utils.getAddress(walletAddress)
+              )
             }
 
             return (
