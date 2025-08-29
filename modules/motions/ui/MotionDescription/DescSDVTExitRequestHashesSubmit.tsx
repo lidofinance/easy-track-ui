@@ -22,37 +22,35 @@ export function DescSDVTExitRequestHashesSubmit({
   const groupedCalldata = Object.values(groupedCallDataMap)
 
   return (
-    <>
-      <div>
-        Submit exit request hashes for SDVT node operator
-        {groupedCalldata.length > 1 ? 's' : ''}
-        <br />
-        {groupedCalldata.map((items, index) => {
-          const nodeOpId = items[0].nodeOpId.toNumber()
-          const nodeOperatorName = nodeOperators?.[nodeOpId].name
-          return (
-            <div key={index}>
-              {nodeOperatorName} (id: {nodeOpId})
-              {items.map(item => {
-                return (
-                  <ul key={item.valPubKeyIndex.toString()}>
-                    <li>
-                      <b>Validator Index:</b> {item.valIndex.toString()};
-                    </li>
-                    <li>
-                      <b>Validator Key Index:</b>{' '}
-                      {item.valPubKeyIndex.toString()};
-                    </li>
-                    <li>
-                      <b>Validator Public Key:</b> {item.valPubkey}.
-                    </li>
-                  </ul>
-                )
-              })}
-            </div>
-          )
-        })}
-      </div>
-    </>
+    <div>
+      Submit exit request hashes for SDVT node operator
+      {groupedCalldata.length > 1 ? 's' : ''}
+      <br />
+      {groupedCalldata.map((items, index) => {
+        const nodeOpId = items[0].nodeOpId.toNumber()
+        const nodeOperatorName = nodeOperators?.[nodeOpId].name
+        return (
+          <div key={index}>
+            {nodeOperatorName} (id: {nodeOpId})
+            {items.map(item => {
+              return (
+                <ul key={item.valPubKeyIndex.toString()}>
+                  <li>
+                    <b>Validator Index:</b> {item.valIndex.toString()};
+                  </li>
+                  <li>
+                    <b>Validator Key Index:</b> {item.valPubKeyIndex.toString()}
+                    ;
+                  </li>
+                  <li>
+                    <b>Validator Public Key:</b> {item.valPubkey}.
+                  </li>
+                </ul>
+              )
+            })}
+          </div>
+        )
+      })}
+    </div>
   )
 }
