@@ -37,9 +37,7 @@ export const MotionTypeForms = {
   StonksStablesTopUp: 'StonksStablesTopUp',
   AllianceOpsStablesTopUp: 'AllianceOpsStablesTopUp',
   EcosystemOpsStablesTopUp: 'EcosystemOpsStablesTopUp',
-  EcosystemOpsStethTopUp: 'EcosystemOpsStethTopUp',
   LabsOpsStablesTopUp: 'LabsOpsStablesTopUp',
-  LabsOpsStethTopUp: 'LabsOpsStethTopUp',
 
   CSMSettleElStealingPenalty: 'CSMSettleElStealingPenalty',
   CSMSetVettedGateTree: 'CSMSetVettedGateTree',

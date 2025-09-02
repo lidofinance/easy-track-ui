@@ -27,8 +27,6 @@ const cspReportOnly = process.env.CSP_REPORT_ONLY
 const cspReportUri = process.env.CSP_REPORT_URI
 
 const subgraphMainnet = process.env.SUBGRAPH_MAINNET
-const subgraphGoerli = process.env.SUBGRAPH_GOERLI
-const subgraphHolesky = process.env.SUBGRAPH_HOLESKY
 const subgraphHoodi = process.env.SUBGRAPH_HOODI
 
 const walletconnectProjectId = process.env.WALLETCONNECT_PROJECT_ID
@@ -149,8 +147,6 @@ export default {
     cspReportOnly,
     cspReportUri,
     subgraphMainnet,
-    subgraphGoerli,
-    subgraphHolesky,
     subgraphHoodi,
     rateLimit,
     rateLimitTimeFrame,

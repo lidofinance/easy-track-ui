@@ -66,11 +66,7 @@ export function useEVMScriptDecoder() {
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.EcosystemOpsStablesAllowedRecipientsRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.EcosystemOpsStethAllowedRecipientsRegistry]:
-          abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.LabsOpsStablesAllowedRecipientsRegistry]:
-          abis.RegistryWithLimitsAbi__factory.abi,
-        [KEYS.LabsOpsStethAllowedRecipientsRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.SandboxStablesAllowedRecipientRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,

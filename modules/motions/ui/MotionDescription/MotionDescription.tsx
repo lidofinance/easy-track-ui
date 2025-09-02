@@ -324,18 +324,6 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.LabsOpsStablesTopUp}
     />
   ),
-  [MotionType.EcosystemOpsStethTopUp]: (props: DescWithLimitsProps) => (
-    <DescTopUpWithLimits
-      {...props}
-      registryType={MotionType.EcosystemOpsStethTopUp}
-    />
-  ),
-  [MotionType.LabsOpsStethTopUp]: (props: DescWithLimitsProps) => (
-    <DescTopUpWithLimits
-      {...props}
-      registryType={MotionType.LabsOpsStethTopUp}
-    />
-  ),
   [MotionType.MEVBoostRelaysAdd]: DescMEVBoostRelaysAdd,
   [MotionType.MEVBoostRelaysEdit]: DescMEVBoostRelaysEdit,
   [MotionType.MEVBoostRelaysRemove]: DescMEVBoostRelaysRemove,

@@ -67,8 +67,6 @@ export const getDualGovernanceBannerColor = (status: DualGovernanceStatus) => {
 
 export const getDualGovernanceLink = (chainId: CHAINS) => {
   switch (chainId) {
-    case CHAINS.Holesky:
-      return 'https://dg-holesky.testnet.fi/'
     case CHAINS.Hoodi:
       return 'https://dg-hoodi.testnet.fi/'
     default:
