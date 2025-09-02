@@ -86,9 +86,7 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTTargetValidatorLimitsUpdateV1,
   [MotionType.EcosystemOpsStablesTopUp]:
     CONTRACTS.ContractEcosystemOpsStablesTopUp,
-  [MotionType.EcosystemOpsStethTopUp]: CONTRACTS.ContractEcosystemOpsStethTopUp,
   [MotionType.LabsOpsStablesTopUp]: CONTRACTS.ContractLabsOpsStablesTopUp,
-  [MotionType.LabsOpsStethTopUp]: CONTRACTS.ContractLabsOpsStethTopUp,
   [MotionType.MEVBoostRelaysAdd]: CONTRACTS.ContractMEVBoostRelaysAdd,
   [MotionType.MEVBoostRelaysEdit]: CONTRACTS.ContractMEVBoostRelaysEdit,
   [MotionType.MEVBoostRelaysRemove]: CONTRACTS.ContractMEVBoostRelaysRemove,

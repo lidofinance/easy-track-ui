@@ -175,9 +175,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.StonksStablesTopUp]: '',
     [MotionType.AllianceOpsStablesTopUp]: '',
     [MotionType.EcosystemOpsStablesTopUp]: '',
-    [MotionType.EcosystemOpsStethTopUp]: '',
     [MotionType.LabsOpsStablesTopUp]: '',
-    [MotionType.LabsOpsStethTopUp]: '',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data

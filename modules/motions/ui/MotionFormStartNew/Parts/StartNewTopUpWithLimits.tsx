@@ -32,8 +32,6 @@ import {
   ContractEvmLegoLDOTopUp,
   ContractEvmGasFunderETHTopUp,
   ContractStonksStethTopUp,
-  ContractEcosystemOpsStethTopUp,
-  ContractLabsOpsStethTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -57,14 +55,6 @@ export const TOP_UP_WITH_LIMITS_MAP = {
   [MotionType.StonksStethTopUp]: {
     evmContract: ContractStonksStethTopUp,
     motionType: MotionType.StonksStethTopUp,
-  },
-  [MotionType.EcosystemOpsStethTopUp]: {
-    evmContract: ContractEcosystemOpsStethTopUp,
-    motionType: MotionType.EcosystemOpsStethTopUp,
-  },
-  [MotionType.LabsOpsStethTopUp]: {
-    evmContract: ContractLabsOpsStethTopUp,
-    motionType: MotionType.LabsOpsStethTopUp,
   },
 }
 

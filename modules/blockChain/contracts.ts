@@ -490,28 +490,6 @@ export const ContractLabsOpsStablesTopUp = createContractHelpers({
   address: EvmAddressesByType[MotionType.LabsOpsStablesTopUp],
 })
 
-export const ContractEcosystemOpsStethAllowedRecipientsRegistry =
-  createContractHelpers({
-    factory: TypeChain.RegistryWithLimitsAbi__factory,
-    address: CONTRACT_ADDRESSES.EcosystemOpsStethAllowedRecipientsRegistry,
-  })
-
-export const ContractEcosystemOpsStethTopUp = createContractHelpers({
-  factory: TypeChain.TopUpWithLimitsAbi__factory,
-  address: EvmAddressesByType[MotionType.EcosystemOpsStethTopUp],
-})
-
-export const ContractLabsOpsStethAllowedRecipientsRegistry =
-  createContractHelpers({
-    factory: TypeChain.RegistryWithLimitsAbi__factory,
-    address: CONTRACT_ADDRESSES.LabsOpsStethAllowedRecipientsRegistry,
-  })
-
-export const ContractLabsOpsStethTopUp = createContractHelpers({
-  factory: TypeChain.TopUpWithLimitsAbi__factory,
-  address: EvmAddressesByType[MotionType.LabsOpsStethTopUp],
-})
-
 export const ContractMEVBoostRelayList = createContractHelpers({
   factory: TypeChain.MEVBoostRelayListAbi__factory,
   address: CONTRACT_ADDRESSES.MEVBoostRelayList,

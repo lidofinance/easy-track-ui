@@ -113,16 +113,10 @@ export const formParts = {
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.EcosystemOpsStablesTopUp,
     }),
-  [MotionTypeForms.EcosystemOpsStethTopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.EcosystemOpsStethTopUp,
-  }),
   [MotionTypeForms.LabsOpsStablesTopUp]:
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.LabsOpsStablesTopUp,
     }),
-  [MotionTypeForms.LabsOpsStethTopUp]: StartNewTopUpWithLimits.formParts({
-    registryType: MotionTypeForms.LabsOpsStethTopUp,
-  }),
   [MotionTypeForms.MEVBoostRelaysAdd]: StartNewMEVBoostRelaysAdd.formParts,
   [MotionTypeForms.MEVBoostRelaysRemove]:
     StartNewMEVBoostRelaysRemove.formParts,
