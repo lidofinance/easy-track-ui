@@ -12,8 +12,7 @@ export const openKeys = [
   'WALLETCONNECT_PROJECT_ID',
 
   'SUBGRAPH_MAINNET',
-  'SUBGRAPH_GOERLI',
-  'SUBGRAPH_HOLESKY',
+  'SUBGRAPH_HOODI',
 ]
 
 export const secretKeys = [

@@ -9,32 +9,6 @@ import * as wagmiChains from 'wagmi/chains'
 
 const { publicRuntimeConfig } = getConfig()
 
-export const holesky = {
-  id: CHAINS.Holesky,
-  name: 'Holesky',
-  network: 'holesky',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'holeskyETH',
-    symbol: 'ETH',
-  },
-  rpcUrls: {
-    public: { http: [getRpcUrlDefault(CHAINS.Holesky)] },
-    default: { http: [getRpcUrlDefault(CHAINS.Holesky)] },
-  },
-  blockExplorers: {
-    etherscan: { name: 'holesky', url: 'https://holesky.etherscan.io/' },
-    default: { name: 'holesky', url: 'https://holesky.etherscan.io/' },
-  },
-  testnet: true,
-  contracts: {
-    multicall3: {
-      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-      blockCreated: 77,
-    },
-  },
-} as const
-
 export const hoodi = {
   id: CHAINS.Hoodi,
   name: 'Hoodi',
@@ -69,7 +43,6 @@ supportedChainIds = publicRuntimeConfig.supportedChains
 
 const wagmiChainsArray = Object.values({
   ...wagmiChains,
-  [CHAINS.Holesky]: holesky,
   [CHAINS.Hoodi]: hoodi,
 })
 

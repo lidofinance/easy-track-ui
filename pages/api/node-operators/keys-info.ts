@@ -41,7 +41,6 @@ const requestTestnetOperators = async (chainId: number) => {
 
 const requestOperators = async (
   api:
-    | 'https://operators-holesky.testnet.fi/api'
     | 'https://operators.lido.fi/api'
     | 'https://operators-hoodi.testnet.fi/api',
   chainId: number,
@@ -109,14 +108,6 @@ export default createNextConnect().get(async (req, res) => {
       case CHAINS.Mainnet:
         result = await requestOperators(
           'https://operators.lido.fi/api',
-          chainId,
-          moduleAddress,
-          walletAddress,
-        )
-        break
-      case CHAINS.Holesky:
-        result = await requestOperators(
-          'https://operators-holesky.testnet.fi/api',
           chainId,
           moduleAddress,
           walletAddress,

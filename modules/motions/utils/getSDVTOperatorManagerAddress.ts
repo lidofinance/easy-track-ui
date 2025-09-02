@@ -100,8 +100,6 @@ export const MANAGER_ADDRESS_MAP: Partial<
     The addresses might be added later.
   */
   [CHAINS.Hoodi]: {},
-  // Deprecated chain
-  [CHAINS.Holesky]: {},
 }
 
 export const getSDVTOperatorManagerAddress = (
