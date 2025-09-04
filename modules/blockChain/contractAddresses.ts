@@ -274,3 +274,8 @@ export const EmergencyProtectedTimelock: ChainAddressMap = {
   [CHAINS.Holesky]: '0xe9c5FfEAd0668AFdBB9aac16163840d649DB76DD',
   [CHAINS.Hoodi]: '0x0A5E22782C0Bd4AddF10D771f0bF0406B038282d',
 }
+
+export const ValidatorsExitBusOracle: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e',
+  [CHAINS.Hoodi]: '0x8664d394c2b3278f26a1b44b967aef99707eeab2',
+}

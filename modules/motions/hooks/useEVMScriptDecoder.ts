@@ -75,6 +75,8 @@ export function useEVMScriptDecoder() {
         [KEYS.SandboxStablesAllowedRecipientRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.MEVBoostRelayList]: abis.MEVBoostRelayListAbi__factory.abi,
+        [KEYS.ValidatorsExitBusOracle]:
+          abis.ValidatorsExitBusOracleAbi__factory.abi,
       }),
     )
   }, `evm-script-decoder-${chainId}`)

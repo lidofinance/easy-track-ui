@@ -12,22 +12,27 @@ export function DescCuratedExitRequestHashesSubmit({
 
   return (
     <div>
-      Submit exit request hashes for node operator {nodeOperatorName} (id:{' '}
-      {nodeOperatorId})
+      Submit exit request hashes for node operator{' '}
+      <b>
+        {nodeOperatorName} (id: {nodeOperatorId})
+      </b>
       <br />
       {callData.map(item => {
         return (
-          <ul key={item.valPubKeyIndex.toString()}>
-            <li>
-              <b>Validator Index:</b> {item.valIndex.toString()};
-            </li>
-            <li>
-              <b>Validator Key Index:</b> {item.valPubKeyIndex.toString()};
-            </li>
-            <li>
-              <b>Validator Public Key:</b> {item.valPubkey}.
-            </li>
-          </ul>
+          <>
+            <br />
+            <ul key={item.valPubKeyIndex.toString()}>
+              <li>
+                <b>Validator Index:</b> {item.valIndex.toString()};
+              </li>
+              <li>
+                <b>Validator Key Index:</b> {item.valPubKeyIndex.toString()};
+              </li>
+              <li>
+                <b>Validator Public Key:</b> {item.valPubkey}.
+              </li>
+            </ul>
+          </>
         )
       })}
     </div>
