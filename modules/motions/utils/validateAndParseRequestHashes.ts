@@ -78,16 +78,16 @@ export const validateAndParseRequestHashes = ({
       const request = decodedCalldata[i]
 
       if (!request.moduleId.eq(STAKING_MODULE_IDS[registryType]!)) {
-        errors.push('invalid moduleId')
+        errors.push('invalid module ID')
       }
 
       if (request.nodeOpId.gte(nodeOperatorsCount)) {
-        errors.push('nodeOpId is out of range')
+        errors.push('node operator ID is out of range')
       }
 
       if (nodeOperatorId !== undefined) {
         if (!request.nodeOpId.eq(nodeOperatorId)) {
-          errors.push('nodeOpId does not match your node operator')
+          errors.push('node operator ID does not match connected node operator')
         }
       }
 
@@ -95,7 +95,7 @@ export const validateAndParseRequestHashes = ({
         !request.valPubkey.startsWith('0x') ||
         request.valPubkey.length !== 98
       ) {
-        errors.push('invalid valPubkey')
+        errors.push('invalid validator pubkey length or format')
       }
 
       // Compute dataWithoutPubkey for sorting validation

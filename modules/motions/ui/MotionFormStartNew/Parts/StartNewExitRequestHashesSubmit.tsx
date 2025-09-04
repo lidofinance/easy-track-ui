@@ -37,13 +37,14 @@ export const formParts = (stakingModuleType: 'curated' | 'sdvt') =>
         ? MotionType.CuratedExitRequestHashesSubmit
         : MotionType.SDVTExitRequestHashesSubmit,
     populateTx: async ({ evmScriptFactory, formData, contract }) => {
+      const trimmedCalldata = formData.calldata.trim()
       const gasLimit = await estimateGasFallback(
-        contract.estimateGas.createMotion(evmScriptFactory, formData.calldata),
+        contract.estimateGas.createMotion(evmScriptFactory, trimmedCalldata),
       )
 
       const tx = await contract.populateTransaction.createMotion(
         evmScriptFactory,
-        formData.calldata,
+        trimmedCalldata,
         { gasLimit },
       )
       return tx
@@ -184,11 +185,12 @@ export const formParts = (stakingModuleType: 'curated' | 'sdvt') =>
               rules={{
                 required: 'Field is required',
                 validate: value => {
-                  if (value.trim() === '') {
+                  const trimmedValue = value.trim()
+                  if (trimmedValue === '') {
                     return 'Calldata cannot be empty'
                   }
 
-                  if (!utils.isHexString(value)) {
+                  if (!utils.isHexString(trimmedValue)) {
                     return 'Calldata must be a valid hex string'
                   }
 
@@ -231,7 +233,7 @@ export const formParts = (stakingModuleType: 'curated' | 'sdvt') =>
                 <HashRequestBlock key={index} $withError={!!item.errors.length}>
                   {item.errors.length ? (
                     <HashRequestError>
-                      Errors: {item.errors.join(', ')}
+                      Error: {item.errors.join('; ')}
                     </HashRequestError>
                   ) : null}
                   <Text size={14}>
