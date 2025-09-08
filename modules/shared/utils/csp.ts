@@ -34,6 +34,7 @@ export const contentSecurityPolicy = {
       'https://*.alchemy.com',
       'https://*.drpc.org',
       'https://*.cow.fi',
+      'https://*.ipfs.w3s.link',
       ...trustedHosts,
     ],
     formAction: ["'self'", ...trustedHosts],
