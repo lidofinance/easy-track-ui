@@ -20,7 +20,10 @@ export const fetcherIPFS: FetcherIPFS = async (
     ...params,
     signal: AbortSignal.timeout(IPFS_TIMEOUT),
   }
-  const response = await fetch(`https://ipfs.io/ipfs/${cid}`, paramsWithTimeout)
+  const response = await fetch(
+    `https://${cid}.ipfs.w3s.link`,
+    paramsWithTimeout,
+  )
 
   if (!response.ok) {
     throw new Error('An error occurred while fetching the data.')
