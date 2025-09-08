@@ -19,6 +19,7 @@ import * as StartNewMEVBoostRelaysAdd from './StartNewMEVBoostRelaysAdd'
 import * as StartNewMEVBoostRelaysRemove from './StartNewMEVBoostRelaysRemove'
 import * as StartNewMEVBoostRelaysEdit from './StartNewMEVBoostRelaysEdit'
 import * as StartNewCSMSetVettedGateTree from './StartNewCSMSetVettedGateTree'
+import * as StartNewExitRequestHashesSubmit from './StartNewExitRequestHashesSubmit'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -129,6 +130,10 @@ export const formParts = {
   [MotionTypeForms.MEVBoostRelaysEdit]: StartNewMEVBoostRelaysEdit.formParts,
   [MotionTypeForms.CSMSetVettedGateTree]:
     StartNewCSMSetVettedGateTree.formParts,
+  [MotionTypeForms.CuratedExitRequestHashesSubmit]:
+    StartNewExitRequestHashesSubmit.formParts('curated'),
+  [MotionTypeForms.SDVTExitRequestHashesSubmit]:
+    StartNewExitRequestHashesSubmit.formParts('sdvt'),
 } as const
 
 export type FormData = {
