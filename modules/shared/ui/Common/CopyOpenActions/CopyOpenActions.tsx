@@ -1,9 +1,10 @@
-import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
 import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
+import { useCopyToClipboard } from 'modules/shared/hooks/useCopyToClipboard'
 
 import { ButtonIcon, Copy } from '@lidofinance/lido-ui'
 import { Wrap } from './CopyOpenActionsStyle'
 import { ButtonExternalView } from 'modules/shared/ui/Common/ButtonExternalView'
+
 import { EtherscanEntity } from 'modules/blockChain/utils/etherscan'
 
 type Props = {
