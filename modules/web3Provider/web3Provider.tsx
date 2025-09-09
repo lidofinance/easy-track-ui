@@ -77,16 +77,9 @@ export const useMainnetOnlyWagmi = () => {
 }
 
 export const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
-  // const {
-  //   defaultChain: defaultChainId,
-  //   supportedChainIds,
-  //   walletconnectProjectId,
-  //   isWalletConnectionAllowed,
-  // } = useUserConfig()
   const {
     supportedChainIds,
     defaultChain: defaultChainId,
-
     getRpcUrl,
   } = useConfig()
   const { themeName } = useThemeToggle()

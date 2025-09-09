@@ -1,3 +1,4 @@
+import { getEtherscanLink } from 'modules/blockChain/utils/etherscan'
 import { trimAddress } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
@@ -20,7 +21,6 @@ import {
   OrderUid,
   Link,
 } from './StonksOrderCardStyle'
-import { getEtherscanLink } from 'modules/blockChain/utils/etherscan'
 
 type Props = {
   order: OrderDetailed

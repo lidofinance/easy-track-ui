@@ -6,12 +6,11 @@ import { useIsContract } from './useIsContract'
 
 export function useSendTransactionGnosisWorkaround() {
   const { web3Provider } = useWeb3()
-  // TODO: track loading state of this swr in the ui on yes/no/enact button
   const { data: isMultisig } = useIsContract()
 
   return useCallback(
     (tx: PopulatedTransaction) =>
-      sendTransactionGnosisWorkaround(web3Provider, tx, !!isMultisig),
+      sendTransactionGnosisWorkaround(web3Provider, tx, Boolean(isMultisig)),
     [web3Provider, isMultisig],
   )
 }

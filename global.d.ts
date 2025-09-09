@@ -1,21 +1,6 @@
-// make sure this file is included by your tsconfig.json ("include": ["src/**/*"])
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import moment from 'moment'
 
-declare module '*.svg' {
-  /**
-   * Use `any` to avoid conflicts with
-   * `@svgr/webpack` plugin or
-   * `babel-plugin-inline-react-svg` plugin.
-   */
-  const content: any
-  export const ReactComponent: React.FunctionComponent<
-    React.ComponentProps<'svg'>
-  >
-  export default content
-}
-
-// declare the plugin module so TS doesn’t complain on import
 declare module 'moment-duration-format'
 
 declare module 'moment' {

@@ -3,8 +3,8 @@ import { StonksOrderAbi__factory } from 'generated'
 import { useTransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { ButtonWrap } from '../StonksOrderCardStyle'
 import { ConnectWalletButton } from 'modules/wallet/ui/ConnectWalletButton'
+import { ButtonWrap } from '../StonksOrderCardStyle'
 
 type Props = {
   orderAddress: string

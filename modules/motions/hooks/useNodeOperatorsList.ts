@@ -1,4 +1,5 @@
 import { useSWR } from 'modules/network/hooks/useSwr'
+import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import {
   NODE_OPERATORS_REGISTRY_MAP,
   NodeOperatorsRegistryType,
@@ -8,7 +9,6 @@ import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { NodeOperator } from '../types'
 import { getSDVTOperatorManagerAddress } from '../utils/getSDVTOperatorManagerAddress'
-import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
 export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
   const { chainId } = useWeb3()

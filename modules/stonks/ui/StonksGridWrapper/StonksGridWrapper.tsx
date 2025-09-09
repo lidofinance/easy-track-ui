@@ -1,9 +1,9 @@
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
+import { ConnectWalletButton } from 'modules/wallet/ui/ConnectWalletButton'
 import { useStonksData } from 'modules/stonks/hooks/useStonksData'
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { MessageBox } from 'modules/stonks/ui/StonksOrderForm'
 import { StonksGrid } from 'modules/stonks/ui/StonksGridWrapper/StonksGrid'
-import { ConnectWalletButton } from 'modules/wallet/ui/ConnectWalletButton'
 
 export function StonksGridWrapper() {
   const { isWalletConnected } = useWeb3()

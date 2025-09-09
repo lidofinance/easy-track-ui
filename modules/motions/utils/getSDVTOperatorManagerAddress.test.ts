@@ -1,8 +1,8 @@
 import { CHAINS } from 'modules/blockChain/chains'
+import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { utils } from 'ethers'
 import { NodeOperatorsRegistryAbi__factory } from 'generated'
 import { SDVTRegistry } from 'modules/blockChain/contractAddresses'
-import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { MANAGER_ADDRESS_MAP } from './getSDVTOperatorManagerAddress'
 
 const SIGNING_KEYS_ROLE =

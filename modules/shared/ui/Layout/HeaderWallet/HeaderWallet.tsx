@@ -3,8 +3,8 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { Button } from '@lidofinance/lido-ui'
 
 import { useWalletModal } from 'modules/wallet/ui/WalletModal'
-import { Wrap, AddressBadge } from './HeaderWalletStyle'
 import { useConnect } from 'reef-knot/core-react'
+import { Wrap, AddressBadge } from './HeaderWalletStyle'
 
 export function HeaderWallet() {
   const { isWalletConnected, walletAddress } = useWeb3()

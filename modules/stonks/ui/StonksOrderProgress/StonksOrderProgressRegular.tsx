@@ -9,12 +9,12 @@ import {
   StatusLoader,
   StatusWrap,
 } from 'modules/motions/ui/MotionFormComplete/MotionFormCompleteStyle'
+import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 import { CopyOpenActions } from 'modules/shared/ui/Common/CopyOpenActions'
 import { useRouter } from 'next/router'
 import { stonksOrder } from 'modules/network/utils/urls'
 import type { TransactionReceipt } from '@ethersproject/providers'
 import { getOrderByPlaceTxReceipt } from 'modules/stonks/utils/getOrderByPlaceTxReceipt'
-import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 
 const getStatusText = (status: TxStatus) =>
   status === 'failed'
