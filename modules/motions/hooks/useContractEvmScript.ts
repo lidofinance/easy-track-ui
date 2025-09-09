@@ -89,6 +89,14 @@ export const EVM_CONTRACTS = {
   [MotionType.EcosystemOpsStethTopUp]: CONTRACTS.ContractEcosystemOpsStethTopUp,
   [MotionType.LabsOpsStablesTopUp]: CONTRACTS.ContractLabsOpsStablesTopUp,
   [MotionType.LabsOpsStethTopUp]: CONTRACTS.ContractLabsOpsStethTopUp,
+  [MotionType.MEVBoostRelaysAdd]: CONTRACTS.ContractMEVBoostRelaysAdd,
+  [MotionType.MEVBoostRelaysEdit]: CONTRACTS.ContractMEVBoostRelaysEdit,
+  [MotionType.MEVBoostRelaysRemove]: CONTRACTS.ContractMEVBoostRelaysRemove,
+  [MotionType.CSMSetVettedGateTree]: CONTRACTS.ContractCSMSetVettedGateTree,
+  [MotionType.CuratedExitRequestHashesSubmit]:
+    CONTRACTS.ContractCuratedExitRequestHashesSubmit,
+  [MotionType.SDVTExitRequestHashesSubmit]:
+    CONTRACTS.ContractSDVTExitRequestHashesSubmit,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

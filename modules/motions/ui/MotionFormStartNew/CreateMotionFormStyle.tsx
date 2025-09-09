@@ -9,6 +9,10 @@ export const Fieldset = styled.div`
   width: 100%;
   margin-bottom: 20px;
 
+  & > label > span:last-child:not(:only-child) {
+    z-index: 1;
+  }
+
   & > * {
     width: 100%;
   }
@@ -113,4 +117,52 @@ export const RetryHint = styled(Text).attrs({
     cursor: pointer;
     color: ${({ theme }) => theme.colors.primary};
   }
+`
+
+export const RelayInfoRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+
+  & > div:nth-child(2) {
+    word-break: break-all;
+  }
+`
+
+export const RelayInfoText = styled(Text).attrs({ size: 14 })`
+  word-break: break-all;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+`
+
+export const HashRequests = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
+export const HashRequestBlock = styled(Block)<{ $withError?: boolean }>`
+  padding: 16px;
+
+  & > div:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  & span {
+    word-break: break-all;
+  }
+
+  ${props =>
+    props.$withError &&
+    `
+    background-color: rgba(var(--lido-rgb-error), 0.2);
+  `}
+`
+
+export const HashRequestError = styled(Text).attrs({
+  size: 14,
+  color: 'error',
+})`
+  margin-bottom: 10px;
 `

@@ -219,6 +219,10 @@ export const CSMRegistry: ChainAddressMap = {
   [CHAINS.Hoodi]: '0x79CEf36D84743222f37765204Bec41E92a93E59d',
 }
 
+export const CSMVettedGate: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0x10a254E724fe2b7f305F76f3F116a3969c53845f',
+}
+
 export const AllianceOpsAllowedRecipientsRegistry: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x3b525f4c059f246ca4aa995d21087204f30c9e2f',
   [CHAINS.Holesky]: '0xe1ba8dee84a4df8e99e495419365d979cdb19991',
@@ -252,4 +256,26 @@ export const USDT: ChainAddressMap = {
   [CHAINS.Mainnet]: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
   [CHAINS.Holesky]: '0x86f6c353a0965eb069cd7f4f91c1afef8c725551',
   [CHAINS.Hoodi]: '0x64f1904d1b419c6889BDf3238e31A138E258eA68',
+}
+
+export const MEVBoostRelayList: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xF95f069F9AD107938F6ba802a3da87892298610E',
+  [CHAINS.Hoodi]: '0x279d3A456212a1294DaEd0faEE98675a52E8A4Bf',
+}
+
+export const DualGovernance: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db',
+  [CHAINS.Holesky]: '0x490bf377734CA134A8E207525E8576745652212e',
+  [CHAINS.Hoodi]: '0x4d12b9f6aCAB54FF6a3a776BA3b8724D9B77845F',
+}
+
+export const EmergencyProtectedTimelock: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316',
+  [CHAINS.Holesky]: '0xe9c5FfEAd0668AFdBB9aac16163840d649DB76DD',
+  [CHAINS.Hoodi]: '0x0A5E22782C0Bd4AddF10D771f0bF0406B038282d',
+}
+
+export const ValidatorsExitBusOracle: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e',
+  [CHAINS.Hoodi]: '0x8664d394c2b3278f26a1b44b967aef99707eeab2',
 }

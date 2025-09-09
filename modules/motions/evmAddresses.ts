@@ -43,12 +43,6 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xd30Dc38EdEfc21875257e8A3123503075226E14B',
     [MotionType.RewardsShareProgramTopUp]:
       '0xbD08f9D6BF1D25Cc7407E4855dF1d46C2043B3Ea',
-    [MotionType.RccStethTopUp]: '0xcD42Eb8a5db5a80Dc8f643745528DD77cf4C7D35',
-    [MotionType.PmlStethTopUp]: '0xc5527396DDC353BD05bBA578aDAa1f5b6c721136',
-    [MotionType.AtcStethTopUp]: '0x87b02dF27cd6ec128532Add7C8BC19f62E6f1fB9',
-    [MotionType.RccStablesTopUp]: '0x75bDecbb6453a901EBBB945215416561547dfDD4',
-    [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
-    [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
     [MotionType.LegoStablesTopUp]: '0x6AB39a8Be67D9305799c3F8FdFc95Caf3150d17c',
     [MotionType.SDVTNodeOperatorsAdd]:
       '0xcAa3AF7460E83E665EEFeC73a7a542E5005C9639',
@@ -77,6 +71,13 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xf2476f967C826722F5505eDfc4b2561A34033477',
     [MotionType.LabsOpsStablesTopUp]:
       '0xE1f6BaBb445F809B97e3505Ea91749461050F780',
+
+    [MotionType.MEVBoostRelaysAdd]:
+      '0x00A3D6260f70b1660c8646Ef25D0820EFFd7bE60',
+    [MotionType.MEVBoostRelaysEdit]:
+      '0x6b7863f2c7dEE99D3b744fDAEDbEB1aeCC025535',
+    [MotionType.MEVBoostRelaysRemove]:
+      '0x9721c0f77E3Ea40eD592B9DCf3032DaF269c0306',
 
     // next motion factories are @deprecated
     // we are keeping them here to display history data
@@ -112,6 +113,12 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.LegoDAITopUp]: '0x0535a67ea2D6d46f85fE568B7EaA91Ca16824FEC',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
       '0x41CF3DbDc939c5115823Fba1432c4EC5E7bD226C',
+    [MotionType.RccStethTopUp]: '0xcD42Eb8a5db5a80Dc8f643745528DD77cf4C7D35',
+    [MotionType.PmlStethTopUp]: '0xc5527396DDC353BD05bBA578aDAa1f5b6c721136',
+    [MotionType.AtcStethTopUp]: '0x87b02dF27cd6ec128532Add7C8BC19f62E6f1fB9',
+    [MotionType.RccStablesTopUp]: '0x75bDecbb6453a901EBBB945215416561547dfDD4',
+    [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
+    [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
   },
 
   // Goerli
@@ -291,6 +298,10 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x0f121e4069e17a2Dc5bAbF39d769313a1e20f323',
     [MotionType.CSMSettleElStealingPenalty]:
       '0x5c0af5b9f96921d3F61503e1006CF0ab9867279E',
+    [MotionType.CSMSetVettedGateTree]:
+      '0xa890fc73e1b771Ee6073e2402E631c312FF92Cd9',
+    [MotionType.CuratedExitRequestHashesSubmit]:
+      '0x397206ecdbdcb1A55A75e60Fc4D054feC72E5f63',
 
     [MotionType.AllowedRecipientTopUpTrpLdo]: '',
     [MotionType.LegoLDOTopUp]: '',
@@ -304,12 +315,6 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RewardsShareProgramRemove]: '',
     [MotionType.RewardsShareProgramTopUp]: '',
 
-    [MotionType.RccStethTopUp]: '',
-    [MotionType.PmlStethTopUp]: '',
-    [MotionType.AtcStethTopUp]: '',
-    [MotionType.RccStablesTopUp]: '',
-    [MotionType.PmlStablesTopUp]: '',
-    [MotionType.AtcStablesTopUp]: '',
     [MotionType.LegoStablesTopUp]: '',
 
     // SDVT factories
@@ -329,6 +334,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xc3975Bc4091B585c57357990155B071111d7f4f8',
     [MotionType.SDVTNodeOperatorManagerChange]:
       '0x8a437cd5685e270cDDb347eeEfEbD22109Fa42a9',
+    [MotionType.SDVTExitRequestHashesSubmit]:
+      '0xAa3D6A8B52447F272c1E8FAaA06EA06658bd95E2',
 
     [MotionType.SandboxStablesAdd]:
       '0x056561d0F1314CB3932180b3f0B3C03174F2642B',
@@ -336,6 +343,13 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xc84251D2959E976AfE95201E1e2B88dB56Bc0a69',
     [MotionType.SandboxStablesTopUp]:
       '0x4A7B898981182c42ecC9444Cd40Cf42CEB6b71Ab',
+
+    [MotionType.MEVBoostRelaysAdd]:
+      '0xF02DbeaA1Bbc90226CaB995db4C190DbE25983af',
+    [MotionType.MEVBoostRelaysEdit]:
+      '0x27A99a7104190DdA297B222104A6C70A4Ca5A17e',
+    [MotionType.MEVBoostRelaysRemove]:
+      '0x7FCc2901C6C3D62784cB178B14d44445B038f736',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',
@@ -363,6 +377,12 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.AllowedRecipientTopUpReferralDai]: '',
     [MotionType.LegoDAITopUp]: '',
     [MotionType.SDVTTargetValidatorLimitsUpdateV1]: '',
+    [MotionType.RccStethTopUp]: '',
+    [MotionType.PmlStethTopUp]: '',
+    [MotionType.AtcStethTopUp]: '',
+    [MotionType.RccStablesTopUp]: '',
+    [MotionType.PmlStablesTopUp]: '',
+    [MotionType.AtcStablesTopUp]: '',
   },
 }
 

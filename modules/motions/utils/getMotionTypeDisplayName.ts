@@ -9,9 +9,6 @@ export const MotionTypeDisplayNames: Record<
     'Increase node operator staking limit',
   [MotionType.AllowedRecipientTopUpTrpLdo]: 'Top up LDO TRP',
   [MotionType.LegoLDOTopUp]: 'Top up LEGO LDO',
-  [MotionType.RccStablesTopUp]: 'Top up RCC stablecoins',
-  [MotionType.PmlStablesTopUp]: 'Top up PML stablecoins',
-  [MotionType.AtcStablesTopUp]: 'Top up ATC stablecoins',
   [MotionType.StethRewardProgramAdd]: 'Add stETH reward program',
   [MotionType.StethRewardProgramRemove]: 'Remove stETH reward program',
   [MotionType.StethRewardProgramTopUp]: 'Top up stETH reward programs',
@@ -35,12 +32,23 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SDVTNodeOperatorNamesSet]: 'Set node operators names',
   [MotionType.SandboxNodeOperatorIncreaseLimit]:
     '[NOR SandBox] Increase node operator staking limit',
-  [MotionType.RccStethTopUp]: 'Top up RCC stETH',
-  [MotionType.PmlStethTopUp]: 'Top up PML stETH',
-  [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
   [MotionType.LegoStablesTopUp]: 'Top up LEGO stablecoins',
   [MotionType.CSMSettleElStealingPenalty]:
     'Settle EL Rewards Stealing penalty for CSM operators',
+  [MotionType.CSMSetVettedGateTree]: 'Set CSM vetted gate tree',
+  [MotionType.CuratedExitRequestHashesSubmit]:
+    '[Curated] Submit Exit Request Hashes',
+  [MotionType.SDVTExitRequestHashesSubmit]: '[SDVT] Submit Exit Request Hashes',
+  [MotionType.EcosystemOpsStablesTopUp]: 'Top up Ecosystem Ops stablecoins',
+  [MotionType.EcosystemOpsStethTopUp]: 'Top up Ecosystem Ops stETH',
+  [MotionType.LabsOpsStablesTopUp]: 'Top up Labs Ops stablecoins',
+  [MotionType.LabsOpsStethTopUp]: 'Top up Labs Ops stETH',
+  [MotionType.MEVBoostRelaysAdd]: 'Add MEV Boost relays',
+  [MotionType.MEVBoostRelaysEdit]: 'Edit MEV Boost relays',
+  [MotionType.MEVBoostRelaysRemove]: 'Remove MEV Boost relays',
+  [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
+  [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
+  [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
@@ -67,15 +75,14 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
   [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
-  [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
-  [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
-  [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
   [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
     'Update target validator limits [deprecated]',
-  [MotionType.EcosystemOpsStablesTopUp]: 'Top up Ecosystem Ops stablecoins',
-  [MotionType.EcosystemOpsStethTopUp]: 'Top up Ecosystem Ops stETH',
-  [MotionType.LabsOpsStablesTopUp]: 'Top up Labs Ops stablecoins',
-  [MotionType.LabsOpsStethTopUp]: 'Top up Labs Ops stETH',
+  [MotionType.RccStablesTopUp]: 'Top up RCC stablecoins',
+  [MotionType.PmlStablesTopUp]: 'Top up PML stablecoins',
+  [MotionType.AtcStablesTopUp]: 'Top up ATC stablecoins',
+  [MotionType.RccStethTopUp]: 'Top up RCC stETH',
+  [MotionType.PmlStethTopUp]: 'Top up PML stETH',
+  [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
 } as const
 
 export function getMotionTypeDisplayName(

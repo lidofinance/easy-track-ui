@@ -1,10 +1,10 @@
 import { BigNumber } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
-import { useSDVTNodeOperatorsList } from './useSDVTNodeOperatorsList'
 import { MAX_PROVIDER_BATCH } from 'modules/config'
-import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useSWR } from 'modules/network/hooks/useSwr'
+import { processInBatches } from 'modules/blockChain/utils/processInBatches'
+import { useNodeOperatorsList } from './useNodeOperatorsList'
 
 type NodeOperatorSummary = {
   targetValidatorsCount: BigNumber
@@ -20,7 +20,7 @@ type NodeOperatorSummary = {
 export function useSDVTNodeOperatorsSummaryMap() {
   const { chainId } = useWeb3()
   const registry = ContractSDVTRegistry.useRpc()
-  const { data: nodeOperatorsList } = useSDVTNodeOperatorsList()
+  const { data: nodeOperatorsList } = useNodeOperatorsList('sdvt')
 
   return useSWR(
     nodeOperatorsList ? `sdvt-operators-summary-${chainId}` : null,

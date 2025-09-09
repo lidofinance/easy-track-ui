@@ -19,9 +19,11 @@ import { ContractSDVTNodeOperatorNamesSet } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { useSDVTNodeOperatorsList } from 'modules/motions/hooks/useSDVTNodeOperatorsList'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { useSDVTOperatorNameLimit } from 'modules/motions/hooks'
+import {
+  useNodeOperatorsList,
+  useSDVTOperatorNameLimit,
+} from 'modules/motions/hooks'
 import { validateNodeOperatorName } from 'modules/motions/utils/validateNodeOperatorName'
 import { NodeOperatorSelectControl } from '../../NodeOperatorSelectControl'
 
@@ -69,7 +71,7 @@ export const formParts = createMotionFormPart({
     const {
       data: nodeOperatorsList,
       initialLoading: isNodeOperatorsDataLoading,
-    } = useSDVTNodeOperatorsList()
+    } = useNodeOperatorsList('sdvt')
 
     const {
       data: maxNodeOperatorNameLength,

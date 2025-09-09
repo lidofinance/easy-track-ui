@@ -3,14 +3,12 @@ import { EasyTrack } from 'generated/EasyTrackAbi'
 
 // Only motions currently supported to start
 export const MotionTypeForms = {
-  // old node operator
+  // Curated Module
   NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
+  CuratedExitRequestHashesSubmit: 'CuratedExitRequestHashesSubmit',
   // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
-  RccStablesTopUp: 'RccStablesTopUp',
-  PmlStablesTopUp: 'PmlStablesTopUp',
-  AtcStablesTopUp: 'AtcStablesTopUp',
   StethRewardProgramAdd: 'StethRewardProgramAdd',
   StethRewardProgramRemove: 'StethRewardProgramRemove',
   StethRewardProgramTopUp: 'StethRewardProgramTopUp',
@@ -29,15 +27,13 @@ export const MotionTypeForms = {
   SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
   SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
   SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
+  SDVTExitRequestHashesSubmit: 'SDVTExitRequestHashesSubmit',
 
   SandboxNodeOperatorIncreaseLimit: 'SandboxNodeOperatorIncreaseLimit',
 
   SandboxStablesTopUp: 'SandboxStablesTopUp',
   SandboxStablesAdd: 'SandboxStablesAdd',
   SandboxStablesRemove: 'SandboxStablesRemove',
-  RccStethTopUp: 'RccStethTopUp',
-  PmlStethTopUp: 'PmlStethTopUp',
-  AtcStethTopUp: 'AtcStethTopUp',
   LegoStablesTopUp: 'LegoStablesTopUp',
   StonksStethTopUp: 'StonksStethTopUp',
   StonksStablesTopUp: 'StonksStablesTopUp',
@@ -48,6 +44,11 @@ export const MotionTypeForms = {
   LabsOpsStethTopUp: 'LabsOpsStethTopUp',
 
   CSMSettleElStealingPenalty: 'CSMSettleElStealingPenalty',
+  CSMSetVettedGateTree: 'CSMSetVettedGateTree',
+
+  MEVBoostRelaysAdd: 'MEVBoostRelaysAdd',
+  MEVBoostRelaysEdit: 'MEVBoostRelaysEdit',
+  MEVBoostRelaysRemove: 'MEVBoostRelaysRemove',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -76,6 +77,12 @@ export const MotionTypeDisplayOnly = {
   AtcDAITopUp: 'AtcDAITopUp',
   LegoDAITopUp: 'LegoDAITopUp',
   SDVTTargetValidatorLimitsUpdateV1: 'SDVTTargetValidatorLimitsUpdateV1',
+  RccStethTopUp: 'RccStethTopUp',
+  PmlStethTopUp: 'PmlStethTopUp',
+  AtcStethTopUp: 'AtcStethTopUp',
+  RccStablesTopUp: 'RccStablesTopUp',
+  PmlStablesTopUp: 'PmlStablesTopUp',
+  AtcStablesTopUp: 'AtcStablesTopUp',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -170,4 +177,23 @@ export type KeysInfoOperator = {
 
 export type KeysInfo = {
   operators?: KeysInfoOperator[]
+}
+
+export type MEVBoostRelay = {
+  uri: string
+  name: string
+  description: string
+  isMandatory: boolean
+}
+
+export type NodeOperator = {
+  id: number
+  active: boolean
+  name: string
+  rewardAddress: string
+  totalVettedValidators: BigNumber
+  totalExitedValidators: BigNumber
+  totalAddedValidators: BigNumber
+  totalDepositedValidators: BigNumber
+  managerAddress?: string // Only for SDVT
 }
