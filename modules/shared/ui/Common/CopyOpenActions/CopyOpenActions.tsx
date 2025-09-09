@@ -4,10 +4,11 @@ import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 import { ButtonIcon, Copy } from '@lidofinance/lido-ui'
 import { Wrap } from './CopyOpenActionsStyle'
 import { ButtonExternalView } from 'modules/shared/ui/Common/ButtonExternalView'
+import { EtherscanEntity } from 'modules/blockChain/utils/etherscan'
 
 type Props = {
   value: string | null | undefined
-  entity: 'address' | 'tx' | 'token'
+  entity: EtherscanEntity
 }
 
 export function CopyOpenActions({ value, entity }: Props) {
