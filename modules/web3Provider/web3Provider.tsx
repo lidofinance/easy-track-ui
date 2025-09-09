@@ -40,33 +40,22 @@ const { publicRuntimeConfig } = getConfig()
 
 type ChainsList = [wagmiChains.Chain, ...wagmiChains.Chain[]]
 
-const WALLETS_PINNED: WalletIdsEthereum[] = [
-  'binanceWallet',
-  'browserExtension',
-]
+const WALLETS_PINNED: WalletIdsEthereum[] = ['browserExtension']
 
-// const HIDDEN_WALLETS: WalletModalForEthProps['hiddenWallets'] = [
-//   'Opera Wallet',
-//   'Coinbase',
-//   'Trust',
-//   'ImToken',
-//   'Coin98',
-//   'MathWallet',
-//   'Brave Wallet',
-//   'Gamestop',
-//   'Xdefi',
-//   'ambire',
-//   'blockchaincom',
-//   'exodus',
-//   'okx',
-//   'phantom',
-//   'tally',
-//   'zengo',
-//   'zerion',
-//   'bitget',
-//   'bitkeep',
-//   'taho',
-// ]
+const WALLETS_SHOWN: WalletIdsEthereum[] = [
+  'browserExtension',
+  'metaMask',
+  'okx',
+  'ledgerHID',
+  'ledgerLive',
+  'walletConnect',
+  'bitget',
+  'imToken',
+  'ambire',
+  'safe',
+  'dappBrowserInjected',
+  'coinbaseSmartWallet',
+]
 
 export const wagmiChainMap = Object.values(wagmiChains).reduce((acc, chain) => {
   acc[chain.id] = chain
@@ -186,6 +175,7 @@ export const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       // Wallets config args
       ...getDefaultWalletsModalConfig(),
       walletsPinned: WALLETS_PINNED,
+      walletsShown: WALLETS_SHOWN,
     })
   }, [backendRPC, supportedChains, defaultChain, transportMap])
 
