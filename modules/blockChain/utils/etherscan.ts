@@ -1,15 +1,7 @@
 import invariant from 'tiny-invariant'
 import { CHAINS } from '../chains'
 
-/**
- *  Local copy of the same util form the "@lido-sdk/helpers"
- */
-
-enum ETHERSCAN_ENTITIES {
-  Tx = 'tx',
-  Token = 'token',
-  Address = 'address',
-}
+export type EtherscanEntity = 'tx' | 'token' | 'address'
 
 const ETHERSCAN_PREFIX_BY_NETWORK: Partial<Record<CHAINS, string>> = {
   [CHAINS.Mainnet]: '',
@@ -26,7 +18,7 @@ export const getEtherscanPrefix = (chainId: CHAINS) => {
 export const getEtherscanLink = (
   chainId: CHAINS,
   hash: string,
-  entity: string,
+  entity: EtherscanEntity,
 ) => {
   const prefix = getEtherscanPrefix(chainId)
   invariant(hash && typeof hash === 'string', 'Hash should be a string')
@@ -35,13 +27,13 @@ export const getEtherscanLink = (
 }
 
 export const getEtherscanTxLink = (chainId: CHAINS, hash: string) => {
-  return getEtherscanLink(chainId, hash, ETHERSCAN_ENTITIES.Tx)
+  return getEtherscanLink(chainId, hash, 'tx')
 }
 
 export const getEtherscanTokenLink = (chainId: CHAINS, hash: string) => {
-  return getEtherscanLink(chainId, hash, ETHERSCAN_ENTITIES.Token)
+  return getEtherscanLink(chainId, hash, 'token')
 }
 
 export const getEtherscanAddressLink = (chainId: CHAINS, hash: string) => {
-  return getEtherscanLink(chainId, hash, ETHERSCAN_ENTITIES.Address)
+  return getEtherscanLink(chainId, hash, 'address')
 }
