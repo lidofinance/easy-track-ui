@@ -2,10 +2,10 @@ import { useMemo } from 'react'
 import { useConfig } from 'modules/config/hooks/useConfig'
 import { parseChainId } from '../chains'
 import { useAccount, useConfig as useWagmiConfig } from 'wagmi'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { type Config, getClient, getConnectorClient } from '@wagmi/core'
 import { providers } from 'ethers'
 import type { Client, Chain, Transport, Account } from 'viem'
-import { useSWR } from 'modules/network/hooks/useSwr'
 
 function clientToSigner(client: Client<Transport, Chain, Account>) {
   const { account, chain, transport } = client
@@ -27,6 +27,7 @@ async function getEthersSigner(
   const client = await getConnectorClient(config, { chainId })
   return clientToSigner(client)
 }
+
 function clientToProvider(client: Client<Transport, Chain>) {
   const { chain, transport } = client
   const network = {
@@ -54,36 +55,39 @@ function getEthersProvider(
 }
 
 export function useWeb3() {
-  const { chainId, isConnected, address } = useAccount()
+  const { chainId: accountChainId, isConnected, address } = useAccount()
+  const { supportedChainIds } = useConfig()
+
   const { defaultChain } = useConfig()
   const wagmiConfig = useWagmiConfig()
 
-  const currentChain = useMemo(
-    () => parseChainId(chainId || defaultChain),
-    [chainId, defaultChain],
-  )
+  const chainId = useMemo(() => {
+    if (!!accountChainId && supportedChainIds.includes(accountChainId)) {
+      return parseChainId(accountChainId)
+    }
 
-  // const publicClient = usePublicClient({ chainId: currentChain })
-  // const { data: walletClient } = useWalletClient({ chainId: currentChain })
+    return defaultChain
+  }, [accountChainId, defaultChain, supportedChainIds])
 
   const rpcProvider = useMemo(
-    () => getEthersProvider(wagmiConfig),
-    [wagmiConfig],
+    () => getEthersProvider(wagmiConfig, { chainId }),
+    [wagmiConfig, chainId],
   )
 
   const { data: web3Provider } = useSWR(
-    address ? `ethers-signer-${currentChain}-${address}` : null,
-    async () => {
-      const signer = await getEthersSigner(wagmiConfig)
-
-      return signer
+    address ? `ethers-signer-${chainId}-${address}` : null,
+    async () => getEthersSigner(wagmiConfig, { chainId }),
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     },
   )
 
   return {
     isWalletConnected: isConnected,
     walletAddress: address,
-    chainId: currentChain,
+    chainId,
     rpcProvider,
     web3Provider,
   }
