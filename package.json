@@ -36,6 +36,7 @@
     "@lidofinance/api-metrics": "^0.51.0",
     "@lidofinance/api-rpc": "^0.51.0",
     "@lidofinance/evm-script-decoder": "0.2.2",
+    "ipfs-only-hash": "4.0.0",
     "@lidofinance/lido-ui": "3.2.0",
     "@lidofinance/next-api-wrapper": "^0.51.0",
     "@lidofinance/next-cache-files-middleware": "^0.33.0",

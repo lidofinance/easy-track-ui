@@ -3,8 +3,9 @@ import { EasyTrack } from 'generated/EasyTrackAbi'
 
 // Only motions currently supported to start
 export const MotionTypeForms = {
-  // old node operator
+  // Curated Module
   NodeOperatorIncreaseLimit: 'NodeOperatorIncreaseLimit',
+  CuratedExitRequestHashesSubmit: 'CuratedExitRequestHashesSubmit',
   // ET
   AllowedRecipientTopUpTrpLdo: 'AllowedRecipientTopUpTrpLdo',
   LegoLDOTopUp: 'LegoLDOTopUp',
@@ -26,6 +27,7 @@ export const MotionTypeForms = {
   SDVTNodeOperatorRewardAddressesSet: 'SDVTNodeOperatorRewardAddressesSet',
   SDVTNodeOperatorNamesSet: 'SDVTNodeOperatorNamesSet',
   SDVTNodeOperatorManagerChange: 'SDVTNodeOperatorManagerChange',
+  SDVTExitRequestHashesSubmit: 'SDVTExitRequestHashesSubmit',
 
   SandboxNodeOperatorIncreaseLimit: 'SandboxNodeOperatorIncreaseLimit',
 
@@ -42,6 +44,7 @@ export const MotionTypeForms = {
   LabsOpsStethTopUp: 'LabsOpsStethTopUp',
 
   CSMSettleElStealingPenalty: 'CSMSettleElStealingPenalty',
+  CSMSetVettedGateTree: 'CSMSetVettedGateTree',
 
   MEVBoostRelaysAdd: 'MEVBoostRelaysAdd',
   MEVBoostRelaysEdit: 'MEVBoostRelaysEdit',

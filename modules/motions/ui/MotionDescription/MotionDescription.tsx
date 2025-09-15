@@ -47,6 +47,9 @@ import { DescCSMSettleElStealingPenalty } from './DescCSMSettleElStealingPenalty
 import { DescMEVBoostRelaysAdd } from './DescMEVBoostRelaysAdd'
 import { DescMEVBoostRelaysEdit } from './DescMEVBoostRelaysEdit'
 import { DescMEVBoostRelaysRemove } from './DescMEVBoostRelaysRemove'
+import { DescCSMSetVettedGateTree } from './DescCSMSetVettedGateTree'
+import { DescCuratedExitRequestHashesSubmit } from './DescCuratedExitRequestHashesSubmit'
+import { DescSDVTExitRequestHashesSubmit } from './DescSDVTExitRequestHashesSubmit'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -338,6 +341,10 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.MEVBoostRelaysAdd]: DescMEVBoostRelaysAdd,
   [MotionType.MEVBoostRelaysEdit]: DescMEVBoostRelaysEdit,
   [MotionType.MEVBoostRelaysRemove]: DescMEVBoostRelaysRemove,
+  [MotionType.CSMSetVettedGateTree]: DescCSMSetVettedGateTree,
+  [MotionType.CuratedExitRequestHashesSubmit]:
+    DescCuratedExitRequestHashesSubmit,
+  [MotionType.SDVTExitRequestHashesSubmit]: DescSDVTExitRequestHashesSubmit,
 } as const
 
 type Props = {

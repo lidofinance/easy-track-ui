@@ -531,3 +531,18 @@ export const ContractMEVBoostRelaysRemove = createContractHelpers({
   factory: TypeChain.RemoveMEVBoostRelaysAbi__factory,
   address: EvmAddressesByType[MotionType.MEVBoostRelaysRemove],
 })
+
+export const ContractCSMSetVettedGateTree = createContractHelpers({
+  factory: TypeChain.CSMSetVettedGateTreeAbi__factory,
+  address: EvmAddressesByType[MotionType.CSMSetVettedGateTree],
+})
+
+export const ContractSDVTExitRequestHashesSubmit = createContractHelpers({
+  factory: TypeChain.SubmitExitRequestHashesAbi__factory,
+  address: EvmAddressesByType[MotionType.SDVTExitRequestHashesSubmit],
+})
+
+export const ContractCuratedExitRequestHashesSubmit = createContractHelpers({
+  factory: TypeChain.SubmitExitRequestHashesAbi__factory,
+  address: EvmAddressesByType[MotionType.CuratedExitRequestHashesSubmit],
+})

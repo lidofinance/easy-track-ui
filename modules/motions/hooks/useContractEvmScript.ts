@@ -92,6 +92,11 @@ export const EVM_CONTRACTS = {
   [MotionType.MEVBoostRelaysAdd]: CONTRACTS.ContractMEVBoostRelaysAdd,
   [MotionType.MEVBoostRelaysEdit]: CONTRACTS.ContractMEVBoostRelaysEdit,
   [MotionType.MEVBoostRelaysRemove]: CONTRACTS.ContractMEVBoostRelaysRemove,
+  [MotionType.CSMSetVettedGateTree]: CONTRACTS.ContractCSMSetVettedGateTree,
+  [MotionType.CuratedExitRequestHashesSubmit]:
+    CONTRACTS.ContractCuratedExitRequestHashesSubmit,
+  [MotionType.SDVTExitRequestHashesSubmit]:
+    CONTRACTS.ContractSDVTExitRequestHashesSubmit,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

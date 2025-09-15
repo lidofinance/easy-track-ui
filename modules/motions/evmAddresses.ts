@@ -298,6 +298,10 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x0f121e4069e17a2Dc5bAbF39d769313a1e20f323',
     [MotionType.CSMSettleElStealingPenalty]:
       '0x5c0af5b9f96921d3F61503e1006CF0ab9867279E',
+    [MotionType.CSMSetVettedGateTree]:
+      '0xa890fc73e1b771Ee6073e2402E631c312FF92Cd9',
+    [MotionType.CuratedExitRequestHashesSubmit]:
+      '0x397206ecdbdcb1A55A75e60Fc4D054feC72E5f63',
 
     [MotionType.AllowedRecipientTopUpTrpLdo]: '',
     [MotionType.LegoLDOTopUp]: '',
@@ -330,6 +334,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xc3975Bc4091B585c57357990155B071111d7f4f8',
     [MotionType.SDVTNodeOperatorManagerChange]:
       '0x8a437cd5685e270cDDb347eeEfEbD22109Fa42a9',
+    [MotionType.SDVTExitRequestHashesSubmit]:
+      '0xAa3D6A8B52447F272c1E8FAaA06EA06658bd95E2',
 
     [MotionType.SandboxStablesAdd]:
       '0x056561d0F1314CB3932180b3f0B3C03174F2642B',
