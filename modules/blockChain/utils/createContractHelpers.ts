@@ -1,5 +1,5 @@
 import { SWRConfiguration } from 'swr'
-import { providers } from 'ethers'
+import { BaseContract, providers } from 'ethers'
 import { CHAINS } from '../chains'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
@@ -13,14 +13,13 @@ import {
   AsyncMethodParameters,
   AsyncMethodReturns,
 } from 'modules/types/filter-async-methods'
-import { useConfig } from 'modules/config/hooks/useConfig'
 import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 
-type Web3Provider = JsonRpcSigner | providers.Provider
+export type Web3Provider = JsonRpcSigner | providers.Provider
 
-interface Factory {
+export interface Factory<C extends BaseContract> {
   name: string
-  connect(address: string, provider: Web3Provider): unknown
+  connect(address: string, signerOrProvider: Web3Provider): C
 }
 
 type Address = {
@@ -40,10 +39,9 @@ type CallArgs = {
 type CallRpcArgs = {
   chainId: CHAINS
   rpcUrl: string
-  cacheSeed?: string
 }
 
-export function createContractHelpers<F extends Factory>({
+export function createContractHelpers<F extends Factory<BaseContract>>({
   address,
   factory,
 }: CreatorArgs<F>) {
@@ -66,12 +64,13 @@ export function createContractHelpers<F extends Factory>({
   }
 
   function useInstanceRpc() {
-    const { chainId } = useWeb3()
-    const { getRpcUrl } = useConfig()
-    const rpcUrl = getRpcUrl(chainId)
+    const { chainId, rpcProvider } = useWeb3()
 
-    const cacheKey = `contract-rpc-${chainId}-${rpcUrl}-${address[chainId]}`
-    return useGlobalMemo(() => connectRpc({ chainId, rpcUrl }), cacheKey)
+    const cacheKey = `contract-rpc-${chainId}-${address[chainId]}`
+    return useGlobalMemo(
+      () => connect({ chainId, provider: rpcProvider }),
+      cacheKey,
+    )
   }
 
   function useInstanceWeb3() {

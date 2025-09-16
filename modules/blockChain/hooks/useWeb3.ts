@@ -6,6 +6,10 @@ import { useSWR } from 'modules/network/hooks/useSwr'
 import { type Config, getClient, getConnectorClient } from '@wagmi/core'
 import { providers } from 'ethers'
 import type { Client, Chain, Transport, Account } from 'viem'
+import {
+  LimitedJsonRpcBatchProvider,
+  getLimitedJsonRpcBatchProvider,
+} from '../utils/limitedJsonRpcBatchProvider'
 
 function clientToSigner(client: Client<Transport, Chain, Account>) {
   const { account, chain, transport } = client
@@ -37,11 +41,11 @@ function clientToProvider(client: Client<Transport, Chain>) {
   }
   if (transport.type === 'fallback')
     return new providers.FallbackProvider(
-      (transport.transports as ReturnType<Transport>[]).map(
-        ({ value }) => new providers.JsonRpcProvider(value?.url, network),
+      (transport.transports as ReturnType<Transport>[]).map(({ value }) =>
+        getLimitedJsonRpcBatchProvider(network.chainId, value?.url),
       ),
     )
-  return new providers.JsonRpcProvider(transport.url, network)
+  return getLimitedJsonRpcBatchProvider(network.chainId, transport.url)
 }
 
 /** Action to convert a viem Public Client to an ethers.js Provider. */
@@ -88,7 +92,7 @@ export function useWeb3() {
     isWalletConnected: isConnected,
     walletAddress: address,
     chainId,
-    rpcProvider,
+    rpcProvider: rpcProvider as LimitedJsonRpcBatchProvider,
     web3Provider,
   }
 }

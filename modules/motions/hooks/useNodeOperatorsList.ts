@@ -4,15 +4,13 @@ import {
   NODE_OPERATORS_REGISTRY_MAP,
   NodeOperatorsRegistryType,
 } from '../constants'
-import { useConfig } from 'modules/config/hooks/useConfig'
 import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { NodeOperator } from '../types'
 import { getSDVTOperatorManagerAddress } from '../utils/getSDVTOperatorManagerAddress'
 
 export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
-  const { chainId } = useWeb3()
-  const { getRpcUrl } = useConfig()
+  const { chainId, rpcProvider } = useWeb3()
 
   return useSWR(
     `${chainId}-${registryType}-operators-list`,
@@ -20,13 +18,9 @@ export function useNodeOperatorsList(registryType: NodeOperatorsRegistryType) {
       try {
         const registry = await NODE_OPERATORS_REGISTRY_MAP[
           registryType
-        ].connectRpc({
+        ].connect({
           chainId,
-          rpcUrl: getRpcUrl(chainId),
-          // separate cache for sandbox and curated registries to avoid batching issues
-          // when using one cached batching provider for both we can get batches from both registries in one request
-          // which triggers api/rpc batch limit even though both registries separately are under the limit
-          cacheSeed: `${registryType}-${chainId}`,
+          provider: rpcProvider,
         })
 
         const count = (await registry.getNodeOperatorsCount()).toNumber()

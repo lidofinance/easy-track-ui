@@ -13,7 +13,6 @@ import { MotionTypeForms } from 'modules/motions/types'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { MAX_PROVIDER_BATCH } from 'modules/config'
-import { useConfig } from 'modules/config/hooks/useConfig'
 
 const isHasTrustedCaller = (
   contract: unknown,
@@ -38,8 +37,7 @@ const getIsNodeOperatorConnected = (
 }
 
 export const useAvailableMotions = () => {
-  const { chainId, walletAddress } = useWeb3()
-  const { getRpcUrl } = useConfig()
+  const { chainId, walletAddress, rpcProvider } = useWeb3()
 
   const { data: nodeOperators, initialLoading: isNodeOperatorsDataLoading } =
     useNodeOperatorsList('curated')
@@ -58,7 +56,6 @@ export const useAvailableMotions = () => {
       : null,
     async () => {
       const parsedChainId = parseEvmSupportedChainId(chainId)
-      const rpcUrl = getRpcUrl(parsedChainId)
       const nodeOperatorIncreaseLimitAddress =
         EVM_CONTRACTS[MotionTypeForms.NodeOperatorIncreaseLimit].address[
           parsedChainId
@@ -88,10 +85,9 @@ export const useAvailableMotions = () => {
         relevantContracts,
         MAX_PROVIDER_BATCH,
         async contract => {
-          const connectedContract = contract.connectRpc({
+          const connectedContract = contract.connect({
             chainId,
-            rpcUrl,
-            cacheSeed: `available-motions-${chainId}`,
+            provider: rpcProvider,
           })
 
           if (!isHasTrustedCaller(connectedContract)) return null
