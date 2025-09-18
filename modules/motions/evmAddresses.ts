@@ -124,6 +124,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x8aa34dAaF0fC263203A15Bcfa0Ed926D466e59F3',
     [MotionType.SDVTExitRequestHashesSubmit]:
       '0xB7668B5485d0f826B86a75b0115e088bB9ee03eE',
+    [MotionType.CSMSetVettedGateTree]:
+      '0xBc5642bDD6F2a54b01A75605aAe9143525D97308',
   },
 
   // Goerli
