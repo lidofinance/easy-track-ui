@@ -119,6 +119,11 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RccStablesTopUp]: '0x75bDecbb6453a901EBBB945215416561547dfDD4',
     [MotionType.PmlStablesTopUp]: '0x92a27C4e5e35cFEa112ACaB53851Ec70e2D99a8D',
     [MotionType.AtcStablesTopUp]: '0x1843Bc35d1fD15AbE1913b9f72852a79457C42Ab',
+
+    [MotionType.CuratedExitRequestHashesSubmit]:
+      '0x8aa34dAaF0fC263203A15Bcfa0Ed926D466e59F3',
+    [MotionType.SDVTExitRequestHashesSubmit]:
+      '0xB7668B5485d0f826B86a75b0115e088bB9ee03eE',
   },
 
   // Goerli
