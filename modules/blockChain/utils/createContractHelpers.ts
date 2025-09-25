@@ -13,7 +13,6 @@ import {
   AsyncMethodParameters,
   AsyncMethodReturns,
 } from 'modules/types/filter-async-methods'
-import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 
 export type Web3Provider = JsonRpcSigner | providers.Provider
 
@@ -36,11 +35,6 @@ type CallArgs = {
   provider: Web3Provider
 }
 
-type CallRpcArgs = {
-  chainId: CHAINS
-  rpcUrl: string
-}
-
 export function createContractHelpers<F extends Factory<BaseContract>>({
   address,
   factory,
@@ -56,11 +50,6 @@ export function createContractHelpers<F extends Factory<BaseContract>>({
     }
 
     return factory.connect(address[chainId] as string, provider) as Instance
-  }
-
-  function connectRpc({ chainId, rpcUrl }: CallRpcArgs) {
-    const provider = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
-    return connect({ chainId, provider })
   }
 
   function useInstanceRpc() {
@@ -117,7 +106,6 @@ export function createContractHelpers<F extends Factory<BaseContract>>({
     address,
     factory,
     connect,
-    connectRpc,
     useRpc: useInstanceRpc,
     useWeb3: useInstanceWeb3,
     useSwrWeb3,
