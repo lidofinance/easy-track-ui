@@ -345,6 +345,24 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.CuratedExitRequestHashesSubmit]:
     DescCuratedExitRequestHashesSubmit,
   [MotionType.SDVTExitRequestHashesSubmit]: DescSDVTExitRequestHashesSubmit,
+  [MotionType.SandboxStEthRemove]: (props: DescAllowedRecipientRemoveProps) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.SandboxStEthRemove}
+    />
+  ),
+  [MotionType.SandboxStEthAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.SandboxStEthAdd}
+    />
+  ),
+  [MotionType.SandboxStEthTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.SandboxStEthTopUp}
+    />
+  ),
 } as const
 
 type Props = {

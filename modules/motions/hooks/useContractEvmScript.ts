@@ -95,6 +95,9 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractCuratedExitRequestHashesSubmit,
   [MotionType.SDVTExitRequestHashesSubmit]:
     CONTRACTS.ContractSDVTExitRequestHashesSubmit,
+  [MotionType.SandboxStEthTopUp]: CONTRACTS.ContractEvmSandboxStEthTopUp,
+  [MotionType.SandboxStEthRemove]: CONTRACTS.ContractEvmSandboxStEthRemove,
+  [MotionType.SandboxStEthAdd]: CONTRACTS.ContractEvmSandboxStEthAdd,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

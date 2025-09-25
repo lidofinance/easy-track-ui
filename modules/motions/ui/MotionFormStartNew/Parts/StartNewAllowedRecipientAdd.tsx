@@ -12,6 +12,7 @@ import {
   ContractStethRewardProgramAdd,
   ContractRewardsShareProgramAdd,
   ContractEvmSandboxStablesAdd,
+  ContractEvmSandboxStEthAdd,
 } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -33,6 +34,10 @@ export const ALLOWED_RECIPIENT_ADD_MAP = {
   [MotionTypeForms.SandboxStablesAdd]: {
     evmContract: ContractEvmSandboxStablesAdd,
     motionType: MotionTypeForms.SandboxStablesAdd,
+  },
+  [MotionTypeForms.SandboxStEthAdd]: {
+    evmContract: ContractEvmSandboxStEthAdd,
+    motionType: MotionTypeForms.SandboxStEthAdd,
   },
 }
 

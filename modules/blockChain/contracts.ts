@@ -546,3 +546,24 @@ export const ContractCuratedExitRequestHashesSubmit = createContractHelpers({
   factory: TypeChain.SubmitExitRequestHashesAbi__factory,
   address: EvmAddressesByType[MotionType.CuratedExitRequestHashesSubmit],
 })
+
+export const ContractSandboxStethAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.SandboxStethAllowedRecipientsRegistry,
+  })
+
+export const ContractEvmSandboxStEthTopUp = createContractHelpers({
+  factory: TypeChain.TopUpAllowedRecipientsAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStEthTopUp],
+})
+
+export const ContractEvmSandboxStEthAdd = createContractHelpers({
+  factory: TypeChain.AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStEthAdd],
+})
+
+export const ContractEvmSandboxStEthRemove = createContractHelpers({
+  factory: TypeChain.RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStEthRemove],
+})

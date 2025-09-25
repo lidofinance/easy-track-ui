@@ -80,6 +80,8 @@ export function useEVMScriptDecoder() {
         [KEYS.MEVBoostRelayList]: abis.MEVBoostRelayListAbi__factory.abi,
         [KEYS.ValidatorsExitBusOracle]:
           abis.ValidatorsExitBusOracleAbi__factory.abi,
+        [KEYS.SandboxStethAllowedRecipientsRegistry]:
+          abis.RegistryWithLimitsAbi__factory.abi,
       }),
     )
   }, `evm-script-decoder-${chainId}`)

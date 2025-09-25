@@ -49,6 +49,10 @@ export const MotionTypeForms = {
   MEVBoostRelaysAdd: 'MEVBoostRelaysAdd',
   MEVBoostRelaysEdit: 'MEVBoostRelaysEdit',
   MEVBoostRelaysRemove: 'MEVBoostRelaysRemove',
+
+  SandboxStEthTopUp: 'SandboxStEthTopUp',
+  SandboxStEthAdd: 'SandboxStEthAdd',
+  SandboxStEthRemove: 'SandboxStEthRemove',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

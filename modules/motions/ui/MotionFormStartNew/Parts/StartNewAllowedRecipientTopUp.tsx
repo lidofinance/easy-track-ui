@@ -33,6 +33,7 @@ import {
   ContractStethGasSupplyTopUp,
   ContractStethRewardProgramTopUp,
   ContractRewardsShareProgramTopUp,
+  ContractEvmSandboxStEthTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -65,6 +66,10 @@ export const ALLOWED_RECIPIENT_TOPUP_MAP = {
   [MotionTypeForms.RewardsShareProgramTopUp]: {
     evmContract: ContractRewardsShareProgramTopUp,
     motionType: MotionTypeForms.RewardsShareProgramTopUp,
+  },
+  [MotionTypeForms.SandboxStEthTopUp]: {
+    evmContract: ContractEvmSandboxStEthTopUp,
+    motionType: MotionTypeForms.SandboxStEthTopUp,
   },
 }
 
