@@ -64,8 +64,8 @@
     "styled-components": "5.3.11",
     "swr": "1.2.2",
     "typechain": "7.0.1",
-    "viem": "2.26.5",
-    "wagmi": "2.14.9"
+    "viem": "2.31.3",
+    "wagmi": "2.15.6"
   },
   "devDependencies": {
     "@commitlint/cli": "17.3.0",
