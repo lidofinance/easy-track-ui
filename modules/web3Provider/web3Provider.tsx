@@ -1,42 +1,18 @@
-import {
-  createContext,
-  useContext,
-  FC,
-  PropsWithChildren,
-  useEffect,
-  useMemo,
-} from 'react'
-import invariant from 'tiny-invariant'
-import { http, type PublicClient } from 'viem'
-import {
-  WagmiProvider,
-  createConfig,
-  useConnections,
-  usePublicClient,
-  fallback,
-  type Config,
-} from 'wagmi'
+import { FC, PropsWithChildren, useMemo } from 'react'
 import * as wagmiChains from 'wagmi/chains'
-
+import getConfig from 'next/config'
+import { WagmiProvider } from 'wagmi'
+import { useConfig } from 'modules/config/hooks/useConfig'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReefKnotProvider, getDefaultConfig } from 'reef-knot/core-react'
 import {
   ReefKnotWalletsModal,
   getDefaultWalletsModalConfig,
 } from 'reef-knot/connect-wallet-modal'
 import { WalletIdsEthereum, WalletsListEthereum } from 'reef-knot/wallets'
-
 import { useThemeToggle } from '@lidofinance/lido-ui'
-import { useConfig } from 'modules/config/hooks/useConfig'
-import { useWeb3Transport } from './useWeb3Transport'
-import {
-  MAX_PROVIDER_BATCH,
-  PROVIDER_BATCH_TIME,
-  PROVIDER_POLLING_INTERVAL,
-} from 'modules/config'
-import { CHAINS } from 'modules/blockChain/chains'
-import getConfig from 'next/config'
-
-const { publicRuntimeConfig } = getConfig()
+import { Web3LegacyProvider } from './web3LegacyProvider'
+import { PROVIDER_POLLING_INTERVAL } from 'modules/config'
 
 type ChainsList = [wagmiChains.Chain, ...wagmiChains.Chain[]]
 
@@ -57,107 +33,83 @@ const WALLETS_SHOWN: WalletIdsEthereum[] = [
   'coinbaseSmartWallet',
 ]
 
-export const wagmiChainMap = Object.values(wagmiChains).reduce((acc, chain) => {
-  acc[chain.id] = chain
-  return acc
-}, {} as Record<number, wagmiChains.Chain>)
+const wagmiChainsArray = Object.values(wagmiChains) as any as ChainsList
 
-type Web3ProviderContextValue = {
-  mainnetConfig: Config
-  publicClientMainnet: PublicClient
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: 'always',
+      staleTime: 30000,
+      gcTime: 60000,
+      retry: (failureCount, error: any) => {
+        if (
+          error?.message?.includes('429') ||
+          error?.message?.includes('rate limit')
+        ) {
+          return false
+        }
+        return failureCount < 2
+      },
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+    },
+  },
+})
+
+const { publicRuntimeConfig } = getConfig()
+
+let supportedChainIds: number[] = []
+if (publicRuntimeConfig.supportedChains != null) {
+  supportedChainIds = publicRuntimeConfig.supportedChains
+    .split(',')
+    .map((chainId: string) => parseInt(chainId))
+    .filter((chainId: number) => !Number.isNaN(chainId))
+} else if (publicRuntimeConfig.defaultChain != null) {
+  supportedChainIds = [parseInt(publicRuntimeConfig.defaultChain)]
 }
 
-const Web3ProviderContext = createContext<Web3ProviderContextValue | null>(null)
-Web3ProviderContext.displayName = 'Web3ProviderContext'
-
-export const useMainnetOnlyWagmi = () => {
-  const value = useContext(Web3ProviderContext)
-  invariant(value, 'useMainnetOnlyWagmi was used outside of Web3Provider')
-  return value
-}
+const defaultChainId = wagmiChainsArray.find(
+  chain => chain.id === parseInt(publicRuntimeConfig.defaultChain),
+)?.id
 
 export const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
-  const {
-    supportedChainIds,
-    defaultChain: defaultChainId,
-    getRpcUrl,
-  } = useConfig()
   const { themeName } = useThemeToggle()
 
-  const { supportedChains, defaultChain } = useMemo(() => {
-    // must preserve order of supportedChainIds
-    const supportedChains = supportedChainIds.map(
-      id => wagmiChainMap[id],
-    ) as ChainsList
-
-    const defaultChain = wagmiChainMap[defaultChainId]
-    return {
-      supportedChains,
-      defaultChain,
-    }
-  }, [defaultChainId, supportedChainIds])
-
+  const { getRpcUrl } = useConfig()
   const backendRPC: Record<number, string> = useMemo(
     () =>
       supportedChainIds.reduce(
         (res, curr) => ({ ...res, [curr]: getRpcUrl(curr) }),
         {},
       ),
-    [supportedChainIds, getRpcUrl],
-  )
-  const { transportMap, onActiveConnection } = useWeb3Transport(
-    supportedChains,
-    backendRPC,
+    [getRpcUrl],
   )
 
-  const mainnetConfig = useMemo(() => {
-    const batchConfig = {
-      wait: PROVIDER_BATCH_TIME,
-      batchSize: MAX_PROVIDER_BATCH,
+  const chains = useMemo(() => {
+    const supportedChains = wagmiChainsArray.filter(chain =>
+      supportedChainIds.includes(chain.id),
+    )
+
+    const defaultChain =
+      supportedChains.find(chain => chain.id === defaultChainId) ||
+      supportedChains[0] // first supported chain as fallback
+    return {
+      supportedChains: supportedChains as ChainsList,
+      defaultChain,
     }
-
-    const rpcUrlMainnet = getRpcUrl(CHAINS.Mainnet)
-
-    return createConfig({
-      chains: [wagmiChains.mainnet],
-      ssr: true,
-      connectors: [],
-      batch: {
-        multicall: false,
-      },
-      pollingInterval: PROVIDER_POLLING_INTERVAL,
-      transports: {
-        [wagmiChains.mainnet.id]: fallback([
-          // api/rpc
-          http(rpcUrlMainnet, {
-            batch: batchConfig,
-            name: rpcUrlMainnet,
-          }),
-          // fallback rpc from wagmi.chains like cloudfare-eth
-          http(undefined, {
-            batch: batchConfig,
-            name: 'default public RPC URL',
-          }),
-        ]),
-      },
-    })
-  }, [getRpcUrl])
-
-  const publicClientMainnet = usePublicClient({
-    config: mainnetConfig,
-  })
+  }, [])
 
   const { wagmiConfig, reefKnotConfig, walletsModalConfig } = useMemo(() => {
     return getDefaultConfig({
       // Reef-Knot config args
       rpc: backendRPC,
-      defaultChain: defaultChain,
+      defaultChain: chains.defaultChain,
       walletconnectProjectId: publicRuntimeConfig.walletconnectProjectId,
       walletsList: WalletsListEthereum,
 
       // Wagmi config args
-      transports: transportMap,
-      chains: supportedChains,
+      chains: chains.supportedChains,
       autoConnect: true,
       ssr: true,
       pollingInterval: PROVIDER_POLLING_INTERVAL,
@@ -170,28 +122,26 @@ export const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
       walletsPinned: WALLETS_PINNED,
       walletsShown: WALLETS_SHOWN,
     })
-  }, [backendRPC, supportedChains, defaultChain, transportMap])
-
-  const [activeConnection] = useConnections({ config: wagmiConfig })
-
-  useEffect(() => {
-    void onActiveConnection(activeConnection)
-  }, [activeConnection, onActiveConnection])
+  }, [backendRPC, chains.defaultChain, chains.supportedChains])
 
   return (
-    <Web3ProviderContext.Provider
-      value={{ mainnetConfig, publicClientMainnet }}
-    >
-      {/* default wagmi autoConnect, MUST be false in our case, because we use custom autoConnect from Reef Knot */}
-      <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
-        <ReefKnotProvider config={reefKnotConfig}>
-          <ReefKnotWalletsModal
-            config={walletsModalConfig}
-            darkThemeEnabled={themeName === 'dark'}
-          />
-          {children}
-        </ReefKnotProvider>
-      </WagmiProvider>
-    </Web3ProviderContext.Provider>
+    // default wagmi autoConnect, MUST be false in our case, because we use custom autoConnect from Reef Knot
+    <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
+      <QueryClientProvider client={queryClient}>
+        <Web3LegacyProvider
+          defaultChainId={chains.defaultChain.id}
+          supportedChains={chains.supportedChains}
+          wagmiConfig={wagmiConfig}
+        >
+          <ReefKnotProvider config={reefKnotConfig}>
+            <ReefKnotWalletsModal
+              config={walletsModalConfig}
+              darkThemeEnabled={themeName === 'dark'}
+            />
+            {children}
+          </ReefKnotProvider>
+        </Web3LegacyProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }

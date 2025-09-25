@@ -21,7 +21,6 @@ import { CustomAppProps } from 'modules/shared/utils/utilTypes'
 import { parseEnvConfig } from 'modules/config'
 import { Web3Provider } from 'modules/web3Provider/web3Provider'
 import { useIsChainSupported } from 'modules/blockChain/hooks/useIsChainSupported'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Somehow using `GlobalStyle` directly causes a type error
 const GlobalStyleCasted = GlobalStyle as unknown as React.FC
@@ -106,28 +105,18 @@ function AppRoot({ Component, pageProps }: AppProps) {
 
 const AppRootMemo = memo(AppRoot)
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-})
-
 function App({ envConfig, ...appProps }: CustomAppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <CookieThemeProvider>
-        <GlobalStyleCasted />
-        <ConfigProvider envConfig={envConfig}>
-          <Web3Provider>
-            <ModalProvider>
-              <AppRootMemo {...appProps} />
-            </ModalProvider>
-          </Web3Provider>
-        </ConfigProvider>
-      </CookieThemeProvider>
-    </QueryClientProvider>
+    <CookieThemeProvider>
+      <GlobalStyleCasted />
+      <ConfigProvider envConfig={envConfig}>
+        <Web3Provider>
+          <ModalProvider>
+            <AppRootMemo {...appProps} />
+          </ModalProvider>
+        </Web3Provider>
+      </ConfigProvider>
+    </CookieThemeProvider>
   )
 }
 
