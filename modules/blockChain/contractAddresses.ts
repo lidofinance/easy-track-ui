@@ -220,6 +220,7 @@ export const CSMRegistry: ChainAddressMap = {
 }
 
 export const CSMVettedGate: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xB314D4A76C457c93150d308787939063F4Cc67E0',
   [CHAINS.Hoodi]: '0x10a254E724fe2b7f305F76f3F116a3969c53845f',
 }
 
