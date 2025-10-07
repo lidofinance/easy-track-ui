@@ -9,7 +9,7 @@ import {
   StatusLoader,
   StatusWrap,
 } from 'modules/motions/ui/MotionFormComplete/MotionFormCompleteStyle'
-import { useEtherscanOpen } from '@lido-sdk/react'
+import { useEtherscanOpener } from 'modules/blockChain/hooks/useEtherscanOpener'
 import { CopyOpenActions } from 'modules/shared/ui/Common/CopyOpenActions'
 import { useRouter } from 'next/router'
 import { stonksOrder } from 'modules/network/utils/urls'
@@ -28,13 +28,13 @@ type Props = {
 }
 
 export function StonksOrderProgressRegular({ txHash }: Props) {
-  const { library } = useWeb3()
+  const { rpcProvider } = useWeb3()
   const router = useRouter()
   const [status, setStatus] = useState<TxStatus>('pending')
-  const openEtherscan = useEtherscanOpen(txHash, 'tx')
+  const openEtherscan = useEtherscanOpener(txHash, 'tx')
 
   useEffect(() => {
-    if (!library) return
+    if (!rpcProvider) return
 
     const checkTransaction = (receipt: TransactionReceipt | undefined) => {
       if (!receipt) {
@@ -47,13 +47,13 @@ export function StonksOrderProgressRegular({ txHash }: Props) {
       }
     }
 
-    library.getTransactionReceipt(txHash).then(checkTransaction)
-    library.on(txHash, checkTransaction)
+    rpcProvider.getTransactionReceipt(txHash).then(checkTransaction)
+    rpcProvider.on(txHash, checkTransaction)
 
     return () => {
-      library.off(txHash)
+      rpcProvider.off(txHash)
     }
-  }, [library, router, txHash])
+  }, [rpcProvider, router, txHash])
 
   return (
     <Container>

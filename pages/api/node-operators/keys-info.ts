@@ -1,9 +1,8 @@
 import { createNextConnect } from 'modules/shared/utils/createNextConnect'
-import { parseChainId } from 'modules/blockChain/chains'
-import { fetch } from '@lido-sdk/fetch'
-import { CHAINS } from '@lido-sdk/constants'
+import { parseChainId, CHAINS } from 'modules/blockChain/chains'
 import { KeysInfo } from 'modules/motions/types'
 import { utils } from 'ethers'
+import { fetcherStandard } from 'modules/network/utils/fetcherStandard'
 
 export type Module = {
   id: number
@@ -33,10 +32,10 @@ export type KeysInfoNew = {
 }
 
 const requestTestnetOperators = async (chainId: number) => {
-  const data = await fetch(
+  const data = await fetcherStandard(
     `https://operators.testnet.fi/api/operators?chainId=${chainId}`,
   )
-  return data.json()
+  return data
 }
 
 const requestOperators = async (

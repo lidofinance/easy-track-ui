@@ -1,12 +1,13 @@
 import { useMemo } from 'react'
+import { useConnect } from 'wagmi'
 import { useConfig } from 'modules/config/hooks/useConfig'
-import { useSupportedChains, useConnectorError } from 'reef-knot/web3-react'
 
 import { getChainName } from 'modules/blockChain/chains'
+import { useIsChainSupported } from './useIsChainSupported'
 
 export function useErrorMessage() {
-  const error = useConnectorError()
-  const { isUnsupported } = useSupportedChains()
+  const { error } = useConnect()
+  const isChainSupported = useIsChainSupported()
   const { supportedChainIds } = useConfig()
 
   const chains = useMemo(() => {
@@ -14,7 +15,7 @@ export function useErrorMessage() {
     return networksList.join(' / ')
   }, [supportedChainIds])
 
-  if (isUnsupported) {
+  if (!isChainSupported) {
     return `Unsupported chain. Please switch to ${chains} in your wallet.`
   }
 

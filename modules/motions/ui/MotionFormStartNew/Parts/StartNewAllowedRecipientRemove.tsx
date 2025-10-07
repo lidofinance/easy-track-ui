@@ -10,6 +10,7 @@ import {
   ContractStethRewardProgramRemove,
   ContractRewardsShareProgramRemove,
   ContractEvmSandboxStablesRemove,
+  ContractEvmSandboxStEthRemove,
 } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -32,6 +33,10 @@ export const ALLOWED_RECIPIENT_REMOVE_MAP = {
   [MotionTypeForms.SandboxStablesRemove]: {
     evmContract: ContractEvmSandboxStablesRemove,
     motionType: MotionTypeForms.SandboxStablesRemove,
+  },
+  [MotionTypeForms.SandboxStEthRemove]: {
+    evmContract: ContractEvmSandboxStEthRemove,
+    motionType: MotionTypeForms.SandboxStEthRemove,
   },
 }
 

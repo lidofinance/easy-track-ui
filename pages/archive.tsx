@@ -14,6 +14,7 @@ import {
   fetchMotionsSubgraphList,
   getQuerySubgraphMotions,
 } from 'modules/motions/network/motionsSubgraphFetchers'
+import { CHAINS } from 'modules/blockChain/chains'
 
 const LoadMoreWrap = styled.div`
   margin-top: 40px;
@@ -39,7 +40,10 @@ export default function ArchivePage() {
               }),
             ]
           : null,
-      fetchMotionsSubgraphList,
+
+      ([_chainId, _query]: [CHAINS, string]) => {
+        return fetchMotionsSubgraphList(_chainId, _query)
+      },
     )
 
   const motions = data?.flat()

@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { ContractSDVTRegistry } from 'modules/blockChain/contracts'
-import { useLidoSWRImmutable } from '@lido-sdk/react'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useNodeOperatorsList } from './useNodeOperatorsList'
@@ -22,7 +22,7 @@ export function useSDVTNodeOperatorsSummaryMap() {
   const registry = ContractSDVTRegistry.useRpc()
   const { data: nodeOperatorsList } = useNodeOperatorsList('sdvt')
 
-  return useLidoSWRImmutable(
+  return useSWR(
     nodeOperatorsList ? `sdvt-operators-summary-${chainId}` : null,
     async () => {
       if (!Array.isArray(nodeOperatorsList) || nodeOperatorsList.length === 0) {
@@ -50,6 +50,11 @@ export function useSDVTNodeOperatorsSummaryMap() {
       }
 
       return summaryMap
+    },
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
     },
   )
 }

@@ -134,6 +134,15 @@ export const formParts = {
     StartNewExitRequestHashesSubmit.formParts('curated'),
   [MotionTypeForms.SDVTExitRequestHashesSubmit]:
     StartNewExitRequestHashesSubmit.formParts('sdvt'),
+  [MotionTypeForms.SandboxStEthAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.SandboxStEthAdd,
+  }),
+  [MotionTypeForms.SandboxStEthRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionTypeForms.SandboxStEthRemove,
+  }),
+  [MotionTypeForms.SandboxStEthTopUp]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionTypeForms.SandboxStEthTopUp,
+  }),
 } as const
 
 export type FormData = {

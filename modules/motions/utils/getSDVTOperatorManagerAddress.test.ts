@@ -1,5 +1,5 @@
-import { CHAINS } from '@lido-sdk/constants'
-import { getStaticRpcBatchProvider } from '@lido-sdk/providers'
+import { CHAINS } from 'modules/blockChain/chains'
+import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { utils } from 'ethers'
 import { NodeOperatorsRegistryAbi__factory } from 'generated'
 import { SDVTRegistry } from 'modules/blockChain/contractAddresses'
@@ -20,7 +20,7 @@ describe('sdvt manager address map validation', () => {
     const chainId = CHAINS.Mainnet
     expect(rpcUrl).toBeDefined()
 
-    const provider = getStaticRpcBatchProvider(chainId, rpcUrl)
+    const provider = getLimitedJsonRpcBatchProvider(chainId, rpcUrl)
     const sdvtRegistry = NodeOperatorsRegistryAbi__factory.connect(
       SDVTRegistry[chainId]!,
       provider,

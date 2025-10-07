@@ -1,10 +1,8 @@
-import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useGlobalMemo } from 'modules/shared/hooks/useGlobalMemo'
 import { MotionType } from '../types'
 import * as CONTRACTS from 'modules/blockChain/contracts'
 import { EvmUnrecognized } from '../evmAddresses'
-import { useConfig } from 'modules/config/hooks/useConfig'
 
 export const EVM_CONTRACTS = {
   [MotionType.NodeOperatorIncreaseLimit]:
@@ -97,18 +95,22 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractCuratedExitRequestHashesSubmit,
   [MotionType.SDVTExitRequestHashesSubmit]:
     CONTRACTS.ContractSDVTExitRequestHashesSubmit,
+  [MotionType.SandboxStEthTopUp]: CONTRACTS.ContractEvmSandboxStEthTopUp,
+  [MotionType.SandboxStEthRemove]: CONTRACTS.ContractEvmSandboxStEthRemove,
+  [MotionType.SandboxStEthAdd]: CONTRACTS.ContractEvmSandboxStEthAdd,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(
   motionType: T,
 ) {
-  const { chainId } = useWeb3()
-  const { getRpcUrl } = useConfig()
+  const { chainId, rpcProvider } = useWeb3()
 
   const contract = useGlobalMemo(() => {
     if (motionType === EvmUnrecognized) return null
-    const library = getLimitedJsonRpcBatchProvider(chainId, getRpcUrl(chainId))
-    return EVM_CONTRACTS[motionType as MotionType].connect({ chainId, library })
+    return EVM_CONTRACTS[motionType as MotionType].connect({
+      chainId,
+      provider: rpcProvider,
+    })
   }, `evm-contract-${chainId}-${motionType}`)
 
   type Contract = T extends MotionType

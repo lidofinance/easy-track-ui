@@ -1,7 +1,6 @@
 import { formatUnits } from 'ethers/lib/utils'
 import { StonksOrderAbi__factory } from 'generated'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useConfig } from 'modules/config/hooks/useConfig'
 import { useConnectErc20Contract } from 'modules/motions/hooks/useConnectErc20Contract'
 import { connectContractRpc } from 'modules/motions/utils/connectContractRpc'
 import { useSWR } from 'modules/network/hooks/useSwr'
@@ -11,8 +10,8 @@ import { fetchOffChainOrder } from '../utils/fetchOffChainOrder'
 import { formatValue } from '../utils/formatValue'
 
 export function useOrderData(orderAddress: string) {
-  const { chainId } = useWeb3()
-  const { getRpcUrl } = useConfig()
+  const { chainId, rpcProvider } = useWeb3()
+
   const connectErc20Contract = useConnectErc20Contract()
 
   return useSWR<OrderDetailed | undefined>(
@@ -24,8 +23,7 @@ export function useOrderData(orderAddress: string) {
       const orderContract = connectContractRpc(
         StonksOrderAbi__factory,
         orderAddress,
-        chainId,
-        getRpcUrl(chainId),
+        rpcProvider,
       )
 
       const [, sellToken, buyToken, sellAmountBn, buyAmountBn, validTo] =

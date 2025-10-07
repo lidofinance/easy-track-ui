@@ -6,9 +6,9 @@ import { ResultTx, TxStatus } from '../types'
 import { PopulatedTransaction } from '@ethersproject/contracts'
 import { openWindow } from 'modules/shared/utils/openWindow'
 import { getGnosisSafeLink } from '../utils/getGnosisSafeLink'
-import { getEtherscanLink } from '@lido-sdk/helpers'
 import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
 import { ToastError } from '@lidofinance/lido-ui'
+import { getEtherscanLink } from '../utils/etherscan'
 
 type PopulateFn =
   | (() => PopulatedTransaction)
@@ -22,7 +22,7 @@ export function useTransactionSender(
   populateTx: PopulateFn,
   { onFinish }: Options = {},
 ) {
-  const { library, chainId, walletAddress } = useWeb3()
+  const { rpcProvider, chainId, walletAddress } = useWeb3()
   const [resultTx, setResultTx] = useState<ResultTx | null>(null)
   const [status, setStatus] = useState<TxStatus>('empty')
   const sendTransactionGnosisWorkaround = useSendTransactionGnosisWorkaround()
@@ -53,7 +53,7 @@ export function useTransactionSender(
   }, [finish, populateTx, sendTransactionGnosisWorkaround])
 
   useEffect(() => {
-    if (!library || !resultTx || resultTx.type === 'safe') {
+    if (!rpcProvider || !resultTx || resultTx.type === 'safe') {
       return
     }
 
@@ -69,13 +69,13 @@ export function useTransactionSender(
       }
     }
 
-    library.getTransactionReceipt(tx.hash).then(checkTransaction)
-    library.on(tx.hash, checkTransaction)
+    rpcProvider.getTransactionReceipt(tx.hash).then(checkTransaction)
+    rpcProvider.on(tx.hash, checkTransaction)
 
     return () => {
-      library.off(tx.hash)
+      rpcProvider.off(tx.hash)
     }
-  }, [library, resultTx, onFinish, finish])
+  }, [rpcProvider, resultTx, onFinish, finish])
 
   const open = useCallback(() => {
     if (!resultTx) return

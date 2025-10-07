@@ -1,5 +1,5 @@
 import get from 'lodash/get'
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from '../chains'
 
 const PREFIXES = {
   [CHAINS.Mainnet]: 'eth',

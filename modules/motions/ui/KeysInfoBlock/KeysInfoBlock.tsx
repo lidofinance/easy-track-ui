@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { Button } from '@lidofinance/lido-ui'
-import { Text } from 'modules/shared/ui/Common/Text'
+import { Text, TextColor } from 'modules/shared/ui/Common/Text'
 import { Block } from 'modules/shared/ui/Common/Block'
 import { Row, Col, ColValue, ErrorMessageWrap } from './KeysInfoBlockStyle'
 
@@ -18,7 +18,10 @@ function ErrorMessage({ error }: ErrorMessageProps) {
   )
 }
 
-const getKeysColor = (keys: string[] | undefined, defaultColor?: string) => {
+const getKeysColor = (
+  keys: string[] | undefined,
+  defaultColor?: TextColor,
+): TextColor => {
   if (!keys) {
     return 'warning'
   }

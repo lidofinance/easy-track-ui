@@ -6,7 +6,6 @@ import * as TypeChain from 'generated'
 import { utils } from 'ethers'
 import { StonksAbi } from 'generated'
 import { useRouter } from 'next/router'
-import { useConfig } from 'modules/config/hooks/useConfig'
 
 type StonksResult = {
   address: string
@@ -15,9 +14,8 @@ type StonksResult = {
 
 export function useAvailableStonks() {
   const router = useRouter()
-  const { getRpcUrl } = useConfig()
   const stonksAddress = String(router.query.stonksAddress)
-  const { chainId, walletAddress } = useWeb3()
+  const { chainId, walletAddress, rpcProvider } = useWeb3()
   const { data, initialLoading } = useSWR(
     walletAddress
       ? `available-stonks-${chainId}-${walletAddress}-${stonksAddress}`
@@ -48,9 +46,9 @@ export function useAvailableStonks() {
 
       return Promise.all(
         contracts.map(async stonks => {
-          const stonksContract = stonks.connectRpc({
+          const stonksContract = stonks.connect({
             chainId,
-            rpcUrl: getRpcUrl(chainId),
+            provider: rpcProvider,
           })
           const managerAddress = await stonksContract.manager()
 

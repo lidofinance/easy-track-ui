@@ -1,12 +1,12 @@
-import { CHAINS } from '@lido-sdk/constants'
+export enum CHAINS {
+  Mainnet = 1,
+  Holesky = 17000,
+  Hoodi = 560048,
+  Goerli = 5,
+}
 
 export const ChainNames = {
   [CHAINS.Mainnet]: 'Mainnet',
-  [CHAINS.Ropsten]: 'Ropsten',
-  [CHAINS.Rinkeby]: 'Rinkeby',
-  [CHAINS.Goerli]: 'Goerli',
-  [CHAINS.Kovan]: 'Kovan',
-  [CHAINS.Kintsugi]: 'Kintsugi',
   [CHAINS.Holesky]: 'Holesky',
   [CHAINS.Hoodi]: 'Hoodi',
 } as const

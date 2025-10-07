@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 
 export const getOffChainOrderUrl = (
   orderUid: string | undefined,

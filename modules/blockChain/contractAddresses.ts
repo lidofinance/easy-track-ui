@@ -1,4 +1,4 @@
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from './chains'
 import type { ChainAddressMap, ChainAddressListMap } from './types'
 
 export const NodeOperatorsRegistry: ChainAddressMap = {
@@ -158,7 +158,7 @@ export const AllowedTokensRegistry: ChainAddressMap = {
 
 export const SandboxStablesAllowedRecipientRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0xF8a63a36B954D72de197097377aa00C238c653Cf',
-  [CHAINS.Hoodi]: '0xd57FF1ce54F572F4E8DaF0cB7038F1Bd6049cAa8',
+  [CHAINS.Hoodi]: '0xdf53b1cd4CFE43b6CdA3640Be0e4f1a45126ec61',
 }
 
 export const RccStethAllowedRecipientsRegistry: ChainAddressMap = {
@@ -279,4 +279,8 @@ export const EmergencyProtectedTimelock: ChainAddressMap = {
 export const ValidatorsExitBusOracle: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e',
   [CHAINS.Hoodi]: '0x8664d394c2b3278f26a1b44b967aef99707eeab2',
+}
+
+export const SandboxStethAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0x7E33f2192c2cEC339493B9193110BC0510d6CBD2',
 }

@@ -83,6 +83,9 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.RccStethTopUp]: 'Top up RCC stETH',
   [MotionType.PmlStethTopUp]: 'Top up PML stETH',
   [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
+  [MotionType.SandboxStEthTopUp]: 'Top up sandbox stETH',
+  [MotionType.SandboxStEthRemove]: 'Remove sandbox stETH recipient',
+  [MotionType.SandboxStEthAdd]: 'Add sandbox stETH recipient',
 } as const
 
 export function getMotionTypeDisplayName(

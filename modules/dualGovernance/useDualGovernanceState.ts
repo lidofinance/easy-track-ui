@@ -1,6 +1,5 @@
-import { useLidoSWRImmutable } from '@lido-sdk/react'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { useConfig } from 'modules/config/hooks/useConfig'
 import {
   DualGovernanceState,
   DualGovernanceStatus,
@@ -18,10 +17,9 @@ import {
 const WARNING_STATE_THRESHOLD_PERCENT = 33
 
 export const useDualGovernanceState = () => {
-  const { chainId } = useWeb3()
-  const { getRpcUrl } = useConfig()
+  const { chainId, rpcProvider } = useWeb3()
 
-  return useLidoSWRImmutable<DualGovernanceState>(
+  return useSWR<DualGovernanceState>(
     ['swr:useDualGovernanceState', chainId],
     async () => {
       const dualGovernance = createContractHelpers({
@@ -39,20 +37,20 @@ export const useDualGovernanceState = () => {
         factory: TypeChain.EmergencyProtectedTimelockAbi__factory,
       })
 
-      const dualGovernanceContract = dualGovernance.connectRpc({
+      const dualGovernanceContract = dualGovernance.connect({
         chainId,
-        rpcUrl: getRpcUrl(chainId),
+        provider: rpcProvider,
       })
 
-      const stEthContract = stEth.connectRpc({
+      const stEthContract = stEth.connect({
         chainId,
-        rpcUrl: getRpcUrl(chainId),
+        provider: rpcProvider,
       })
 
       const emergencyProtectedTimelockContract =
-        emergencyProtectedTimelock.connectRpc({
+        emergencyProtectedTimelock.connect({
           chainId,
-          rpcUrl: getRpcUrl(chainId),
+          provider: rpcProvider,
         })
 
       const isEmergencyModeActive =
@@ -68,9 +66,9 @@ export const useDualGovernanceState = () => {
         factory: TypeChain.DGEscrowAbi__factory,
       })
 
-      const vetoSignallingEscrowContract = vetoSignallingEscrow.connectRpc({
+      const vetoSignallingEscrowContract = vetoSignallingEscrow.connect({
         chainId,
-        rpcUrl: getRpcUrl(chainId),
+        provider: rpcProvider,
       })
 
       const dualGovernanceConfig = createContractHelpers({
@@ -78,9 +76,9 @@ export const useDualGovernanceState = () => {
         factory: TypeChain.DGConfigProviderAbi__factory,
       })
 
-      const dualGovernanceConfigContract = dualGovernanceConfig.connectRpc({
+      const dualGovernanceConfigContract = dualGovernanceConfig.connect({
         chainId,
-        rpcUrl: getRpcUrl(chainId),
+        provider: rpcProvider,
       })
 
       const lockedAssets =
@@ -169,6 +167,11 @@ export const useDualGovernanceState = () => {
         firstSealRageQuitSupport,
         secondSealRageQuitSupport,
       }
+    },
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     },
   )
 }

@@ -1,7 +1,7 @@
 import { RawMotionSubgraph } from '../types'
 import { formatMotionDataSubgraph } from '../utils/formatMotionDataSubgraph'
 import { fetcherGraphql } from 'modules/network/utils/fetcherGraphql'
-import { CHAINS } from '@lido-sdk/constants'
+import { CHAINS } from 'modules/blockChain/chains'
 
 type Response = {
   data: { motions: RawMotionSubgraph[] }

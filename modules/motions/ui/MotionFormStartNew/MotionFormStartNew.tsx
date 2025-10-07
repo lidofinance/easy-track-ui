@@ -50,7 +50,7 @@ export function MotionFormStartNew({ onComplete }: Props) {
   const contractEasyTrack = ContractEasyTrack.useWeb3()
 
   const handleSubmit = useCallback(
-    async e => {
+    async (e: any) => {
       try {
         const motionType = formMethods.getValues('motionType')
         if (!motionType) return

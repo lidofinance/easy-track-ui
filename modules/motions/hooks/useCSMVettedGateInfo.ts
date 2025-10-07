@@ -1,31 +1,23 @@
 import { CSMVettedGateTreeAbi__factory } from 'generated'
 import { ContractCSMSetVettedGateTree } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
-import { useConfig } from 'modules/config/hooks/useConfig'
 import { useSWR } from 'modules/network/hooks/useSwr'
 
 export const useCSMVettedGateInfo = () => {
-  const { chainId } = useWeb3()
-  const { getRpcUrl } = useConfig()
+  const { chainId, rpcProvider } = useWeb3()
 
   return useSWR(
     `vetted-gate-tree-${chainId}`,
     async () => {
-      const library = getLimitedJsonRpcBatchProvider(
-        chainId,
-        getRpcUrl(chainId),
-      )
-
       const factoryContract = ContractCSMSetVettedGateTree.connect({
         chainId,
-        library,
+        provider: rpcProvider,
       })
       const address = await factoryContract.vettedGate()
 
       const vettedGateTreeContract = CSMVettedGateTreeAbi__factory.connect(
         address,
-        library,
+        rpcProvider,
       )
 
       const treeRoot = await vettedGateTreeContract.treeRoot()

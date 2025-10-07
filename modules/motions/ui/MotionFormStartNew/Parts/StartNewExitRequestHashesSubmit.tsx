@@ -55,7 +55,7 @@ export const formParts = (stakingModuleType: 'curated' | 'sdvt') =>
     Component: ({ fieldNames, submitAction }) => {
       const { trigger, setError, getValues, formState } = useFormContext()
 
-      const { walletAddress, chainId, library } = useWeb3()
+      const { walletAddress, chainId, web3Provider } = useWeb3()
 
       const [parsedHashData, setParsedHashData] =
         useState<ParsingResultData | null>(null)
@@ -78,7 +78,7 @@ export const formParts = (stakingModuleType: 'curated' | 'sdvt') =>
             if (stakingModuleType === 'sdvt') {
               const factory = ContractSDVTExitRequestHashesSubmit.connect({
                 chainId,
-                library: library!,
+                provider: web3Provider!,
               })
               const trustedCaller = await factory.trustedCaller()
 

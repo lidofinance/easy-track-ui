@@ -4,7 +4,6 @@ import {
   ContractEasyTrack,
   ContractGovernanceToken,
 } from 'modules/blockChain/contracts'
-import { useCheckWalletConnect } from 'modules/blockChain/hooks/useCheckWalletConnect'
 import { useGovernanceSymbol } from 'modules/tokens/hooks/useGovernanceSymbol'
 import { TransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
 import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
@@ -16,6 +15,7 @@ import {
   TxHint,
   TxStatus,
   ButtonStyled,
+  ConnectWalletButtonStyled,
 } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
@@ -131,16 +131,11 @@ function ActionsBody({ motion }: Props) {
 }
 
 function AuthStub() {
-  const checkWalletConnect = useCheckWalletConnect()
   return (
     <>
       <Hint>Connect your wallet to interact with this motion</Hint>
       <Actions>
-        <ButtonStyled
-          size="sm"
-          children="Connect wallet"
-          onClick={checkWalletConnect}
-        />
+        <ConnectWalletButtonStyled size="sm" children="Connect wallet" />
       </Actions>
     </>
   )

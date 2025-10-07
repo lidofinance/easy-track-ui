@@ -1,7 +1,7 @@
 import { deepCopy } from '@ethersproject/properties'
 import { fetchJson } from '@ethersproject/web'
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { MAX_PROVIDER_BATCH } from 'modules/config'
+import { MAX_PROVIDER_BATCH, PROVIDER_POLLING_INTERVAL } from 'modules/config'
 
 export class LimitedJsonRpcBatchProvider extends JsonRpcProvider {
   _pendingBatchAggregator: NodeJS.Timer | null = null
@@ -102,10 +102,10 @@ export const getLimitedJsonRpcBatchProvider = (
 ) => {
   const cacheKey = `${chainId}-${rpcUrl}`
   if (!providerCache.has(cacheKey)) {
-    providerCache.set(
-      cacheKey,
-      new LimitedJsonRpcBatchProvider(rpcUrl, chainId),
-    )
+    const provider = new LimitedJsonRpcBatchProvider(rpcUrl, chainId)
+    provider.pollingInterval = PROVIDER_POLLING_INTERVAL
+
+    providerCache.set(cacheKey, provider)
   }
 
   return providerCache.get(cacheKey) as LimitedJsonRpcBatchProvider

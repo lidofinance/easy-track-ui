@@ -11,17 +11,13 @@ import { Fieldset } from './StonksOrderResolverFormStyle'
 import { Form } from 'modules/shared/ui/Controls/Form'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
-import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
-import { useMemo } from 'react'
-import { useConfig } from 'modules/config/hooks/useConfig'
 
 type FormData = {
   txHashOrAddress: string
 }
 
 export function StonksOrderResolverForm() {
-  const { chainId } = useWeb3()
-  const { getRpcUrl } = useConfig()
+  const { rpcProvider } = useWeb3()
   const router = useRouter()
 
   const formMethods = useForm<FormData>({
@@ -35,19 +31,13 @@ export function StonksOrderResolverForm() {
 
   const { isSubmitting } = formMethods.formState
 
-  const library = useMemo(
-    () => getLimitedJsonRpcBatchProvider(chainId, getRpcUrl(chainId)),
-    [chainId, getRpcUrl],
-  )
-
   const handleSubmit = async (values: FormData) => {
     try {
       if (utils.isAddress(values.txHashOrAddress)) {
         const orderContract = connectContractRpc(
           StonksOrderAbi__factory,
           values.txHashOrAddress,
-          chainId,
-          getRpcUrl(chainId),
+          rpcProvider,
         )
 
         try {
@@ -58,7 +48,7 @@ export function StonksOrderResolverForm() {
         }
       } else {
         try {
-          const txReceipt = await library.getTransactionReceipt(
+          const txReceipt = await rpcProvider.getTransactionReceipt(
             values.txHashOrAddress,
           )
           const orderFromReceipt = getOrderByPlaceTxReceipt(txReceipt)

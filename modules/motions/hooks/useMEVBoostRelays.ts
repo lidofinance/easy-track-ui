@@ -1,4 +1,4 @@
-import { useLidoSWR } from '@lido-sdk/react'
+import { useSWR } from 'modules/network/hooks/useSwr'
 import { ContractMEVBoostRelayList } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
@@ -6,7 +6,7 @@ export const useMEVBoostRelays = () => {
   const { chainId } = useWeb3()
   const mevBoostRelayListContract = ContractMEVBoostRelayList.useRpc()
 
-  const result = useLidoSWR(
+  const result = useSWR(
     `mev-boost-relays-list-${chainId}`,
     async () => {
       const relays = await mevBoostRelayListContract.get_relays()

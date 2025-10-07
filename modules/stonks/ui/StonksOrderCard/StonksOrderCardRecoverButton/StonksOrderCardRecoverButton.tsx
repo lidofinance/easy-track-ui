@@ -3,7 +3,7 @@ import { StonksOrderAbi__factory } from 'generated'
 import { useTransactionSender } from 'modules/blockChain/hooks/useTransactionSender'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { useConnectWalletModal } from 'modules/wallet/ui/ConnectWalletModal'
+import { ConnectWalletButton } from 'modules/wallet/ui/ConnectWalletButton'
 import { ButtonWrap } from '../StonksOrderCardStyle'
 
 type Props = {
@@ -17,15 +17,17 @@ export function StonksOrderCardRecoverButton({
   variant,
   onFinish,
 }: Props) {
-  const { library, isWalletConnected } = useWeb3()
-  const openConnectWalletModal = useConnectWalletModal()
+  const { web3Provider, isWalletConnected } = useWeb3()
 
   const populateRecover = async () => {
-    if (!library) {
-      throw new Error('Library not found')
+    if (!web3Provider) {
+      throw new Error('web3Provider not found')
     }
 
-    const orderContract = StonksOrderAbi__factory.connect(orderAddress, library)
+    const orderContract = StonksOrderAbi__factory.connect(
+      orderAddress,
+      web3Provider,
+    )
 
     const gasLimit = await estimateGasFallback(
       orderContract.estimateGas.recoverTokenFrom(),
@@ -53,11 +55,10 @@ export function StonksOrderCardRecoverButton({
           Recover funds
         </Button>
       ) : (
-        <Button
+        <ConnectWalletButton
           type="submit"
           fullwidth
           children="Connect wallet to recover funds"
-          onClick={openConnectWalletModal}
         />
       )}
     </ButtonWrap>
