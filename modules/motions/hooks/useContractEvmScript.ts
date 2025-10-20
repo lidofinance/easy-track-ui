@@ -99,6 +99,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSDVTExitRequestHashesSubmit,
   [MotionType.RegisterGroupsInOperatorGrid]:
     CONTRACTS.ContractRegisterGroupsInOperatorGrid,
+  [MotionType.RegisterTiersInOperatorGrid]:
+    CONTRACTS.ContractRegisterTiersInOperatorGrid,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

@@ -1,5 +1,5 @@
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
-import { BigNumber } from 'ethers'
+import { BigNumber, BigNumberish } from 'ethers'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useFieldArray, useFormContext } from 'react-hook-form'
@@ -9,28 +9,26 @@ import {
   FieldsHeaderDesc,
   FieldsWrapper,
   RemoveItemButton,
-} from '../../CreateMotionFormStyle'
-import { EMPTY_TIER, MAX_FEE_BP, MAX_RESERVE_RATIO_BP } from './constants'
+} from 'modules/motions/ui/MotionFormStartNew/CreateMotionFormStyle'
+import { EMPTY_TIER, MAX_FEE_BP, MAX_RESERVE_RATIO_BP } from '../constants'
 
-type TierSectionProps = {
-  groupIndex: number
-  fieldNames: Record<'groups', string>
-  shareLimit: string
+type Props = {
+  tierArrayFieldName: string
+  maxShareLimit: BigNumberish | undefined
 }
 
-export const TiersSection = ({
-  groupIndex,
-  fieldNames,
-  shareLimit,
-}: TierSectionProps) => {
+export const OperatorGridTierFieldsGroup = ({
+  tierArrayFieldName,
+  maxShareLimit,
+}: Props) => {
   const tiersFieldArray = useFieldArray({
-    name: `${fieldNames.groups}.${groupIndex}.tiers`,
+    name: tierArrayFieldName,
   })
   const { getValues } = useFormContext()
 
   const handleAddTier = () => tiersFieldArray.append({ ...EMPTY_TIER })
 
-  const shareLimitBn = BigNumber.from(shareLimit || 0)
+  const shareLimitBn = BigNumber.from(maxShareLimit || 0)
 
   return (
     <>
@@ -55,8 +53,9 @@ export const TiersSection = ({
 
           <Fieldset>
             <InputNumberControl
-              name={`${fieldNames.groups}.${groupIndex}.tiers.${tierIndex}.shareLimit`}
+              name={`${tierArrayFieldName}.${tierIndex}.shareLimit`}
               label="Tier share limit"
+              disabled={shareLimitBn.isZero()}
               rules={{
                 required: 'Field is required',
                 validate: value => {
@@ -77,7 +76,7 @@ export const TiersSection = ({
 
           <Fieldset>
             <InputNumberControl
-              name={`${fieldNames.groups}.${groupIndex}.tiers.${tierIndex}.reserveRatioBP`}
+              name={`${tierArrayFieldName}.${tierIndex}.reserveRatioBP`}
               label="Reserve ratio (BP)"
               rules={{
                 required: 'Field is required',
@@ -92,7 +91,7 @@ export const TiersSection = ({
                     return 'Value must be greater than 0'
                   }
 
-                  if (valueNum > 10000) {
+                  if (valueNum > MAX_RESERVE_RATIO_BP) {
                     return `Value must be less than or equal to ${MAX_RESERVE_RATIO_BP}`
                   }
 
@@ -104,7 +103,7 @@ export const TiersSection = ({
 
           <Fieldset>
             <InputNumberControl
-              name={`${fieldNames.groups}.${groupIndex}.tiers.${tierIndex}.forcedRebalanceThresholdBP`}
+              name={`${tierArrayFieldName}.${tierIndex}.forcedRebalanceThresholdBP`}
               label="Forced rebalance threshold (BP)"
               rules={{
                 required: 'Field is required',
@@ -120,7 +119,7 @@ export const TiersSection = ({
                   }
 
                   const reserveRatioBP = getValues(
-                    `${fieldNames.groups}.${groupIndex}.tiers.${tierIndex}.reserveRatioBP`,
+                    `${tierArrayFieldName}.${tierIndex}.reserveRatioBP`,
                   )
 
                   if (!reserveRatioBP) {
@@ -139,7 +138,7 @@ export const TiersSection = ({
 
           <Fieldset>
             <InputNumberControl
-              name={`${fieldNames.groups}.${groupIndex}.tiers.${tierIndex}.infraFeeBP`}
+              name={`${tierArrayFieldName}.${tierIndex}.infraFeeBP`}
               label="Infra fee (BP)"
               rules={{
                 required: 'Field is required',
@@ -161,7 +160,7 @@ export const TiersSection = ({
 
           <Fieldset>
             <InputNumberControl
-              name={`${fieldNames.groups}.${groupIndex}.tiers.${tierIndex}.liquidityFeeBP`}
+              name={`${tierArrayFieldName}.${tierIndex}.liquidityFeeBP`}
               label="Liquidity fee (BP)"
               rules={{
                 required: 'Field is required',
@@ -183,7 +182,7 @@ export const TiersSection = ({
 
           <Fieldset>
             <InputNumberControl
-              name={`${fieldNames.groups}.${groupIndex}.tiers.${tierIndex}.reservationFeeBP`}
+              name={`${tierArrayFieldName}.${tierIndex}.reservationFeeBP`}
               label="Reservation fee (BP)"
               rules={{
                 required: 'Field is required',

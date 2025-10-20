@@ -13,20 +13,20 @@ import {
   FieldsWrapper,
   FieldsHeader,
   FieldsHeaderDesc,
-} from '../../CreateMotionFormStyle'
+} from '../CreateMotionFormStyle'
 
 import { ContractRegisterGroupsInOperatorGrid } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
-import { createMotionFormPart } from '../createMotionFormPart'
+import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { GridGroup } from './types'
-import { EMPTY_GROUP } from './constants'
-import { TiersSection } from './TiersSection'
+import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
+import { GridGroup } from 'modules/vaults/types'
+import { OperatorGridTierFieldsGroup } from 'modules/vaults/ui/OperatorGridTierFieldsGroup'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -77,16 +77,13 @@ export const formParts = createMotionFormPart({
     const { data: factoryData, initialLoading: isFactoryDataLoading } = useSWR(
       `register-groups-factory-${chainId}`,
       async () => {
-        const [maxShareLimit, trustedCaller, defaultTierOperator] =
-          await Promise.all([
-            factoryContract.maxShareLimit(),
-            factoryContract.trustedCaller(),
-            factoryContract.DEFAULT_TIER_OPERATOR(),
-          ])
+        const [maxShareLimit, trustedCaller] = await Promise.all([
+          factoryContract.maxShareLimit(),
+          factoryContract.trustedCaller(),
+        ])
         return {
           maxShareLimit,
           trustedCaller,
-          defaultTierOperator,
         }
       },
       {
@@ -143,7 +140,7 @@ export const formParts = createMotionFormPart({
 
                       const valueAddress = utils.getAddress(value)
 
-                      if (valueAddress === factoryData?.defaultTierOperator) {
+                      if (valueAddress === DEFAULT_TIER_OPERATOR) {
                         return `Address can not be the default tier operator address`
                       }
 
@@ -185,10 +182,9 @@ export const formParts = createMotionFormPart({
                   }}
                 />
               </Fieldset>
-              <TiersSection
-                groupIndex={groupIndex}
-                fieldNames={fieldNames}
-                shareLimit={groupsInput[groupIndex].shareLimit}
+              <OperatorGridTierFieldsGroup
+                tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
+                maxShareLimit={groupsInput[groupIndex].shareLimit}
               />
             </FieldsWrapper>
           </Fragment>
