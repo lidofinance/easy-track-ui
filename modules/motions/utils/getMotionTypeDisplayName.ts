@@ -83,6 +83,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.RccStethTopUp]: 'Top up RCC stETH',
   [MotionType.PmlStethTopUp]: 'Top up PML stETH',
   [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
+  [MotionType.RegisterGroupsInOperatorGrid]: 'Register groups in Operator Grid',
 } as const
 
 export function getMotionTypeDisplayName(

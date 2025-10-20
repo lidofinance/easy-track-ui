@@ -546,3 +546,8 @@ export const ContractCuratedExitRequestHashesSubmit = createContractHelpers({
   factory: TypeChain.SubmitExitRequestHashesAbi__factory,
   address: EvmAddressesByType[MotionType.CuratedExitRequestHashesSubmit],
 })
+
+export const ContractRegisterGroupsInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmRegisterGroupsInOperatorsGridAbi__factory,
+  address: EvmAddressesByType[MotionType.RegisterGroupsInOperatorGrid],
+})

@@ -49,6 +49,9 @@ export const MotionTypeForms = {
   MEVBoostRelaysAdd: 'MEVBoostRelaysAdd',
   MEVBoostRelaysEdit: 'MEVBoostRelaysEdit',
   MEVBoostRelaysRemove: 'MEVBoostRelaysRemove',
+
+  // Lido Vaults
+  RegisterGroupsInOperatorGrid: 'RegisterGroupsInOperatorGrid',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare
