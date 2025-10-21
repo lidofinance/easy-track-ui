@@ -27,6 +27,7 @@ import { useSWR } from 'modules/network/hooks/useSwr'
 import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
 import { GridGroup } from 'modules/vaults/types'
 import { OperatorGridTierFieldsGroup } from 'modules/vaults/ui/OperatorGridTierFieldsGroup'
+import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -71,6 +72,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
+    const { getOperatorGridGroup } = useOperatorGridGroup()
 
     const factoryContract = ContractRegisterGroupsInOperatorGrid.useRpc()
 
@@ -132,7 +134,7 @@ export const formParts = createMotionFormPart({
                   label="Node operator address"
                   rules={{
                     required: 'Field is required',
-                    validate: value => {
+                    validate: async value => {
                       const addressErr = validateAddress(value)
                       if (addressErr) {
                         return addressErr
@@ -153,6 +155,11 @@ export const formParts = createMotionFormPart({
 
                       if (addressInGroupInputIndex !== -1) {
                         return 'Address is already in use by another group within the motion'
+                      }
+
+                      const group = await getOperatorGridGroup(valueAddress)
+                      if (group) {
+                        return `Operator grid already has a group for this address`
                       }
 
                       return true
