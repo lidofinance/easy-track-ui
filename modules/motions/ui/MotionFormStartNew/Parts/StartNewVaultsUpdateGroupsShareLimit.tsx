@@ -25,7 +25,6 @@ import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { GridGroup } from 'modules/vaults/types'
-import { OperatorGridTierFieldsGroup } from 'modules/vaults/ui/OperatorGridTierFieldsGroup'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 
 type GroupInput = Omit<GridGroup, 'tiers'>
@@ -124,12 +123,11 @@ export const formParts = createMotionFormPart({
                         return addressErr
                       }
 
-                      const valueAddress = utils.getAddress(value)
+                      const lowerAddress = value.toLowerCase()
 
                       const addressInGroupInputIndex = groupsInput.findIndex(
                         ({ nodeOperator }, index) =>
-                          nodeOperator &&
-                          utils.getAddress(nodeOperator) === valueAddress &&
+                          nodeOperator.toLowerCase() === lowerAddress &&
                           groupIndex !== index,
                       )
 
@@ -137,7 +135,7 @@ export const formParts = createMotionFormPart({
                         return 'Address is already in use by another group within the motion'
                       }
 
-                      const group = await getOperatorGridGroup(valueAddress)
+                      const group = await getOperatorGridGroup(lowerAddress)
                       if (!group) {
                         return `Node operator is not registered in Operator Grid`
                       }
@@ -169,10 +167,6 @@ export const formParts = createMotionFormPart({
                   }}
                 />
               </Fieldset>
-              <OperatorGridTierFieldsGroup
-                tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
-                maxShareLimit={groupsInput[groupIndex].shareLimit}
-              />
             </FieldsWrapper>
           </Fragment>
         ))}

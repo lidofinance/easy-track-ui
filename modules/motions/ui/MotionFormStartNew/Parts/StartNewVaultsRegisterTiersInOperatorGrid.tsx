@@ -125,16 +125,15 @@ export const formParts = createMotionFormPart({
                           return addressErr
                         }
 
-                        const valueAddress = utils.getAddress(value)
+                        const lowerAddress = value.toLowerCase()
 
-                        if (valueAddress === DEFAULT_TIER_OPERATOR) {
+                        if (lowerAddress === DEFAULT_TIER_OPERATOR) {
                           return `Address can not be the default tier operator address`
                         }
 
                         const addressInGroupInputIndex = groupsInput.findIndex(
                           ({ nodeOperator }, index) =>
-                            nodeOperator &&
-                            utils.getAddress(nodeOperator) === valueAddress &&
+                            nodeOperator.toLowerCase() === lowerAddress &&
                             groupIndex !== index,
                         )
 
@@ -142,7 +141,7 @@ export const formParts = createMotionFormPart({
                           return 'Address is already in use by another group within the motion'
                         }
 
-                        const group = await getOperatorGridGroup(valueAddress)
+                        const group = await getOperatorGridGroup(lowerAddress)
                         if (!group) {
                           return `Node operator is not registered in Operator Grid`
                         }

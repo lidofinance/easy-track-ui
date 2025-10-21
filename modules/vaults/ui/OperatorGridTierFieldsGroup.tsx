@@ -32,12 +32,10 @@ export const OperatorGridTierFieldsGroup = ({
 
   return (
     <>
-      <FieldsHeaderDesc style={{ marginTop: '16px', marginBottom: '8px' }}>
-        Tiers
-      </FieldsHeaderDesc>
+      <FieldsHeaderDesc>Tiers</FieldsHeaderDesc>
 
       {tiersFieldArray.fields.map((tierItem, tierIndex) => (
-        <FieldsWrapper key={tierItem.id} style={{ marginLeft: '16px' }}>
+        <FieldsWrapper key={tierItem.id}>
           <FieldsHeader>
             {tiersFieldArray.fields.length > 1 && (
               <FieldsHeaderDesc>Tier #{tierIndex + 1}</FieldsHeaderDesc>
@@ -204,7 +202,7 @@ export const OperatorGridTierFieldsGroup = ({
         </FieldsWrapper>
       ))}
 
-      <Fieldset style={{ marginLeft: '16px' }}>
+      <Fieldset>
         <ButtonIcon
           type="button"
           variant="ghost"
