@@ -53,6 +53,7 @@ export const MotionTypeForms = {
   // Lido Vaults
   RegisterGroupsInOperatorGrid: 'RegisterGroupsInOperatorGrid',
   RegisterTiersInOperatorGrid: 'RegisterTiersInOperatorGrid',
+  UpdateGroupsShareLimit: 'UpdateGroupsShareLimit',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

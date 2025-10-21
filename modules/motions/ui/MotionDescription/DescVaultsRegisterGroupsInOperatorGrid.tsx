@@ -11,7 +11,7 @@ export function DescVaultsRegisterGroupsInOperatorGrid({
 
   return (
     <>
-      {Array.from({ length: callData.length }, (_, i) => i).map(index => {
+      {Array.from({ length: nodeOperators.length }, (_, i) => i).map(index => {
         return (
           <div key={index}>
             — Register group for node operator{' '}

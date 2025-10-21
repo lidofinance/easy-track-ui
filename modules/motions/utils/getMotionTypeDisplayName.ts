@@ -85,6 +85,7 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
   [MotionType.RegisterGroupsInOperatorGrid]: 'Register groups in Operator Grid',
   [MotionType.RegisterTiersInOperatorGrid]: 'Register tiers in Operator Grid',
+  [MotionType.UpdateGroupsShareLimit]: 'Update groups share limit',
 } as const
 
 export function getMotionTypeDisplayName(

@@ -22,6 +22,7 @@ import * as StartNewCSMSetVettedGateTree from './StartNewCSMSetVettedGateTree'
 import * as StartNewExitRequestHashesSubmit from './StartNewExitRequestHashesSubmit'
 import * as StartNewVaultsRegisterGroupsInOperatorGrid from './StartNewVaultsRegisterGroupsInOperatorGrid'
 import * as StartNewVaultsRegisterTiersInOperatorGrid from './StartNewVaultsRegisterTiersInOperatorGrid'
+import * as StartNewVaultsUpdateGroupsShareLimit from './StartNewVaultsUpdateGroupsShareLimit'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -140,6 +141,8 @@ export const formParts = {
     StartNewVaultsRegisterGroupsInOperatorGrid.formParts,
   [MotionTypeForms.RegisterTiersInOperatorGrid]:
     StartNewVaultsRegisterTiersInOperatorGrid.formParts,
+  [MotionTypeForms.UpdateGroupsShareLimit]:
+    StartNewVaultsUpdateGroupsShareLimit.formParts,
 } as const
 
 export type FormData = {

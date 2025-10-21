@@ -561,3 +561,8 @@ export const ContractOperatorGrid = createContractHelpers({
   factory: TypeChain.OperatorGridAbi__factory,
   address: CONTRACT_ADDRESSES.OperatorGrid,
 })
+
+export const ContractUpdateGroupsShareLimit = createContractHelpers({
+  factory: TypeChain.EvmUpdateGroupsShareLimitAbi__factory,
+  address: EvmAddressesByType[MotionType.UpdateGroupsShareLimit],
+})
