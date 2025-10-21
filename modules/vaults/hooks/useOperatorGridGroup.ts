@@ -3,6 +3,7 @@ import { ContractOperatorGrid } from 'modules/blockChain/contracts'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
 import { useCallback } from 'react'
 import { isAddress } from 'ethers/lib/utils'
+import { constants } from 'ethers'
 
 type Group = Awaited<ReturnType<OperatorGridAbi['group']>>
 
@@ -26,6 +27,9 @@ export const useOperatorGridGroup = () => {
 
       try {
         const group = await operatorGrid.group(lowerAddress)
+        if (group.operator === constants.AddressZero) {
+          return null
+        }
         setState({ [lowerAddress]: group })
         return group
       } catch (error) {

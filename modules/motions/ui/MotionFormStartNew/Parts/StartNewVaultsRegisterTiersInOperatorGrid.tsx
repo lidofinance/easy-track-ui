@@ -131,6 +131,17 @@ export const formParts = createMotionFormPart({
                           return `Address can not be the default tier operator address`
                         }
 
+                        const addressInGroupInputIndex = groupsInput.findIndex(
+                          ({ nodeOperator }, index) =>
+                            nodeOperator &&
+                            utils.getAddress(nodeOperator) === valueAddress &&
+                            groupIndex !== index,
+                        )
+
+                        if (addressInGroupInputIndex !== -1) {
+                          return 'Address is already in use by another group within the motion'
+                        }
+
                         const group = await getOperatorGridGroup(valueAddress)
                         if (!group) {
                           return `Node operator is not registered in Operator Grid`

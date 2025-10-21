@@ -39,20 +39,20 @@ export function DescVaultsUpdateGroupsShareLimit({
   const [nodeOperators, newShareLimits] = callData
 
   return (
-    <>
+    <ul>
       {Array.from({ length: nodeOperators.length }, (_, i) => i).map(index => {
         const nodeOperator = nodeOperators[index]
         const currentShareLimit = currentShareLimits[index]
         const newShareLimit = newShareLimits[index]
         return (
-          <div key={index}>
-            Update share limit of group with node operator{' '}
+          <li key={index}>
+            Group group with node operator{' '}
             <AddressInlineWithPop address={nodeOperator} />
-            {isOnChain && data ? ` from ${currentShareLimit} ` : ''}
-            {`to ${newShareLimit}`}
-          </div>
+            {isOnChain && data ? ` from ${currentShareLimit.toString()} ` : ''}
+            {`to ${newShareLimit.toString()}`}
+          </li>
         )
       })}
-    </>
+    </ul>
   )
 }
