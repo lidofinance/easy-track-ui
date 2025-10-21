@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 
 const formatter = new Intl.NumberFormat('en', {
   notation: 'standard',
@@ -10,5 +10,10 @@ export const formatVaultParam = (value: BigNumber, isBp?: boolean) => {
   if (isBp) {
     return formatter.format(value.toNumber())
   }
-  return formatter.format(parseInt(ethers.utils.formatEther(value)))
+
+  const formattedEtherValue = utils.formatEther(value)
+  if (value.lt(utils.parseEther('0.01'))) {
+    return formattedEtherValue
+  }
+  return formatter.format(parseInt(formattedEtherValue))
 }

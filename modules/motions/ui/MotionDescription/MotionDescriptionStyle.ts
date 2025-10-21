@@ -7,4 +7,8 @@ export const DescWrap = styled.div`
   ol {
     padding-left: 12px;
   }
+
+  ul {
+    padding-left: 20px;
+  }
 `

@@ -11,6 +11,9 @@ import {
   RemoveItemButton,
 } from 'modules/motions/ui/MotionFormStartNew/CreateMotionFormStyle'
 import { EMPTY_TIER, MAX_FEE_BP, MAX_RESERVE_RATIO_BP } from '../constants'
+import { parseEther } from 'ethers/lib/utils'
+import { formatVaultParam } from '../utils/formatVaultParam'
+import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 
 type Props = {
   tierArrayFieldName: string
@@ -62,8 +65,10 @@ export const OperatorGridTierFieldsGroup = ({
                     return uintError
                   }
 
-                  if (shareLimitBn.lt(value)) {
-                    return `Value must be less than or equal to ${shareLimitBn} (the group's share limit)`
+                  if (shareLimitBn.lt(parseEther(value))) {
+                    return `Value must be less than or equal to ${formatVaultParam(
+                      shareLimitBn,
+                    )} (the group's share limit)`
                   }
 
                   return true
@@ -79,9 +84,9 @@ export const OperatorGridTierFieldsGroup = ({
               rules={{
                 required: 'Field is required',
                 validate: value => {
-                  const uintError = validateUintValue(value)
-                  if (uintError) {
-                    return uintError
+                  const amountError = validateEtherValue(value)
+                  if (amountError) {
+                    return amountError
                   }
 
                   const valueNum = Number(value)

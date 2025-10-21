@@ -22,10 +22,12 @@ import { estimateGasFallback } from 'modules/motions/utils'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
-import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { GridGroup } from 'modules/vaults/types'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { parseEther } from 'ethers/lib/utils'
+import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
+import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 
 type GroupInput = Omit<GridGroup, 'tiers'>
 
@@ -35,8 +37,8 @@ export const formParts = createMotionFormPart({
     const encodedCallData = new utils.AbiCoder().encode(
       ['address[]', 'uint256[]'],
       [
-        formData.groups.map(group => group.nodeOperator),
-        formData.groups.map(group => group.shareLimit),
+        formData.groups.map(group => utils.getAddress(group.nodeOperator)),
+        formData.groups.map(group => utils.parseEther(group.shareLimit)),
       ],
     )
     const gasLimit = await estimateGasFallback(
@@ -153,13 +155,15 @@ export const formParts = createMotionFormPart({
                   rules={{
                     required: 'Field is required',
                     validate: value => {
-                      const uintError = validateUintValue(value)
-                      if (uintError) {
-                        return uintError
+                      const amountError = validateEtherValue(value)
+                      if (amountError) {
+                        return amountError
                       }
 
-                      if (factoryData?.maxShareLimit.lt(value)) {
-                        return `Value must be less than or equal to ${factoryData.maxShareLimit}`
+                      if (factoryData?.maxShareLimit.lt(parseEther(value))) {
+                        return `Value must be less than or equal to ${formatVaultParam(
+                          factoryData.maxShareLimit,
+                        )}`
                       }
 
                       return true

@@ -41,10 +41,10 @@ export const formParts = createMotionFormPart({
         'tuple(uint256,uint256,uint256,uint256,uint256,uint256)[][]',
       ],
       [
-        sortedGroups.map(group => group.nodeOperator),
+        sortedGroups.map(group => utils.getAddress(group.nodeOperator)),
         sortedGroups.map(group =>
           group.tiers.map(tier => [
-            Number(tier.shareLimit),
+            utils.parseEther(tier.shareLimit),
             Number(tier.reserveRatioBP),
             Number(tier.forcedRebalanceThresholdBP),
             Number(tier.infraFeeBP),

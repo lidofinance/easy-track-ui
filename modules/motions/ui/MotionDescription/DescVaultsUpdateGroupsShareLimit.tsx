@@ -3,6 +3,7 @@ import { EvmUpdateGroupsShareLimitAbi } from 'generated'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import React from 'react'
 import { NestProps } from './types'
 
@@ -46,10 +47,12 @@ export function DescVaultsUpdateGroupsShareLimit({
         const newShareLimit = newShareLimits[index]
         return (
           <li key={index}>
-            Group group with node operator{' '}
-            <AddressInlineWithPop address={nodeOperator} />
-            {isOnChain && data ? ` from ${currentShareLimit.toString()} ` : ''}
-            {`to ${newShareLimit.toString()}`}
+            Update share limit of group with node operator{' '}
+            <AddressInlineWithPop address={nodeOperator} />{' '}
+            {isOnChain && data
+              ? ` from ${formatVaultParam(currentShareLimit)} `
+              : ''}
+            {`to ${formatVaultParam(newShareLimit)}`}
           </li>
         )
       })}
