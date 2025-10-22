@@ -1,5 +1,5 @@
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigNumber } from 'ethers'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useFieldArray, useFormContext } from 'react-hook-form'
@@ -14,15 +14,18 @@ import { EMPTY_TIER, MAX_FEE_BP, MAX_RESERVE_RATIO_BP } from '../constants'
 import { parseEther } from 'ethers/lib/utils'
 import { formatVaultParam } from '../utils/formatVaultParam'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
+import { useMemo } from 'react'
 
 type Props = {
   tierArrayFieldName: string
-  maxShareLimit: BigNumberish | undefined
+  maxShareLimit: BigNumber | string | undefined
+  tiersCount?: number
 }
 
 export const OperatorGridTierFieldsGroup = ({
   tierArrayFieldName,
   maxShareLimit,
+  tiersCount,
 }: Props) => {
   const tiersFieldArray = useFieldArray({
     name: tierArrayFieldName,
@@ -31,23 +34,37 @@ export const OperatorGridTierFieldsGroup = ({
 
   const handleAddTier = () => tiersFieldArray.append({ ...EMPTY_TIER })
 
-  const shareLimitBn = BigNumber.from(maxShareLimit || 0)
+  const maxShareLimitBn = useMemo(() => {
+    if (!maxShareLimit) {
+      return BigNumber.from(0)
+    }
+    if (typeof maxShareLimit === 'string') {
+      return parseEther(maxShareLimit)
+    }
+    return maxShareLimit
+  }, [maxShareLimit])
+
+  const firstTierId = (tiersCount ?? 0) + 1
 
   return (
     <>
-      <FieldsHeaderDesc>Tiers</FieldsHeaderDesc>
+      <FieldsHeaderDesc>
+        Tiers {tiersCount ? `(current count is ${tiersCount})` : ''}
+      </FieldsHeaderDesc>
 
       {tiersFieldArray.fields.map((tierItem, tierIndex) => (
         <FieldsWrapper key={tierItem.id}>
           <FieldsHeader>
             {tiersFieldArray.fields.length > 1 && (
-              <FieldsHeaderDesc>Tier #{tierIndex + 1}</FieldsHeaderDesc>
+              <FieldsHeaderDesc>
+                Tier #{tierIndex + firstTierId}
+              </FieldsHeaderDesc>
             )}
             {tiersFieldArray.fields.length > 1 && (
               <RemoveItemButton
                 onClick={() => tiersFieldArray.remove(tierIndex)}
               >
-                Remove tier {tierIndex + 1}
+                Remove tier {tierIndex + firstTierId}
               </RemoveItemButton>
             )}
           </FieldsHeader>
@@ -56,7 +73,7 @@ export const OperatorGridTierFieldsGroup = ({
             <InputNumberControl
               name={`${tierArrayFieldName}.${tierIndex}.shareLimit`}
               label="Tier share limit"
-              disabled={shareLimitBn.isZero()}
+              disabled={maxShareLimitBn.isZero()}
               rules={{
                 required: 'Field is required',
                 validate: value => {
@@ -65,10 +82,10 @@ export const OperatorGridTierFieldsGroup = ({
                     return uintError
                   }
 
-                  if (shareLimitBn.lt(parseEther(value))) {
+                  if (maxShareLimitBn.lt(parseEther(value))) {
                     return `Value must be less than or equal to ${formatVaultParam(
-                      shareLimitBn,
-                    )} (the group's share limit)`
+                      maxShareLimitBn,
+                    )}`
                   }
 
                   return true

@@ -155,6 +155,7 @@ export const formParts = createMotionFormPart({
                 <OperatorGridTierFieldsGroup
                   tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
                   maxShareLimit={entityInMap?.shareLimit}
+                  tiersCount={entityInMap?.tierIds.length}
                 />
               </FieldsWrapper>
             </Fragment>
