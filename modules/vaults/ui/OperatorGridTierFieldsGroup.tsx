@@ -19,11 +19,13 @@ import { useMemo } from 'react'
 type Props = {
   tierArrayFieldName: string
   maxShareLimit: BigNumber | string | undefined
+  tiersCount?: number
 }
 
 export const OperatorGridTierFieldsGroup = ({
   tierArrayFieldName,
   maxShareLimit,
+  tiersCount,
 }: Props) => {
   const tiersFieldArray = useFieldArray({
     name: tierArrayFieldName,
@@ -42,21 +44,27 @@ export const OperatorGridTierFieldsGroup = ({
     return maxShareLimit
   }, [maxShareLimit])
 
+  const firstTierId = (tiersCount ?? 0) + 1
+
   return (
     <>
-      <FieldsHeaderDesc>Tiers</FieldsHeaderDesc>
+      <FieldsHeaderDesc>
+        Tiers {tiersCount ? `(current count is ${tiersCount})` : ''}
+      </FieldsHeaderDesc>
 
       {tiersFieldArray.fields.map((tierItem, tierIndex) => (
         <FieldsWrapper key={tierItem.id}>
           <FieldsHeader>
             {tiersFieldArray.fields.length > 1 && (
-              <FieldsHeaderDesc>Tier #{tierIndex + 1}</FieldsHeaderDesc>
+              <FieldsHeaderDesc>
+                Tier #{tierIndex + firstTierId}
+              </FieldsHeaderDesc>
             )}
             {tiersFieldArray.fields.length > 1 && (
               <RemoveItemButton
                 onClick={() => tiersFieldArray.remove(tierIndex)}
               >
-                Remove tier {tierIndex + 1}
+                Remove tier {tierIndex + firstTierId}
               </RemoveItemButton>
             )}
           </FieldsHeader>

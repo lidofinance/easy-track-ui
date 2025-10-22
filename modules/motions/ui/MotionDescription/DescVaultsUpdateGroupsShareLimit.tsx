@@ -13,6 +13,7 @@ export function DescVaultsUpdateGroupsShareLimit({
   isOnChain,
 }: NestProps<EvmUpdateGroupsShareLimitAbi['decodeEVMScriptCallData']>) {
   const { getOperatorGridGroup } = useOperatorGridGroup()
+  const [nodeOperators, newShareLimits] = callData
 
   const { data } = useSWR(
     isOnChain ? `vaults-update-groups-share-limit-desc` : null,
@@ -20,7 +21,6 @@ export function DescVaultsUpdateGroupsShareLimit({
       if (!isOnChain) {
         return null
       }
-      const nodeOperators = callData[0]
       const result: BigNumber[] = []
 
       for (const nodeOperator of nodeOperators) {
@@ -37,7 +37,6 @@ export function DescVaultsUpdateGroupsShareLimit({
   )
 
   const currentShareLimits = data ?? []
-  const [nodeOperators, newShareLimits] = callData
 
   return (
     <ul>
