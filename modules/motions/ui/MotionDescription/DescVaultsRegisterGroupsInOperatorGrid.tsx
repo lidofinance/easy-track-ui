@@ -18,14 +18,15 @@ export function DescVaultsRegisterGroupsInOperatorGrid({
           <li key={index}>
             Group with node operator{' '}
             <AddressInlineWithPop address={nodeOperators[index]} />, share limit{' '}
-            <b>{tierLimit}</b> and tiers:
+            <b>{tierLimit} stETH</b> and tiers:
             <br />
             {tiers[index].map((tier, tierIndex) => (
               <React.Fragment key={`${index}.tierIndex`}>
                 <span>Tier #{tierIndex + 1}</span>
                 <ul>
                   <li>
-                    <b>Share limit:</b> {formatVaultParam(tier.shareLimit)};
+                    <b>Share limit:</b> {formatVaultParam(tier.shareLimit)}{' '}
+                    stETH;
                   </li>
                   <li>
                     <b>Reserve ratio (BP):</b>{' '}
@@ -43,7 +44,7 @@ export function DescVaultsRegisterGroupsInOperatorGrid({
                     {formatVaultParam(tier.liquidityFeeBP, true)};
                   </li>
                   <li>
-                    <b>Reservation fee (BP):</b>{' '}
+                    <b>Reservation liquidity fee (BP):</b>{' '}
                     {formatVaultParam(tier.reservationFeeBP, true)}.
                   </li>
                 </ul>

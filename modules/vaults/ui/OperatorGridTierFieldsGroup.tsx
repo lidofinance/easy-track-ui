@@ -203,7 +203,7 @@ export const OperatorGridTierFieldsGroup = ({
           <Fieldset>
             <InputNumberControl
               name={`${tierArrayFieldName}.${tierIndex}.reservationFeeBP`}
-              label="Reservation fee (BP)"
+              label="Reservation liquidity fee (BP)"
               rules={{
                 required: 'Field is required',
                 validate: value => {

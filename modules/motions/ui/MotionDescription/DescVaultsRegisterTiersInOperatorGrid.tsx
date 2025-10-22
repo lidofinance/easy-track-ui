@@ -51,7 +51,8 @@ export function DescVaultsRegisterTiersInOperatorGrid({
                 <span>Tier #{tierIndex + tiersCount + 1}</span>
                 <ul>
                   <li>
-                    <b>Share limit:</b> {formatVaultParam(tier.shareLimit)};
+                    <b>Share limit:</b> {formatVaultParam(tier.shareLimit)}{' '}
+                    stETH;
                   </li>
                   <li>
                     <b>Reserve ratio (BP):</b>{' '}
@@ -69,7 +70,7 @@ export function DescVaultsRegisterTiersInOperatorGrid({
                     {formatVaultParam(tier.liquidityFeeBP, true)};
                   </li>
                   <li>
-                    <b>Reservation fee (BP):</b>{' '}
+                    <b>Reservation liquidity fee (BP):</b>{' '}
                     {formatVaultParam(tier.reservationFeeBP, true)}.
                   </li>
                 </ul>

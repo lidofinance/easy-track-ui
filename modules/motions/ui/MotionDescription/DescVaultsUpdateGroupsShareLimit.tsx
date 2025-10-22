@@ -51,7 +51,7 @@ export function DescVaultsUpdateGroupsShareLimit({
             {isOnChain && data
               ? ` from ${formatVaultParam(currentShareLimit)} `
               : ''}
-            {`to ${formatVaultParam(newShareLimit)}`}
+            {`to ${formatVaultParam(newShareLimit)} stETH`}
           </li>
         )
       })}
