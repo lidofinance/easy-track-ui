@@ -25,11 +25,12 @@ import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
 import { GridGroup } from 'modules/vaults/types'
-import { OperatorGridTierFieldsGroup } from 'modules/vaults/ui/OperatorGridTierFieldsGroup'
+import { OperatorGridTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridTiersFieldsWrapper'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { parseEther } from 'ethers/lib/utils'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
+import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -97,6 +98,11 @@ export const formParts = createMotionFormPart({
       },
     )
 
+    const {
+      data: operatorGridInfo,
+      initialLoading: isOperatorGridInfoLoading,
+    } = useOperatorGridInfo()
+
     const groupsFieldArray = useFieldArray({ name: fieldNames.groups })
 
     const { watch } = useFormContext()
@@ -104,7 +110,7 @@ export const formParts = createMotionFormPart({
 
     const handleAddGroup = () => groupsFieldArray.append({ ...EMPTY_GROUP })
 
-    if (isFactoryDataLoading) {
+    if (isFactoryDataLoading || isOperatorGridInfoLoading) {
       return <PageLoader />
     }
 
@@ -112,93 +118,98 @@ export const formParts = createMotionFormPart({
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
+    const groupCount = operatorGridInfo?.nodeOperatorCount ?? 0
+
     return (
       <>
-        {groupsFieldArray.fields.map((item, groupIndex) => (
-          <Fragment key={item.id}>
-            <FieldsWrapper>
-              <FieldsHeader>
-                {groupsFieldArray.fields.length > 1 && (
-                  <FieldsHeaderDesc>Group #{groupIndex + 1}</FieldsHeaderDesc>
-                )}
-                {groupsFieldArray.fields.length > 1 && (
-                  <RemoveItemButton
-                    onClick={() => groupsFieldArray.remove(groupIndex)}
-                  >
-                    Remove group {groupIndex + 1}
-                  </RemoveItemButton>
-                )}
-              </FieldsHeader>
+        {groupsFieldArray.fields.map((item, groupIndex) => {
+          const groupNumber = groupCount + groupIndex + 1
+          return (
+            <Fragment key={item.id}>
+              <FieldsWrapper>
+                <FieldsHeader>
+                  <FieldsHeaderDesc>Group #{groupNumber}</FieldsHeaderDesc>
+                  {groupsFieldArray.fields.length > 1 && (
+                    <RemoveItemButton
+                      onClick={() => groupsFieldArray.remove(groupIndex)}
+                    >
+                      Remove group {groupNumber}
+                    </RemoveItemButton>
+                  )}
+                </FieldsHeader>
 
-              <Fieldset>
-                <InputControl
-                  name={`${fieldNames.groups}.${groupIndex}.nodeOperator`}
-                  label="Node operator address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: async value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
+                <Fieldset>
+                  <InputControl
+                    name={`${fieldNames.groups}.${groupIndex}.nodeOperator`}
+                    label="Node operator address"
+                    rules={{
+                      required: 'Field is required',
+                      validate: async value => {
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
+                        }
 
-                      const lowerAddress = value.toLowerCase()
+                        const lowerAddress = value.toLowerCase()
 
-                      if (lowerAddress === DEFAULT_TIER_OPERATOR) {
-                        return `Address can not be the default tier operator address`
-                      }
+                        if (lowerAddress === DEFAULT_TIER_OPERATOR) {
+                          return `Address can not be the default tier operator address`
+                        }
 
-                      const addressInGroupInputIndex = groupsInput.findIndex(
-                        ({ nodeOperator }, index) =>
-                          nodeOperator.toLowerCase() === lowerAddress &&
-                          groupIndex !== index,
-                      )
+                        const addressInGroupInputIndex = groupsInput.findIndex(
+                          ({ nodeOperator }, index) =>
+                            nodeOperator.toLowerCase() === lowerAddress &&
+                            groupIndex !== index,
+                        )
 
-                      if (addressInGroupInputIndex !== -1) {
-                        return 'Address is already in use by another group within the motion'
-                      }
+                        if (addressInGroupInputIndex !== -1) {
+                          return 'Address is already in use by another group within the motion'
+                        }
 
-                      const group = await getOperatorGridGroup(lowerAddress)
-                      if (group) {
-                        return `Operator grid already has a group for this address`
-                      }
+                        const group = await getOperatorGridGroup(lowerAddress)
+                        if (group) {
+                          return `Operator grid already has a group for this address`
+                        }
 
-                      return true
-                    },
-                  }}
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
+
+                <Fieldset>
+                  <InputNumberControl
+                    name={`${fieldNames.groups}.${groupIndex}.shareLimit`}
+                    label="Share limit"
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        const amountError = validateEtherValue(value)
+                        if (amountError) {
+                          return amountError
+                        }
+
+                        if (factoryData?.maxShareLimit.lt(parseEther(value))) {
+                          return `Value must be less than or equal to ${formatVaultParam(
+                            factoryData.maxShareLimit,
+                          )}`
+                        }
+
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
+                <OperatorGridTiersFieldsWrapper
+                  tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
+                  maxShareLimit={groupsInput[groupIndex].shareLimit}
+                  groupTiersCount={0}
+                  totalTiersCount={operatorGridInfo?.tiersCount}
                 />
-              </Fieldset>
-
-              <Fieldset>
-                <InputNumberControl
-                  name={`${fieldNames.groups}.${groupIndex}.shareLimit`}
-                  label="Share limit"
-                  rules={{
-                    required: 'Field is required',
-                    validate: value => {
-                      const amountError = validateEtherValue(value)
-                      if (amountError) {
-                        return amountError
-                      }
-
-                      if (factoryData?.maxShareLimit.lt(parseEther(value))) {
-                        return `Value must be less than or equal to ${formatVaultParam(
-                          factoryData.maxShareLimit,
-                        )}`
-                      }
-
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
-              <OperatorGridTierFieldsGroup
-                tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
-                maxShareLimit={groupsInput[groupIndex].shareLimit}
-              />
-            </FieldsWrapper>
-          </Fragment>
-        ))}
+              </FieldsWrapper>
+            </Fragment>
+          )
+        })}
 
         <Fieldset>
           <ButtonIcon

@@ -19,13 +19,15 @@ import { useMemo } from 'react'
 type Props = {
   tierArrayFieldName: string
   maxShareLimit: BigNumber | string | undefined
-  tiersCount?: number
+  groupTiersCount: number | undefined
+  totalTiersCount: number | undefined
 }
 
-export const OperatorGridTierFieldsGroup = ({
+export const OperatorGridTiersFieldsWrapper = ({
   tierArrayFieldName,
   maxShareLimit,
-  tiersCount,
+  groupTiersCount,
+  totalTiersCount,
 }: Props) => {
   const tiersFieldArray = useFieldArray({
     name: tierArrayFieldName,
@@ -44,27 +46,33 @@ export const OperatorGridTierFieldsGroup = ({
     return maxShareLimit
   }, [maxShareLimit])
 
-  const firstTierId = (tiersCount ?? 0) + 1
-
   return (
     <>
-      <FieldsHeaderDesc>
-        Tiers {tiersCount ? `(current count is ${tiersCount})` : ''}
-      </FieldsHeaderDesc>
+      <FieldsHeaderDesc>Tiers</FieldsHeaderDesc>
 
       {tiersFieldArray.fields.map((tierItem, tierIndex) => (
         <FieldsWrapper key={tierItem.id}>
           <FieldsHeader>
-            {tiersFieldArray.fields.length > 1 && (
-              <FieldsHeaderDesc>
-                Tier #{tierIndex + firstTierId}
-              </FieldsHeaderDesc>
-            )}
+            <FieldsHeaderDesc>
+              Tier
+              {groupTiersCount !== undefined && (
+                <>
+                  <br />
+                  expected in-group index = {groupTiersCount + tierIndex}
+                </>
+              )}
+              {totalTiersCount !== undefined && (
+                <>
+                  <br />
+                  expected global tierId = {totalTiersCount + tierIndex}
+                </>
+              )}
+            </FieldsHeaderDesc>
             {tiersFieldArray.fields.length > 1 && (
               <RemoveItemButton
                 onClick={() => tiersFieldArray.remove(tierIndex)}
               >
-                Remove tier {tierIndex + firstTierId}
+                Remove tier
               </RemoveItemButton>
             )}
           </FieldsHeader>
@@ -72,7 +80,7 @@ export const OperatorGridTierFieldsGroup = ({
           <Fieldset>
             <InputNumberControl
               name={`${tierArrayFieldName}.${tierIndex}.shareLimit`}
-              label="Tier share limit"
+              label="Share limit"
               disabled={maxShareLimitBn.isZero()}
               rules={{
                 required: 'Field is required',
