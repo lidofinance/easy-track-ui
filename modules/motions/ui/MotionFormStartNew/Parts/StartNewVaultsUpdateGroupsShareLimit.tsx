@@ -28,6 +28,8 @@ import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 import { parseEther } from 'ethers/lib/utils'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
+import { Text } from 'modules/shared/ui/Common/Text'
 
 type GroupInput = Omit<GridGroup, 'tiers'>
 
@@ -56,7 +58,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
-    const { getOperatorGridGroup } = useOperatorGridGroup()
+    const { groupMap, getOperatorGridGroup } = useOperatorGridGroup()
 
     const factoryContract = ContractUpdateGroupsShareLimit.useRpc()
 
@@ -97,83 +99,102 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {groupsFieldArray.fields.map((item, groupIndex) => (
-          <Fragment key={item.id}>
-            <FieldsWrapper>
-              <FieldsHeader>
-                {groupsFieldArray.fields.length > 1 && (
-                  <FieldsHeaderDesc>Group #{groupIndex + 1}</FieldsHeaderDesc>
-                )}
-                {groupsFieldArray.fields.length > 1 && (
-                  <RemoveItemButton
-                    onClick={() => groupsFieldArray.remove(groupIndex)}
-                  >
-                    Remove group {groupIndex + 1}
-                  </RemoveItemButton>
-                )}
-              </FieldsHeader>
+        {groupsFieldArray.fields.map((item, groupIndex) => {
+          const entityInMap =
+            groupMap[groupsInput[groupIndex].nodeOperator.toLowerCase()]
+          return (
+            <Fragment key={item.id}>
+              <FieldsWrapper>
+                <FieldsHeader>
+                  {groupsFieldArray.fields.length > 1 && (
+                    <FieldsHeaderDesc>Group #{groupIndex + 1}</FieldsHeaderDesc>
+                  )}
+                  {groupsFieldArray.fields.length > 1 && (
+                    <RemoveItemButton
+                      onClick={() => groupsFieldArray.remove(groupIndex)}
+                    >
+                      Remove group {groupIndex + 1}
+                    </RemoveItemButton>
+                  )}
+                </FieldsHeader>
 
-              <Fieldset>
-                <InputControl
-                  name={`${fieldNames.groups}.${groupIndex}.nodeOperator`}
-                  label="Node operator address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: async value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
+                <Fieldset>
+                  <InputControl
+                    name={`${fieldNames.groups}.${groupIndex}.nodeOperator`}
+                    label="Node operator address"
+                    rules={{
+                      required: 'Field is required',
+                      validate: async value => {
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
+                        }
 
-                      const lowerAddress = value.toLowerCase()
+                        const lowerAddress = value.toLowerCase()
 
-                      const addressInGroupInputIndex = groupsInput.findIndex(
-                        ({ nodeOperator }, index) =>
-                          nodeOperator.toLowerCase() === lowerAddress &&
-                          groupIndex !== index,
-                      )
+                        const addressInGroupInputIndex = groupsInput.findIndex(
+                          ({ nodeOperator }, index) =>
+                            nodeOperator.toLowerCase() === lowerAddress &&
+                            groupIndex !== index,
+                        )
 
-                      if (addressInGroupInputIndex !== -1) {
-                        return 'Address is already in use by another group within the motion'
-                      }
+                        if (addressInGroupInputIndex !== -1) {
+                          return 'Address is already in use by another group within the motion'
+                        }
 
-                      const group = await getOperatorGridGroup(lowerAddress)
-                      if (!group) {
-                        return `Node operator is not registered in Operator Grid`
-                      }
+                        const group = await getOperatorGridGroup(lowerAddress)
+                        if (!group) {
+                          return `Node operator is not registered in Operator Grid`
+                        }
 
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
 
-              <Fieldset>
-                <InputNumberControl
-                  name={`${fieldNames.groups}.${groupIndex}.shareLimit`}
-                  label="Share limit"
-                  rules={{
-                    required: 'Field is required',
-                    validate: value => {
-                      const amountError = validateEtherValue(value)
-                      if (amountError) {
-                        return amountError
-                      }
+                {factoryData ? (
+                  <MotionInfoBox>
+                    <Text size={12}>
+                      Max share limit:{' '}
+                      {formatVaultParam(factoryData.maxShareLimit)} stETH
+                    </Text>
+                    {entityInMap ? (
+                      <Text size={12}>
+                        Current share limit:{' '}
+                        {formatVaultParam(entityInMap.shareLimit)} stETH
+                      </Text>
+                    ) : null}
+                  </MotionInfoBox>
+                ) : null}
 
-                      if (factoryData?.maxShareLimit.lt(parseEther(value))) {
-                        return `Value must be less than or equal to ${formatVaultParam(
-                          factoryData.maxShareLimit,
-                        )}`
-                      }
+                <Fieldset>
+                  <InputNumberControl
+                    name={`${fieldNames.groups}.${groupIndex}.shareLimit`}
+                    label="Share limit"
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        const amountError = validateEtherValue(value)
+                        if (amountError) {
+                          return amountError
+                        }
 
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
-            </FieldsWrapper>
-          </Fragment>
-        ))}
+                        if (factoryData?.maxShareLimit.lt(parseEther(value))) {
+                          return `Value must be less than or equal to ${formatVaultParam(
+                            factoryData.maxShareLimit,
+                          )}`
+                        }
+
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
+              </FieldsWrapper>
+            </Fragment>
+          )
+        })}
 
         <Fieldset>
           <ButtonIcon
