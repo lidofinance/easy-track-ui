@@ -25,7 +25,7 @@ import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
 import { GridGroup } from 'modules/vaults/types'
-import { OperatorGridTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridTiersFieldsWrapper'
+import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { parseEther } from 'ethers/lib/utils'
@@ -200,7 +200,7 @@ export const formParts = createMotionFormPart({
                     }}
                   />
                 </Fieldset>
-                <OperatorGridTiersFieldsWrapper
+                <OperatorGridAddTiersFieldsWrapper
                   tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
                   maxShareLimit={groupsInput[groupIndex].shareLimit}
                   groupTiersCount={0}

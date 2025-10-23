@@ -23,7 +23,7 @@ import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 import { DEFAULT_TIER_OPERATOR, EMPTY_TIER } from 'modules/vaults/constants'
-import { OperatorGridTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridTiersFieldsWrapper'
+import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { GridGroup } from 'modules/vaults/types'
 import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 
@@ -158,7 +158,7 @@ export const formParts = createMotionFormPart({
                   />
                 </Fieldset>
 
-                <OperatorGridTiersFieldsWrapper
+                <OperatorGridAddTiersFieldsWrapper
                   tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
                   maxShareLimit={entityInMap?.shareLimit}
                   groupTiersCount={entityInMap?.tierIds.length}

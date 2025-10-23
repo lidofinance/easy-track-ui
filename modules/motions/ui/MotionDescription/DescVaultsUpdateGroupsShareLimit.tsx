@@ -49,9 +49,9 @@ export function DescVaultsUpdateGroupsShareLimit({
             Update share limit of group with node operator{' '}
             <AddressInlineWithPop address={nodeOperator} />{' '}
             {isOnChain && data
-              ? ` from ${formatVaultParam(currentShareLimit)} `
+              ? ` from ${formatVaultParam(currentShareLimit)}`
               : ''}
-            {`to ${formatVaultParam(newShareLimit)} stETH`}
+            {`to ${formatVaultParam(newShareLimit)}`}
           </li>
         )
       })}

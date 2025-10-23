@@ -53,6 +53,7 @@ import { DescSDVTExitRequestHashesSubmit } from './DescSDVTExitRequestHashesSubm
 import { DescVaultsRegisterGroupsInOperatorGrid } from './DescVaultsRegisterGroupsInOperatorGrid'
 import { DescVaultsRegisterTiersInOperatorGrid } from './DescVaultsRegisterTiersInOperatorGrid'
 import { DescVaultsUpdateGroupsShareLimit } from './DescVaultsUpdateGroupsShareLimit'
+import { DescVaultsAlterTiersInOperatorGrid } from './DescVaultsAlterTiersInOperatorGrid'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -353,6 +354,7 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.RegisterTiersInOperatorGrid]:
     DescVaultsRegisterTiersInOperatorGrid,
   [MotionType.UpdateGroupsShareLimit]: DescVaultsUpdateGroupsShareLimit,
+  [MotionType.AlterTiersInOperatorGrid]: DescVaultsAlterTiersInOperatorGrid,
 } as const
 
 type Props = {

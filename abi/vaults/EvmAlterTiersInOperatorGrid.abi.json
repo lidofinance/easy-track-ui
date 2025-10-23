@@ -1,0 +1,100 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_trustedCaller",
+        "type": "address"
+      },
+      { "internalType": "address", "name": "_lidoLocator", "type": "address" },
+      {
+        "internalType": "uint256",
+        "name": "_defaultTierMaxShareLimit",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_creator", "type": "address" },
+      { "internalType": "bytes", "name": "_evmScriptCallData", "type": "bytes" }
+    ],
+    "name": "createEVMScript",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes", "name": "_evmScriptCallData", "type": "bytes" }
+    ],
+    "name": "decodeEVMScriptCallData",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "", "type": "uint256[]" },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "shareLimit",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reserveRatioBP",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "forcedRebalanceThresholdBP",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "infraFeeBP",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "liquidityFeeBP",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reservationFeeBP",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct TierParams[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "defaultTierMaxShareLimit",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lidoLocator",
+    "outputs": [
+      { "internalType": "contract ILidoLocator", "name": "", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trustedCaller",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

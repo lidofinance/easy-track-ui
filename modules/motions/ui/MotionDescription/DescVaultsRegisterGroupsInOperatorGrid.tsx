@@ -25,26 +25,27 @@ export function DescVaultsRegisterGroupsInOperatorGrid({
                 <span>Tier #{tierIndex + 1}</span>
                 <ul>
                   <li>
-                    <b>Share limit:</b> {formatVaultParam(tier.shareLimit)}{' '}
-                    stETH;
+                    <b>Share limit: </b>
+                    {formatVaultParam(tier.shareLimit)} stETH;
                   </li>
                   <li>
-                    <b>Reserve ratio (BP):</b>{' '}
+                    <b>Reserve ratio: </b>
                     {formatVaultParam(tier.reserveRatioBP, true)};
                   </li>
                   <li>
-                    <b>Forced rebalance threshold (BP):</b>{' '}
+                    <b>Forced rebalance threshold: </b>
+                    {formatVaultParam(tier.forcedRebalanceThresholdBP, true)};
                   </li>
                   <li>
-                    <b>Infra fee (BP):</b>{' '}
+                    <b>Infra fee: </b>
                     {formatVaultParam(tier.infraFeeBP, true)};
                   </li>
                   <li>
-                    <b>Liquidity fee (BP):</b>{' '}
+                    <b>Liquidity fee: </b>
                     {formatVaultParam(tier.liquidityFeeBP, true)};
                   </li>
                   <li>
-                    <b>Reservation liquidity fee (BP):</b>{' '}
+                    <b>Reservation liquidity fee: </b>
                     {formatVaultParam(tier.reservationFeeBP, true)}.
                   </li>
                 </ul>
