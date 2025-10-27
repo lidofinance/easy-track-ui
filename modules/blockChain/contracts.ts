@@ -571,3 +571,8 @@ export const ContractAlterTiersInOperatorGrid = createContractHelpers({
   factory: TypeChain.EvmAlterTiersInOperatorGridAbi__factory,
   address: EvmAddressesByType[MotionType.AlterTiersInOperatorGrid],
 })
+
+export const ContractSteth = createContractHelpers({
+  factory: TypeChain.StethAbi__factory,
+  address: CONTRACT_ADDRESSES.STETH,
+})

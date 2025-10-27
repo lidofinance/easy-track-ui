@@ -8,7 +8,7 @@ const formatter = new Intl.NumberFormat('en', {
 
 export const formatBp = (value: BigNumber | number) => {
   const valueNum = typeof value === 'number' ? value : value.toNumber()
-  return `${formatter.format(valueNum)} BP`
+  return `${formatter.format(valueNum)} BP (${(valueNum * 0.01).toFixed(2)}%)`
 }
 
 export const formatShareLimit = (value: BigNumber) => {
@@ -16,7 +16,7 @@ export const formatShareLimit = (value: BigNumber) => {
   if (value.lt(utils.parseEther('0.01'))) {
     return formattedEtherValue
   }
-  return `${formatter.format(parseInt(formattedEtherValue))} stETH`
+  return formatter.format(parseInt(formattedEtherValue))
 }
 
 export const formatVaultParam = (value: BigNumber | number, isBp?: boolean) => {
