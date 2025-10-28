@@ -7,6 +7,7 @@ import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useFormContext } from 'react-hook-form'
 import { MAX_FEE_BP, MAX_RESERVE_RATIO_BP } from '../constants'
 import { formatVaultParam } from '../utils/formatVaultParam'
+import { BpValueFormatted } from './BpValueFormatted'
 
 type Props = {
   tierFieldName: string
@@ -71,6 +72,10 @@ export const OperatorGridTierFieldsets = ({
             },
           }}
         />
+        <BpValueFormatted
+          fieldName={`${tierFieldName}.reserveRatioBP`}
+          label="Reserve ratio"
+        />
       </Fieldset>
 
       <Fieldset>
@@ -106,6 +111,10 @@ export const OperatorGridTierFieldsets = ({
             },
           }}
         />
+        <BpValueFormatted
+          fieldName={`${tierFieldName}.forcedRebalanceThresholdBP`}
+          label="Forced rebalance threshold"
+        />
       </Fieldset>
 
       <Fieldset>
@@ -127,6 +136,10 @@ export const OperatorGridTierFieldsets = ({
               return true
             },
           }}
+        />
+        <BpValueFormatted
+          fieldName={`${tierFieldName}.infraFeeBP`}
+          label="Infra fee"
         />
       </Fieldset>
 
@@ -150,6 +163,10 @@ export const OperatorGridTierFieldsets = ({
             },
           }}
         />
+        <BpValueFormatted
+          fieldName={`${tierFieldName}.liquidityFeeBP`}
+          label="Liquidity fee"
+        />
       </Fieldset>
 
       <Fieldset>
@@ -171,6 +188,10 @@ export const OperatorGridTierFieldsets = ({
               return true
             },
           }}
+        />
+        <BpValueFormatted
+          fieldName={`${tierFieldName}.reservationFeeBP`}
+          label="Reservation liquidity fee"
         />
       </Fieldset>
     </>

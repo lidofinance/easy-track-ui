@@ -6,9 +6,13 @@ const formatter = new Intl.NumberFormat('en', {
   maximumFractionDigits: 2,
 })
 
+export const formatPercentBp = (value: number) => {
+  return `${formatter.format(value * 0.01)}%`
+}
+
 export const formatBp = (value: BigNumber | number) => {
   const valueNum = typeof value === 'number' ? value : value.toNumber()
-  return `${formatter.format(valueNum)} BP (${(valueNum * 0.01).toFixed(2)}%)`
+  return `${formatter.format(valueNum)} BP (${formatBpPercent(valueNum)})`
 }
 
 export const formatShareLimit = (value: BigNumber) => {
