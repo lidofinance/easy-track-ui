@@ -32,18 +32,14 @@ type GroupInput = Omit<GridGroup, 'shareLimit'>
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterTiersInOperatorGrid,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
-    const sortedGroups = formData.groups.sort((a, b) =>
-      a.nodeOperator.toLowerCase().localeCompare(b.nodeOperator.toLowerCase()),
-    )
-
     const encodedCallData = new utils.AbiCoder().encode(
       [
         'address[]',
         'tuple(uint256,uint256,uint256,uint256,uint256,uint256)[][]',
       ],
       [
-        sortedGroups.map(group => utils.getAddress(group.nodeOperator)),
-        sortedGroups.map(group =>
+        formData.groups.map(group => utils.getAddress(group.nodeOperator)),
+        formData.groups.map(group =>
           group.tiers.map(tier => [
             utils.parseEther(tier.shareLimit),
             Number(tier.reserveRatioBP),

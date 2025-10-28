@@ -37,7 +37,11 @@ export const OperatorGridAddTiersFieldsWrapper = ({
       return BigNumber.from(0)
     }
     if (typeof maxShareLimit === 'string') {
-      return parseEther(maxShareLimit)
+      try {
+        return parseEther(maxShareLimit)
+      } catch (error) {
+        return BigNumber.from(0)
+      }
     }
     return maxShareLimit
   }, [maxShareLimit])
