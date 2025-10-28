@@ -204,7 +204,6 @@ export const formParts = createMotionFormPart({
                   tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
                   maxShareLimit={groupsInput[groupIndex].shareLimit}
                   groupTiersCount={0}
-                  totalTiersCount={operatorGridInfo?.tiersCount}
                 />
               </FieldsWrapper>
             </Fragment>

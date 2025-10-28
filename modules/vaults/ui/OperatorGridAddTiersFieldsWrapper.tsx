@@ -17,14 +17,12 @@ type Props = {
   tierArrayFieldName: string
   maxShareLimit: BigNumber | string | undefined
   groupTiersCount: number | undefined
-  totalTiersCount: number | undefined
 }
 
 export const OperatorGridAddTiersFieldsWrapper = ({
   tierArrayFieldName,
   maxShareLimit,
   groupTiersCount,
-  totalTiersCount,
 }: Props) => {
   const tiersFieldArray = useFieldArray({
     name: tierArrayFieldName,
@@ -59,12 +57,6 @@ export const OperatorGridAddTiersFieldsWrapper = ({
                 <>
                   <br />
                   expected in-group index = {groupTiersCount + tierIndex}
-                </>
-              )}
-              {totalTiersCount !== undefined && (
-                <>
-                  <br />
-                  expected global tierId = {totalTiersCount + tierIndex}
                 </>
               )}
             </FieldsHeaderDesc>
