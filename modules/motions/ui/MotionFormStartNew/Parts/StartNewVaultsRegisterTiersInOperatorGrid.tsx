@@ -78,7 +78,7 @@ export const formParts = createMotionFormPart({
     const groupsInput: GroupInput[] = watch(fieldNames.groups)
 
     const handleAddGroup = () =>
-      groupsFieldArray.append({ nodeOperator: '', tier: { ...EMPTY_TIER } })
+      groupsFieldArray.append({ nodeOperator: '', tiers: [{ ...EMPTY_TIER }] })
 
     if (trustedCaller.initialLoading) {
       return <PageLoader />
