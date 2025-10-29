@@ -212,7 +212,7 @@ export const formParts = createMotionFormPart({
                       <Option
                         key={i}
                         value={tierId.toNumber()}
-                        children={`${i} (global tierId = ${tierId})`}
+                        children={`#${i + 1} (global tierId = ${tierId})`}
                       />
                     ))}
                   </SelectControl>

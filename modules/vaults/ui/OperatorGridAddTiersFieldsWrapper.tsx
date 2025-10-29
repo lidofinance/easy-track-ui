@@ -53,12 +53,9 @@ export const OperatorGridAddTiersFieldsWrapper = ({
           <FieldsHeader>
             <FieldsHeaderDesc>
               Tier
-              {groupTiersCount !== undefined && (
-                <>
-                  <br />
-                  expected in-group index = {groupTiersCount + tierIndex}
-                </>
-              )}
+              {groupTiersCount === undefined
+                ? ''
+                : ` #${groupTiersCount + tierIndex + 1}`}
             </FieldsHeaderDesc>
             {tiersFieldArray.fields.length > 1 && (
               <RemoveItemButton

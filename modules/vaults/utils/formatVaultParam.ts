@@ -12,7 +12,7 @@ export const formatPercentBp = (value: number) => {
 
 export const formatBp = (value: BigNumber | number) => {
   const valueNum = typeof value === 'number' ? value : value.toNumber()
-  return `${formatter.format(valueNum)} BP (${formatBpPercent(valueNum)})`
+  return `${formatter.format(valueNum)} BP (${formatPercentBp(valueNum)})`
 }
 
 export const formatShareLimit = (value: BigNumber) => {
