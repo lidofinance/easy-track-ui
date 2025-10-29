@@ -1,8 +1,9 @@
-import { BigNumber } from 'ethers'
 import { EvmUpdateGroupsShareLimitAbi } from 'generated'
+import { ContractOperatorGrid } from 'modules/blockChain/contracts'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
-import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { useShareRate } from 'modules/vaults/hooks/useShareRate'
+import { convertSharesToStEthString } from 'modules/vaults/utils/convertSharesToStEthString'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import React from 'react'
 import { NestProps } from './types'
@@ -12,22 +13,24 @@ export function DescVaultsUpdateGroupsShareLimit({
   callData,
   isOnChain,
 }: NestProps<EvmUpdateGroupsShareLimitAbi['decodeEVMScriptCallData']>) {
-  const { getOperatorGridGroup } = useOperatorGridGroup()
+  const operatorGrid = ContractOperatorGrid.useRpc()
   const [nodeOperators, newShareLimits] = callData
 
-  const { data } = useSWR(
-    isOnChain ? `vaults-update-groups-share-limit-desc` : null,
-    async () => {
-      if (!isOnChain) {
-        return null
-      }
-      const result: BigNumber[] = []
+  const { data: shareRate } = useShareRate()
 
-      for (const nodeOperator of nodeOperators) {
-        const group = await getOperatorGridGroup(nodeOperator)
-        result.push(group?.shareLimit ?? BigNumber.from(0))
-      }
-      return result
+  const { data } = useSWR(
+    isOnChain
+      ? `vaults-update-groups-share-limit-desc-${nodeOperators.join('-')}`
+      : null,
+    async () => {
+      if (!isOnChain) return
+
+      return Promise.all(
+        nodeOperators.map(async nodeOperator => {
+          const group = await operatorGrid.group(nodeOperator)
+          return group.shareLimit
+        }),
+      )
     },
     {
       revalidateIfStale: false,
@@ -51,7 +54,10 @@ export function DescVaultsUpdateGroupsShareLimit({
             {isOnChain && data
               ? ` from ${formatVaultParam(currentShareLimit)}`
               : ''}
-            {`to ${formatVaultParam(newShareLimit)}`}
+            {`to ${formatVaultParam(newShareLimit)}${convertSharesToStEthString(
+              newShareLimit,
+              shareRate,
+            )}`}
           </li>
         )
       })}

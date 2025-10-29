@@ -1,11 +1,9 @@
 import { BigNumber } from 'ethers'
 import { EvmAlterTiersInOperatorGridAbi } from 'generated'
+import { ContractOperatorGrid } from 'modules/blockChain/contracts'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
-import {
-  Tier,
-  useOperatorGridTierMap,
-} from 'modules/vaults/hooks/useOperatorGridTierMap'
+import { useShareRate } from 'modules/vaults/hooks/useShareRate'
+import { convertSharesToStEthString } from 'modules/vaults/utils/convertSharesToStEthString'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import React from 'react'
 import { NestProps } from './types'
@@ -15,27 +13,24 @@ export function DescVaultsAlterTiersInOperatorGrid({
   callData,
   isOnChain,
 }: NestProps<EvmAlterTiersInOperatorGridAbi['decodeEVMScriptCallData']>) {
-  const { data: operatorGridInfo } = useOperatorGridInfo()
-  const { getOperatorGridTier } = useOperatorGridTierMap(
-    operatorGridInfo?.tiersCount,
-  )
+  const operatorGrid = ContractOperatorGrid.useRpc()
+
+  const { data: shareRate } = useShareRate()
   const [tierIds, tierParamsUpdates] = callData
 
   const { data } = useSWR(
-    isOnChain ? `vaults-register-tiers-desc` : null,
+    isOnChain
+      ? `vaults-register-tiers-desc-${tierIds.map(t => t.toString()).join('-')}`
+      : null,
     async () => {
-      if (!isOnChain) {
-        return null
-      }
-      const result: Tier[] = []
+      if (!isOnChain) return
 
-      for (const tierId of tierIds) {
-        const tier = await getOperatorGridTier(tierId.toString())
-        if (tier) {
-          result.push(tier)
-        }
-      }
-      return result
+      return Promise.all(
+        tierIds.map(async tierId => {
+          const tier = await operatorGrid.tier(tierId)
+          return tier
+        }),
+      )
     },
     {
       revalidateIfStale: false,
@@ -50,7 +45,7 @@ export function DescVaultsAlterTiersInOperatorGrid({
     isBp: boolean,
   ) => {
     if (!before) {
-      return `${formatVaultParam(after, isBp)}`
+      return formatVaultParam(after, isBp)
     }
     if (after.eq(before)) {
       return `${formatVaultParam(after, isBp)} (no change)`
@@ -77,6 +72,10 @@ export function DescVaultsAlterTiersInOperatorGrid({
                   currentParams?.shareLimit,
                   updatedParams.shareLimit,
                   false,
+                )}
+                {convertSharesToStEthString(
+                  updatedParams.shareLimit,
+                  shareRate,
                 )}
                 ;
               </li>

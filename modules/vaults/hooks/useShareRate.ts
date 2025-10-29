@@ -9,9 +9,7 @@ export const useShareRate = (isEnabled = true) => {
   return useSWR(
     isEnabled ? `share-limit-rate-${chainId}` : null,
     async () => {
-      if (!isEnabled) {
-        return null
-      }
+      if (!isEnabled) return
       const rate = await stEthContract.getPooledEthByShares(
         utils.parseEther('1'),
       )
