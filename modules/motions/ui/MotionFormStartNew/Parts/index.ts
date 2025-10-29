@@ -23,6 +23,7 @@ import * as StartNewExitRequestHashesSubmit from './StartNewExitRequestHashesSub
 import * as StartNewVaultsRegisterGroupsInOperatorGrid from './StartNewVaultsRegisterGroupsInOperatorGrid'
 import * as StartNewVaultsRegisterTiersInOperatorGrid from './StartNewVaultsRegisterTiersInOperatorGrid'
 import * as StartNewVaultsUpdateGroupsShareLimit from './StartNewVaultsUpdateGroupsShareLimit'
+import * as StartNewVaultsAlterTiersInOperatorGrid from './StartNewVaultsAlterTiersInOperatorGrid'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -143,6 +144,8 @@ export const formParts = {
     StartNewVaultsRegisterTiersInOperatorGrid.formParts,
   [MotionTypeForms.UpdateGroupsShareLimit]:
     StartNewVaultsUpdateGroupsShareLimit.formParts,
+  [MotionTypeForms.AlterTiersInOperatorGrid]:
+    StartNewVaultsAlterTiersInOperatorGrid.formParts,
 } as const
 
 export type FormData = {

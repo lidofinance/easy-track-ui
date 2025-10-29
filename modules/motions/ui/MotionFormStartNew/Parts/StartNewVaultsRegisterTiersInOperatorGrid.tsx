@@ -23,27 +23,22 @@ import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 import { DEFAULT_TIER_OPERATOR, EMPTY_TIER } from 'modules/vaults/constants'
-import { OperatorGridTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridTiersFieldsWrapper'
+import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { GridGroup } from 'modules/vaults/types'
-import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 
 type GroupInput = Omit<GridGroup, 'shareLimit'>
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterTiersInOperatorGrid,
   populateTx: async ({ evmScriptFactory, formData, contract }) => {
-    const sortedGroups = formData.groups.sort((a, b) =>
-      a.nodeOperator.toLowerCase().localeCompare(b.nodeOperator.toLowerCase()),
-    )
-
     const encodedCallData = new utils.AbiCoder().encode(
       [
         'address[]',
         'tuple(uint256,uint256,uint256,uint256,uint256,uint256)[][]',
       ],
       [
-        sortedGroups.map(group => utils.getAddress(group.nodeOperator)),
-        sortedGroups.map(group =>
+        formData.groups.map(group => utils.getAddress(group.nodeOperator)),
+        formData.groups.map(group =>
           group.tiers.map(tier => [
             utils.parseEther(tier.shareLimit),
             Number(tier.reserveRatioBP),
@@ -78,19 +73,14 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const {
-      data: operatorGridInfo,
-      initialLoading: isOperatorGridInfoLoading,
-    } = useOperatorGridInfo()
-
     const groupsFieldArray = useFieldArray({ name: fieldNames.groups })
     const { watch } = useFormContext()
     const groupsInput: GroupInput[] = watch(fieldNames.groups)
 
     const handleAddGroup = () =>
-      groupsFieldArray.append({ nodeOperator: '', tier: { ...EMPTY_TIER } })
+      groupsFieldArray.append({ nodeOperator: '', tiers: [{ ...EMPTY_TIER }] })
 
-    if (trustedCaller.initialLoading || isOperatorGridInfoLoading) {
+    if (trustedCaller.initialLoading) {
       return <PageLoader />
     }
 
@@ -158,11 +148,10 @@ export const formParts = createMotionFormPart({
                   />
                 </Fieldset>
 
-                <OperatorGridTiersFieldsWrapper
+                <OperatorGridAddTiersFieldsWrapper
                   tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
                   maxShareLimit={entityInMap?.shareLimit}
                   groupTiersCount={entityInMap?.tierIds.length}
-                  totalTiersCount={operatorGridInfo?.tiersCount}
                 />
               </FieldsWrapper>
             </Fragment>
