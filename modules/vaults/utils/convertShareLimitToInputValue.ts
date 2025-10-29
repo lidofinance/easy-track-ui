@@ -1,6 +1,6 @@
 import { BigNumber, utils } from 'ethers'
 
-export const formatShareLimit = (value: BigNumber) => {
+export const convertShareLimitToInputValue = (value: BigNumber) => {
   const formatted = utils.formatEther(value)
 
   const num = parseFloat(formatted)

@@ -10,12 +10,12 @@ export const formatPercentBp = (value: number) => {
   return `${formatter.format(value * 0.01)}%`
 }
 
-export const formatBp = (value: BigNumber | number) => {
+const formatBp = (value: BigNumber | number) => {
   const valueNum = typeof value === 'number' ? value : value.toNumber()
   return `${formatter.format(valueNum)} BP (${formatPercentBp(valueNum)})`
 }
 
-export const formatShareLimit = (value: BigNumber) => {
+const formatShareLimit = (value: BigNumber) => {
   const formattedEtherValue = utils.formatEther(value)
   if (value.lt(utils.parseEther('0.01'))) {
     return formattedEtherValue

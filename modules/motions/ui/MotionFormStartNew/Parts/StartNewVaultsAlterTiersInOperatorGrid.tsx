@@ -28,7 +28,7 @@ import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { OperatorGridTierFieldsets } from 'modules/vaults/ui/OperatorGridTierFieldsets'
-import { formatShareLimit } from 'modules/vaults/utils/formatShareLimit'
+import { convertShareLimitToInputValue } from 'modules/vaults/utils/convertShareLimitToInputValue'
 
 type TierInput = {
   nodeOperator: string
@@ -182,7 +182,7 @@ export const formParts = createMotionFormPart({
                         if (tier) {
                           setTierParam(
                             `${fieldNames.tiers}.${tierIndex}.shareLimit`,
-                            formatShareLimit(tier.shareLimit),
+                            convertShareLimitToInputValue(tier.shareLimit),
                           )
                           setTierParam(
                             `${fieldNames.tiers}.${tierIndex}.reserveRatioBP`,
