@@ -25,7 +25,7 @@ import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 import { useOperatorGridTierMap } from 'modules/vaults/hooks/useOperatorGridTierMap'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
-import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { OperatorGridTierFieldsets } from 'modules/vaults/ui/OperatorGridTierFieldsets'
 import { convertShareLimitToInputValue } from 'modules/vaults/utils/convertShareLimitToInputValue'
@@ -78,7 +78,7 @@ export const formParts = createMotionFormPart({
     const { data: operatorGridInfo, initialLoading: isOperatorGridLoading } =
       useOperatorGridInfo()
 
-    const { groupMap, getOperatorGridGroup } = useOperatorGridGroup()
+    const { groupMap, getOperatorGridGroup } = useOperatorGridGroupMap()
 
     const { getOperatorGridTier } = useOperatorGridTierMap(
       operatorGridInfo?.tiersCount,
