@@ -3,7 +3,8 @@ import { ContractOperatorGrid } from 'modules/blockChain/contracts'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
 import { useCallback } from 'react'
 import { isAddress } from 'ethers/lib/utils'
-import { constants } from 'ethers'
+import { BigNumber, constants } from 'ethers'
+import { DEFAULT_TIER_OPERATOR } from '../constants'
 
 type Group = Awaited<ReturnType<OperatorGridAbi['group']>>
 
@@ -28,6 +29,18 @@ export const useOperatorGridGroupMap = () => {
       try {
         const group = await operatorGrid.group(lowerAddress)
         if (group.operator === constants.AddressZero) {
+          // Check for default tier group
+          if (lowerAddress === DEFAULT_TIER_OPERATOR) {
+            const defaultGroup = {
+              ...group,
+              operator: DEFAULT_TIER_OPERATOR,
+              tierIds: [BigNumber.from(0)],
+            }
+
+            setState({ [lowerAddress]: defaultGroup })
+            return defaultGroup
+          }
+
           setState({ [lowerAddress]: null })
           return null
         }

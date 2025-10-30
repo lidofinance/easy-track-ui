@@ -41,7 +41,6 @@ export function DescVaultsAlterTiersInOperatorGrid({
   const { data, initialLoading } = useSWR(
     `vaults-register-tiers-desc-${tierIds.map(t => t.toString()).join('-')}`,
     async () => {
-      console.log('Fetching tier data for tierIds:', tierIds)
       const tiersData = await Promise.all(
         tierIds.map(async tierId => operatorGrid.tier(tierId)),
       )

@@ -159,7 +159,7 @@ export const formParts = createMotionFormPart({
                       Max share limit:{' '}
                       {formatVaultParam(factoryData.maxShareLimit)} stETH
                     </Text>
-                    {entityInMap ? (
+                    {entityInMap && !entityInMap.shareLimit.isZero() ? (
                       <Text size={12}>
                         Current share limit:{' '}
                         {formatVaultParam(entityInMap.shareLimit)} stETH
