@@ -24,7 +24,7 @@ import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { GridGroup } from 'modules/vaults/types'
-import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 import { parseEther } from 'ethers/lib/utils'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
@@ -58,7 +58,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
-    const { groupMap, getOperatorGridGroup } = useOperatorGridGroup()
+    const { groupMap, getOperatorGridGroup } = useOperatorGridGroupMap()
 
     const factoryContract = ContractUpdateGroupsShareLimit.useRpc()
 
@@ -159,7 +159,7 @@ export const formParts = createMotionFormPart({
                       Max share limit:{' '}
                       {formatVaultParam(factoryData.maxShareLimit)} stETH
                     </Text>
-                    {entityInMap ? (
+                    {entityInMap && !entityInMap.shareLimit.isZero() ? (
                       <Text size={12}>
                         Current share limit:{' '}
                         {formatVaultParam(entityInMap.shareLimit)} stETH

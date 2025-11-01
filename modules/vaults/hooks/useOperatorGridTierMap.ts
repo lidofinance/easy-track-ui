@@ -15,7 +15,7 @@ export type Tier = {
 }
 export const useOperatorGridTierMap = (totalTiersCount: number | undefined) => {
   const [tierMap, setState] = useSimpleReducer<
-    Record<string, Tier | undefined>
+    Record<string, Tier | null | undefined>
   >({})
   const operatorGrid = ContractOperatorGrid.useRpc()
 
@@ -31,15 +31,18 @@ export const useOperatorGridTierMap = (totalTiersCount: number | undefined) => {
         return null
       }
 
-      if (tierMap[tierIdNum]) {
-        return tierMap[tierIdNum]!
+      if (tierMap[tierIdNum] !== undefined) {
+        return tierMap[tierIdNum] as Tier | null
       }
 
-      const tier = await operatorGrid.tier(tierId)
-
-      setState({ [tierIdNum]: tier })
-
-      return tier
+      try {
+        const tier = await operatorGrid.tier(tierId)
+        setState({ [tierIdNum]: tier })
+        return tier
+      } catch (error) {
+        setState({ [tierIdNum]: null })
+        return null
+      }
     },
     [tierMap, totalTiersCount, operatorGrid, setState],
   )

@@ -26,7 +26,7 @@ import { useSWR } from 'modules/network/hooks/useSwr'
 import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
 import { GridGroup } from 'modules/vaults/types'
 import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
-import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { parseEther } from 'ethers/lib/utils'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
@@ -75,7 +75,7 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
-    const { getOperatorGridGroup } = useOperatorGridGroup()
+    const { getOperatorGridGroup } = useOperatorGridGroupMap()
 
     const factoryContract = ContractRegisterGroupsInOperatorGrid.useRpc()
 

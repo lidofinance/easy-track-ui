@@ -21,7 +21,7 @@ import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
-import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 import { DEFAULT_TIER_OPERATOR, EMPTY_TIER } from 'modules/vaults/constants'
 import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { GridGroup } from 'modules/vaults/types'
@@ -66,7 +66,7 @@ export const formParts = createMotionFormPart({
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress } = useWeb3()
 
-    const { groupMap, getOperatorGridGroup } = useOperatorGridGroup()
+    const { groupMap, getOperatorGridGroup } = useOperatorGridGroupMap()
 
     const trustedCaller = ContractRegisterTiersInOperatorGrid.useSwrWeb3(
       'trustedCaller',
