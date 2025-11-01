@@ -19,16 +19,18 @@ import { ContractAlterTiersInOperatorGrid } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { EMPTY_TIER } from 'modules/vaults/constants'
+import { DEFAULT_TIER_OPERATOR, EMPTY_TIER } from 'modules/vaults/constants'
 import { TierParams } from 'modules/vaults/types'
 import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 import { useOperatorGridTierMap } from 'modules/vaults/hooks/useOperatorGridTierMap'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
-import { useOperatorGridGroup } from 'modules/vaults/hooks/useOperatorGridGroup'
+import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { OperatorGridTierFieldsets } from 'modules/vaults/ui/OperatorGridTierFieldsets'
 import { convertShareLimitToInputValue } from 'modules/vaults/utils/convertShareLimitToInputValue'
+import { useSWR } from 'modules/network/hooks/useSwr'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 
 type TierInput = {
   nodeOperator: string
@@ -68,17 +70,33 @@ export const formParts = createMotionFormPart({
     tiers: [{ nodeOperator: '', tierId: '', ...EMPTY_TIER }] as TierInput[],
   }),
   Component: ({ fieldNames, submitAction }) => {
-    const { walletAddress } = useWeb3()
+    const { walletAddress, chainId } = useWeb3()
 
-    const trustedCaller = ContractAlterTiersInOperatorGrid.useSwrWeb3(
-      'trustedCaller',
-      [],
+    const factoryContract = ContractAlterTiersInOperatorGrid.useRpc()
+
+    const { data: factoryData, initialLoading: isFactoryDataLoading } = useSWR(
+      `alter-tiers-factory-${chainId}`,
+      async () => {
+        const [defaultTierMaxShareLimit, trustedCaller] = await Promise.all([
+          factoryContract.defaultTierMaxShareLimit(),
+          factoryContract.trustedCaller(),
+        ])
+        return {
+          defaultTierMaxShareLimit,
+          trustedCaller,
+        }
+      },
+      {
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+      },
     )
 
     const { data: operatorGridInfo, initialLoading: isOperatorGridLoading } =
       useOperatorGridInfo()
 
-    const { groupMap, getOperatorGridGroup } = useOperatorGridGroup()
+    const { groupMap, getOperatorGridGroup } = useOperatorGridGroupMap()
 
     const { getOperatorGridTier } = useOperatorGridTierMap(
       operatorGridInfo?.tiersCount,
@@ -109,11 +127,11 @@ export const formParts = createMotionFormPart({
       })
     }
 
-    if (trustedCaller.initialLoading || isOperatorGridLoading) {
+    if (isFactoryDataLoading || isOperatorGridLoading) {
       return <PageLoader />
     }
 
-    if (trustedCaller.data !== walletAddress) {
+    if (factoryData?.trustedCaller !== walletAddress) {
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
@@ -123,9 +141,18 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
+        <MotionInfoBox>
+          Note: to alter default tier with global tierId 0, use default tier
+          operator address address — {DEFAULT_TIER_OPERATOR}
+        </MotionInfoBox>
         {tiersFieldArray.fields.map((item, tierIndex) => {
           const groupData =
             groupMap[tiersInput[tierIndex]?.nodeOperator.toLowerCase()]
+
+          const groupShareLimit =
+            groupData?.operator.toLowerCase() === DEFAULT_TIER_OPERATOR
+              ? factoryData?.defaultTierMaxShareLimit
+              : groupData?.shareLimit
 
           return (
             <Fragment key={item.id}>
@@ -218,10 +245,10 @@ export const formParts = createMotionFormPart({
                   </SelectControl>
                 </Fieldset>
 
-                {groupData && (
+                {groupShareLimit && (
                   <OperatorGridTierFieldsets
                     tierFieldName={`${fieldNames.tiers}.${tierIndex}`}
-                    maxShareLimit={groupData.shareLimit}
+                    maxShareLimit={groupShareLimit}
                   />
                 )}
               </FieldsWrapper>
