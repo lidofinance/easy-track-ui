@@ -22,16 +22,17 @@ export const useOperatorGridTierMap = (totalTiersCount: number | undefined) => {
   const getOperatorGridTier = useCallback(
     async (tierId: string) => {
       const tierIdNum = parseInt(tierId)
-      if (!totalTiersCount || isNaN(tierIdNum) || tierIdNum < 0) {
+      if (
+        !totalTiersCount ||
+        isNaN(tierIdNum) ||
+        tierIdNum < 0 ||
+        tierIdNum >= totalTiersCount
+      ) {
         return null
       }
 
       if (tierMap[tierIdNum]) {
         return tierMap[tierIdNum]!
-      }
-
-      if (tierIdNum >= totalTiersCount) {
-        return null
       }
 
       const tier = await operatorGrid.tier(tierId)
