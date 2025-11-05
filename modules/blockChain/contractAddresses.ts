@@ -288,3 +288,7 @@ export const OperatorGrid: ChainAddressMap = {
 export const SandboxAllowedRecipientsRegistry: ChainAddressMap = {
   [CHAINS.Hoodi]: '0x7E33f2192c2cEC339493B9193110BC0510d6CBD2',
 }
+
+export const VaultsAdapter: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0xbc2bb8310730f3d2b514cb26f7e0a8776de879ac',
+}

@@ -587,3 +587,13 @@ export const ContractSandboxStethAllowedRecipientsRegistry =
     factory: TypeChain.RegistryWithLimitsAbi__factory,
     address: CONTRACT_ADDRESSES.SandboxAllowedRecipientsRegistry,
   })
+
+export const ContractSetJailStatusInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmSetJailStatusInOperatorGridAbi__factory,
+  address: EvmAddressesByType[MotionType.SetJailStatusInOperatorGrid],
+})
+
+export const ContractVaultsAdapter = createContractHelpers({
+  factory: TypeChain.VaultsAdapterAbi__factory,
+  address: CONTRACT_ADDRESSES.VaultsAdapter,
+})

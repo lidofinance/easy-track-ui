@@ -105,6 +105,8 @@ export const EVM_CONTRACTS = {
   [MotionType.SandboxStethTopUp]: CONTRACTS.ContractSandboxStethTopUp,
   [MotionType.SandboxStethAdd]: CONTRACTS.ContractSandboxStethAdd,
   [MotionType.SandboxStethRemove]: CONTRACTS.ContractSandboxStethRemove,
+  [MotionType.SetJailStatusInOperatorGrid]:
+    CONTRACTS.ContractSetJailStatusInOperatorGrid,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

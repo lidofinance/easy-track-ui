@@ -24,6 +24,7 @@ import * as StartNewVaultsRegisterGroupsInOperatorGrid from './StartNewVaultsReg
 import * as StartNewVaultsRegisterTiersInOperatorGrid from './StartNewVaultsRegisterTiersInOperatorGrid'
 import * as StartNewVaultsUpdateGroupsShareLimit from './StartNewVaultsUpdateGroupsShareLimit'
 import * as StartNewVaultsAlterTiersInOperatorGrid from './StartNewVaultsAlterTiersInOperatorGrid'
+import * as StartNewVaultsSetJailStatusInOperatorGrid from './StartNewVaultsSetJailStatusInOperatorGrid'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -140,6 +141,8 @@ export const formParts = {
     StartNewVaultsUpdateGroupsShareLimit.formParts,
   [MotionTypeForms.AlterTiersInOperatorGrid]:
     StartNewVaultsAlterTiersInOperatorGrid.formParts,
+  [MotionTypeForms.SetJailStatusInOperatorGrid]:
+    StartNewVaultsSetJailStatusInOperatorGrid.formParts,
   [MotionTypeForms.SandboxStethTopUp]: formAllowedRecipientTopUp.formParts({
     registryType: MotionTypeForms.SandboxStethTopUp,
   }),

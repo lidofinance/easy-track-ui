@@ -363,6 +363,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SandboxStethAdd]: '0x8f05Cc4cC42745E9723E105D38638683f162e1d9',
     [MotionType.SandboxStethRemove]:
       '0x86E10ffC7c67A92e0c5E58ae42945213da43D0c7',
+    [MotionType.SetJailStatusInOperatorGrid]:
+      '0xc3FA83D65a900303e1d99cDBBF762c6630562c04',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',
