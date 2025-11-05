@@ -103,8 +103,8 @@ export const OperatorGridTierFieldsets = ({
                 return 'Please set Reserve ratio BP first'
               }
 
-              if (valueNum > Number(reserveRatioBP)) {
-                return `Value must be less than or equal to Reserve ratio BP (${reserveRatioBP})`
+              if (valueNum >= Number(reserveRatioBP)) {
+                return `Value must be less than Reserve ratio BP (${reserveRatioBP})`
               }
 
               return true
