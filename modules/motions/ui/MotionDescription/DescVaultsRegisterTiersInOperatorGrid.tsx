@@ -39,7 +39,7 @@ export function DescVaultsRegisterTiersInOperatorGrid({
 
   return (
     <ol>
-      {Array.from({ length: nodeOperators.length }, (_, i) => i).map(index => {
+      {nodeOperators.map((nodeOperator, index) => {
         const tiersList = tiers[index]
         const s = tiersList.length > 1 ? 's' : ''
         const tiersCount = (tiersCounts ?? [])[index] ?? 0
@@ -47,7 +47,7 @@ export function DescVaultsRegisterTiersInOperatorGrid({
         return (
           <li key={index}>
             Tier{s} for a group with node operator{' '}
-            <AddressInlineWithPop address={nodeOperators[index]} />:
+            <AddressInlineWithPop address={nodeOperator} />:
             <br />
             {tiers[index].map((tier, tierIndex) => (
               <React.Fragment key={`${index}.${tierIndex}`}>

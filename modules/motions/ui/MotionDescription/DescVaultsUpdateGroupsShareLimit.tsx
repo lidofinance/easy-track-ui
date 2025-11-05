@@ -43,8 +43,7 @@ export function DescVaultsUpdateGroupsShareLimit({
 
   return (
     <ul>
-      {Array.from({ length: nodeOperators.length }, (_, i) => i).map(index => {
-        const nodeOperator = nodeOperators[index]
+      {nodeOperators.map((nodeOperator, index) => {
         const currentShareLimit = currentShareLimits[index]
         const newShareLimit = newShareLimits[index]
         return (
