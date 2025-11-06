@@ -546,3 +546,33 @@ export const ContractCuratedExitRequestHashesSubmit = createContractHelpers({
   factory: TypeChain.SubmitExitRequestHashesAbi__factory,
   address: EvmAddressesByType[MotionType.CuratedExitRequestHashesSubmit],
 })
+
+export const ContractRegisterGroupsInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmRegisterGroupsInOperatorsGridAbi__factory,
+  address: EvmAddressesByType[MotionType.RegisterGroupsInOperatorGrid],
+})
+
+export const ContractRegisterTiersInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmRegisterTiersInOperatorsGridAbi__factory,
+  address: EvmAddressesByType[MotionType.RegisterTiersInOperatorGrid],
+})
+
+export const ContractOperatorGrid = createContractHelpers({
+  factory: TypeChain.OperatorGridAbi__factory,
+  address: CONTRACT_ADDRESSES.OperatorGrid,
+})
+
+export const ContractUpdateGroupsShareLimit = createContractHelpers({
+  factory: TypeChain.EvmUpdateGroupsShareLimitAbi__factory,
+  address: EvmAddressesByType[MotionType.UpdateGroupsShareLimit],
+})
+
+export const ContractAlterTiersInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmAlterTiersInOperatorGridAbi__factory,
+  address: EvmAddressesByType[MotionType.AlterTiersInOperatorGrid],
+})
+
+export const ContractSteth = createContractHelpers({
+  factory: TypeChain.StethAbi__factory,
+  address: CONTRACT_ADDRESSES.STETH,
+})

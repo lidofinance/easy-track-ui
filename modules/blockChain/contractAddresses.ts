@@ -280,3 +280,7 @@ export const ValidatorsExitBusOracle: ChainAddressMap = {
   [CHAINS.Mainnet]: '0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e',
   [CHAINS.Hoodi]: '0x8664d394c2b3278f26a1b44b967aef99707eeab2',
 }
+
+export const OperatorGrid: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0x501e678182bB5dF3f733281521D3f3D1aDe69917',
+}

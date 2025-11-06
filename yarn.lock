@@ -2621,10 +2621,10 @@
   resolved "https://registry.yarnpkg.com/@lidofinance/api-rpc/-/api-rpc-0.51.0.tgz#51ac71e4921ab654d691ce4facd5f46d114c6157"
   integrity sha512-HFYaWj5jaSpcextd8gDKXCxfx0Q3H0fBtSv+u5F5IrYbAiRr5oaJk06jsM/3tdNTg13nhrfddf0G1y2mkY9OKQ==
 
-"@lidofinance/evm-script-decoder@0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@lidofinance/evm-script-decoder/-/evm-script-decoder-0.2.2.tgz#202cbfc4f4229405d9e2a70e88347b20e726d3a2"
-  integrity sha512-Gk7gDus2QvOOCCg8NCSOgv43rNIdMFohfRtyc9PSWViIH0GLqNiOFXR71tfwkemrNpu2A0LlBakoB9vgCY+Yfw==
+"@lidofinance/evm-script-decoder@0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@lidofinance/evm-script-decoder/-/evm-script-decoder-0.2.3.tgz#3cfda26a5d401dfcff155ec9509269157f3e3c88"
+  integrity sha512-Hj3/QjgWD71GQt+n5XLKX5a+17VtfDNkhh4rTcpkOK6oKYmq4BfbQFWI9erRJ/z+zYyoYJ0UAGYbLh6Cim3dAw==
   dependencies:
     "@ethersproject/abi" "^5.0.7"
     keccak256 "^1.0.3"

@@ -358,6 +358,15 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.MEVBoostRelaysRemove]:
       '0x7FCc2901C6C3D62784cB178B14d44445B038f736',
 
+    [MotionType.RegisterGroupsInOperatorGrid]:
+      '0xF5ce5E9348EB58AfA29aD933ae3A0DCb74b68d1b',
+    [MotionType.RegisterTiersInOperatorGrid]:
+      '0x6d91c6751DfB46E7E22eC78f5e6FbcEb1BBe6614',
+    [MotionType.UpdateGroupsShareLimit]:
+      '0x56Ff87F41a8CF795764E15E496124240Ac17695b',
+    [MotionType.AlterTiersInOperatorGrid]:
+      '0xA76bD0a2ca6E1Be2F7Cf62fa63BddaCb6d6d1287',
+
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',
     [MotionType.AllianceOpsStablesTopUp]: '',

@@ -16,6 +16,19 @@ type Props = {
 const DisplayTypes = ['Parsed', 'JSON', 'Raw'] as const
 type DisplayType = typeof DisplayTypes[number]
 
+const stringifyArray = (arr: any[], separator = ',\n'): string => {
+  const result = arr
+    .map(item => {
+      if (Array.isArray(item)) {
+        return `[${stringifyArray(item, ', ')}]`
+      }
+      return item.toString()
+    })
+    .join(separator)
+
+  return result
+}
+
 export function MotionEvmScript({ motion }: Props) {
   const [currentDisplayType, setDisplayType] = useState<DisplayType>(
     DisplayTypes[0],
@@ -70,7 +83,12 @@ export function MotionEvmScript({ motion }: Props) {
             res += '\n\nCall data:\n'
             if (decodedCallData) {
               res += decodedCallData
-                .map((data, i) => `[${i}] ${data}`)
+                .map((data, i) => {
+                  if (Array.isArray(data)) {
+                    return `[${i}] [${stringifyArray(data)}]`
+                  }
+                  return `[${i}] ${data}`
+                })
                 .join('\n')
             } else {
               res += '[call data not found]'
