@@ -89,6 +89,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.UpdateGroupsShareLimit]: 'Update groups share limit',
   [MotionType.AlterTiersInOperatorGrid]: 'Alter tiers in Operator Grid',
   [MotionType.SetJailStatusInOperatorGrid]: 'Set jail status in Operator Grid',
+  [MotionType.UpdateVaultsFeesInOperatorGrid]:
+    'Update vaults fees in Operator Grid',
 } as const
 
 export function getMotionTypeDisplayName(

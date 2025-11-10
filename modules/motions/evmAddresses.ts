@@ -365,6 +365,8 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x86E10ffC7c67A92e0c5E58ae42945213da43D0c7',
     [MotionType.SetJailStatusInOperatorGrid]:
       '0xc3FA83D65a900303e1d99cDBBF762c6630562c04',
+    [MotionType.UpdateVaultsFeesInOperatorGrid]:
+      '0x351426775c75aB5127de860Cdcaf1953F1D622a2',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',

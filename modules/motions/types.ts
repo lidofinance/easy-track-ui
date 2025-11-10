@@ -57,6 +57,7 @@ export const MotionTypeForms = {
   UpdateGroupsShareLimit: 'UpdateGroupsShareLimit',
   AlterTiersInOperatorGrid: 'AlterTiersInOperatorGrid',
   SetJailStatusInOperatorGrid: 'SetJailStatusInOperatorGrid',
+  UpdateVaultsFeesInOperatorGrid: 'UpdateVaultsFeesInOperatorGrid',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

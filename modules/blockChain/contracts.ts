@@ -597,3 +597,13 @@ export const ContractVaultsAdapter = createContractHelpers({
   factory: TypeChain.VaultsAdapterAbi__factory,
   address: CONTRACT_ADDRESSES.VaultsAdapter,
 })
+
+export const ContractUpdateVaultsFeesInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmUpdateVaultsFeesInOperatorGridAbi__factory,
+  address: EvmAddressesByType[MotionType.UpdateVaultsFeesInOperatorGrid],
+})
+
+export const ContractVaultHub = createContractHelpers({
+  factory: TypeChain.VaultHubAbi__factory,
+  address: CONTRACT_ADDRESSES.VaultHub,
+})
