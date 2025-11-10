@@ -607,3 +607,8 @@ export const ContractVaultHub = createContractHelpers({
   factory: TypeChain.VaultHubAbi__factory,
   address: CONTRACT_ADDRESSES.VaultHub,
 })
+
+export const ContractVaultViewer = createContractHelpers({
+  factory: TypeChain.VaultViewerAbi__factory,
+  address: CONTRACT_ADDRESSES.VaultViewer,
+})

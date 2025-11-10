@@ -21,7 +21,7 @@ import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
-import { useVaultTierInfoMap } from 'modules/vaults/hooks/useVaultTierInfoMap'
+import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
@@ -70,7 +70,7 @@ export const formParts = createMotionFormPart({
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress } = useWeb3()
 
-    const { vaultMap, getVaultTierInfo } = useVaultTierInfoMap()
+    const { vaultsDataMap, getVaultData } = useVaultsDataMap()
 
     const trustedCaller = ContractUpdateVaultsFeesInOperatorGrid.useSwrWeb3(
       'trustedCaller',
@@ -102,7 +102,7 @@ export const formParts = createMotionFormPart({
       <>
         {vaultsFieldArray.fields.map((item, fieldIndex) => {
           const vaultTierInfo =
-            vaultMap[vaultsInputs[fieldIndex]?.address.toLowerCase()]
+            vaultsDataMap[vaultsInputs[fieldIndex]?.address.toLowerCase()]
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
@@ -145,17 +145,17 @@ export const formParts = createMotionFormPart({
                           return 'Address is already in use by another update within the motion'
                         }
 
-                        const tierInfo = await getVaultTierInfo(lowerAddress)
+                        const vaultData = await getVaultData(lowerAddress)
 
-                        if (!tierInfo) {
+                        if (!vaultData) {
                           return 'Invalid vault address'
                         }
 
-                        if (!tierInfo.isVaultConnected) {
+                        if (!vaultData.isVaultConnected) {
                           return 'Vault is not connected in the Operator Grid'
                         }
 
-                        if (tierInfo.isPendingDisconnect) {
+                        if (vaultData.isPendingDisconnect) {
                           return 'Vault is pending disconnect in the Operator Grid'
                         }
 

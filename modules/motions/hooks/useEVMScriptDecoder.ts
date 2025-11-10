@@ -82,6 +82,7 @@ export function useEVMScriptDecoder() {
         [KEYS.OperatorGrid]: abis.OperatorGridAbi__factory.abi,
         [KEYS.VaultsAdapter]: abis.VaultsAdapterAbi__factory.abi,
         [KEYS.VaultHub]: abis.VaultHubAbi__factory.abi,
+        [KEYS.VaultViewer]: abis.VaultViewerAbi__factory.abi,
       }),
     )
   }, `evm-script-decoder-${chainId}`)

@@ -296,3 +296,7 @@ export const VaultsAdapter: ChainAddressMap = {
 export const VaultHub: ChainAddressMap = {
   [CHAINS.Hoodi]: '0x4C9fFC325392090F789255b9948Ab1659b797964',
 }
+
+export const VaultViewer: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0x069f5f448475c843e099198b5e9F9977bF84FDd0',
+}
