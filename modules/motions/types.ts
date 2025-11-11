@@ -59,6 +59,7 @@ export const MotionTypeForms = {
   SetJailStatusInOperatorGrid: 'SetJailStatusInOperatorGrid',
   UpdateVaultsFeesInOperatorGrid: 'UpdateVaultsFeesInOperatorGrid',
   ForceValidatorExitsInVaultHub: 'ForceValidatorExitsInVaultHub',
+  SocializeBadDebtInVaultHub: 'SocializeBadDebtInVaultHub',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

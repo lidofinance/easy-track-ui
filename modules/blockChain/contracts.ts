@@ -612,3 +612,8 @@ export const ContractForceValidatorExitsInVaultHub = createContractHelpers({
   factory: TypeChain.EvmForceValidatorExitsInVaultHubAbi__factory,
   address: EvmAddressesByType[MotionType.ForceValidatorExitsInVaultHub],
 })
+
+export const ContractSocializeBadDebtInVaultHub = createContractHelpers({
+  factory: TypeChain.EvmSocializeBadDebtInVaultHubAbi__factory,
+  address: EvmAddressesByType[MotionType.SocializeBadDebtInVaultHub],
+})
