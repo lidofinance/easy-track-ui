@@ -91,6 +91,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.SetJailStatusInOperatorGrid]: 'Set jail status in Operator Grid',
   [MotionType.UpdateVaultsFeesInOperatorGrid]:
     'Update vaults fees in Operator Grid',
+  [MotionType.ForceValidatorExitsInVaultHub]:
+    'Force validator exits in Vault Hub',
 } as const
 
 export function getMotionTypeDisplayName(
