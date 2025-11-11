@@ -5,16 +5,16 @@ export const validateTransitionLimit = (
 ): string | null => {
   if (typeof limit !== 'number') {
     if (!tokenLabel) {
-      return 'Transition limit is not defined'
+      return 'Per transaction limit is not defined'
     }
 
-    return `Transition limit for ${tokenLabel} is not defined`
+    return `Per transaction limit for ${tokenLabel} is not defined`
   }
 
   if (Number(value) > limit) {
     return `${
       tokenLabel ?? 'Token'
-    } transition is limited by ${limit.toLocaleString()}`
+    } per transaction limit is ${limit.toLocaleString()}`
   }
 
   return null
