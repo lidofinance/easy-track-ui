@@ -25,6 +25,7 @@ import {
   ContractEcosystemOpsStethAllowedRecipientsRegistry,
   ContractLabsOpsStablesAllowedRecipientsRegistry,
   ContractLabsOpsStethAllowedRecipientsRegistry,
+  ContractSandboxStethAllowedRecipientsRegistry,
 } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 
@@ -83,6 +84,10 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.LabsOpsStablesTopUp]:
     ContractLabsOpsStablesAllowedRecipientsRegistry,
   [MotionType.LabsOpsStethTopUp]: ContractLabsOpsStethAllowedRecipientsRegistry,
+  [MotionType.SandboxStethTopUp]: ContractSandboxStethAllowedRecipientsRegistry,
+  [MotionType.SandboxStethAdd]: ContractSandboxStethAllowedRecipientsRegistry,
+  [MotionType.SandboxStethRemove]:
+    ContractSandboxStethAllowedRecipientsRegistry,
 } as const
 
 type HookArgs = {

@@ -49,6 +49,9 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
   [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
   [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
+  [MotionType.SandboxStethTopUp]: 'Top up sandbox stETH',
+  [MotionType.SandboxStethAdd]: 'Add sandbox stETH recipient',
+  [MotionType.SandboxStethRemove]: 'Remove sandbox stETH recipient',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 

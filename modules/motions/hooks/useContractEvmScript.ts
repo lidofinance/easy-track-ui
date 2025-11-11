@@ -102,6 +102,9 @@ export const EVM_CONTRACTS = {
   [MotionType.UpdateGroupsShareLimit]: CONTRACTS.ContractUpdateGroupsShareLimit,
   [MotionType.AlterTiersInOperatorGrid]:
     CONTRACTS.ContractAlterTiersInOperatorGrid,
+  [MotionType.SandboxStethTopUp]: CONTRACTS.ContractSandboxStethTopUp,
+  [MotionType.SandboxStethAdd]: CONTRACTS.ContractSandboxStethAdd,
+  [MotionType.SandboxStethRemove]: CONTRACTS.ContractSandboxStethRemove,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

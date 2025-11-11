@@ -82,6 +82,10 @@ const TOKEN = {
     label: 'stETH',
     value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
   },
+  [MotionType.SandboxStethTopUp]: {
+    label: 'stETH',
+    value: (chainId: CHAINS) => CONTRACT_ADDRESSES.STETH[chainId],
+  },
 }
 
 const isTopUpType = (type: unknown): type is keyof typeof TOKEN => {

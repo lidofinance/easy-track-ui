@@ -140,6 +140,15 @@ export const formParts = {
     StartNewVaultsUpdateGroupsShareLimit.formParts,
   [MotionTypeForms.AlterTiersInOperatorGrid]:
     StartNewVaultsAlterTiersInOperatorGrid.formParts,
+  [MotionTypeForms.SandboxStethTopUp]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionTypeForms.SandboxStethTopUp,
+  }),
+  [MotionTypeForms.SandboxStethAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.SandboxStethAdd,
+  }),
+  [MotionTypeForms.SandboxStethRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionTypeForms.SandboxStethRemove,
+  }),
 } as const
 
 export type FormData = {

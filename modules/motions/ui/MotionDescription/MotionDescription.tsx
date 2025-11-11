@@ -341,6 +341,24 @@ const MOTION_DESCRIPTIONS = {
     DescVaultsRegisterTiersInOperatorGrid,
   [MotionType.UpdateGroupsShareLimit]: DescVaultsUpdateGroupsShareLimit,
   [MotionType.AlterTiersInOperatorGrid]: DescVaultsAlterTiersInOperatorGrid,
+  [MotionType.SandboxStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.SandboxStethTopUp}
+    />
+  ),
+  [MotionType.SandboxStethAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.SandboxStethAdd}
+    />
+  ),
+  [MotionType.SandboxStethRemove]: (props: DescAllowedRecipientRemoveProps) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.SandboxStethRemove}
+    />
+  ),
 } as const
 
 type Props = {

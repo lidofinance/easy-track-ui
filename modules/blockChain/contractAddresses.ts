@@ -284,3 +284,7 @@ export const ValidatorsExitBusOracle: ChainAddressMap = {
 export const OperatorGrid: ChainAddressMap = {
   [CHAINS.Hoodi]: '0x501e678182bB5dF3f733281521D3f3D1aDe69917',
 }
+
+export const SandboxAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0x7E33f2192c2cEC339493B9193110BC0510d6CBD2',
+}
