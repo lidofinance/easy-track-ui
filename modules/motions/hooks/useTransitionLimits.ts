@@ -14,19 +14,19 @@ import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useConnectErc20Contract } from './useConnectErc20Contract'
 
-// Data structure reference
-// https://github.com/lidofinance/scripts/blob/bda3568d1291bdc7ba422fb20150313f2d1778c3/scripts/vote_2024_01_16.py#L106
-const STETH_INDEX = 1
-const DAI_INDEX = 4
-const LDO_INDEX = 7
-const USDC_INDEX = 10
-const USDT_INDEX = 13
+// Data structure reference (upd nov 2025)
+// https://github.com/lidofinance/scripts/pull/530/files#diff-da0344e1fb80ad8cbc4d1d930219eee206f7fcdf7a02def4c54d9d4f7773e2dd
+const USDC_INDEX = 1
+const USDT_INDEX = 4
+const DAI_INDEX = 7
+const SUSDS_INDEX = 10
+const STETH_INDEX = 13
 const ETH_INDEX = 16
 
 const TOKEN_INDEXES = [
   STETH_INDEX,
   DAI_INDEX,
-  LDO_INDEX,
+  SUSDS_INDEX,
   USDC_INDEX,
   USDT_INDEX,
   ETH_INDEX,
