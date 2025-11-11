@@ -72,8 +72,6 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.PmlDAITopUp]: 'Top up PML DAI',
   [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
   [MotionType.SandboxStablesTopUp]: 'Top up sandbox stables',
-  [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
-  [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
     'Update target validator limits [deprecated]',

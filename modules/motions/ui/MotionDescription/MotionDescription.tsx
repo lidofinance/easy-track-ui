@@ -264,20 +264,6 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.AtcStablesTopUp}
     />
   ),
-  [MotionType.SandboxStablesAdd]: (props: DescAllowedRecipientAddProps) => (
-    <DescAllowedRecipientAdd
-      {...props}
-      registryType={MotionType.SandboxStablesAdd}
-    />
-  ),
-  [MotionType.SandboxStablesRemove]: (
-    props: DescAllowedRecipientRemoveProps,
-  ) => (
-    <DescAllowedRecipientRemove
-      {...props}
-      registryType={MotionType.SandboxStablesRemove}
-    />
-  ),
   [MotionType.SandboxStablesTopUp]: (props: GenericDescProps) => (
     <DescTopUpWithLimitsAndCustomToken
       {...props}

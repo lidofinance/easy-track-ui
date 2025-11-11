@@ -65,10 +65,6 @@ export const REGISTRY_WITH_LIMITS_BY_MOTION_TYPE = {
   [MotionType.RccStablesTopUp]: ContractRccStablesRegistry,
   [MotionType.PmlStablesTopUp]: ContractPmlStablesRegistry,
   [MotionType.AtcStablesTopUp]: ContractAtcStablesRegistry,
-  [MotionType.SandboxStablesAdd]:
-    ContractSandboxStablesAllowedRecipientRegistry,
-  [MotionType.SandboxStablesRemove]:
-    ContractSandboxStablesAllowedRecipientRegistry,
   [MotionType.SandboxStablesTopUp]:
     ContractSandboxStablesAllowedRecipientRegistry,
   [MotionType.RccStethTopUp]: ContractRccStethAllowedRecipientsRegistry,

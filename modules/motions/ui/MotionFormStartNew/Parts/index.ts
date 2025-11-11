@@ -87,12 +87,6 @@ export const formParts = {
     StartNewNodeOperatorLimitIncrease.formParts({
       motionType: MotionTypeForms.SandboxNodeOperatorIncreaseLimit,
     }),
-  [MotionTypeForms.SandboxStablesAdd]: formAllowedRecipientAdd.formParts({
-    registryType: MotionTypeForms.SandboxStablesAdd,
-  }),
-  [MotionTypeForms.SandboxStablesRemove]: formAllowedRecipientRemove.formParts({
-    registryType: MotionTypeForms.SandboxStablesRemove,
-  }),
   [MotionTypeForms.SandboxStablesTopUp]:
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.SandboxStablesTopUp,
