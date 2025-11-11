@@ -14,23 +14,10 @@ import { MAX_PROVIDER_BATCH } from 'modules/config'
 import { processInBatches } from 'modules/blockChain/utils/processInBatches'
 import { useConnectErc20Contract } from './useConnectErc20Contract'
 
-// Data structure reference (upd nov 2025)
-// https://github.com/lidofinance/scripts/pull/530/files#diff-da0344e1fb80ad8cbc4d1d930219eee206f7fcdf7a02def4c54d9d4f7773e2dd
-const USDC_INDEX = 1
-const USDT_INDEX = 4
-const DAI_INDEX = 7
-const SUSDS_INDEX = 10
-const STETH_INDEX = 13
-const ETH_INDEX = 16
-
-const TOKEN_INDEXES = [
-  STETH_INDEX,
-  DAI_INDEX,
-  SUSDS_INDEX,
-  USDC_INDEX,
-  USDT_INDEX,
-  ETH_INDEX,
-]
+// Data structure reference
+// https://github.com/lidofinance/scripts/blob/bda3568d1291bdc7ba422fb20150313f2d1778c3/scripts/vote_2024_01_16.py#L106
+const TOKEN_ARG_INDEX = 0
+const AMOUNT_ARG_INDEX = 2
 
 const decodeLimit = (val: BigNumber, decimals: number | null) => {
   if (!decimals) {
@@ -48,71 +35,102 @@ export const useTransitionLimits = () => {
   const finance = ContractFinance.useRpc()
   const aragonAcl = ContractAragonAcl.useRpc()
 
-  const result = useSWR<LimitsMap>(`permission-param-${chainId}`, async () => {
-    const evmScriptExecutorAddress = ContractEVMScriptExecutor.address[chainId]!
-    const role = await finance.CREATE_PAYMENTS_ROLE()
-    const paramsLength = await aragonAcl.getPermissionParamsLength(
-      evmScriptExecutorAddress,
-      finance.address,
-      role,
-    )
-
-    const indexes = Array.from({ length: Number(paramsLength) }, (_, i) => i)
-
-    const batchResults = await processInBatches(
-      indexes,
-      MAX_PROVIDER_BATCH,
-      async i =>
-        aragonAcl.getPermissionParam(
-          evmScriptExecutorAddress,
-          finance.address,
-          role,
-          i,
-        ),
-    )
-
-    // Build the params map directly from fulfilled results
-    const params: Record<number, any> = {}
-
-    batchResults.forEach((res, i) => {
-      if (res.status === 'fulfilled') {
-        params[indexes[i]] = res.value
-      } else {
-        console.error(
-          `Failed to fetch permission param at index ${indexes[i]}`,
-          res.reason,
+  const result = useSWR<LimitsMap>(
+    `permission-param-${chainId}`,
+    async () => {
+      const evmScriptExecutorAddress =
+        ContractEVMScriptExecutor.address[chainId]
+      if (!evmScriptExecutorAddress) {
+        throw new Error(
+          `EVMScriptExecutor address not found for chainId ${chainId}`,
         )
       }
-    })
 
-    const limits: LimitsMap = {}
+      const role = await finance.CREATE_PAYMENTS_ROLE()
+      const paramsLength = await aragonAcl.getPermissionParamsLength(
+        evmScriptExecutorAddress,
+        finance.address,
+        role,
+      )
 
-    for (const index of TOKEN_INDEXES) {
-      const rawAddress: string | undefined =
-        index === ETH_INDEX
-          ? constants.AddressZero
-          : params[index]?.[2].toHexString()
-      const address = rawAddress ? utils.getAddress(rawAddress) : null
+      const indexes = Array.from({ length: Number(paramsLength) }, (_, i) => i)
 
-      if (address) {
-        let decimals: number | null = null
-        if (address === constants.AddressZero) {
-          decimals = DEFAULT_DECIMALS
+      const batchResults = await processInBatches(
+        indexes,
+        MAX_PROVIDER_BATCH,
+        async i =>
+          aragonAcl.getPermissionParam(
+            evmScriptExecutorAddress,
+            finance.address,
+            role,
+            i,
+          ),
+      )
+
+      // Build the params map directly from fulfilled results
+      const params: Record<number, any> = {}
+
+      const paramsArr: [number, number, BigNumber][] = []
+
+      batchResults.forEach((res, i) => {
+        if (res.status === 'fulfilled') {
+          params[indexes[i]] = res.value
+          paramsArr.push(res.value)
         } else {
-          const tokenContract = connectErc20Contract(address)
-          try {
-            decimals = await tokenContract.decimals()
-          } catch {
-            decimals = null
-          }
+          console.error(
+            `Failed to fetch permission param at index ${indexes[i]}`,
+            res.reason,
+          )
         }
+      })
 
-        limits[address] = decodeLimit(params[index + 1]?.[2], decimals)
+      const limits: LimitsMap = {}
+
+      let decimals: number | null = null
+      for (let i = 0; i < paramsArr.length; i += 1) {
+        const [argIndex, , value] = paramsArr[i]
+
+        if (argIndex === TOKEN_ARG_INDEX) {
+          const tokenAddress: string = value.toHexString()
+          const limitParam = paramsArr[i + 1]
+
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (!limitParam || limitParam[0] !== AMOUNT_ARG_INDEX) {
+            console.warn(
+              `Expected limit param at index ${
+                i + 1
+              } for token ${tokenAddress}, but not found.`,
+            )
+            continue
+          }
+          const [, , limitValue] = limitParam
+          if (tokenAddress === constants.AddressZero) {
+            decimals = DEFAULT_DECIMALS
+          } else {
+            const tokenContract = connectErc20Contract(tokenAddress)
+            try {
+              decimals = await tokenContract.decimals()
+            } catch {
+              decimals = null
+            }
+          }
+
+          limits[utils.getAddress(tokenAddress)] = decodeLimit(
+            limitValue,
+            decimals,
+          )
+          i += 1 // Skip the next param as it's already processed
+        }
       }
-    }
 
-    return limits
-  })
+      return limits
+    },
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  )
 
   return result
 }
