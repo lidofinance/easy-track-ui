@@ -608,11 +608,6 @@ export const ContractVaultHub = createContractHelpers({
   address: CONTRACT_ADDRESSES.VaultHub,
 })
 
-export const ContractVaultViewer = createContractHelpers({
-  factory: TypeChain.VaultViewerAbi__factory,
-  address: CONTRACT_ADDRESSES.VaultViewer,
-})
-
 export const ContractForceValidatorExitsInVaultHub = createContractHelpers({
   factory: TypeChain.EvmForceValidatorExitsInVaultHubAbi__factory,
   address: EvmAddressesByType[MotionType.ForceValidatorExitsInVaultHub],

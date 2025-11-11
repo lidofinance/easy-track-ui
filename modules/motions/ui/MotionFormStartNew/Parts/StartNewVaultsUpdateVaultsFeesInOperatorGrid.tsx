@@ -202,7 +202,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         if (valueNum > vaultTierInfo.infraFeeBP) {
-                          return 'Value must be less than or equal to current'
+                          return `Value must be less than or equal to ${vaultTierInfo.infraFeeBP}`
                         }
 
                         return true
@@ -239,7 +239,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         if (valueNum > vaultTierInfo.liquidityFeeBP) {
-                          return 'Value must be less than or equal to current'
+                          return `Value must be less than or equal to ${vaultTierInfo.liquidityFeeBP}`
                         }
 
                         return true
@@ -276,7 +276,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         if (valueNum > vaultTierInfo.reservationFeeBP) {
-                          return 'Value must be less than or equal to current'
+                          return `Value must be less than or equal to ${vaultTierInfo.reservationFeeBP}`
                         }
 
                         return true

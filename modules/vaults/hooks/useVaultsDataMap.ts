@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { StakingVaultAbi__factory } from 'generated'
-import { ContractVaultViewer } from 'modules/blockChain/contracts'
+import { ContractVaultHub } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
 import { useCallback } from 'react'
@@ -15,7 +15,8 @@ const fetchVaultNodeOperator = async (
 
   try {
     const vault = StakingVaultAbi__factory.connect(address, provider)
-    return vault.nodeOperator()
+    const nodeOperator = await vault.nodeOperator()
+    return nodeOperator
   } catch (error) {
     return null
   }
@@ -38,7 +39,7 @@ export const useVaultsDataMap = () => {
   const [vaultsDataMap, setState] = useSimpleReducer<
     Record<string, VaultData | null | undefined>
   >({})
-  const vaultViewer = ContractVaultViewer.useRpc()
+  const vaultHub = ContractVaultHub.useRpc()
 
   const getVaultData = useCallback(
     async (address: string) => {
@@ -57,25 +58,23 @@ export const useVaultsDataMap = () => {
       }
 
       try {
-        const vaultData = await vaultViewer.getVaultData(lowerAddress)
+        const vaultData = await vaultHub.vaultConnection(lowerAddress)
 
         // Source: VaultHub.sol - see isVaultConnected function
-        const isVaultConnected = !vaultData.connection.vaultIndex.isZero()
+        const isVaultConnected = !vaultData.vaultIndex.isZero()
 
         // Source: VaultHub.sol - see _isPendingDisconnect function
         const isPendingDisconnect =
-          vaultData.connection.disconnectInitiatedTs > 0 &&
-          DISCONNECT_NOT_INITIATED.eq(
-            vaultData.connection.disconnectInitiatedTs,
-          )
+          vaultData.disconnectInitiatedTs > 0 &&
+          !DISCONNECT_NOT_INITIATED.eq(vaultData.disconnectInitiatedTs)
 
         const result = {
           nodeOperator,
           isVaultConnected,
           isPendingDisconnect,
-          infraFeeBP: vaultData.connection.infraFeeBP,
-          liquidityFeeBP: vaultData.connection.liquidityFeeBP,
-          reservationFeeBP: vaultData.connection.reservationFeeBP,
+          infraFeeBP: vaultData.infraFeeBP,
+          liquidityFeeBP: vaultData.liquidityFeeBP,
+          reservationFeeBP: vaultData.reservationFeeBP,
         }
 
         setState({ [lowerAddress]: result })
@@ -86,7 +85,7 @@ export const useVaultsDataMap = () => {
         return null
       }
     },
-    [library, vaultViewer, vaultsDataMap, setState],
+    [library, vaultHub, vaultsDataMap, setState],
   )
 
   return {
