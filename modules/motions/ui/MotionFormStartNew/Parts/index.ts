@@ -28,6 +28,7 @@ import * as StartNewVaultsSetJailStatusInOperatorGrid from './StartNewVaultsSetJ
 import * as StartNewVaultsUpdateVaultsFeesInOperatorGrid from './StartNewVaultsUpdateVaultsFeesInOperatorGrid'
 import * as StartNewVaultForceValidatorExitsInVaultHub from './StartNewVaultForceValidatorExitsInVaultHub'
 import * as StartNewVaultsSocializeBadDebtInVaultHub from './StartNewVaultsSocializeBadDebtInVaultHub'
+import * as StartNewVaultsSetLiabilitySharesTargetInVaultHub from './StartNewVaultsSetLiabilitySharesTargetInVaultHub'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -161,6 +162,8 @@ export const formParts = {
     StartNewVaultForceValidatorExitsInVaultHub.formParts,
   [MotionTypeForms.SocializeBadDebtInVaultHub]:
     StartNewVaultsSocializeBadDebtInVaultHub.formParts,
+  [MotionTypeForms.SetLiabilitySharesTargetInVaultHub]:
+    StartNewVaultsSetLiabilitySharesTargetInVaultHub.formParts,
 } as const
 
 export type FormData = {

@@ -59,6 +59,8 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.ForceValidatorExitsInVaultHub]:
     'Force validator exits in Vault Hub',
   [MotionType.SocializeBadDebtInVaultHub]: 'Socialize bad debt in Vault Hub',
+  [MotionType.SetLiabilitySharesTargetInVaultHub]:
+    'Set liability shares target in Vault Hub',
   [MotionType.SandboxStethTopUp]: 'Top up sandbox stETH',
   [MotionType.SandboxStethAdd]: 'Add sandbox stETH recipient',
   [MotionType.SandboxStethRemove]: 'Remove sandbox stETH recipient',

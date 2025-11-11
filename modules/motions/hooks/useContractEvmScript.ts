@@ -113,6 +113,8 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractForceValidatorExitsInVaultHub,
   [MotionType.SocializeBadDebtInVaultHub]:
     CONTRACTS.ContractSocializeBadDebtInVaultHub,
+  [MotionType.SetLiabilitySharesTargetInVaultHub]:
+    CONTRACTS.ContractSetLiabilitySharesTargetInVaultHub,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

@@ -617,3 +617,10 @@ export const ContractSocializeBadDebtInVaultHub = createContractHelpers({
   factory: TypeChain.EvmSocializeBadDebtInVaultHubAbi__factory,
   address: EvmAddressesByType[MotionType.SocializeBadDebtInVaultHub],
 })
+
+export const ContractSetLiabilitySharesTargetInVaultHub = createContractHelpers(
+  {
+    factory: TypeChain.EvmSetLiabilitySharesTargetInVaultHubAbi__factory,
+    address: EvmAddressesByType[MotionType.SetLiabilitySharesTargetInVaultHub],
+  },
+)
