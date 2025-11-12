@@ -1,5 +1,4 @@
 export type FormData = {
-  stonksAddress: string
-  minAcceptableAmount: number
-  tokenToDecimals: number
+  sellAmount: string
+  minBuyAmount: string
 }
