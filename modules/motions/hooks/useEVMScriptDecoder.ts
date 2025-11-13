@@ -74,6 +74,8 @@ export function useEVMScriptDecoder() {
           abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.SandboxStablesAllowedRecipientRegistry]:
           abis.RegistryWithLimitsAbi__factory.abi,
+        [KEYS.SandboxAllowedRecipientsRegistry]:
+          abis.RegistryWithLimitsAbi__factory.abi,
         [KEYS.MEVBoostRelayList]: abis.MEVBoostRelayListAbi__factory.abi,
         [KEYS.ValidatorsExitBusOracle]:
           abis.ValidatorsExitBusOracleAbi__factory.abi,
