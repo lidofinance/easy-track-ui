@@ -87,12 +87,6 @@ export const formParts = {
     StartNewNodeOperatorLimitIncrease.formParts({
       motionType: MotionTypeForms.SandboxNodeOperatorIncreaseLimit,
     }),
-  [MotionTypeForms.SandboxStablesAdd]: formAllowedRecipientAdd.formParts({
-    registryType: MotionTypeForms.SandboxStablesAdd,
-  }),
-  [MotionTypeForms.SandboxStablesRemove]: formAllowedRecipientRemove.formParts({
-    registryType: MotionTypeForms.SandboxStablesRemove,
-  }),
   [MotionTypeForms.SandboxStablesTopUp]:
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.SandboxStablesTopUp,
@@ -146,6 +140,15 @@ export const formParts = {
     StartNewVaultsUpdateGroupsShareLimit.formParts,
   [MotionTypeForms.AlterTiersInOperatorGrid]:
     StartNewVaultsAlterTiersInOperatorGrid.formParts,
+  [MotionTypeForms.SandboxStethTopUp]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionTypeForms.SandboxStethTopUp,
+  }),
+  [MotionTypeForms.SandboxStethAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.SandboxStethAdd,
+  }),
+  [MotionTypeForms.SandboxStethRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionTypeForms.SandboxStethRemove,
+  }),
 } as const
 
 export type FormData = {

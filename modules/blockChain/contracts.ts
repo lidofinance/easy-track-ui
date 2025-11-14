@@ -367,16 +367,6 @@ export const ContractSandboxStablesAllowedRecipientRegistry =
     address: CONTRACT_ADDRESSES.SandboxStablesAllowedRecipientRegistry,
   })
 
-export const ContractEvmSandboxStablesAdd = createContractHelpers({
-  factory: TypeChain.AddAllowedRecipientAbi__factory,
-  address: EvmAddressesByType[MotionType.SandboxStablesAdd],
-})
-
-export const ContractEvmSandboxStablesRemove = createContractHelpers({
-  factory: TypeChain.RemoveAllowedRecipientAbi__factory,
-  address: EvmAddressesByType[MotionType.SandboxStablesRemove],
-})
-
 export const ContractEvmSandboxStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.SandboxStablesTopUp],
@@ -576,3 +566,24 @@ export const ContractSteth = createContractHelpers({
   factory: TypeChain.StethAbi__factory,
   address: CONTRACT_ADDRESSES.STETH,
 })
+
+export const ContractSandboxStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpAllowedRecipientsAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStethTopUp],
+})
+
+export const ContractSandboxStethAdd = createContractHelpers({
+  factory: TypeChain.AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStethAdd],
+})
+
+export const ContractSandboxStethRemove = createContractHelpers({
+  factory: TypeChain.RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStethRemove],
+})
+
+export const ContractSandboxStethAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.SandboxAllowedRecipientsRegistry,
+  })

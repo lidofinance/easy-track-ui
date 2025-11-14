@@ -69,9 +69,7 @@ export const EVM_CONTRACTS = {
   [MotionType.RccStablesTopUp]: CONTRACTS.ContractEvmRccStablesTopUp,
   [MotionType.PmlStablesTopUp]: CONTRACTS.ContractEvmPmlStablesTopUp,
   [MotionType.AtcStablesTopUp]: CONTRACTS.ContractEvmAtcStablesTopUp,
-  [MotionType.SandboxStablesAdd]: CONTRACTS.ContractEvmSandboxStablesAdd,
   [MotionType.SandboxStablesTopUp]: CONTRACTS.ContractEvmSandboxStablesTopUp,
-  [MotionType.SandboxStablesRemove]: CONTRACTS.ContractEvmSandboxStablesRemove,
   [MotionType.RccStethTopUp]: CONTRACTS.ContractRccStethTopUp,
   [MotionType.PmlStethTopUp]: CONTRACTS.ContractPmlStethTopUp,
   [MotionType.AtcStethTopUp]: CONTRACTS.ContractAtcStethTopUp,
@@ -104,6 +102,9 @@ export const EVM_CONTRACTS = {
   [MotionType.UpdateGroupsShareLimit]: CONTRACTS.ContractUpdateGroupsShareLimit,
   [MotionType.AlterTiersInOperatorGrid]:
     CONTRACTS.ContractAlterTiersInOperatorGrid,
+  [MotionType.SandboxStethTopUp]: CONTRACTS.ContractSandboxStethTopUp,
+  [MotionType.SandboxStethAdd]: CONTRACTS.ContractSandboxStethAdd,
+  [MotionType.SandboxStethRemove]: CONTRACTS.ContractSandboxStethRemove,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

@@ -33,6 +33,7 @@ import {
   ContractStethGasSupplyTopUp,
   ContractStethRewardProgramTopUp,
   ContractRewardsShareProgramTopUp,
+  ContractSandboxStethTopUp,
 } from 'modules/blockChain/contracts'
 import { MotionTypeForms } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
@@ -65,6 +66,10 @@ export const ALLOWED_RECIPIENT_TOPUP_MAP = {
   [MotionTypeForms.RewardsShareProgramTopUp]: {
     evmContract: ContractRewardsShareProgramTopUp,
     motionType: MotionTypeForms.RewardsShareProgramTopUp,
+  },
+  [MotionTypeForms.SandboxStethTopUp]: {
+    evmContract: ContractSandboxStethTopUp,
+    motionType: MotionTypeForms.SandboxStethTopUp,
   },
 }
 
@@ -209,7 +214,7 @@ export const formParts = ({
                 )}
                 <Fieldset>
                   <SelectControl
-                    label="Reward program address"
+                    label="Recipient address"
                     name={`${fieldNames.programs}.${i}.address`}
                     rules={{ required: 'Field is required' }}
                   >

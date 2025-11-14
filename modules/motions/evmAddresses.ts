@@ -249,10 +249,6 @@ export const EvmAddressesByChain: EvmAddresses = {
 
     [MotionType.SandboxNodeOperatorIncreaseLimit]:
       '0xbD37e55748c6f4Ece637AeD3e278e7575346B587',
-    [MotionType.SandboxStablesAdd]:
-      '0xB238fB1e7c8da5da022140dA956Fc3052808fC56',
-    [MotionType.SandboxStablesRemove]:
-      '0x51c730af05777c4D3CcC8c8B80558F4D155bb7BF',
     [MotionType.SandboxStablesTopUp]:
       '0x71bcEf1f4E4945005e1D22d68F02085D5167ab43',
     [MotionType.RccStethTopUp]: '0xe3bCa174A8b031C61a58aa56a0f622D4FFCA47d7',
@@ -344,12 +340,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SDVTExitRequestHashesSubmit]:
       '0xAa3D6A8B52447F272c1E8FAaA06EA06658bd95E2',
 
-    [MotionType.SandboxStablesAdd]:
-      '0x056561d0F1314CB3932180b3f0B3C03174F2642B',
-    [MotionType.SandboxStablesRemove]:
-      '0xc84251D2959E976AfE95201E1e2B88dB56Bc0a69',
     [MotionType.SandboxStablesTopUp]:
-      '0x4A7B898981182c42ecC9444Cd40Cf42CEB6b71Ab',
+      '0x9D735eeDfa96F53BF9d31DbE81B51a5d333198dB',
 
     [MotionType.MEVBoostRelaysAdd]:
       '0xF02DbeaA1Bbc90226CaB995db4C190DbE25983af',
@@ -366,6 +358,11 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x56Ff87F41a8CF795764E15E496124240Ac17695b',
     [MotionType.AlterTiersInOperatorGrid]:
       '0xF21f98cac0Ba38f02b4d5be1667cc345929E8877',
+    [MotionType.SandboxStethTopUp]:
+      '0xE5aE943A3AEFA44AD16438Bc3D2cA7654103F985',
+    [MotionType.SandboxStethAdd]: '0x8f05Cc4cC42745E9723E105D38638683f162e1d9',
+    [MotionType.SandboxStethRemove]:
+      '0x86E10ffC7c67A92e0c5E58ae42945213da43D0c7',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',

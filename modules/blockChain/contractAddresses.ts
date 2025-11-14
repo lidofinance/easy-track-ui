@@ -158,7 +158,7 @@ export const AllowedTokensRegistry: ChainAddressMap = {
 
 export const SandboxStablesAllowedRecipientRegistry: ChainAddressMap = {
   [CHAINS.Holesky]: '0xF8a63a36B954D72de197097377aa00C238c653Cf',
-  [CHAINS.Hoodi]: '0xd57FF1ce54F572F4E8DaF0cB7038F1Bd6049cAa8',
+  [CHAINS.Hoodi]: '0xdf53b1cd4CFE43b6CdA3640Be0e4f1a45126ec61',
 }
 
 export const RccStethAllowedRecipientsRegistry: ChainAddressMap = {
@@ -283,4 +283,8 @@ export const ValidatorsExitBusOracle: ChainAddressMap = {
 
 export const OperatorGrid: ChainAddressMap = {
   [CHAINS.Hoodi]: '0x501e678182bB5dF3f733281521D3f3D1aDe69917',
+}
+
+export const SandboxAllowedRecipientsRegistry: ChainAddressMap = {
+  [CHAINS.Hoodi]: '0x7E33f2192c2cEC339493B9193110BC0510d6CBD2',
 }
