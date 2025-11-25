@@ -208,6 +208,25 @@ export const formParts = createMotionFormPart({
                         return amountError
                       }
 
+                      const parsedValue = utils.parseEther(value)
+                      if (parsedValue.isZero()) {
+                        return 'Amount must be greater than 0'
+                      }
+
+                      const vaultAddress =
+                        vaultsInputs[fieldIndex]?.vaultAddress
+                      if (vaultAddress && isAddress(vaultAddress)) {
+                        const vaultData =
+                          vaultsDataMap[vaultAddress.toLowerCase()]
+                        if (vaultData?.badDebtEth) {
+                          if (parsedValue.gt(vaultData.badDebtEth)) {
+                            return `Amount exceeds current vault debt (${formatBalance(
+                              vaultData.badDebtEth,
+                            )})`
+                          }
+                        }
+                      }
+
                       return true
                     },
                   }}
