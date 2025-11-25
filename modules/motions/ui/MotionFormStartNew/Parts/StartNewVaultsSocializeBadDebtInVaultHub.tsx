@@ -24,6 +24,9 @@ import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
+import { isAddress } from 'ethers/lib/utils'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
+import { formatBalance } from 'modules/blockChain/utils/formatBalance'
 
 type VaultInput = {
   vaultAddress: string
@@ -71,7 +74,7 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const { getVaultData } = useVaultsDataMap()
+    const { vaultsDataMap, getVaultData } = useVaultsDataMap()
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
 
@@ -111,6 +114,20 @@ export const formParts = createMotionFormPart({
                 )}
               </FieldsHeader>
 
+              {vaultsInputs[fieldIndex]?.vaultAddress &&
+                vaultsDataMap[
+                  vaultsInputs[fieldIndex].vaultAddress.toLowerCase()
+                ]?.badDebtEth && (
+                  <MotionInfoBox>
+                    Current vault debt:{' '}
+                    {formatBalance(
+                      vaultsDataMap[
+                        vaultsInputs[fieldIndex].vaultAddress.toLowerCase()
+                      ]?.badDebtEth,
+                    )}
+                  </MotionInfoBox>
+                )}
+
               <Fieldset>
                 <InputControl
                   name={`${fieldNames.vaults}.${fieldIndex}.vaultAddress`}
@@ -141,6 +158,10 @@ export const formParts = createMotionFormPart({
                         return 'Invalid vault address'
                       }
 
+                      if (!vaultData.isVaultConnected) {
+                        return 'Vault is not connected in the Operator Grid'
+                      }
+
                       return true
                     },
                   }}
@@ -157,6 +178,16 @@ export const formParts = createMotionFormPart({
                       const addressErr = validateAddress(value)
                       if (addressErr) {
                         return addressErr
+                      }
+
+                      const vaultAddress =
+                        vaultsInputs[fieldIndex]?.vaultAddress
+                      if (
+                        vaultAddress &&
+                        isAddress(vaultAddress) &&
+                        value.toLowerCase() === vaultAddress.toLowerCase()
+                      ) {
+                        return 'Acceptor address cannot be the same as vault address'
                       }
 
                       return true

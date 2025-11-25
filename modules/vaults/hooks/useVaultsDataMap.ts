@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { StakingVaultAbi__factory } from 'generated'
-import { ContractVaultHub } from 'modules/blockChain/contracts'
+import { ContractSteth, ContractVaultHub } from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
 import { useCallback } from 'react'
@@ -32,6 +32,7 @@ type VaultData = {
   infraFeeBP: number
   liquidityFeeBP: number
   reservationFeeBP: number
+  badDebtEth: BigNumber
 }
 
 export const useVaultsDataMap = () => {
@@ -40,6 +41,7 @@ export const useVaultsDataMap = () => {
     Record<string, VaultData | null | undefined>
   >({})
   const vaultHub = ContractVaultHub.useRpc()
+  const stETH = ContractSteth.useRpc()
 
   const getVaultData = useCallback(
     async (address: string) => {
@@ -60,6 +62,20 @@ export const useVaultsDataMap = () => {
       try {
         const vaultData = await vaultHub.vaultConnection(lowerAddress)
 
+        // For debt calculation
+        const vaultRecord = await vaultHub.vaultRecord(lowerAddress)
+        const totalValue = await vaultHub.totalValue(lowerAddress)
+        const totalValueShares = await stETH.getSharesByPooledEth(totalValue)
+
+        const badDebtShares =
+          totalValueShares >= vaultRecord.liabilityShares
+            ? BigNumber.from(0)
+            : vaultRecord.liabilityShares.sub(totalValueShares)
+
+        const badDebtEth = badDebtShares.gt(0)
+          ? await stETH.getPooledEthByShares(badDebtShares)
+          : BigNumber.from(0)
+
         // Source: VaultHub.sol - see isVaultConnected function
         const isVaultConnected = !vaultData.vaultIndex.isZero()
 
@@ -75,6 +91,7 @@ export const useVaultsDataMap = () => {
           infraFeeBP: vaultData.infraFeeBP,
           liquidityFeeBP: vaultData.liquidityFeeBP,
           reservationFeeBP: vaultData.reservationFeeBP,
+          badDebtEth,
         }
 
         setState({ [lowerAddress]: result })
@@ -85,7 +102,7 @@ export const useVaultsDataMap = () => {
         return null
       }
     },
-    [library, vaultHub, vaultsDataMap, setState],
+    [vaultsDataMap, library, setState, vaultHub, stETH],
   )
 
   return {
