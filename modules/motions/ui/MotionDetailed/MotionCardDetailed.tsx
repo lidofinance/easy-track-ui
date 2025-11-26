@@ -10,6 +10,7 @@ import {
   getMotionDisplayStatus,
   getMotionTypeByScriptFactory,
 } from 'modules/motions/utils'
+import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { MotionDetailedObjections } from './MotionDetailedObjections'
 import { MotionDetailedTime } from './MotionDetailedTime'
 import { MotionDetailedCancelButton } from './MotionDetailedCancelButton'
@@ -37,10 +38,19 @@ import {
   StonksButton,
 } from './MotionCardDetailedStyle'
 
-import { Motion, MotionStatus } from 'modules/motions/types'
+import { Text } from 'modules/shared/ui/Common/Text'
+
+import { Motion, MotionStatus, MotionType } from 'modules/motions/types'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 import { stonksInstance } from 'modules/network/utils/urls'
 import Link from 'next/link'
+
+// Motion types that require a fresh report before enactment
+const MOTION_TYPES_REQUIRING_REPORT = new Set<MotionType | EvmUnrecognized>([
+  MotionType.UpdateVaultsFeesInOperatorGrid,
+  MotionType.ForceValidatorExitsInVaultHub,
+  MotionType.SocializeBadDebtInVaultHub,
+])
 
 type Props = {
   motion: Motion
@@ -116,7 +126,14 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
           )}
         </HeaderAside>
       </Header>
-
+      {MOTION_TYPES_REQUIRING_REPORT.has(motionType) && (
+        <>
+          <Text size={18} color="warning">
+            This motion type requires a fresh report before it can be enacted.
+          </Text>
+          <br />
+        </>
+      )}
       <Description>
         <MotionDescription motion={motion} />
         {stonksRecipientAddress && (

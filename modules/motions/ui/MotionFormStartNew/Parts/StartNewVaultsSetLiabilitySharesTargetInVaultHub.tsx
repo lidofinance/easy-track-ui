@@ -137,6 +137,10 @@ export const formParts = createMotionFormPart({
                         return 'Invalid vault address'
                       }
 
+                      if (!vaultData.isVaultConnected) {
+                        return 'Vault is not connected in the Operator Grid'
+                      }
+
                       return true
                     },
                   }}
