@@ -128,7 +128,7 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
       </Header>
       {MOTION_TYPES_REQUIRING_REPORT.has(motionType) && (
         <>
-          <Text size={18} color="warning">
+          <Text size={14}>
             This motion type requires a fresh report before it can be enacted.
           </Text>
           <br />
