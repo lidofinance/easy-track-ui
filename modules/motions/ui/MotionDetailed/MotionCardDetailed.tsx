@@ -41,8 +41,6 @@ import {
   StonksButton,
 } from './MotionCardDetailedStyle'
 
-import { Text } from 'modules/shared/ui/Common/Text'
-
 import { Motion, MotionStatus, MotionType } from 'modules/motions/types'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 import { stonksInstance } from 'modules/network/utils/urls'
@@ -167,14 +165,6 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
           )}
         </HeaderAside>
       </Header>
-      {MOTION_TYPES_REQUIRING_REPORT.has(motionType) && (
-        <>
-          <Text size={14}>
-            This motion type requires a fresh report before it can be enacted.
-          </Text>
-          <br />
-        </>
-      )}
       <Description>
         <MotionDescription motion={motion} />
         {stonksRecipientAddress && (
