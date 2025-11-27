@@ -2,6 +2,9 @@ import { useEffect } from 'react'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
+import { ContractVaultHub } from 'modules/blockChain/contracts'
+import { useContractEvmScript } from 'modules/motions/hooks/useContractEvmScript'
+import { useSWR } from 'modules/network/hooks/useSwr'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
@@ -87,6 +90,44 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     progress,
     isAttentionTime,
   })
+
+  const requiresReport = MOTION_TYPES_REQUIRING_REPORT.has(motionType)
+  const evmContract = useContractEvmScript(motionType)
+
+  const { data: decodedCallData } = useSWR(
+    `vault-address-${chainId}-${motion.id}`,
+    async () => {
+      if (!requiresReport || motionType === EvmUnrecognized || !evmContract) {
+        return null
+      }
+      if (!motion.evmScriptCalldata) return null
+
+      try {
+        const decoded = await evmContract.decodeEVMScriptCallData(
+          motion.evmScriptCalldata,
+        )
+        // For all vault-related motions that require reports, the first parameter is the vault address(es)
+        const vaults = (decoded as any)[0]
+        const vaultAddress = Array.isArray(vaults) ? vaults[0] : vaults
+        return typeof vaultAddress === 'string' ? vaultAddress : null
+      } catch (error) {
+        console.error('Failed to decode EVM script calldata:', error)
+        return null
+      }
+    },
+  )
+
+  const isReportFresh = ContractVaultHub.useSwrWeb3(
+    'isReportFresh',
+    [decodedCallData || '0x0000000000000000000000000000000000000000'],
+    { isPaused: () => !decodedCallData },
+  )
+
+  const hasStaleReport =
+    requiresReport &&
+    !!decodedCallData &&
+    !isReportFresh.initialLoading &&
+    isReportFresh.data === false
 
   if (pending) return <PageLoader />
 
@@ -188,7 +229,12 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
 
       <MotionDetailedLimits />
 
-      {!isArchived && <MotionDetailedActions motion={motion} />}
+      {!isArchived && (
+        <MotionDetailedActions
+          motion={motion}
+          hasStaleReport={hasStaleReport}
+        />
+      )}
     </Card>
   )
 }

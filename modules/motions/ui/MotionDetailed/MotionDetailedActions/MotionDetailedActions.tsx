@@ -16,6 +16,7 @@ import {
   TxHint,
   TxStatus,
   ButtonStyled,
+  TooltipStyled,
 } from './MotionDetailedActionsStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
@@ -35,9 +36,10 @@ function TxRow({ label, tx }: { label: string; tx: TransactionSender }) {
 
 type Props = {
   motion: Motion
+  hasStaleReport?: boolean
 }
 
-function ActionsBody({ motion }: Props) {
+function ActionsBody({ motion, hasStaleReport }: Props) {
   const { walletAddress } = useWeb3()
   const { data: governanceSymbol } = useGovernanceSymbol()
   const { isOverPeriodLimit, txEnact, txObject } = useMotionDetailed()
@@ -114,16 +116,28 @@ function ActionsBody({ motion }: Props) {
             onClick={txObject.send}
             loading={txObject.isPending}
           />
-          {motion.status === MotionStatus.PENDING && (
-            <ButtonStyled
-              size="sm"
-              variant="outlined"
-              children="Enact"
-              onClick={txEnact.send}
-              loading={txEnact.isPending}
-              disabled={isOverPeriodLimit}
-            />
-          )}
+          {motion.status === MotionStatus.PENDING &&
+            (hasStaleReport ? (
+              <TooltipStyled tooltip="Cannot enact: a fresh report is required before enactment">
+                <ButtonStyled
+                  size="sm"
+                  variant="outlined"
+                  children="Enact"
+                  onClick={txEnact.send}
+                  loading={txEnact.isPending}
+                  disabled={isOverPeriodLimit || hasStaleReport}
+                />
+              </TooltipStyled>
+            ) : (
+              <ButtonStyled
+                size="sm"
+                variant="outlined"
+                children="Enact"
+                onClick={txEnact.send}
+                loading={txEnact.isPending}
+                disabled={isOverPeriodLimit || hasStaleReport}
+              />
+            ))}
         </Actions>
       )}
     </>
@@ -146,10 +160,10 @@ function AuthStub() {
   )
 }
 
-export function MotionDetailedActions({ motion }: Props) {
+export function MotionDetailedActions({ motion, hasStaleReport }: Props) {
   const { isWalletConnected } = useWeb3()
 
   if (!isWalletConnected) return <AuthStub />
 
-  return <ActionsBody motion={motion} />
+  return <ActionsBody motion={motion} hasStaleReport={hasStaleReport} />
 }
