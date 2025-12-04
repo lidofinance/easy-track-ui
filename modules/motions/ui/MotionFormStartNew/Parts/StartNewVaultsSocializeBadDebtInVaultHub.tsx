@@ -184,7 +184,6 @@ export const formParts = createMotionFormPart({
                         vaultsInputs[fieldIndex]?.vaultAddress
                       if (
                         vaultAddress &&
-                        isAddress(vaultAddress) &&
                         value.toLowerCase() === vaultAddress.toLowerCase()
                       ) {
                         return 'Acceptor address cannot be the same as vault address'
