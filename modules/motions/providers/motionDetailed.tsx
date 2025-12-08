@@ -67,6 +67,7 @@ export type MotionDetailedValue = {
   txObject: ReturnType<typeof useTransactionSender>
   txEnact: ReturnType<typeof useTransactionSender>
   stonksRecipientAddress: string | undefined
+  callDataDecoded: any
 }
 
 export const MotionDetailedContext = createContext({} as MotionDetailedValue)
@@ -210,6 +211,7 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       txObject,
       txEnact,
       stonksRecipientAddress,
+      callDataDecoded: callData,
     }),
     [
       isArchived,
@@ -225,6 +227,7 @@ export const MotionDetailedProvider: FC<MotionDetailedProps> = props => {
       txObject,
       txEnact,
       stonksRecipientAddress,
+      callData,
     ],
   )
 
