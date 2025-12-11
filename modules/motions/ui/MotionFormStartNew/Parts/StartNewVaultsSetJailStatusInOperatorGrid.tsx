@@ -73,7 +73,7 @@ export const formParts = createMotionFormPart({
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
 
-    const { formState, watch, register } = useFormContext()
+    const { formState, watch, register, setValue } = useFormContext()
     const vaultsInputs: VaultInput[] = watch(fieldNames.vaults)
 
     const handleAddUpdate = () =>
@@ -136,9 +136,10 @@ export const formParts = createMotionFormPart({
                   onValidVaultAddressInput={data => {
                     // Update isInJail based on current jail status automatically
                     const currentJailStatus = data.jailStatus
-                    vaultsFieldArray.update(fieldIndex, {
-                      isInJail: !currentJailStatus,
-                    })
+                    setValue(
+                      `${fieldNames.vaults}.${fieldIndex}.isInJail`,
+                      !currentJailStatus,
+                    )
                   }}
                   extraValidateFn={vaultData => {
                     if (

@@ -1,7 +1,9 @@
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useWatch } from 'react-hook-form'
 import { VaultData } from '../types'
+import { useEffect } from 'react'
+import { useDebounce } from 'modules/shared/hooks/useDebounce'
 
 type Props = {
   vaultsFieldName: string
@@ -27,8 +29,11 @@ export const VaultAddressInputControl = ({
   const { setError, clearErrors, getValues } = useFormContext()
 
   const fieldName = `${vaultsFieldName}.${fieldIndex}.address`
+  const fieldValue = useWatch({ name: fieldName })
 
-  const validateVaultAddress = (value: string) => {
+  const debouncedAddress = useDebounce(fieldValue, 500)
+
+  const validateVaultAddressSync = (value: string) => {
     if (!value) return
     const addressErr = validateAddress(value)
     if (addressErr) {
@@ -36,7 +41,6 @@ export const VaultAddressInputControl = ({
     }
 
     const lowerAddress = value.toLowerCase()
-
     const vaultsInputs: VaultInput[] = getValues(vaultsFieldName)
 
     const addressInGroupInputIndex = vaultsInputs.findIndex(
@@ -49,63 +53,75 @@ export const VaultAddressInputControl = ({
     }
   }
 
-  const handleValueChange = async (e: any) => {
-    const value = e.target.value
-    if (!value) return
-    const addressErr = validateVaultAddress(value)
+  useEffect(() => {
+    if (!debouncedAddress) {
+      clearErrors(fieldName)
+      return
+    }
+    console.log('Validating vault address:', debouncedAddress)
+
+    const addressErr = validateVaultAddressSync(debouncedAddress)
     if (addressErr) {
-      setError(fieldName, {
-        type: 'validate',
-        message: addressErr,
-      })
+      setError(fieldName, { type: 'validate', message: addressErr })
       return
     }
 
-    const lowerAddress = value.toLowerCase()
-    // Fetch vault data
-    const vaultData = await getVaultData(lowerAddress)
+    let isCurrent = true // Flag to prevent setting state on unmounted component (or stale data)
 
-    if (!vaultData) {
-      setError(fieldName, {
-        type: 'validate',
-        message: 'Invalid vault address',
-      })
-      return
+    const fetchAndValidate = async () => {
+      const lowerAddress = debouncedAddress.toLowerCase()
+
+      const vaultData = await getVaultData(lowerAddress)
+
+      // Check if this effect is still the latest one before setting state
+      if (!isCurrent) return
+
+      if (!vaultData) {
+        setError(fieldName, {
+          type: 'validate',
+          message: 'Invalid vault address',
+        })
+        return
+      }
+
+      if (!allowDisconnectedVaults && !vaultData.isVaultConnected) {
+        setError(fieldName, {
+          type: 'validate',
+          message: 'Vault is not connected in the Operator Grid',
+        })
+        return
+      }
+
+      const extraValidationResult = extraValidateFn?.(vaultData)
+      if (typeof extraValidationResult === 'string') {
+        setError(fieldName, {
+          type: 'validate',
+          message: extraValidationResult,
+        })
+        return
+      }
+
+      // Success handling
+      onValidVaultAddressInput?.(vaultData)
+      clearErrors(fieldName)
     }
 
-    if (!allowDisconnectedVaults && !vaultData.isVaultConnected) {
-      setError(fieldName, {
-        type: 'validate',
-        message: 'Vault is not connected in the Operator Grid',
-      })
-      return
+    fetchAndValidate()
+
+    // Cleanup
+    return () => {
+      isCurrent = false
     }
 
-    // Extra validation
-    const extraValidationResult = extraValidateFn?.(vaultData)
-    if (typeof extraValidationResult === 'string') {
-      setError(fieldName, {
-        type: 'validate',
-        message: extraValidationResult,
-      })
-      return
-    }
-
-    // Call callback with valid vault data
-    onValidVaultAddressInput?.(vaultData)
-    clearErrors(fieldName)
-  }
+    // Only run when the debounced value changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedAddress])
 
   return (
     <InputControl
       name={fieldName}
       label="Vault address"
       rules={{ required: 'Field is required' }}
-      onChange={e => {
-        setTimeout(() => {
-          handleValueChange(e)
-        }, 500)
-      }}
     />
   )
 }

@@ -66,8 +66,10 @@ export const useVaultsDataMap = (params?: OptionalDataParams) => {
         // For debt calculation
         let badDebtEth = BigNumber.from(0)
         if (params?.includeBadDebt) {
-          const vaultRecord = await vaultHub.vaultRecord(lowerAddress)
-          const totalValue = await vaultHub.totalValue(lowerAddress)
+          const [vaultRecord, totalValue] = await Promise.all([
+            vaultHub.vaultRecord(lowerAddress),
+            vaultHub.totalValue(lowerAddress),
+          ])
           const totalValueShares = await stETH.getSharesByPooledEth(totalValue)
 
           const badDebtShares =
