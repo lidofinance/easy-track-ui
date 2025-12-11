@@ -27,6 +27,7 @@ import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { isAddress } from 'ethers/lib/utils'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { formatBalance } from 'modules/blockChain/utils/formatBalance'
+import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
 
 type VaultInput = {
   vaultAddress: string
@@ -129,41 +130,14 @@ export const formParts = createMotionFormPart({
                 )}
 
               <Fieldset>
-                <InputControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.vaultAddress`}
-                  label="Vault address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: async value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
-
-                      const lowerAddress = value.toLowerCase()
-
-                      const addressInGroupInputIndex = vaultsInputs.findIndex(
-                        ({ vaultAddress }, index) =>
-                          vaultAddress.toLowerCase() === lowerAddress &&
-                          fieldIndex !== index,
-                      )
-
-                      if (addressInGroupInputIndex !== -1) {
-                        return 'Address is already in use by another update within the motion'
-                      }
-
-                      const vaultData = await getVaultData(lowerAddress)
-
-                      if (!vaultData) {
-                        return 'Invalid vault address'
-                      }
-
-                      if (!vaultData.isVaultConnected) {
-                        return 'Vault is not connected in the Operator Grid'
-                      }
-
-                      return true
-                    },
+                <VaultAddressInputControl
+                  vaultsFieldName={fieldNames.vaults}
+                  fieldIndex={fieldIndex}
+                  getVaultData={getVaultData}
+                  extraValidateFn={vaultData => {
+                    if (!vaultData.isVaultConnected) {
+                      return 'Vault is not connected in the Operator Grid'
+                    }
                   }}
                 />
               </Fieldset>

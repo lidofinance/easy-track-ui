@@ -20,8 +20,8 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
+import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
 
 type VaultInput = {
   address: string
@@ -101,31 +101,14 @@ export const formParts = createMotionFormPart({
               </FieldsHeader>
 
               <Fieldset>
-                <InputControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.address`}
-                  label="Vault address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: async value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
-
-                      const lowerAddress = value.toLowerCase()
-
-                      const vaultData = await getVaultData(lowerAddress)
-
-                      if (!vaultData) {
-                        return 'Invalid vault address'
-                      }
-
-                      if (!vaultData.isVaultConnected) {
-                        return 'Vault is not connected in the Operator Grid'
-                      }
-
-                      return true
-                    },
+                <VaultAddressInputControl
+                  vaultsFieldName={fieldNames.vaults}
+                  fieldIndex={fieldIndex}
+                  getVaultData={getVaultData}
+                  extraValidateFn={vaultData => {
+                    if (!vaultData.isVaultConnected) {
+                      return 'Vault is not connected in the Operator Grid'
+                    }
                   }}
                 />
               </Fieldset>

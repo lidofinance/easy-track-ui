@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment } from 'react'
-import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
@@ -73,11 +73,8 @@ export const formParts = createMotionFormPart({
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
 
-    const { formState, control, register } = useFormContext()
-    const vaultsInputs: VaultInput[] = useWatch({
-      control,
-      name: fieldNames.vaults,
-    })
+    const { formState, watch, register } = useFormContext()
+    const vaultsInputs: VaultInput[] = watch(fieldNames.vaults)
 
     const handleAddUpdate = () =>
       vaultsFieldArray.append({
@@ -139,7 +136,6 @@ export const formParts = createMotionFormPart({
                     // Update isInJail based on current jail status automatically
                     const currentJailStatus = data.jailStatus
                     vaultsFieldArray.update(fieldIndex, {
-                      ...vaultsInputs[fieldIndex],
                       isInJail: !currentJailStatus,
                     })
                   }}

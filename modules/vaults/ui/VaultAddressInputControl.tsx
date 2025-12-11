@@ -25,9 +25,6 @@ export const VaultAddressInputControl = ({
   const { setError, clearErrors, getValues } = useFormContext()
 
   const validateVaultAddress = (value: string) => {
-    console.log('Validating vault address input:', value)
-    console.log('field index:', fieldIndex)
-    console.log('------------------------------')
     if (!value) return
     const addressErr = validateAddress(value)
     if (addressErr) {
@@ -50,9 +47,6 @@ export const VaultAddressInputControl = ({
 
   const handleValueChange = async (e: any) => {
     const value = e.target.value
-    console.log('Validating vault address input:', value)
-    console.log('field index:', fieldIndex)
-    console.log('------------------------------')
     if (!value) return
     const addressErr = validateVaultAddress(value)
     if (addressErr) {

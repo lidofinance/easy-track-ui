@@ -19,14 +19,13 @@ import { ContractUpdateVaultsFeesInOperatorGrid } from 'modules/blockChain/contr
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { MAX_FEE_BP } from 'modules/vaults/constants'
 import { BpValueFormatted } from 'modules/vaults/ui/BpValueFormatted'
+import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
 
 type VaultFeesInput = {
   address: string
@@ -122,45 +121,18 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.vaults}.${fieldIndex}.address`}
-                    label="Vault address"
-                    rules={{
-                      required: 'Field is required',
-                      validate: async value => {
-                        const addressErr = validateAddress(value)
-                        if (addressErr) {
-                          return addressErr
-                        }
+                  <VaultAddressInputControl
+                    vaultsFieldName={fieldNames.vaults}
+                    fieldIndex={fieldIndex}
+                    getVaultData={getVaultData}
+                    extraValidateFn={vaultData => {
+                      if (!vaultData.isVaultConnected) {
+                        return 'Vault is not connected in the Operator Grid'
+                      }
 
-                        const lowerAddress = value.toLowerCase()
-
-                        const addressInGroupInputIndex = vaultsInputs.findIndex(
-                          ({ address }, index) =>
-                            address.toLowerCase() === lowerAddress &&
-                            fieldIndex !== index,
-                        )
-
-                        if (addressInGroupInputIndex !== -1) {
-                          return 'Address is already in use by another update within the motion'
-                        }
-
-                        const vaultData = await getVaultData(lowerAddress)
-
-                        if (!vaultData) {
-                          return 'Invalid vault address'
-                        }
-
-                        if (!vaultData.isVaultConnected) {
-                          return 'Vault is not connected in the Operator Grid'
-                        }
-
-                        if (vaultData.isPendingDisconnect) {
-                          return 'Vault is pending disconnect in the Operator Grid'
-                        }
-
-                        return true
-                      },
+                      if (vaultData.isPendingDisconnect) {
+                        return 'Vault is pending disconnect in the Operator Grid'
+                      }
                     }}
                   />
                 </Fieldset>
