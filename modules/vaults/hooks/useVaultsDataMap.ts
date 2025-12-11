@@ -1,9 +1,14 @@
 import { BigNumber } from 'ethers'
 import { StakingVaultAbi__factory } from 'generated'
-import { ContractSteth, ContractVaultHub } from 'modules/blockChain/contracts'
+import {
+  ContractOperatorGrid,
+  ContractSteth,
+  ContractVaultHub,
+} from 'modules/blockChain/contracts'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
 import { useCallback } from 'react'
+import { VaultData } from '../types'
 
 const fetchVaultNodeOperator = async (
   address: string,
@@ -25,23 +30,19 @@ const fetchVaultNodeOperator = async (
 // Source: VaultHub.sol - DISCONNECT_NOT_INITIATED = type(uint48).max;
 const DISCONNECT_NOT_INITIATED = BigNumber.from('0xFFFFFFFFFFFF')
 
-type VaultData = {
-  nodeOperator: string
-  isVaultConnected: boolean
-  isPendingDisconnect: boolean
-  infraFeeBP: number
-  liquidityFeeBP: number
-  reservationFeeBP: number
-  badDebtEth: BigNumber
+type OptionalDataParams = {
+  includeBadDebt?: boolean
+  includeJailStatus?: boolean
 }
 
-export const useVaultsDataMap = () => {
+export const useVaultsDataMap = (params?: OptionalDataParams) => {
   const { library } = useWeb3()
   const [vaultsDataMap, setState] = useSimpleReducer<
     Record<string, VaultData | null | undefined>
   >({})
   const vaultHub = ContractVaultHub.useRpc()
   const stETH = ContractSteth.useRpc()
+  const operatorGrid = ContractOperatorGrid.useRpc()
 
   const getVaultData = useCallback(
     async (address: string) => {
@@ -63,18 +64,26 @@ export const useVaultsDataMap = () => {
         const vaultData = await vaultHub.vaultConnection(lowerAddress)
 
         // For debt calculation
-        const vaultRecord = await vaultHub.vaultRecord(lowerAddress)
-        const totalValue = await vaultHub.totalValue(lowerAddress)
-        const totalValueShares = await stETH.getSharesByPooledEth(totalValue)
+        let badDebtEth = BigNumber.from(0)
+        if (params?.includeBadDebt) {
+          const vaultRecord = await vaultHub.vaultRecord(lowerAddress)
+          const totalValue = await vaultHub.totalValue(lowerAddress)
+          const totalValueShares = await stETH.getSharesByPooledEth(totalValue)
 
-        const badDebtShares =
-          totalValueShares >= vaultRecord.liabilityShares
-            ? BigNumber.from(0)
-            : vaultRecord.liabilityShares.sub(totalValueShares)
+          const badDebtShares =
+            totalValueShares >= vaultRecord.liabilityShares
+              ? BigNumber.from(0)
+              : vaultRecord.liabilityShares.sub(totalValueShares)
 
-        const badDebtEth = badDebtShares.gt(0)
-          ? await stETH.getPooledEthByShares(badDebtShares)
-          : BigNumber.from(0)
+          badDebtEth = badDebtShares.gt(0)
+            ? await stETH.getPooledEthByShares(badDebtShares)
+            : BigNumber.from(0)
+        }
+
+        let jailStatus: boolean = false
+        if (params?.includeJailStatus) {
+          jailStatus = await operatorGrid.isVaultInJail(lowerAddress)
+        }
 
         // Source: VaultHub.sol - see isVaultConnected function
         const isVaultConnected = !vaultData.vaultIndex.isZero()
@@ -92,6 +101,7 @@ export const useVaultsDataMap = () => {
           liquidityFeeBP: vaultData.liquidityFeeBP,
           reservationFeeBP: vaultData.reservationFeeBP,
           badDebtEth,
+          jailStatus,
         }
 
         setState({ [lowerAddress]: result })
@@ -102,7 +112,7 @@ export const useVaultsDataMap = () => {
         return null
       }
     },
-    [vaultsDataMap, library, setState, vaultHub, stETH],
+    [vaultsDataMap, library, setState, vaultHub, stETH, operatorGrid, params],
   )
 
   return {

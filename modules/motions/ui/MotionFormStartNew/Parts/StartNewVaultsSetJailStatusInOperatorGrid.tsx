@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
@@ -19,18 +19,16 @@ import { ContractSetJailStatusInOperatorGrid } from 'modules/blockChain/contract
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { isAddress } from 'ethers/lib/utils'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
-import { CheckboxControl } from 'modules/shared/ui/Controls/Checkbox'
-import { useVaultsJailStatusMap } from 'modules/vaults/hooks/useVaultsJailStatusMap'
+import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
+import { Text } from 'modules/shared/ui/Common/Text'
 
 type VaultInput = {
   address: string
-  isInJail: boolean
+  isInJail: boolean | null
 }
 
 export const formParts = createMotionFormPart({
@@ -57,7 +55,7 @@ export const formParts = createMotionFormPart({
     vaults: [
       {
         address: '',
-        isInJail: false,
+        isInJail: null,
       },
     ] as VaultInput[],
   }),
@@ -69,18 +67,22 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const { vaultsDataMap, getVaultData } = useVaultsDataMap()
-    const { vaultsJailStatusMap, getVaultJailStatus } = useVaultsJailStatusMap()
+    const { vaultsDataMap, getVaultData } = useVaultsDataMap({
+      includeJailStatus: true,
+    })
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
 
-    const { formState, watch } = useFormContext()
-    const vaultsInputs: VaultInput[] = watch(fieldNames.vaults)
+    const { formState, control, register } = useFormContext()
+    const vaultsInputs: VaultInput[] = useWatch({
+      control,
+      name: fieldNames.vaults,
+    })
 
     const handleAddUpdate = () =>
       vaultsFieldArray.append({
         address: '',
-        isInJail: false,
+        isInJail: null,
       } as VaultInput)
 
     if (trustedCaller.initialLoading) {
@@ -111,92 +113,68 @@ export const formParts = createMotionFormPart({
               />
             </>
           ) : null}
-          <br />
-          All jail status updates must be different from the current values.
         </MotionInfoBox>
-        {vaultsFieldArray.fields.map((item, fieldIndex) => {
-          const jailStatus =
-            vaultsJailStatusMap[vaultsInputs[fieldIndex]?.address.toLowerCase()]
-          return (
-            <Fragment key={item.id}>
-              <FieldsWrapper>
-                <FieldsHeader>
-                  {vaultsFieldArray.fields.length > 1 && (
-                    <FieldsHeaderDesc>
-                      Update #{fieldIndex + 1}
-                    </FieldsHeaderDesc>
-                  )}
-                  {vaultsFieldArray.fields.length > 1 && (
-                    <RemoveItemButton
-                      onClick={() => vaultsFieldArray.remove(fieldIndex)}
-                    >
-                      Remove update {fieldIndex + 1}
-                    </RemoveItemButton>
-                  )}
-                </FieldsHeader>
-
-                <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.vaults}.${fieldIndex}.address`}
-                    label="Vault address"
-                    rules={{
-                      required: 'Field is required',
-                      validate: async value => {
-                        const addressErr = validateAddress(value)
-                        if (addressErr) {
-                          return addressErr
-                        }
-
-                        const lowerAddress = value.toLowerCase()
-
-                        const addressInGroupInputIndex = vaultsInputs.findIndex(
-                          ({ address }, index) =>
-                            address.toLowerCase() === lowerAddress &&
-                            fieldIndex !== index,
-                        )
-
-                        if (addressInGroupInputIndex !== -1) {
-                          return 'Address is already in use by another update within the motion'
-                        }
-
-                        const vaultData = await getVaultData(lowerAddress)
-
-                        if (!vaultData) {
-                          return 'Invalid vault address'
-                        }
-
-                        if (
-                          fieldIndex > 0 &&
-                          vaultData.nodeOperator !== sharedNodeOperatorAddress
-                        ) {
-                          return 'All vaults within the motion must share the same node operator address'
-                        }
-
-                        await getVaultJailStatus(lowerAddress)
-
-                        return true
-                      },
-                    }}
-                  />
-                </Fieldset>
-
-                {typeof jailStatus === 'boolean' && (
-                  <MotionInfoBox>
-                    Current vault jail status:{' '}
-                    {jailStatus ? 'in jail' : 'not in jail'}
-                  </MotionInfoBox>
+        {vaultsFieldArray.fields.map((item, fieldIndex) => (
+          <Fragment key={item.id}>
+            <FieldsWrapper>
+              <FieldsHeader>
+                {vaultsFieldArray.fields.length > 1 && (
+                  <FieldsHeaderDesc>Update #{fieldIndex + 1}</FieldsHeaderDesc>
                 )}
+                {vaultsFieldArray.fields.length > 1 && (
+                  <RemoveItemButton
+                    onClick={() => vaultsFieldArray.remove(fieldIndex)}
+                  >
+                    Remove update {fieldIndex + 1}
+                  </RemoveItemButton>
+                )}
+              </FieldsHeader>
 
-                <Fieldset>
-                  <CheckboxControl
-                    label="Put vault in jail"
-                    name={`${fieldNames.vaults}.${fieldIndex}.isInJail`}
-                  />
-                </Fieldset>
-              </FieldsWrapper>
-            </Fragment>
-          )
-        })}
+              <Fieldset>
+                <VaultAddressInputControl
+                  vaultsFieldName={fieldNames.vaults}
+                  fieldIndex={fieldIndex}
+                  getVaultData={getVaultData}
+                  onValidVaultAddressInput={data => {
+                    // Update isInJail based on current jail status automatically
+                    const currentJailStatus = data.jailStatus
+                    vaultsFieldArray.update(fieldIndex, {
+                      ...vaultsInputs[fieldIndex],
+                      isInJail: !currentJailStatus,
+                    })
+                  }}
+                  extraValidateFn={vaultData => {
+                    if (
+                      fieldIndex > 0 &&
+                      vaultData.nodeOperator !== sharedNodeOperatorAddress
+                    ) {
+                      return 'All vaults within the motion must share the same node operator address'
+                    }
+                  }}
+                />
+              </Fieldset>
+
+              {typeof vaultsInputs[fieldIndex]?.isInJail === 'boolean' && (
+                <Text size={16}>
+                  This vault jail status will be changed to{' '}
+                  <b>{vaultsInputs[fieldIndex].isInJail ? 'True' : 'False'}</b>.
+                </Text>
+              )}
+
+              <input
+                type="hidden"
+                {...register(`${fieldNames.vaults}.${fieldIndex}.isInJail`, {
+                  validate: value => {
+                    if (value === null) {
+                      return 'Please enter a valid vault address first'
+                    }
+                    return true
+                  },
+                })}
+              />
+            </FieldsWrapper>
+          </Fragment>
+        ))}
 
         <Fieldset>
           <ButtonIcon
