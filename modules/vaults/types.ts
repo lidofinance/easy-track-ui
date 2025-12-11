@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+import { OperatorGridAbi } from 'generated'
 
 export type TierParams = {
   shareLimit: string
@@ -25,3 +26,5 @@ export type VaultData = {
   badDebtEth: BigNumber
   jailStatus: boolean
 }
+
+export type Group = Awaited<ReturnType<OperatorGridAbi['group']>>

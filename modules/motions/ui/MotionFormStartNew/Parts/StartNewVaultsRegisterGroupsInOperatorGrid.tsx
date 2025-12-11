@@ -19,11 +19,9 @@ import { ContractRegisterGroupsInOperatorGrid } from 'modules/blockChain/contrac
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
+import { EMPTY_GROUP } from 'modules/vaults/constants'
 import { GridGroup } from 'modules/vaults/types'
 import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
@@ -31,6 +29,7 @@ import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { parseEther } from 'ethers/lib/utils'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
+import { GridOperatorAddressInputControl } from 'modules/vaults/ui/GridOperatorAddressInputControl'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -139,41 +138,11 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.groups}.${groupIndex}.nodeOperator`}
-                    label="Node operator address"
-                    rules={{
-                      required: 'Field is required',
-                      validate: async value => {
-                        const addressErr = validateAddress(value)
-                        if (addressErr) {
-                          return addressErr
-                        }
-
-                        const lowerAddress = value.toLowerCase()
-
-                        if (lowerAddress === DEFAULT_TIER_OPERATOR) {
-                          return `Address can not be the default tier operator address`
-                        }
-
-                        const addressInGroupInputIndex = groupsInput.findIndex(
-                          ({ nodeOperator }, index) =>
-                            nodeOperator.toLowerCase() === lowerAddress &&
-                            groupIndex !== index,
-                        )
-
-                        if (addressInGroupInputIndex !== -1) {
-                          return 'Address is already in use by another group within the motion'
-                        }
-
-                        const group = await getOperatorGridGroup(lowerAddress)
-                        if (group) {
-                          return `Operator grid already has a group for this address`
-                        }
-
-                        return true
-                      },
-                    }}
+                  <GridOperatorAddressInputControl
+                    groupFieldName={fieldNames.groups}
+                    fieldIndex={groupIndex}
+                    getGroupData={getOperatorGridGroup}
+                    allowDefaultOperatorAddress={false}
                   />
                 </Fieldset>
 

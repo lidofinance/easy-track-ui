@@ -24,6 +24,8 @@ export const VaultAddressInputControl = ({
 }: Props) => {
   const { setError, clearErrors, getValues } = useFormContext()
 
+  const fieldName = `${vaultsFieldName}.${fieldIndex}.address`
+
   const validateVaultAddress = (value: string) => {
     if (!value) return
     const addressErr = validateAddress(value)
@@ -50,7 +52,7 @@ export const VaultAddressInputControl = ({
     if (!value) return
     const addressErr = validateVaultAddress(value)
     if (addressErr) {
-      setError(`${vaultsFieldName}.${fieldIndex}.address`, {
+      setError(fieldName, {
         type: 'validate',
         message: addressErr,
       })
@@ -62,7 +64,7 @@ export const VaultAddressInputControl = ({
     const vaultData = await getVaultData(lowerAddress)
 
     if (!vaultData) {
-      setError(`${vaultsFieldName}.${fieldIndex}.address`, {
+      setError(fieldName, {
         type: 'validate',
         message: 'Invalid vault address',
       })
@@ -72,7 +74,7 @@ export const VaultAddressInputControl = ({
     // Extra validation
     const extraValidationResult = extraValidateFn?.(vaultData)
     if (typeof extraValidationResult === 'string') {
-      setError(`${vaultsFieldName}.${fieldIndex}.address`, {
+      setError(fieldName, {
         type: 'validate',
         message: extraValidationResult,
       })
@@ -81,12 +83,12 @@ export const VaultAddressInputControl = ({
 
     // Call callback with valid vault data
     onValidVaultAddressInput?.(vaultData)
-    clearErrors(`${vaultsFieldName}.${fieldIndex}.address`)
+    clearErrors(fieldName)
   }
 
   return (
     <InputControl
-      name={`${vaultsFieldName}.${fieldIndex}.address`}
+      name={fieldName}
       label="Vault address"
       rules={{ required: 'Field is required' }}
       onChange={e => {
