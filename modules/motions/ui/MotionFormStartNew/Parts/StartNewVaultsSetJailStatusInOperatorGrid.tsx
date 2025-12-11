@@ -132,6 +132,7 @@ export const formParts = createMotionFormPart({
                   vaultsFieldName={fieldNames.vaults}
                   fieldIndex={fieldIndex}
                   getVaultData={getVaultData}
+                  allowDisconnectedVaults={true}
                   onValidVaultAddressInput={data => {
                     // Update isInJail based on current jail status automatically
                     const currentJailStatus = data.jailStatus

@@ -108,11 +108,6 @@ export const formParts = createMotionFormPart({
                   vaultsFieldName={fieldNames.vaults}
                   fieldIndex={fieldIndex}
                   getVaultData={getVaultData}
-                  extraValidateFn={vaultData => {
-                    if (!vaultData.isVaultConnected) {
-                      return 'Vault is not connected in the Operator Grid'
-                    }
-                  }}
                 />
               </Fieldset>
 

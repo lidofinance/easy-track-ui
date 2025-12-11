@@ -6,6 +6,7 @@ import { VaultData } from '../types'
 type Props = {
   vaultsFieldName: string
   fieldIndex: number
+  allowDisconnectedVaults?: boolean
   getVaultData: (address: string) => Promise<VaultData | null | undefined>
   onValidVaultAddressInput?: (vaultData: VaultData) => void
   extraValidateFn?: (vaultData: VaultData) => string | undefined
@@ -18,6 +19,7 @@ type VaultInput = {
 export const VaultAddressInputControl = ({
   vaultsFieldName,
   fieldIndex,
+  allowDisconnectedVaults,
   getVaultData,
   onValidVaultAddressInput,
   extraValidateFn,
@@ -67,6 +69,14 @@ export const VaultAddressInputControl = ({
       setError(fieldName, {
         type: 'validate',
         message: 'Invalid vault address',
+      })
+      return
+    }
+
+    if (!allowDisconnectedVaults && !vaultData.isVaultConnected) {
+      setError(fieldName, {
+        type: 'validate',
+        message: 'Vault is not connected in the Operator Grid',
       })
       return
     }
