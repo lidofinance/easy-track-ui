@@ -14,6 +14,7 @@ type Props = {
   getGroupData: (address: string) => Promise<any | null | undefined>
   onValidOperatorAddressInput?: (groupData: Group) => void
   extraValidateFn?: (groupData: Group) => string | undefined
+  onChange?: ((e: any) => void) | undefined
 }
 
 type GroupInput = {
@@ -28,6 +29,7 @@ export const OperatorGridAddressInputControl = ({
   getGroupData,
   onValidOperatorAddressInput,
   extraValidateFn,
+  onChange,
 }: Props) => {
   const { setError, clearErrors, getValues } = useFormContext()
 
@@ -128,6 +130,7 @@ export const OperatorGridAddressInputControl = ({
       name={fieldName}
       label="Node operator address"
       rules={{ required: 'Field is required' }}
+      onChange={onChange}
     />
   )
 }

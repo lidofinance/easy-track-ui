@@ -175,7 +175,7 @@ export const formParts = createMotionFormPart({
                     fieldIndex={tierIndex}
                     getGroupData={getOperatorGridGroup}
                     allowDuplicateAddresses
-                    onValidOperatorAddressInput={() =>
+                    onChange={() =>
                       resetField(`${fieldNames.tiers}.${tierIndex}.tierId`)
                     }
                   />
