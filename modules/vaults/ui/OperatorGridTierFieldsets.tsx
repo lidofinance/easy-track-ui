@@ -61,10 +61,9 @@ export const OperatorGridTierFieldsets = ({
               }, BigNumber.from(0))
 
               if (totalShareLimit.gt(maxShareLimit)) {
-                return `Share limits total must be less than or equal to ${formatVaultParam(
+                return `Share limits sum must be less than or equal to ${formatVaultParam(
                   maxShareLimit,
-                )} (
-                currently ${formatVaultParam(totalShareLimit)})`
+                )}`
               }
 
               return true

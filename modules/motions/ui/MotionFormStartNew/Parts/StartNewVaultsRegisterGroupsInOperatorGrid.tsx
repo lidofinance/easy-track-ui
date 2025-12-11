@@ -30,6 +30,7 @@ import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
+import { PredefinedGroupParamsPicker } from 'modules/vaults/ui/PredefinedGroupParamsPicker'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -169,6 +170,12 @@ export const formParts = createMotionFormPart({
                     }}
                   />
                 </Fieldset>
+
+                <PredefinedGroupParamsPicker
+                  groupsArrayFieldName={fieldNames.groups}
+                  groupIndex={groupIndex}
+                  onUpdate={groupsFieldArray.update}
+                />
 
                 <Fieldset>
                   <InputNumberControl

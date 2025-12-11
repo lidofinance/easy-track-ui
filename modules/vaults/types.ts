@@ -28,3 +28,15 @@ export type VaultData = {
 }
 
 export type Group = Awaited<ReturnType<OperatorGridAbi['group']>>
+
+export type PredefinedGroupSetup = {
+  label: string
+  groupShareLimit: number
+  tiers: PredefinedTierParams[]
+}
+
+type PredefinedTierParams = {
+  shareLimit: number
+  reserveRatioBP: number
+  forcedRebalanceThresholdBP: number
+}

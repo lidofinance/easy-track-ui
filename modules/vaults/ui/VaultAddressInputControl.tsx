@@ -58,7 +58,6 @@ export const VaultAddressInputControl = ({
       clearErrors(fieldName)
       return
     }
-    console.log('Validating vault address:', debouncedAddress)
 
     const addressErr = validateVaultAddressSync(debouncedAddress)
     if (addressErr) {

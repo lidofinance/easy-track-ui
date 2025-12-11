@@ -139,6 +139,7 @@ export const formParts = createMotionFormPart({
                     setValue(
                       `${fieldNames.vaults}.${fieldIndex}.isInJail`,
                       !currentJailStatus,
+                      { shouldDirty: true, shouldValidate: true },
                     )
                   }}
                   extraValidateFn={vaultData => {
@@ -154,7 +155,7 @@ export const formParts = createMotionFormPart({
 
               {typeof vaultsInputs[fieldIndex]?.isInJail === 'boolean' && (
                 <Text size={16}>
-                  This vault jail status will be changed to{' '}
+                  This vault jail status will be set to{' '}
                   <b>{vaultsInputs[fieldIndex].isInJail ? 'True' : 'False'}</b>.
                 </Text>
               )}
