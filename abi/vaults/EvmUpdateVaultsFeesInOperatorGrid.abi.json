@@ -7,7 +7,18 @@
         "type": "address"
       },
       { "internalType": "address", "name": "_adapter", "type": "address" },
-      { "internalType": "address", "name": "_lidoLocator", "type": "address" }
+      { "internalType": "address", "name": "_lidoLocator", "type": "address" },
+      {
+        "internalType": "uint256",
+        "name": "_maxLiquidityFeeBP",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxReservationFeeBP",
+        "type": "uint256"
+      },
+      { "internalType": "uint256", "name": "_maxInfraFeeBP", "type": "uint256" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -42,6 +53,27 @@
     "outputs": [
       { "internalType": "contract ILidoLocator", "name": "", "type": "address" }
     ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxInfraFeeBP",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxLiquidityFeeBP",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxReservationFeeBP",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },

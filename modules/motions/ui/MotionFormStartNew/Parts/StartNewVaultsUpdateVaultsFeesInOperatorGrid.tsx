@@ -26,6 +26,7 @@ import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { MAX_FEE_BP } from 'modules/vaults/constants'
 import { BpValueFormatted } from 'modules/vaults/ui/BpValueFormatted'
 import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
+import { useSWR } from 'modules/network/hooks/useSwr'
 
 type VaultFeesInput = {
   address: string
@@ -67,13 +68,39 @@ export const formParts = createMotionFormPart({
     ] as VaultFeesInput[],
   }),
   Component: ({ fieldNames, submitAction }) => {
-    const { walletAddress } = useWeb3()
+    const { walletAddress, chainId } = useWeb3()
 
     const { vaultsDataMap, getVaultData } = useVaultsDataMap()
 
-    const trustedCaller = ContractUpdateVaultsFeesInOperatorGrid.useSwrWeb3(
-      'trustedCaller',
-      [],
+    const factoryContract = ContractUpdateVaultsFeesInOperatorGrid.useRpc()
+
+    const { data: factoryData, initialLoading: isFactoryDataLoading } = useSWR(
+      `update-vaults-fees-data-${chainId}`,
+      async () => {
+        const [
+          trustedCaller,
+          maxLiquidityFeeBP,
+          maxReservationFeeBP,
+          maxInfraFeeBP,
+        ] = await Promise.all([
+          factoryContract.trustedCaller(),
+          factoryContract.maxLiquidityFeeBP(),
+          factoryContract.maxReservationFeeBP(),
+          factoryContract.maxInfraFeeBP(),
+        ])
+
+        return {
+          trustedCaller,
+          maxLiquidityFeeBP: maxLiquidityFeeBP.toNumber(),
+          maxReservationFeeBP: maxReservationFeeBP.toNumber(),
+          maxInfraFeeBP: maxInfraFeeBP.toNumber(),
+        }
+      },
+      {
+        revalidateOnFocus: false,
+        revalidateIfStale: false,
+        revalidateOnReconnect: false,
+      },
     )
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
@@ -89,16 +116,25 @@ export const formParts = createMotionFormPart({
         reservationFeeBP: '',
       } as VaultFeesInput)
 
-    if (trustedCaller.initialLoading) {
+    if (isFactoryDataLoading || !factoryData) {
       return <PageLoader />
     }
 
-    if (trustedCaller.data !== walletAddress) {
+    if (factoryData.trustedCaller !== walletAddress) {
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
     return (
       <>
+        <MotionInfoBox>
+          Current factory-level maximum fees
+          <br />
+          Max infra fee (BP): {factoryData.maxInfraFeeBP}
+          <br />
+          Max liquidity fee (BP): {factoryData.maxLiquidityFeeBP}
+          <br />
+          Max reservation liquidity fee (BP): {factoryData.maxReservationFeeBP}
+        </MotionInfoBox>
         {vaultsFieldArray.fields.map((item, fieldIndex) => {
           const vaultTierInfo =
             vaultsDataMap[vaultsInputs[fieldIndex]?.address.toLowerCase()]
@@ -165,10 +201,16 @@ export const formParts = createMotionFormPart({
                           return `Value must be less than or equal to ${MAX_FEE_BP}`
                         }
 
+                        // Check for factory maximum
+                        if (valueNum > factoryData.maxInfraFeeBP) {
+                          return `Value must be less than or equal to ${factoryData.maxInfraFeeBP}`
+                        }
+
                         if (!vaultTierInfo) {
                           return true
                         }
 
+                        // Check for tier maximum
                         if (valueNum > vaultTierInfo.infraFeeBP) {
                           return `Value must be less than or equal to ${vaultTierInfo.infraFeeBP}`
                         }
@@ -202,10 +244,16 @@ export const formParts = createMotionFormPart({
                           return `Value must be less than or equal to ${MAX_FEE_BP}`
                         }
 
+                        // Check for factory maximum
+                        if (valueNum > factoryData.maxLiquidityFeeBP) {
+                          return `Value must be less than or equal to ${factoryData.maxLiquidityFeeBP}`
+                        }
+
                         if (!vaultTierInfo) {
                           return true
                         }
 
+                        // Check for tier maximum
                         if (valueNum > vaultTierInfo.liquidityFeeBP) {
                           return `Value must be less than or equal to ${vaultTierInfo.liquidityFeeBP}`
                         }
@@ -239,10 +287,16 @@ export const formParts = createMotionFormPart({
                           return `Value must be less than or equal to ${MAX_FEE_BP}`
                         }
 
+                        // Check for factory maximum
+                        if (valueNum > factoryData.maxReservationFeeBP) {
+                          return `Value must be less than or equal to ${factoryData.maxReservationFeeBP}`
+                        }
+
                         if (!vaultTierInfo) {
                           return true
                         }
 
+                        // Check for tier maximum
                         if (valueNum > vaultTierInfo.reservationFeeBP) {
                           return `Value must be less than or equal to ${vaultTierInfo.reservationFeeBP}`
                         }
