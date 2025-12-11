@@ -230,7 +230,8 @@ export const formParts = createMotionFormPart({
 
                 {groupShareLimit && (
                   <OperatorGridTierFieldsets
-                    tierFieldName={`${fieldNames.tiers}.${tierIndex}`}
+                    tierArrayFieldName={fieldNames.tiers}
+                    fieldIndex={tierIndex}
                     maxShareLimit={groupShareLimit}
                   />
                 )}

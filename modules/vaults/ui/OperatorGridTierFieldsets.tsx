@@ -10,12 +10,18 @@ import { formatVaultParam } from '../utils/formatVaultParam'
 import { BpValueFormatted } from './BpValueFormatted'
 
 type Props = {
-  tierFieldName: string
+  tierArrayFieldName: string
+  fieldIndex: number
   maxShareLimit: BigNumber
 }
 
+type Tier = {
+  shareLimit: string
+}
+
 export const OperatorGridTierFieldsets = ({
-  tierFieldName,
+  tierArrayFieldName,
+  fieldIndex,
   maxShareLimit,
 }: Props) => {
   const { getValues } = useFormContext()
@@ -24,7 +30,7 @@ export const OperatorGridTierFieldsets = ({
     <>
       <Fieldset>
         <InputNumberControl
-          name={`${tierFieldName}.shareLimit`}
+          name={`${tierArrayFieldName}.${fieldIndex}.shareLimit`}
           label="Share limit"
           disabled={maxShareLimit.isZero()}
           rules={{
@@ -35,10 +41,30 @@ export const OperatorGridTierFieldsets = ({
                 return amountError
               }
 
-              if (maxShareLimit.lt(parseEther(value))) {
+              const valueBn = parseEther(value)
+              if (maxShareLimit.lt(valueBn)) {
                 return `Value must be less than or equal to ${formatVaultParam(
                   maxShareLimit,
                 )}`
+              }
+
+              // Check sum of all tiers' share limits
+              const tiers: Tier[] = getValues(tierArrayFieldName)
+              const totalShareLimit = tiers.reduce((acc, tier, idx) => {
+                if (idx === fieldIndex) {
+                  return acc.add(valueBn)
+                }
+                if (!tier.shareLimit) {
+                  return acc
+                }
+                return acc.add(parseEther(tier.shareLimit))
+              }, BigNumber.from(0))
+
+              if (totalShareLimit.gt(maxShareLimit)) {
+                return `Share limits total must be less than or equal to ${formatVaultParam(
+                  maxShareLimit,
+                )} (
+                currently ${formatVaultParam(totalShareLimit)})`
               }
 
               return true
@@ -49,7 +75,7 @@ export const OperatorGridTierFieldsets = ({
 
       <Fieldset>
         <InputNumberControl
-          name={`${tierFieldName}.reserveRatioBP`}
+          name={`${tierArrayFieldName}.${fieldIndex}.reserveRatioBP`}
           label="Reserve ratio (BP)"
           rules={{
             required: 'Field is required',
@@ -73,14 +99,14 @@ export const OperatorGridTierFieldsets = ({
           }}
         />
         <BpValueFormatted
-          fieldName={`${tierFieldName}.reserveRatioBP`}
+          fieldName={`${tierArrayFieldName}.${fieldIndex}.reserveRatioBP`}
           label="Reserve ratio"
         />
       </Fieldset>
 
       <Fieldset>
         <InputNumberControl
-          name={`${tierFieldName}.forcedRebalanceThresholdBP`}
+          name={`${tierArrayFieldName}.${fieldIndex}.forcedRebalanceThresholdBP`}
           label="Forced rebalance threshold (BP)"
           rules={{
             required: 'Field is required',
@@ -96,7 +122,7 @@ export const OperatorGridTierFieldsets = ({
               }
 
               const reserveRatioBP = getValues(
-                `${tierFieldName}.reserveRatioBP`,
+                `${tierArrayFieldName}.${fieldIndex}.reserveRatioBP`,
               )
 
               if (!reserveRatioBP) {
@@ -112,14 +138,14 @@ export const OperatorGridTierFieldsets = ({
           }}
         />
         <BpValueFormatted
-          fieldName={`${tierFieldName}.forcedRebalanceThresholdBP`}
+          fieldName={`${tierArrayFieldName}.${fieldIndex}.forcedRebalanceThresholdBP`}
           label="Forced rebalance threshold"
         />
       </Fieldset>
 
       <Fieldset>
         <InputNumberControl
-          name={`${tierFieldName}.infraFeeBP`}
+          name={`${tierArrayFieldName}.${fieldIndex}.infraFeeBP`}
           label="Infra fee (BP)"
           rules={{
             required: 'Field is required',
@@ -138,14 +164,14 @@ export const OperatorGridTierFieldsets = ({
           }}
         />
         <BpValueFormatted
-          fieldName={`${tierFieldName}.infraFeeBP`}
+          fieldName={`${tierArrayFieldName}.${fieldIndex}.infraFeeBP`}
           label="Infra fee"
         />
       </Fieldset>
 
       <Fieldset>
         <InputNumberControl
-          name={`${tierFieldName}.liquidityFeeBP`}
+          name={`${tierArrayFieldName}.${fieldIndex}.liquidityFeeBP`}
           label="Liquidity fee (BP)"
           rules={{
             required: 'Field is required',
@@ -164,14 +190,14 @@ export const OperatorGridTierFieldsets = ({
           }}
         />
         <BpValueFormatted
-          fieldName={`${tierFieldName}.liquidityFeeBP`}
+          fieldName={`${tierArrayFieldName}.${fieldIndex}.liquidityFeeBP`}
           label="Liquidity fee"
         />
       </Fieldset>
 
       <Fieldset>
         <InputNumberControl
-          name={`${tierFieldName}.reservationFeeBP`}
+          name={`${tierArrayFieldName}.${fieldIndex}.reservationFeeBP`}
           label="Reservation liquidity fee (BP)"
           rules={{
             required: 'Field is required',
@@ -190,7 +216,7 @@ export const OperatorGridTierFieldsets = ({
           }}
         />
         <BpValueFormatted
-          fieldName={`${tierFieldName}.reservationFeeBP`}
+          fieldName={`${tierArrayFieldName}.${fieldIndex}.reservationFeeBP`}
           label="Reservation liquidity fee"
         />
       </Fieldset>
