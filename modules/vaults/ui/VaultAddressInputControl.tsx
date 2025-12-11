@@ -66,7 +66,7 @@ export const VaultAddressInputControl = ({
       return
     }
 
-    let isCurrent = true // Flag to prevent setting state on unmounted component (or stale data)
+    let isCurrent = true // Guard against race conditions
 
     const fetchAndValidate = async () => {
       const lowerAddress = debouncedAddress.toLowerCase()

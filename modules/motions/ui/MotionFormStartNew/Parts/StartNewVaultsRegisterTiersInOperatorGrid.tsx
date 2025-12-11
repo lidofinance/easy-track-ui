@@ -23,7 +23,7 @@ import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGro
 import { EMPTY_TIER } from 'modules/vaults/constants'
 import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { GridGroup } from 'modules/vaults/types'
-import { GridOperatorAddressInputControl } from 'modules/vaults/ui/GridOperatorAddressInputControl'
+import { OperatorGridAddressInputControl } from 'modules/vaults/ui/OperatorGridAddressInputControl'
 
 type GroupInput = Omit<GridGroup, 'shareLimit'>
 
@@ -109,7 +109,7 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <GridOperatorAddressInputControl
+                  <OperatorGridAddressInputControl
                     groupFieldName={fieldNames.groups}
                     fieldIndex={groupIndex}
                     getGroupData={getOperatorGridGroup}

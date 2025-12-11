@@ -29,7 +29,7 @@ import { OperatorGridTierFieldsets } from 'modules/vaults/ui/OperatorGridTierFie
 import { convertShareLimitToInputValue } from 'modules/vaults/utils/convertShareLimitToInputValue'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
-import { GridOperatorAddressInputControl } from 'modules/vaults/ui/GridOperatorAddressInputControl'
+import { OperatorGridAddressInputControl } from 'modules/vaults/ui/OperatorGridAddressInputControl'
 
 type TierInput = {
   nodeOperator: string
@@ -170,7 +170,7 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <GridOperatorAddressInputControl
+                  <OperatorGridAddressInputControl
                     groupFieldName={fieldNames.tiers}
                     fieldIndex={tierIndex}
                     getGroupData={getOperatorGridGroup}

@@ -1,8 +1,10 @@
+import React, { useEffect } from 'react'
+import { useFormContext, useWatch } from 'react-hook-form'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { useFormContext } from 'react-hook-form'
 import { DEFAULT_TIER_OPERATOR } from '../constants'
 import { Group } from '../types'
+import { useDebounce } from 'modules/shared/hooks/useDebounce'
 
 type Props = {
   groupFieldName: string
@@ -18,7 +20,7 @@ type GroupInput = {
   nodeOperator: string
 }
 
-export const GridOperatorAddressInputControl = ({
+export const OperatorGridAddressInputControl = ({
   groupFieldName,
   fieldIndex,
   allowDuplicateAddresses,
@@ -30,15 +32,20 @@ export const GridOperatorAddressInputControl = ({
   const { setError, clearErrors, getValues } = useFormContext()
 
   const fieldName = `${groupFieldName}.${fieldIndex}.nodeOperator`
+  const fieldValue = useWatch({ name: fieldName })
 
-  const validateNodeOperatorAddress = (value: string) => {
+  const debouncedAddress = useDebounce(fieldValue, 500)
+
+  const validateAddressSync = (value: string) => {
     if (!value) return
+
     const addressErr = validateAddress(value)
     if (addressErr) {
       return addressErr
     }
 
     const lowerAddress = value.toLowerCase()
+
     if (
       !allowDefaultOperatorAddress &&
       lowerAddress === DEFAULT_TIER_OPERATOR
@@ -60,55 +67,67 @@ export const GridOperatorAddressInputControl = ({
     }
   }
 
-  const handleValueChange = async (e: any) => {
-    const value = e.target.value
-    if (!value) return
-    const addressErr = validateNodeOperatorAddress(value)
+  useEffect(() => {
+    if (!debouncedAddress) {
+      clearErrors(fieldName)
+      return
+    }
+
+    const addressErr = validateAddressSync(debouncedAddress)
     if (addressErr) {
-      setError(fieldName, {
-        type: 'validate',
-        message: addressErr,
-      })
+      setError(fieldName, { type: 'validate', message: addressErr })
       return
     }
 
-    const lowerAddress = value.toLowerCase()
-    // Fetch group data
-    const groupData = await getGroupData(lowerAddress)
+    let isCurrent = true // Guard against race conditions
 
-    if (!groupData) {
-      setError(fieldName, {
-        type: 'validate',
-        message: 'Node operator is not registered in Operator Grid',
-      })
-      return
+    const fetchAndValidate = async () => {
+      const lowerAddress = debouncedAddress.toLowerCase()
+
+      const groupData = await getGroupData(lowerAddress)
+
+      // Check if this effect is still the latest one before setting state
+      if (!isCurrent) return
+
+      if (!groupData) {
+        setError(fieldName, {
+          type: 'validate',
+          message: 'Node operator is not registered in Operator Grid',
+        })
+        return
+      }
+
+      const extraValidationResult = extraValidateFn?.(groupData)
+      if (typeof extraValidationResult === 'string') {
+        setError(fieldName, {
+          type: 'validate',
+          message: extraValidationResult,
+        })
+        return
+      }
+
+      // Success handling
+      onValidOperatorAddressInput?.(groupData as Group)
+      clearErrors(fieldName)
     }
 
-    // Extra validation
-    const extraValidationResult = extraValidateFn?.(groupData)
-    if (typeof extraValidationResult === 'string') {
-      setError(fieldName, {
-        type: 'validate',
-        message: extraValidationResult,
-      })
-      return
+    fetchAndValidate()
+
+    // Cleanup
+    return () => {
+      isCurrent = false
     }
 
-    // Call callback with valid group data
-    onValidOperatorAddressInput?.(groupData)
-    clearErrors(fieldName)
-  }
+    // Only run when the debounced value changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedAddress])
 
+  // 5. Render the InputControl
   return (
     <InputControl
       name={fieldName}
       label="Node operator address"
       rules={{ required: 'Field is required' }}
-      onChange={e => {
-        setTimeout(() => {
-          handleValueChange(e)
-        }, 500)
-      }}
     />
   )
 }

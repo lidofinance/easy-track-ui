@@ -28,7 +28,7 @@ import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { Text } from 'modules/shared/ui/Common/Text'
-import { GridOperatorAddressInputControl } from 'modules/vaults/ui/GridOperatorAddressInputControl'
+import { OperatorGridAddressInputControl } from 'modules/vaults/ui/OperatorGridAddressInputControl'
 
 type GroupInput = Omit<GridGroup, 'tiers'>
 
@@ -118,7 +118,7 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <GridOperatorAddressInputControl
+                  <OperatorGridAddressInputControl
                     groupFieldName={fieldNames.groups}
                     fieldIndex={groupIndex}
                     getGroupData={getOperatorGridGroup}
