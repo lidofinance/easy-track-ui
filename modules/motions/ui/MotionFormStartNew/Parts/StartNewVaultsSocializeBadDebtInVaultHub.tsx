@@ -24,7 +24,6 @@ import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
-import { isAddress } from 'ethers/lib/utils'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { formatBalance } from 'modules/blockChain/utils/formatBalance'
 import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
@@ -75,7 +74,9 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const { vaultsDataMap, getVaultData } = useVaultsDataMap()
+    const { vaultsDataMap, getVaultData } = useVaultsDataMap({
+      includeBadDebt: true,
+    })
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
 
@@ -99,93 +100,86 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {vaultsFieldArray.fields.map((item, fieldIndex) => (
-          <Fragment key={item.id}>
-            <FieldsWrapper>
-              <FieldsHeader>
-                {vaultsFieldArray.fields.length > 1 && (
-                  <FieldsHeaderDesc>Update #{fieldIndex + 1}</FieldsHeaderDesc>
-                )}
-                {vaultsFieldArray.fields.length > 1 && (
-                  <RemoveItemButton
-                    onClick={() => vaultsFieldArray.remove(fieldIndex)}
-                  >
-                    Remove update {fieldIndex + 1}
-                  </RemoveItemButton>
-                )}
-              </FieldsHeader>
+        {vaultsFieldArray.fields.map((item, fieldIndex) => {
+          const vaultData =
+            vaultsDataMap[vaultsInputs[fieldIndex].vaultAddress.toLowerCase()]
 
-              {vaultsInputs[fieldIndex]?.vaultAddress &&
-                vaultsDataMap[
-                  vaultsInputs[fieldIndex].vaultAddress.toLowerCase()
-                ]?.badDebtEth && (
+          return (
+            <Fragment key={item.id}>
+              <FieldsWrapper>
+                <FieldsHeader>
+                  {vaultsFieldArray.fields.length > 1 && (
+                    <FieldsHeaderDesc>
+                      Update #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
+                  )}
+                  {vaultsFieldArray.fields.length > 1 && (
+                    <RemoveItemButton
+                      onClick={() => vaultsFieldArray.remove(fieldIndex)}
+                    >
+                      Remove update {fieldIndex + 1}
+                    </RemoveItemButton>
+                  )}
+                </FieldsHeader>
+
+                {vaultData?.badDebtEth && (
                   <MotionInfoBox>
-                    Current vault debt:{' '}
-                    {formatBalance(
-                      vaultsDataMap[
-                        vaultsInputs[fieldIndex].vaultAddress.toLowerCase()
-                      ]?.badDebtEth,
-                    )}
+                    Current vault debt: {formatBalance(vaultData.badDebtEth)}
                   </MotionInfoBox>
                 )}
 
-              <Fieldset>
-                <VaultAddressInputControl
-                  vaultsFieldName={fieldNames.vaults}
-                  fieldIndex={fieldIndex}
-                  getVaultData={getVaultData}
-                />
-              </Fieldset>
+                <Fieldset>
+                  <VaultAddressInputControl
+                    vaultsFieldName={fieldNames.vaults}
+                    fieldIndex={fieldIndex}
+                    getVaultData={getVaultData}
+                  />
+                </Fieldset>
 
-              <Fieldset>
-                <InputControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.acceptorAddress`}
-                  label="Acceptor address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
+                <Fieldset>
+                  <InputControl
+                    name={`${fieldNames.vaults}.${fieldIndex}.acceptorAddress`}
+                    label="Acceptor address"
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
+                        }
 
-                      const vaultAddress =
-                        vaultsInputs[fieldIndex]?.vaultAddress
-                      if (
-                        vaultAddress &&
-                        value.toLowerCase() === vaultAddress.toLowerCase()
-                      ) {
-                        return 'Acceptor address cannot be the same as vault address'
-                      }
+                        const vaultAddress =
+                          vaultsInputs[fieldIndex]?.vaultAddress
+                        if (
+                          vaultAddress &&
+                          value.toLowerCase() === vaultAddress.toLowerCase()
+                        ) {
+                          return 'Acceptor address cannot be the same as vault address'
+                        }
 
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
 
-              <Fieldset>
-                <InputNumberControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.maxShareToSocialize`}
-                  label="Max share to socialize"
-                  rules={{
-                    required: 'Field is required',
-                    validate: value => {
-                      const amountError = validateEtherValue(value)
-                      if (amountError) {
-                        return amountError
-                      }
+                <Fieldset>
+                  <InputNumberControl
+                    name={`${fieldNames.vaults}.${fieldIndex}.maxShareToSocialize`}
+                    label="Max share to socialize"
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        const amountError = validateEtherValue(value)
+                        if (amountError) {
+                          return amountError
+                        }
 
-                      const parsedValue = utils.parseEther(value)
-                      if (parsedValue.isZero()) {
-                        return 'Amount must be greater than 0'
-                      }
+                        const parsedValue = utils.parseEther(value)
+                        if (parsedValue.isZero()) {
+                          return 'Amount must be greater than 0'
+                        }
 
-                      const vaultAddress =
-                        vaultsInputs[fieldIndex]?.vaultAddress
-                      if (vaultAddress && isAddress(vaultAddress)) {
-                        const vaultData =
-                          vaultsDataMap[vaultAddress.toLowerCase()]
                         if (vaultData?.badDebtEth) {
                           if (parsedValue.gt(vaultData.badDebtEth)) {
                             return `Amount exceeds current vault debt (${formatBalance(
@@ -193,16 +187,16 @@ export const formParts = createMotionFormPart({
                             )})`
                           }
                         }
-                      }
 
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
-            </FieldsWrapper>
-          </Fragment>
-        ))}
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
+              </FieldsWrapper>
+            </Fragment>
+          )
+        })}
 
         <Fieldset>
           <ButtonIcon
