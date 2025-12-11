@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useMotionDetailed } from 'modules/motions/providers/hooks/useMotionDetaled'
-import { ContractVaultHub } from 'modules/blockChain/contracts'
 
 import { PageLoader } from 'modules/shared/ui/Common/PageLoader'
 import { FormattedDate } from 'modules/shared/ui/Utils/FormattedDate'
@@ -11,7 +10,6 @@ import {
   getMotionDisplayStatus,
   getMotionTypeByScriptFactory,
 } from 'modules/motions/utils'
-import { EvmUnrecognized } from 'modules/motions/evmAddresses'
 import { MotionDetailedObjections } from './MotionDetailedObjections'
 import { MotionDetailedTime } from './MotionDetailedTime'
 import { MotionDetailedCancelButton } from './MotionDetailedCancelButton'
@@ -37,19 +35,14 @@ import {
   StartDateValue,
   StartDateTime,
   StonksButton,
+  EnactWarningBox,
 } from './MotionCardDetailedStyle'
 
-import { Motion, MotionStatus, MotionType } from 'modules/motions/types'
+import { Motion, MotionStatus } from 'modules/motions/types'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 import { stonksInstance } from 'modules/network/utils/urls'
 import Link from 'next/link'
-
-// Motion types that require a fresh report before enactment
-const MOTION_TYPES_REQUIRING_REPORT = new Set<MotionType | EvmUnrecognized>([
-  MotionType.UpdateVaultsFeesInOperatorGrid,
-  MotionType.ForceValidatorExitsInVaultHub,
-  MotionType.SocializeBadDebtInVaultHub,
-])
+import { getMotionEnactWarning } from 'modules/motions/utils/getMotionEnactWarning'
 
 type Props = {
   motion: Motion
@@ -65,7 +58,6 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     timeData,
     motionDisplaydName,
     stonksRecipientAddress,
-    callDataDecoded,
   } = useMotionDetailed()
   const { isPassed, diff } = timeData
 
@@ -88,18 +80,7 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     isAttentionTime,
   })
 
-  const requiresReport = MOTION_TYPES_REQUIRING_REPORT.has(motionType)
-  const isReportFresh = ContractVaultHub.useSwrWeb3(
-    'isReportFresh',
-    [callDataDecoded || '0x0000000000000000000000000000000000000000'],
-    { isPaused: () => !callDataDecoded },
-  )
-
-  const hasStaleReport =
-    requiresReport &&
-    !!callDataDecoded &&
-    !isReportFresh.initialLoading &&
-    isReportFresh.data === false
+  const enactWarningMessage = getMotionEnactWarning(motionType)
 
   if (pending) return <PageLoader />
 
@@ -194,7 +175,12 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
       <MotionDetailedLimits />
 
       {!isArchived && (
-        <MotionDetailedActions motion={motion} canEnact={!hasStaleReport} />
+        <>
+          {motion.status === MotionStatus.PENDING && enactWarningMessage && (
+            <EnactWarningBox>{enactWarningMessage}</EnactWarningBox>
+          )}
+          <MotionDetailedActions motion={motion} />
+        </>
       )}
     </Card>
   )
