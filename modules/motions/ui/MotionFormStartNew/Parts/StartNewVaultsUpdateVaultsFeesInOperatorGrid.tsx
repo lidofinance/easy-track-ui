@@ -138,6 +138,23 @@ export const formParts = createMotionFormPart({
         {vaultsFieldArray.fields.map((item, fieldIndex) => {
           const vaultTierInfo =
             vaultsDataMap[vaultsInputs[fieldIndex]?.address.toLowerCase()]
+
+          const maxInfraFeeBP = Math.min(
+            factoryData.maxInfraFeeBP,
+            vaultTierInfo ? vaultTierInfo.infraFeeBP : MAX_FEE_BP,
+            MAX_FEE_BP,
+          )
+          const maxLiquidityFeeBP = Math.min(
+            factoryData.maxLiquidityFeeBP,
+            vaultTierInfo ? vaultTierInfo.liquidityFeeBP : MAX_FEE_BP,
+            MAX_FEE_BP,
+          )
+          const maxReservationFeeBP = Math.min(
+            factoryData.maxReservationFeeBP,
+            vaultTierInfo ? vaultTierInfo.reservationFeeBP : MAX_FEE_BP,
+            MAX_FEE_BP,
+          )
+
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
@@ -195,24 +212,8 @@ export const formParts = createMotionFormPart({
                           return uintError
                         }
 
-                        const valueNum = Number(value)
-
-                        if (valueNum > MAX_FEE_BP) {
-                          return `Value must be less than or equal to ${MAX_FEE_BP}`
-                        }
-
-                        // Check for factory maximum
-                        if (valueNum > factoryData.maxInfraFeeBP) {
-                          return `Value must be less than or equal to ${factoryData.maxInfraFeeBP}`
-                        }
-
-                        if (!vaultTierInfo) {
-                          return true
-                        }
-
-                        // Check for tier maximum
-                        if (valueNum > vaultTierInfo.infraFeeBP) {
-                          return `Value must be less than or equal to ${vaultTierInfo.infraFeeBP}`
+                        if (Number(value) > maxInfraFeeBP) {
+                          return `Value must be less than or equal to ${maxInfraFeeBP}`
                         }
 
                         return true
@@ -238,24 +239,8 @@ export const formParts = createMotionFormPart({
                           return uintError
                         }
 
-                        const valueNum = Number(value)
-
-                        if (valueNum > MAX_FEE_BP) {
-                          return `Value must be less than or equal to ${MAX_FEE_BP}`
-                        }
-
-                        // Check for factory maximum
-                        if (valueNum > factoryData.maxLiquidityFeeBP) {
-                          return `Value must be less than or equal to ${factoryData.maxLiquidityFeeBP}`
-                        }
-
-                        if (!vaultTierInfo) {
-                          return true
-                        }
-
-                        // Check for tier maximum
-                        if (valueNum > vaultTierInfo.liquidityFeeBP) {
-                          return `Value must be less than or equal to ${vaultTierInfo.liquidityFeeBP}`
+                        if (Number(value) > maxLiquidityFeeBP) {
+                          return `Value must be less than or equal to ${maxLiquidityFeeBP}`
                         }
 
                         return true
@@ -281,24 +266,8 @@ export const formParts = createMotionFormPart({
                           return uintError
                         }
 
-                        const valueNum = Number(value)
-
-                        if (valueNum > MAX_FEE_BP) {
-                          return `Value must be less than or equal to ${MAX_FEE_BP}`
-                        }
-
-                        // Check for factory maximum
-                        if (valueNum > factoryData.maxReservationFeeBP) {
-                          return `Value must be less than or equal to ${factoryData.maxReservationFeeBP}`
-                        }
-
-                        if (!vaultTierInfo) {
-                          return true
-                        }
-
-                        // Check for tier maximum
-                        if (valueNum > vaultTierInfo.reservationFeeBP) {
-                          return `Value must be less than or equal to ${vaultTierInfo.reservationFeeBP}`
+                        if (Number(value) > maxReservationFeeBP) {
+                          return `Value must be less than or equal to ${maxLiquidityFeeBP}`
                         }
 
                         return true
