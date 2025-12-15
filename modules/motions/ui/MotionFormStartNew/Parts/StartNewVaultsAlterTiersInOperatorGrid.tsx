@@ -23,14 +23,13 @@ import { DEFAULT_TIER_OPERATOR, EMPTY_TIER } from 'modules/vaults/constants'
 import { TierParams } from 'modules/vaults/types'
 import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 import { useOperatorGridTierMap } from 'modules/vaults/hooks/useOperatorGridTierMap'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 import { SelectControl } from 'modules/shared/ui/Controls/Select'
 import { OperatorGridTierFieldsets } from 'modules/vaults/ui/OperatorGridTierFieldsets'
 import { convertShareLimitToInputValue } from 'modules/vaults/utils/convertShareLimitToInputValue'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
+import { OperatorGridAddressInputControl } from 'modules/vaults/ui/OperatorGridAddressInputControl'
 
 type TierInput = {
   nodeOperator: string
@@ -171,30 +170,14 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.tiers}.${tierIndex}.nodeOperator`}
-                    label="Node operator address"
+                  <OperatorGridAddressInputControl
+                    groupFieldName={fieldNames.tiers}
+                    fieldIndex={tierIndex}
+                    getGroupData={getOperatorGridGroup}
+                    allowDuplicateAddresses
                     onChange={() =>
                       resetField(`${fieldNames.tiers}.${tierIndex}.tierId`)
                     }
-                    rules={{
-                      required: 'Field is required',
-                      validate: async value => {
-                        const addressErr = validateAddress(value)
-                        if (addressErr) {
-                          return addressErr
-                        }
-
-                        const lowerAddress = value.toLowerCase()
-
-                        const group = await getOperatorGridGroup(lowerAddress)
-                        if (!group) {
-                          return `Node operator is not registered in Operator Grid`
-                        }
-
-                        return true
-                      },
-                    }}
                   />
                 </Fieldset>
 
@@ -247,7 +230,8 @@ export const formParts = createMotionFormPart({
 
                 {groupShareLimit && (
                   <OperatorGridTierFieldsets
-                    tierFieldName={`${fieldNames.tiers}.${tierIndex}`}
+                    tierArrayFieldName={fieldNames.tiers}
+                    fieldIndex={tierIndex}
                     maxShareLimit={groupShareLimit}
                   />
                 )}

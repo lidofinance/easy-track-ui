@@ -19,14 +19,14 @@ import { ContractUpdateVaultsFeesInOperatorGrid } from 'modules/blockChain/contr
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateUintValue } from 'modules/motions/utils/validateUintValue'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { MAX_FEE_BP } from 'modules/vaults/constants'
 import { BpValueFormatted } from 'modules/vaults/ui/BpValueFormatted'
+import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
+import { useSWR } from 'modules/network/hooks/useSwr'
 
 type VaultFeesInput = {
   address: string
@@ -68,13 +68,39 @@ export const formParts = createMotionFormPart({
     ] as VaultFeesInput[],
   }),
   Component: ({ fieldNames, submitAction }) => {
-    const { walletAddress } = useWeb3()
+    const { walletAddress, chainId } = useWeb3()
 
     const { vaultsDataMap, getVaultData } = useVaultsDataMap()
 
-    const trustedCaller = ContractUpdateVaultsFeesInOperatorGrid.useSwrWeb3(
-      'trustedCaller',
-      [],
+    const factoryContract = ContractUpdateVaultsFeesInOperatorGrid.useRpc()
+
+    const { data: factoryData, initialLoading: isFactoryDataLoading } = useSWR(
+      `update-vaults-fees-data-${chainId}`,
+      async () => {
+        const [
+          trustedCaller,
+          maxLiquidityFeeBP,
+          maxReservationFeeBP,
+          maxInfraFeeBP,
+        ] = await Promise.all([
+          factoryContract.trustedCaller(),
+          factoryContract.maxLiquidityFeeBP(),
+          factoryContract.maxReservationFeeBP(),
+          factoryContract.maxInfraFeeBP(),
+        ])
+
+        return {
+          trustedCaller,
+          maxLiquidityFeeBP: maxLiquidityFeeBP.toNumber(),
+          maxReservationFeeBP: maxReservationFeeBP.toNumber(),
+          maxInfraFeeBP: maxInfraFeeBP.toNumber(),
+        }
+      },
+      {
+        revalidateOnFocus: false,
+        revalidateIfStale: false,
+        revalidateOnReconnect: false,
+      },
     )
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
@@ -90,19 +116,45 @@ export const formParts = createMotionFormPart({
         reservationFeeBP: '',
       } as VaultFeesInput)
 
-    if (trustedCaller.initialLoading) {
+    if (isFactoryDataLoading || !factoryData) {
       return <PageLoader />
     }
 
-    if (trustedCaller.data !== walletAddress) {
+    if (factoryData.trustedCaller !== walletAddress) {
       return <MessageBox>You should be connected as trusted caller</MessageBox>
     }
 
     return (
       <>
+        <MotionInfoBox>
+          Current factory-level maximum fees
+          <br />
+          Max infra fee (BP): {factoryData.maxInfraFeeBP}
+          <br />
+          Max liquidity fee (BP): {factoryData.maxLiquidityFeeBP}
+          <br />
+          Max reservation liquidity fee (BP): {factoryData.maxReservationFeeBP}
+        </MotionInfoBox>
         {vaultsFieldArray.fields.map((item, fieldIndex) => {
           const vaultTierInfo =
             vaultsDataMap[vaultsInputs[fieldIndex]?.address.toLowerCase()]
+
+          const maxInfraFeeBP = Math.min(
+            factoryData.maxInfraFeeBP,
+            vaultTierInfo ? vaultTierInfo.infraFeeBP : MAX_FEE_BP,
+            MAX_FEE_BP,
+          )
+          const maxLiquidityFeeBP = Math.min(
+            factoryData.maxLiquidityFeeBP,
+            vaultTierInfo ? vaultTierInfo.liquidityFeeBP : MAX_FEE_BP,
+            MAX_FEE_BP,
+          )
+          const maxReservationFeeBP = Math.min(
+            factoryData.maxReservationFeeBP,
+            vaultTierInfo ? vaultTierInfo.reservationFeeBP : MAX_FEE_BP,
+            MAX_FEE_BP,
+          )
+
           return (
             <Fragment key={item.id}>
               <FieldsWrapper>
@@ -122,45 +174,14 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.vaults}.${fieldIndex}.address`}
-                    label="Vault address"
-                    rules={{
-                      required: 'Field is required',
-                      validate: async value => {
-                        const addressErr = validateAddress(value)
-                        if (addressErr) {
-                          return addressErr
-                        }
-
-                        const lowerAddress = value.toLowerCase()
-
-                        const addressInGroupInputIndex = vaultsInputs.findIndex(
-                          ({ address }, index) =>
-                            address.toLowerCase() === lowerAddress &&
-                            fieldIndex !== index,
-                        )
-
-                        if (addressInGroupInputIndex !== -1) {
-                          return 'Address is already in use by another update within the motion'
-                        }
-
-                        const vaultData = await getVaultData(lowerAddress)
-
-                        if (!vaultData) {
-                          return 'Invalid vault address'
-                        }
-
-                        if (!vaultData.isVaultConnected) {
-                          return 'Vault is not connected in the Operator Grid'
-                        }
-
-                        if (vaultData.isPendingDisconnect) {
-                          return 'Vault is pending disconnect in the Operator Grid'
-                        }
-
-                        return true
-                      },
+                  <VaultAddressInputControl
+                    vaultsFieldName={fieldNames.vaults}
+                    fieldIndex={fieldIndex}
+                    getVaultData={getVaultData}
+                    extraValidateFn={vaultData => {
+                      if (vaultData.isPendingDisconnect) {
+                        return 'Vault is pending disconnect in the Operator Grid'
+                      }
                     }}
                   />
                 </Fieldset>
@@ -191,18 +212,8 @@ export const formParts = createMotionFormPart({
                           return uintError
                         }
 
-                        const valueNum = Number(value)
-
-                        if (valueNum > MAX_FEE_BP) {
-                          return `Value must be less than or equal to ${MAX_FEE_BP}`
-                        }
-
-                        if (!vaultTierInfo) {
-                          return true
-                        }
-
-                        if (valueNum > vaultTierInfo.infraFeeBP) {
-                          return `Value must be less than or equal to ${vaultTierInfo.infraFeeBP}`
+                        if (Number(value) > maxInfraFeeBP) {
+                          return `Value must be less than or equal to ${maxInfraFeeBP}`
                         }
 
                         return true
@@ -228,18 +239,8 @@ export const formParts = createMotionFormPart({
                           return uintError
                         }
 
-                        const valueNum = Number(value)
-
-                        if (valueNum > MAX_FEE_BP) {
-                          return `Value must be less than or equal to ${MAX_FEE_BP}`
-                        }
-
-                        if (!vaultTierInfo) {
-                          return true
-                        }
-
-                        if (valueNum > vaultTierInfo.liquidityFeeBP) {
-                          return `Value must be less than or equal to ${vaultTierInfo.liquidityFeeBP}`
+                        if (Number(value) > maxLiquidityFeeBP) {
+                          return `Value must be less than or equal to ${maxLiquidityFeeBP}`
                         }
 
                         return true
@@ -265,18 +266,8 @@ export const formParts = createMotionFormPart({
                           return uintError
                         }
 
-                        const valueNum = Number(value)
-
-                        if (valueNum > MAX_FEE_BP) {
-                          return `Value must be less than or equal to ${MAX_FEE_BP}`
-                        }
-
-                        if (!vaultTierInfo) {
-                          return true
-                        }
-
-                        if (valueNum > vaultTierInfo.reservationFeeBP) {
-                          return `Value must be less than or equal to ${vaultTierInfo.reservationFeeBP}`
+                        if (Number(value) > maxReservationFeeBP) {
+                          return `Value must be less than or equal to ${maxLiquidityFeeBP}`
                         }
 
                         return true

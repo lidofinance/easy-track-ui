@@ -19,18 +19,18 @@ import { ContractRegisterGroupsInOperatorGrid } from 'modules/blockChain/contrac
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
 import { GridGroup } from 'modules/vaults/types'
 import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
-import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { parseEther } from 'ethers/lib/utils'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
+import { InputControl } from 'modules/shared/ui/Controls/Input'
+import { validateAddress } from 'modules/motions/utils/validateAddress'
+import { PredefinedGroupParamsPicker } from 'modules/vaults/ui/PredefinedGroupParamsPicker'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -75,7 +75,6 @@ export const formParts = createMotionFormPart({
   }),
   Component: ({ fieldNames, submitAction }) => {
     const { walletAddress, chainId } = useWeb3()
-    const { getOperatorGridGroup } = useOperatorGridGroupMap()
 
     const factoryContract = ContractRegisterGroupsInOperatorGrid.useRpc()
 
@@ -144,7 +143,7 @@ export const formParts = createMotionFormPart({
                     label="Node operator address"
                     rules={{
                       required: 'Field is required',
-                      validate: async value => {
+                      validate: value => {
                         const addressErr = validateAddress(value)
                         if (addressErr) {
                           return addressErr
@@ -166,16 +165,17 @@ export const formParts = createMotionFormPart({
                           return 'Address is already in use by another group within the motion'
                         }
 
-                        const group = await getOperatorGridGroup(lowerAddress)
-                        if (group) {
-                          return `Operator grid already has a group for this address`
-                        }
-
                         return true
                       },
                     }}
                   />
                 </Fieldset>
+
+                <PredefinedGroupParamsPicker
+                  groupsArrayFieldName={fieldNames.groups}
+                  groupIndex={groupIndex}
+                  onUpdate={groupsFieldArray.update}
+                />
 
                 <Fieldset>
                   <InputNumberControl

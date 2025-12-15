@@ -24,9 +24,9 @@ import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
-import { isAddress } from 'ethers/lib/utils'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { formatBalance } from 'modules/blockChain/utils/formatBalance'
+import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
 
 type VaultInput = {
   vaultAddress: string
@@ -74,7 +74,9 @@ export const formParts = createMotionFormPart({
       [],
     )
 
-    const { vaultsDataMap, getVaultData } = useVaultsDataMap()
+    const { vaultsDataMap, getVaultData } = useVaultsDataMap({
+      includeBadDebt: true,
+    })
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
 
@@ -98,125 +100,86 @@ export const formParts = createMotionFormPart({
 
     return (
       <>
-        {vaultsFieldArray.fields.map((item, fieldIndex) => (
-          <Fragment key={item.id}>
-            <FieldsWrapper>
-              <FieldsHeader>
-                {vaultsFieldArray.fields.length > 1 && (
-                  <FieldsHeaderDesc>Update #{fieldIndex + 1}</FieldsHeaderDesc>
-                )}
-                {vaultsFieldArray.fields.length > 1 && (
-                  <RemoveItemButton
-                    onClick={() => vaultsFieldArray.remove(fieldIndex)}
-                  >
-                    Remove update {fieldIndex + 1}
-                  </RemoveItemButton>
-                )}
-              </FieldsHeader>
+        {vaultsFieldArray.fields.map((item, fieldIndex) => {
+          const vaultData =
+            vaultsDataMap[vaultsInputs[fieldIndex].vaultAddress.toLowerCase()]
 
-              {vaultsInputs[fieldIndex]?.vaultAddress &&
-                vaultsDataMap[
-                  vaultsInputs[fieldIndex].vaultAddress.toLowerCase()
-                ]?.badDebtEth && (
+          return (
+            <Fragment key={item.id}>
+              <FieldsWrapper>
+                <FieldsHeader>
+                  {vaultsFieldArray.fields.length > 1 && (
+                    <FieldsHeaderDesc>
+                      Update #{fieldIndex + 1}
+                    </FieldsHeaderDesc>
+                  )}
+                  {vaultsFieldArray.fields.length > 1 && (
+                    <RemoveItemButton
+                      onClick={() => vaultsFieldArray.remove(fieldIndex)}
+                    >
+                      Remove update {fieldIndex + 1}
+                    </RemoveItemButton>
+                  )}
+                </FieldsHeader>
+
+                {vaultData?.badDebtEth && (
                   <MotionInfoBox>
-                    Current vault debt:{' '}
-                    {formatBalance(
-                      vaultsDataMap[
-                        vaultsInputs[fieldIndex].vaultAddress.toLowerCase()
-                      ]?.badDebtEth,
-                    )}
+                    Current vault debt: {formatBalance(vaultData.badDebtEth)}
                   </MotionInfoBox>
                 )}
 
-              <Fieldset>
-                <InputControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.vaultAddress`}
-                  label="Vault address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: async value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
+                <Fieldset>
+                  <VaultAddressInputControl
+                    vaultsFieldName={fieldNames.vaults}
+                    fieldIndex={fieldIndex}
+                    getVaultData={getVaultData}
+                  />
+                </Fieldset>
 
-                      const lowerAddress = value.toLowerCase()
+                <Fieldset>
+                  <InputControl
+                    name={`${fieldNames.vaults}.${fieldIndex}.acceptorAddress`}
+                    label="Acceptor address"
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        const addressErr = validateAddress(value)
+                        if (addressErr) {
+                          return addressErr
+                        }
 
-                      const addressInGroupInputIndex = vaultsInputs.findIndex(
-                        ({ vaultAddress }, index) =>
-                          vaultAddress.toLowerCase() === lowerAddress &&
-                          fieldIndex !== index,
-                      )
+                        const vaultAddress =
+                          vaultsInputs[fieldIndex]?.vaultAddress
+                        if (
+                          vaultAddress &&
+                          value.toLowerCase() === vaultAddress.toLowerCase()
+                        ) {
+                          return 'Acceptor address cannot be the same as vault address'
+                        }
 
-                      if (addressInGroupInputIndex !== -1) {
-                        return 'Address is already in use by another update within the motion'
-                      }
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
 
-                      const vaultData = await getVaultData(lowerAddress)
+                <Fieldset>
+                  <InputNumberControl
+                    name={`${fieldNames.vaults}.${fieldIndex}.maxShareToSocialize`}
+                    label="Max share to socialize"
+                    rules={{
+                      required: 'Field is required',
+                      validate: value => {
+                        const amountError = validateEtherValue(value)
+                        if (amountError) {
+                          return amountError
+                        }
 
-                      if (!vaultData) {
-                        return 'Invalid vault address'
-                      }
+                        const parsedValue = utils.parseEther(value)
+                        if (parsedValue.isZero()) {
+                          return 'Amount must be greater than 0'
+                        }
 
-                      if (!vaultData.isVaultConnected) {
-                        return 'Vault is not connected in the Operator Grid'
-                      }
-
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
-
-              <Fieldset>
-                <InputControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.acceptorAddress`}
-                  label="Acceptor address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
-
-                      const vaultAddress =
-                        vaultsInputs[fieldIndex]?.vaultAddress
-                      if (
-                        vaultAddress &&
-                        value.toLowerCase() === vaultAddress.toLowerCase()
-                      ) {
-                        return 'Acceptor address cannot be the same as vault address'
-                      }
-
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
-
-              <Fieldset>
-                <InputNumberControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.maxShareToSocialize`}
-                  label="Max share to socialize"
-                  rules={{
-                    required: 'Field is required',
-                    validate: value => {
-                      const amountError = validateEtherValue(value)
-                      if (amountError) {
-                        return amountError
-                      }
-
-                      const parsedValue = utils.parseEther(value)
-                      if (parsedValue.isZero()) {
-                        return 'Amount must be greater than 0'
-                      }
-
-                      const vaultAddress =
-                        vaultsInputs[fieldIndex]?.vaultAddress
-                      if (vaultAddress && isAddress(vaultAddress)) {
-                        const vaultData =
-                          vaultsDataMap[vaultAddress.toLowerCase()]
                         if (vaultData?.badDebtEth) {
                           if (parsedValue.gt(vaultData.badDebtEth)) {
                             return `Amount exceeds current vault debt (${formatBalance(
@@ -224,16 +187,16 @@ export const formParts = createMotionFormPart({
                             )})`
                           }
                         }
-                      }
 
-                      return true
-                    },
-                  }}
-                />
-              </Fieldset>
-            </FieldsWrapper>
-          </Fragment>
-        ))}
+                        return true
+                      },
+                    }}
+                  />
+                </Fieldset>
+              </FieldsWrapper>
+            </Fragment>
+          )
+        })}
 
         <Fieldset>
           <ButtonIcon

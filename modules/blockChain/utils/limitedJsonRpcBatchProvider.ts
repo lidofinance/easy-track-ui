@@ -1,9 +1,9 @@
 import { deepCopy } from '@ethersproject/properties'
 import { fetchJson } from '@ethersproject/web'
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { StaticJsonRpcProvider } from '@ethersproject/providers'
 import { MAX_PROVIDER_BATCH } from 'modules/config'
 
-export class LimitedJsonRpcBatchProvider extends JsonRpcProvider {
+export class LimitedJsonRpcBatchProvider extends StaticJsonRpcProvider {
   _pendingBatchAggregator: NodeJS.Timer | null = null
   _pendingBatch: {
     request: { method: string; params: any[]; id: number; jsonrpc: '2.0' }

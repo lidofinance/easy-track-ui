@@ -1,12 +1,10 @@
-import { OperatorGridAbi } from 'generated'
 import { ContractOperatorGrid } from 'modules/blockChain/contracts'
 import { useSimpleReducer } from 'modules/shared/hooks/useSimpleReducer'
 import { useCallback } from 'react'
 import { isAddress } from 'ethers/lib/utils'
 import { BigNumber, constants } from 'ethers'
 import { DEFAULT_TIER_OPERATOR } from '../constants'
-
-type Group = Awaited<ReturnType<OperatorGridAbi['group']>>
+import { Group } from '../types'
 
 export const useOperatorGridGroupMap = () => {
   const [groupMap, setState] = useSimpleReducer<

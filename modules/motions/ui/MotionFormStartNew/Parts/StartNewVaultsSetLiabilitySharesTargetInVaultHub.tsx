@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { Fragment } from 'react'
-import { useFieldArray, useFormContext } from 'react-hook-form'
+import { useFieldArray } from 'react-hook-form'
 import { Plus, ButtonIcon } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 
@@ -19,11 +19,10 @@ import { ContractSetLiabilitySharesTargetInVaultHub } from 'modules/blockChain/c
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
+import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
 
 type VaultInput = {
   address: string
@@ -72,9 +71,6 @@ export const formParts = createMotionFormPart({
 
     const vaultsFieldArray = useFieldArray({ name: fieldNames.vaults })
 
-    const { watch } = useFormContext()
-    const vaultsInputs: VaultInput[] = watch(fieldNames.vaults)
-
     const handleAddUpdate = () =>
       vaultsFieldArray.append({
         address: '',
@@ -108,42 +104,10 @@ export const formParts = createMotionFormPart({
               </FieldsHeader>
 
               <Fieldset>
-                <InputControl
-                  name={`${fieldNames.vaults}.${fieldIndex}.address`}
-                  label="Vault address"
-                  rules={{
-                    required: 'Field is required',
-                    validate: async value => {
-                      const addressErr = validateAddress(value)
-                      if (addressErr) {
-                        return addressErr
-                      }
-
-                      const lowerAddress = value.toLowerCase()
-
-                      const addressInGroupInputIndex = vaultsInputs.findIndex(
-                        ({ address }, index) =>
-                          address.toLowerCase() === lowerAddress &&
-                          fieldIndex !== index,
-                      )
-
-                      if (addressInGroupInputIndex !== -1) {
-                        return 'Address is already in use by another update within the motion'
-                      }
-
-                      const vaultData = await getVaultData(lowerAddress)
-
-                      if (!vaultData) {
-                        return 'Invalid vault address'
-                      }
-
-                      if (!vaultData.isVaultConnected) {
-                        return 'Vault is not connected in the Operator Grid'
-                      }
-
-                      return true
-                    },
-                  }}
+                <VaultAddressInputControl
+                  vaultsFieldName={fieldNames.vaults}
+                  fieldIndex={fieldIndex}
+                  getVaultData={getVaultData}
                 />
               </Fieldset>
 
