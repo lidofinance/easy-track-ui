@@ -165,10 +165,10 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
   [CHAINS.Mainnet]: [
     {
       label: 'Basic — Phase I',
-      groupShareLimit: 42725,
+      groupShareLimit: 38849,
       tiers: [
         {
-          shareLimit: 42725,
+          shareLimit: 38849,
           reserveRatioBP: 500,
           forcedRebalanceThresholdBP: 475,
         },
@@ -176,10 +176,10 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
     },
     {
       label: 'Professional — Phase I',
-      groupShareLimit: 44813,
+      groupShareLimit: 39463,
       tiers: [
         {
-          shareLimit: 44813,
+          shareLimit: 39463,
           reserveRatioBP: 350,
           forcedRebalanceThresholdBP: 325,
         },
@@ -187,10 +187,10 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
     },
     {
       label: 'Professional Trusted — Phase I',
-      groupShareLimit: 46488,
+      groupShareLimit: 39872,
       tiers: [
         {
-          shareLimit: 46488,
+          shareLimit: 39872,
           reserveRatioBP: 250,
           forcedRebalanceThresholdBP: 225,
         },
@@ -198,10 +198,10 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
     },
     {
       label: 'DVT Cluster — Phase I',
-      groupShareLimit: 48450,
+      groupShareLimit: 40076,
       tiers: [
         {
-          shareLimit: 48450,
+          shareLimit: 40076,
           reserveRatioBP: 200,
           forcedRebalanceThresholdBP: 175,
         },
