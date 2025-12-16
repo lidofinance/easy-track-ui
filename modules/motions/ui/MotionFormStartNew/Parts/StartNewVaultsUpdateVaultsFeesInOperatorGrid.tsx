@@ -267,7 +267,7 @@ export const formParts = createMotionFormPart({
                         }
 
                         if (Number(value) > maxReservationFeeBP) {
-                          return `Value must be less than or equal to ${maxLiquidityFeeBP}`
+                          return `Value must be less than or equal to ${maxReservationFeeBP}`
                         }
 
                         return true

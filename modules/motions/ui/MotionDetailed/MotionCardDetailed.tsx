@@ -176,9 +176,11 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
 
       {!isArchived && (
         <>
-          {motion.status === MotionStatus.PENDING && enactWarningMessage && (
-            <EnactWarningBox>{enactWarningMessage}</EnactWarningBox>
-          )}
+          {motion.status === MotionStatus.PENDING &&
+            enactWarningMessage &&
+            walletAddress && (
+              <EnactWarningBox>{enactWarningMessage}</EnactWarningBox>
+            )}
           <MotionDetailedActions motion={motion} />
         </>
       )}

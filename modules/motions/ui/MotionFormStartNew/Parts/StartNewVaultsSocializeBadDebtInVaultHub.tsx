@@ -25,11 +25,11 @@ import { useVaultsDataMap } from 'modules/vaults/hooks/useVaultsDataMap'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
-import { formatBalance } from 'modules/blockChain/utils/formatBalance'
 import { VaultAddressInputControl } from 'modules/vaults/ui/VaultAddressInputControl'
+import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 
 type VaultInput = {
-  vaultAddress: string
+  address: string
   acceptorAddress: string
   maxShareToSocialize: string
 }
@@ -40,7 +40,7 @@ export const formParts = createMotionFormPart({
     const encodedCallData = new utils.AbiCoder().encode(
       ['address[]', 'address[]', 'uint256[]'],
       [
-        formData.vaults.map(vault => utils.getAddress(vault.vaultAddress)),
+        formData.vaults.map(vault => utils.getAddress(vault.address)),
         formData.vaults.map(vault => utils.getAddress(vault.acceptorAddress)),
         formData.vaults.map(vault =>
           utils.parseEther(vault.maxShareToSocialize),
@@ -60,7 +60,7 @@ export const formParts = createMotionFormPart({
   getDefaultFormData: () => ({
     vaults: [
       {
-        vaultAddress: '',
+        address: '',
         acceptorAddress: '',
         maxShareToSocialize: '',
       },
@@ -85,7 +85,7 @@ export const formParts = createMotionFormPart({
 
     const handleAddUpdate = () =>
       vaultsFieldArray.append({
-        vaultAddress: '',
+        address: '',
         acceptorAddress: '',
         maxShareToSocialize: '',
       } as VaultInput)
@@ -102,7 +102,7 @@ export const formParts = createMotionFormPart({
       <>
         {vaultsFieldArray.fields.map((item, fieldIndex) => {
           const vaultData =
-            vaultsDataMap[vaultsInputs[fieldIndex].vaultAddress.toLowerCase()]
+            vaultsDataMap[vaultsInputs[fieldIndex]?.address.toLowerCase()]
 
           return (
             <Fragment key={item.id}>
@@ -124,7 +124,7 @@ export const formParts = createMotionFormPart({
 
                 {vaultData?.badDebtEth && (
                   <MotionInfoBox>
-                    Current vault debt: {formatBalance(vaultData.badDebtEth)}
+                    Current vault debt: {formatVaultParam(vaultData.badDebtEth)}
                   </MotionInfoBox>
                 )}
 
@@ -148,8 +148,7 @@ export const formParts = createMotionFormPart({
                           return addressErr
                         }
 
-                        const vaultAddress =
-                          vaultsInputs[fieldIndex]?.vaultAddress
+                        const vaultAddress = vaultsInputs[fieldIndex]?.address
                         if (
                           vaultAddress &&
                           value.toLowerCase() === vaultAddress.toLowerCase()
@@ -182,7 +181,7 @@ export const formParts = createMotionFormPart({
 
                         if (vaultData?.badDebtEth) {
                           if (parsedValue.gt(vaultData.badDebtEth)) {
-                            return `Amount exceeds current vault debt (${formatBalance(
+                            return `Amount exceeds current vault debt (${formatVaultParam(
                               vaultData.badDebtEth,
                             )})`
                           }

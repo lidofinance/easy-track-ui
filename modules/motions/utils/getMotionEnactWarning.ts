@@ -10,6 +10,6 @@ export const getMotionEnactWarning = (
       return 'Warning: This motion requires a fresh oracle report before it can be enacted.'
 
     default:
-      return 'Warning: This motion requires a fresh oracle report before it can be enacted.'
+      return null
   }
 }
