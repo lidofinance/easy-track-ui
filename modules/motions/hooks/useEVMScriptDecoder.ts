@@ -80,6 +80,8 @@ export function useEVMScriptDecoder() {
         [KEYS.ValidatorsExitBusOracle]:
           abis.ValidatorsExitBusOracleAbi__factory.abi,
         [KEYS.OperatorGrid]: abis.OperatorGridAbi__factory.abi,
+        [KEYS.VaultsAdapter]: abis.VaultsAdapterAbi__factory.abi,
+        [KEYS.VaultHub]: abis.VaultHubAbi__factory.abi,
       }),
     )
   }, `evm-script-decoder-${chainId}`)

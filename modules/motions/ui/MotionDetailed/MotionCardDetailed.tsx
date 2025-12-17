@@ -35,12 +35,14 @@ import {
   StartDateValue,
   StartDateTime,
   StonksButton,
+  EnactWarningBox,
 } from './MotionCardDetailedStyle'
 
 import { Motion, MotionStatus } from 'modules/motions/types'
 import { MOTION_ATTENTION_PERIOD } from 'modules/motions/constants'
 import { stonksInstance } from 'modules/network/utils/urls'
 import Link from 'next/link'
+import { getMotionEnactWarning } from 'modules/motions/utils/getMotionEnactWarning'
 
 type Props = {
   motion: Motion
@@ -77,6 +79,8 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
     progress,
     isAttentionTime,
   })
+
+  const enactWarningMessage = getMotionEnactWarning(motionType)
 
   if (pending) return <PageLoader />
 
@@ -116,7 +120,6 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
           )}
         </HeaderAside>
       </Header>
-
       <Description>
         <MotionDescription motion={motion} />
         {stonksRecipientAddress && (
@@ -171,7 +174,16 @@ export function MotionCardDetailed({ motion, onInvalidate }: Props) {
 
       <MotionDetailedLimits />
 
-      {!isArchived && <MotionDetailedActions motion={motion} />}
+      {!isArchived && (
+        <>
+          {motion.status === MotionStatus.PENDING &&
+            enactWarningMessage &&
+            walletAddress && (
+              <EnactWarningBox>{enactWarningMessage}</EnactWarningBox>
+            )}
+          <MotionDetailedActions motion={motion} />
+        </>
+      )}
     </Card>
   )
 }

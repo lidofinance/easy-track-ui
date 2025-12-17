@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Button } from '@lidofinance/lido-ui'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { TxStatus as TxStatusType } from 'modules/blockChain/types'
+import { Tooltip } from 'modules/shared/ui/Common/Tooltip'
 
 export const Actions = styled.div`
   display: flex;
@@ -44,4 +45,11 @@ export const TxStatus = styled.span<TxStatusProps>`
 export const ButtonStyled = styled(Button)`
   flex-grow: 1;
   flex-basis: 40%;
+`
+
+export const TooltipStyled = styled(Tooltip)`
+  flex-grow: 1;
+  button {
+    width: 100%;
+  }
 `

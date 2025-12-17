@@ -20,7 +20,7 @@ const formatShareLimit = (value: BigNumber) => {
   if (value.lt(utils.parseEther('0.01'))) {
     return formattedEtherValue
   }
-  return formatter.format(parseInt(formattedEtherValue))
+  return formatter.format(parseFloat(formattedEtherValue))
 }
 
 export const formatVaultParam = (value: BigNumber | number, isBp?: boolean) => {

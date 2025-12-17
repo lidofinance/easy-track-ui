@@ -126,6 +126,23 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xB7668B5485d0f826B86a75b0115e088bB9ee03eE',
     [MotionType.CSMSetVettedGateTree]:
       '0xBc5642bDD6F2a54b01A75605aAe9143525D97308',
+
+    [MotionType.RegisterGroupsInOperatorGrid]:
+      '0x194A46DA1947E98c9D79af13E06Cfbee0D8610cC',
+    [MotionType.RegisterTiersInOperatorGrid]:
+      '0x5292A1284e4695B95C0840CF8ea25A818751C17F',
+    [MotionType.UpdateGroupsShareLimit]:
+      '0x8Bdc726a3147D8187820391D7c6F9F942606aEe6',
+    [MotionType.AlterTiersInOperatorGrid]:
+      '0xa29173C7BCf39dA48D5E404146A652d7464aee14',
+    [MotionType.SetJailStatusInOperatorGrid]:
+      '0x93F1DEE4473Ee9F42c8257C201e33a6Da30E5d67',
+    [MotionType.UpdateVaultsFeesInOperatorGrid]:
+      '0x5C3bDFa3E7f312d8cf72F56F2b797b026f6B471c',
+    [MotionType.ForceValidatorExitsInVaultHub]:
+      '0x6C968cD89CA358fbAf57B18e77a8973Fa869a6aA',
+    [MotionType.SocializeBadDebtInVaultHub]:
+      '0x1dF50522A1D868C12bF71747Bb6F24A18Fe6d32C',
   },
 
   // Goerli
@@ -363,6 +380,16 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SandboxStethAdd]: '0x8f05Cc4cC42745E9723E105D38638683f162e1d9',
     [MotionType.SandboxStethRemove]:
       '0x86E10ffC7c67A92e0c5E58ae42945213da43D0c7',
+    [MotionType.SetJailStatusInOperatorGrid]:
+      '0x4e5b0187479854e88A5b18c49047636707a26f0d',
+    [MotionType.UpdateVaultsFeesInOperatorGrid]:
+      '0x615D3f028D1CA549d350403Cd6043Cb515BE08BF',
+    [MotionType.ForceValidatorExitsInVaultHub]:
+      '0x83DfE5Fe8ac8b7DB38c020F4F54BF09b65D92c63',
+    [MotionType.SocializeBadDebtInVaultHub]:
+      '0xa11906bBBBaC5207b8FDA4F7F294d7EcB8dcc758',
+    [MotionType.SetLiabilitySharesTargetInVaultHub]:
+      '0xc5dCd2A9642ceA9B71A632BF5b8ff52424Ea1B40',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',

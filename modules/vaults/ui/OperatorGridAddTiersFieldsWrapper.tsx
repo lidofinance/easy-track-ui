@@ -67,7 +67,8 @@ export const OperatorGridAddTiersFieldsWrapper = ({
           </FieldsHeader>
 
           <OperatorGridTierFieldsets
-            tierFieldName={`${tierArrayFieldName}.${tierIndex}`}
+            tierArrayFieldName={tierArrayFieldName}
+            fieldIndex={tierIndex}
             maxShareLimit={maxShareLimitBn}
           />
         </FieldsWrapper>

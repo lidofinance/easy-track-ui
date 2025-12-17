@@ -24,6 +24,11 @@ import * as StartNewVaultsRegisterGroupsInOperatorGrid from './StartNewVaultsReg
 import * as StartNewVaultsRegisterTiersInOperatorGrid from './StartNewVaultsRegisterTiersInOperatorGrid'
 import * as StartNewVaultsUpdateGroupsShareLimit from './StartNewVaultsUpdateGroupsShareLimit'
 import * as StartNewVaultsAlterTiersInOperatorGrid from './StartNewVaultsAlterTiersInOperatorGrid'
+import * as StartNewVaultsSetJailStatusInOperatorGrid from './StartNewVaultsSetJailStatusInOperatorGrid'
+import * as StartNewVaultsUpdateVaultsFeesInOperatorGrid from './StartNewVaultsUpdateVaultsFeesInOperatorGrid'
+import * as StartNewVaultForceValidatorExitsInVaultHub from './StartNewVaultForceValidatorExitsInVaultHub'
+import * as StartNewVaultsSocializeBadDebtInVaultHub from './StartNewVaultsSocializeBadDebtInVaultHub'
+import * as StartNewVaultsSetLiabilitySharesTargetInVaultHub from './StartNewVaultsSetLiabilitySharesTargetInVaultHub'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -140,6 +145,10 @@ export const formParts = {
     StartNewVaultsUpdateGroupsShareLimit.formParts,
   [MotionTypeForms.AlterTiersInOperatorGrid]:
     StartNewVaultsAlterTiersInOperatorGrid.formParts,
+  [MotionTypeForms.SetJailStatusInOperatorGrid]:
+    StartNewVaultsSetJailStatusInOperatorGrid.formParts,
+  [MotionTypeForms.UpdateVaultsFeesInOperatorGrid]:
+    StartNewVaultsUpdateVaultsFeesInOperatorGrid.formParts,
   [MotionTypeForms.SandboxStethTopUp]: formAllowedRecipientTopUp.formParts({
     registryType: MotionTypeForms.SandboxStethTopUp,
   }),
@@ -149,6 +158,12 @@ export const formParts = {
   [MotionTypeForms.SandboxStethRemove]: formAllowedRecipientRemove.formParts({
     registryType: MotionTypeForms.SandboxStethRemove,
   }),
+  [MotionTypeForms.ForceValidatorExitsInVaultHub]:
+    StartNewVaultForceValidatorExitsInVaultHub.formParts,
+  [MotionTypeForms.SocializeBadDebtInVaultHub]:
+    StartNewVaultsSocializeBadDebtInVaultHub.formParts,
+  [MotionTypeForms.SetLiabilitySharesTargetInVaultHub]:
+    StartNewVaultsSetLiabilitySharesTargetInVaultHub.formParts,
 } as const
 
 export type FormData = {

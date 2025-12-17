@@ -4,8 +4,7 @@ import { ContractOperatorGrid } from 'modules/blockChain/contracts'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { AddressInlineWithPop } from 'modules/shared/ui/Common/AddressInlineWithPop'
 import { useShareRate } from 'modules/vaults/hooks/useShareRate'
-import { convertSharesToStEthString } from 'modules/vaults/utils/convertSharesToStEthString'
-import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
+import { renderVaultParamUpdate } from 'modules/vaults/utils/renderVaultParamUpdate'
 import React from 'react'
 import { NestProps } from './types'
 
@@ -74,33 +73,6 @@ export function DescVaultsAlterTiersInOperatorGrid({
     return <>No data</>
   }
 
-  const renderParamUpdate = (
-    before: BigNumber | number | undefined,
-    after: BigNumber,
-    isBp: boolean,
-  ) => {
-    const convertedSharesAfter = isBp
-      ? ''
-      : convertSharesToStEthString(after, shareRate)
-
-    if (before === undefined) {
-      return `${formatVaultParam(after, isBp)}${convertedSharesAfter}`
-    }
-    if (after.eq(before)) {
-      return (
-        <>
-          {formatVaultParam(after, isBp)}
-          {convertedSharesAfter} <b>(no change)</b>
-        </>
-      )
-    }
-
-    return `from ${formatVaultParam(before, isBp)} to ${formatVaultParam(
-      after,
-      isBp,
-    )}${convertedSharesAfter}`
-  }
-
   return (
     <>
       <ol>
@@ -119,16 +91,17 @@ export function DescVaultsAlterTiersInOperatorGrid({
                   <ul>
                     <li>
                       <b>Share limit: </b>
-                      {renderParamUpdate(
+                      {renderVaultParamUpdate(
                         tier.before.shareLimit,
                         tier.after.shareLimit,
                         false,
+                        shareRate,
                       )}
                       ;
                     </li>
                     <li>
                       <b>Reserve ratio: </b>
-                      {renderParamUpdate(
+                      {renderVaultParamUpdate(
                         tier.before.reserveRatioBP,
                         tier.after.reserveRatioBP,
                         true,
@@ -137,7 +110,7 @@ export function DescVaultsAlterTiersInOperatorGrid({
                     </li>
                     <li>
                       <b>Forced rebalance threshold: </b>
-                      {renderParamUpdate(
+                      {renderVaultParamUpdate(
                         tier.before.forcedRebalanceThresholdBP,
                         tier.after.forcedRebalanceThresholdBP,
                         true,
@@ -146,7 +119,7 @@ export function DescVaultsAlterTiersInOperatorGrid({
                     </li>
                     <li>
                       <b>Infra fee: </b>
-                      {renderParamUpdate(
+                      {renderVaultParamUpdate(
                         tier.before.infraFeeBP,
                         tier.after.infraFeeBP,
                         true,
@@ -155,7 +128,7 @@ export function DescVaultsAlterTiersInOperatorGrid({
                     </li>
                     <li>
                       <b>Liquidity fee:</b>{' '}
-                      {renderParamUpdate(
+                      {renderVaultParamUpdate(
                         tier.before.liquidityFeeBP,
                         tier.after.liquidityFeeBP,
                         true,
@@ -164,7 +137,7 @@ export function DescVaultsAlterTiersInOperatorGrid({
                     </li>
                     <li>
                       <b>Reservation liquidity fee:</b>{' '}
-                      {renderParamUpdate(
+                      {renderVaultParamUpdate(
                         tier.before.reservationFeeBP,
                         tier.after.reservationFeeBP,
                         true,

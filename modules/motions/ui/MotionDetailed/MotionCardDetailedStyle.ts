@@ -135,3 +135,13 @@ export const StartDateTime = styled.span`
 export const StonksButton = styled(Button)`
   margin: 10px 0;
 `
+
+export const EnactWarningBox = styled.div`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.warningContrast};
+  background-color: rgba(236, 134, 0, 1);
+  border-radius: ${({ theme }) => theme.borderRadiusesMap.lg}px;
+  font-weight: 500;
+  margin: 20px 0 20px 0;
+  padding: 12px;
+`

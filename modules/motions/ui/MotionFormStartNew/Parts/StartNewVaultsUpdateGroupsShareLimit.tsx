@@ -19,8 +19,6 @@ import { ContractUpdateGroupsShareLimit } from 'modules/blockChain/contracts'
 import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
-import { InputControl } from 'modules/shared/ui/Controls/Input'
-import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useSWR } from 'modules/network/hooks/useSwr'
 import { GridGroup } from 'modules/vaults/types'
@@ -30,6 +28,7 @@ import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
 import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { Text } from 'modules/shared/ui/Common/Text'
+import { OperatorGridAddressInputControl } from 'modules/vaults/ui/OperatorGridAddressInputControl'
 
 type GroupInput = Omit<GridGroup, 'tiers'>
 
@@ -119,37 +118,10 @@ export const formParts = createMotionFormPart({
                 </FieldsHeader>
 
                 <Fieldset>
-                  <InputControl
-                    name={`${fieldNames.groups}.${groupIndex}.nodeOperator`}
-                    label="Node operator address"
-                    rules={{
-                      required: 'Field is required',
-                      validate: async value => {
-                        const addressErr = validateAddress(value)
-                        if (addressErr) {
-                          return addressErr
-                        }
-
-                        const lowerAddress = value.toLowerCase()
-
-                        const addressInGroupInputIndex = groupsInput.findIndex(
-                          ({ nodeOperator }, index) =>
-                            nodeOperator.toLowerCase() === lowerAddress &&
-                            groupIndex !== index,
-                        )
-
-                        if (addressInGroupInputIndex !== -1) {
-                          return 'Address is already in use by another group within the motion'
-                        }
-
-                        const group = await getOperatorGridGroup(lowerAddress)
-                        if (!group) {
-                          return `Node operator is not registered in Operator Grid`
-                        }
-
-                        return true
-                      },
-                    }}
+                  <OperatorGridAddressInputControl
+                    groupFieldName={fieldNames.groups}
+                    fieldIndex={groupIndex}
+                    getGroupData={getOperatorGridGroup}
                   />
                 </Fieldset>
 
@@ -157,12 +129,12 @@ export const formParts = createMotionFormPart({
                   <MotionInfoBox>
                     <Text size={12}>
                       Max share limit:{' '}
-                      {formatVaultParam(factoryData.maxShareLimit)} stETH
+                      {formatVaultParam(factoryData.maxShareLimit)}
                     </Text>
                     {entityInMap && !entityInMap.shareLimit.isZero() ? (
                       <Text size={12}>
                         Current share limit:{' '}
-                        {formatVaultParam(entityInMap.shareLimit)} stETH
+                        {formatVaultParam(entityInMap.shareLimit)}
                       </Text>
                     ) : null}
                   </MotionInfoBox>

@@ -54,6 +54,11 @@ import { DescVaultsRegisterGroupsInOperatorGrid } from './DescVaultsRegisterGrou
 import { DescVaultsRegisterTiersInOperatorGrid } from './DescVaultsRegisterTiersInOperatorGrid'
 import { DescVaultsUpdateGroupsShareLimit } from './DescVaultsUpdateGroupsShareLimit'
 import { DescVaultsAlterTiersInOperatorGrid } from './DescVaultsAlterTiersInOperatorGrid'
+import { DescVaultsSetJailStatusInOperatorGrid } from './DescVaultsSetJailStatusInOperatorGrid'
+import { DescVaultsUpdateVaultsFeesInOperatorGrid } from './DescVaultsUpdateVaultsFeesInOperatorGrid'
+import { DescVaultsForceValidatorExitsInVaultHub } from './DescVaultsForceValidatorExitsInVaultHub'
+import { DescVaultsSocializeBadDebtInVaultHub } from './DescVaultsSocializeBadDebtInVaultHub'
+import { DescVaultsSetLiabilitySharesTargetInVaultHub } from './DescVaultsSetLiabilitySharesTargetInVaultHub'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -341,6 +346,15 @@ const MOTION_DESCRIPTIONS = {
     DescVaultsRegisterTiersInOperatorGrid,
   [MotionType.UpdateGroupsShareLimit]: DescVaultsUpdateGroupsShareLimit,
   [MotionType.AlterTiersInOperatorGrid]: DescVaultsAlterTiersInOperatorGrid,
+  [MotionType.SetJailStatusInOperatorGrid]:
+    DescVaultsSetJailStatusInOperatorGrid,
+  [MotionType.UpdateVaultsFeesInOperatorGrid]:
+    DescVaultsUpdateVaultsFeesInOperatorGrid,
+  [MotionType.ForceValidatorExitsInVaultHub]:
+    DescVaultsForceValidatorExitsInVaultHub,
+  [MotionType.SocializeBadDebtInVaultHub]: DescVaultsSocializeBadDebtInVaultHub,
+  [MotionType.SetLiabilitySharesTargetInVaultHub]:
+    DescVaultsSetLiabilitySharesTargetInVaultHub,
   [MotionType.SandboxStethTopUp]: (props: DescWithLimitsProps) => (
     <DescTopUpWithLimits
       {...props}
