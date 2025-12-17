@@ -15,10 +15,6 @@ type Props = {
   maxShareLimit: BigNumber
 }
 
-type Tier = {
-  shareLimit: string
-}
-
 export const OperatorGridTierFieldsets = ({
   tierArrayFieldName,
   fieldIndex,
@@ -44,24 +40,6 @@ export const OperatorGridTierFieldsets = ({
               const valueBn = parseEther(value)
               if (maxShareLimit.lt(valueBn)) {
                 return `Value must be less than or equal to ${formatVaultParam(
-                  maxShareLimit,
-                )}`
-              }
-
-              // Check sum of all tiers' share limits
-              const tiers: Tier[] = getValues(tierArrayFieldName)
-              const totalShareLimit = tiers.reduce((acc, tier, idx) => {
-                if (idx === fieldIndex) {
-                  return acc.add(valueBn)
-                }
-                if (!tier.shareLimit) {
-                  return acc
-                }
-                return acc.add(parseEther(tier.shareLimit))
-              }, BigNumber.from(0))
-
-              if (totalShareLimit.gt(maxShareLimit)) {
-                return `Share limits sum must be less than or equal to ${formatVaultParam(
                   maxShareLimit,
                 )}`
               }

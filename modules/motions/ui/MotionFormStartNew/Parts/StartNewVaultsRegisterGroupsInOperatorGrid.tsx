@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 
 import { Fragment } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
@@ -31,6 +31,7 @@ import { useOperatorGridInfo } from 'modules/vaults/hooks/useOperatorGridInfo'
 import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { PredefinedGroupParamsPicker } from 'modules/vaults/ui/PredefinedGroupParamsPicker'
+import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -106,6 +107,15 @@ export const formParts = createMotionFormPart({
 
     const { watch } = useFormContext()
     const groupsInput: GridGroup[] = watch(fieldNames.groups)
+
+    const groupsShareLimitsSum = groupsInput.map(group => {
+      return group.tiers.reduce((acc, tier) => {
+        if (!tier.shareLimit) {
+          return acc
+        }
+        return acc.add(parseEther(tier.shareLimit))
+      }, BigNumber.from(0))
+    })
 
     const handleAddGroup = () => groupsFieldArray.append({ ...EMPTY_GROUP })
 
@@ -205,6 +215,21 @@ export const formParts = createMotionFormPart({
                   maxShareLimit={groupsInput[groupIndex].shareLimit}
                   groupTiersCount={0}
                 />
+                {groupsShareLimitsSum[groupIndex]?.gt(0) && (
+                  <MotionInfoBox>
+                    Sum of tier share limits:
+                    {formatVaultParam(groupsShareLimitsSum[groupIndex])}
+                    {groupsInput[groupIndex].shareLimit && (
+                      <>
+                        <br />
+                        Group share limit:{' '}
+                        {formatVaultParam(
+                          parseEther(groupsInput[groupIndex].shareLimit),
+                        )}
+                      </>
+                    )}
+                  </MotionInfoBox>
+                )}
               </FieldsWrapper>
             </Fragment>
           )
