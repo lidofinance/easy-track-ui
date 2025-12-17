@@ -282,6 +282,7 @@ export const ValidatorsExitBusOracle: ChainAddressMap = {
 }
 
 export const OperatorGrid: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xC69685E89Cefc327b43B7234AC646451B27c544d',
   [CHAINS.Hoodi]: '0x501e678182bB5dF3f733281521D3f3D1aDe69917',
 }
 
@@ -290,9 +291,11 @@ export const SandboxAllowedRecipientsRegistry: ChainAddressMap = {
 }
 
 export const VaultsAdapter: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0xe2DE6d2DefF15588a71849c0429101F8ca9FB14D',
   [CHAINS.Hoodi]: '0xbc2bb8310730f3d2b514cb26f7e0a8776de879ac',
 }
 
 export const VaultHub: ChainAddressMap = {
+  [CHAINS.Mainnet]: '0x1d201BE093d847f6446530Efb0E8Fb426d176709',
   [CHAINS.Hoodi]: '0x4C9fFC325392090F789255b9948Ab1659b797964',
 }
