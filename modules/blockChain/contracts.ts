@@ -367,16 +367,6 @@ export const ContractSandboxStablesAllowedRecipientRegistry =
     address: CONTRACT_ADDRESSES.SandboxStablesAllowedRecipientRegistry,
   })
 
-export const ContractEvmSandboxStablesAdd = createContractHelpers({
-  factory: TypeChain.AddAllowedRecipientAbi__factory,
-  address: EvmAddressesByType[MotionType.SandboxStablesAdd],
-})
-
-export const ContractEvmSandboxStablesRemove = createContractHelpers({
-  factory: TypeChain.RemoveAllowedRecipientAbi__factory,
-  address: EvmAddressesByType[MotionType.SandboxStablesRemove],
-})
-
 export const ContractEvmSandboxStablesTopUp = createContractHelpers({
   factory: TypeChain.TopUpWithLimitsStablesAbi__factory,
   address: EvmAddressesByType[MotionType.SandboxStablesTopUp],
@@ -546,3 +536,91 @@ export const ContractCuratedExitRequestHashesSubmit = createContractHelpers({
   factory: TypeChain.SubmitExitRequestHashesAbi__factory,
   address: EvmAddressesByType[MotionType.CuratedExitRequestHashesSubmit],
 })
+
+export const ContractRegisterGroupsInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmRegisterGroupsInOperatorsGridAbi__factory,
+  address: EvmAddressesByType[MotionType.RegisterGroupsInOperatorGrid],
+})
+
+export const ContractRegisterTiersInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmRegisterTiersInOperatorsGridAbi__factory,
+  address: EvmAddressesByType[MotionType.RegisterTiersInOperatorGrid],
+})
+
+export const ContractOperatorGrid = createContractHelpers({
+  factory: TypeChain.OperatorGridAbi__factory,
+  address: CONTRACT_ADDRESSES.OperatorGrid,
+})
+
+export const ContractUpdateGroupsShareLimit = createContractHelpers({
+  factory: TypeChain.EvmUpdateGroupsShareLimitAbi__factory,
+  address: EvmAddressesByType[MotionType.UpdateGroupsShareLimit],
+})
+
+export const ContractAlterTiersInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmAlterTiersInOperatorGridAbi__factory,
+  address: EvmAddressesByType[MotionType.AlterTiersInOperatorGrid],
+})
+
+export const ContractSteth = createContractHelpers({
+  factory: TypeChain.StethAbi__factory,
+  address: CONTRACT_ADDRESSES.STETH,
+})
+
+export const ContractSandboxStethTopUp = createContractHelpers({
+  factory: TypeChain.TopUpAllowedRecipientsAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStethTopUp],
+})
+
+export const ContractSandboxStethAdd = createContractHelpers({
+  factory: TypeChain.AddAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStethAdd],
+})
+
+export const ContractSandboxStethRemove = createContractHelpers({
+  factory: TypeChain.RemoveAllowedRecipientAbi__factory,
+  address: EvmAddressesByType[MotionType.SandboxStethRemove],
+})
+
+export const ContractSandboxStethAllowedRecipientsRegistry =
+  createContractHelpers({
+    factory: TypeChain.RegistryWithLimitsAbi__factory,
+    address: CONTRACT_ADDRESSES.SandboxAllowedRecipientsRegistry,
+  })
+
+export const ContractSetJailStatusInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmSetJailStatusInOperatorGridAbi__factory,
+  address: EvmAddressesByType[MotionType.SetJailStatusInOperatorGrid],
+})
+
+export const ContractVaultsAdapter = createContractHelpers({
+  factory: TypeChain.VaultsAdapterAbi__factory,
+  address: CONTRACT_ADDRESSES.VaultsAdapter,
+})
+
+export const ContractUpdateVaultsFeesInOperatorGrid = createContractHelpers({
+  factory: TypeChain.EvmUpdateVaultsFeesInOperatorGridAbi__factory,
+  address: EvmAddressesByType[MotionType.UpdateVaultsFeesInOperatorGrid],
+})
+
+export const ContractVaultHub = createContractHelpers({
+  factory: TypeChain.VaultHubAbi__factory,
+  address: CONTRACT_ADDRESSES.VaultHub,
+})
+
+export const ContractForceValidatorExitsInVaultHub = createContractHelpers({
+  factory: TypeChain.EvmForceValidatorExitsInVaultHubAbi__factory,
+  address: EvmAddressesByType[MotionType.ForceValidatorExitsInVaultHub],
+})
+
+export const ContractSocializeBadDebtInVaultHub = createContractHelpers({
+  factory: TypeChain.EvmSocializeBadDebtInVaultHubAbi__factory,
+  address: EvmAddressesByType[MotionType.SocializeBadDebtInVaultHub],
+})
+
+export const ContractSetLiabilitySharesTargetInVaultHub = createContractHelpers(
+  {
+    factory: TypeChain.EvmSetLiabilitySharesTargetInVaultHubAbi__factory,
+    address: EvmAddressesByType[MotionType.SetLiabilitySharesTargetInVaultHub],
+  },
+)

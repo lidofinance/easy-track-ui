@@ -69,9 +69,7 @@ export const EVM_CONTRACTS = {
   [MotionType.RccStablesTopUp]: CONTRACTS.ContractEvmRccStablesTopUp,
   [MotionType.PmlStablesTopUp]: CONTRACTS.ContractEvmPmlStablesTopUp,
   [MotionType.AtcStablesTopUp]: CONTRACTS.ContractEvmAtcStablesTopUp,
-  [MotionType.SandboxStablesAdd]: CONTRACTS.ContractEvmSandboxStablesAdd,
   [MotionType.SandboxStablesTopUp]: CONTRACTS.ContractEvmSandboxStablesTopUp,
-  [MotionType.SandboxStablesRemove]: CONTRACTS.ContractEvmSandboxStablesRemove,
   [MotionType.RccStethTopUp]: CONTRACTS.ContractRccStethTopUp,
   [MotionType.PmlStethTopUp]: CONTRACTS.ContractPmlStethTopUp,
   [MotionType.AtcStethTopUp]: CONTRACTS.ContractAtcStethTopUp,
@@ -97,6 +95,26 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractCuratedExitRequestHashesSubmit,
   [MotionType.SDVTExitRequestHashesSubmit]:
     CONTRACTS.ContractSDVTExitRequestHashesSubmit,
+  [MotionType.RegisterGroupsInOperatorGrid]:
+    CONTRACTS.ContractRegisterGroupsInOperatorGrid,
+  [MotionType.RegisterTiersInOperatorGrid]:
+    CONTRACTS.ContractRegisterTiersInOperatorGrid,
+  [MotionType.UpdateGroupsShareLimit]: CONTRACTS.ContractUpdateGroupsShareLimit,
+  [MotionType.AlterTiersInOperatorGrid]:
+    CONTRACTS.ContractAlterTiersInOperatorGrid,
+  [MotionType.SandboxStethTopUp]: CONTRACTS.ContractSandboxStethTopUp,
+  [MotionType.SandboxStethAdd]: CONTRACTS.ContractSandboxStethAdd,
+  [MotionType.SandboxStethRemove]: CONTRACTS.ContractSandboxStethRemove,
+  [MotionType.SetJailStatusInOperatorGrid]:
+    CONTRACTS.ContractSetJailStatusInOperatorGrid,
+  [MotionType.UpdateVaultsFeesInOperatorGrid]:
+    CONTRACTS.ContractUpdateVaultsFeesInOperatorGrid,
+  [MotionType.ForceValidatorExitsInVaultHub]:
+    CONTRACTS.ContractForceValidatorExitsInVaultHub,
+  [MotionType.SocializeBadDebtInVaultHub]:
+    CONTRACTS.ContractSocializeBadDebtInVaultHub,
+  [MotionType.SetLiabilitySharesTargetInVaultHub]:
+    CONTRACTS.ContractSetLiabilitySharesTargetInVaultHub,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

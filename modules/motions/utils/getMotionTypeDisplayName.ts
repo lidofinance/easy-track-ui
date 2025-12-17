@@ -49,6 +49,21 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.StonksStablesTopUp]: 'Top up stonks stablecoins',
   [MotionType.StonksStethTopUp]: 'Top up stonks stETH',
   [MotionType.AllianceOpsStablesTopUp]: 'Top up Alliance Ops stablecoins',
+  [MotionType.RegisterGroupsInOperatorGrid]: 'Register groups in Operator Grid',
+  [MotionType.RegisterTiersInOperatorGrid]: 'Register tiers in Operator Grid',
+  [MotionType.UpdateGroupsShareLimit]: 'Update groups share limit',
+  [MotionType.AlterTiersInOperatorGrid]: 'Alter tiers in Operator Grid',
+  [MotionType.SetJailStatusInOperatorGrid]: 'Set jail status in Operator Grid',
+  [MotionType.UpdateVaultsFeesInOperatorGrid]:
+    'Update vaults fees in Operator Grid',
+  [MotionType.ForceValidatorExitsInVaultHub]:
+    'Force validator exits in Vault Hub',
+  [MotionType.SocializeBadDebtInVaultHub]: 'Socialize bad debt in Vault Hub',
+  [MotionType.SetLiabilitySharesTargetInVaultHub]:
+    'Set liability shares target in Vault Hub',
+  [MotionType.SandboxStethTopUp]: 'Top up sandbox stETH',
+  [MotionType.SandboxStethAdd]: 'Add sandbox stETH recipient',
+  [MotionType.SandboxStethRemove]: 'Remove sandbox stETH recipient',
 
   [EvmUnrecognized]: 'Unrecognized evm factory',
 
@@ -72,8 +87,6 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.PmlDAITopUp]: 'Top up PML DAI',
   [MotionType.AtcDAITopUp]: 'Top up ATC DAI',
   [MotionType.SandboxStablesTopUp]: 'Top up sandbox stables',
-  [MotionType.SandboxStablesAdd]: 'Add sandbox stables recipient',
-  [MotionType.SandboxStablesRemove]: 'Remove sandbox stables recipient',
   [MotionType.LegoDAITopUp]: 'Top up LEGO DAI',
   [MotionType.SDVTTargetValidatorLimitsUpdateV1]:
     'Update target validator limits [deprecated]',

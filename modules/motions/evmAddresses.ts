@@ -126,6 +126,23 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0xB7668B5485d0f826B86a75b0115e088bB9ee03eE',
     [MotionType.CSMSetVettedGateTree]:
       '0xBc5642bDD6F2a54b01A75605aAe9143525D97308',
+
+    [MotionType.RegisterGroupsInOperatorGrid]:
+      '0x194A46DA1947E98c9D79af13E06Cfbee0D8610cC',
+    [MotionType.RegisterTiersInOperatorGrid]:
+      '0x5292A1284e4695B95C0840CF8ea25A818751C17F',
+    [MotionType.UpdateGroupsShareLimit]:
+      '0x8Bdc726a3147D8187820391D7c6F9F942606aEe6',
+    [MotionType.AlterTiersInOperatorGrid]:
+      '0xa29173C7BCf39dA48D5E404146A652d7464aee14',
+    [MotionType.SetJailStatusInOperatorGrid]:
+      '0x93F1DEE4473Ee9F42c8257C201e33a6Da30E5d67',
+    [MotionType.UpdateVaultsFeesInOperatorGrid]:
+      '0x5C3bDFa3E7f312d8cf72F56F2b797b026f6B471c',
+    [MotionType.ForceValidatorExitsInVaultHub]:
+      '0x6C968cD89CA358fbAf57B18e77a8973Fa869a6aA',
+    [MotionType.SocializeBadDebtInVaultHub]:
+      '0x1dF50522A1D868C12bF71747Bb6F24A18Fe6d32C',
   },
 
   // Goerli
@@ -249,10 +266,6 @@ export const EvmAddressesByChain: EvmAddresses = {
 
     [MotionType.SandboxNodeOperatorIncreaseLimit]:
       '0xbD37e55748c6f4Ece637AeD3e278e7575346B587',
-    [MotionType.SandboxStablesAdd]:
-      '0xB238fB1e7c8da5da022140dA956Fc3052808fC56',
-    [MotionType.SandboxStablesRemove]:
-      '0x51c730af05777c4D3CcC8c8B80558F4D155bb7BF',
     [MotionType.SandboxStablesTopUp]:
       '0x71bcEf1f4E4945005e1D22d68F02085D5167ab43',
     [MotionType.RccStethTopUp]: '0xe3bCa174A8b031C61a58aa56a0f622D4FFCA47d7',
@@ -344,12 +357,8 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SDVTExitRequestHashesSubmit]:
       '0xAa3D6A8B52447F272c1E8FAaA06EA06658bd95E2',
 
-    [MotionType.SandboxStablesAdd]:
-      '0x056561d0F1314CB3932180b3f0B3C03174F2642B',
-    [MotionType.SandboxStablesRemove]:
-      '0xc84251D2959E976AfE95201E1e2B88dB56Bc0a69',
     [MotionType.SandboxStablesTopUp]:
-      '0x4A7B898981182c42ecC9444Cd40Cf42CEB6b71Ab',
+      '0x9D735eeDfa96F53BF9d31DbE81B51a5d333198dB',
 
     [MotionType.MEVBoostRelaysAdd]:
       '0xF02DbeaA1Bbc90226CaB995db4C190DbE25983af',
@@ -357,6 +366,30 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x27A99a7104190DdA297B222104A6C70A4Ca5A17e',
     [MotionType.MEVBoostRelaysRemove]:
       '0x7FCc2901C6C3D62784cB178B14d44445B038f736',
+
+    [MotionType.RegisterGroupsInOperatorGrid]:
+      '0xfEF8B796Fea42b3C68E342364Adcf88F1d6145a6',
+    [MotionType.RegisterTiersInOperatorGrid]:
+      '0x4DF806111AC58e93d90E6D2fBE8522a76be6F499',
+    [MotionType.UpdateGroupsShareLimit]:
+      '0x56Ff87F41a8CF795764E15E496124240Ac17695b',
+    [MotionType.AlterTiersInOperatorGrid]:
+      '0xF21f98cac0Ba38f02b4d5be1667cc345929E8877',
+    [MotionType.SandboxStethTopUp]:
+      '0xE5aE943A3AEFA44AD16438Bc3D2cA7654103F985',
+    [MotionType.SandboxStethAdd]: '0x8f05Cc4cC42745E9723E105D38638683f162e1d9',
+    [MotionType.SandboxStethRemove]:
+      '0x86E10ffC7c67A92e0c5E58ae42945213da43D0c7',
+    [MotionType.SetJailStatusInOperatorGrid]:
+      '0x4e5b0187479854e88A5b18c49047636707a26f0d',
+    [MotionType.UpdateVaultsFeesInOperatorGrid]:
+      '0x615D3f028D1CA549d350403Cd6043Cb515BE08BF',
+    [MotionType.ForceValidatorExitsInVaultHub]:
+      '0x83DfE5Fe8ac8b7DB38c020F4F54BF09b65D92c63',
+    [MotionType.SocializeBadDebtInVaultHub]:
+      '0xa11906bBBBaC5207b8FDA4F7F294d7EcB8dcc758',
+    [MotionType.SetLiabilitySharesTargetInVaultHub]:
+      '0xc5dCd2A9642ceA9B71A632BF5b8ff52424Ea1B40',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',

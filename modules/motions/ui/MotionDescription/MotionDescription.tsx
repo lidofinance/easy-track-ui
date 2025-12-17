@@ -50,6 +50,15 @@ import { DescMEVBoostRelaysRemove } from './DescMEVBoostRelaysRemove'
 import { DescCSMSetVettedGateTree } from './DescCSMSetVettedGateTree'
 import { DescCuratedExitRequestHashesSubmit } from './DescCuratedExitRequestHashesSubmit'
 import { DescSDVTExitRequestHashesSubmit } from './DescSDVTExitRequestHashesSubmit'
+import { DescVaultsRegisterGroupsInOperatorGrid } from './DescVaultsRegisterGroupsInOperatorGrid'
+import { DescVaultsRegisterTiersInOperatorGrid } from './DescVaultsRegisterTiersInOperatorGrid'
+import { DescVaultsUpdateGroupsShareLimit } from './DescVaultsUpdateGroupsShareLimit'
+import { DescVaultsAlterTiersInOperatorGrid } from './DescVaultsAlterTiersInOperatorGrid'
+import { DescVaultsSetJailStatusInOperatorGrid } from './DescVaultsSetJailStatusInOperatorGrid'
+import { DescVaultsUpdateVaultsFeesInOperatorGrid } from './DescVaultsUpdateVaultsFeesInOperatorGrid'
+import { DescVaultsForceValidatorExitsInVaultHub } from './DescVaultsForceValidatorExitsInVaultHub'
+import { DescVaultsSocializeBadDebtInVaultHub } from './DescVaultsSocializeBadDebtInVaultHub'
+import { DescVaultsSetLiabilitySharesTargetInVaultHub } from './DescVaultsSetLiabilitySharesTargetInVaultHub'
 
 type DescWithLimitsProps = NestProps<
   TopUpWithLimitsAbi['decodeEVMScriptCallData']
@@ -260,20 +269,6 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.AtcStablesTopUp}
     />
   ),
-  [MotionType.SandboxStablesAdd]: (props: DescAllowedRecipientAddProps) => (
-    <DescAllowedRecipientAdd
-      {...props}
-      registryType={MotionType.SandboxStablesAdd}
-    />
-  ),
-  [MotionType.SandboxStablesRemove]: (
-    props: DescAllowedRecipientRemoveProps,
-  ) => (
-    <DescAllowedRecipientRemove
-      {...props}
-      registryType={MotionType.SandboxStablesRemove}
-    />
-  ),
   [MotionType.SandboxStablesTopUp]: (props: GenericDescProps) => (
     <DescTopUpWithLimitsAndCustomToken
       {...props}
@@ -345,6 +340,39 @@ const MOTION_DESCRIPTIONS = {
   [MotionType.CuratedExitRequestHashesSubmit]:
     DescCuratedExitRequestHashesSubmit,
   [MotionType.SDVTExitRequestHashesSubmit]: DescSDVTExitRequestHashesSubmit,
+  [MotionType.RegisterGroupsInOperatorGrid]:
+    DescVaultsRegisterGroupsInOperatorGrid,
+  [MotionType.RegisterTiersInOperatorGrid]:
+    DescVaultsRegisterTiersInOperatorGrid,
+  [MotionType.UpdateGroupsShareLimit]: DescVaultsUpdateGroupsShareLimit,
+  [MotionType.AlterTiersInOperatorGrid]: DescVaultsAlterTiersInOperatorGrid,
+  [MotionType.SetJailStatusInOperatorGrid]:
+    DescVaultsSetJailStatusInOperatorGrid,
+  [MotionType.UpdateVaultsFeesInOperatorGrid]:
+    DescVaultsUpdateVaultsFeesInOperatorGrid,
+  [MotionType.ForceValidatorExitsInVaultHub]:
+    DescVaultsForceValidatorExitsInVaultHub,
+  [MotionType.SocializeBadDebtInVaultHub]: DescVaultsSocializeBadDebtInVaultHub,
+  [MotionType.SetLiabilitySharesTargetInVaultHub]:
+    DescVaultsSetLiabilitySharesTargetInVaultHub,
+  [MotionType.SandboxStethTopUp]: (props: DescWithLimitsProps) => (
+    <DescTopUpWithLimits
+      {...props}
+      registryType={MotionType.SandboxStethTopUp}
+    />
+  ),
+  [MotionType.SandboxStethAdd]: (props: DescAllowedRecipientAddProps) => (
+    <DescAllowedRecipientAdd
+      {...props}
+      registryType={MotionType.SandboxStethAdd}
+    />
+  ),
+  [MotionType.SandboxStethRemove]: (props: DescAllowedRecipientRemoveProps) => (
+    <DescAllowedRecipientRemove
+      {...props}
+      registryType={MotionType.SandboxStethRemove}
+    />
+  ),
 } as const
 
 type Props = {

@@ -32,8 +32,9 @@ export const MotionTypeForms = {
   SandboxNodeOperatorIncreaseLimit: 'SandboxNodeOperatorIncreaseLimit',
 
   SandboxStablesTopUp: 'SandboxStablesTopUp',
-  SandboxStablesAdd: 'SandboxStablesAdd',
-  SandboxStablesRemove: 'SandboxStablesRemove',
+  SandboxStethTopUp: 'SandboxStethTopUp',
+  SandboxStethAdd: 'SandboxStethAdd',
+  SandboxStethRemove: 'SandboxStethRemove',
   LegoStablesTopUp: 'LegoStablesTopUp',
   StonksStethTopUp: 'StonksStethTopUp',
   StonksStablesTopUp: 'StonksStablesTopUp',
@@ -49,6 +50,17 @@ export const MotionTypeForms = {
   MEVBoostRelaysAdd: 'MEVBoostRelaysAdd',
   MEVBoostRelaysEdit: 'MEVBoostRelaysEdit',
   MEVBoostRelaysRemove: 'MEVBoostRelaysRemove',
+
+  // Lido Vaults
+  RegisterGroupsInOperatorGrid: 'RegisterGroupsInOperatorGrid',
+  RegisterTiersInOperatorGrid: 'RegisterTiersInOperatorGrid',
+  UpdateGroupsShareLimit: 'UpdateGroupsShareLimit',
+  AlterTiersInOperatorGrid: 'AlterTiersInOperatorGrid',
+  SetJailStatusInOperatorGrid: 'SetJailStatusInOperatorGrid',
+  UpdateVaultsFeesInOperatorGrid: 'UpdateVaultsFeesInOperatorGrid',
+  ForceValidatorExitsInVaultHub: 'ForceValidatorExitsInVaultHub',
+  SocializeBadDebtInVaultHub: 'SocializeBadDebtInVaultHub',
+  SetLiabilitySharesTargetInVaultHub: 'SetLiabilitySharesTargetInVaultHub',
 } as const
 // intentionally
 // eslint-disable-next-line @typescript-eslint/no-redeclare

@@ -20,6 +20,15 @@ import * as StartNewMEVBoostRelaysRemove from './StartNewMEVBoostRelaysRemove'
 import * as StartNewMEVBoostRelaysEdit from './StartNewMEVBoostRelaysEdit'
 import * as StartNewCSMSetVettedGateTree from './StartNewCSMSetVettedGateTree'
 import * as StartNewExitRequestHashesSubmit from './StartNewExitRequestHashesSubmit'
+import * as StartNewVaultsRegisterGroupsInOperatorGrid from './StartNewVaultsRegisterGroupsInOperatorGrid'
+import * as StartNewVaultsRegisterTiersInOperatorGrid from './StartNewVaultsRegisterTiersInOperatorGrid'
+import * as StartNewVaultsUpdateGroupsShareLimit from './StartNewVaultsUpdateGroupsShareLimit'
+import * as StartNewVaultsAlterTiersInOperatorGrid from './StartNewVaultsAlterTiersInOperatorGrid'
+import * as StartNewVaultsSetJailStatusInOperatorGrid from './StartNewVaultsSetJailStatusInOperatorGrid'
+import * as StartNewVaultsUpdateVaultsFeesInOperatorGrid from './StartNewVaultsUpdateVaultsFeesInOperatorGrid'
+import * as StartNewVaultForceValidatorExitsInVaultHub from './StartNewVaultForceValidatorExitsInVaultHub'
+import * as StartNewVaultsSocializeBadDebtInVaultHub from './StartNewVaultsSocializeBadDebtInVaultHub'
+import * as StartNewVaultsSetLiabilitySharesTargetInVaultHub from './StartNewVaultsSetLiabilitySharesTargetInVaultHub'
 
 export const formParts = {
   [MotionTypeForms.NodeOperatorIncreaseLimit]:
@@ -83,12 +92,6 @@ export const formParts = {
     StartNewNodeOperatorLimitIncrease.formParts({
       motionType: MotionTypeForms.SandboxNodeOperatorIncreaseLimit,
     }),
-  [MotionTypeForms.SandboxStablesAdd]: formAllowedRecipientAdd.formParts({
-    registryType: MotionTypeForms.SandboxStablesAdd,
-  }),
-  [MotionTypeForms.SandboxStablesRemove]: formAllowedRecipientRemove.formParts({
-    registryType: MotionTypeForms.SandboxStablesRemove,
-  }),
   [MotionTypeForms.SandboxStablesTopUp]:
     StartNewTopUpWithLimitsAndCustomToken.formParts({
       registryType: MotionTypeForms.SandboxStablesTopUp,
@@ -134,6 +137,33 @@ export const formParts = {
     StartNewExitRequestHashesSubmit.formParts('curated'),
   [MotionTypeForms.SDVTExitRequestHashesSubmit]:
     StartNewExitRequestHashesSubmit.formParts('sdvt'),
+  [MotionTypeForms.RegisterGroupsInOperatorGrid]:
+    StartNewVaultsRegisterGroupsInOperatorGrid.formParts,
+  [MotionTypeForms.RegisterTiersInOperatorGrid]:
+    StartNewVaultsRegisterTiersInOperatorGrid.formParts,
+  [MotionTypeForms.UpdateGroupsShareLimit]:
+    StartNewVaultsUpdateGroupsShareLimit.formParts,
+  [MotionTypeForms.AlterTiersInOperatorGrid]:
+    StartNewVaultsAlterTiersInOperatorGrid.formParts,
+  [MotionTypeForms.SetJailStatusInOperatorGrid]:
+    StartNewVaultsSetJailStatusInOperatorGrid.formParts,
+  [MotionTypeForms.UpdateVaultsFeesInOperatorGrid]:
+    StartNewVaultsUpdateVaultsFeesInOperatorGrid.formParts,
+  [MotionTypeForms.SandboxStethTopUp]: formAllowedRecipientTopUp.formParts({
+    registryType: MotionTypeForms.SandboxStethTopUp,
+  }),
+  [MotionTypeForms.SandboxStethAdd]: formAllowedRecipientAdd.formParts({
+    registryType: MotionTypeForms.SandboxStethAdd,
+  }),
+  [MotionTypeForms.SandboxStethRemove]: formAllowedRecipientRemove.formParts({
+    registryType: MotionTypeForms.SandboxStethRemove,
+  }),
+  [MotionTypeForms.ForceValidatorExitsInVaultHub]:
+    StartNewVaultForceValidatorExitsInVaultHub.formParts,
+  [MotionTypeForms.SocializeBadDebtInVaultHub]:
+    StartNewVaultsSocializeBadDebtInVaultHub.formParts,
+  [MotionTypeForms.SetLiabilitySharesTargetInVaultHub]:
+    StartNewVaultsSetLiabilitySharesTargetInVaultHub.formParts,
 } as const
 
 export type FormData = {

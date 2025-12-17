@@ -20,6 +20,8 @@ import { ResultTx } from 'modules/blockChain/types'
 import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
 import { MotionTypeForms } from 'modules/motions/types'
 import { validateMotionExtraData } from 'modules/motions/utils/onSubmitValidation'
+import { getLimitedJsonRpcBatchProvider } from 'modules/blockChain/utils/limitedJsonRpcBatchProvider'
+import { useConfig } from 'modules/config/hooks/useConfig'
 
 type Props = {
   onComplete: (tx: ResultTx) => void
@@ -27,6 +29,7 @@ type Props = {
 
 export function MotionFormStartNew({ onComplete }: Props) {
   const { chainId } = useWeb3()
+  const { getRpcUrl } = useConfig()
   const [isSubmitting, setSubmitting] = useState(false)
   const sendTransaction = useSendTransactionGnosisWorkaround()
 
@@ -68,9 +71,15 @@ export function MotionFormStartNew({ onComplete }: Props) {
           )
         }
 
+        const provider = getLimitedJsonRpcBatchProvider(
+          chainId,
+          getRpcUrl(chainId),
+        )
+
         const extraValidationError = await validateMotionExtraData(
           motionType,
           e[motionType],
+          { chainId, provider },
         )
 
         if (extraValidationError) {
@@ -93,7 +102,14 @@ export function MotionFormStartNew({ onComplete }: Props) {
         setSubmitting(false)
       }
     },
-    [formMethods, chainId, contractEasyTrack, sendTransaction, onComplete],
+    [
+      formMethods,
+      chainId,
+      contractEasyTrack,
+      sendTransaction,
+      onComplete,
+      getRpcUrl,
+    ],
   )
 
   const motionType = formMethods.watch('motionType')

@@ -4,18 +4,31 @@ import { withFormController } from 'modules/shared/hocs/withFormController'
 
 type Props = React.ComponentProps<typeof Input>
 
+const NUM_REGEX = /^-?(\d+\.?\d*|\d*\.\d+|\.)$/
+
 export const InputNumber = forwardRef<HTMLInputElement, Props>(
   ({ onChange, ...props }, ref) => {
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Prepend zero when user types just a dot symbol for "0."
-        if (e.currentTarget.value === '.') {
+        const value = e.currentTarget.value
+
+        if (value === '') {
+          onChange?.(e)
+          return
+        }
+
+        if (value === '.') {
           e.currentTarget.value = '0.'
           onChange?.(e)
           return
         }
 
-        if (isNaN(Number(e.target.value))) {
+        if (value.includes('-')) {
+          e.currentTarget.value = value.replaceAll('-', '')
+        }
+
+        // Validate the input matches numeric pattern
+        if (!NUM_REGEX.test(value)) {
           return
         }
 
