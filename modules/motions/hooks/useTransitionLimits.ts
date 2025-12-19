@@ -131,7 +131,7 @@ export const useTransitionLimits = () => {
           }
         }
       }
-      console.log('Transition limits:', limits)
+
       return limits
     },
     {
