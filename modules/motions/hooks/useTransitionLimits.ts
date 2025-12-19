@@ -91,7 +91,11 @@ export const useTransitionLimits = () => {
         const [argIndex, , value] = paramsArr[i]
 
         if (argIndex === TOKEN_ARG_INDEX) {
-          const tokenAddress: string = value.toHexString()
+          let tokenAddress: string = value.toHexString()
+          // Handle special case for zero address representation
+          if (tokenAddress === '0x00') {
+            tokenAddress = constants.AddressZero
+          }
           const limitParam = paramsArr[i + 1]
 
           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -115,11 +119,16 @@ export const useTransitionLimits = () => {
             }
           }
 
-          limits[utils.getAddress(tokenAddress)] = decodeLimit(
-            limitValue,
-            decimals,
-          )
-          i += 1 // Skip the next param as it's already processed
+          // Safe address getter
+          try {
+            limits[utils.getAddress(tokenAddress)] = decodeLimit(
+              limitValue,
+              decimals,
+            )
+            i += 1 // Skip the next param as it's already processed
+          } catch {
+            continue
+          }
         }
       }
 
