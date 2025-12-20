@@ -32,6 +32,11 @@
         "type": "address"
       },
       {
+        "internalType": "address",
+        "name": "oracleRouter_",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "orderDurationInSeconds_",
         "type": "uint256"
@@ -45,6 +50,16 @@
         "internalType": "uint256",
         "name": "priceToleranceInBasisPoints_",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxImprovementInBasisPoints_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowPartialFill_",
+        "type": "bool"
       }
     ],
     "stateMutability": "nonpayable",
@@ -54,7 +69,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "agent_",
+        "name": "agent",
         "type": "address"
       }
     ],
@@ -92,6 +107,17 @@
       }
     ],
     "name": "InvalidManagerAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "oracleRouter",
+        "type": "address"
+      }
+    ],
+    "name": "InvalidOracleRouterAddress",
     "type": "error"
   },
   {
@@ -219,6 +245,22 @@
     "type": "error"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "available",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "requested",
+        "type": "uint256"
+      }
+    ],
+    "name": "SellAmountExceedsBalance",
+    "type": "error"
+  },
+  {
     "inputs": [],
     "name": "TokensCannotBeSame",
     "type": "error"
@@ -255,25 +297,25 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_token",
+        "name": "token",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_recipient",
+        "name": "recipient",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -286,19 +328,19 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_token",
+        "name": "token",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_recipient",
+        "name": "recipient",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -311,19 +353,19 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_token",
+        "name": "token",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_tokenId",
+        "name": "tokenId",
         "type": "uint256"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_recipient",
+        "name": "recipient",
         "type": "address"
       }
     ],
@@ -336,13 +378,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_recipient",
+        "name": "recipient",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -373,6 +415,19 @@
       }
     ],
     "name": "MarginInBasisPointsSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oracleRouter",
+        "type": "address"
+      }
+    ],
+    "name": "OracleRouterSet",
     "type": "event"
   },
   {
@@ -474,6 +529,19 @@
   },
   {
     "inputs": [],
+    "name": "ALLOW_PARTIAL_FILL",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "AMOUNT_CONVERTER",
     "outputs": [
       {
@@ -487,12 +555,51 @@
   },
   {
     "inputs": [],
+    "name": "MARGIN_DIFFERENCE_IN_BASIS_POINTS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "MARGIN_IN_BASIS_POINTS",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_IMPROVEMENT_IN_BASIS_POINTS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ORACLE_ROUTER",
+    "outputs": [
+      {
+        "internalType": "contract IOracleRouter",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -564,6 +671,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "assertQuotable",
+    "outputs": [],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -585,6 +699,19 @@
   {
     "inputs": [],
     "name": "estimateTradeOutputFromCurrentBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMaxImprovementBps",
     "outputs": [
       {
         "internalType": "uint256",
@@ -653,6 +780,30 @@
       }
     ],
     "name": "placeOrder",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "sellAmount_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minBuyAmount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "placeOrderWithAmount",
     "outputs": [
       {
         "internalType": "address",

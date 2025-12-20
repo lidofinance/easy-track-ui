@@ -66,6 +66,7 @@ export const InputRow = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   flex-direction: column;
+  margin-top: 20px;
 `
 
 export const InfoValue = styled(Text).attrs({

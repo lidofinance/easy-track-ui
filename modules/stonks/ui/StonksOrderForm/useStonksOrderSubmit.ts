@@ -9,8 +9,9 @@ import { getErrorMessage } from 'modules/shared/utils/getErrorMessage'
 import { useState } from 'react'
 import { FormData } from './types'
 import { parseUnits } from 'ethers/lib/utils'
+import { StonksData } from 'modules/stonks/types'
 
-export function useStonksOrderSubmit() {
+export function useStonksOrderSubmit(stonksPairData: StonksData) {
   const { library } = useWeb3()
   const [isSubmitting, setSubmitting] = useState(false)
   const [resultTx, setResultTx] = useState<ResultTx | null>(null)
@@ -18,20 +19,38 @@ export function useStonksOrderSubmit() {
   const sendTransactionGnosisWorkaround = useSendTransactionGnosisWorkaround()
 
   const populatePlaceOrder = async (
-    stonksAddress: string,
-    minAcceptableAmount: BigNumber,
+    sellAmount: BigNumber,
+    minBuyAmount: BigNumber,
   ) => {
     if (!library) {
       throw new Error('Library not found')
     }
 
-    const stonksContract = StonksAbi__factory.connect(stonksAddress, library)
+    const stonksContract = StonksAbi__factory.connect(
+      stonksPairData.address,
+      library,
+    )
+    if (stonksPairData.version === 'v1') {
+      const gasLimit = await estimateGasFallback(
+        stonksContract.estimateGas.placeOrder(minBuyAmount),
+      )
+
+      const tx = await stonksContract.populateTransaction.placeOrder(
+        minBuyAmount,
+        {
+          gasLimit,
+        },
+      )
+      return tx
+    }
+
     const gasLimit = await estimateGasFallback(
-      stonksContract.estimateGas.placeOrder(minAcceptableAmount),
+      stonksContract.estimateGas.placeOrderWithAmount(sellAmount, minBuyAmount),
     )
 
-    const tx = await stonksContract.populateTransaction.placeOrder(
-      minAcceptableAmount,
+    const tx = await stonksContract.populateTransaction.placeOrderWithAmount(
+      sellAmount,
+      minBuyAmount,
       {
         gasLimit,
       },
@@ -43,11 +62,8 @@ export function useStonksOrderSubmit() {
     try {
       setSubmitting(true)
       const populatedTx = await populatePlaceOrder(
-        values.stonksAddress,
-        parseUnits(
-          values.minAcceptableAmount.toString(),
-          BigInt(values.tokenToDecimals),
-        ),
+        parseUnits(values.sellAmount, stonksPairData.tokenTo.decimals),
+        parseUnits(values.minBuyAmount, stonksPairData.tokenTo.decimals),
       )
       const res = await sendTransactionGnosisWorkaround(populatedTx)
       setResultTx(res)
