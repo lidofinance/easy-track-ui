@@ -368,26 +368,26 @@ export const EvmAddressesByChain: EvmAddresses = {
       '0x7FCc2901C6C3D62784cB178B14d44445B038f736',
 
     [MotionType.RegisterGroupsInOperatorGrid]:
-      '0xfEF8B796Fea42b3C68E342364Adcf88F1d6145a6',
+      '0x6e8D6e23A46AD61967CDD5C220B67645F46A2D7c',
     [MotionType.RegisterTiersInOperatorGrid]:
       '0x4DF806111AC58e93d90E6D2fBE8522a76be6F499',
     [MotionType.UpdateGroupsShareLimit]:
-      '0x56Ff87F41a8CF795764E15E496124240Ac17695b',
+      '0x99a645A4137ea171Ce4D43c22d30A71251D6Ed7d',
     [MotionType.AlterTiersInOperatorGrid]:
-      '0xF21f98cac0Ba38f02b4d5be1667cc345929E8877',
+      '0x1e71B8E60e0491A212999f3104A06913b77f438e',
     [MotionType.SandboxStethTopUp]:
       '0xE5aE943A3AEFA44AD16438Bc3D2cA7654103F985',
     [MotionType.SandboxStethAdd]: '0x8f05Cc4cC42745E9723E105D38638683f162e1d9',
     [MotionType.SandboxStethRemove]:
       '0x86E10ffC7c67A92e0c5E58ae42945213da43D0c7',
     [MotionType.SetJailStatusInOperatorGrid]:
-      '0x4e5b0187479854e88A5b18c49047636707a26f0d',
+      '0x395E6AF61B6Ba3EC0E72E168A2Ec8204589F357c',
     [MotionType.UpdateVaultsFeesInOperatorGrid]:
-      '0x615D3f028D1CA549d350403Cd6043Cb515BE08BF',
+      '0x2D5b8B082d618A8d5DeFE3f4c2b2869e3f1C1a3D',
     [MotionType.ForceValidatorExitsInVaultHub]:
-      '0x83DfE5Fe8ac8b7DB38c020F4F54BF09b65D92c63',
+      '0x820e9924C2059d37871acd6eccB578e4a3B15c30',
     [MotionType.SocializeBadDebtInVaultHub]:
-      '0xa11906bBBBaC5207b8FDA4F7F294d7EcB8dcc758',
+      '0x01C9dB53D7a87c3e47D537c925921fB735bEe6c9',
     [MotionType.SetLiabilitySharesTargetInVaultHub]:
       '0xc5dCd2A9642ceA9B71A632BF5b8ff52424Ea1B40',
 
