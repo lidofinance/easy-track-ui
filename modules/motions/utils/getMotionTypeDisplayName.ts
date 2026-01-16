@@ -96,6 +96,20 @@ export const MotionTypeDisplayNames: Record<
   [MotionType.RccStethTopUp]: 'Top up RCC stETH',
   [MotionType.PmlStethTopUp]: 'Top up PML stETH',
   [MotionType.AtcStethTopUp]: 'Top up ATC stETH',
+  [MotionType.RegisterGroupsInOperatorGridPhaseOne]:
+    'Register groups in Operator Grid (Phase I)',
+  [MotionType.UpdateGroupsShareLimitPhaseOne]:
+    'Update groups share limit (Phase I)',
+  [MotionType.AlterTiersInOperatorGridPhaseOne]:
+    'Alter tiers in Operator Grid (Phase I)',
+  [MotionType.SetJailStatusInOperatorGridPhaseOne]:
+    'Set jail status in Operator Grid (Phase I)',
+  [MotionType.UpdateVaultsFeesInOperatorGridPhaseOne]:
+    'Update vaults fees in Operator Grid (Phase I)',
+  [MotionType.ForceValidatorExitsInVaultHubPhaseOne]:
+    'Force validator exits in Vault Hub (Phase I)',
+  [MotionType.SocializeBadDebtInVaultHubPhaseOne]:
+    'Socialize bad debt in Vault Hub (Phase I)',
 } as const
 
 export function getMotionTypeDisplayName(

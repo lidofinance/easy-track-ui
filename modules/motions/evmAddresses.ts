@@ -423,6 +423,20 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.RccStablesTopUp]: '',
     [MotionType.PmlStablesTopUp]: '',
     [MotionType.AtcStablesTopUp]: '',
+    [MotionType.RegisterGroupsInOperatorGridPhaseOne]:
+      '0xfEF8B796Fea42b3C68E342364Adcf88F1d6145a6',
+    [MotionType.UpdateGroupsShareLimitPhaseOne]:
+      '0x56Ff87F41a8CF795764E15E496124240Ac17695b',
+    [MotionType.AlterTiersInOperatorGridPhaseOne]:
+      '0xF21f98cac0Ba38f02b4d5be1667cc345929E8877',
+    [MotionType.SetJailStatusInOperatorGridPhaseOne]:
+      '0x4e5b0187479854e88A5b18c49047636707a26f0d',
+    [MotionType.UpdateVaultsFeesInOperatorGridPhaseOne]:
+      '0x615D3f028D1CA549d350403Cd6043Cb515BE08BF',
+    [MotionType.ForceValidatorExitsInVaultHubPhaseOne]:
+      '0x83DfE5Fe8ac8b7DB38c020F4F54BF09b65D92c63',
+    [MotionType.SocializeBadDebtInVaultHubPhaseOne]:
+      '0xa11906bBBBaC5207b8FDA4F7F294d7EcB8dcc758',
   },
 }
 

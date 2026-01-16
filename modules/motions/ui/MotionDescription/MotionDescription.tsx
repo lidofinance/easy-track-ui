@@ -373,6 +373,19 @@ const MOTION_DESCRIPTIONS = {
       registryType={MotionType.SandboxStethRemove}
     />
   ),
+  [MotionType.RegisterGroupsInOperatorGridPhaseOne]:
+    DescVaultsRegisterGroupsInOperatorGrid,
+  [MotionType.UpdateGroupsShareLimitPhaseOne]: DescVaultsUpdateGroupsShareLimit,
+  [MotionType.AlterTiersInOperatorGridPhaseOne]:
+    DescVaultsAlterTiersInOperatorGrid,
+  [MotionType.SetJailStatusInOperatorGridPhaseOne]:
+    DescVaultsSetJailStatusInOperatorGrid,
+  [MotionType.UpdateVaultsFeesInOperatorGridPhaseOne]:
+    DescVaultsUpdateVaultsFeesInOperatorGrid,
+  [MotionType.ForceValidatorExitsInVaultHubPhaseOne]:
+    DescVaultsForceValidatorExitsInVaultHub,
+  [MotionType.SocializeBadDebtInVaultHubPhaseOne]:
+    DescVaultsSocializeBadDebtInVaultHub,
 } as const
 
 type Props = {
