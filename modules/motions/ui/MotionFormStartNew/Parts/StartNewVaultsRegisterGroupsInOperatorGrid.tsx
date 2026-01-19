@@ -32,6 +32,7 @@ import { InputControl } from 'modules/shared/ui/Controls/Input'
 import { validateAddress } from 'modules/motions/utils/validateAddress'
 import { PredefinedGroupParamsPicker } from 'modules/vaults/ui/PredefinedGroupParamsPicker'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
+import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
 
 export const formParts = createMotionFormPart({
   motionType: MotionType.RegisterGroupsInOperatorGrid,
@@ -103,6 +104,8 @@ export const formParts = createMotionFormPart({
       initialLoading: isOperatorGridInfoLoading,
     } = useOperatorGridInfo()
 
+    const { getOperatorGridGroup } = useOperatorGridGroupMap()
+
     const groupsFieldArray = useFieldArray({ name: fieldNames.groups })
 
     const { watch } = useFormContext()
@@ -153,7 +156,7 @@ export const formParts = createMotionFormPart({
                     label="Node operator address"
                     rules={{
                       required: 'Field is required',
-                      validate: value => {
+                      validate: async value => {
                         const addressErr = validateAddress(value)
                         if (addressErr) {
                           return addressErr
@@ -173,6 +176,14 @@ export const formParts = createMotionFormPart({
 
                         if (addressInGroupInputIndex !== -1) {
                           return 'Address is already in use by another group within the motion'
+                        }
+
+                        const groupData = await getOperatorGridGroup(
+                          lowerAddress,
+                        )
+
+                        if (groupData) {
+                          return 'Address is already registered in Operator Grid'
                         }
 
                         return true

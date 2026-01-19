@@ -115,6 +115,20 @@ export const EVM_CONTRACTS = {
     CONTRACTS.ContractSocializeBadDebtInVaultHub,
   [MotionType.SetLiabilitySharesTargetInVaultHub]:
     CONTRACTS.ContractSetLiabilitySharesTargetInVaultHub,
+  [MotionType.RegisterGroupsInOperatorGridPhaseOne]:
+    CONTRACTS.ContractRegisterGroupsInOperatorGrid,
+  [MotionType.UpdateGroupsShareLimitPhaseOne]:
+    CONTRACTS.ContractUpdateGroupsShareLimit,
+  [MotionType.AlterTiersInOperatorGridPhaseOne]:
+    CONTRACTS.ContractAlterTiersInOperatorGrid,
+  [MotionType.SetJailStatusInOperatorGridPhaseOne]:
+    CONTRACTS.ContractSetJailStatusInOperatorGrid,
+  [MotionType.UpdateVaultsFeesInOperatorGridPhaseOne]:
+    CONTRACTS.ContractUpdateVaultsFeesInOperatorGrid,
+  [MotionType.ForceValidatorExitsInVaultHubPhaseOne]:
+    CONTRACTS.ContractForceValidatorExitsInVaultHub,
+  [MotionType.SocializeBadDebtInVaultHubPhaseOne]:
+    CONTRACTS.ContractSocializeBadDebtInVaultHub,
 } as const
 
 export function useContractEvmScript<T extends MotionType | EvmUnrecognized>(

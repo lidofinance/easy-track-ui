@@ -108,6 +108,11 @@ export const formParts = createMotionFormPart({
                   vaultsFieldName={fieldNames.vaults}
                   fieldIndex={fieldIndex}
                   getVaultData={getVaultData}
+                  extraValidateFn={vaultData => {
+                    if (vaultData.isPendingDisconnect) {
+                      return 'Vault is pending disconnect in the Operator Grid'
+                    }
+                  }}
                 />
               </Fieldset>
 
