@@ -291,8 +291,8 @@ export const SandboxAllowedRecipientsRegistry: ChainAddressMap = {
 }
 
 export const VaultsAdapter: ChainAddressMap = {
-  [CHAINS.Mainnet]: '0xe2DE6d2DefF15588a71849c0429101F8ca9FB14D',
-  [CHAINS.Hoodi]: '0xbc2bb8310730f3d2b514cb26f7e0a8776de879ac',
+  [CHAINS.Mainnet]: '0x28F9Ac198C4E0FA6A9Ad2c2f97CB38F1A3120f27',
+  [CHAINS.Hoodi]: '0x854CF0D7446Faa7AdDFE557cc8aa9FA9b7017910',
 }
 
 export const VaultHub: ChainAddressMap = {
