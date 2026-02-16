@@ -39,7 +39,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
   [CHAINS.Hoodi]: [
     {
       label: 'Basic',
-      groupShareLimit: 42725,
+      shareLimit: 42725,
       tiers: [
         {
           shareLimit: 2375,
@@ -70,7 +70,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
     },
     {
       label: 'Professional',
-      groupShareLimit: 44813,
+      shareLimit: 44813,
       tiers: [
         {
           shareLimit: 2413,
@@ -101,7 +101,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
     },
     {
       label: 'Professional Trusted',
-      groupShareLimit: 46488,
+      shareLimit: 46488,
       tiers: [
         {
           shareLimit: 2438,
@@ -132,7 +132,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
     },
     {
       label: 'DVT Cluster',
-      groupShareLimit: 48450,
+      shareLimit: 48450,
       tiers: [
         {
           shareLimit: 2450,
@@ -164,71 +164,128 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
   ],
   [CHAINS.Mainnet]: [
     {
-      label: 'Basic — Phase I',
-      groupShareLimit: 38849,
+      label: 'Basic — Phase III',
+      shareLimit: 696836,
       tiers: [
         {
-          shareLimit: 38849,
+          shareLimit: 38736,
           reserveRatioBP: 500,
           forcedRebalanceThresholdBP: 475,
         },
-      ],
-    },
-    {
-      label: 'Professional — Phase I',
-      groupShareLimit: 39463,
-      tiers: [
         {
-          shareLimit: 39463,
-          reserveRatioBP: 350,
-          forcedRebalanceThresholdBP: 325,
+          shareLimit: 38328,
+          reserveRatioBP: 600,
+          forcedRebalanceThresholdBP: 575,
+        },
+        {
+          shareLimit: 148419,
+          reserveRatioBP: 900,
+          forcedRebalanceThresholdBP: 875,
+        },
+        {
+          shareLimit: 210396,
+          reserveRatioBP: 1400,
+          forcedRebalanceThresholdBP: 1375,
+        },
+        {
+          shareLimit: 260957,
+          reserveRatioBP: 2000,
+          forcedRebalanceThresholdBP: 1975,
         },
       ],
-    },
-    {
-      label: 'Professional Trusted — Phase I',
-      groupShareLimit: 39872,
-      tiers: [
-        {
-          shareLimit: 39872,
-          reserveRatioBP: 250,
-          forcedRebalanceThresholdBP: 225,
-        },
-      ],
-    },
-    {
-      label: 'DVT Cluster — Phase I',
-      groupShareLimit: 40076,
-      tiers: [
-        {
-          shareLimit: 40076,
-          reserveRatioBP: 200,
-          forcedRebalanceThresholdBP: 175,
-        },
-      ],
-    },
-  ],
-}
-
-export const PREDEFINED_GROUP_SHARE_LIMITS_MAP: Partial<
-  Record<CHAINS, { label: string; groupShareLimit: number }[]>
-> = {
-  [CHAINS.Mainnet]: [
-    {
-      label: 'Basic — Phase III',
-      groupShareLimit: 696836,
     },
     {
       label: 'Professional — Phase III',
-      groupShareLimit: 730882,
+      shareLimit: 730881,
+      tiers: [
+        {
+          shareLimit: 39347,
+          reserveRatioBP: 350,
+          forcedRebalanceThresholdBP: 325,
+        },
+        {
+          shareLimit: 39143,
+          reserveRatioBP: 400,
+          forcedRebalanceThresholdBP: 375,
+        },
+        {
+          shareLimit: 153312,
+          reserveRatioBP: 600,
+          forcedRebalanceThresholdBP: 575,
+        },
+        {
+          shareLimit: 220182,
+          reserveRatioBP: 1000,
+          forcedRebalanceThresholdBP: 975,
+        },
+        {
+          shareLimit: 278897,
+          reserveRatioBP: 1450,
+          forcedRebalanceThresholdBP: 1425,
+        },
+      ],
     },
     {
       label: 'Professional Trusted — Phase III',
-      groupShareLimit: 758201,
+      shareLimit: 758201,
+      tiers: [
+        {
+          shareLimit: 39755,
+          reserveRatioBP: 250,
+          forcedRebalanceThresholdBP: 225,
+        },
+        {
+          shareLimit: 39551,
+          reserveRatioBP: 300,
+          forcedRebalanceThresholdBP: 275,
+        },
+        {
+          shareLimit: 156574,
+          reserveRatioBP: 400,
+          forcedRebalanceThresholdBP: 375,
+        },
+        {
+          shareLimit: 228745,
+          reserveRatioBP: 650,
+          forcedRebalanceThresholdBP: 625,
+        },
+        {
+          shareLimit: 293576,
+          reserveRatioBP: 1000,
+          forcedRebalanceThresholdBP: 975,
+        },
+      ],
     },
     {
       label: 'DVT Cluster — Phase III',
-      groupShareLimit: 790209,
+      shareLimit: 790209,
+      tiers: [
+        {
+          shareLimit: 39959,
+          reserveRatioBP: 200,
+          forcedRebalanceThresholdBP: 175,
+        },
+        {
+          shareLimit: 39959,
+          reserveRatioBP: 200,
+          forcedRebalanceThresholdBP: 175,
+        },
+        {
+          shareLimit: 159836,
+          reserveRatioBP: 200,
+          forcedRebalanceThresholdBP: 175,
+        },
+        {
+          shareLimit: 237307,
+          reserveRatioBP: 300,
+          forcedRebalanceThresholdBP: 275,
+        },
+        {
+          shareLimit: 313148,
+          reserveRatioBP: 400,
+          forcedRebalanceThresholdBP: 375,
+        },
+      ],
     },
   ],
 }

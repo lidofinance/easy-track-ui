@@ -21,7 +21,11 @@ import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { InputNumberControl } from 'modules/shared/ui/Controls/InputNumber'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { DEFAULT_TIER_OPERATOR, EMPTY_GROUP } from 'modules/vaults/constants'
+import {
+  DEFAULT_TIER_OPERATOR,
+  EMPTY_GROUP,
+  PREDEFINED_CONSTANT_TIER_PARAMS,
+} from 'modules/vaults/constants'
 import { GridGroup } from 'modules/vaults/types'
 import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { formatVaultParam } from 'modules/vaults/utils/formatVaultParam'
@@ -108,7 +112,7 @@ export const formParts = createMotionFormPart({
 
     const groupsFieldArray = useFieldArray({ name: fieldNames.groups })
 
-    const { watch } = useFormContext()
+    const { watch, getValues } = useFormContext()
     const groupsInput: GridGroup[] = watch(fieldNames.groups)
 
     const groupsShareLimitsSum = groupsInput.map(group => {
@@ -193,9 +197,26 @@ export const formParts = createMotionFormPart({
                 </Fieldset>
 
                 <PredefinedGroupParamsPicker
-                  groupsArrayFieldName={fieldNames.groups}
-                  groupIndex={groupIndex}
-                  onUpdate={groupsFieldArray.update}
+                  onSelect={groupOption => {
+                    groupsFieldArray.update(groupIndex, {
+                      nodeOperator: getValues(
+                        `${fieldNames.groups}.${groupIndex}.nodeOperator`,
+                      ),
+                      shareLimit: groupOption.shareLimit.toString(),
+                      tiers: groupOption.tiers.map(tier => ({
+                        shareLimit: tier.shareLimit.toString(),
+                        reserveRatioBP: tier.reserveRatioBP.toString(),
+                        forcedRebalanceThresholdBP:
+                          tier.forcedRebalanceThresholdBP.toString(),
+                        infraFeeBP:
+                          PREDEFINED_CONSTANT_TIER_PARAMS.infraFeeBP.toString(),
+                        liquidityFeeBP:
+                          PREDEFINED_CONSTANT_TIER_PARAMS.liquidityFeeBP.toString(),
+                        reservationFeeBP:
+                          PREDEFINED_CONSTANT_TIER_PARAMS.reservationFeeBP.toString(),
+                      })),
+                    })
+                  }}
                 />
 
                 <Fieldset>
