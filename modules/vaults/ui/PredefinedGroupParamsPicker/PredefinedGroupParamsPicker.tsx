@@ -1,12 +1,11 @@
-import { Button } from '@lidofinance/lido-ui'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
-import { Text } from 'modules/shared/ui/Common/Text'
 import { useFormContext } from 'react-hook-form'
 import {
   PREDEFINED_CONSTANT_TIER_PARAMS,
   PREDEFINED_GROUP_SETUPS_MAP,
-} from '../../constants'
-import { ButtonsWrap, Wrap } from './PredefinedGroupParamsPickerStyle'
+} from 'modules/vaults/constants'
+import { PredefinedParamsPicker } from '../PredefinedParamsPicker'
+import { PredefinedGroupSetup } from 'modules/vaults/types'
 
 type Props = {
   groupsArrayFieldName: string
@@ -22,15 +21,7 @@ export const PredefinedGroupParamsPicker = ({
   const { chainId } = useWeb3()
   const { getValues } = useFormContext()
 
-  const predefinedGroups = PREDEFINED_GROUP_SETUPS_MAP[chainId]
-
-  if (!predefinedGroups?.length) {
-    return null
-  }
-
-  const handleGroupClick = (index: number) => {
-    const predefinedGroup = predefinedGroups[index]
-
+  const handleOptionClick = (predefinedGroup: PredefinedGroupSetup) => {
     onUpdate(groupIndex, {
       nodeOperator: getValues(
         `${groupsArrayFieldName}.${groupIndex}.nodeOperator`,
@@ -50,21 +41,10 @@ export const PredefinedGroupParamsPicker = ({
   }
 
   return (
-    <Wrap>
-      <Text size={14}>Predefined group setups</Text>
-      <ButtonsWrap>
-        {predefinedGroups.map((group, index) => (
-          <Button
-            variant="outlined"
-            key={index}
-            size="xs"
-            type="button"
-            onClick={() => handleGroupClick(index)}
-          >
-            {group.label}
-          </Button>
-        ))}
-      </ButtonsWrap>
-    </Wrap>
+    <PredefinedParamsPicker
+      title="Predefined group setups"
+      options={PREDEFINED_GROUP_SETUPS_MAP[chainId]}
+      onSelect={handleOptionClick}
+    />
   )
 }

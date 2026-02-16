@@ -209,3 +209,26 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
     },
   ],
 }
+
+export const PREDEFINED_GROUP_SHARE_LIMITS_MAP: Partial<
+  Record<CHAINS, { label: string; groupShareLimit: number }[]>
+> = {
+  [CHAINS.Mainnet]: [
+    {
+      label: 'Basic — Phase III',
+      groupShareLimit: 696836,
+    },
+    {
+      label: 'Professional — Phase III',
+      groupShareLimit: 730882,
+    },
+    {
+      label: 'Professional Trusted — Phase III',
+      groupShareLimit: 758201,
+    },
+    {
+      label: 'DVT Cluster — Phase III',
+      groupShareLimit: 790209,
+    },
+  ],
+}
