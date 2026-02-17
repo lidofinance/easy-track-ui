@@ -38,9 +38,13 @@ export const OperatorGridEditTiersFieldsWrapper = ({
     name: tierArrayFieldName,
   })
 
-  const selectedTiers: TierInput[] = useWatch({ name: tierArrayFieldName })
+  const selectedTiers: TierInput[] = useWatch({
+    name: tierArrayFieldName,
+    defaultValue: [],
+  })
 
-  const handleAddTier = () => tiersFieldArray.append({ ...EMPTY_TIER })
+  const handleAddTier = () =>
+    tiersFieldArray.append({ tierId: '', ...EMPTY_TIER })
 
   const getFilteredTierIdOptions = (tierIndex: number) => {
     if (!Array.isArray(currentTierIds)) {

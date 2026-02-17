@@ -115,7 +115,7 @@ export const formParts = createMotionFormPart({
     const handleAddTier = () =>
       groupsFieldArray.append({
         nodeOperator: '',
-        tiers: [{ ...EMPTY_TIER }],
+        tiers: [{ tierId: '', ...EMPTY_TIER }],
       } as TierInput)
 
     if (isFactoryDataLoading || isOperatorGridLoading) {
