@@ -31,7 +31,7 @@ export type Group = Awaited<ReturnType<OperatorGridAbi['group']>>
 
 export type PredefinedGroupSetup = {
   label: string
-  groupShareLimit: number
+  shareLimit: number
   tiers: PredefinedTierParams[]
 }
 

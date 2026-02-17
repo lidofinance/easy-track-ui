@@ -29,6 +29,7 @@ import { validateEtherValue } from 'modules/motions/utils/validateEtherValue'
 import { MotionInfoBox } from 'modules/shared/ui/Common/MotionInfoBox'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { OperatorGridAddressInputControl } from 'modules/vaults/ui/OperatorGridAddressInputControl'
+import { PredefinedGroupParamsPicker } from 'modules/vaults/ui/PredefinedGroupParamsPicker'
 
 type GroupInput = Omit<GridGroup, 'tiers'>
 
@@ -82,7 +83,7 @@ export const formParts = createMotionFormPart({
 
     const groupsFieldArray = useFieldArray({ name: fieldNames.groups })
 
-    const { watch } = useFormContext()
+    const { watch, setValue } = useFormContext()
     const groupsInput: GridGroup[] = watch(fieldNames.groups)
 
     const handleAddGroup = () =>
@@ -139,6 +140,18 @@ export const formParts = createMotionFormPart({
                     ) : null}
                   </MotionInfoBox>
                 ) : null}
+
+                <PredefinedGroupParamsPicker
+                  onSelect={groupOption => {
+                    setValue(
+                      `${fieldNames.groups}.${groupIndex}.shareLimit`,
+                      groupOption.shareLimit.toString(),
+                      {
+                        shouldValidate: true,
+                      },
+                    )
+                  }}
+                />
 
                 <Fieldset>
                   <InputNumberControl

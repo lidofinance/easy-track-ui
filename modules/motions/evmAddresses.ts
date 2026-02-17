@@ -404,7 +404,7 @@ export const EvmAddressesByChain: EvmAddresses = {
     [MotionType.SocializeBadDebtInVaultHub]:
       '0x01C9dB53D7a87c3e47D537c925921fB735bEe6c9',
     [MotionType.SetLiabilitySharesTargetInVaultHub]:
-      '0xc5dCd2A9642ceA9B71A632BF5b8ff52424Ea1B40',
+      '0xaccaE3755d63EeaAF2e525E780aEeA8D58700Ab9',
 
     [MotionType.StonksStethTopUp]: '',
     [MotionType.StonksStablesTopUp]: '',
