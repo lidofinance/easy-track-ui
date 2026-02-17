@@ -174,7 +174,7 @@ export const formParts = createMotionFormPart({
                   />
                 </Fieldset>
 
-                {groupData?.tierIds.length && (
+                {!!groupData?.tierIds && (
                   <>
                     <PredefinedGroupParamsPicker
                       title={`Predefined tier setups (for up to 5 tiers)`}
