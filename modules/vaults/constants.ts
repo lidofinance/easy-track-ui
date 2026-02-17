@@ -164,7 +164,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
   ],
   [CHAINS.Mainnet]: [
     {
-      label: 'Basic — Phase III',
+      label: 'Basic',
       shareLimit: 695695,
       tiers: [
         {
@@ -195,7 +195,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
       ],
     },
     {
-      label: 'Professional — Phase III',
+      label: 'Professional',
       shareLimit: 729686,
       tiers: [
         {
@@ -226,7 +226,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
       ],
     },
     {
-      label: 'Professional Trusted — Phase III',
+      label: 'Professional Trusted',
       shareLimit: 756962,
       tiers: [
         {
@@ -257,7 +257,7 @@ export const PREDEFINED_GROUP_SETUPS_MAP: Partial<
       ],
     },
     {
-      label: 'DVT Cluster — Phase III',
+      label: 'DVT Cluster',
       shareLimit: 788918,
       tiers: [
         {

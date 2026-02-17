@@ -6,10 +6,16 @@ import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { PREDEFINED_GROUP_SETUPS_MAP } from 'modules/vaults/constants'
 
 type Props = {
+  title?: string
+  upgradeMode?: boolean
   onSelect: (option: PredefinedGroupSetup) => void
 }
 
-export const PredefinedGroupParamsPicker = ({ onSelect }: Props) => {
+export const PredefinedGroupParamsPicker = ({
+  title,
+  upgradeMode,
+  onSelect,
+}: Props) => {
   const { chainId } = useWeb3()
 
   const options = PREDEFINED_GROUP_SETUPS_MAP[chainId]
@@ -20,7 +26,7 @@ export const PredefinedGroupParamsPicker = ({ onSelect }: Props) => {
 
   return (
     <Wrap>
-      <Text size={14}>Predefined group setups</Text>
+      <Text size={14}>{title ?? 'Predefined group setups'}</Text>
       <ButtonsWrap>
         {options.map((option, index) => (
           <Button
@@ -30,6 +36,7 @@ export const PredefinedGroupParamsPicker = ({ onSelect }: Props) => {
             type="button"
             onClick={() => onSelect(option)}
           >
+            {upgradeMode ? 'Upgrade to ' : ''}
             {option.label}
           </Button>
         ))}
