@@ -20,10 +20,14 @@ import { MotionType } from 'modules/motions/types'
 import { createMotionFormPart } from './createMotionFormPart'
 import { estimateGasFallback } from 'modules/motions/utils'
 import { useOperatorGridGroupMap } from 'modules/vaults/hooks/useOperatorGridGroupMap'
-import { EMPTY_TIER } from 'modules/vaults/constants'
+import {
+  EMPTY_TIER,
+  PREDEFINED_CONSTANT_TIER_PARAMS,
+} from 'modules/vaults/constants'
 import { OperatorGridAddTiersFieldsWrapper } from 'modules/vaults/ui/OperatorGridAddTiersFieldsWrapper'
 import { GridGroup } from 'modules/vaults/types'
 import { OperatorGridAddressInputControl } from 'modules/vaults/ui/OperatorGridAddressInputControl'
+import { PredefinedGroupParamsPicker } from 'modules/vaults/ui/PredefinedGroupParamsPicker'
 
 type GroupInput = Omit<GridGroup, 'shareLimit'>
 
@@ -73,7 +77,7 @@ export const formParts = createMotionFormPart({
     )
 
     const groupsFieldArray = useFieldArray({ name: fieldNames.groups })
-    const { watch } = useFormContext()
+    const { watch, getValues } = useFormContext()
     const groupsInput: GroupInput[] = watch(fieldNames.groups)
 
     const handleAddGroup = () =>
@@ -116,6 +120,31 @@ export const formParts = createMotionFormPart({
                     allowDefaultOperatorAddress={false}
                   />
                 </Fieldset>
+
+                <PredefinedGroupParamsPicker
+                  onSelect={groupOption => {
+                    // For phase III we need to add all tiers except first one, which was added in Phase I
+                    const tiersToAdd = groupOption.tiers.slice(1)
+
+                    groupsFieldArray.update(groupIndex, {
+                      nodeOperator: getValues(
+                        `${fieldNames.groups}.${groupIndex}.nodeOperator`,
+                      ),
+                      tiers: tiersToAdd.map(tier => ({
+                        shareLimit: tier.shareLimit.toString(),
+                        reserveRatioBP: tier.reserveRatioBP.toString(),
+                        forcedRebalanceThresholdBP:
+                          tier.forcedRebalanceThresholdBP.toString(),
+                        infraFeeBP:
+                          PREDEFINED_CONSTANT_TIER_PARAMS.infraFeeBP.toString(),
+                        liquidityFeeBP:
+                          PREDEFINED_CONSTANT_TIER_PARAMS.liquidityFeeBP.toString(),
+                        reservationFeeBP:
+                          PREDEFINED_CONSTANT_TIER_PARAMS.reservationFeeBP.toString(),
+                      })),
+                    })
+                  }}
+                />
 
                 <OperatorGridAddTiersFieldsWrapper
                   tierArrayFieldName={`${fieldNames.groups}.${groupIndex}.tiers`}
