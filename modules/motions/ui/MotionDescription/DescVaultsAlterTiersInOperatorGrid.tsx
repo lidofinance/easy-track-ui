@@ -7,6 +7,7 @@ import { useShareRate } from 'modules/vaults/hooks/useShareRate'
 import { renderVaultParamUpdate } from 'modules/vaults/utils/renderVaultParamUpdate'
 import React from 'react'
 import { NestProps } from './types'
+import { Text } from 'modules/shared/ui/Common/Text'
 
 // Copies of original types without array part
 type TierParamsStructOutputCopy = {
@@ -88,7 +89,10 @@ export function DescVaultsAlterTiersInOperatorGrid({
               <br />
               {tiers.map((tier, index) => (
                 <React.Fragment key={index}>
-                  <span>Tier with global tierId {tier.tierId.toString()}:</span>
+                  <Text size={12} weight={800}>
+                    <br />
+                    Tier with global tierId {tier.tierId.toString()}:
+                  </Text>
                   <ul>
                     <li>
                       <b>Share limit: </b>
