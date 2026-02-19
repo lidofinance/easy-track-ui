@@ -84,6 +84,7 @@ export function DescVaultsAlterTiersInOperatorGrid({
           const s = tiers.length > 1 ? 's' : ''
           return (
             <li key={operator}>
+              <br />
               Alter tier{s} for a group with node operator{' '}
               <AddressInlineWithPop address={operator} />:
               <br />
