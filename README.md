@@ -1,5 +1,11 @@
 # Lido EasyTrack UI
 
+> [!WARNING]
+>
+> ### **_This repository is no longer maintained._**
+>
+> The EasyTrack functionality has moved to the [Governance Portal](https://github.com/lidofinance/governance-portal).
+
 A UI app for interacting with Lido's [Easy Track](https://github.com/lidofinance/easy-track) governance feature.
 
 Learn more about [Easy Track](https://github.com/lidofinance/lido-improvement-proposals/blob/develop/LIPS/lip-3.md).
