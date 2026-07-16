@@ -79,6 +79,13 @@ export default {
     loader: 'custom',
   },
   async headers() {
+    // set Content-Security-Policy header for manifest.json and all other routes to allow this app to be embedded in iframes by Safe
+    const cspConfig = {
+      key: 'Content-Security-Policy',
+      value:
+        'frame-ancestors "self" https://app.safe.global https://app.safe.protofire.io;',
+    }
+
     return [
       {
         source: '/manifest.json',
@@ -95,11 +102,7 @@ export default {
             key: 'Access-Control-Allow-Headers',
             value: 'X-Requested-With, content-type, Authorization',
           },
-          {
-            key: 'Content-Security-Policy',
-            value:
-              'frame-ancestors "self" https://app.safe.global https://app.safe.protofire.io;',
-          },
+          cspConfig,
         ],
       },
       {
@@ -122,6 +125,7 @@ export default {
             key: 'Referrer-Policy',
             value: 'same-origin',
           },
+          cspConfig,
         ],
       },
     ]
