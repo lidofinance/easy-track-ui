@@ -3,6 +3,7 @@ import { Title } from 'modules/shared/ui/Common/Title'
 import { StonksOrderResolverForm } from 'modules/stonks/ui/StonksOrderResolverForm'
 import { StonksGridWrapper } from 'modules/stonks/ui/StonksGridWrapper'
 import { StonksPageContainer } from 'modules/stonks/ui/StonksPageContainer'
+import { StonksRecentOrdersList } from 'modules/stonks/ui/StonksRecentOrdersList'
 
 export default function StonksCreateOrderPage() {
   return (
@@ -12,6 +13,10 @@ export default function StonksCreateOrderPage() {
         Manage existing order
       </Subtitle>
       <StonksOrderResolverForm />
+      <Subtitle size={20} weight={800} isCentered>
+        Recent orders
+      </Subtitle>
+      <StonksRecentOrdersList />
       <Subtitle size={20} weight={800} isCentered>
         Create on-chain order
       </Subtitle>

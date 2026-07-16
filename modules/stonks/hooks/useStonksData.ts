@@ -1,56 +1,68 @@
 import { BigNumber } from 'ethers'
 import { useWeb3 } from 'modules/blockChain/hooks/useWeb3'
 import { useSWR } from 'modules/network/hooks/useSwr'
-import { formatUnits } from 'ethers/lib/utils'
 import { useAvailableStonks } from './useAvailableStonks'
-import { useRouter } from 'next/router'
 import { useConnectErc20Contract } from 'modules/motions/hooks/useConnectErc20Contract'
+import { MIN_POSSIBLE_BALANCE } from '../constants'
+import { StonksData } from '../types'
+import { getStonksVersion } from '../utils/getStonksVersion'
 
-const minimalBalance = 10
-
-export function useStonksData() {
+export function useStonksData(stonksAddress?: string) {
   const { chainId } = useWeb3()
   const connectErc20Contract = useConnectErc20Contract()
-  const router = useRouter()
-  const stonksAddress = String(router.query.stonksAddress)
   const { availableStonks, initialLoading: isAvailableStonksDataLoading } =
     useAvailableStonks()
 
-  const { data: stonksData, initialLoading: isStonksDataLoading } = useSWR(
-    availableStonks?.length ? `stonks-data-${chainId}-${stonksAddress}` : null,
+  const stonksList = stonksAddress
+    ? availableStonks?.filter(
+        stonks => stonks.address.toLowerCase() === stonksAddress.toLowerCase(),
+      )
+    : availableStonks
+
+  const { data: stonksData, initialLoading: isStonksDataLoading } = useSWR<
+    StonksData[] | undefined
+  >(
+    stonksList?.length
+      ? `stonks-data-${chainId}-${stonksList
+          .map(({ address }) => address)
+          .join('-')}`
+      : null,
     async () => {
-      if (!availableStonks?.length) {
+      if (!stonksList?.length) {
         return
       }
 
       const processedStonks = await Promise.all(
-        availableStonks.map(async stonks => {
+        stonksList.map(async stonks => {
           const [tokenFrom, tokenTo, orderDurationInSeconds] =
             await stonks.contract.getOrderParameters()
-          const marginInBasisPoints =
-            await stonks.contract.MARGIN_IN_BASIS_POINTS()
-          const priceToleranceInBasisPoints =
-            await stonks.contract.PRICE_TOLERANCE_IN_BASIS_POINTS()
+
           const tokenFromContract = connectErc20Contract(tokenFrom)
-
-          const currentBalance = await tokenFromContract.balanceOf(
-            stonks.address,
-          )
-
-          const tokenFromDecimals = await tokenFromContract.decimals()
-          const tokenFromLabel = await tokenFromContract.symbol()
           const tokenToContract = connectErc20Contract(tokenTo)
 
-          const tokenToLabel = await tokenToContract.symbol()
-          const tokenToDecimals = await tokenToContract.decimals()
+          const [
+            marginBP,
+            priceToleranceBP,
+            tokenFromBalance,
+            tokenFromDecimals,
+            tokenFromLabel,
+            tokenToLabel,
+            tokenToDecimals,
+            version,
+          ] = await Promise.all([
+            stonks.contract.MARGIN_IN_BASIS_POINTS(),
+            stonks.contract.PRICE_TOLERANCE_IN_BASIS_POINTS(),
+            tokenFromContract.balanceOf(stonks.address),
+            tokenFromContract.decimals(),
+            tokenFromContract.symbol(),
+            tokenToContract.symbol(),
+            tokenToContract.decimals(),
+            getStonksVersion(stonks.contract),
+          ])
 
-          let expectedOutput = BigNumber.from(0)
-
-          const isEnoughBalance = currentBalance.gt(minimalBalance)
-
-          if (isEnoughBalance) {
-            expectedOutput =
-              await stonks.contract.estimateTradeOutputFromCurrentBalance()
+          let balanceAdjustedToMinimal = tokenFromBalance
+          if (tokenFromBalance.lt(BigNumber.from(MIN_POSSIBLE_BALANCE))) {
+            balanceAdjustedToMinimal = BigNumber.from(0)
           }
 
           return {
@@ -58,31 +70,31 @@ export function useStonksData() {
             tokenFrom: {
               label: tokenFromLabel,
               address: tokenFrom,
+              decimals: tokenFromDecimals,
             },
             tokenTo: {
               label: tokenToLabel,
               address: tokenTo,
+              decimals: tokenToDecimals,
             },
-            marginInBasisPoints: marginInBasisPoints.toNumber(),
+            marginBP,
+            priceToleranceBP,
             orderDurationInSeconds: orderDurationInSeconds.toNumber(),
-            priceToleranceInBasisPoints: priceToleranceInBasisPoints.toNumber(),
-            currentBalance: isEnoughBalance
-              ? formatUnits(currentBalance, tokenFromDecimals)
-              : '0',
-            expectedOutput: Number(
-              formatUnits(expectedOutput, tokenToDecimals),
-            ),
-            tokenToDecimals: tokenToDecimals,
-            isBalanceZero: !isEnoughBalance,
+            currentBalance: balanceAdjustedToMinimal,
+            version,
           }
         }),
       )
 
-      return processedStonks.sort(
-        (a, b) => parseFloat(b.currentBalance) - parseFloat(a.currentBalance),
+      return processedStonks.sort((a, b) =>
+        b.currentBalance.sub(a.currentBalance).toNumber(),
       )
     },
-    { revalidateOnFocus: false, revalidateOnReconnect: false },
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
   )
 
   return {

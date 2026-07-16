@@ -2,7 +2,7 @@ import { Button } from '@lidofinance/lido-ui'
 import { stonksInstance } from 'modules/network/utils/urls'
 import { Text } from 'modules/shared/ui/Common/Text'
 import { StonksData } from 'modules/stonks/types'
-import { formatValue } from 'modules/stonks/utils/formatValue'
+import { formatValueBn } from 'modules/stonks/utils/formatValue'
 import { useRouter } from 'next/router'
 import { Card, Grid } from './StonksGridStyle'
 
@@ -16,7 +16,7 @@ export function StonksGrid({ stonksData }: Props) {
   return (
     <Grid>
       {stonksData.map(stonks => {
-        const isZero = parseFloat(stonks.currentBalance) === 0
+        const isZero = stonks.currentBalance.isZero()
         return (
           <Card key={stonks.address}>
             <Text size={14} weight={800}>
@@ -25,7 +25,8 @@ export function StonksGrid({ stonksData }: Props) {
               {stonks.tokenTo.label}
             </Text>
             <Text size={12} color="textSecondary">
-              Balance: {formatValue(stonks.currentBalance)}{' '}
+              Balance:{' '}
+              {formatValueBn(stonks.currentBalance, stonks.tokenFrom.decimals)}{' '}
               {stonks.tokenFrom.label}
             </Text>
             <Button

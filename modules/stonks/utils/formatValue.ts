@@ -1,3 +1,6 @@
+import { BigNumber } from 'ethers'
+import { formatUnits } from 'ethers/lib/utils'
+
 export function formatValue(
   value: string | number | null | undefined,
   maxDigits = 4,
@@ -13,4 +16,12 @@ export function formatValue(
     minimumFractionDigits: 0,
     maximumFractionDigits: maxDigits,
   })
+}
+
+export const formatValueBn = (
+  value: BigNumber,
+  decimals: number,
+  maxDigits = 4,
+): string => {
+  return formatValue(formatUnits(value, decimals), maxDigits)
 }

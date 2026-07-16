@@ -1,3 +1,5 @@
+import { BigNumber } from 'ethers'
+
 export type OrderFromReceipt = {
   address: string
   hash: string
@@ -79,15 +81,16 @@ export type StonksData = {
   tokenFrom: {
     label: string
     address: string
+    decimals: number
   }
   tokenTo: {
     label: string
     address: string
+    decimals: number
   }
-  marginInBasisPoints: number
+  marginBP: BigNumber
+  priceToleranceBP: BigNumber
   orderDurationInSeconds: number
-  priceToleranceInBasisPoints: number
-  currentBalance: string
-  expectedOutput: number
-  tokenToDecimals: number
+  currentBalance: BigNumber
+  version: 'v1' | 'v2'
 }
